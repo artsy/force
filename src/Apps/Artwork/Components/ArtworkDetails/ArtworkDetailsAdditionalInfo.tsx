@@ -4,17 +4,17 @@ import {
   Clickable,
   Flex,
   type FlexProps,
-  HTML,
-  Join,
   ReadMore,
-  Spacer,
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import {
+  DefinitionList,
+  type DefinitionListItem,
+} from "Components/DefinitionList"
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -36,9 +36,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
   const { listItems, openConditionModal, setOpenConditionModal } =
     useArtworkDetailsAdditionalInfoFields({ artwork })
 
-  const displayItems = listItems.filter(i => i.value != null && i.value !== "")
-
-  if (displayItems.length === 0) {
+  if (listItems.length === 0) {
     return null
   }
 
@@ -50,29 +48,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<
         <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
       )}
       <Container flexDirection="column" {...flexProps}>
-        <Join separator={<Spacer y={1} />}>
-          {displayItems.map(
-            ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
-              <ArtworkDefinitionList
-                key={title + index}
-                term={title}
-                onTitleClick={onTitleClick}
-              >
-                <HTML variant="xs" color="mono60">
-                  {typeof value === "string" ? (
-                    <ReadMore
-                      onReadMoreClicked={onReadMoreClicked}
-                      maxLines={2}
-                      content={value}
-                    />
-                  ) : (
-                    value
-                  )}
-                </HTML>
-              </ArtworkDefinitionList>
-            ),
-          )}
-        </Join>
+        <DefinitionList items={listItems} aria-label="Artwork details" />
       </Container>
     </>
   )
@@ -118,17 +94,17 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   const [openRarityModal, setOpenRarityModal] = useState(false)
   const [openConditionModal, setOpenConditionModal] = useState(false)
 
-  const listItems = [
+  const allListItems: DefinitionListItem[] = [
     {
-      title: "Materials",
+      term: "Materials",
       value: medium,
     },
     {
-      title: "Size",
+      term: "Size",
       value: dimensionsLabel,
     },
     {
-      title: "Rarity",
+      term: "Rarity",
       value: attributionClass?.name && (
         <>
           <Clickable
@@ -160,7 +136,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
       ),
     },
     {
-      title: "Medium",
+      term: "Medium",
       value: category && (
         <>
           {artwork.mediumType ? (
@@ -200,41 +176,50 @@ export const useArtworkDetailsAdditionalInfoFields = ({
       ),
     },
     {
-      title: "Condition",
+      term: "Condition",
       value: canRequestLotConditionsReport ? (
         <RequestConditionReportQueryRenderer artworkID={internalID} />
-      ) : (
-        conditionDescription && conditionDescription.details
-      ),
-      onReadMoreClicked: () => {
-        trackEvent({
-          action_type: "Click",
-          context_module: "Condition",
-          subject: "Read more",
-        })
-      },
-      onTitleClick: () => {
+      ) : conditionDescription?.details ? (
+        <Text variant="xs">
+          <ReadMore
+            onReadMoreClicked={() => {
+              trackEvent({
+                action_type: "Click",
+                context_module: "Condition",
+                subject: "Read more",
+              })
+            }}
+            maxLines={2}
+            content={conditionDescription.details}
+          />
+        </Text>
+      ) : null,
+      onTermClick: () => {
         setOpenConditionModal(true)
       },
     },
 
     {
-      title: "Signature",
+      term: "Signature",
       value: signatureInfo && signatureInfo.details,
     },
     {
-      title: "Certificate of authenticity",
+      term: "Certificate of authenticity",
       value: certificateOfAuthenticity && certificateOfAuthenticity.details,
     },
     {
-      title: "Frame",
+      term: "Frame",
       value: framed && framed.details,
     },
-    { title: "Series", value: series },
-    { title: "Publisher", value: publisher },
-    { title: "Manufacturer", value: manufacturer },
-    { title: "Image rights", value: imageRights },
+    { term: "Series", value: series },
+    { term: "Publisher", value: publisher },
+    { term: "Manufacturer", value: manufacturer },
+    { term: "Image rights", value: imageRights },
   ]
+
+  const listItems = allListItems.filter(
+    item => item.value != null && item.value !== "",
+  )
 
   return {
     listItems,

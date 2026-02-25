@@ -2,16 +2,13 @@ import {
   Clickable,
   Flex,
   type FlexProps,
-  HTML,
-  Join,
-  ReadMore,
   Spacer,
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
 import { useArtworkDetailsAdditionalInfoFields } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
-import { PrivateArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkDefinitionList"
+import { DefinitionList } from "Components/DefinitionList"
 import type { PrivateArtworkAdditionalInfo_artwork$key } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
@@ -34,23 +31,19 @@ export const PrivateArtworkAdditionalInfo: React.FC<
 
   const itemsToRemove = ["Materials", "Size", "Rarity", "Frame"]
 
-  const privateListItems = listItems.filter(item => {
-    return !itemsToRemove.includes(item.title)
-  })
+  const privateListItems = listItems.filter(
+    item => !itemsToRemove.includes(item.term),
+  )
 
   const { trackEvent } = useTracking()
 
-  const allDisplayItems = privateListItems.filter(
-    i => i.value != null && i.value !== "",
-  )
-
   const [isCollapsed, setIsCollapsed] = React.useState(
-    allDisplayItems.length > COLLAPSED_COUNT,
+    privateListItems.length > COLLAPSED_COUNT,
   )
 
   const displayItems = isCollapsed
-    ? allDisplayItems.slice(0, COLLAPSED_COUNT)
-    : allDisplayItems
+    ? privateListItems.slice(0, COLLAPSED_COUNT)
+    : privateListItems
 
   if (displayItems.length === 0) {
     return null
@@ -75,29 +68,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<
         <ConditionInfoModal onClose={() => setOpenConditionModal(false)} />
       )}
       <Container flexDirection="column" {...flexProps}>
-        <Join separator={<Spacer y={1} />}>
-          {displayItems.map(
-            ({ title, value, onReadMoreClicked, onTitleClick }, index) => (
-              <PrivateArtworkDefinitionList
-                key={title + index}
-                term={title}
-                onTitleClick={onTitleClick}
-              >
-                <HTML variant="xs" color="mono100">
-                  {typeof value === "string" ? (
-                    <ReadMore
-                      onReadMoreClicked={onReadMoreClicked}
-                      maxLines={3}
-                      content={value}
-                    />
-                  ) : (
-                    value
-                  )}
-                </HTML>
-              </PrivateArtworkDefinitionList>
-            ),
-          )}
-        </Join>
+        <DefinitionList items={displayItems} aria-label="Artwork details" />
         {!!isCollapsed && (
           <Flex flexDirection="row" justifyContent="flex-start">
             <Spacer x={150} />
