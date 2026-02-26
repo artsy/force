@@ -261,8 +261,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     submitForm()
   }
 
-  const isPriceHidden =
-    orderData.lineItems?.[0]?.artwork?.priceDisplay === "hidden"
+  const isPriceHidden = orderData.lineItems?.[0]?.artwork?.isPriceHidden
 
   return (
     <Flex
@@ -395,8 +394,6 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         slug
-        priceDisplay
-        isPriceRange
         isPriceHidden
         listPrice {
           __typename

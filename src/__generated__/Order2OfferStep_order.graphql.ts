@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fd8e936ca97771b7efee11f06a93b03b>>
+ * @generated SignedSource<<7450f798e0620ad1514d2bbc6600a364>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,6 @@ export type Order2OfferStep_order$data = {
         readonly internalID: string;
       } | null | undefined> | null | undefined;
       readonly isPriceHidden: boolean | null | undefined;
-      readonly isPriceRange: boolean | null | undefined;
       readonly listPrice: {
         readonly __typename: "Money";
         readonly major: number;
@@ -39,7 +38,6 @@ export type Order2OfferStep_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
-      readonly priceDisplay: string | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
@@ -206,20 +204,6 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "priceDisplay",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isPriceRange",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
               "name": "isPriceHidden",
               "storageKey": null
             },
@@ -298,6 +282,6 @@ return {
 };
 })();
 
-(node as any).hash = "1077016a8b6916d71e05f4cbda04fff2";
+(node as any).hash = "f494ef27c6af481bd1360bd28ea083bc";
 
 export default node;
