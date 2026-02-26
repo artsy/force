@@ -8,9 +8,19 @@ import type { OfferInputTestQuery } from "__generated__/OfferInputTestQuery.grap
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL<OfferInputTestQuery>({
-  Component: ({ me, initialValue = 0, onBlur }: any) => (
+  Component: ({
+    me,
+    initialValue = 0,
+    onBlur,
+    showCurrencySymbol = false,
+  }: any) => (
     <Formik initialValues={{ offerValue: initialValue }} onSubmit={() => {}}>
-      <OfferInput name="offerValue" order={me.order} onBlur={onBlur} />
+      <OfferInput
+        name="offerValue"
+        order={me.order}
+        onBlur={onBlur}
+        showCurrencySymbol={showCurrencySymbol}
+      />
     </Formik>
   ),
   query: graphql`
@@ -29,22 +39,33 @@ const setInputValue = (input: HTMLInputElement, value: string) => {
 }
 
 describe("OfferInput", () => {
-  describe("placeholder", () => {
-    it("shows the currency symbol as a placeholder", () => {
-      renderWithRelay({ Me: () => ({ order: { currencySymbol: "$" } }) })
-      expect(screen.getByRole("textbox")).toHaveAttribute("placeholder", "$0")
+  describe("title", () => {
+    it("shows 'Your offer' as the title by default", () => {
+      renderWithRelay({ Me: () => ({ order: { currencySymbol: "US$" } }) })
+      expect(screen.getByTitle("Your offer")).toBeInTheDocument()
     })
 
-    it("shows no placeholder when the currency symbol is an empty string", () => {
-      renderWithRelay({ Me: () => ({ order: { currencySymbol: "" } }) })
-      expect(screen.getByRole("textbox")).not.toHaveAttribute("placeholder")
+    it("shows the currency symbol in the title when showCurrencySymbol is true", () => {
+      renderWithRelay(
+        { Me: () => ({ order: { currencySymbol: "US$" } }) },
+        { showCurrencySymbol: true },
+      )
+      expect(screen.getByTitle("Your offer (US$)")).toBeInTheDocument()
+    })
+
+    it("omits the currency symbol from the title when showCurrencySymbol is true but symbol is empty", () => {
+      renderWithRelay(
+        { Me: () => ({ order: { currencySymbol: "" } }) },
+        { showCurrencySymbol: true },
+      )
+      expect(screen.getByTitle("Your offer")).toBeInTheDocument()
     })
   })
 
   describe("value display", () => {
     it("shows an empty input when the value is 0", () => {
       renderWithRelay(
-        { Me: () => ({ order: { currencySymbol: "$" } }) },
+        { Me: () => ({ order: { currencySymbol: "US$" } }) },
         { initialValue: 0 },
       )
       expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("")
@@ -52,7 +73,7 @@ describe("OfferInput", () => {
 
     it("displays values with comma separators at thousands", () => {
       renderWithRelay(
-        { Me: () => ({ order: { currencySymbol: "$" } }) },
+        { Me: () => ({ order: { currencySymbol: "US$" } }) },
         { initialValue: 4200 },
       )
       expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe(
@@ -62,7 +83,7 @@ describe("OfferInput", () => {
 
     it("displays large values with multiple comma separators", () => {
       renderWithRelay(
-        { Me: () => ({ order: { currencySymbol: "$" } }) },
+        { Me: () => ({ order: { currencySymbol: "US$" } }) },
         { initialValue: 2389274922 },
       )
       expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe(
@@ -73,7 +94,7 @@ describe("OfferInput", () => {
 
   describe("input handling", () => {
     it("updates the displayed value when the user enters numbers", () => {
-      renderWithRelay({ Me: () => ({ order: { currencySymbol: "$" } }) })
+      renderWithRelay({ Me: () => ({ order: { currencySymbol: "US$" } }) })
       const input = screen.getByRole("textbox") as HTMLInputElement
 
       setInputValue(input, "1")
@@ -87,7 +108,7 @@ describe("OfferInput", () => {
     })
 
     it("ignores non-numeric characters", () => {
-      renderWithRelay({ Me: () => ({ order: { currencySymbol: "$" } }) })
+      renderWithRelay({ Me: () => ({ order: { currencySymbol: "US$" } }) })
       const input = screen.getByRole("textbox") as HTMLInputElement
 
       setInputValue(input, "1d")
@@ -103,7 +124,7 @@ describe("OfferInput", () => {
     it("calls onBlur with the current field value when blurred", () => {
       const onBlur = jest.fn()
       renderWithRelay(
-        { Me: () => ({ order: { currencySymbol: "$" } }) },
+        { Me: () => ({ order: { currencySymbol: "US$" } }) },
         { onBlur },
       )
       const input = screen.getByRole("textbox") as HTMLInputElement

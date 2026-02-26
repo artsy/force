@@ -8,16 +8,21 @@ export interface OfferInputProps {
   name: string
   order: OfferInput_order$key
   onBlur?: (value: number | undefined) => void
+  showCurrencySymbol?: boolean
 }
 
-export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
+export const OfferInput: FC<OfferInputProps> = ({
+  name,
+  order,
+  onBlur,
+  showCurrencySymbol = false,
+}) => {
   const [field, meta, helpers] = useField<number>(name)
   const { currencySymbol } = useFragment(FRAGMENT, order)
-  const placeholder = !!currencySymbol.trim() ? currencySymbol : undefined
 
   const formatValueForDisplay = (val: number | undefined) => {
     if (val !== undefined && val > 0) {
-      return `${currencySymbol} ${val.toLocaleString("en-US")}`
+      return val.toLocaleString("en-US")
     }
     return ""
   }
@@ -30,7 +35,7 @@ export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
 
   return (
     <Input
-      title={`Your offer${placeholder ? ` (${placeholder})` : ""}`}
+      title={`Your offer${showCurrencySymbol && !!currencySymbol.length ? ` (${currencySymbol})` : ""}`}
       type="text"
       pattern="[0-9]"
       error={!!meta.error}
