@@ -1,15 +1,31 @@
 import { OwnerType } from "@artsy/cohesion"
-import { screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SuggestedArtworksModalGrid } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalGrid"
 import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { SuggestedArtworksModalGrid_Test_Query } from "__generated__/SuggestedArtworksModalGrid_Test_Query.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "artwork-id",
+    contextPageOwnerSlug: "artwork-slug",
+    contextPageOwnerType: "artwork",
+  })),
+}))
 
 describe("SuggestedArtworksModalGrid", () => {
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
+
+  beforeAll(() => {
+    mockUseTracking.mockImplementation(() => ({ trackEvent }))
+  })
+
   const savedSearchEntity: SavedSearchEntity = {
     defaultCriteria: {
       artistIDs: [
@@ -97,5 +113,35 @@ describe("SuggestedArtworksModalGrid", () => {
 
     const exploreMoreButton = screen.queryByText("Explore more on Artsy")
     expect(exploreMoreButton).not.toBeInTheDocument()
+  })
+
+  it("tracks click on 'Explore more on Artsy' button", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        counts: { total: 11 },
+        edges: [
+          {
+            node: {
+              title: "Test Artwork Title",
+            },
+          },
+        ],
+      }),
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText("Explore more on Artsy")).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByText("Explore more on Artsy"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "artworkClosedLotHeader",
+      context_page_owner_id: "artwork-id",
+      context_page_owner_slug: "artwork-slug",
+      context_page_owner_type: "artwork",
+      type: "viewAll",
+    })
   })
 })

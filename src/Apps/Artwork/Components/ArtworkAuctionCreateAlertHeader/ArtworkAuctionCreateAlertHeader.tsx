@@ -1,4 +1,4 @@
-import { OwnerType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import {
   Box,
@@ -22,12 +22,14 @@ import type {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Media } from "Utils/Responsive"
 import type { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
 import { compact } from "lodash"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -36,6 +38,10 @@ interface ArtworkAuctionCreateAlertHeaderProps {
 const ArtworkAuctionCreateAlertHeader: FC<
   React.PropsWithChildren<ArtworkAuctionCreateAlertHeaderProps>
 > = ({ artwork }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
+
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
   const { hasEnded } = useTimer(
@@ -148,6 +154,17 @@ const ArtworkAuctionCreateAlertHeader: FC<
                   // @ts-ignore
                   as={RouterLink}
                   to={"/favorites/alerts"}
+                  onClick={() => {
+                    trackEvent({
+                      action: ActionType.clickedArtworkGroup,
+                      context_module: ContextModule.artworkClosedLotHeader,
+                      context_page_owner_id: contextPageOwnerId,
+                      context_page_owner_slug: contextPageOwnerSlug,
+                      context_page_owner_type: contextPageOwnerType,
+                      destination_page_owner_type: OwnerType.saves,
+                      type: "viewAll",
+                    })
+                  }}
                 >
                   Manage your alerts
                 </Button>

@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -14,6 +14,7 @@ import {
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import type { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import type {
@@ -22,6 +23,7 @@ import type {
 } from "__generated__/SuggestedArtworksShelfQuery.graphql"
 import { type FC, useState } from "react"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 5
 
@@ -32,6 +34,10 @@ interface SuggestedArtworksShelfProps {
 export const SuggestedArtworksShelf: FC<
   React.PropsWithChildren<SuggestedArtworksShelfProps>
 > = ({ artworksConnection }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
+
   const artworks = extractNodes(artworksConnection)
   const suggestedArtworksCount = artworksConnection?.counts?.total ?? 0
   const displaySuggestedArtworksSection = suggestedArtworksCount > 0
@@ -69,7 +75,17 @@ export const SuggestedArtworksShelf: FC<
             size={["large", "small"]}
             m="auto"
             width={["100%", "auto"]}
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setOpen(true)
+              trackEvent({
+                action: ActionType.clickedArtworkGroup,
+                context_module: ContextModule.artworkClosedLotHeader,
+                context_page_owner_id: contextPageOwnerId,
+                context_page_owner_slug: contextPageOwnerSlug,
+                context_page_owner_type: contextPageOwnerType,
+                type: "viewAll",
+              })
+            }}
           >
             See more
           </Button>
