@@ -18,8 +18,7 @@ export const RadioOptionRow: React.FC<RadioOptionRowProps> = ({
   return (
     <Flex
       backgroundColor={isSelected ? "mono5" : "mono0"}
-      px={1}
-      py={2}
+      p={1}
       onClick={onClick}
     >
       {children}
