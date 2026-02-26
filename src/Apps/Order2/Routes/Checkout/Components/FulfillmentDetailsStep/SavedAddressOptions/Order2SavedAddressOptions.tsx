@@ -263,7 +263,12 @@ export const SavedAddressOptions = ({
                 })
               }}
             >
-              <Text variant="sm" fontWeight="normal" color={textColor}>
+              <Text
+                style={{ textDecoration: "underline" }}
+                variant="sm"
+                fontWeight="normal"
+                color={textColor}
+              >
                 Edit
               </Text>
             </Clickable>
