@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3e17809bf9cfb813c3ae2e5eee1b26d>>
+ * @generated SignedSource<<578ead51d3e5a9311e81b21abc766eef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,7 @@ export type Order2OfferOptions_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly source: OrderSourceEnum;
+  readonly " $fragmentSpreads": FragmentRefs<"OfferInput_order">;
   readonly " $fragmentType": "Order2OfferOptions_order";
 };
 export type Order2OfferOptions_order$key = {
@@ -108,6 +109,11 @@ return {
   "metadata": null,
   "name": "Order2OfferOptions_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OfferInput_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -182,6 +188,6 @@ return {
 };
 })();
 
-(node as any).hash = "5b8efe775b89bdadcf318e959e1755af";
+(node as any).hash = "2203dc92eac8c99d66c3ea0df174b01b";
 
 export default node;

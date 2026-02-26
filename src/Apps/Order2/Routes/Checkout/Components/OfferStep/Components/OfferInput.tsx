@@ -1,4 +1,5 @@
 import { Input } from "@artsy/palette"
+import type { OfferInput_order$key } from "__generated__/OfferInput_order.graphql"
 import { useField } from "formik"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -9,23 +10,14 @@ export interface OfferInputProps {
   onBlur?: (value: number | undefined) => void
 }
 
-const CURRENCY_SYMBOLS: Record<string, string> = {
-  USD: "$",
-  EUR: "€",
-  GBP: "£",
-}
-
-const getCurrencySymbol = (currencyCode: string): string => {
-  return CURRENCY_SYMBOLS[currencyCode] || currencyCode
-}
-
 export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
   const [field, meta, helpers] = useField<number>(name)
-  const orderData = useFragment(FRAGMENT, order)
+  const { currencySymbol } = useFragment(FRAGMENT, order)
+  const placeholder = !!currencySymbol.trim() ? currencySymbol : undefined
 
   const formatValueForDisplay = (val: number | undefined) => {
     if (val !== undefined && val > 0) {
-      return val.toLocaleString("en-US")
+      return `${currencySymbol} ${val.toLocaleString("en-US")}`
     }
     return ""
   }
@@ -38,14 +30,13 @@ export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
 
   return (
     <Input
-      title="Your offer"
+      title={`Your offer${placeholder ? ` (${placeholder})` : ""}`}
       type="text"
       pattern="[0-9]"
       error={!!meta.error}
       inputMode={"numeric"}
       onBlur={handleBlur}
       value={formatValueForDisplay(field.value)}
-      placeholder={`${currencySymbol}0`}
       data-testid="offer-input"
       onChange={event => {
         const currentValue = event.currentTarget.value
@@ -57,7 +48,7 @@ export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
 }
 
 const FRAGMENT = graphql`
-  fragment OfferInput_order on CommerceOrder {
+  fragment OfferInput_order on Order {
     currencySymbol
   }
 `

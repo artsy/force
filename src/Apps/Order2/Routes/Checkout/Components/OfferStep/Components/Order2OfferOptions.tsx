@@ -3,8 +3,8 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
 import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
-import createLogger from "Utils/logger"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
+import createLogger from "Utils/logger"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
 import { useFormikContext } from "formik"
 import { DateTime } from "luxon"
@@ -231,7 +231,7 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
             <Flex flexDirection="column" mt={2}>
               <OfferInput
                 name="offerValue"
-                currencyCode={orderData.currencyCode}
+                order={orderData}
                 onBlur={onCustomOfferBlur}
               />
             </Flex>
@@ -244,6 +244,7 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2OfferOptions_order on Order {
+    ...OfferInput_order
     source
     buyerStateExpiresAt
     currencyCode
