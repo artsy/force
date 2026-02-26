@@ -231,7 +231,7 @@ export const SavedAddressOptions = ({
     <Flex flexDirection="column">
       <SectionHeading>Delivery address</SectionHeading>
 
-      <Spacer y={1} />
+      <Spacer y={2} />
 
       {savedAddresses.map(processedAddress => {
         const { address, internalID, phoneNumberParsed } = processedAddress
