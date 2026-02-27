@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8bccf4308a069fef32bedc973aaa84eb>>
+ * @generated SignedSource<<7450f798e0620ad1514d2bbc6600a364>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,6 @@ export type Order2OfferStep_order$data = {
         readonly internalID: string;
       } | null | undefined> | null | undefined;
       readonly isPriceHidden: boolean | null | undefined;
-      readonly isPriceRange: boolean | null | undefined;
       readonly listPrice: {
         readonly __typename: "Money";
         readonly major: number;
@@ -39,7 +38,6 @@ export type Order2OfferStep_order$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       } | null | undefined;
-      readonly priceDisplay: string | null | undefined;
       readonly slug: string;
     } | null | undefined;
   } | null | undefined>;
@@ -55,7 +53,7 @@ export type Order2OfferStep_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly source: OrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2OfferOptions_order" | "useCompleteOfferData_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"OfferInput_order" | "Order2OfferOptions_order" | "useCompleteOfferData_order">;
   readonly " $fragmentType": "Order2OfferStep_order";
 };
 export type Order2OfferStep_order$key = {
@@ -96,6 +94,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Order2OfferOptions_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OfferInput_order"
     },
     (v0/*: any*/),
     {
@@ -201,20 +204,6 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "priceDisplay",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isPriceRange",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
               "name": "isPriceHidden",
               "storageKey": null
             },
@@ -293,6 +282,6 @@ return {
 };
 })();
 
-(node as any).hash = "3a8ff30a3a8d9c8113cf0ce897e114ee";
+(node as any).hash = "f494ef27c6af481bd1360bd28ea083bc";
 
 export default node;
