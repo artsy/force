@@ -15,11 +15,15 @@ import { useTracking } from "react-tracking"
 interface ArtistCombinedNavProps {
   waitUntil: (section: string) => Promise<void>
   navigating: Record<string, boolean>
+  // diamond_editorial-section
+  showEditorialTab?: boolean
 }
 
 export const ArtistCombinedNav = ({
   waitUntil,
   navigating,
+  // diamond_editorial-section
+  showEditorialTab = false,
 }: ArtistCombinedNavProps) => {
   const backdrop = useStickyBackdrop()
 
@@ -87,6 +91,22 @@ export const ArtistCombinedNav = ({
                     >
                       Auction Results
                     </BaseTab>
+
+                    {/* diamond_editorial-section */}
+                    {showEditorialTab && (
+                      <BaseTab
+                        as={Clickable}
+                        active={active === "artistEditorialTop"}
+                        disabled={navigating.about}
+                        onClick={async () => {
+                          await waitUntil("about")
+                          jumpTo("artistEditorialTop")
+                          handleClick("editorial")
+                        }}
+                      >
+                        Editorial
+                      </BaseTab>
+                    )}
 
                     <BaseTab
                       as={Clickable}
