@@ -184,12 +184,10 @@ describe("CriticalErrorModal", () => {
     })
   })
 
-  describe("CHARGE_AUTHORIZATION_FAILED error", () => {
+  describe("PAYMENT_PROCESSING_FAILED error", () => {
     it("shows payment authentication error message with Continue button", () => {
       render(
-        <CheckoutModal
-          error={CheckoutModalError.CHARGE_AUTHORIZATION_FAILED}
-        />,
+        <CheckoutModal error={CheckoutModalError.PAYMENT_PROCESSING_FAILED} />,
       )
 
       expect(
@@ -206,9 +204,7 @@ describe("CriticalErrorModal", () => {
 
     it("dismisses modal when Continue button is clicked", async () => {
       render(
-        <CheckoutModal
-          error={CheckoutModalError.CHARGE_AUTHORIZATION_FAILED}
-        />,
+        <CheckoutModal error={CheckoutModalError.PAYMENT_PROCESSING_FAILED} />,
       )
 
       const continueButton = screen.getByText("Continue")
@@ -220,9 +216,7 @@ describe("CriticalErrorModal", () => {
 
     it("dismisses modal when X button is clicked", async () => {
       render(
-        <CheckoutModal
-          error={CheckoutModalError.CHARGE_AUTHORIZATION_FAILED}
-        />,
+        <CheckoutModal error={CheckoutModalError.PAYMENT_PROCESSING_FAILED} />,
       )
 
       const closeButton = screen.getByLabelText("Close")

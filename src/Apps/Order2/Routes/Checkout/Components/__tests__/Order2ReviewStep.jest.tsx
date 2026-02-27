@@ -472,7 +472,7 @@ describe("Order2ReviewStep", () => {
       pendingOffer: null,
     }
 
-    it("sets CHARGE_AUTHORIZATION_FAILED modal error when handleNextAction returns a failure", async () => {
+    it("sets PAYMENT_PROCESSING_FAILED modal error when handleNextAction returns payment_intent_authentication_failure", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -502,109 +502,14 @@ describe("Order2ReviewStep", () => {
 
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
-          error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
+          error: CheckoutModalError.PAYMENT_PROCESSING_FAILED,
           description: "Authentication failed",
           onClose: expect.any(Function),
         })
       })
     })
 
-    it("sets ARTWORK_NOT_FOR_SALE modal error when insufficient_inventory error is returned", async () => {
-      mockSubmitOrderMutation.submitMutation.mockRejectedValueOnce({
-        code: "insufficient_inventory",
-        message: "Insufficient inventory",
-      })
-
-      renderWithRelay({
-        Me: () => ({
-          order: defaultOrderData,
-        }),
-      })
-
-      const submitButton = screen.getByText("Submit")
-      await userEvent.click(submitButton)
-
-      await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
-          error: CheckoutModalError.ARTWORK_NOT_FOR_SALE,
-        })
-      })
-    })
-  })
-
-  describe("Error handling", () => {
-    const defaultOrderData = {
-      __typename: "Order",
-      internalID: "order-id",
-      mode: "BUY",
-      stripeConfirmationToken: "ctoken_123",
-      buyerTotal: { display: "$100" },
-      itemsTotal: { display: "$90" },
-      shippingTotal: { display: "$5" },
-      taxTotal: { display: "$5" },
-      lineItems: [
-        {
-          artworkOrEditionSet: {
-            __typename: "Artwork",
-            price: "$90",
-            dimensions: { in: "10 x 10", cm: "25 x 25" },
-          },
-          artworkVersion: {
-            title: "Test Artwork",
-            artistNames: "Test Artist",
-            date: "2024",
-            attributionClass: {
-              shortDescription: "Original",
-            },
-            image: {
-              resized: {
-                url: "https://test.com/image.jpg",
-              },
-            },
-          },
-        },
-      ],
-      pendingOffer: null,
-    }
-
-    it("sets CHARGE_AUTHORIZATION_FAILED modal error when handleNextAction returns payment_intent_authentication_failure", async () => {
-      mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
-        submitOrder: {
-          orderOrError: {
-            __typename: "OrderMutationActionRequired",
-            actionData: {
-              clientSecret: "test-secret",
-            },
-          },
-        },
-      })
-
-      mockStripe.handleNextAction.mockResolvedValueOnce({
-        error: {
-          code: "payment_intent_authentication_failure",
-          message: "Authentication failed",
-        },
-      })
-
-      renderWithRelay({
-        Me: () => ({
-          order: defaultOrderData,
-        }),
-      })
-
-      const submitButton = screen.getByText("Submit")
-      await userEvent.click(submitButton)
-
-      await waitFor(() => {
-        expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
-          error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
-          description: "Authentication failed",
-          onClose: expect.any(Function),
-        })
-      })
-    })
-
-    it("sets CHARGE_AUTHORIZATION_FAILED modal error for other Stripe errors", async () => {
+    it("sets PAYMENT_PROCESSING_FAILED modal error for other Stripe errors", async () => {
       mockSubmitOrderMutation.submitMutation.mockResolvedValueOnce({
         submitOrder: {
           orderOrError: {
@@ -634,7 +539,7 @@ describe("Order2ReviewStep", () => {
 
       await waitFor(() => {
         expect(mockCheckoutModal.showCheckoutErrorModal).toHaveBeenCalledWith({
-          error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
+          error: CheckoutModalError.PAYMENT_PROCESSING_FAILED,
           description: "Some other error",
           onClose: expect.any(Function),
         })

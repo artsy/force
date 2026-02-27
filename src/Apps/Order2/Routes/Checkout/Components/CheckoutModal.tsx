@@ -8,7 +8,7 @@ export enum CheckoutModalError {
   ARTWORK_VERSION_MISMATCH = "artwork_version_mismatch",
   ARTWORK_NOT_FOR_SALE = "artwork_not_for_sale",
   SUBMIT_ERROR = "submit_error",
-  CHARGE_AUTHORIZATION_FAILED = "charge_authorization_failed",
+  PAYMENT_PROCESSING_FAILED = "payment_processing_failed",
   OTHER_ERROR = "other_error",
 }
 
@@ -56,7 +56,7 @@ export const CheckoutModal: React.FC<{
         "Something went wrong while submitting your order. Please try again."
       canDismiss = true
       break
-    case CheckoutModalError.CHARGE_AUTHORIZATION_FAILED:
+    case CheckoutModalError.PAYMENT_PROCESSING_FAILED:
       defaultTitle = "An error occurred while processing your payment"
       defaultDescription =
         "We are unable to authenticate your payment method. Please choose a different payment method and try again."
