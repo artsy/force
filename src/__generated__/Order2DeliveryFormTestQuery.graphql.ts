@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<386d966acb731b71ce88716bd9159775>>
+ * @generated SignedSource<<85af8f6d4caff61474952b95e3c34d58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -248,6 +248,13 @@ return {
                             "kind": "ScalarField",
                             "name": "display",
                             "storageKey": "display(format:\"INTERNATIONAL\")"
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isValid",
+                            "storageKey": null
                           }
                         ],
                         "storageKey": null
@@ -371,7 +378,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1785e27dd83a014ae4363a98629daa62",
+    "cacheID": "3aa99f2ea3728fe227311eef0d7220b7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -416,6 +423,12 @@ return {
         "me.addressConnection.edges.node.phoneNumberCountryCode": (v11/*: any*/),
         "me.addressConnection.edges.node.phoneNumberParsed": (v13/*: any*/),
         "me.addressConnection.edges.node.phoneNumberParsed.display": (v11/*: any*/),
+        "me.addressConnection.edges.node.phoneNumberParsed.isValid": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "me.addressConnection.edges.node.postalCode": (v11/*: any*/),
         "me.addressConnection.edges.node.region": (v11/*: any*/),
         "me.id": (v12/*: any*/),
@@ -483,7 +496,7 @@ return {
     },
     "name": "Order2DeliveryFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    ...Order2DeliveryForm_me\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  mode\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n      countryCode\n    }\n  }\n}\n"
+    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    ...Order2DeliveryForm_me\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  mode\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n      countryCode\n    }\n  }\n}\n"
   }
 };
 })();

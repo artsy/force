@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e163e95b205606d763fbe7c4c256c8e4>>
+ * @generated SignedSource<<a34bc53205a009625aa48b9049efa738>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -322,6 +322,13 @@ return {
                                 "kind": "ScalarField",
                                 "name": "display",
                                 "storageKey": "display(format:\"INTERNATIONAL\")"
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isValid",
+                                "storageKey": null
                               }
                             ],
                             "storageKey": null
@@ -390,12 +397,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e529766ce5db13cddcf0d8dbad88aaaa",
+    "cacheID": "f599071eb6e11fb3341387f8b49d07af",
     "id": null,
     "metadata": {},
     "name": "useOrder2CreateUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
