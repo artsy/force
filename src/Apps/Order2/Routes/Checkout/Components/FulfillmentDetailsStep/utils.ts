@@ -18,7 +18,10 @@ export type ProcessedUserAddress = FormikContextWithAddress & {
   isValid: boolean
   internalID: string
   isDefault: boolean
-  phoneNumberParsed?: { display: string | null | undefined } | null
+  phoneNumberParsed?: {
+    display: string | null | undefined
+    isValid?: boolean | null | undefined
+  } | null
 }
 
 export const normalizeAddress = (
@@ -67,7 +70,9 @@ export const processSavedAddresses = (
       normalizedAddress.address.country,
     )
 
-    const isValid = validateAddressFields(normalizedAddress)
+    const isValid =
+      validateAddressFields(normalizedAddress) &&
+      address.phoneNumberParsed?.isValid !== false
 
     return {
       ...normalizedAddress,
@@ -100,28 +105,36 @@ export const findInitialSelectedAddress = (
   processedAddresses: ProcessedUserAddress[],
   initialValues: FormikContextWithAddress,
 ): ProcessedUserAddress | undefined => {
-  return (
-    processedAddresses.find(processedAddress => {
-      return (
-        initialValues.address.name === processedAddress.address.name &&
-        initialValues.address.country === processedAddress.address.country &&
-        initialValues.address.postalCode ===
-          processedAddress.address.postalCode &&
-        initialValues.address.addressLine1 ===
-          processedAddress.address.addressLine1 &&
-        initialValues.address.addressLine2 ===
-          processedAddress.address.addressLine2 &&
-        initialValues.address.city === processedAddress.address.city &&
-        initialValues.address.region === processedAddress.address.region &&
-        initialValues.phoneNumber === processedAddress.phoneNumber &&
-        initialValues.phoneNumberCountryCode ===
-          processedAddress.phoneNumberCountryCode
-      )
-    }) ||
-    processedAddresses.find(
-      processedAddress =>
-        processedAddress.isShippable && processedAddress.isValid,
+  // First, try to find an address that matches the order's fulfillment details
+  const matchingAddress = processedAddresses.find(processedAddress => {
+    return (
+      initialValues.address.name === processedAddress.address.name &&
+      initialValues.address.country === processedAddress.address.country &&
+      initialValues.address.postalCode ===
+        processedAddress.address.postalCode &&
+      initialValues.address.addressLine1 ===
+        processedAddress.address.addressLine1 &&
+      initialValues.address.addressLine2 ===
+        processedAddress.address.addressLine2 &&
+      initialValues.address.city === processedAddress.address.city &&
+      initialValues.address.region === processedAddress.address.region &&
+      initialValues.phoneNumber === processedAddress.phoneNumber &&
+      initialValues.phoneNumberCountryCode ===
+        processedAddress.phoneNumberCountryCode
     )
+  })
+
+  if (matchingAddress) return matchingAddress
+
+  // If there's only one saved address, always auto-select it regardless of validity
+  // (validation will trigger and show errors if needed)
+  if (processedAddresses.length === 1) {
+    return processedAddresses[0]
+  }
+
+  return processedAddresses.find(
+    processedAddress =>
+      processedAddress.isShippable && processedAddress.isValid,
   )
 }
 
