@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8aff238964e22aeff945b65f883de80>>
+ * @generated SignedSource<<af3b0950d9525273b583655f4b28753f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type showsRoutes_ShowsCityQuery$variables = {
+  maxPerPartner?: number | null | undefined;
   page?: number | null | undefined;
   slug: string;
 };
@@ -31,26 +32,36 @@ const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "page"
+  "name": "maxPerPartner"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "page"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "slug"
 },
-v2 = [
+v3 = [
   {
     "kind": "Variable",
     "name": "slug",
     "variableName": "slug"
   }
 ],
-v3 = {
+v4 = {
+  "kind": "Variable",
+  "name": "maxPerPartner",
+  "variableName": "maxPerPartner"
+},
+v5 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v4 = [
+v6 = [
   {
     "alias": "text",
     "args": null,
@@ -66,33 +77,33 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v8 = {
   "kind": "Literal",
   "name": "first",
   "value": 18
 },
-v7 = [
+v9 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "MMM D"
   }
 ],
-v8 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v9 = {
+v11 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -102,7 +113,7 @@ v9 = {
     "large"
   ]
 },
-v10 = [
+v12 = [
   {
     "alias": null,
     "args": null,
@@ -132,7 +143,7 @@ v10 = [
     "storageKey": null
   }
 ],
-v11 = {
+v13 = {
   "alias": null,
   "args": null,
   "concreteType": "ShowEdge",
@@ -171,14 +182,14 @@ v11 = {
         },
         {
           "alias": "formattedStartAt",
-          "args": (v7/*: any*/),
+          "args": (v9/*: any*/),
           "kind": "ScalarField",
           "name": "startAt",
           "storageKey": "startAt(format:\"MMM D\")"
         },
         {
           "alias": "formattedEndAt",
-          "args": (v7/*: any*/),
+          "args": (v9/*: any*/),
           "kind": "ScalarField",
           "name": "endAt",
           "storageKey": "endAt(format:\"MMM D\")"
@@ -198,12 +209,12 @@ v11 = {
               "name": "city",
               "storageKey": null
             },
-            (v8/*: any*/)
+            (v10/*: any*/)
           ],
           "storageKey": null
         },
-        (v8/*: any*/),
-        (v5/*: any*/),
+        (v10/*: any*/),
+        (v7/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -234,7 +245,7 @@ v11 = {
                   "name": "height",
                   "value": 683
                 },
-                (v9/*: any*/),
+                (v11/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -245,7 +256,7 @@ v11 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v10/*: any*/),
+              "selections": (v12/*: any*/),
               "storageKey": "cropped(height:683,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:910)"
             },
             {
@@ -256,7 +267,7 @@ v11 = {
                   "name": "height",
                   "value": 450
                 },
-                (v9/*: any*/),
+                (v11/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -267,7 +278,7 @@ v11 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v10/*: any*/),
+              "selections": (v12/*: any*/),
               "storageKey": "cropped(height:450,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:600)"
             }
           ],
@@ -291,7 +302,7 @@ v11 = {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v5/*: any*/)
+                (v7/*: any*/)
               ],
               "type": "Partner",
               "abstractKey": null
@@ -299,8 +310,8 @@ v11 = {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v5/*: any*/),
-                (v8/*: any*/)
+                (v7/*: any*/),
+                (v10/*: any*/)
               ],
               "type": "ExternalPartner",
               "abstractKey": null
@@ -308,7 +319,7 @@ v11 = {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v8/*: any*/)
+                (v10/*: any*/)
               ],
               "type": "Node",
               "abstractKey": "__isNode"
@@ -322,26 +333,26 @@ v11 = {
   ],
   "storageKey": null
 },
-v12 = [
-  (v11/*: any*/)
+v14 = [
+  (v13/*: any*/)
 ],
-v13 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v14 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v15 = [
-  (v13/*: any*/),
-  (v14/*: any*/),
+v17 = [
+  (v15/*: any*/),
+  (v16/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -354,7 +365,8 @@ return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -378,7 +390,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "City",
         "kind": "LinkedField",
         "name": "city",
@@ -386,7 +398,8 @@ return {
         "selections": [
           {
             "args": [
-              (v3/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ShowsCity_city"
@@ -401,6 +414,7 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v2/*: any*/),
       (v1/*: any*/),
       (v0/*: any*/)
     ],
@@ -422,7 +436,7 @@ return {
             "kind": "LinkedField",
             "name": "cities",
             "plural": true,
-            "selections": (v4/*: any*/),
+            "selections": (v6/*: any*/),
             "storageKey": null
           },
           {
@@ -438,7 +452,7 @@ return {
             "kind": "LinkedField",
             "name": "cities",
             "plural": true,
-            "selections": (v4/*: any*/),
+            "selections": (v6/*: any*/),
             "storageKey": "cities(featured:true)"
           }
         ],
@@ -446,13 +460,13 @@ return {
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "City",
         "kind": "LinkedField",
         "name": "city",
         "plural": false,
         "selections": [
-          (v5/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -463,7 +477,8 @@ return {
           {
             "alias": "upcomingShows",
             "args": [
-              (v6/*: any*/),
+              (v8/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -479,14 +494,15 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v12/*: any*/),
-            "storageKey": "showsConnection(first:18,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
+            "selections": (v14/*: any*/),
+            "storageKey": null
           },
           {
             "alias": "currentShows",
             "args": [
-              (v6/*: any*/),
-              (v3/*: any*/),
+              (v8/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -543,7 +559,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v15/*: any*/),
+                    "selections": (v17/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -553,7 +569,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v15/*: any*/),
+                    "selections": (v17/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -563,7 +579,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v15/*: any*/),
+                    "selections": (v17/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -574,8 +590,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v13/*: any*/),
-                      (v14/*: any*/)
+                      (v15/*: any*/),
+                      (v16/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -589,14 +605,14 @@ return {
                 "name": "totalCount",
                 "storageKey": null
               },
-              (v11/*: any*/)
+              (v13/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": "pastShows",
             "args": [
-              (v6/*: any*/),
+              (v8/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -612,7 +628,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v12/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": "showsConnection(first:18,sort:\"END_AT_DESC\",status:\"CLOSED\")"
           }
         ],
@@ -621,16 +637,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80f9ce8bf62aa2bd6d712c38a57c0721",
+    "cacheID": "12bce072b9007f3badef2d709b202b36",
     "id": null,
     "metadata": {},
     "name": "showsRoutes_ShowsCityQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsCityQuery(\n  $slug: String!\n  $page: Int\n) @cacheable {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: $slug) @principalField {\n    ...ShowsCity_city_2Pg8Wv\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city_2Pg8Wv on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING, sort: START_AT_ASC) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: RUNNING, page: $page, sort: END_AT_ASC) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED, sort: END_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query showsRoutes_ShowsCityQuery(\n  $slug: String!\n  $page: Int\n  $maxPerPartner: Int\n) @cacheable {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: $slug) @principalField {\n    ...ShowsCity_city_2TlGEn\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city_2TlGEn on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING, sort: START_AT_ASC, maxPerPartner: $maxPerPartner) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: RUNNING, page: $page, sort: END_AT_ASC, maxPerPartner: $maxPerPartner) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED, sort: END_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3ab0ffd2a33f95eabb97988fcf0e7e97";
+(node as any).hash = "2fe90da5df53f88cdf64d998e4d2861a";
 
 export default node;

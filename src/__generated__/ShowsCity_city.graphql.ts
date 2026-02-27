@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<979fb8d1943235469f87bab0fc19b0fe>>
+ * @generated SignedSource<<892de0d764ccc3fb06a08d7cfef29575>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -60,18 +60,23 @@ var v0 = {
   "value": 18
 },
 v1 = {
+  "kind": "Variable",
+  "name": "maxPerPartner",
+  "variableName": "maxPerPartner"
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "ShowsFeaturedShow_show"
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "concreteType": "ShowEdge",
@@ -87,8 +92,8 @@ v3 = {
       "name": "node",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
-        (v2/*: any*/)
+        (v2/*: any*/),
+        (v3/*: any*/)
       ],
       "storageKey": null
     }
@@ -101,6 +106,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "maxPerPartner"
     },
     {
       "defaultValue": null,
@@ -130,6 +140,7 @@ return {
       "alias": "upcomingShows",
       "args": [
         (v0/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "Literal",
           "name": "sort",
@@ -162,7 +173,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v1/*: any*/),
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -170,7 +181,7 @@ return {
                   "name": "startAt",
                   "storageKey": null
                 },
-                (v2/*: any*/)
+                (v3/*: any*/)
               ],
               "storageKey": null
             }
@@ -178,7 +189,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "showsConnection(first:18,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
+      "storageKey": null
     },
     {
       "alias": "currentShows",
@@ -189,6 +200,7 @@ return {
           "variableName": "after"
         },
         (v0/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "Variable",
           "name": "page",
@@ -258,7 +270,7 @@ return {
           "name": "totalCount",
           "storageKey": null
         },
-        (v3/*: any*/)
+        (v4/*: any*/)
       ],
       "storageKey": null
     },
@@ -282,7 +294,7 @@ return {
       "name": "showsConnection",
       "plural": false,
       "selections": [
-        (v3/*: any*/)
+        (v4/*: any*/)
       ],
       "storageKey": "showsConnection(first:18,sort:\"END_AT_DESC\",status:\"CLOSED\")"
     }
@@ -292,6 +304,6 @@ return {
 };
 })();
 
-(node as any).hash = "0bf0c87351c5631ece3cf3b9e1c3548c";
+(node as any).hash = "fc5025ac3f9cd236cf28e38db4cc7a2a";
 
 export default node;
