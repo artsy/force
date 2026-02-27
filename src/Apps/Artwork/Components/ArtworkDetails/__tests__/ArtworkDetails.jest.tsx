@@ -93,7 +93,7 @@ describe("ArtworkDetails", () => {
           series: null,
           publisher: null,
           manufacturer: null,
-          image_rights: null,
+          imageRights: null,
           framed: null,
         }),
       })
@@ -106,7 +106,8 @@ describe("ArtworkDetails", () => {
       ).toBeInTheDocument()
       expect(screen.getByText("Rarity")).toBeInTheDocument()
       expect(screen.getByText("Size")).toBeInTheDocument()
-      expect(container.querySelectorAll("dl")).toHaveLength(7)
+      expect(container.querySelectorAll("dl")).toHaveLength(1)
+      expect(container.querySelectorAll("dt")).toHaveLength(7)
     })
   })
 
@@ -120,7 +121,7 @@ describe("ArtworkDetails", () => {
         series: null,
         publisher: null,
         manufacturer: null,
-        image_rights: null,
+        imageRights: null,
         framed: null,
         signatureInfo: null,
         conditionDescription: null,

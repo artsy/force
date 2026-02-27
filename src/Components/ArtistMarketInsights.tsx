@@ -1,14 +1,19 @@
-import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
-import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
+import { BorderBox, Box } from "@artsy/palette"
+import {
+  DefinitionList,
+  type DefinitionListItem,
+} from "Components/DefinitionList"
 import type { ArtistMarketInsights_artist$data } from "__generated__/ArtistMarketInsights_artist.graphql"
-import { groupBy } from "lodash"
-import { Component } from "react"
+import type * as React from "react"
+import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-export interface MarketInsightsProps {
+export interface ArtistMarketInsightsProps {
   artist: ArtistMarketInsights_artist$data
   border?: boolean
-  Container?: (props: { children: JSX.Element }) => JSX.Element
+  Container?: React.ComponentType<
+    React.PropsWithChildren<{ flexDirection?: string }>
+  >
 }
 
 export const CATEGORIES = {
@@ -22,27 +27,24 @@ const CATEGORY_LABEL_MAP = {
   "top-emerging": "Represented by up-and-coming galleries.",
 }
 
-export class MarketInsights extends Component<
-  React.PropsWithChildren<MarketInsightsProps>
-> {
-  static defaultProps = {
-    border: true,
+type CategorySlug = keyof typeof CATEGORIES
+
+export const ArtistMarketInsights: React.FC<
+  React.PropsWithChildren<ArtistMarketInsightsProps>
+> = ({ artist, border = true, Container: CustomContainer, children }) => {
+  const hasAnySections = useMemo(() => hasSections(artist), [artist])
+
+  if (!hasAnySections) {
+    return null
   }
 
-  renderAuctionHighlight() {
-    if (
-      !this.props.artist.auctionResultsConnection ||
-      (this.props.artist.auctionResultsConnection.edges?.length ?? 0) < 1
-    ) {
-      return null
-    }
+  const Container = CustomContainer ?? (border ? BorderBox : Box)
 
-    const topAuctionResult =
-      this.props.artist.auctionResultsConnection?.edges !== null
-        ? this.props.artist.auctionResultsConnection.edges?.[0]?.node
-        : null
+  const items = useMemo(() => {
+    const entries: DefinitionListItem[] = []
 
-    const display = [
+    const topAuctionResult = artist.auctionResultsConnection?.edges?.[0]?.node
+    const auctionDisplay = [
       topAuctionResult?.price_realized?.display,
       topAuctionResult?.organization,
       topAuctionResult?.sale_date,
@@ -50,81 +52,44 @@ export class MarketInsights extends Component<
       .filter(Boolean)
       .join(", ")
 
-    return (
-      <ArtworkDefinitionList term="High auction record">
-        {display}
-      </ArtworkDefinitionList>
-    )
-  }
-  renderGalleryRepresentation() {
-    const { highlights } = this.props.artist
-    const partnersConnection = highlights?.partnersConnection
-
-    if (partnersConnection && (partnersConnection?.edges?.length ?? 0) > 0) {
-      const highCategory = highestCategory(partnersConnection.edges)
-
-      return (
-        <ArtworkDefinitionList term={CATEGORIES[highCategory]}>
-          {CATEGORY_LABEL_MAP[highCategory]}
-        </ArtworkDefinitionList>
-      )
-    }
-  }
-  renderPermanentCollection() {
-    const { collections } = this.props.artist
-
-    if (!collections || collections.length === 0) {
-      return null
+    if (auctionDisplay) {
+      entries.push({ term: "High auction record", value: auctionDisplay })
     }
 
-    const label =
-      collections.length === 1
-        ? "Collected by a major museum"
-        : "Collected by major museums"
+    const highCategory = highestCategory(artist)
 
-    return (
-      <ArtworkDefinitionList term={label}>
-        {collections.join(", ")}
-      </ArtworkDefinitionList>
-    )
-  }
-
-  render() {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    if (!hasSections(this.props.artist)) {
-      return null
+    if (highCategory) {
+      entries.push({
+        term: CATEGORIES[highCategory],
+        value: CATEGORY_LABEL_MAP[highCategory],
+      })
     }
 
-    let Container
+    if (artist.collections && artist.collections.length > 0) {
+      const label =
+        artist.collections.length === 1
+          ? "Collected by a major museum"
+          : "Collected by major museums"
 
-    if (this.props.Container) {
-      Container = this.props.Container
-    } else if (this.props.border) {
-      Container = BorderBox
-    } else {
-      Container = Box
+      entries.push({ term: label, value: artist.collections.join(", ") })
     }
 
-    return (
-      <>
-        <Container flexDirection="column">
-          <div>
-            <Join separator={<Spacer y={1} />}>
-              {this.renderAuctionHighlight()}
-              {this.renderGalleryRepresentation()}
-              {this.renderPermanentCollection()}
-            </Join>
-          </div>
-        </Container>
+    return entries
+  }, [artist])
 
-        {this.props.children}
-      </>
-    )
-  }
+  return (
+    <>
+      <Container flexDirection="column">
+        <DefinitionList items={items} />
+      </Container>
+
+      {children}
+    </>
+  )
 }
 
 export const ArtistMarketInsightsFragmentContainer = createFragmentContainer(
-  MarketInsights,
+  ArtistMarketInsights,
   {
     artist: graphql`
       fragment ArtistMarketInsights_artist on Artist
@@ -171,62 +136,36 @@ export const ArtistMarketInsightsFragmentContainer = createFragmentContainer(
   },
 )
 
-export const hasSections = ({
-  highlights,
-  auctionResults,
-  collections,
-}: {
-  highlights: { partnersConnection?: { edges: ReadonlyArray<any> } }
-  auctionResults?: { edges: ReadonlyArray<any> }
-  collections?: ReadonlyArray<any>
-}) => {
-  const { partnersConnection } = highlights
-
-  // Is there a gallery representation section?
-  if (
-    partnersConnection &&
-    partnersConnection.edges &&
-    partnersConnection.edges.length > 0
-  ) {
-    return true
-  }
-
-  // Is there an auction highlights section?
-  if (
-    auctionResults &&
-    auctionResults.edges &&
-    auctionResults.edges.length > 0
-  ) {
-    return true
-  }
-
-  // Is there a permanent collections section?
-  if (collections && collections.length > 0) {
-    return true
-  }
-
-  return false
+export const hasSections = (artist: ArtistMarketInsights_artist$data) => {
+  return Boolean(
+    (artist.highlights?.partnersConnection?.edges?.length ?? 0) > 0 ||
+      (artist.auctionResultsConnection?.edges?.length ?? 0) > 0 ||
+      (artist.collections?.length ?? 0) > 0,
+  )
 }
 
-const orderedCategories = ["blue-chip", "top-established", "top-emerging"]
+const ORDERED_CATEGORIES: CategorySlug[] = [
+  "blue-chip",
+  "top-established",
+  "top-emerging",
+]
 
-export const highestCategory = edges => {
-  const groups = groupedByCategories(edges)
-  return orderedCategories.filter(
-    category => groups[category] && groups[category].length > 0,
-  )[0]
-}
+export const highestCategory = (
+  artist: ArtistMarketInsights_artist$data,
+): CategorySlug | null => {
+  const edges = artist.highlights?.partnersConnection?.edges ?? []
 
-const groupedByCategories = edges => {
-  return groupBy(edges, ({ node: partner }) => {
-    let category
-    Object.keys(CATEGORIES).forEach(key => {
-      partner.categories.forEach(partnerCategory => {
-        if (partnerCategory.slug === key) {
-          category = key
-        }
-      })
-    })
-    return category
-  })
+  for (const category of ORDERED_CATEGORIES) {
+    const hasMatch = edges.some(edge =>
+      (edge?.node?.categories ?? []).some(
+        partnerCategory => partnerCategory?.slug === category,
+      ),
+    )
+
+    if (hasMatch) {
+      return category
+    }
+  }
+
+  return null
 }
