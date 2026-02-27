@@ -38,11 +38,14 @@ export const __ProgressiveOnboardingAlertCreate__: FC<
     counts.isReady &&
     counts.savedSearches === 0
 
-  const image = resized(IMAGE.src, { width: 230 })
-
   const handleClose = () => {
     dismiss(KEY)
   }
+
+  if (!isDisplayable) {
+    return <>{children({ onSkip: handleClose })}</>
+  }
+  const image = resized(IMAGE.src, { width: 230 })
 
   return (
     <ProgressiveOnboardingPopover
@@ -50,7 +53,6 @@ export const __ProgressiveOnboardingAlertCreate__: FC<
       ignoreClickOutside
       onClose={handleClose}
       variant="defaultLight"
-      visible={isDisplayable}
       popover={({ onHide }) => {
         return (
           <Box py={1}>
