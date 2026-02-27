@@ -1,4 +1,4 @@
-import { screen, fireEvent } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtistEditorialNewsGridFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtistEditorialNewsGridTestQuery } from "__generated__/ArtistEditorialNewsGridTestQuery.graphql"
@@ -136,6 +136,46 @@ describe("ArtistEditorialNewsGrid", () => {
         destination_page_owner_type: "article",
         type: "thumbnail",
       })
+    })
+  })
+
+  describe("empty states", () => {
+    it("returns null by default when there are no articles", () => {
+      renderWithRelay({
+        Artist: () => ({
+          articlesConnection: {
+            edges: [],
+          },
+        }),
+      })
+
+      expect(
+        screen.queryByText(/no editorial content featuring this artist/i),
+      ).not.toBeInTheDocument()
+    })
+
+    it("renders the experiment empty state when enabled and there are no articles", () => {
+      renderWithRelay(
+        {
+          Artist: () => ({
+            articlesConnection: {
+              edges: [],
+            },
+          }),
+        },
+        { showEmptyStateWhenNoArticles: true },
+      )
+
+      expect(
+        screen.getByText(
+          "There are currently no editorial pieces about this artist.",
+        ),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          "Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy.",
+        ),
+      ).toBeInTheDocument()
     })
   })
 })

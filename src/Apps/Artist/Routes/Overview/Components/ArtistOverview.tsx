@@ -29,11 +29,19 @@ type ArtistOverviewQueryRendererProps = {
   id: string
   lazyLoad?: boolean
   onReady?: () => void
+  // diamond_editorial-section
+  hideEditorial?: boolean
 }
 
 export const ArtistOverviewQueryRenderer: React.FC<
   ArtistOverviewQueryRendererProps
-> = ({ id, lazyLoad, onReady }) => {
+> = ({
+  id,
+  lazyLoad,
+  onReady,
+  // diamond_editorial-section
+  hideEditorial,
+}) => {
   const { handleReady } = useSectionReady({ onReady })
 
   return (
@@ -60,7 +68,13 @@ export const ArtistOverviewQueryRenderer: React.FC<
 
         handleReady()
 
-        return <ArtistOverviewFragmentContainer artist={props.artist} />
+        return (
+          <ArtistOverviewFragmentContainer
+            artist={props.artist}
+            // diamond_editorial-section
+            hideEditorial={hideEditorial}
+          />
+        )
       }}
     />
   )
@@ -68,11 +82,17 @@ export const ArtistOverviewQueryRenderer: React.FC<
 
 interface ArtistOverviewProps {
   artist: ArtistOverview_artist$data
+  // diamond_editorial-section
+  hideEditorial?: boolean
 }
 
 export const ArtistOverview: React.FC<
   React.PropsWithChildren<ArtistOverviewProps>
-> = ({ artist }) => {
+> = ({
+  artist,
+  // diamond_editorial-section
+  hideEditorial = false,
+}) => {
   const { trackEvent } = useTracking()
 
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
@@ -83,6 +103,7 @@ export const ArtistOverview: React.FC<
     artist.insights.length > ARTIST_HEADER_NUMBER_OF_INSIGHTS
   const hasArtistSeries = (artist.artistSeriesConnection?.totalCount ?? 0) > 0
   const hasEditorial = (artist.counts?.articles ?? 0) > 0
+  const hasEditorialContent = hasEditorial && !hideEditorial // diamond_editorial-section
   const hasCurrentShows = (artist.showsConnection?.totalCount ?? 0) > 0
   const hasRelatedArtists = (artist.counts?.relatedArtists ?? 0) > 0
   const hasRelatedCategories =
@@ -105,7 +126,8 @@ export const ArtistOverview: React.FC<
   if (
     !hasCareerHighlights &&
     !hasArtistSeries &&
-    !hasEditorial &&
+    // diamond_editorial-section
+    !hasEditorialContent &&
     !hasCurrentShows &&
     !hasRelatedArtists &&
     !hasRelatedCategories
@@ -137,7 +159,7 @@ export const ArtistOverview: React.FC<
         />
       )}
 
-      {hasEditorial && (
+      {hasEditorialContent && (
         <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
       )}
 
