@@ -33,6 +33,7 @@ const mockUSAddress1: ProcessedUserAddress = {
   },
   phoneNumberParsed: {
     display: "+1 555-1234",
+    isValid: true,
   },
 }
 
@@ -54,6 +55,7 @@ const mockUSAddress2: ProcessedUserAddress = {
   },
   phoneNumberParsed: {
     display: "+1 555-5678",
+    isValid: true,
   },
 }
 
@@ -75,6 +77,7 @@ const mockInvalidAddress: ProcessedUserAddress = {
   },
   phoneNumberParsed: {
     display: "+1 555-9999",
+    isValid: true,
   },
 }
 
@@ -96,6 +99,29 @@ const mockUnshippableAddress: ProcessedUserAddress = {
   },
   phoneNumberParsed: {
     display: "+1 555-9999",
+    isValid: true,
+  },
+}
+
+const mockAddressWithInvalidPhone: ProcessedUserAddress = {
+  internalID: "address-id-999",
+  phoneNumber: "10-10-321",
+  phoneNumberCountryCode: "+1",
+  isValid: false,
+  isShippable: true,
+  isDefault: false,
+  address: {
+    name: "Bad Phone",
+    addressLine1: "999 Phone St",
+    addressLine2: "",
+    city: "New York",
+    region: "NY",
+    postalCode: "10001",
+    country: "US",
+  },
+  phoneNumberParsed: {
+    display: "+1 10-10-321",
+    isValid: false,
   },
 }
 
@@ -256,20 +282,15 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(invalidAddress)
 
       await waitFor(() => {
-        const mockFn =
-          mockCheckoutContext.setSectionErrorMessage as unknown as jest.Mock
-        const call = mockFn.mock.calls.find(
-          call =>
-            call[0].section === CheckoutStepName.FULFILLMENT_DETAILS &&
-            call[0].error?.title === "Missing required information",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
+          },
         )
-        expect(call).toBeDefined()
-        expect(call[0].error).toMatchObject({
-          title: "Missing required information",
-          displayText:
-            "Edit your address and/or phone number to continue. Edit this address.",
-        })
-        expect(call[0].error.message).toBeDefined()
       })
     })
 
@@ -297,20 +318,16 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(unshippableAddress)
 
       await waitFor(() => {
-        const mockFn =
-          mockCheckoutContext.setSectionErrorMessage as unknown as jest.Mock
-        const call = mockFn.mock.calls.find(
-          call =>
-            call[0].section === CheckoutStepName.FULFILLMENT_DETAILS &&
-            call[0].error?.title === "Unable to ship to this address",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Unable to ship to this address",
+              message:
+                "Select a different address or add a new one to continue.",
+            },
+          },
         )
-        expect(call).toBeDefined()
-        expect(call[0].error).toMatchObject({
-          title: "Unable to ship to this address",
-          message: "Select a different address or add a new one to continue.",
-        })
-        // No edit link for unshippable addresses
-        expect(call[0].error).not.toHaveProperty("displayText")
       })
     })
 
@@ -448,6 +465,23 @@ describe("SavedAddressOptions", () => {
       expect(submitButton).toBeDisabled()
     })
 
+    it("disables submit button when selected address has a known-invalid phone", () => {
+      render(
+        <TestWrapper initialValues={mockAddressWithInvalidPhone}>
+          <SavedAddressOptions
+            savedAddresses={[mockAddressWithInvalidPhone]}
+            initialSelectedAddress={mockAddressWithInvalidPhone}
+            onSelectAddress={jest.fn()}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      expect(
+        screen.getByRole("button", { name: /See Shipping Methods/i }),
+      ).toBeDisabled()
+    })
+
     it("enables submit button for valid and shippable address", async () => {
       const onSelectAddress = jest.fn()
       mockUseCheckoutContext.mockReturnValue({
@@ -508,20 +542,15 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(invalidAddress)
 
       await waitFor(() => {
-        const mockFn =
-          mockCheckoutContext.setSectionErrorMessage as unknown as jest.Mock
-        const call = mockFn.mock.calls.find(
-          call =>
-            call[0].section === CheckoutStepName.FULFILLMENT_DETAILS &&
-            call[0].error?.title === "Missing required information",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
+          },
         )
-        expect(call).toBeDefined()
-        expect(call[0].error).toMatchObject({
-          title: "Missing required information",
-          displayText:
-            "Edit your address and/or phone number to continue. Edit this address.",
-        })
-        expect(call[0].error.message).toBeDefined()
       })
 
       const updatedValidAddress: FormikContextWithAddress = {
@@ -583,12 +612,14 @@ describe("SavedAddressOptions", () => {
         </TestWrapper>,
       )
 
-      // Valid address should clear any existing errors
-      expect(
-        mockCheckoutContext.setSectionErrorMessage,
-      ).toHaveBeenLastCalledWith({
-        section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: null,
+      // The validation effect fires on mount with error: null for the valid address
+      await waitFor(() => {
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: null,
+          },
+        )
       })
 
       const updatedInvalidAddress: FormikContextWithAddress = {
@@ -647,6 +678,65 @@ describe("SavedAddressOptions", () => {
           title: "Missing required information",
           message: "Edit your address and/or phone number to continue.",
         },
+      })
+    })
+  })
+
+  describe("Single saved address behavior", () => {
+    it("opens edit form and shows error on mount for single invalid address", async () => {
+      const onSelectAddress = jest.fn()
+      const mockSingleInvalidAddress: ProcessedUserAddress = {
+        ...mockUSAddress1,
+        isValid: false,
+        address: { ...mockUSAddress1.address, city: "" },
+      }
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockSingleInvalidAddress]}
+            initialSelectedAddress={mockSingleInvalidAddress}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
+          },
+        )
+        expect(mockCheckoutContext.setUserAddressMode).toHaveBeenCalledWith({
+          mode: "edit",
+          address: mockSingleInvalidAddress,
+        })
+      })
+    })
+
+    it("does not open edit form on mount for single valid address", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setUserAddressMode).not.toHaveBeenCalledWith(
+          expect.objectContaining({ mode: "edit" }),
+        )
       })
     })
   })

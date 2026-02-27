@@ -22,7 +22,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "us",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "us",
-        phoneNumberParsed: { display: "+1 1234567890" },
+        phoneNumberParsed: { display: "+1 1234567890", isValid: true },
         isDefault: false,
       }
 
@@ -88,7 +88,7 @@ describe("FulfillmentDetailsStep utils", () => {
         country: "ca",
         phoneNumber: "1234567890",
         phoneNumberCountryCode: "ca",
-        phoneNumberParsed: { display: "+1 1234567890" },
+        phoneNumberParsed: { display: "+1 1234567890", isValid: true },
         isDefault: false,
       }
 
@@ -129,9 +129,9 @@ describe("FulfillmentDetailsStep utils", () => {
             region: "NY",
             postalCode: "10001",
             country: "US",
-            phoneNumber: "5551234567",
-            phoneNumberCountryCode: "+1",
-            phoneNumberParsed: { display: "+1 5551234567" },
+            phoneNumber: "1234567890",
+            phoneNumberCountryCode: "US",
+            phoneNumberParsed: { display: "+1 1234567890", isValid: true },
             isDefault: false,
           },
         },
@@ -145,9 +145,9 @@ describe("FulfillmentDetailsStep utils", () => {
             region: "ON",
             postalCode: "M5V 3A8",
             country: "CA",
-            phoneNumber: "4165551234",
-            phoneNumberCountryCode: "+1",
-            phoneNumberParsed: { display: "+1 4165551234" },
+            phoneNumber: "9876543210",
+            phoneNumberCountryCode: "CA",
+            phoneNumberParsed: { display: "+1 9876543210", isValid: true },
             isDefault: true,
           },
         },
@@ -162,14 +162,14 @@ describe("FulfillmentDetailsStep utils", () => {
       )
 
       expect(result).toHaveLength(2)
-      // After sorting: shippable addresses come first, then non-shippable
+      // After sorting: usable addresses come first (non-shippable default comes after usable)
       expect(result[0]).toMatchObject({
         internalID: "address1",
         isShippable: true, // US is in available countries
-        isValid: true, // Lenient validation passes
+        isValid: true, // All required fields present
         isDefault: false,
-        phoneNumber: "5551234567",
-        phoneNumberCountryCode: "+1",
+        phoneNumber: "1234567890",
+        phoneNumberCountryCode: "US",
         address: {
           name: "John Doe",
           country: "US",
@@ -179,10 +179,10 @@ describe("FulfillmentDetailsStep utils", () => {
       expect(result[1]).toMatchObject({
         internalID: "address2",
         isShippable: false, // CA is not in available countries
-        isValid: true, // Lenient validation passes
+        isValid: true, // All required fields present
         isDefault: true,
-        phoneNumber: "4165551234",
-        phoneNumberCountryCode: "+1",
+        phoneNumber: "9876543210",
+        phoneNumberCountryCode: "CA",
         address: {
           name: "Jane Smith",
           country: "CA",
@@ -202,6 +202,60 @@ describe("FulfillmentDetailsStep utils", () => {
       const result = processSavedAddresses(null, ["US"])
 
       expect(result).toEqual([])
+    })
+
+    it("marks address as invalid when phoneNumberParsed.isValid is false", () => {
+      const connectionWithInvalidPhone = {
+        edges: [
+          {
+            node: {
+              internalID: "address1",
+              name: "John Doe",
+              addressLine1: "123 Main St",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              postalCode: "10001",
+              country: "US",
+              phoneNumber: "10-10-321",
+              phoneNumberCountryCode: "US",
+              phoneNumberParsed: { display: "+1 10-10-321", isValid: false },
+              isDefault: false,
+            },
+          },
+        ],
+      }
+
+      const result = processSavedAddresses(connectionWithInvalidPhone, ["US"])
+
+      expect(result[0].isValid).toBe(false)
+    })
+
+    it("treats address as valid when phoneNumberParsed.isValid is null or undefined", () => {
+      const connectionWithUnknownPhone = {
+        edges: [
+          {
+            node: {
+              internalID: "address1",
+              name: "John Doe",
+              addressLine1: "123 Main St",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              postalCode: "10001",
+              country: "US",
+              phoneNumber: "5551234567",
+              phoneNumberCountryCode: "US",
+              phoneNumberParsed: null,
+              isDefault: false,
+            },
+          },
+        ],
+      }
+
+      const result = processSavedAddresses(connectionWithUnknownPhone, ["US"])
+
+      expect(result[0].isValid).toBe(true)
     })
   })
 
@@ -329,8 +383,8 @@ describe("FulfillmentDetailsStep utils", () => {
       expect(result).toBeUndefined()
     })
 
-    it("returns single invalid address when it's the only option", () => {
-      const invalidAddresses: ProcessedUserAddress[] = [
+    it("auto-selects single address regardless of validity or shippability", () => {
+      const singleInvalidAddress: ProcessedUserAddress[] = [
         {
           internalID: "invalid1",
           isShippable: false,
@@ -365,11 +419,71 @@ describe("FulfillmentDetailsStep utils", () => {
         },
       }
 
+      const result = findInitialSelectedAddress(
+        singleInvalidAddress,
+        initialValues,
+      )
+
+      expect(result?.internalID).toBe("invalid1")
+    })
+
+    it("returns undefined when multiple addresses exist and none are valid", () => {
+      const invalidAddresses: ProcessedUserAddress[] = [
+        {
+          internalID: "invalid1",
+          isShippable: false,
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "",
+          phoneNumberCountryCode: "",
+          phoneNumberParsed: null,
+          address: {
+            name: "Invalid Address 1",
+            addressLine1: "123 Invalid St",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "",
+            postalCode: "12345",
+            country: "XX",
+          },
+        },
+        {
+          internalID: "invalid2",
+          isShippable: false,
+          isValid: false,
+          isDefault: false,
+          phoneNumber: "",
+          phoneNumberCountryCode: "",
+          phoneNumberParsed: null,
+          address: {
+            name: "Invalid Address 2",
+            addressLine1: "456 Invalid Ave",
+            addressLine2: "",
+            city: "Invalid City",
+            region: "",
+            postalCode: "67890",
+            country: "YY",
+          },
+        },
+      ]
+
+      const initialValues: FormikContextWithAddress = {
+        phoneNumber: "",
+        phoneNumberCountryCode: "",
+        address: {
+          name: "No Match",
+          addressLine1: "No Match St",
+          addressLine2: "",
+          city: "No Match City",
+          region: "",
+          postalCode: "00000",
+          country: "ZZ",
+        },
+      }
+
       const result = findInitialSelectedAddress(invalidAddresses, initialValues)
 
-      // Single address should always be auto-selected, even if invalid
-      // (error messaging will be triggered)
-      expect(result).toEqual(invalidAddresses[0])
+      expect(result).toBeUndefined()
     })
 
     it("matches addresses with partial empty fields", () => {
@@ -598,128 +712,6 @@ describe("FulfillmentDetailsStep utils", () => {
         initialValues,
       )
       expect(result?.internalID).toBe("address1") // Falls back to first valid address
-    })
-
-    it("selects first shippable address when none are valid", () => {
-      const addressesWithShippableButInvalid: ProcessedUserAddress[] = [
-        {
-          internalID: "address1",
-          isShippable: false,
-          isValid: false,
-          isDefault: false,
-          phoneNumber: "",
-          phoneNumberCountryCode: "",
-          phoneNumberParsed: null,
-          address: {
-            name: "Invalid Address",
-            addressLine1: "123 Invalid St",
-            addressLine2: "",
-            city: "Invalid City",
-            region: "",
-            postalCode: "12345",
-            country: "XX",
-          },
-        },
-        {
-          internalID: "address2",
-          isShippable: true,
-          isValid: false,
-          isDefault: false,
-          phoneNumber: "",
-          phoneNumberCountryCode: "",
-          phoneNumberParsed: null,
-          address: {
-            name: "Shippable But Incomplete",
-            addressLine1: "456 Main St",
-            addressLine2: "",
-            city: "Valid City",
-            region: "",
-            postalCode: "67890",
-            country: "US",
-          },
-        },
-      ]
-
-      const initialValues: FormikContextWithAddress = {
-        phoneNumber: "0000000000",
-        phoneNumberCountryCode: "YY",
-        address: {
-          name: "No Match",
-          addressLine1: "No Match St",
-          addressLine2: "",
-          city: "No Match City",
-          region: "YY",
-          postalCode: "00000",
-          country: "YY",
-        },
-      }
-
-      const result = findInitialSelectedAddress(
-        addressesWithShippableButInvalid,
-        initialValues,
-      )
-      expect(result?.internalID).toBe("address2") // Shippable address selected over non-shippable
-    })
-
-    it("selects first address when none are shippable or valid", () => {
-      const allInvalidAddresses: ProcessedUserAddress[] = [
-        {
-          internalID: "address1",
-          isShippable: false,
-          isValid: false,
-          isDefault: false,
-          phoneNumber: "",
-          phoneNumberCountryCode: "",
-          phoneNumberParsed: null,
-          address: {
-            name: "Invalid Address 1",
-            addressLine1: "123 Invalid St",
-            addressLine2: "",
-            city: "Invalid City",
-            region: "",
-            postalCode: "12345",
-            country: "XX",
-          },
-        },
-        {
-          internalID: "address2",
-          isShippable: false,
-          isValid: false,
-          isDefault: false,
-          phoneNumber: "",
-          phoneNumberCountryCode: "",
-          phoneNumberParsed: null,
-          address: {
-            name: "Invalid Address 2",
-            addressLine1: "456 Invalid Ave",
-            addressLine2: "",
-            city: "Invalid City",
-            region: "",
-            postalCode: "67890",
-            country: "YY",
-          },
-        },
-      ]
-
-      const initialValues: FormikContextWithAddress = {
-        phoneNumber: "0000000000",
-        phoneNumberCountryCode: "ZZ",
-        address: {
-          name: "No Match",
-          addressLine1: "No Match St",
-          addressLine2: "",
-          city: "No Match City",
-          region: "ZZ",
-          postalCode: "00000",
-          country: "ZZ",
-        },
-      }
-
-      const result = findInitialSelectedAddress(
-        allInvalidAddresses,
-        initialValues,
-      )
-      expect(result?.internalID).toBe("address1") // Falls back to first address
     })
   })
 
