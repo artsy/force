@@ -385,6 +385,7 @@ const ME_FRAGMENT = graphql`
           phoneNumberCountryCode
           phoneNumberParsed {
             display(format: INTERNATIONAL)
+            isValid
           }
           isDefault
         }

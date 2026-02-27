@@ -107,8 +107,47 @@ export const SavedAddressOptions = ({
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
 
+  // Auto-open edit form for the single saved address if it has missing fields
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
+  useEffect(() => {
+    if (savedAddresses.length !== 1 || !initialSelectedAddress) return
+    if (!initialSelectedAddress.isValid) {
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
+      })
+      setUserAddressMode({ mode: "edit", address: initialSelectedAddress })
+    }
+  }, [])
+
+  // Reactively set/clear error banner based on selected address validity and shippability
+  useEffect(() => {
+    if (!selectedAddress || userAddressMode) return
+
+    if (!selectedAddress.isShippable && !isOfferOrder) {
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
+      })
+      return
+    }
+
+    if (!selectedAddress.isValid) {
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
+      })
+      return
+    }
+
+    setSectionErrorMessage({
+      section: CheckoutStepName.FULFILLMENT_DETAILS,
+      error: null,
+    })
+  }, [selectedAddress, userAddressMode, isOfferOrder, setSectionErrorMessage])
+
   const onSaveAddress = useCallback(
-    async (values, addressID) => {
+    async (values: FormikContextWithAddress, addressID: string) => {
       await onSelectAddress(values)
       setUserAddressMode(null)
 
@@ -122,34 +161,10 @@ export const SavedAddressOptions = ({
         ...values,
         isValid,
         isShippable,
-      })
-
-      if (!isShippable && !isOfferOrder) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
-        })
-      }
-
-      if (!isValid) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
-        })
-      }
-
-      setSectionErrorMessage({
-        section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: null,
+        isDefault: false,
       })
     },
-    [
-      onSelectAddress,
-      setUserAddressMode,
-      setSectionErrorMessage,
-      availableShippingCountries,
-      isOfferOrder,
-    ],
+    [onSelectAddress, setUserAddressMode, availableShippingCountries],
   )
 
   const onDeleteAddress = useCallback(
@@ -174,32 +189,11 @@ export const SavedAddressOptions = ({
 
   const handleAddressClick = useCallback(
     async (processedAddress: ProcessedUserAddress) => {
-      const { isShippable, isValid } = processedAddress
-
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
       await onSelectAddress(processedAddress)
-
-      if (!isShippable && !isOfferOrder) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
-        })
-      }
-
-      if (!isValid) {
-        return setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
-        })
-      }
-
-      setSectionErrorMessage({
-        section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: null,
-      })
     },
-    [checkoutTracking, onSelectAddress, setSectionErrorMessage, isOfferOrder],
+    [checkoutTracking, onSelectAddress],
   )
 
   if (userAddressMode?.mode === "add") {
