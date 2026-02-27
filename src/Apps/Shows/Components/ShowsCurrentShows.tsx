@@ -1,4 +1,5 @@
 import { Box, Button, Join, Separator } from "@artsy/palette"
+import { MAX_TIMELY_SHOWS_PER_PARTNER } from "Apps/Shows/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
@@ -69,9 +70,14 @@ const ShowsCurrentShows: React.FC<
 }
 
 const SHOWS_CURRENT_SHOWS_QUERY = graphql`
-  query ShowsCurrentShowsQuery($first: Int, $after: String) {
+  query ShowsCurrentShowsQuery(
+    $first: Int
+    $after: String
+    $maxPerPartner: Int
+  ) {
     viewer {
-      ...ShowsCurrentShows_viewer @arguments(first: $first, after: $after)
+      ...ShowsCurrentShows_viewer
+        @arguments(first: $first, after: $after, maxPerPartner: $maxPerPartner)
     }
   }
 `
@@ -84,6 +90,7 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
       @argumentDefinitions(
         first: { type: "Int", defaultValue: 10 }
         after: { type: "String" }
+        maxPerPartner: { type: "Int" }
       ) {
         showsConnection(
           first: $first
@@ -93,7 +100,7 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
           sort: END_AT_ASC
           status: CURRENT
           hasLocation: true
-          maxPerPartner: 1
+          maxPerPartner: $maxPerPartner
         ) @connection(key: "ShowsCurrentShowsQuery_showsConnection") {
           pageInfo {
             hasNextPage
@@ -140,7 +147,7 @@ export const ShowsCurrentShowsQueryRenderer: React.FC<
       environment={relayEnvironment}
       query={SHOWS_CURRENT_SHOWS_QUERY}
       placeholder={SHOWS_CURRENT_SHOWS_PLACEHOLDER}
-      variables={{ first: 10 }}
+      variables={{ first: 10, maxPerPartner: MAX_TIMELY_SHOWS_PER_PARTNER }}
       render={({ error, props }) => {
         if (error) {
           console.error(error)
