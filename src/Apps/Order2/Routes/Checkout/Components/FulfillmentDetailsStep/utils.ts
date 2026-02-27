@@ -14,9 +14,7 @@ type MeAddresses = ExtractNodeType<
 type GravityAddress = ReturnType<typeof extractNodes<MeAddresses>>[number]
 
 export type ProcessedUserAddress = FormikContextWithAddress & {
-  /** valid shipping country for this order */
   isShippable: boolean
-  /** pre-validated with our client schema (except phone number) */
   isValid: boolean
   internalID: string
   isDefault: boolean
@@ -45,23 +43,17 @@ export const countryNameFromAlpha2 = (country: string): string => {
   return COUNTRY_CODE_TO_COUNTRY_NAME[country.toUpperCase()] || country
 }
 
-/**
- * Validates saved address fields with lenient phone validation.
- * Checks for required address fields and phone number presence,
- * but does not validate phone number format or region code.
- */
 export const validateAddressFields = (
   values: FormikContextWithAddress,
 ): boolean => {
-  try {
-    savedAddressValidationSchema.validateSync(values)
-    return true
-  } catch (error) {
-    if (error instanceof yup.ValidationError) {
-      return false
-    }
-    throw error
-  }
+  return (
+    !!values.address.name &&
+    !!values.address.country &&
+    !!values.address.addressLine1 &&
+    !!values.address.city &&
+    !!values.phoneNumber &&
+    !!values.phoneNumberCountryCode
+  )
 }
 
 export const processSavedAddresses = (
@@ -91,11 +83,6 @@ export const processSavedAddresses = (
 
 export const sortAddressesByPriority = (addresses: ProcessedUserAddress[]) => {
   return [...addresses].sort((a, b) => {
-    // Shippable addresses always come before non-shippable
-    if (a.isShippable && !b.isShippable) return -1
-    if (!a.isShippable && b.isShippable) return 1
-
-    // Within same shippability group, sort by validity and default status
     const aUsable = a.isShippable && a.isValid
     const bUsable = b.isShippable && b.isValid
 
@@ -113,65 +100,30 @@ export const findInitialSelectedAddress = (
   processedAddresses: ProcessedUserAddress[],
   initialValues: FormikContextWithAddress,
 ): ProcessedUserAddress | undefined => {
-  // First, try to find an address that matches the order's fulfillment details
-  const matchingAddress = processedAddresses.find(processedAddress => {
-    return (
-      initialValues.address.name === processedAddress.address.name &&
-      initialValues.address.country === processedAddress.address.country &&
-      initialValues.address.postalCode ===
-        processedAddress.address.postalCode &&
-      initialValues.address.addressLine1 ===
-        processedAddress.address.addressLine1 &&
-      initialValues.address.addressLine2 ===
-        processedAddress.address.addressLine2 &&
-      initialValues.address.city === processedAddress.address.city &&
-      initialValues.address.region === processedAddress.address.region &&
-      initialValues.phoneNumber === processedAddress.phoneNumber &&
-      initialValues.phoneNumberCountryCode ===
-        processedAddress.phoneNumberCountryCode
+  return (
+    processedAddresses.find(processedAddress => {
+      return (
+        initialValues.address.name === processedAddress.address.name &&
+        initialValues.address.country === processedAddress.address.country &&
+        initialValues.address.postalCode ===
+          processedAddress.address.postalCode &&
+        initialValues.address.addressLine1 ===
+          processedAddress.address.addressLine1 &&
+        initialValues.address.addressLine2 ===
+          processedAddress.address.addressLine2 &&
+        initialValues.address.city === processedAddress.address.city &&
+        initialValues.address.region === processedAddress.address.region &&
+        initialValues.phoneNumber === processedAddress.phoneNumber &&
+        initialValues.phoneNumberCountryCode ===
+          processedAddress.phoneNumberCountryCode
+      )
+    }) ||
+    processedAddresses.find(
+      processedAddress =>
+        processedAddress.isShippable && processedAddress.isValid,
     )
-  })
-
-  if (matchingAddress) {
-    return matchingAddress
-  }
-
-  // If there's only one saved address, always auto-select it
-  // (error messaging will be triggered if invalid)
-  if (processedAddresses.length === 1) {
-    return processedAddresses[0]
-  }
-
-  // For multiple addresses, select in priority order:
-  // 1. First shippable and valid address
-  const shippableAndValid = processedAddresses.find(
-    processedAddress =>
-      processedAddress.isShippable && processedAddress.isValid,
   )
-  if (shippableAndValid) {
-    return shippableAndValid
-  }
-
-  // 2. First shippable address (even if not valid)
-  const shippable = processedAddresses.find(
-    processedAddress => processedAddress.isShippable,
-  )
-  if (shippable) {
-    return shippable
-  }
-
-  // 3. First address (as last resort)
-  return processedAddresses[0]
 }
-
-/**
- * Schema for pre-validating saved addresses - lenient on phone validation
- * since saved addresses may have incomplete phone data (e.g., missing region code)
- */
-export const savedAddressValidationSchema = yup.object().shape({
-  ...addressFormFieldsValidator(), // Just address fields, no phone
-  phoneNumber: yup.string().required(), // Just check it exists, not format
-})
 
 export const deliveryAddressValidationSchema = yup
   .object()
