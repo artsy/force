@@ -256,20 +256,15 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(invalidAddress)
 
       await waitFor(() => {
-        const mockFn =
-          mockCheckoutContext.setSectionErrorMessage as unknown as jest.Mock
-        const call = mockFn.mock.calls.find(
-          call =>
-            call[0].section === CheckoutStepName.FULFILLMENT_DETAILS &&
-            call[0].error?.title === "Missing required information",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
+          },
         )
-        expect(call).toBeDefined()
-        expect(call[0].error).toMatchObject({
-          title: "Missing required information",
-          displayText:
-            "Edit your address and/or phone number to continue. Edit this address.",
-        })
-        expect(call[0].error.message).toBeDefined()
       })
     })
 
@@ -297,20 +292,16 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(unshippableAddress)
 
       await waitFor(() => {
-        const mockFn =
-          mockCheckoutContext.setSectionErrorMessage as unknown as jest.Mock
-        const call = mockFn.mock.calls.find(
-          call =>
-            call[0].section === CheckoutStepName.FULFILLMENT_DETAILS &&
-            call[0].error?.title === "Unable to ship to this address",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Unable to ship to this address",
+              message:
+                "Select a different address or add a new one to continue.",
+            },
+          },
         )
-        expect(call).toBeDefined()
-        expect(call[0].error).toMatchObject({
-          title: "Unable to ship to this address",
-          message: "Select a different address or add a new one to continue.",
-        })
-        // No edit link for unshippable addresses
-        expect(call[0].error).not.toHaveProperty("displayText")
       })
     })
 
@@ -508,20 +499,15 @@ describe("SavedAddressOptions", () => {
       await userEvent.click(invalidAddress)
 
       await waitFor(() => {
-        const mockFn =
-          mockCheckoutContext.setSectionErrorMessage as unknown as jest.Mock
-        const call = mockFn.mock.calls.find(
-          call =>
-            call[0].section === CheckoutStepName.FULFILLMENT_DETAILS &&
-            call[0].error?.title === "Missing required information",
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
+          },
         )
-        expect(call).toBeDefined()
-        expect(call[0].error).toMatchObject({
-          title: "Missing required information",
-          displayText:
-            "Edit your address and/or phone number to continue. Edit this address.",
-        })
-        expect(call[0].error.message).toBeDefined()
       })
 
       const updatedValidAddress: FormikContextWithAddress = {
@@ -583,13 +569,7 @@ describe("SavedAddressOptions", () => {
         </TestWrapper>,
       )
 
-      // Valid address should clear any existing errors
-      expect(
-        mockCheckoutContext.setSectionErrorMessage,
-      ).toHaveBeenLastCalledWith({
-        section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: null,
-      })
+      expect(mockCheckoutContext.setSectionErrorMessage).not.toHaveBeenCalled()
 
       const updatedInvalidAddress: FormikContextWithAddress = {
         ...mockUSAddress1,
