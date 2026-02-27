@@ -1,14 +1,24 @@
 import { Input } from "@artsy/palette"
+import type { OfferInput_order$key } from "__generated__/OfferInput_order.graphql"
 import { useField } from "formik"
 import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 export interface OfferInputProps {
   name: string
+  order: OfferInput_order$key
   onBlur?: (value: number | undefined) => void
+  showCurrencySymbol?: boolean
 }
 
-export const OfferInput: FC<OfferInputProps> = ({ name, onBlur }) => {
+export const OfferInput: FC<OfferInputProps> = ({
+  name,
+  order,
+  onBlur,
+  showCurrencySymbol = false,
+}) => {
   const [field, meta, helpers] = useField<number>(name)
+  const { currencySymbol } = useFragment(FRAGMENT, order)
 
   const formatValueForDisplay = (val: number | undefined) => {
     if (val !== undefined && val > 0) {
@@ -25,7 +35,7 @@ export const OfferInput: FC<OfferInputProps> = ({ name, onBlur }) => {
 
   return (
     <Input
-      title="Your offer"
+      title={`Your offer${showCurrencySymbol && !!currencySymbol.length ? ` (${currencySymbol})` : ""}`}
       type="text"
       pattern="[0-9]"
       error={!!meta.error}
@@ -41,3 +51,9 @@ export const OfferInput: FC<OfferInputProps> = ({ name, onBlur }) => {
     />
   )
 }
+
+const FRAGMENT = graphql`
+  fragment OfferInput_order on Order {
+    currencySymbol
+  }
+`
