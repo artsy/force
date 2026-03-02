@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { MAX_TIMELY_SHOWS_PER_PARTNER } from "Apps/Shows/constants"
 import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
@@ -88,16 +89,22 @@ export const showsRoutes: RouteProps[] = [
             slug,
             ...props,
             page: Number.parseInt(props.location.query.page, 10) || 1,
+            maxPerPartner:
+              slug === "online" ? MAX_TIMELY_SHOWS_PER_PARTNER : undefined,
           }
         },
         query: graphql`
-          query showsRoutes_ShowsCityQuery($slug: String!, $page: Int)
-          @cacheable {
+          query showsRoutes_ShowsCityQuery(
+            $slug: String!
+            $page: Int
+            $maxPerPartner: Int
+          ) @cacheable {
             viewer {
               ...ShowsCity_viewer
             }
             city(slug: $slug) @principalField {
-              ...ShowsCity_city @arguments(page: $page)
+              ...ShowsCity_city
+                @arguments(page: $page, maxPerPartner: $maxPerPartner)
             }
           }
         `,
