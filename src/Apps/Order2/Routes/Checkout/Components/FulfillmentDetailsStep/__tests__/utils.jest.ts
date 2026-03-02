@@ -231,7 +231,7 @@ describe("FulfillmentDetailsStep utils", () => {
       expect(result[0].isValid).toBe(false)
     })
 
-    it("treats address as valid when phoneNumberParsed.isValid is null or undefined", () => {
+    it("treats address as invalid when phoneNumberParsed.isValid is null or undefined", () => {
       const connectionWithUnknownPhone = {
         edges: [
           {
@@ -255,7 +255,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = processSavedAddresses(connectionWithUnknownPhone, ["US"])
 
-      expect(result[0].isValid).toBe(true)
+      expect(result[0].isValid).toBe(false)
     })
   })
 
@@ -427,7 +427,7 @@ describe("FulfillmentDetailsStep utils", () => {
       expect(result?.internalID).toBe("invalid1")
     })
 
-    it("returns undefined when multiple addresses exist and none are valid", () => {
+    it("auto-selects first address when multiple addresses exist and none are valid", () => {
       const invalidAddresses: ProcessedUserAddress[] = [
         {
           internalID: "invalid1",
@@ -483,7 +483,7 @@ describe("FulfillmentDetailsStep utils", () => {
 
       const result = findInitialSelectedAddress(invalidAddresses, initialValues)
 
-      expect(result).toBeUndefined()
+      expect(result?.internalID).toBe("invalid1")
     })
 
     it("matches addresses with partial empty fields", () => {

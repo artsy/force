@@ -72,7 +72,7 @@ export const processSavedAddresses = (
 
     const isValid =
       validateAddressFields(normalizedAddress) &&
-      address.phoneNumberParsed?.isValid !== false
+      !!address.phoneNumberParsed?.isValid
 
     return {
       ...normalizedAddress,
@@ -126,16 +126,7 @@ export const findInitialSelectedAddress = (
 
   if (matchingAddress) return matchingAddress
 
-  // If there's only one saved address, always auto-select it regardless of validity
-  // (validation will trigger and show errors if needed)
-  if (processedAddresses.length === 1) {
-    return processedAddresses[0]
-  }
-
-  return processedAddresses.find(
-    processedAddress =>
-      processedAddress.isShippable && processedAddress.isValid,
-  )
+  return processedAddresses[0]
 }
 
 export const deliveryAddressValidationSchema = yup
