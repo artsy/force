@@ -96,7 +96,7 @@ export const Order2PaymentCompletedView: React.FC<
         {paymentMethod === "WIRE_TRANSFER" && (
           <>
             <InstitutionIcon fill="mono100" width="24px" height="24px" mr={1} />
-            <Text variant="sm-display">Wire Transfer</Text>
+            <Text variant="sm-display">Wire transfer</Text>
           </>
         )}
       </Flex>

@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
@@ -12,9 +12,8 @@ export const LayoutOrderDetails: FC<
     <>
       <AppToasts />
 
-      <Flex
+      <Box
         width="100%"
-        overflowX="hidden"
         minHeight="100vh"
         flexDirection="column"
         backgroundColor="mono5"
@@ -24,7 +23,7 @@ export const LayoutOrderDetails: FC<
         <AppContainer as="main" id="main" flex={1}>
           {children}
         </AppContainer>
-      </Flex>
+      </Box>
     </>
   )
 }

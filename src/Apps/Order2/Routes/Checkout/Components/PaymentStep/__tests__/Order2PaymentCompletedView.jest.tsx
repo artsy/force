@@ -141,7 +141,7 @@ describe("Order2PaymentCompletedView", () => {
         Viewer: () => props,
       })
 
-      expect(screen.getAllByText("Wire Transfer").length).toBeGreaterThan(0)
+      expect(screen.getAllByText("Wire transfer").length).toBeGreaterThan(0)
     })
   })
 })

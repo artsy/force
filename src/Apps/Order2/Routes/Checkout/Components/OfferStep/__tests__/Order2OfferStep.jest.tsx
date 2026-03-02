@@ -97,6 +97,7 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   internalID: "order-id",
   mode: "OFFER",
   currencyCode: "USD",
+  currencySymbol: "US$",
   source: "artwork_page",
   buyerStateExpiresAt: null,
   selectedFulfillmentOption: null,
@@ -425,8 +426,8 @@ describe("Order2OfferStep", () => {
         }),
       })
 
-      // Check that the offer input is rendered
-      expect(screen.getByTitle("Your offer")).toBeInTheDocument()
+      // Check that the offer input is rendered with currency symbol in title
+      expect(screen.getByTitle("Your offer (US$)")).toBeInTheDocument()
 
       // Check for note section
       expect(screen.getByText("Offer note")).toBeInTheDocument()
@@ -455,7 +456,7 @@ describe("Order2OfferStep", () => {
       })
 
       // Enter offer amount
-      const offerInput = screen.getByTitle("Your offer")
+      const offerInput = screen.getByTitle("Your offer (US$)")
       fireEvent.change(offerInput, { target: { value: "3000" } })
 
       // Click continue
@@ -490,7 +491,7 @@ describe("Order2OfferStep", () => {
       })
 
       // Enter offer amount
-      const offerInput = screen.getByTitle("Your offer")
+      const offerInput = screen.getByTitle("Your offer (US$)")
       fireEvent.change(offerInput, { target: { value: "2500" } })
 
       // Enter custom note
@@ -569,7 +570,7 @@ describe("Order2OfferStep", () => {
       })
 
       // Enter offer amount
-      const offerInput = screen.getByTitle("Your offer")
+      const offerInput = screen.getByTitle("Your offer (US$)")
       fireEvent.change(offerInput, { target: { value: "4000" } })
 
       // Click continue

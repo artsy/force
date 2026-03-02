@@ -35,7 +35,7 @@ export const OrderDetailsPage = ({ order, me }: OrderDetailsPageProps) => {
   const artworkSlug = orderData.lineItems[0]?.artwork?.slug
 
   return (
-    <GridColumns py={[0, 4]} px={[0, 4]}>
+    <GridColumns pt={[0, 4]} px={[0, 4]}>
       <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
         <OrderDetailsHeader order={orderData} />
 
@@ -59,21 +59,25 @@ export const OrderDetailsPage = ({ order, me }: OrderDetailsPageProps) => {
             artworkID={artworkSlug as string}
             contextModule={ContextModule.ordersDetail}
           />
-          <Spacer y={[4, 0]} />
+          <Spacer y={2} />
         </Box>
       </Column>
+
       <Column
         span={[12, 5, 4, 3]}
         start={[1, 8, 8, 8]}
         display={["none", "block"]}
       >
         <OrderDetailsOrderSummary order={orderData} />
+
         <Spacer y={1} />
+
         <Order2HelpLinksWithInquiry
           order={orderData}
           artworkID={artworkSlug as string}
           contextModule={ContextModule.ordersDetail}
         />
+        <Spacer y={2} />
       </Column>
     </GridColumns>
   )

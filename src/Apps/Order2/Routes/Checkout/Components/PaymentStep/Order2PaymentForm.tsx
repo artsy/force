@@ -150,7 +150,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           accordionItemSpacing: "10px",
           fontFamily: theme.fonts.sans,
           colorPrimary: theme.colors.mono100, // Accordian selected.
-          colorTextSecondary: theme.colors.mono60, // Accordian not selected.
+          colorTextSecondary: theme.colors.mono100, // Accordian not selected.
         },
         rules: {
           ".AccordionItem": {

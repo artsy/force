@@ -47,15 +47,11 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
         data-testid="PaymentFormWire"
       >
         <HoverFlex alignItems="center">
-          <HoverIcon height={18} fill={isSelected ? "mono100" : "mono60"} />
+          <HoverIcon height={18} />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
-          <HoverText
-            variant="sm"
-            color={isSelected ? "mono100" : "mono60"}
-            fontWeight={isSelected ? "bold" : "normal"}
-          >
-            Wire Transfer
+          <HoverText variant="sm" fontWeight={isSelected ? "bold" : "normal"}>
+            Wire transfer
           </HoverText>
         </HoverFlex>
 

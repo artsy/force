@@ -261,8 +261,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     submitForm()
   }
 
-  const isPriceHidden =
-    orderData.lineItems?.[0]?.artwork?.priceDisplay === "hidden"
+  const isPriceHidden = orderData.lineItems?.[0]?.artwork?.isPriceHidden
 
   return (
     <Flex
@@ -324,7 +323,12 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
       >
         {isPriceHidden ? (
           <>
-            <OfferInput name="offerValue" onBlur={onCustomOfferBlur} />
+            <OfferInput
+              name="offerValue"
+              onBlur={onCustomOfferBlur}
+              order={orderData}
+              showCurrencySymbol
+            />
             <Spacer y={4} />
           </>
         ) : (
@@ -372,6 +376,7 @@ const FRAGMENT = graphql`
   fragment Order2OfferStep_order on Order {
     ...useCompleteOfferData_order
     ...Order2OfferOptions_order
+    ...OfferInput_order
     internalID
     mode
     source
@@ -389,8 +394,6 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         slug
-        priceDisplay
-        isPriceRange
         isPriceHidden
         listPrice {
           __typename
