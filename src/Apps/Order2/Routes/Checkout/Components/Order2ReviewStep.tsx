@@ -90,9 +90,12 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       return
     }
 
-    if (error.code === "charge_authorization_failed") {
+    if (
+      error.code === "charge_authorization_failed" ||
+      error.code === "payment_method_confirmation_failed"
+    ) {
       showCheckoutErrorModal({
-        error: CheckoutModalError.CHARGE_AUTHORIZATION_FAILED,
+        error: CheckoutModalError.PAYMENT_PROCESSING_FAILED,
         description: error.message,
         onClose: showPaymentError,
       })

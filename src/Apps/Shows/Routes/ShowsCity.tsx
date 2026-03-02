@@ -2,6 +2,7 @@ import { Column, GridColumns, Join, Spacer, Sup, Text } from "@artsy/palette"
 import { ShowsFeaturedShowFragmentContainer } from "Apps/Shows/Components/ShowsFeaturedShow"
 import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
 import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
+import { MAX_TIMELY_SHOWS_PER_PARTNER } from "Apps/Shows/constants"
 import { EmptyState } from "Components/EmptyState"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useRouter } from "System/Hooks/useRouter"
@@ -69,7 +70,14 @@ export const ShowsCity: React.FC<React.PropsWithChildren<ShowsCityProps>> = ({
     setLoading(true)
 
     relay.refetch(
-      { slug: city.slug, first: 18, after: cursor, page: null },
+      {
+        slug: city.slug,
+        first: 18,
+        after: cursor,
+        page: null,
+        maxPerPartner:
+          city.slug === "online" ? MAX_TIMELY_SHOWS_PER_PARTNER : undefined,
+      },
       null,
       error => {
         if (error) {
@@ -238,13 +246,18 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
     `,
     city: graphql`
       fragment ShowsCity_city on City
-      @argumentDefinitions(after: { type: "String" }, page: { type: "Int" }) {
+      @argumentDefinitions(
+        after: { type: "String" }
+        page: { type: "Int" }
+        maxPerPartner: { type: "Int" }
+      ) {
         name
         slug
         upcomingShows: showsConnection(
           first: 18
           status: UPCOMING
           sort: START_AT_ASC
+          maxPerPartner: $maxPerPartner
         ) {
           edges {
             node {
@@ -260,6 +273,7 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
           after: $after
           page: $page
           sort: END_AT_ASC
+          maxPerPartner: $maxPerPartner
         ) {
           pageInfo {
             hasNextPage
@@ -292,9 +306,15 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query ShowsCityQuery($slug: String!, $after: String, $page: Int) {
+    query ShowsCityQuery(
+      $slug: String!
+      $after: String
+      $page: Int
+      $maxPerPartner: Int
+    ) {
       city(slug: $slug) {
-        ...ShowsCity_city @arguments(after: $after, page: $page)
+        ...ShowsCity_city
+          @arguments(after: $after, page: $page, maxPerPartner: $maxPerPartner)
       }
     }
   `,
