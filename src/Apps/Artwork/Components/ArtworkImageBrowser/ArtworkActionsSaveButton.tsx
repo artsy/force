@@ -7,6 +7,8 @@ import createLogger from "Utils/logger"
 import type { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 const logger = createLogger("ArtworkActionsSaveButton")
 
@@ -19,6 +21,13 @@ export const ArtworkActionsSaveButton: FC<
 > = ({ artwork }) => {
   const { isAuction, isClosed } = artwork.sale ?? {}
   const isOpenOrUpcomingSale = isAuction && !isClosed
+
+  const variant = useVariant("diamond_remove_tooltip_experiment")
+  useTrackFeatureVariantOnMount({
+    experimentName: "diamond_remove_tooltip_experiment",
+    variantName: variant?.name,
+  })
+  const showTooltip = variant?.name !== "experiment"
 
   const { saveArtworkToLists } = useArtworkLists({
     contextModule: ContextModule.artworkImage,
@@ -61,9 +70,21 @@ export const ArtworkActionsSaveButton: FC<
   }
 
   return (
-    <ProgressiveOnboardingSaveArtwork>
-      <SaveUtilButton isSaved={artwork.isSavedToAnyList} onClick={handleSave} />
-    </ProgressiveOnboardingSaveArtwork>
+    <>
+      {showTooltip ? (
+        <ProgressiveOnboardingSaveArtwork>
+          <SaveUtilButton
+            isSaved={artwork.isSavedToAnyList}
+            onClick={handleSave}
+          />
+        </ProgressiveOnboardingSaveArtwork>
+      ) : (
+        <SaveUtilButton
+          isSaved={artwork.isSavedToAnyList}
+          onClick={handleSave}
+        />
+      )}
+    </>
   )
 }
 
