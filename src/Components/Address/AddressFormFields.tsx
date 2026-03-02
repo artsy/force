@@ -21,6 +21,11 @@ import { sortCountriesForCountryInput } from "Components/Address/utils/sortCount
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
+import {
+  findCountryByAlpha2,
+  formatPhoneNumber,
+  generatePhonePlaceholder,
+} from "globalism"
 import { useMemo } from "react"
 
 export interface FormikContextWithAddress {
@@ -149,6 +154,16 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
 
     return countryPhoneOptions
   }, [values.phoneNumberCountryCode])
+
+  const phoneCountry = useMemo(() => {
+    if (!values.phoneNumberCountryCode) return undefined
+    return findCountryByAlpha2(values.phoneNumberCountryCode.toUpperCase())
+  }, [values.phoneNumberCountryCode])
+
+  const phonePlaceholder = useMemo(() => {
+    if (!phoneCountry) return undefined
+    return generatePhonePlaceholder(phoneCountry) ?? "000 000 0000"
+  }, [phoneCountry])
 
   return (
     <GridColumns data-testid={dataTestIdPrefix}>
@@ -317,16 +332,28 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             // mt required to match spacing for other text inputs
             mt={1}
             name="phoneNumber"
-            onChange={handleChange}
+            onChange={e => {
+              const formatted = phoneCountry
+                ? formatPhoneNumber(e.target.value, phoneCountry, true)
+                : e.target.value
+              setFieldValue("phoneNumber", formatted)
+            }}
             onBlur={handleBlur}
             data-testid={`${dataTestIdPrefix}.phoneNumber`}
             options={phoneCountryOptions}
             onSelect={(option: CountryData): void => {
+              const newCountry = findCountryByAlpha2(option.value.toUpperCase())
               setFieldValue("phoneNumberCountryCode", option.value)
+              if (newCountry && values.phoneNumber) {
+                setFieldValue(
+                  "phoneNumber",
+                  formatPhoneNumber(values.phoneNumber, newCountry, true),
+                )
+              }
             }}
             dropdownValue={values.phoneNumberCountryCode}
             inputValue={values.phoneNumber}
-            placeholder="(000) 000 0000"
+            placeholder={phonePlaceholder}
             autoComplete="tel-national"
             error={
               (touched.phoneNumber &&

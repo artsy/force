@@ -9018,6 +9018,7 @@ __metadata:
     found-scroll: "npm:^1.1.1"
     fsevents: "npm:*"
     glob: "npm:7.1.3"
+    globalism: "npm:^0.2.1"
     graphql: "npm:15.8.0"
     helmet: "npm:2.3.0"
     http-proxy: "npm:1.18.1"
@@ -9618,6 +9619,13 @@ __metadata:
   dependencies:
     ini: "npm:^1.3.4"
   checksum: 10c0/3608072e58962396c124ad5a1cfb3f99ee76c998654a3432d82977b3c3eeb09dc8a5a2a9849b2b8113906c8d0aad89ce362c22e97cec5fe34405bbf4f3cdbe7a
+  languageName: node
+  linkType: hard
+
+"globalism@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "globalism@npm:0.2.1"
+  checksum: 10c0/c7398f7bf1a09aecd317d7bad3fef29784567a60651773ce1babcf647c81e855d5f0f1c8b6184277aeb9d72bea36dfba830ce2d86a9d362a5dbd7f17fe1c7aa4
   languageName: node
   linkType: hard
 

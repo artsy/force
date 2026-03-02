@@ -592,7 +592,7 @@ describe("Order2CheckoutRoute", () => {
         )
         expect(setPickupDetailsOperation.operationVariables.input).toEqual({
           id: "order-id",
-          buyerPhoneNumber: "03012345678",
+          buyerPhoneNumber: "030 12345678",
           buyerPhoneNumberCountryCode: "de",
         })
         await flushPromiseQueue()

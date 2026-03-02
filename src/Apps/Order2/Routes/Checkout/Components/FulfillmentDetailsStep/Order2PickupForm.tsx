@@ -12,6 +12,11 @@ import {
 } from "Components/Address/utils"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
+import {
+  findCountryByAlpha2,
+  formatPhoneNumber,
+  generatePhonePlaceholder,
+} from "globalism"
 import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
 import {
   Form,
@@ -189,6 +194,18 @@ const PickupFormInput: React.FC = () => {
   const formikContext = useFormikContext<PickupFormValues>()
   const formRef = useScrollToFieldErrorOnSubmit()
 
+  const phoneCountry = useMemo(() => {
+    if (!formikContext.values.phoneNumberCountryCode) return undefined
+    return findCountryByAlpha2(
+      formikContext.values.phoneNumberCountryCode.toUpperCase(),
+    )
+  }, [formikContext.values.phoneNumberCountryCode])
+
+  const phonePlaceholder = useMemo(() => {
+    if (!phoneCountry) return undefined
+    return generatePhonePlaceholder(phoneCountry) ?? "000 000 0000"
+  }, [phoneCountry])
+
   return (
     <div ref={formRef}>
       <SelectInput
@@ -196,16 +213,32 @@ const PickupFormInput: React.FC = () => {
         label="Phone number"
         mt={1}
         name="phoneNumber"
-        onChange={formikContext.handleChange}
+        onChange={e => {
+          const formatted = phoneCountry
+            ? formatPhoneNumber(e.target.value, phoneCountry, true)
+            : e.target.value
+          formikContext.setFieldValue("phoneNumber", formatted)
+        }}
         onBlur={formikContext.handleBlur}
         data-testid={"PickupPhoneNumberInput"}
         options={phoneCountryOptions}
         onSelect={(option: (typeof phoneCountryOptions)[number]): void => {
+          const newCountry = findCountryByAlpha2(option.value.toUpperCase())
           formikContext.setFieldValue("phoneNumberCountryCode", option.value)
+          if (newCountry && formikContext.values.phoneNumber) {
+            formikContext.setFieldValue(
+              "phoneNumber",
+              formatPhoneNumber(
+                formikContext.values.phoneNumber,
+                newCountry,
+                true,
+              ),
+            )
+          }
         }}
         dropdownValue={formikContext.values.phoneNumberCountryCode}
         inputValue={formikContext.values.phoneNumber}
-        placeholder="(000) 000 0000"
+        placeholder={phonePlaceholder}
         autoComplete="tel-national"
         error={
           (formikContext.touched.phoneNumberCountryCode &&
