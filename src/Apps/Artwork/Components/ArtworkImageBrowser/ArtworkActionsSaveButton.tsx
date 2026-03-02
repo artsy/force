@@ -76,12 +76,14 @@ export const ArtworkActionsSaveButton: FC<
           <SaveUtilButton
             isSaved={artwork.isSavedToAnyList}
             onClick={handleSave}
+            data-testid="save-button-with-tooltip"
           />
         </ProgressiveOnboardingSaveArtwork>
       ) : (
         <SaveUtilButton
           isSaved={artwork.isSavedToAnyList}
           onClick={handleSave}
+          data-testid="save-button-without-tooltip"
         />
       )}
     </>

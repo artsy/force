@@ -465,7 +465,27 @@ export const BaseArtworkFilter: React.FC<
                       <Flex gap={1}>
                         {enableImmersiveView &&
                           (showTooltip ? (
-                            <ProgressiveOnboardingImmersiveView>
+                            <div data-testid="immersive-view-with-tooltip">
+                              <ProgressiveOnboardingImmersiveView>
+                                <Button
+                                  variant={"tertiary"}
+                                  size={"small"}
+                                  onClick={() => {
+                                    setIsImmersed(true)
+                                    trackClickedImmersiveView()
+                                    if (!isDismissed(IMMERSIVE_KEY).status) {
+                                      dismiss(IMMERSIVE_KEY)
+                                    }
+                                  }}
+                                  disabled={Number(total) === 0}
+                                >
+                                  <ExpandIcon mr={0.5} />
+                                  Immersive View
+                                </Button>
+                              </ProgressiveOnboardingImmersiveView>
+                            </div>
+                          ) : (
+                            <div data-testid="immersive-view-without-tooltip">
                               <Button
                                 variant={"tertiary"}
                                 size={"small"}
@@ -481,23 +501,7 @@ export const BaseArtworkFilter: React.FC<
                                 <ExpandIcon mr={0.5} />
                                 Immersive View
                               </Button>
-                            </ProgressiveOnboardingImmersiveView>
-                          ) : (
-                            <Button
-                              variant={"tertiary"}
-                              size={"small"}
-                              onClick={() => {
-                                setIsImmersed(true)
-                                trackClickedImmersiveView()
-                                if (!isDismissed(IMMERSIVE_KEY).status) {
-                                  dismiss(IMMERSIVE_KEY)
-                                }
-                              }}
-                              disabled={Number(total) === 0}
-                            >
-                              <ExpandIcon mr={0.5} />
-                              Immersive View
-                            </Button>
+                            </div>
                           ))}
 
                         <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />

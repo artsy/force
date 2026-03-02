@@ -30,33 +30,37 @@ export const ArtworkFilterCreateAlert: FC<
   return (
     <>
       {showTooltip ? (
-        <CreateAlertButton
-          renderButton={({ onClick }) => (
-            <ProgressiveOnboardingAlertCreate>
-              {/*
+        <div data-testid="create-alert-with-tooltip">
+          <CreateAlertButton
+            renderButton={({ onClick }) => (
+              <ProgressiveOnboardingAlertCreate>
+                {/*
               FIXME: REACT_18_UPGRADE
               @ts-ignore */}
-              {({ onSkip: createSkip }) =>
-                renderButton({
-                  onClick: () => {
-                    createSkip()
-                    onClick()
-                  },
-                })
-              }
-            </ProgressiveOnboardingAlertCreate>
-          )}
-        />
+                {({ onSkip: createSkip }) =>
+                  renderButton({
+                    onClick: () => {
+                      createSkip()
+                      onClick()
+                    },
+                  })
+                }
+              </ProgressiveOnboardingAlertCreate>
+            )}
+          />
+        </div>
       ) : (
-        <CreateAlertButton
-          renderButton={({ onClick }) =>
-            renderButton({
-              onClick: () => {
-                onClick()
-              },
-            })
-          }
-        />
+        <div data-testid="create-alert-without-tooltip">
+          <CreateAlertButton
+            renderButton={({ onClick }) =>
+              renderButton({
+                onClick: () => {
+                  onClick()
+                },
+              })
+            }
+          />
+        </div>
       )}
 
       {children}

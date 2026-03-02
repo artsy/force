@@ -164,7 +164,39 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
                   <Flex alignItems="center" gap={1}>
                     {showTooltip ? (
-                      <ProgressiveOnboardingFollowArtist>
+                      <div data-testid="follow-button-with-tooltip">
+                        <ProgressiveOnboardingFollowArtist>
+                          <FollowArtistButtonQueryRenderer
+                            id={artist.internalID}
+                            contextModule={ContextModule.artistHeader}
+                            size={["large", "small"]}
+                            width={["100%", "fit-content"]}
+                          >
+                            {/*
+                          // FIXME: REACT_18_UPGRADE
+                          @ts-ignore */}
+                            {label => (
+                              <Stack
+                                gap={0.5}
+                                flexDirection="row"
+                                alignItems="center"
+                              >
+                                <Box>{label}</Box>
+
+                                {!!artist.counts?.follows && (
+                                  <FollowButtonInlineCount
+                                    display={["block", "none"]}
+                                  >
+                                    {formatFollowerCount(artist.counts.follows)}
+                                  </FollowButtonInlineCount>
+                                )}
+                              </Stack>
+                            )}
+                          </FollowArtistButtonQueryRenderer>
+                        </ProgressiveOnboardingFollowArtist>
+                      </div>
+                    ) : (
+                      <div data-testid="follow-button-without-tooltip">
                         <FollowArtistButtonQueryRenderer
                           id={artist.internalID}
                           contextModule={ContextModule.artistHeader}
@@ -192,35 +224,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                             </Stack>
                           )}
                         </FollowArtistButtonQueryRenderer>
-                      </ProgressiveOnboardingFollowArtist>
-                    ) : (
-                      <FollowArtistButtonQueryRenderer
-                        id={artist.internalID}
-                        contextModule={ContextModule.artistHeader}
-                        size={["large", "small"]}
-                        width={["100%", "fit-content"]}
-                      >
-                        {/*
-                          // FIXME: REACT_18_UPGRADE
-                          @ts-ignore */}
-                        {label => (
-                          <Stack
-                            gap={0.5}
-                            flexDirection="row"
-                            alignItems="center"
-                          >
-                            <Box>{label}</Box>
-
-                            {!!artist.counts?.follows && (
-                              <FollowButtonInlineCount
-                                display={["block", "none"]}
-                              >
-                                {formatFollowerCount(artist.counts.follows)}
-                              </FollowButtonInlineCount>
-                            )}
-                          </Stack>
-                        )}
-                      </FollowArtistButtonQueryRenderer>
+                      </div>
                     )}
 
                     {!!artist.counts?.follows && (
@@ -242,21 +246,25 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
             {!hasSomething &&
               (showTooltip ? (
-                <ProgressiveOnboardingFollowArtist>
+                <div data-testid="follow-button-with-tooltip">
+                  <ProgressiveOnboardingFollowArtist>
+                    <FollowArtistButtonQueryRenderer
+                      id={artist.internalID}
+                      contextModule={ContextModule.artistHeader}
+                      size="small"
+                      width="fit-content"
+                    />
+                  </ProgressiveOnboardingFollowArtist>
+                </div>
+              ) : (
+                <div data-testid="follow-button-without-tooltip">
                   <FollowArtistButtonQueryRenderer
                     id={artist.internalID}
                     contextModule={ContextModule.artistHeader}
                     size="small"
                     width="fit-content"
                   />
-                </ProgressiveOnboardingFollowArtist>
-              ) : (
-                <FollowArtistButtonQueryRenderer
-                  id={artist.internalID}
-                  contextModule={ContextModule.artistHeader}
-                  size="small"
-                  width="fit-content"
-                />
+                </div>
               ))}
           </Flex>
         </Flex>
