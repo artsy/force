@@ -1,4 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
+import { useVariant } from "@unleash/proxy-client-react"
 import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -14,6 +15,12 @@ const MockArtsyShippingEstimate = ArtsyShippingEstimate as jest.Mock
 jest.mock("Components/ArtsyShippingEstimate", () => ({
   ArtsyShippingEstimate: jest.fn(() => <div>ArtsyShippingEstimate</div>),
 }))
+
+jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
+  useTrackFeatureVariantOnMount: jest.fn(),
+}))
+
+const mockUseVariant = useVariant as jest.Mock
 
 jest.mock(
   "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer",
@@ -52,6 +59,10 @@ describe("ArtworkSidebarArtists", () => {
   })
 
   describe("should display the create alert section", () => {
+    beforeEach(() => {
+      mockUseVariant.mockReturnValue({ name: "control", enabled: true })
+    })
+
     it("renders the create alert section", () => {
       renderWithRelay({
         Artwork: () => ({
@@ -325,6 +336,32 @@ describe("ArtworkSidebarArtists", () => {
           subject: "Shipping and taxes",
         },
       ])
+    })
+  })
+
+  describe("diamond_create-alert-cta-experiment", () => {
+    it("shows the Create Alert CTA in the sidebar for the control variant", () => {
+      mockUseVariant.mockReturnValue({ name: "control", enabled: true })
+
+      renderWithRelay({
+        Artwork: () => ({
+          isEligibleToCreateAlert: true,
+        }),
+      })
+
+      expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
+    })
+
+    it("hides the Create Alert CTA in the sidebar for the experiment variant", () => {
+      mockUseVariant.mockReturnValue({ name: "experiment", enabled: true })
+
+      renderWithRelay({
+        Artwork: () => ({
+          isEligibleToCreateAlert: true,
+        }),
+      })
+
+      expect(screen.queryByText(/Create Alert/i)).not.toBeInTheDocument()
     })
   })
 
