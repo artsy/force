@@ -1478,6 +1478,11 @@ describe("Order2CheckoutRoute", () => {
                     country: "US",
                     phoneNumber: "5551234567",
                     phoneNumberCountryCode: "us",
+                    isDefault: false,
+                    phoneNumberParsed: {
+                      display: "+1 5551234567",
+                      isValid: true,
+                    },
                   },
                 },
                 {
@@ -1492,6 +1497,11 @@ describe("Order2CheckoutRoute", () => {
                     country: "DE",
                     phoneNumber: "5559876543",
                     phoneNumberCountryCode: "de",
+                    isDefault: false,
+                    phoneNumberParsed: {
+                      display: "+49 5559876543",
+                      isValid: true,
+                    },
                   },
                 },
               ],
@@ -1585,6 +1595,11 @@ describe("Order2CheckoutRoute", () => {
                     country: "US",
                     phoneNumber: "5551234567",
                     phoneNumberCountryCode: "us",
+                    isDefault: false,
+                    phoneNumberParsed: {
+                      display: "+1 5551234567",
+                      isValid: true,
+                    },
                   },
                 },
               ],

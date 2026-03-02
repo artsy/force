@@ -1232,6 +1232,7 @@ describe("Order2DeliveryForm", () => {
               country: "US",
               phoneNumber: "5551234567",
               phoneNumberCountryCode: "us",
+              phoneNumberParsed: { display: "+1 5551234567", isValid: true },
             },
           },
           {
@@ -1246,6 +1247,7 @@ describe("Order2DeliveryForm", () => {
               country: "DE",
               phoneNumber: "5559876543",
               phoneNumberCountryCode: "de",
+              phoneNumberParsed: { display: "+49 5559876543", isValid: true },
             },
           },
         ],
