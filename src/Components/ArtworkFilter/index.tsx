@@ -22,7 +22,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -141,6 +142,14 @@ export const BaseArtworkFilter: React.FC<
   ...rest
 }) => {
   const tracking = useTracking()
+  const variant = useVariant("diamond_remove_tooltip_experiment")
+
+  useTrackFeatureVariantOnMount({
+    experimentName: "diamond_remove_tooltip_experiment",
+    variantName: variant?.name,
+  })
+
+  const showTooltip = variant.name !== "experiment"
 
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
@@ -454,8 +463,26 @@ export const BaseArtworkFilter: React.FC<
                       </HorizontalOverflow>
 
                       <Flex gap={1}>
-                        {enableImmersiveView && (
-                          <ProgressiveOnboardingImmersiveView>
+                        {enableImmersiveView &&
+                          (showTooltip ? (
+                            <ProgressiveOnboardingImmersiveView>
+                              <Button
+                                variant={"tertiary"}
+                                size={"small"}
+                                onClick={() => {
+                                  setIsImmersed(true)
+                                  trackClickedImmersiveView()
+                                  if (!isDismissed(IMMERSIVE_KEY).status) {
+                                    dismiss(IMMERSIVE_KEY)
+                                  }
+                                }}
+                                disabled={Number(total) === 0}
+                              >
+                                <ExpandIcon mr={0.5} />
+                                Immersive View
+                              </Button>
+                            </ProgressiveOnboardingImmersiveView>
+                          ) : (
                             <Button
                               variant={"tertiary"}
                               size={"small"}
@@ -471,8 +498,7 @@ export const BaseArtworkFilter: React.FC<
                               <ExpandIcon mr={0.5} />
                               Immersive View
                             </Button>
-                          </ProgressiveOnboardingImmersiveView>
-                        )}
+                          ))}
 
                         <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />
                       </Flex>
