@@ -19,7 +19,7 @@ import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/Ar
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPartnerInfo"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
-import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { useShouldShowCreateAlertCTA } from "Apps/Artwork/Utils/useShouldShowCreateAlertCTA"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -41,19 +41,6 @@ export interface ArtworkSidebarProps {
   me: ArtworkSidebar_me$data
 }
 
-const checkIfArtworkIsOnLoanOrPermanentCollection = (
-  saleMessage: string | null | undefined,
-) => {
-  switch (saleMessage) {
-    case "On loan":
-      return true
-    case "Permanent collection":
-      return true
-    default:
-      return false
-  }
-}
-
 export const ArtworkSidebar: React.FC<
   React.PropsWithChildren<ArtworkSidebarProps>
 > = ({ artwork, me }) => {
@@ -65,7 +52,6 @@ export const ArtworkSidebar: React.FC<
     isAcquireable,
     isEdition,
     isEligibleForArtsyGuarantee,
-    isEligibleToCreateAlert,
     isInAuction,
     isOfferable,
     isSold,
@@ -121,12 +107,7 @@ export const ArtworkSidebar: React.FC<
 
   const { hasEnded } = useTimer(timerEndAt as string, startAt as string)
 
-  const shouldHideDetailsCreateAlertCTA =
-    isUnlisted ||
-    !isEligibleToCreateAlert ||
-    (isInAuction && hasEnded) ||
-    (isInAuction && lotIsClosed(sale, saleArtwork)) ||
-    isSold
+  const shouldShowCreateAlertCTA = useShouldShowCreateAlertCTA(artwork)
 
   const shoudlDisplayLotLabel = !!isInAuction && !!lotLabel
 
@@ -273,8 +254,7 @@ export const ArtworkSidebar: React.FC<
 
       <Spacer y={2} />
 
-      {(!shouldHideDetailsCreateAlertCTA ||
-        checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
+      {shouldShowCreateAlertCTA && (
         <ArtworkSidebarCreateAlertFragmentContainer artwork={artwork} />
       )}
 
@@ -306,6 +286,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarArtsyGuarantee_artwork
         ...PrivateArtworkAdditionalInfo_artwork
         ...ArtsyShippingEstimate_artwork
+        ...useShouldShowCreateAlertCTA_artwork
         artists(shallow: true) {
           internalID
         }
