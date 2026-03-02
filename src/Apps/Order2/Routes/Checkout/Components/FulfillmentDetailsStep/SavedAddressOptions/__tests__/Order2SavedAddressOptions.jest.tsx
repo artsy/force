@@ -683,7 +683,7 @@ describe("SavedAddressOptions", () => {
   })
 
   describe("Single saved address behavior", () => {
-    it("opens edit form and shows error on mount for single invalid address", async () => {
+    it("opens edit form on mount for single invalid address", async () => {
       const onSelectAddress = jest.fn()
       const mockSingleInvalidAddress: ProcessedUserAddress = {
         ...mockUSAddress1,
@@ -703,15 +703,6 @@ describe("SavedAddressOptions", () => {
       )
 
       await waitFor(() => {
-        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
-          {
-            section: CheckoutStepName.FULFILLMENT_DETAILS,
-            error: {
-              title: "Missing required information",
-              message: "Edit your address and/or phone number to continue.",
-            },
-          },
-        )
         expect(mockCheckoutContext.setUserAddressMode).toHaveBeenCalledWith({
           mode: "edit",
           address: mockSingleInvalidAddress,

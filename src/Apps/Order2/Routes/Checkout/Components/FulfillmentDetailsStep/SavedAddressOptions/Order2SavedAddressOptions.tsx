@@ -112,10 +112,6 @@ export const SavedAddressOptions = ({
   useEffect(() => {
     if (savedAddresses.length !== 1 || !initialSelectedAddress) return
     if (!initialSelectedAddress.isValid) {
-      setSectionErrorMessage({
-        section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: ADDRESS_ERROR_MESSAGES.missingAddressInfo,
-      })
       setUserAddressMode({ mode: "edit", address: initialSelectedAddress })
     }
   }, [])
