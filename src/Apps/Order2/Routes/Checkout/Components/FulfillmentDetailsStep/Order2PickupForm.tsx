@@ -43,7 +43,8 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   const { setFulfillmentDetailsComplete, checkoutTracking, setCheckoutMode } =
     useCheckoutContext()
 
-  const { fulfillmentOptions, shippingOrigin } = orderData
+  const { fulfillmentOptions, shippingOrigin, mode } = orderData
+  const isOffer = mode === "OFFER"
   // By the time we get here, this option should be available
   const pickupFulfillmentOption = fulfillmentOptions?.find(
     option => option.type === "PICKUP",
@@ -150,8 +151,10 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         </Text>
       )}
       <Text variant="xs" color="mono60">
-        After your order is confirmed, a specialist will contact you with
-        details on how to pick up the work.
+        {isOffer
+          ? "If your offer is accepted,"
+          : "After your order is confirmed,"}{" "}
+        a specialist will contact you with details on how to pick up the work.
       </Text>
       <Spacer y={[2, 2, 4]} />
       <Formik<PickupFormValues>
@@ -229,6 +232,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 const FRAGMENT = graphql`
   fragment Order2PickupForm_order on Order {
     internalID
+    mode
     fulfillmentOptions {
       type
     }

@@ -889,6 +889,180 @@ describe("Order2CheckoutRoute", () => {
         expect(phoneCountryPicker).toHaveTextContent("+ 52")
       })
     })
+
+    it('displays "After your order is confirmed" text for BUY mode orders in pickup form', async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            mode: "BUY",
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
+          },
+        },
+      }
+
+      renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      act(() => {
+        userEvent.click(screen.getByText("Pickup"))
+      })
+
+      expect(
+        screen.getByText(/After your order is confirmed,/),
+      ).toBeInTheDocument()
+      expect(
+        screen.queryByText(/If your offer is accepted,/),
+      ).not.toBeInTheDocument()
+    })
+
+    it('displays "If your offer is accepted" text for OFFER mode orders in pickup form', async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            mode: "OFFER",
+            currencyCode: "USD",
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
+          },
+        },
+      }
+
+      renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      act(() => {
+        userEvent.click(screen.getByText("Pickup"))
+      })
+
+      expect(screen.getByText(/If your offer is accepted,/)).toBeInTheDocument()
+      expect(
+        screen.queryByText(/After your order is confirmed,/),
+      ).not.toBeInTheDocument()
+    })
+
+    it('displays "After your order is confirmed" text for BUY mode orders in completed view', async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            mode: "BUY",
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+                selected: true,
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: {
+              name: "John Doe",
+              phoneNumber: {
+                originalNumber: "03012345678",
+                regionCode: "de",
+                display: "+49 30 12345678",
+              },
+            },
+            selectedFulfillmentOption: {
+              type: "PICKUP",
+            },
+          },
+        },
+      }
+
+      renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      const fulfillmentStep = screen.getByTestId(testIDs.fulfillmentDetailsStep)
+
+      expect(
+        within(fulfillmentStep).getAllByText(/After your order is confirmed,/)
+          .length,
+      ).toBeGreaterThan(0)
+      expect(
+        within(fulfillmentStep).queryByText(/If your offer is accepted,/),
+      ).not.toBeInTheDocument()
+    })
+
+    it('displays "If your offer is accepted" text for OFFER mode orders in completed view', async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            mode: "OFFER",
+            currencyCode: "USD",
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+                selected: true,
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: {
+              name: "John Doe",
+              phoneNumber: {
+                originalNumber: "03012345678",
+                regionCode: "de",
+                display: "+49 30 12345678",
+              },
+            },
+            selectedFulfillmentOption: {
+              type: "PICKUP",
+            },
+          },
+        },
+      }
+
+      renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      const fulfillmentStep = screen.getByTestId(testIDs.fulfillmentDetailsStep)
+
+      expect(
+        within(fulfillmentStep).getAllByText(/If your offer is accepted,/)
+          .length,
+      ).toBeGreaterThan(0)
+      expect(
+        within(fulfillmentStep).queryByText(/After your order is confirmed,/),
+      ).not.toBeInTheDocument()
+    })
   })
 
   describe("Checkout with flat-rate shipping", () => {
