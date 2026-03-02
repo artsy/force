@@ -1,13 +1,20 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
+import { ArtworkActionsAlertButton } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsAlertButton"
 import { ArtworkActionsSaveButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButton"
 import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
+import {
+  CREATE_ALERT_EXPERIMENT,
+  useShouldShowCreateAlertCTA,
+} from "Apps/Artwork/Utils/useShouldShowCreateAlertCTA"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import {
   ViewInRoomFragmentContainer,
   useViewInRoom,
 } from "Components/ViewInRoom/ViewInRoom"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin, userIsTeam } from "Utils/user"
@@ -30,6 +37,17 @@ export const ArtworkActions: React.FC<
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)
+
+  const shouldShowCreateAlertCTA = useShouldShowCreateAlertCTA(artwork)
+
+  const variant = useVariant(CREATE_ALERT_EXPERIMENT)
+  const shouldRenderExperiment =
+    variant.enabled && variant.name === "experiment"
+
+  useTrackFeatureVariantOnMount({
+    experimentName: CREATE_ALERT_EXPERIMENT,
+    variantName: variant.name,
+  })
 
   const tracking = useTracking()
 
@@ -112,6 +130,11 @@ export const ArtworkActions: React.FC<
       name: "save",
       condition: true,
       content: SaveButton,
+    },
+    {
+      name: "alert",
+      condition: shouldRenderExperiment && shouldShowCreateAlertCTA,
+      content: <ArtworkActionsAlertButton />,
     },
     {
       name: "viewInRoom",
@@ -220,6 +243,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         ...ArtworkSharePanel_artwork
           @arguments(includeAllImages: $includeAllImages)
         ...ViewInRoom_artwork
+        ...useShouldShowCreateAlertCTA_artwork
         isUnlisted
         slug
         downloadableImageUrl
