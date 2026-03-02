@@ -1,14 +1,17 @@
 import { Box, Separator, Spacer, Spinner, Text, useTheme } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResults"
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { ArtistCombinedNav } from "Apps/Artist/Routes/Combined/Components/ArtistCombinedNav"
+import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
 import { useRouter } from "System/Hooks/useRouter"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { useJump } from "Utils/Hooks/useJump"
 import { Section, SectionNavProvider } from "Utils/Hooks/useSectionNav"
 import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
@@ -21,10 +24,19 @@ interface ArtistCombinedRouteProps {
   artist: ArtistCombinedRoute_artist$data
 }
 
+const EDITORIAL_SECTION_EXPERIMENT = "diamond_editorial-section"
+
 const ArtistCombinedRoute: React.FC<
   React.PropsWithChildren<ArtistCombinedRouteProps>
 > = ({ artist }) => {
   const { handleScrollToTop } = useScrollToTopOfAuctionResults()
+  const variant = useVariant(EDITORIAL_SECTION_EXPERIMENT)
+  useTrackFeatureVariantOnMount({
+    experimentName: EDITORIAL_SECTION_EXPERIMENT,
+    variantName: variant?.name,
+  })
+  const isEditorialSectionExperiment =
+    variant.enabled && variant.name === "experiment"
 
   const { jumpTo } = useJump()
 
@@ -126,7 +138,11 @@ const ArtistCombinedRoute: React.FC<
         </Box>
       )}
 
-      <ArtistCombinedNav waitUntil={waitUntil} navigating={navigating} />
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={navigating}
+        showEditorialTab={isEditorialSectionExperiment}
+      />
 
       <Spacer y={[2, 4]} />
 
@@ -170,11 +186,25 @@ const ArtistCombinedRoute: React.FC<
         />
       </Section>
 
+      {isEditorialSectionExperiment && (
+        <>
+          <Separator my={4} />
+
+          <Section id="artistEditorialTop">
+            <ArtistEditorialNewsGridQueryRenderer
+              id={artist.internalID}
+              showEmptyStateWhenNoArticles
+            />
+          </Section>
+        </>
+      )}
+
       <Separator my={4} />
 
       <Section id="artistAboutTop">
         <ArtistOverviewQueryRenderer
           id={artist.internalID}
+          hideEditorial={isEditorialSectionExperiment}
           lazyLoad={lazy.about}
           onReady={() => markReady("about")}
         />

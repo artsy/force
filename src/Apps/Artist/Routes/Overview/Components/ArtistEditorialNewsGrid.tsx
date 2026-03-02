@@ -17,6 +17,7 @@ import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
+import { EmptyState } from "Components/EmptyState"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -35,11 +36,17 @@ const ARTICLE_COUNT = 6
 
 interface ArtistEditorialNewsGridProps {
   artist: ArtistEditorialNewsGrid_artist$data
+  // diamond_editorial-section
+  showEmptyStateWhenNoArticles?: boolean
 }
 
 const ArtistEditorialNewsGrid: FC<
   React.PropsWithChildren<ArtistEditorialNewsGridProps>
-> = ({ artist }) => {
+> = ({
+  artist,
+  // diamond_editorial-section
+  showEmptyStateWhenNoArticles = false,
+}) => {
   const { trackEvent } = useTracking()
 
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -50,6 +57,20 @@ const ArtistEditorialNewsGrid: FC<
   const viewAllHref = `${artist.href}/articles`
 
   if (articles.length === 0) {
+    // diamond_editorial-section
+    if (showEmptyStateWhenNoArticles) {
+      return (
+        <EmptyState
+          title="There are currently no editorial pieces about this artist."
+          description="Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy."
+          action={{
+            label: "Browse Artsy Editorial",
+            href: "/editorial",
+          }}
+        />
+      )
+    }
+
     return null
   }
 
@@ -256,8 +277,14 @@ const PLACEHOLDER = (
 export const ArtistEditorialNewsGridQueryRenderer: FC<
   React.PropsWithChildren<{
     id: string
+    // diamond_editorial-section
+    showEmptyStateWhenNoArticles?: boolean
   }>
-> = ({ id }) => {
+> = ({
+  id,
+  // diamond_editorial-section
+  showEmptyStateWhenNoArticles = false,
+}) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -283,7 +310,11 @@ export const ArtistEditorialNewsGridQueryRenderer: FC<
         }
 
         return (
-          <ArtistEditorialNewsGridFragmentContainer artist={props.artist} />
+          <ArtistEditorialNewsGridFragmentContainer
+            artist={props.artist}
+            // diamond_editorial-section
+            showEmptyStateWhenNoArticles={showEmptyStateWhenNoArticles}
+          />
         )
       }}
     />
