@@ -35,6 +35,8 @@ import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
+import { useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
@@ -46,6 +48,14 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
+
+  const variant = useVariant("diamond_remove_tooltip_experiment")
+  useTrackFeatureVariantOnMount({
+    experimentName: "diamond_remove_tooltip_experiment",
+    variantName: variant?.name,
+  })
+
+  const showTooltip = variant.name !== "experiment"
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
@@ -153,7 +163,37 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                   <Spacer y={2} />
 
                   <Flex alignItems="center" gap={1}>
-                    <ProgressiveOnboardingFollowArtist>
+                    {showTooltip ? (
+                      <ProgressiveOnboardingFollowArtist>
+                        <FollowArtistButtonQueryRenderer
+                          id={artist.internalID}
+                          contextModule={ContextModule.artistHeader}
+                          size={["large", "small"]}
+                          width={["100%", "fit-content"]}
+                        >
+                          {/*
+                          // FIXME: REACT_18_UPGRADE
+                          @ts-ignore */}
+                          {label => (
+                            <Stack
+                              gap={0.5}
+                              flexDirection="row"
+                              alignItems="center"
+                            >
+                              <Box>{label}</Box>
+
+                              {!!artist.counts?.follows && (
+                                <FollowButtonInlineCount
+                                  display={["block", "none"]}
+                                >
+                                  {formatFollowerCount(artist.counts.follows)}
+                                </FollowButtonInlineCount>
+                              )}
+                            </Stack>
+                          )}
+                        </FollowArtistButtonQueryRenderer>
+                      </ProgressiveOnboardingFollowArtist>
+                    ) : (
                       <FollowArtistButtonQueryRenderer
                         id={artist.internalID}
                         contextModule={ContextModule.artistHeader}
@@ -181,7 +221,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                           </Stack>
                         )}
                       </FollowArtistButtonQueryRenderer>
-                    </ProgressiveOnboardingFollowArtist>
+                    )}
 
                     {!!artist.counts?.follows && (
                       <Text
@@ -200,16 +240,24 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
               )}
             </Box>
 
-            {!hasSomething && (
-              <ProgressiveOnboardingFollowArtist>
+            {!hasSomething &&
+              (showTooltip ? (
+                <ProgressiveOnboardingFollowArtist>
+                  <FollowArtistButtonQueryRenderer
+                    id={artist.internalID}
+                    contextModule={ContextModule.artistHeader}
+                    size="small"
+                    width="fit-content"
+                  />
+                </ProgressiveOnboardingFollowArtist>
+              ) : (
                 <FollowArtistButtonQueryRenderer
                   id={artist.internalID}
                   contextModule={ContextModule.artistHeader}
                   size="small"
                   width="fit-content"
                 />
-              </ProgressiveOnboardingFollowArtist>
-            )}
+              ))}
           </Flex>
         </Flex>
 
