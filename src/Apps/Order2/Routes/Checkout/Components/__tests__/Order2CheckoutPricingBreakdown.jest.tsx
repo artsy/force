@@ -352,4 +352,84 @@ describe("Order2PricingBreakdown", () => {
     const totalRow = screen.getByText("Total").parentElement
     expect(totalRow).toHaveTextContent("Waiting for final totals")
   })
+
+  it('displays "To be confirmed by seller" for shipping line when fulfillment type is SHIPPING_TBD', () => {
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          selectedFulfillmentOption: {
+            type: "SHIPPING_TBD",
+          },
+          pricingBreakdownLines: [
+            {
+              __typename: "SubtotalLine",
+              displayName: "Subtotal",
+              amount: { amount: "1000", currencySymbol: "$" },
+            },
+            {
+              __typename: "ShippingLine",
+              displayName: "Shipping",
+              amountFallbackText: "Calculated at checkout",
+              amount: null,
+            },
+            {
+              __typename: "TaxLine",
+              displayName: "Tax",
+              amountFallbackText: "Calculated at checkout",
+              amount: null,
+            },
+            {
+              __typename: "TotalLine",
+              displayName: "Total",
+              amountFallbackText: "Waiting for final totals",
+              amount: null,
+            },
+          ],
+        },
+      }),
+    })
+
+    const shippingRow = screen.getByText("Shipping").parentElement
+    expect(shippingRow).toHaveTextContent("To be confirmed by seller")
+  })
+
+  it("displays regular shipping text when fulfillment type is not SHIPPING_TBD", () => {
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          selectedFulfillmentOption: {
+            type: "DOMESTIC_FLAT",
+          },
+          pricingBreakdownLines: [
+            {
+              __typename: "SubtotalLine",
+              displayName: "Subtotal",
+              amount: { amount: "1000", currencySymbol: "$" },
+            },
+            {
+              __typename: "ShippingLine",
+              displayName: "Shipping",
+              amountFallbackText: "Calculated at checkout",
+              amount: null,
+            },
+            {
+              __typename: "TaxLine",
+              displayName: "Tax",
+              amountFallbackText: "Calculated at checkout",
+              amount: null,
+            },
+            {
+              __typename: "TotalLine",
+              displayName: "Total",
+              amountFallbackText: "Waiting for final totals",
+              amount: null,
+            },
+          ],
+        },
+      }),
+    })
+
+    const shippingRow = screen.getByText("Shipping").parentElement
+    expect(shippingRow).toHaveTextContent("Calculated at checkout")
+  })
 })
