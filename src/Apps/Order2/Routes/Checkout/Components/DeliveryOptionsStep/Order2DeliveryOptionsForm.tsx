@@ -68,8 +68,6 @@ export const Order2DeliveryOptionsForm: React.FC<
     option => option.type !== "PICKUP",
   )
 
-  const isSingleOption = deliveryOptions.length === 1
-
   const handleSubmit: FormikConfig<FormValues>["onSubmit"] = async ({
     deliveryOption,
   }) => {
