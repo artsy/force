@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbe5549cd27641c8c828bf6874f744cd>>
+ * @generated SignedSource<<e7a5c7554a5da932da17c07ec07bb477>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,7 +51,7 @@ export type ArtworkSidebar_artwork$data = {
   readonly shippingWeight: number | null | undefined;
   readonly shippingWeightMetric: string | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtsyShippingEstimate_artwork" | "ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtsyGuarantee_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork" | "PrivateArtworkAdditionalInfo_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtsyShippingEstimate_artwork" | "ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtsyGuarantee_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarPrivateArtwork_artwork" | "ArtworkSidebarShippingInformation_artwork" | "PrivateArtworkAdditionalInfo_artwork" | "useShouldShowCreateAlertCTA_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$key = {
@@ -161,6 +161,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtsyShippingEstimate_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useShouldShowCreateAlertCTA_artwork"
     },
     {
       "alias": null,
@@ -400,6 +405,6 @@ return {
 };
 })();
 
-(node as any).hash = "4cf76de287e9061591904b521e66bf36";
+(node as any).hash = "0c1f99d1dd8586ade14fcf08f73b81f0";
 
 export default node;
