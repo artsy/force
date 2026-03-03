@@ -14,7 +14,6 @@ import {
   useViewInRoom,
 } from "Components/ViewInRoom/ViewInRoom"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { Media } from "Utils/Responsive"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin, userIsTeam } from "Utils/user"
@@ -41,14 +40,14 @@ export const ArtworkActions: React.FC<
 
   const shouldShowCreateAlertCTA = useShouldShowCreateAlertCTA(artwork)
 
+  // Note: In order to avoid double-firing the event, the CREATE_ALERT_EXPERIMENT
+  // view is not tracked here, since it is already reliably tracked over where
+  // the `control` CTA is displayed, in <ArtworkSidebar />, for both mobile
+  // and desktop.
+
   const variant = useVariant(CREATE_ALERT_EXPERIMENT)
   const shouldRenderExperiment =
     variant.enabled && variant.name === "experiment"
-
-  useTrackFeatureVariantOnMount({
-    experimentName: CREATE_ALERT_EXPERIMENT,
-    variantName: variant.name,
-  })
 
   // when the Unleash flag is resolved client-side, the Create Alert CTA
   // flashes in, which causes a layout shift, which in turn messes up the
