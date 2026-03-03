@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d27166782762a977ba48c958a14a2cb8>>
+ * @generated SignedSource<<6954ffcda753ac3a6c1fc88498178308>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -259,24 +259,6 @@ return {
                 "name": "buyerStateExpiresAt",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "FulfillmentOption",
-                "kind": "LinkedField",
-                "name": "selectedFulfillmentOption",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "type",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
               (v5/*: any*/),
               {
                 "alias": null,
@@ -302,7 +284,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3ad3ac9d1618b07bd7ba817d5e34b209",
+    "cacheID": "be763a39512a8867cdb8a4d10cab3289",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -353,26 +335,6 @@ return {
         "me.order.pricingBreakdownLines.amount.display": (v8/*: any*/),
         "me.order.pricingBreakdownLines.amountFallbackText": (v8/*: any*/),
         "me.order.pricingBreakdownLines.displayName": (v10/*: any*/),
-        "me.order.selectedFulfillmentOption": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FulfillmentOption"
-        },
-        "me.order.selectedFulfillmentOption.type": {
-          "enumValues": [
-            "ARTSY_EXPRESS",
-            "ARTSY_STANDARD",
-            "ARTSY_WHITE_GLOVE",
-            "DOMESTIC_FLAT",
-            "INTERNATIONAL_FLAT",
-            "PICKUP",
-            "SHIPPING_TBD"
-          ],
-          "nullable": false,
-          "plural": false,
-          "type": "FulfillmentOptionTypeEnum"
-        },
         "me.order.source": {
           "enumValues": [
             "ARTWORK_PAGE",
@@ -388,7 +350,7 @@ return {
     },
     "name": "Order2CheckoutPricingBreakdownTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutPricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2CheckoutPricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  selectedFulfillmentOption {\n    type\n  }\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query Order2CheckoutPricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2CheckoutPricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

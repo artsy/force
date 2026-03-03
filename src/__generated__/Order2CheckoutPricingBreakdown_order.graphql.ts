@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff5bcbda54f2fd7dc1090da12c0fa691>>
+ * @generated SignedSource<<8d50254f3a2db210346d058fbf79fc97>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -88,9 +87,6 @@ export type Order2CheckoutPricingBreakdown_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined>;
-  readonly selectedFulfillmentOption: {
-    readonly type: FulfillmentOptionTypeEnum;
-  } | null | undefined;
   readonly source: OrderSourceEnum;
   readonly " $fragmentType": "Order2CheckoutPricingBreakdown_order";
 };
@@ -237,24 +233,6 @@ return {
       "name": "buyerStateExpiresAt",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FulfillmentOption",
-      "kind": "LinkedField",
-      "name": "selectedFulfillmentOption",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     (v4/*: any*/),
     {
       "alias": null,
@@ -274,6 +252,6 @@ return {
 };
 })();
 
-(node as any).hash = "15b7463b16078aa427966ac1470e4bf7";
+(node as any).hash = "e5a999380639b2f226d9dfcbcd03672d";
 
 export default node;

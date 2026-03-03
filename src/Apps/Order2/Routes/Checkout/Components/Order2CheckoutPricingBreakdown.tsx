@@ -25,17 +25,10 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 > = ({ order, contextModule }) => {
   const { checkoutTracking } = useCheckoutContext()
   const orderData = useFragment(FRAGMENT, order)
-  const {
-    mode,
-    pendingOffer,
-    source,
-    buyerStateExpiresAt,
-    selectedFulfillmentOption,
-  } = orderData
+  const { mode, pendingOffer, source, buyerStateExpiresAt } = orderData
 
   const isOffer = mode === "OFFER"
   const accountForPartnerOffer = !isOffer && source === "PARTNER_OFFER"
-  const isDeferredShipping = selectedFulfillmentOption?.type === "SHIPPING_TBD"
 
   // Calculate timer directly in this component to ensure re-renders
   const partnerOfferEndTime =
@@ -99,13 +92,9 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 
             break
           case "ShippingLine":
-            if (isDeferredShipping) {
-              amountText = "To be confirmed by seller"
-            } else {
-              amountText = line.amount
-                ? `${line.amount.currencySymbol}${line.amount.amount}`
-                : (line.amountFallbackText as string)
-            }
+            amountText = line.amount
+              ? `${line.amount.currencySymbol}${line.amount.amount}`
+              : (line.amountFallbackText as string)
             break
           case "TaxLine":
             amountText = line.amount
@@ -161,9 +150,6 @@ const FRAGMENT = graphql`
     source
     mode
     buyerStateExpiresAt
-    selectedFulfillmentOption {
-      type
-    }
     pricingBreakdownLines {
       __typename
       ... on ShippingLine {
