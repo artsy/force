@@ -181,10 +181,17 @@ export const Order2DeliveryOptionsForm: React.FC<
 
                 <Spacer y={2} />
 
-                {isSingleOption ? (
+                {deliveryOptions.length === 1 ? (
                   <SingleShippingOption option={deliveryOptions[0]} />
-                ) : (
+                ) : deliveryOptions.length > 1 ? (
                   <MultipleShippingOptionsForm options={deliveryOptions} />
+                ) : (
+                  <Flex flexDirection="column">
+                    <Text variant="sm-display" color="mono100">
+                      Unable to find shipping quotes. Please contact
+                      orders@artsy.net
+                    </Text>
+                  </Flex>
                 )}
               </Flex>
 
@@ -192,6 +199,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 
               <Button
                 loading={isSubmitting}
+                disabled={deliveryOptions.length === 0}
                 variant="primaryBlack"
                 width="100%"
               >
