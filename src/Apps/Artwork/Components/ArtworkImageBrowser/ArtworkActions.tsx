@@ -20,6 +20,7 @@ import { getENV } from "Utils/getENV"
 import { userIsAdmin, userIsTeam } from "Utils/user"
 import type { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
 import * as React from "react"
+import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -48,6 +49,21 @@ export const ArtworkActions: React.FC<
     experimentName: CREATE_ALERT_EXPERIMENT,
     variantName: variant.name,
   })
+
+  // when the Unleash flag is resolved client-side, the Create Alert CTA
+  // flashes in, which causes a layout shift, which in turn messes up the
+  // positioning of the progressive onboarding popover.
+  //
+  // To fix this, we dispatch a window resize event if and only if the
+  // experiment CTA is rendered, thus triggering the Palette Popover to
+  // recalculate its position.
+  useEffect(() => {
+    if (shouldShowCreateAlertCTA && shouldRenderExperiment) {
+      requestAnimationFrame(() => {
+        window.dispatchEvent(new Event("resize"))
+      })
+    }
+  }, [shouldShowCreateAlertCTA, shouldRenderExperiment])
 
   const tracking = useTracking()
 
