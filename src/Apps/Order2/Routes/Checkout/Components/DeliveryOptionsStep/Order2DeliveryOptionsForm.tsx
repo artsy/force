@@ -9,7 +9,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
@@ -21,6 +20,7 @@ import {
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -130,7 +130,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                 </>
               )}
               <Flex flexDirection="column">
-                <Flex>
+                <Flex alignItems="center">
                   <SectionHeading>Shipping method</SectionHeading>
 
                   <Tooltip
@@ -140,19 +140,12 @@ export const Order2DeliveryOptionsForm: React.FC<
                     pointer={true}
                     content={
                       <Text variant="xs">
-                        Shipping methods depend on location and artwork size. If
-                        shipped internationally or part of a show, delivery may
-                        take longer.
+                        Shipping options depend on location and artwork size.
+                        International orders or works in shows may take longer.
                       </Text>
                     }
                   >
-                    <Clickable
-                      height={20}
-                      width={40}
-                      ml={0.5}
-                      style={{ lineHeight: 0 }}
-                      alignContent="center"
-                    >
+                    <Clickable ml={0.5}>
                       <InfoIcon />
                     </Clickable>
                   </Tooltip>
