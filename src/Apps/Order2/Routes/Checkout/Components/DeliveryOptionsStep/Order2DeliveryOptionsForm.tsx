@@ -187,7 +187,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                   <Flex flexDirection="column">
                     <Text variant="sm-display" color="mono100">
                       Unable to find shipping quotes. Please contact
-                      orders@artsy.net
+                      orders@artsy.net.
                     </Text>
                   </Flex>
                 )}

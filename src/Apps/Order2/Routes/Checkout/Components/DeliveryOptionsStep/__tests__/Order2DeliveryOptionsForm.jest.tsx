@@ -271,7 +271,7 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(
         screen.getByText(
-          "Unable to find shipping quotes. Please contact orders@artsy.net",
+          "Unable to find shipping quotes. Please contact orders@artsy.net.",
         ),
       ).toBeInTheDocument()
       expect(screen.queryByRole("radio")).not.toBeInTheDocument()
@@ -295,7 +295,7 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(
         screen.getByText(
-          "Unable to find shipping quotes. Please contact orders@artsy.net",
+          "Unable to find shipping quotes. Please contact orders@artsy.net.",
         ),
       ).toBeInTheDocument()
     })
