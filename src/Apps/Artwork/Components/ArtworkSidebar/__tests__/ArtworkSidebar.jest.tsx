@@ -340,28 +340,56 @@ describe("ArtworkSidebarArtists", () => {
   })
 
   describe("diamond_create-alert-cta-experiment", () => {
-    it("shows the Create Alert CTA in the sidebar for the control variant", () => {
-      mockUseVariant.mockReturnValue({ name: "control", enabled: true })
+    describe("when experiment is enabled", () => {
+      it("shows the Create Alert CTA in the sidebar for the control variant", () => {
+        mockUseVariant.mockReturnValue({
+          name: "control",
+          enabled: true,
+          feature_enabled: true,
+        })
 
-      renderWithRelay({
-        Artwork: () => ({
-          isEligibleToCreateAlert: true,
-        }),
+        renderWithRelay({
+          Artwork: () => ({
+            isEligibleToCreateAlert: true,
+          }),
+        })
+
+        expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
       })
 
-      expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
+      it("hides the Create Alert CTA in the sidebar for the experiment variant", () => {
+        mockUseVariant.mockReturnValue({
+          name: "experiment",
+          enabled: true,
+          feature_enabled: true,
+        })
+
+        renderWithRelay({
+          Artwork: () => ({
+            isEligibleToCreateAlert: true,
+          }),
+        })
+
+        expect(screen.queryByText(/Create Alert/i)).not.toBeInTheDocument()
+      })
     })
 
-    it("hides the Create Alert CTA in the sidebar for the experiment variant", () => {
-      mockUseVariant.mockReturnValue({ name: "experiment", enabled: true })
+    describe("when experiment is disabled", () => {
+      it("shows the Create Alert CTA in the sidebar", () => {
+        mockUseVariant.mockReturnValue({
+          name: "control",
+          enabled: false,
+          feature_enabled: false,
+        })
 
-      renderWithRelay({
-        Artwork: () => ({
-          isEligibleToCreateAlert: true,
-        }),
+        renderWithRelay({
+          Artwork: () => ({
+            isEligibleToCreateAlert: true,
+          }),
+        })
+
+        expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
       })
-
-      expect(screen.queryByText(/Create Alert/i)).not.toBeInTheDocument()
     })
   })
 

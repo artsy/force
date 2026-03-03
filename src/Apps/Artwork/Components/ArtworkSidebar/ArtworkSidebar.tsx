@@ -115,7 +115,9 @@ export const ArtworkSidebar: React.FC<
   const shouldShowCreateAlertCTA = useShouldShowCreateAlertCTA(artwork)
 
   const variant = useVariant(CREATE_ALERT_EXPERIMENT)
-  const shouldRenderControl = variant.enabled && variant.name === "control"
+  const experimentNotEnabled = !variant.feature_enabled
+  const shouldRenderControl =
+    experimentNotEnabled || (variant.enabled && variant.name === "control")
 
   useTrackFeatureVariantOnMount({
     experimentName: CREATE_ALERT_EXPERIMENT,
