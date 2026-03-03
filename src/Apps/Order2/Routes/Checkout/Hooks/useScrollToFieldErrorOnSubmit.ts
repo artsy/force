@@ -34,10 +34,15 @@ const getFirstFieldErrorName = (
 export const useScrollToFieldErrorOnSubmit = () => {
   const { submitCount, isValid, errors } = useFormikContext()
   const formRef = useRef<HTMLDivElement>(null)
+  const lastScrolledSubmitCountRef = useRef(0)
 
   useEffect(() => {
     // Only run when form is submitted and invalid
     if (isValid || submitCount === 0) return
+
+    // Only scroll once per submission
+    if (submitCount === lastScrolledSubmitCountRef.current) return
+    lastScrolledSubmitCountRef.current = submitCount
 
     const container = formRef.current
 
