@@ -258,6 +258,64 @@ describe("Order2DeliveryOptionsForm", () => {
     })
   })
 
+  describe("with no delivery options", () => {
+    it("shows an error message when there are no fulfillment options", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByText(
+          "Unable to find shipping quotes. Please contact orders@artsy.net",
+        ),
+      ).toBeInTheDocument()
+      expect(screen.queryByRole("radio")).not.toBeInTheDocument()
+    })
+
+    it("shows an error message when only PICKUP options exist", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                amount: { display: "$0.00" },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByText(
+          "Unable to find shipping quotes. Please contact orders@artsy.net",
+        ),
+      ).toBeInTheDocument()
+    })
+
+    it("disables the submit button", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByRole("button", { name: "Continue to Payment" }),
+      ).toBeDisabled()
+    })
+  })
+
   describe("shipping origin", () => {
     it("displays 'Ships from' when shipping origin is available", () => {
       renderWithRelay({
