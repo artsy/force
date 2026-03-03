@@ -234,7 +234,7 @@ describe("ArtworkActionsSaveButton", () => {
         Artwork: () => unsavedArtwork,
       })
 
-      expect(screen.getByText("Save")).toBeInTheDocument()
+      expect(screen.getByTestId("save-button-with-tooltip")).toBeInTheDocument()
     })
 
     it("renders without tooltip in experiment variant", () => {
@@ -247,7 +247,9 @@ describe("ArtworkActionsSaveButton", () => {
         Artwork: () => unsavedArtwork,
       })
 
-      expect(screen.getByText("Save")).toBeInTheDocument()
+      expect(
+        screen.getByTestId("save-button-without-tooltip"),
+      ).toBeInTheDocument()
     })
   })
 })
