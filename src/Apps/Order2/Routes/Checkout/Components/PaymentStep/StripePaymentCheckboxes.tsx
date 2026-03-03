@@ -8,7 +8,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { Collapse } from "Apps/Order/Components/Collapse"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import {
   AddressFormFields,
@@ -51,6 +50,9 @@ export const StripePaymentCheckboxes: React.FC<
   onBillingFormValuesChange,
   billingFormRef,
 }) => {
+  const isStripeCardSelected = selectedPaymentMethod === "stripe-card"
+  const isStripeACHSelected = selectedPaymentMethod === "stripe-ach"
+
   const needsBillingAddress = () => {
     if (selectedPaymentMethod !== "stripe-card") return false
     if (activeFulfillmentDetailsTab === "PICKUP") return true
@@ -60,10 +62,7 @@ export const StripePaymentCheckboxes: React.FC<
   return (
     <>
       {/* Credit Card Options */}
-      <Collapse
-        open={selectedPaymentMethod === "stripe-card"}
-        data-testid="stripe-card-collapse"
-      >
+      <Box hidden={!isStripeCardSelected} data-testid="stripe-card-collapse">
         <Box p={2}>
           {activeFulfillmentDetailsTab !== "PICKUP" && (
             <>
@@ -118,13 +117,10 @@ export const StripePaymentCheckboxes: React.FC<
             </>
           )}
         </Box>
-      </Collapse>
+      </Box>
 
       {/* Bank Debit Options (ACH) */}
-      <Collapse
-        open={selectedPaymentMethod === "stripe-ach"}
-        data-testid="stripe-ach-collapse"
-      >
+      <Box hidden={!isStripeACHSelected} data-testid="stripe-ach-collapse">
         <Flex p={2} position="relative">
           <Checkbox
             selected={savePaymentMethod}
@@ -150,7 +146,7 @@ export const StripePaymentCheckboxes: React.FC<
             </Clickable>
           </Tooltip>
         </Flex>
-      </Collapse>
+      </Box>
     </>
   )
 }

@@ -36,13 +36,16 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
   return (
     <FadeInBox>
       <Box
+        as="button"
+        type="button"
         backgroundColor="mono5"
         borderRadius="5px"
         padding="1rem"
         marginBottom="10px"
         border={isSelected ? "1px solid" : "none"}
         borderColor="mono10"
-        style={{ cursor: "pointer" }}
+        width="100%"
+        style={{ cursor: "pointer", appearance: "none", textAlign: "left" }}
         onClick={onSelect}
         data-testid="PaymentFormWire"
       >
