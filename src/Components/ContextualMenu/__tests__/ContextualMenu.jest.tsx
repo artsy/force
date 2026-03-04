@@ -49,14 +49,11 @@ describe("ContextualMenu", () => {
     )
 
     fireEvent.click(screen.getByRole("button"))
-
-    const firstItem = await screen.findByText("Do the first thing")
-    const secondItem = await screen.findByText("Do the second thing")
-
-    fireEvent.click(firstItem)
-    fireEvent.click(secondItem)
-
+    fireEvent.click(await screen.findByText("Do the first thing"))
     expect(firstHandler).toHaveBeenCalledTimes(1)
+
+    fireEvent.click(screen.getByRole("button"))
+    fireEvent.click(await screen.findByText("Do the second thing"))
     expect(secondHandler).toHaveBeenCalledTimes(1)
   })
 })

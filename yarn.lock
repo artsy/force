@@ -120,9 +120,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette-charts@npm:45.4.0":
-  version: 45.4.0
-  resolution: "@artsy/palette-charts@npm:45.4.0"
+"@artsy/palette-charts@npm:46.0.0-canary.1502.33273.0":
+  version: 46.0.0-canary.1502.33273.0
+  resolution: "@artsy/palette-charts@npm:46.0.0-canary.1502.33273.0"
   dependencies:
     "@seznam/compose-react-refs": "npm:^1.0.6"
     d3-interpolate: "npm:^1.3.2"
@@ -134,7 +134,7 @@ __metadata:
     react-dom: ^18
     styled-components: ^6
     styled-system: ^5
-  checksum: 10c0/2d0d63b1fc4fcf17f305038f20b0745bc0a764652bf5d957879b46901fdce8cb1bc7418140b4e685bfd92d00ff8f5d2af3e21f4b17ac90f0543e77864c1a6305
+  checksum: 10c0/a74bcf32c6f9fd5bfb2ec4f2c764c100a4b708adcf6d3d2f4d97b912b52df46eaacf27833e2ac1774a3f6641c55c884ccfdaa9dc1216938a9aa07a7c340d3858
   languageName: node
   linkType: hard
 
@@ -145,11 +145,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette@npm:46.4.0":
-  version: 46.4.0
-  resolution: "@artsy/palette@npm:46.4.0"
+"@artsy/palette@npm:47.0.0-canary.1502.33273.0":
+  version: 47.0.0-canary.1502.33273.0
+  resolution: "@artsy/palette@npm:47.0.0-canary.1502.33273.0"
   dependencies:
     "@artsy/palette-tokens": "npm:^7.3.0"
+    "@floating-ui/react": "npm:^0.27.18"
     "@seznam/compose-react-refs": "npm:^1.0.6"
     "@styled-system/theme-get": "npm:^5.1.2"
     es-toolkit: "npm:^1.16.0"
@@ -163,7 +164,7 @@ __metadata:
     react: ^18
     react-dom: ^18
     styled-components: ^6
-  checksum: 10c0/50dae4b7f05ce04d4bc3cb129bb9d790d5e1d3d48babe6747720653cf945bc712b6ed46e9055abbf7af6f113b2ce78ad3523e1114cade11eb3f804efaf6fa453
+  checksum: 10c0/357c0df9f449971a66716e0bf98d74c6a2875ab53fc384e72fdee9e1e3f8d9905e529917d628cb9c4f73e8d76072088fc5231e33c9a0e3ab241cc2164d6830c6
   languageName: node
   linkType: hard
 
@@ -1168,6 +1169,58 @@ __metadata:
   version: 0.25.12
   resolution: "@esbuild/win32-x64@npm:0.25.12"
   conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@floating-ui/core@npm:^1.7.5":
+  version: 1.7.5
+  resolution: "@floating-ui/core@npm:1.7.5"
+  dependencies:
+    "@floating-ui/utils": "npm:^0.2.11"
+  checksum: 10c0/f9c52205e198b231d63a387b09c659aab08c46a1899e0b0bbe147b8b4f048b546f15ba17cb5d2a471da9534f1883d979425e13e5c4ceee67be63e4b0abd4db5d
+  languageName: node
+  linkType: hard
+
+"@floating-ui/dom@npm:^1.7.6":
+  version: 1.7.6
+  resolution: "@floating-ui/dom@npm:1.7.6"
+  dependencies:
+    "@floating-ui/core": "npm:^1.7.5"
+    "@floating-ui/utils": "npm:^0.2.11"
+  checksum: 10c0/5c098e0d7b58c9bc769f276cca1766994c2c9c70c92d091a61bba8b3e9be53c011e0a79a8457fc2fb2f3d91697a26eb52e0a4962ef936dc963b45f58613c212f
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react-dom@npm:^2.1.8":
+  version: 2.1.8
+  resolution: "@floating-ui/react-dom@npm:2.1.8"
+  dependencies:
+    "@floating-ui/dom": "npm:^1.7.6"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10c0/26260ca4bb23b57c73b824062505abf977a008ce6e0463bdacca74f7e49853c4cd1d2bbf1a77c6caa17fa37dfffda2c6c4cd07a8737ebd7474aaff7818401d75
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react@npm:^0.27.18":
+  version: 0.27.19
+  resolution: "@floating-ui/react@npm:0.27.19"
+  dependencies:
+    "@floating-ui/react-dom": "npm:^2.1.8"
+    "@floating-ui/utils": "npm:^0.2.11"
+    tabbable: "npm:^6.0.0"
+  peerDependencies:
+    react: ">=17.0.0"
+    react-dom: ">=17.0.0"
+  checksum: 10c0/2a2cdfd3e67e0606833b63f922ad2a9037974f22b944e1cb8c0991b4c40450f8413d69745c0bbf4646e5ba283747f60d2fdc9a8d289b68b24448e59d81a3a96d
+  languageName: node
+  linkType: hard
+
+"@floating-ui/utils@npm:^0.2.11":
+  version: 0.2.11
+  resolution: "@floating-ui/utils@npm:0.2.11"
+  checksum: 10c0/f4bcea1559bdbb721ecc8e8ead423ac58d6a5b6e70b602cf0810ba6ad4ed1c77211b207faa88b278a9042f0c743133de08a203ed6741c1b6443423332884d5b3
   languageName: node
   linkType: hard
 
@@ -8909,8 +8962,8 @@ __metadata:
     "@artsy/icons": "npm:3.65.0"
     "@artsy/img": "npm:1.1.2"
     "@artsy/multienv": "npm:^1.2.0"
-    "@artsy/palette": "npm:46.4.0"
-    "@artsy/palette-charts": "npm:45.4.0"
+    "@artsy/palette": "npm:47.0.0-canary.1502.33273.0"
+    "@artsy/palette-charts": "npm:46.0.0-canary.1502.33273.0"
     "@artsy/palette-tokens": "npm:7.3.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
     "@artsy/xapp": "npm:2.0.0"
@@ -16825,6 +16878,13 @@ __metadata:
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
   checksum: 10c0/dfbe201ae09ac6053d163578778c53aa860a784147ecf95705de0cd23f42c851e1be7889241495e95c37cabb058edb1052f141387bef68f705afc8f9dd358509
+  languageName: node
+  linkType: hard
+
+"tabbable@npm:^6.0.0":
+  version: 6.4.0
+  resolution: "tabbable@npm:6.4.0"
+  checksum: 10c0/d931427f4a96b801fd8801ba296a702119e06f70ad262fed8abc5271225c9f1ca51b89fdec4fb2f22e1d35acb3d2881db0a17cedc758272e9ecb540d00299d76
   languageName: node
   linkType: hard
 
