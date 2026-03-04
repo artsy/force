@@ -255,6 +255,13 @@ https://artsy.net/artist/banksy?unleash=
 3. Overrides persist across client-side navigations but are cleared when the browser tab is closed.
 4. New overrides merge with existing ones, so you can build them up incrementally.
 
+### Visual indicator
+
+When any overrides are active, a `FeatureFlagOverrideIndicator` renders:
+
+- A **soft blue gradient border** around the entire viewport so it's immediately obvious the page is running with non-default flag values.
+- A **badge** in the bottom-left corner showing the number of active overrides. Clicking the badge expands a panel listing each flag and its override value, with a "Clear all" action to remove every override at once.
+
 ### Notes
 
 - Overrides are **client-side only** and do not affect server-side rendering or other users.
