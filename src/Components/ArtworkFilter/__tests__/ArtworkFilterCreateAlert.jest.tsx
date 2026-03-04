@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useVariant: jest.fn(() => ({
     enabled: true,
     name: "control",

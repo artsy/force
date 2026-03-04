@@ -16,7 +16,7 @@ jest.mock("@artsy/palette", () => ({
 }))
 
 const mockUseFlag = jest.fn()
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useFlag: (flagName: string) => mockUseFlag(flagName),
 }))
 

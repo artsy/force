@@ -16,7 +16,7 @@ jest.mock("System/Hooks/useRouter", () => ({
   }),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useFlag: jest.fn(
     flag => flag === "my-collection-web-phase-7-median-sale-price-graph",
   ),

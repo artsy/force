@@ -14,7 +14,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useFlag: jest.fn(flag => flag === "address_autocomplete_us"),
 }))
 

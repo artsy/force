@@ -7,7 +7,7 @@ import createLogger from "Utils/logger"
 import type { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 const logger = createLogger("ArtworkActionsSaveButton")

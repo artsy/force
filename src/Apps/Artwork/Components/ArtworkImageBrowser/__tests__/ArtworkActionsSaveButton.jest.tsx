@@ -9,7 +9,7 @@ import type { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkA
 import { act } from "react-dom/test-utils"
 import { graphql } from "react-relay"
 import { fetchQuery } from "react-relay"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
@@ -28,7 +28,7 @@ jest.mock("react-relay", () => ({
 }))
 
 // mocks for a/b test
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useVariant: jest.fn(() => ({
     enabled: true,
     name: "control",

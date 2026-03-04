@@ -4,7 +4,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -28,7 +28,7 @@ jest.mock(
   }),
 )
 
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useVariant: jest.fn(() => ({
     enabled: true,
     name: "control",

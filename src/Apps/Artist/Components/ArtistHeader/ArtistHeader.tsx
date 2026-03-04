@@ -35,7 +35,7 @@ import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 interface ArtistHeaderProps {

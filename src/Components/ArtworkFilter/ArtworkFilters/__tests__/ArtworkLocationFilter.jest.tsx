@@ -7,7 +7,7 @@ import {
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
 import { useTracking } from "react-tracking"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFeatureFlag"
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({

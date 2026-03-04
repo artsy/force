@@ -7,7 +7,7 @@ import {
 import type { AutocompleteInputOptionType } from "@artsy/palette"
 import type { Address } from "Components/Address/utils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useMemo, useState } from "react"

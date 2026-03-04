@@ -51,12 +51,14 @@ By following these steps, you can safely manage feature rollouts and experiments
 
 ## Using Feature Flags in React (Client-side)
 
+IMPORTANT: Always import `useFlag` and `useVariant` from `System/FeatureFlags/useFeatureFlag`, **not** from `@unleash/proxy-client-react` directly. Our wrapper hooks add support for [URL-based overrides](#overriding-flags-via-url-parameters).
+
 IMPORTANT: `useFlag` is not isomorphic. Meaning you will not have access to the flag on the server side render. Design your UI accordingly.
 
 ### Basic Feature Flag Usage
 
 ```tsx
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFeatureFlag"
 
 const MyComponent = () => {
   const enabled = useFlag("demo-feature")
@@ -74,7 +76,7 @@ const MyComponent = () => {
 IMPORTANT: `useVariant` is not isomorphic. Meaning you will not have access to the variant on the server side render. `variant` will be `"disabled"` until Unleash mounts and fetches.
 
 ```tsx
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 const MyExperiment = () => {
@@ -216,6 +218,48 @@ return (
 )
 ```
 
+## Overriding Flags via URL Parameters
+
+For QA and development, you can override any Unleash flag by adding an `unleash` query parameter to the URL. Overrides are stored in `sessionStorage` and persist across SPA navigations within the same browser tab.
+
+### Usage
+
+```
+# Override a release toggle
+https://artsy.net/artist/banksy?unleash=my-feature-flag:true
+
+# Override an experiment variant
+https://artsy.net/artist/banksy?unleash=my-experiment:experiment
+
+# Override multiple flags at once
+https://artsy.net/artist/banksy?unleash=flag-a:true,experiment-b:control
+
+# Clear all overrides
+https://artsy.net/artist/banksy?unleash=
+```
+
+### Supported values
+
+| Flag type | Override value | Effect |
+|-----------|--------------|--------|
+| Release toggle (`useFlag`) | `true` | Flag returns `true` |
+| Release toggle (`useFlag`) | `false` | Flag returns `false` |
+| Experiment (`useVariant`) | `experiment` | Variant returns `{ name: "experiment", enabled: true }` |
+| Experiment (`useVariant`) | `control` | Variant returns `{ name: "control", enabled: true }` |
+| Experiment (`useVariant`) | `disabled` or `false` | Variant returns the disabled state |
+
+### How it works
+
+1. On page load, `syncOverridesFromURL()` reads the `?unleash=` param and writes overrides to `sessionStorage`.
+2. The `useFlag` and `useVariant` wrapper hooks check `sessionStorage` for overrides before delegating to Unleash.
+3. Overrides persist across client-side navigations but are cleared when the browser tab is closed.
+4. New overrides merge with existing ones, so you can build them up incrementally.
+
+### Notes
+
+- Overrides are **client-side only** and do not affect server-side rendering or other users.
+- Since SSR does not have access to Unleash values, the override behavior matches the normal Unleash experience (values take effect on hydration).
+
 ## Best Practices
 
 1. **Use descriptive flag names**: Follow a consistent naming convention like `[team-name]_[feature-name]`.
@@ -225,3 +269,5 @@ return (
 3. **Clean up old flags**: Remove flags after they've been fully rolled out or experiments are complete.
 
 4. **Test both flag states**: Ensure your app works regardless of whether the flag is enabled or disabled.
+
+5. **Import from the wrapper module**: Always use `import { useFlag, useVariant } from "System/FeatureFlags/useFeatureFlag"` instead of importing directly from `@unleash/proxy-client-react`.

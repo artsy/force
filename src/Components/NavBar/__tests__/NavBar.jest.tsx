@@ -29,7 +29,7 @@ jest.mock("System/Relay/SystemQueryRenderer", () => ({
   ),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useFlag: jest.fn(() => false),
   useVariant: jest.fn(() => ({ name: "disabled", enabled: false })),
 }))

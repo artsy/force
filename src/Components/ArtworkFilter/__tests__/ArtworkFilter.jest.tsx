@@ -1,5 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { useFlag, useVariant } from "System/FeatureFlags/useFeatureFlag"
 import { ArtworkFilter, getTotalCountLabel } from "Components/ArtworkFilter"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
@@ -32,8 +32,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  ...jest.requireActual("@unleash/proxy-client-react"),
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useFlag: jest.fn(),
   useVariant: jest.fn(() => ({
     enabled: true,

@@ -12,7 +12,7 @@ import type { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentR
 import type { Payment_me$data } from "__generated__/Payment_me.graphql"
 import type { Payment_order$data } from "__generated__/Payment_order.graphql"
 
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFeatureFlag"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import {

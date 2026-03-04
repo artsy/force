@@ -4,7 +4,7 @@ import {
   type AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { throttle } from "lodash"
 import { useTracking } from "react-tracking"

@@ -22,7 +22,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { useFlag, useVariant } from "System/FeatureFlags/useFeatureFlag"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"

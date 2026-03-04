@@ -1,5 +1,5 @@
 import { Box, Separator, Spacer, Spinner, Text, useTheme } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,

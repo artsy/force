@@ -3,12 +3,15 @@ import {
   type IConfig,
   type IFlagProvider,
 } from "@unleash/proxy-client-react"
+import { syncOverridesFromURL } from "System/FeatureFlags/featureFlagOverrides"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 
 export const FeatureFlagProvider: React.FC<
   React.PropsWithChildren<IFlagProvider>
 > = ({ children }) => {
+  syncOverridesFromURL()
+
   const { user } = useSystemContext()
 
   const unleashConfig: IConfig = {

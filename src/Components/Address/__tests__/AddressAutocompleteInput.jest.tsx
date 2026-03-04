@@ -23,7 +23,7 @@ jest.mock("react-tracking")
 
 let mockFetch: jest.Mock
 
-jest.mock("@unleash/proxy-client-react", () => ({
+jest.mock("System/FeatureFlags/useFeatureFlag", () => ({
   useFlag: jest.fn(flag => flag === "address_autocomplete_us"),
 }))
 

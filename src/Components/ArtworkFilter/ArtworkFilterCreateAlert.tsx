@@ -3,7 +3,7 @@ import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboardi
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { isEmpty } from "lodash"
 import type { FC, ReactNode } from "react"
-import { useVariant } from "@unleash/proxy-client-react"
+import { useVariant } from "System/FeatureFlags/useFeatureFlag"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 interface ArtworkFilterCreateAlertProps {

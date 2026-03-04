@@ -1,6 +1,6 @@
 import { Box, Clickable, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFeatureFlag"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useRouter } from "System/Hooks/useRouter"
 import { extractNodes } from "Utils/extractNodes"

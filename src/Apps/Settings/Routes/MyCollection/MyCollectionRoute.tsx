@@ -1,7 +1,7 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import ShareIcon from "@artsy/icons/ShareIcon"
 import { Box, Button, Flex, Stack } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFeatureFlag"
 import { useMyCollectionTracking } from "Apps/CollectorProfile/Routes/MyCollection/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
