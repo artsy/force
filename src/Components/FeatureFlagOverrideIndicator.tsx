@@ -29,7 +29,7 @@ export const FeatureFlagOverrideIndicator: React.FC = () => {
         right={0}
         bottom={0}
         style={{
-          boxShadow: "inset 0 0 0 4px rgba(16, 35, 215, 0.25)",
+          boxShadow: "inset 0 0 20px 20px rgba(16, 35, 215, 0.25)",
           pointerEvents: "none",
           zIndex: 9999,
         }}
@@ -88,8 +88,8 @@ export const FeatureFlagOverrideIndicator: React.FC = () => {
 
         <Clickable onClick={() => setIsExpanded(prev => !prev)}>
           <Flex
-            px={1.5}
-            py={0.5}
+            px={1}
+            py={1}
             alignItems="center"
             gap={0.5}
             style={{
