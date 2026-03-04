@@ -145,7 +145,14 @@ export const Order2DeliveryOptionsForm: React.FC<
                       </Text>
                     }
                   >
-                    <Clickable ml={0.5}>
+                    <Clickable
+                      aria-label="Shipping information"
+                      height={20}
+                      width={40}
+                      ml={0.5}
+                      style={{ lineHeight: 0 }}
+                      alignContent="center"
+                    >
                       <InfoIcon />
                     </Clickable>
                   </Tooltip>

@@ -251,6 +251,7 @@ export const SavedAddressOptions = ({
 
             <Clickable
               alignSelf="flex-start"
+              aria-label={`Edit address for ${address.name}`}
               onClick={e => {
                 e.stopPropagation()
                 setUserAddressMode({

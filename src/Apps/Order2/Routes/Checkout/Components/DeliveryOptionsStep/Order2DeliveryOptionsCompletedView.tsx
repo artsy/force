@@ -33,6 +33,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           textDecoration="underline"
           cursor="pointer"
           type="button"
+          aria-label="Edit shipping method"
           onClick={onClickEdit}
         >
           <Text variant="sm" fontWeight="normal" color="mono100">

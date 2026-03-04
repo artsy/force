@@ -40,6 +40,7 @@ export const Order2OfferCompletedView: React.FC<
           textDecoration="underline"
           cursor="pointer"
           type="button"
+          aria-label="Edit offer amount"
           onClick={onClickEdit}
         >
           <Text variant="sm" fontWeight="normal" color="mono100">

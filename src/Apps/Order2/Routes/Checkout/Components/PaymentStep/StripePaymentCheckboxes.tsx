@@ -141,7 +141,7 @@ export const StripePaymentCheckboxes: React.FC<
                       days' notice. By clicking "Save bank account for later use",
                       you authorize Artsy to save the bank account specified above.`}
           >
-            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+            <Clickable aria-label="Direct debit authorization information" ml={0.5} style={{ lineHeight: 0 }}>
               <InfoIcon />
             </Clickable>
           </Tooltip>
