@@ -19,21 +19,24 @@ export const DEFAULT_IMAGES = [
     height: IMAGE_HEIGHT,
     src: "https://files.artsy.net/images/signup-01-1765895830875.png",
     title: "Welcome to Artsy",
-    subtitle: "The world's largest online art marketplace",
+    subtitle: "The world's largest online art marketplace.",
+    photoAuthor: "Daniel Dorsa",
   },
   {
     width: COLUMN_WIDTH,
     height: IMAGE_HEIGHT,
     src: "https://files.artsy.net/images/signup-02-1765895830877.png",
     title: "Welcome to Artsy",
-    subtitle: "Get personalized recommendations that match your taste",
+    subtitle: "Get personalized recommendations that match your taste.",
+    photoAuthor: "Luke Stettner",
   },
   {
     width: COLUMN_WIDTH,
     height: IMAGE_HEIGHT,
     src: "https://files.artsy.net/images/signup-03-1765895830761.png",
     title: "Welcome to Artsy",
-    subtitle: "Discover and buy art you love",
+    subtitle: "Discover and buy art you love.",
+    photoAuthor: "Luke Stettner",
   },
 ]
 
@@ -48,6 +51,7 @@ export const getResizedAuthDialogImages = () =>
     ...resized(image.src, { width: image.width, quality: 80 }),
     title: image.title,
     subtitle: image.subtitle,
+    photoAuthor: image.photoAuthor,
   }))
 
 export const getResizedAuthDialogImagePlaceholder = () =>

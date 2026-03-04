@@ -8,7 +8,6 @@ import {
   Flex,
   Image,
   Text,
-  useTheme,
 } from "@artsy/palette"
 import {
   COLUMN_WIDTH,
@@ -34,7 +33,6 @@ const CAROUSEL_INTERVAL = 4000
 export const AuthDialogImageCarousel: FC = () => {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const { theme } = useTheme()
 
   const { index, setCursor } = useCursor({ max: DEFAULT_IMAGES.length })
 
@@ -106,18 +104,34 @@ export const AuthDialogImageCarousel: FC = () => {
 
                 <Box
                   position="absolute"
-                  bottom={theme.space["4"]}
+                  background="linear-gradient(0deg,rgba(0, 0, 0, 1) 0%, rgba(67, 67, 67, 0) 100%)"
+                  bottom={0}
+                  pt={6}
+                  height={185}
                   width="100%"
                   px={2}
                 >
-                  {img?.title && (
-                    <Text color="white" variant="md" fontWeight="bold">
-                      {img.title}
+                  <Box minHeight={72}>
+                    {img?.title && (
+                      <Text color="white" variant="md" fontWeight="bold">
+                        {img.title}
+                      </Text>
+                    )}
+                    <Text color="white" variant="sm">
+                      {img.subtitle}
                     </Text>
-                  )}
-                  <Text color="white" variant="sm">
-                    {img.subtitle}
-                  </Text>
+                    {img?.photoAuthor && (
+                      <Text
+                        position="absolute"
+                        bottom={2}
+                        right={2}
+                        color="white"
+                        variant="xxs"
+                      >
+                        Photo by {img.photoAuthor} for Artsy.
+                      </Text>
+                    )}
+                  </Box>
                 </Box>
               </>
             )}
