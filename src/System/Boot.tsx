@@ -8,6 +8,7 @@ import {
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
 import { DeveloperBreakpointOverlay } from "Components/DeveloperBreakpointOverlay"
+import { FeatureFlagOverrideIndicator } from "Components/FeatureFlagOverrideIndicator"
 import { HydrationErrorOverlay } from "Components/HydrationErrorOverlay"
 import { PROGRESSIVE_ONBOARDING_KEYS } from "Components/ProgressiveOnboarding/progressiveOnboardingKeys"
 import { StickyProvider } from "Components/Sticky"
@@ -91,6 +92,7 @@ export const Boot: React.FC<
                             >
                               <CookieConsentManager>
                                 <SiftContainer />
+                                <FeatureFlagOverrideIndicator />
                                 {isDevelopment && (
                                   <>
                                     <DeveloperBreakpointOverlay />

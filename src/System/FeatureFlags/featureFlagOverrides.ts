@@ -67,3 +67,8 @@ export function getOverrides(): Overrides {
 export function getOverride(flagName: string): string | undefined {
   return getOverrides()[flagName]
 }
+
+export function clearOverrides(): void {
+  if (typeof window === "undefined") return
+  sessionStorage.removeItem(STORAGE_KEY)
+}
