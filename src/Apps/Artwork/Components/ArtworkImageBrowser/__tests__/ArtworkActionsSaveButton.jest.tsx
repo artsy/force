@@ -9,6 +9,7 @@ import type { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkA
 import { act } from "react-dom/test-utils"
 import { graphql } from "react-relay"
 import { fetchQuery } from "react-relay"
+import { useVariant } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
@@ -24,6 +25,20 @@ jest.mock("react-relay", () => ({
   fetchQuery: jest.fn(() => ({
     toPromise: jest.fn(),
   })),
+}))
+
+// mocks for a/b test
+jest.mock("@unleash/proxy-client-react", () => ({
+  useVariant: jest.fn(() => ({
+    enabled: true,
+    name: "control",
+  })),
+}))
+
+const mockUseVariant = useVariant as jest.Mock
+
+jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
+  useTrackFeatureVariantOnMount: jest.fn(),
 }))
 
 describe("ArtworkActionsSaveButton", () => {
@@ -205,6 +220,36 @@ describe("ArtworkActionsSaveButton", () => {
           expect(screen.getByText(modalTitle)).toBeInTheDocument()
         })
       })
+    })
+  })
+
+  describe("diamond_remove_tooltip_experiment", () => {
+    it("renders with tooltip in control variant", () => {
+      mockUseVariant.mockReturnValue({
+        enabled: true,
+        name: "control",
+      })
+
+      renderWithRelay({
+        Artwork: () => unsavedArtwork,
+      })
+
+      expect(screen.getByTestId("save-button-with-tooltip")).toBeInTheDocument()
+    })
+
+    it("renders without tooltip in experiment variant", () => {
+      mockUseVariant.mockReturnValue({
+        enabled: true,
+        name: "experiment",
+      })
+
+      renderWithRelay({
+        Artwork: () => unsavedArtwork,
+      })
+
+      expect(
+        screen.getByTestId("save-button-without-tooltip"),
+      ).toBeInTheDocument()
     })
   })
 })

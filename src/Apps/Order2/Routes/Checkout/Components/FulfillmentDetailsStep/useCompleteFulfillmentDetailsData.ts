@@ -13,6 +13,7 @@ export const useCompleteFulfillmentDetailsData = (
   const orderData = useFragment(FRAGMENT, order)
 
   const fulfillmentDetails = orderData.fulfillmentDetails
+  const isOffer = orderData.mode === "OFFER"
   if (!fulfillmentDetails) {
     return null
   }
@@ -24,6 +25,7 @@ export const useCompleteFulfillmentDetailsData = (
           name: fulfillmentDetails?.name,
           phoneNumber: orderData.fulfillmentDetails?.phoneNumber?.display,
         },
+        isOffer,
       }
     default:
       const isComplete = ["addressLine1", "country", "name"].every(field => {
@@ -55,6 +57,7 @@ export const useCompleteFulfillmentDetailsData = (
 
 const FRAGMENT = graphql`
   fragment useCompleteFulfillmentDetailsData_order on Order {
+    mode
     fulfillmentDetails {
       addressLine1
       addressLine2

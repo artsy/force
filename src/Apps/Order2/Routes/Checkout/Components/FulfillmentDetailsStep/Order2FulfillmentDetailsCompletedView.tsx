@@ -18,11 +18,12 @@ export interface FulfillmentDetails {
 export interface Order2FulfillmentDetailsCompletedViewProps {
   isPickup: boolean
   fulfillmentDetails: FulfillmentDetails
+  isOffer?: boolean
 }
 
 export const Order2FulfillmentDetailsCompletedView: React.FC<
   Order2FulfillmentDetailsCompletedViewProps
-> = ({ isPickup, fulfillmentDetails }) => {
+> = ({ isPickup, fulfillmentDetails, isOffer = false }) => {
   const { editFulfillmentDetails, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = () => {
@@ -52,8 +53,11 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
         </Flex>
         <Flex alignItems="center" ml="30px" mt={1}>
           <Text variant="sm" fontWeight="normal" color="mono100">
-            After your order is confirmed, a specialist will contact you with
-            details on how to pick up the work.
+            {isOffer
+              ? "If your offer is accepted,"
+              : "After your order is confirmed,"}{" "}
+            a specialist will contact you with details on how to pick up the
+            work.
           </Text>
         </Flex>
       </Flex>

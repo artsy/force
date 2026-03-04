@@ -25,6 +25,15 @@ export const useCompleteDeliveryOptionData = (
     return null
   }
 
+  if (fulfillmentType === "SHIPPING_TBD") {
+    return {
+      label:
+        "Shipping details will be updated after checkout. You will be able to review and approve the final total before purchase",
+      timeEstimatePrefix: null,
+      timeEstimateRange: null,
+    }
+  }
+
   const isSpecificMethod = [
     "ARTSY_STANDARD",
     "ARTSY_EXPRESS",

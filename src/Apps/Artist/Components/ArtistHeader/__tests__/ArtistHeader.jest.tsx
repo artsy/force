@@ -4,6 +4,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { useVariant } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -26,6 +27,19 @@ jest.mock(
     ProgressiveOnboardingFollowArtist: ({ children }) => children,
   }),
 )
+
+jest.mock("@unleash/proxy-client-react", () => ({
+  useVariant: jest.fn(() => ({
+    enabled: true,
+    name: "control",
+  })),
+}))
+
+const mockUseVariant = useVariant as jest.Mock
+
+jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
+  useTrackFeatureVariantOnMount: jest.fn(),
+}))
 
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()
@@ -514,6 +528,44 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(screen.getByTestId("follow-button")).toBeInTheDocument()
+    })
+  })
+
+  describe("diamond_remove_tooltip_experiment", () => {
+    it("renders with tooltip in control variant", () => {
+      mockUseVariant.mockReturnValue({
+        enabled: true,
+        name: "control",
+      })
+
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          internalID: "artist-id",
+        }),
+      })
+
+      expect(
+        screen.getByTestId("follow-button-with-tooltip"),
+      ).toBeInTheDocument()
+    })
+
+    it("renders without tooltip in experiment variant", () => {
+      mockUseVariant.mockReturnValue({
+        enabled: true,
+        name: "experiment",
+      })
+
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          internalID: "artist-id",
+        }),
+      })
+
+      expect(
+        screen.getByTestId("follow-button-without-tooltip"),
+      ).toBeInTheDocument()
     })
   })
 })

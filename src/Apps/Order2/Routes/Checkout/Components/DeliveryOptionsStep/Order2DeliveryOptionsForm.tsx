@@ -9,7 +9,6 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
@@ -21,6 +20,7 @@ import {
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -67,8 +67,6 @@ export const Order2DeliveryOptionsForm: React.FC<
   const deliveryOptions = fulfillmentOptions.filter(
     option => option.type !== "PICKUP",
   )
-
-  const isSingleOption = deliveryOptions.length === 1
 
   const handleSubmit: FormikConfig<FormValues>["onSubmit"] = async ({
     deliveryOption,
@@ -132,7 +130,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                 </>
               )}
               <Flex flexDirection="column">
-                <Flex>
+                <Flex alignItems="center">
                   <SectionHeading>Shipping method</SectionHeading>
 
                   <Tooltip
@@ -142,19 +140,12 @@ export const Order2DeliveryOptionsForm: React.FC<
                     pointer={true}
                     content={
                       <Text variant="xs">
-                        Shipping methods depend on location and artwork size. If
-                        shipped internationally or part of a show, delivery may
-                        take longer.
+                        Shipping options depend on location and artwork size.
+                        International orders or works in shows may take longer.
                       </Text>
                     }
                   >
-                    <Clickable
-                      height={20}
-                      width={40}
-                      ml={0.5}
-                      style={{ lineHeight: 0 }}
-                      alignContent="center"
-                    >
+                    <Clickable ml={0.5}>
                       <InfoIcon />
                     </Clickable>
                   </Tooltip>
@@ -187,10 +178,17 @@ export const Order2DeliveryOptionsForm: React.FC<
 
                 <Spacer y={2} />
 
-                {isSingleOption ? (
+                {deliveryOptions.length === 1 ? (
                   <SingleShippingOption option={deliveryOptions[0]} />
-                ) : (
+                ) : deliveryOptions.length > 1 ? (
                   <MultipleShippingOptionsForm options={deliveryOptions} />
+                ) : (
+                  <Flex flexDirection="column">
+                    <Text variant="sm-display" color="mono100">
+                      Unable to find shipping quotes. Please contact
+                      orders@artsy.net.
+                    </Text>
+                  </Flex>
                 )}
               </Flex>
 
@@ -198,6 +196,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 
               <Button
                 loading={isSubmitting}
+                disabled={deliveryOptions.length === 0}
                 variant="primaryBlack"
                 width="100%"
               >
