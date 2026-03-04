@@ -195,6 +195,8 @@ const goToOrder2CheckoutIfEnabled: OrderPredicate = ({
   }
 }
 
+export const CHECKOUT_REDESIGN_FLAG = "emerald_checkout-redesign"
+
 // Temporary type to allow orders queried for the new checkout page to work here
 interface Order2RedirectArgs {
   order: { mode?: string | null }
@@ -204,21 +206,8 @@ export const newCheckoutEnabled = ({
   order,
   featureFlags,
 }: Order2RedirectArgs): boolean => {
-  if (
-    order.mode === "BUY" &&
-    featureFlags?.isEnabled("emerald_checkout-redesign")
-  ) {
-    return true
-  }
-
-  if (
-    order.mode === "OFFER" &&
-    featureFlags?.isEnabled("emerald_checkout-redesign")
-  ) {
-    return true
-  }
-
-  return false
+  const variant = featureFlags?.getVariant(CHECKOUT_REDESIGN_FLAG)
+  return !!(variant?.enabled && variant?.name === "experiment")
 }
 
 export const redirects: RedirectRecord<OrderQuery> = {
