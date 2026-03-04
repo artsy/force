@@ -9,7 +9,7 @@ const STORAGE_KEY = "unleash_overrides"
 
 describe("featureFlagOverrides", () => {
   beforeEach(() => {
-    sessionStorage.clear()
+    localStorage.clear()
   })
 
   describe("parseUnleashParam", () => {
@@ -61,50 +61,50 @@ describe("featureFlagOverrides", () => {
     it("does nothing when the unleash param is absent", () => {
       setURL("")
       syncOverridesFromURL()
-      expect(sessionStorage.getItem(STORAGE_KEY)).toBeNull()
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull()
     })
 
-    it("writes parsed overrides to sessionStorage", () => {
+    it("writes parsed overrides to localStorage", () => {
       setURL("?unleash=my-flag:true")
       syncOverridesFromURL()
-      expect(JSON.parse(sessionStorage.getItem(STORAGE_KEY)!)).toEqual({
+      expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!)).toEqual({
         "my-flag": "true",
       })
     })
 
     it("merges with existing overrides", () => {
-      sessionStorage.setItem(
+      localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({ "existing-flag": "control" })
       )
       setURL("?unleash=new-flag:experiment")
       syncOverridesFromURL()
-      expect(JSON.parse(sessionStorage.getItem(STORAGE_KEY)!)).toEqual({
+      expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!)).toEqual({
         "existing-flag": "control",
         "new-flag": "experiment",
       })
     })
 
     it("overwrites existing values for the same flag", () => {
-      sessionStorage.setItem(
+      localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({ "my-flag": "control" })
       )
       setURL("?unleash=my-flag:experiment")
       syncOverridesFromURL()
-      expect(JSON.parse(sessionStorage.getItem(STORAGE_KEY)!)).toEqual({
+      expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!)).toEqual({
         "my-flag": "experiment",
       })
     })
 
     it("clears all overrides when the unleash param is empty", () => {
-      sessionStorage.setItem(
+      localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({ "my-flag": "true" })
       )
       setURL("?unleash=")
       syncOverridesFromURL()
-      expect(sessionStorage.getItem(STORAGE_KEY)).toBeNull()
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull()
     })
   })
 
@@ -114,7 +114,7 @@ describe("featureFlagOverrides", () => {
     })
 
     it("returns stored overrides", () => {
-      sessionStorage.setItem(
+      localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({ "my-flag": "true" })
       )
@@ -122,7 +122,7 @@ describe("featureFlagOverrides", () => {
     })
 
     it("returns an empty object on corrupted storage", () => {
-      sessionStorage.setItem(STORAGE_KEY, "not-json")
+      localStorage.setItem(STORAGE_KEY, "not-json")
       expect(getOverrides()).toEqual({})
     })
   })
@@ -133,7 +133,7 @@ describe("featureFlagOverrides", () => {
     })
 
     it("returns the override value for an overridden flag", () => {
-      sessionStorage.setItem(
+      localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({ "my-flag": "experiment" })
       )

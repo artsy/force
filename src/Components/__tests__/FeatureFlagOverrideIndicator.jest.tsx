@@ -6,7 +6,7 @@ const STORAGE_KEY = "unleash_overrides"
 
 describe("FeatureFlagOverrideIndicator", () => {
   beforeEach(() => {
-    sessionStorage.clear()
+    localStorage.clear()
   })
 
   const renderComponent = () => {
@@ -23,7 +23,7 @@ describe("FeatureFlagOverrideIndicator", () => {
   })
 
   it("renders badge when overrides are present", () => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ "my-flag": "true" }),
     )
@@ -32,7 +32,7 @@ describe("FeatureFlagOverrideIndicator", () => {
   })
 
   it("shows plural text for multiple overrides", () => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ "flag-a": "true", "flag-b": "experiment" }),
     )
@@ -41,7 +41,7 @@ describe("FeatureFlagOverrideIndicator", () => {
   })
 
   it("expands to show flag details when badge is clicked", () => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ "my-flag": "experiment" }),
     )
@@ -56,7 +56,7 @@ describe("FeatureFlagOverrideIndicator", () => {
   })
 
   it("clears overrides and hides indicator when 'Clear all' is clicked", () => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ "my-flag": "true" }),
     )
@@ -67,12 +67,12 @@ describe("FeatureFlagOverrideIndicator", () => {
     // Clear
     fireEvent.click(screen.getByText("Clear all"))
 
-    expect(sessionStorage.getItem(STORAGE_KEY)).toBeNull()
+    expect(localStorage.getItem(STORAGE_KEY)).toBeNull()
     expect(screen.queryByText(/override/)).not.toBeInTheDocument()
   })
 
   it("collapses panel when badge is clicked again", () => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ "my-flag": "true" }),
     )

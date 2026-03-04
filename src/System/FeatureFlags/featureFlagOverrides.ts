@@ -26,7 +26,7 @@ export function parseUnleashParam(param: string): Overrides {
 }
 
 /**
- * Read `?unleash=` from the current URL and sync into sessionStorage.
+ * Read `?unleash=` from the current URL and sync into localStorage.
  *
  * - New overrides are merged with existing ones so you can build up
  *   overrides across multiple navigations.
@@ -43,21 +43,21 @@ export function syncOverridesFromURL(): void {
   const raw = params.get("unleash") ?? ""
 
   if (raw === "") {
-    sessionStorage.removeItem(STORAGE_KEY)
+    localStorage.removeItem(STORAGE_KEY)
     return
   }
 
   const parsed = parseUnleashParam(raw)
   const existing = getOverrides()
   const merged = { ...existing, ...parsed }
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
 }
 
 export function getOverrides(): Overrides {
   if (typeof window === "undefined") return {}
 
   try {
-    const stored = sessionStorage.getItem(STORAGE_KEY)
+    const stored = localStorage.getItem(STORAGE_KEY)
     return stored ? JSON.parse(stored) : {}
   } catch {
     return {}
@@ -70,5 +70,5 @@ export function getOverride(flagName: string): string | undefined {
 
 export function clearOverrides(): void {
   if (typeof window === "undefined") return
-  sessionStorage.removeItem(STORAGE_KEY)
+  localStorage.removeItem(STORAGE_KEY)
 }
