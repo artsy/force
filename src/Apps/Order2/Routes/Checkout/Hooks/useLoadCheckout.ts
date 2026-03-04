@@ -6,10 +6,7 @@ import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/Check
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
-import {
-  handleBackNavigation,
-  preventHardReload,
-} from "Apps/Order2/Utils/navigationGuards"
+import { setNavigationGuardsEnabled } from "Apps/Order2/Order2App"
 import createLogger from "Utils/logger"
 import type {
   useLoadCheckout_order$data,
@@ -35,6 +32,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     isLoading,
     setLoadingComplete,
     expressCheckoutPaymentMethods,
+    expressCheckoutState,
     steps,
   } = useCheckoutContext()
 
@@ -70,32 +68,22 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     }
   }, [isLoading])
 
-  // Navigation guards - prevent accidental navigation away from checkout
-  // except during loading or error
-  useEffect(() => {
-    // Don't set up guards if there's a critical error or still loading
-    if (isLoading || checkoutModalError) {
-      return
-    }
-
-    window.addEventListener("beforeunload", preventHardReload)
-    window.history.pushState(null, "", window.location.pathname)
-    window.addEventListener("popstate", handleBackNavigation)
-
-    return () => {
-      window.removeEventListener("beforeunload", preventHardReload)
-      window.removeEventListener("popstate", handleBackNavigation)
-    }
-  }, [isLoading, checkoutModalError])
-
-  // If a critical error occurs, immediately remove any existing guards
+  // If a critical error occurs, disable navigation guards so the user can leave
   useEffect(() => {
     if (checkoutModalError) {
-      window.removeEventListener("beforeunload", preventHardReload)
-      window.removeEventListener("popstate", handleBackNavigation)
-      window.onbeforeunload = null
+      setNavigationGuardsEnabled(false)
     }
   }, [checkoutModalError])
+
+  // Disable navigation guards while express checkout (Apple Pay / Google Pay)
+  // modal is open so the browser back button doesn't show a confirmation dialog
+  useEffect(() => {
+    if (expressCheckoutState !== null) {
+      setNavigationGuardsEnabled(false)
+    } else {
+      setNavigationGuardsEnabled(true)
+    }
+  }, [expressCheckoutState])
 
   // Validate order and get into good initial checkout state on load
   useEffect(() => {
