@@ -46,6 +46,7 @@ import { Sticky } from "Components/Sticky"
 import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
@@ -399,7 +400,7 @@ export const BaseArtworkFilter: React.FC<
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
         <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-          {({ stuck, scrollDirection }) => {
+          {({ scrollDirection }) => {
             return (
               <FullBleed style={backdrop[scrollDirection]}>
                 <AppContainer>
@@ -451,7 +452,6 @@ export const BaseArtworkFilter: React.FC<
 
                           <ArtworkFiltersQuick
                             featuredKeywords={featuredKeywords}
-                            {...(stuck ? { offset: 20 } : {})}
                           />
                         </Flex>
                       </HorizontalOverflow>
@@ -498,7 +498,7 @@ export const BaseArtworkFilter: React.FC<
                             </div>
                           ))}
 
-                        <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />
+                        <ArtworkFilterSort />
                       </Flex>
 
                       <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
