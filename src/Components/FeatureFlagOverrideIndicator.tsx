@@ -5,8 +5,6 @@ import {
 } from "System/FeatureFlags/featureFlagOverrides"
 import { useState } from "react"
 
-const BLUE = "#1023D7"
-
 export const FeatureFlagOverrideIndicator: React.FC = () => {
   const [overrides, setOverrides] = useState(() => getOverrides())
   const [isExpanded, setIsExpanded] = useState(false)
@@ -31,7 +29,7 @@ export const FeatureFlagOverrideIndicator: React.FC = () => {
         right={0}
         bottom={0}
         style={{
-          boxShadow: `inset 0 0 0 2px ${BLUE}`,
+          boxShadow: "inset 0 0 0 4px rgba(16, 35, 215, 0.25)",
           pointerEvents: "none",
           zIndex: 9999,
         }}
@@ -51,10 +49,12 @@ export const FeatureFlagOverrideIndicator: React.FC = () => {
           <Box
             p={2}
             mb={0.5}
-            bg="white100"
             style={{
+              background: "rgba(255, 255, 255, 0.85)",
+              backdropFilter: "blur(8px)",
               borderRadius: "8px",
-              boxShadow: `0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px ${BLUE}`,
+              boxShadow:
+                "0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(16, 35, 215, 0.3)",
             }}
           >
             <Text variant="xs" fontWeight="bold" mb={1}>
@@ -90,12 +90,14 @@ export const FeatureFlagOverrideIndicator: React.FC = () => {
           <Flex
             px={1.5}
             py={0.5}
-            bg="white100"
             alignItems="center"
             gap={0.5}
             style={{
+              background: "rgba(255, 255, 255, 0.85)",
+              backdropFilter: "blur(8px)",
               borderRadius: "16px",
-              boxShadow: `0 2px 8px rgba(0, 0, 0, 0.15), 0 0 0 1.5px ${BLUE}`,
+              boxShadow:
+                "0 2px 8px rgba(0, 0, 0, 0.15), 0 0 0 1.5px rgba(16, 35, 215, 0.3)",
             }}
           >
             <Box
