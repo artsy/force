@@ -221,10 +221,10 @@ export const ArtworkApp: React.FC<React.PropsWithChildren<Props>> = props => {
    * the `trackingMiddleware` file as we need to pass along additional metadata.
    *
    */
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
   useEffect(() => {
     track()
-  }, [track])
+  }, [])
 
   if (match?.location?.query?.creating_order) {
     return (
