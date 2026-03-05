@@ -65,7 +65,7 @@ const ArtistEditorialNewsGrid: FC<
           description="Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy."
           action={{
             label: "Browse Artsy Editorial",
-            href: "/editorial",
+            href: "/articles",
           }}
         />
       )
