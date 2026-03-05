@@ -244,8 +244,8 @@ describe("canonicalSlugRedirect", () => {
     })
 
     expect(result).toBeDefined()
-    expect(result!.type).toBeDefined()
-    expect(result!.props.code).toBe(404)
+    const errorPage = result!.props.children[1]
+    expect(errorPage.props.code).toBe(404)
     expect(updateContext).toHaveBeenCalledWith("statusCode", 404)
   })
 
@@ -261,7 +261,8 @@ describe("canonicalSlugRedirect", () => {
     })
 
     expect(result).toBeDefined()
-    expect(result!.props.code).toBe(500)
+    const errorPage = result!.props.children[1]
+    expect(errorPage.props.code).toBe(500)
     expect(updateContext).toHaveBeenCalledWith("statusCode", 500)
   })
 })

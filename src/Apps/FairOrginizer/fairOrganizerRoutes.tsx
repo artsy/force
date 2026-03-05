@@ -3,8 +3,9 @@ import { ErrorPage } from "Components/ErrorPage"
 import type { RouteProps } from "System/Router/Route"
 import {
   type RenderArgs,
+  defaultErrorRender,
   renderRouteError,
-} from "System/Router/Utils/canonicalSlugRedirect"
+} from "System/Router/Utils/renderRouteError"
 import { extractNodes } from "Utils/extractNodes"
 import type { fairOrganizerRoutes_FairOrganizerQuery$data } from "__generated__/fairOrganizerRoutes_FairOrganizerQuery.graphql"
 import { RedirectException, type RenderProps } from "found"
@@ -96,6 +97,7 @@ export const fairOrganizerRoutes: RouteProps[] = [
       const { page } = location.query
       return { page, slug }
     },
+    render: defaultErrorRender,
     query: graphql`
       query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(
         $slug: String!

@@ -6,7 +6,7 @@ import type { RouteProps } from "System/Router/Route"
 import {
   type RenderArgs,
   renderRouteError,
-} from "System/Router/Utils/canonicalSlugRedirect"
+} from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 

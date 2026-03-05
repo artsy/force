@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { Redirect } from "found"
 import { graphql } from "react-relay"
 
@@ -55,6 +56,7 @@ export const auctionRoutes: RouteProps[] = [
     onPreloadJS: () => {
       AuctionApp.preload()
     },
+    render: defaultErrorRender,
     query: graphql`
       query auctionRoutes_TopLevelQuery($slug: String!, $isLoggedIn: Boolean!) {
         me {

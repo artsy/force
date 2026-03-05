@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const PressApp = loadable(
@@ -17,6 +18,7 @@ export const pressRoutes: RouteProps[] = [
     onPreloadJS: () => {
       PressApp.preload()
     },
+    render: defaultErrorRender,
     query: graphql`
       query pressRoutes_InTheMediaQuery {
         page(id: "in-the-media") @principalField {
@@ -32,6 +34,7 @@ export const pressRoutes: RouteProps[] = [
     onPreloadJS: () => {
       PressApp.preload()
     },
+    render: defaultErrorRender,
     query: graphql`
       query pressRoutes_PressReleasesQuery {
         page(id: "news-and-press-releases") @principalField {

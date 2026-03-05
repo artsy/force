@@ -1,10 +1,11 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { checkForCanonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import {
   type RenderArgs,
-  checkForCanonicalSlugRedirect,
+  defaultErrorRender,
   renderRouteError,
-} from "System/Router/Utils/canonicalSlugRedirect"
+} from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -126,6 +127,7 @@ export const partnerRoutes: RouteProps[] = [
         onPreloadJS: () => {
           OverviewRoute.preload()
         },
+        render: defaultErrorRender,
         query: graphql`
           query partnerRoutes_OverviewQuery($partnerId: String!) @cacheable {
             partner(id: $partnerId) @principalField {
@@ -193,6 +195,7 @@ export const partnerRoutes: RouteProps[] = [
         onPreloadJS: () => {
           ViewingRoomsRoute.preload()
         },
+        render: defaultErrorRender,
         query: graphql`
           query partnerRoutes_ViewingRoomsQuery($partnerId: String!)
           @cacheable {

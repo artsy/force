@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { MAX_TIMELY_SHOWS_PER_PARTNER } from "Apps/Shows/constants"
 import type { RouteProps } from "System/Router/Route"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { PLACE_REDIRECTS } from "./redirects"
@@ -93,6 +94,7 @@ export const showsRoutes: RouteProps[] = [
               slug === "online" ? MAX_TIMELY_SHOWS_PER_PARTNER : undefined,
           }
         },
+        render: defaultErrorRender,
         query: graphql`
           query showsRoutes_ShowsCityQuery(
             $slug: String!

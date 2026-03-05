@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const PageApp = loadable(
@@ -40,6 +41,7 @@ const PAGE_ROUTE_CONFIG = {
   onPreloadJS: () => {
     PageApp.preload()
   },
+  render: defaultErrorRender,
   query: graphql`
     query pageRoutes_PageQuery($id: ID!) @cacheable {
       page(id: $id) @principalField {

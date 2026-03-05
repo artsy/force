@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
 import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -71,6 +72,7 @@ export const fairRoutes: RouteProps[] = [
         onPreloadJS: () => {
           FairOverviewRoute.preload()
         },
+        render: defaultErrorRender,
         query: graphql`
           query fairRoutes_FairOverviewQuery($slug: String!) @cacheable {
             fair(id: $slug) @principalField {
@@ -85,6 +87,7 @@ export const fairRoutes: RouteProps[] = [
         onPreloadJS: () => {
           FairExhibitorsRoute.preload()
         },
+        render: defaultErrorRender,
         query: graphql`
           query fairRoutes_FairExhibitorsQuery($slug: String!) @cacheable {
             fair(id: $slug) @principalField {
@@ -133,6 +136,7 @@ export const fairRoutes: RouteProps[] = [
         onPreloadJS: () => {
           FairArticlesRoute.preload()
         },
+        render: defaultErrorRender,
         query: graphql`
           query fairRoutes_FaiArticlesQuery($slug: String!) @cacheable {
             fair(id: $slug) @principalField {

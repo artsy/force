@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { RedirectException, type RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
 
@@ -26,6 +27,7 @@ export const articleRoutes: RouteProps[] = [
     onPreloadJS: () => {
       ArticleApp.preload()
     },
+    render: defaultErrorRender,
     query: graphql`
       query articleRoutes_ArticleQuery($id: String!) {
         article(id: $id) @principalField {

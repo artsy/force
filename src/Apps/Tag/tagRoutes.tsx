@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const TagApp = loadable(
@@ -16,7 +17,7 @@ export const tagRoutes: RouteProps[] = [
     onPreloadJS: () => {
       TagApp.preload()
     },
-
+    render: defaultErrorRender,
     query: graphql`
       query tagRoutes_TagQuery($slug: String!) @cacheable {
         tag(id: $slug) @principalField {

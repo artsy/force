@@ -1,8 +1,7 @@
-import { Spacer } from "@artsy/palette"
-import { ErrorPage } from "Components/ErrorPage"
-import { updateContext } from "Server/context"
 import { RedirectException } from "found"
 import type { Match } from "found"
+import type { RenderArgs } from "System/Router/Utils/renderRouteError"
+import { renderRouteError } from "System/Router/Utils/renderRouteError"
 
 interface CanonicalSlugRedirectConfig {
   /** The entity field name in the props (e.g., "artist", "gene", "partner") */
@@ -11,34 +10,6 @@ interface CanonicalSlugRedirectConfig {
   paramName: string
   /** The base path for the redirect URL (e.g., "/artist", "/gene", "/partner") */
   basePath: string
-}
-
-export interface RenderArgs {
-  Component?: React.ComponentType<any>
-  props?: Record<string, any>
-  match: Match
-  error?: { status?: number; data?: any } | null
-}
-
-/**
- * Handles a route-level error by setting the HTTP status code and rendering
- * an ErrorPage. Use this in route render functions that check the `error` arg.
- *
- * Returns JSX if there's an error (caller should return it), or null if no error.
- */
-export function renderRouteError(
-  error: RenderArgs["error"],
-): React.JSX.Element | null {
-  if (!error) return null
-
-  const status = error.status || 500
-  updateContext("statusCode", status)
-  return (
-    <>
-      <Spacer y={4} />
-      <ErrorPage code={status} />
-    </>
-  )
 }
 
 /**
