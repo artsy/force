@@ -5,6 +5,7 @@ import {
   Clickable,
   Flex,
   Radio,
+  RadioGroup,
   Spacer,
   Text,
   Tooltip,
@@ -272,7 +273,15 @@ const MultipleShippingOptionsForm = ({
   const { checkoutTracking } = useCheckoutContext()
 
   return (
-    <Flex flexDirection="column">
+    <RadioGroup
+      flexDirection="column"
+      defaultValue={defaultOption}
+      onSelect={option => {
+        setSelectedOption(option)
+        setFieldValue("deliveryOption", option)
+        checkoutTracking.clickedSelectShippingOption(option.type)
+      }}
+    >
       {options.map((option, i) => {
         const label = deliveryOptionLabel(option.type)
         const timeEstimate = deliveryOptionTimeEstimate(option.type)
@@ -280,15 +289,7 @@ const MultipleShippingOptionsForm = ({
         const isSelected = selectedOption === option
 
         return (
-          <RadioOptionRow
-            key={`${option.type}:${i}`}
-            isSelected={isSelected}
-            onClick={() => {
-              setSelectedOption(option)
-              setFieldValue("deliveryOption", option)
-              checkoutTracking.clickedSelectShippingOption(option.type)
-            }}
-          >
+          <RadioOptionRow key={`${option.type}:${i}`} value={option}>
             <Radio
               flex={1}
               label={
@@ -300,7 +301,6 @@ const MultipleShippingOptionsForm = ({
                 </>
               }
               value={option}
-              selected={isSelected}
             >
               <Flex width="100%">
                 <Flex flexDirection="column">
@@ -322,6 +322,6 @@ const MultipleShippingOptionsForm = ({
           </RadioOptionRow>
         )
       })}
-    </Flex>
+    </RadioGroup>
   )
 }

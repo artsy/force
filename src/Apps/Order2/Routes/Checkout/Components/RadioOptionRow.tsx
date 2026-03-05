@@ -1,9 +1,12 @@
 import { Flex } from "@artsy/palette"
+import React from "react"
 
 interface RadioOptionRowProps {
-  isSelected: boolean
   onClick?: () => void
   children: React.ReactNode
+  value?: unknown
+  onSelect?: (args: { selected: boolean; value: unknown }) => void
+  selected?: boolean
 }
 
 /**
@@ -11,17 +14,26 @@ interface RadioOptionRowProps {
  * handler to `onClick` so the entire row is clickable, NOT the radio itself.
  */
 export const RadioOptionRow: React.FC<RadioOptionRowProps> = ({
-  isSelected,
   onClick,
+  onSelect,
+  selected = false,
+  value: _value,
   children,
 }) => {
+  const [radioChild, ...otherChildren] = React.Children.toArray(children)
+  const clonedRadio = React.cloneElement(radioChild as React.ReactElement, {
+    onSelect,
+    selected,
+  })
+
   return (
     <Flex
-      backgroundColor={isSelected ? "mono5" : "mono0"}
+      backgroundColor={selected ? "mono5" : "mono0"}
       p={1}
       onClick={onClick}
     >
-      {children}
+      {clonedRadio}
+      {otherChildren}
     </Flex>
   )
 }

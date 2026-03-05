@@ -4,6 +4,7 @@ import {
   Clickable,
   Flex,
   Radio,
+  RadioGroup,
   Spacer,
   Text,
   usePrevious,
@@ -225,54 +226,54 @@ export const SavedAddressOptions = ({
 
       <Spacer y={2} />
 
-      {savedAddresses.map(processedAddress => {
-        const { address, internalID, phoneNumberParsed } = processedAddress
-        const isSelected = selectedAddress?.internalID === internalID
-        const textColor = isSelected ? "mono100" : "mono60"
+      <RadioGroup
+        defaultValue={initialSelectedAddress}
+        onSelect={address => handleAddressClick(address)}
+      >
+        {savedAddresses.map(processedAddress => {
+          const { address, internalID, phoneNumberParsed } = processedAddress
+          const isSelected = selectedAddress?.internalID === internalID
+          const textColor = isSelected ? "mono100" : "mono60"
 
-        return (
-          <RadioOptionRow
-            key={internalID}
-            isSelected={isSelected}
-            onClick={() => handleAddressClick(processedAddress)}
-          >
-            <Radio
-              flex={1}
-              value={internalID}
-              selected={isSelected}
-              label={
-                <AddressDisplay
-                  address={address}
-                  phoneNumber={phoneNumberParsed?.display}
-                  textColor={textColor}
-                />
-              }
-            />
+          return (
+            <RadioOptionRow key={internalID} value={processedAddress}>
+              <Radio
+                flex={1}
+                value={processedAddress}
+                label={
+                  <AddressDisplay
+                    address={address}
+                    phoneNumber={phoneNumberParsed?.display}
+                    textColor={textColor}
+                  />
+                }
+              />
 
-            <Clickable
-              alignSelf="flex-start"
-              type="button"
-              aria-label={`Edit address for ${address.name}`}
-              onClick={e => {
-                e.stopPropagation()
-                setUserAddressMode({
-                  mode: "edit",
-                  address: processedAddress,
-                })
-              }}
-            >
-              <Text
-                style={{ textDecoration: "underline" }}
-                variant="sm"
-                fontWeight="normal"
-                color={textColor}
+              <Clickable
+                alignSelf="flex-start"
+                type="button"
+                aria-label={`Edit address for ${address.name}`}
+                onClick={e => {
+                  e.stopPropagation()
+                  setUserAddressMode({
+                    mode: "edit",
+                    address: processedAddress,
+                  })
+                }}
               >
-                Edit
-              </Text>
-            </Clickable>
-          </RadioOptionRow>
-        )
-      })}
+                <Text
+                  style={{ textDecoration: "underline" }}
+                  variant="sm"
+                  fontWeight="normal"
+                  color={textColor}
+                >
+                  Edit
+                </Text>
+              </Clickable>
+            </RadioOptionRow>
+          )
+        })}
+      </RadioGroup>
 
       <Spacer y={2} />
 

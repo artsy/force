@@ -1,4 +1,4 @@
-import { Flex, Radio, Spacer, Text } from "@artsy/palette"
+import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
@@ -178,67 +178,61 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
     setSelectedRadio(value as PriceOptionKey)
   }
 
-  return (
-    <Flex flexDirection="column">
-      {priceOptions.map(({ value: optionValue, description, key }) => {
-        const isSelected = selectedRadio === key
-        const isGalleryOffer =
-          isLimitedPartnerOffer && key === PriceOptionKey.MAX
-        const showTimer = isGalleryOffer && timer.hasValidRemainingTime
-        return (
-          <RadioOptionRow
-            key={key}
-            isSelected={isSelected}
-            onClick={() => handleRadioSelect(key)}
+  const radioOptions = [
+    ...priceOptions.map(({ value: optionValue, description, key }) => {
+      const isGalleryOffer =
+        isLimitedPartnerOffer && key === PriceOptionKey.MAX
+      const showTimer = isGalleryOffer && timer.hasValidRemainingTime
+      return (
+        <RadioOptionRow key={key} value={key}>
+          <Radio
+            flex={1}
+            value={key}
+            label={
+              isGalleryOffer ? (
+                <Text variant="sm-display" color="blue100">
+                  {formatCurrency(optionValue)}
+                </Text>
+              ) : (
+                formatCurrency(optionValue)
+              )
+            }
           >
-            <Radio
-              flex={1}
-              value={key}
-              selected={isSelected}
-              label={
-                isGalleryOffer ? (
-                  <Text variant="sm-display" color="blue100">
-                    {formatCurrency(optionValue)}
-                  </Text>
-                ) : (
-                  formatCurrency(optionValue)
-                )
-              }
+            <Spacer y={0.5} />
+            <Text
+              variant="sm-display"
+              color={isGalleryOffer ? "blue100" : "mono60"}
             >
-              <Spacer y={0.5} />
-              <Text
-                variant="sm-display"
-                color={isGalleryOffer ? "blue100" : "mono60"}
-              >
-                {description}
-                {showTimer && ` (Exp. ${timer.remainingTime})`}
-              </Text>
-            </Radio>
-          </RadioOptionRow>
-        )
-      })}
-      <RadioOptionRow
-        isSelected={selectedRadio === PriceOptionKey.CUSTOM}
-        onClick={() => handleRadioSelect(PriceOptionKey.CUSTOM)}
+              {description}
+              {showTimer && ` (Exp. ${timer.remainingTime})`}
+            </Text>
+          </Radio>
+        </RadioOptionRow>
+      )
+    }),
+    <RadioOptionRow key={PriceOptionKey.CUSTOM} value={PriceOptionKey.CUSTOM}>
+      <Radio
+        flex={1}
+        value={PriceOptionKey.CUSTOM}
+        label="Other amount"
       >
-        <Radio
-          flex={1}
-          value={PriceOptionKey.CUSTOM}
-          selected={selectedRadio === PriceOptionKey.CUSTOM}
-          label="Other amount"
-        >
-          {selectedRadio === PriceOptionKey.CUSTOM && (
-            <Flex flexDirection="column" mt={2}>
-              <OfferInput
-                name="offerValue"
-                order={orderData}
-                onBlur={onCustomOfferBlur}
-              />
-            </Flex>
-          )}
-        </Radio>
-      </RadioOptionRow>
-    </Flex>
+        {selectedRadio === PriceOptionKey.CUSTOM && (
+          <Flex flexDirection="column" mt={2}>
+            <OfferInput
+              name="offerValue"
+              order={orderData}
+              onBlur={onCustomOfferBlur}
+            />
+          </Flex>
+        )}
+      </Radio>
+    </RadioOptionRow>,
+  ]
+
+  return (
+    <RadioGroup defaultValue={selectedRadio} onSelect={handleRadioSelect}>
+      {radioOptions}
+    </RadioGroup>
   )
 }
 
