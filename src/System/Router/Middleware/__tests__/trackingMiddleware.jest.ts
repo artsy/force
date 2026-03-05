@@ -212,4 +212,112 @@ describe("trackingMiddleware", () => {
       )
     })
   })
+
+  describe("referrer preservation across excluded paths", () => {
+    it("preserves the referrer from before an excluded path", () => {
+      const middleware = trackingMiddleware({
+        excludePaths: ["/artist/:artistID/auction-results"],
+      })
+
+      const storeWithReferrer = (pathname: string, search = "") => ({
+        getState: () => ({
+          found: {
+            match: { location: { pathname, search } },
+          },
+        }),
+      })
+
+      // Step 1: Navigate to excluded path from /auction-result/123
+      middleware(storeWithReferrer("/auction-result/123"))(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: { pathname: "/artist/andy-warhol/auction-results" },
+      })
+
+      expect(global.analytics.page).not.toBeCalled()
+
+      // Step 2: Redirect to the artist page — should use the original referrer
+      middleware(storeWithReferrer("/artist/andy-warhol/auction-results"))(
+        noop,
+      )({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: { pathname: "/artist/andy-warhol" },
+      })
+
+      expect(global.analytics.page).toBeCalledWith(
+        {
+          path: "/artist/andy-warhol",
+          referrer: "http://testing.com/auction-result/123",
+          url: "http://testing.com/artist/andy-warhol",
+        },
+        { integrations: { Marketo: false } },
+      )
+    })
+
+    it("clears the saved referrer after it is consumed", () => {
+      const middleware = trackingMiddleware({
+        excludePaths: ["/artist/:artistID/auction-results"],
+      })
+
+      const storeWithReferrer = (pathname: string) => ({
+        getState: () => ({
+          found: {
+            match: { location: { pathname, search: "" } },
+          },
+        }),
+      })
+
+      // Navigate through excluded path
+      middleware(storeWithReferrer("/auction-result/123"))(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: { pathname: "/artist/andy-warhol/auction-results" },
+      })
+
+      // Redirect consumes saved referrer
+      middleware(storeWithReferrer("/artist/andy-warhol/auction-results"))(
+        noop,
+      )({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: { pathname: "/artist/andy-warhol" },
+      })
+      ;(global.analytics.page as jest.Mock).mockClear()
+
+      // Subsequent navigation uses normal store referrer
+      middleware(storeWithReferrer("/artist/andy-warhol"))(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: { pathname: "/some-other-page" },
+      })
+
+      expect(global.analytics.page).toBeCalledWith(
+        {
+          path: "/some-other-page",
+          referrer: "http://testing.com/artist/andy-warhol",
+          url: "http://testing.com/some-other-page",
+        },
+        { integrations: { Marketo: false } },
+      )
+    })
+
+    it("does not update __artsyClientSideRoutingReferrer for excluded paths", () => {
+      const middleware = trackingMiddleware({
+        excludePaths: ["/artist/:artistID/about"],
+      })
+
+      const storeWithReferrer = (pathname: string) => ({
+        getState: () => ({
+          found: {
+            match: { location: { pathname, search: "" } },
+          },
+        }),
+      })
+
+      // Set initial referrer
+      middleware(storeWithReferrer("/some-page"))(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: { pathname: "/artist/picasso/about" },
+      })
+
+      // The excluded path should not have updated the global referrer
+      expect(window.analytics!.__artsyClientSideRoutingReferrer).toBeUndefined()
+    })
+  })
 })
