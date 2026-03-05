@@ -58,6 +58,10 @@ export const setupClientRouter = async (
         // Due to special needs, this page has its own page-view tracking implementation.
         // @see https://github.com/artsy/force/blob/2c0db041fa6cb50e9f747ea95860ad5c38290653/src/Apps/Artwork/ArtworkApp.tsx#L117-L121
         "/artwork(.*)",
+        // Deprecated artist sub-routes that redirect to the main artist page.
+        // Excluding these prevents an intermediate pageview before the redirect.
+        "/artist/:artistID/auction-results",
+        "/artist/:artistID/about",
       ],
       excludeReferrers: ["/\\?(.*)onboarding=true(.*)"],
     }),
