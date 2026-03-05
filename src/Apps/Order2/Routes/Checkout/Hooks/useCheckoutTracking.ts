@@ -201,7 +201,7 @@ export const useCheckoutTracking = ({
       clickedSelectShippingOption: (option: string) => {
         const payload: ClickedSelectShippingOption = {
           action: ActionType.clickedSelectShippingOption,
-          context_module: ContextModule.ordersShipping,
+          context_module: ContextModule.ordersShippingMethods,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
           subject: option,
