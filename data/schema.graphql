@@ -3514,6 +3514,9 @@ enum ArtworkImportError {
   ARTWORK_CREATION_FAILED
   DUPLICATE_IMAGE_FILENAMES
   INVALID_ARTIST_PROOF
+  INVALID_ARTSY_DOMESTIC_SHIPPING
+  INVALID_ARTSY_INTERNATIONAL_SHIPPING
+  INVALID_BUY_NOW
   INVALID_CERTIFICATE_OF_AUTHENTICITY
   INVALID_CLASSIFICATION
   INVALID_CURRENCY
@@ -3524,6 +3527,8 @@ enum ArtworkImportError {
   INVALID_DEPTH
   INVALID_DIAMETER
   INVALID_DIMENSION_METRIC
+  INVALID_DISPLAY_PRICE_RANGE
+  INVALID_DOMESTIC_SHIPPING
   INVALID_ESTIMATE
   INVALID_EXCLUDE_FROM_MARKETING
   INVALID_FRAMED_DEPTH
@@ -3532,12 +3537,19 @@ enum ArtworkImportError {
   INVALID_FRAMED_WIDTH
   INVALID_HEIGHT
   INVALID_HIGH_ESTIMATE
+  INVALID_INTERNATIONAL_SHIPPING
+  INVALID_INVENTORY_QUANTITY
+  INVALID_LOCATION
   INVALID_LOT_NUMBER
   INVALID_LOW_ESTIMATE
+  INVALID_MAKE_OFFER
   INVALID_MEDIUM
   INVALID_OPENING_BID
+  INVALID_PICKUP_AVAILABLE
   INVALID_POSITION
   INVALID_PRICE
+  INVALID_PRICE_MAX
+  INVALID_PRICE_MIN
   INVALID_RESERVE
   INVALID_RESERVE_UNKNOWN
   INVALID_SIGNATURE
@@ -3567,6 +3579,7 @@ type ArtworkImportRow {
   dateLatestYear: Int
   dateMode: DateMode
   dimensionMetric: String!
+  domesticShipping: Money
   errors: [ArtworkImportRowError!]!
   estimate: Money
   excludedFromImport: Boolean!
@@ -3578,9 +3591,12 @@ type ArtworkImportRow {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  internationalShipping: Money
   lowEstimate: Money
   openingBid: Money
   priceListed: Money
+  priceMax: Money
+  priceMin: Money
   rawData: JSON!
   reserve: Money
   transformedData: ArtworkImportTransformedData!
@@ -3687,11 +3703,14 @@ type ArtworkImportSummary {
 type ArtworkImportTransformedData {
   artistNames: String
   artistProofs: String
+  artsyDomesticShipping: String
+  artsyInternationalShipping: String
   artworkCondition: String
   artworkDescription: String
   artworkTitle: String
   availableEditions: [String]
   bibliography: String
+  buyNow: String
   certificateOfAuthenticity: String
   classification: String
   confidentialNotes: String
@@ -3705,6 +3724,8 @@ type ArtworkImportTransformedData {
   depth: String
   diameter: String
   dimensionMetric: String
+  displayPriceRange: String
+  domesticShipping: String
   editionSize: String
   estimate: String
   excludeFromMarketing: String
@@ -3718,14 +3739,21 @@ type ArtworkImportTransformedData {
   imageFileNames: String
   imageRights: String
   importSource: String
+  internationalShipping: String
   inventoryId: String
+  inventoryQuantity: String
+  location: String
   lotNumber: String
   lowEstimate: String
+  makeOffer: String
   materials: String
   medium: String
   openingBid: String
+  pickupAvailable: String
   position: String
   price: String
+  priceMax: String
+  priceMin: String
   provenance: String
   publisher: String
   reserve: String
