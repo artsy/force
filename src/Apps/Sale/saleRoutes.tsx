@@ -1,11 +1,12 @@
 import loadable from "@loadable/component"
 import { getArtworkFilterInputArgs } from "Apps/Sale/Components/getArtworkFilterInputArgs"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
-import { ErrorPage } from "Components/ErrorPage"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
-import { updateContext } from "Server/context"
 import type { RouteProps } from "System/Router/Route"
-import type { RenderArgs } from "System/Router/Utils/canonicalSlugRedirect"
+import {
+  type RenderArgs,
+  renderRouteError,
+} from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -69,11 +70,8 @@ export const saleRoutes: RouteProps[] = [
       },
       error,
     }: RenderArgs) => {
-      if (error) {
-        const status = error.status || 500
-        updateContext("statusCode", status)
-        return <ErrorPage code={status} />
-      }
+      const errorPage = renderRouteError(error)
+      if (errorPage) return errorPage
 
       if (!(Component && props)) {
         return undefined

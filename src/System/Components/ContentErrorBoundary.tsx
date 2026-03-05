@@ -79,7 +79,7 @@ export class ContentErrorBoundary extends React.Component<
   }
 
   static getDerivedStateFromError(
-    error: Error | HttpError
+    error: Error | HttpError,
   ): ContentErrorBoundaryState {
     if (error instanceof HttpError) {
       return {
@@ -127,26 +127,35 @@ Time: ${new Date().toUTCString()}`
 
       case "GenericError": {
         return (
-          <ErrorPage
-            code="Something Went Wrong"
-            message={message}
-            detail={detail}
-          >
-            <Spacer y={2} />
+          <>
+            <Spacer y={4} />
 
-            <Button
-              size="small"
-              variant="secondaryBlack"
-              onClick={handleClick}
+            <ErrorPage
+              code="Something Went Wrong"
+              message={message}
+              detail={detail}
             >
-              Reload
-            </Button>
-          </ErrorPage>
+              <Spacer y={2} />
+
+              <Button
+                size="small"
+                variant="secondaryBlack"
+                onClick={handleClick}
+              >
+                Reload
+              </Button>
+            </ErrorPage>
+          </>
         )
       }
 
       case "RouterError": {
-        return <ErrorPage code={code || 500} />
+        return (
+          <>
+            <Spacer y={4} />
+            <ErrorPage code={code || 500} />
+          </>
+        )
       }
 
       case "Pending": {

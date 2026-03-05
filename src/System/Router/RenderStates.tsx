@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { AppShell } from "Apps/Components/AppShell"
 import { ErrorPage } from "Components/ErrorPage"
 import { sentryRouterTracing } from "System/Utils/setupSentryClient"
@@ -48,6 +48,7 @@ export const renderStates = {
 
     return (
       <AppShell>
+        <Spacer y={4} />
         <ErrorPage code={status} message={message} />
       </AppShell>
     )
