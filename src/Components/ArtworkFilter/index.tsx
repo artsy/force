@@ -23,7 +23,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { useFlag, useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -143,11 +142,6 @@ export const BaseArtworkFilter: React.FC<
 }) => {
   const tracking = useTracking()
   const variant = useVariant("diamond_remove_tooltip_experiment")
-
-  useTrackFeatureVariantOnMount({
-    experimentName: "diamond_remove_tooltip_experiment",
-    variantName: variant?.name,
-  })
 
   const showTooltip = variant.name !== "experiment"
 

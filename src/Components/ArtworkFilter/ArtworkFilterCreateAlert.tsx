@@ -4,7 +4,6 @@ import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSea
 import { isEmpty } from "lodash"
 import type { FC, ReactNode } from "react"
 import { useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 interface ArtworkFilterCreateAlertProps {
   renderButton: (props: { onClick: () => void }) => JSX.Element
@@ -16,11 +15,6 @@ export const ArtworkFilterCreateAlert: FC<
 > = ({ renderButton, children }) => {
   const { entity } = useSavedSearchAlertContext()
   const variant = useVariant("diamond_remove_tooltip_experiment")
-
-  useTrackFeatureVariantOnMount({
-    experimentName: "diamond_remove_tooltip_experiment",
-    variantName: variant?.name,
-  })
 
   const showTooltip = variant.name !== "experiment"
 

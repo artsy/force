@@ -36,7 +36,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
@@ -50,10 +49,6 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
     useAnalyticsContext()
 
   const variant = useVariant("diamond_remove_tooltip_experiment")
-  useTrackFeatureVariantOnMount({
-    experimentName: "diamond_remove_tooltip_experiment",
-    variantName: variant?.name,
-  })
 
   const showTooltip = variant.name !== "experiment"
 
