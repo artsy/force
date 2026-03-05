@@ -94,6 +94,13 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     return !aggregation?.counts?.find(agg => agg?.name === key)
   }
 
+  const shouldShowPill = (key: string) => {
+    if (key === TOP_PILL.key) {
+      return true
+    }
+    return !!aggregation?.counts?.find(agg => agg?.name === key)
+  }
+
   const showNextChevronHandler = () => {
     if (pillsRef.current) {
       const pillsContainer = pillsRef.current
@@ -194,7 +201,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
         py={2}
         onScroll={handleScroll}
       >
-        {PILLS.map(pill => {
+        {PILLS.filter(pill => shouldShowPill(pill.key)).map(pill => {
           const { key, displayName } = pill
           const selected = selectedPill.key === pill.key
           const disabled = isPillDisabled(key)
