@@ -45,6 +45,7 @@ export const SavedPaymentMethodOption: React.FC<
         width="100%"
         style={{ cursor: "pointer", appearance: "none", textAlign: "left" }}
         onClick={onSelect}
+        aria-expanded={isSelected}
       >
         <HoverFlex alignItems="center">
           <HoverIcon />

@@ -47,6 +47,7 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
         width="100%"
         style={{ cursor: "pointer", appearance: "none", textAlign: "left" }}
         onClick={onSelect}
+        aria-expanded={isSelected}
         data-testid="PaymentFormWire"
       >
         <HoverFlex alignItems="center">
