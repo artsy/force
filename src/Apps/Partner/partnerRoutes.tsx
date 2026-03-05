@@ -1,6 +1,11 @@
 import loadable from "@loadable/component"
+import { ErrorPage } from "Components/ErrorPage"
+import { updateContext } from "Server/context"
 import type { RouteProps } from "System/Router/Route"
-import { checkForCanonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
+import {
+  type RenderArgs,
+  checkForCanonicalSlugRedirect,
+} from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -82,7 +87,13 @@ export const partnerRoutes: RouteProps[] = [
         }
       }
     `,
-    render: ({ Component, props, match }) => {
+    render: ({ Component, props, match, error }: RenderArgs) => {
+      if (error) {
+        const status = error.status || 500
+        updateContext("statusCode", status)
+        return <ErrorPage code={status} />
+      }
+
       if (!(Component && props)) {
         return undefined
       }
@@ -152,7 +163,13 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match }) => {
+        render: ({ Component, props, match, error }: RenderArgs) => {
+          if (error) {
+            const status = error.status || 500
+            updateContext("statusCode", status)
+            return <ErrorPage code={status} />
+          }
+
           if (!(Component && props)) {
             return
           }
@@ -214,7 +231,13 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match }) => {
+        render: ({ Component, props, match, error }: RenderArgs) => {
+          if (error) {
+            const status = error.status || 500
+            updateContext("statusCode", status)
+            return <ErrorPage code={status} />
+          }
+
           if (!(Component && props)) {
             return
           }
@@ -271,7 +294,13 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match }) => {
+        render: ({ Component, props, match, error }: RenderArgs) => {
+          if (error) {
+            const status = error.status || 500
+            updateContext("statusCode", status)
+            return <ErrorPage code={status} />
+          }
+
           const pageProps = props as any
 
           if (!(Component && pageProps && pageProps.partner)) {
@@ -315,7 +344,13 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match }) => {
+        render: ({ Component, props, match, error }: RenderArgs) => {
+          if (error) {
+            const status = error.status || 500
+            updateContext("statusCode", status)
+            return <ErrorPage code={status} />
+          }
+
           if (!(Component && props)) {
             return
           }
@@ -356,7 +391,13 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match }) => {
+        render: ({ Component, props, match, error }: RenderArgs) => {
+          if (error) {
+            const status = error.status || 500
+            updateContext("statusCode", status)
+            return <ErrorPage code={status} />
+          }
+
           if (!(Component && props)) {
             return undefined
           }

@@ -1,3 +1,5 @@
+import { ErrorPage } from "Components/ErrorPage"
+import { updateContext } from "Server/context"
 import { RedirectException } from "found"
 import type { Match } from "found"
 
@@ -10,10 +12,11 @@ interface CanonicalSlugRedirectConfig {
   basePath: string
 }
 
-interface RenderArgs {
+export interface RenderArgs {
   Component?: React.ComponentType<any>
   props?: Record<string, any>
   match: Match
+  error?: { status?: number; data?: any } | null
 }
 
 /**
@@ -47,7 +50,13 @@ interface RenderArgs {
 export function canonicalSlugRedirect(config: CanonicalSlugRedirectConfig) {
   const { entityName, paramName, basePath } = config
 
-  return ({ Component, props, match }: RenderArgs) => {
+  return ({ Component, props, match, error }: RenderArgs) => {
+    if (error) {
+      const status = error.status || 500
+      updateContext("statusCode", status)
+      return <ErrorPage code={status} />
+    }
+
     if (!Component || !props) return
 
     const entity = props[entityName] as { slug: string } | null | undefined

@@ -1,4 +1,5 @@
 import { Layout } from "Apps/Components/Layouts"
+import { ContentErrorBoundary } from "System/Components/ContentErrorBoundary"
 import { PageLoadingBar } from "System/Components/PageLoadingBar"
 import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
 import { NavigationHistoryProvider } from "System/Contexts/NavigationHistoryContext"
@@ -63,7 +64,11 @@ export const AppShell: React.FC<
         <AnalyticsContextProvider path={match?.location?.pathname}>
           <UseSetupAuth />
 
-          <Layout variant={routeConfig?.layout}>{children}</Layout>
+          <Layout variant={routeConfig?.layout}>
+            <ContentErrorBoundary pathname={match?.location?.pathname}>
+              {children}
+            </ContentErrorBoundary>
+          </Layout>
 
           {onboardingComponent}
         </AnalyticsContextProvider>

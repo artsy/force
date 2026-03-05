@@ -1,4 +1,7 @@
-import { Theme, injectGlobalStyles } from "@artsy/palette"
+import { Flex, Spacer, Text, Theme, injectGlobalStyles } from "@artsy/palette"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { ErrorPage } from "Components/ErrorPage"
 import { NODE_ENV, VERBOSE_LOGGING } from "Server/config"
@@ -74,18 +77,31 @@ Time: ${new Date().toUTCString()}`
   try {
     const sheet = new ServerStyleSheet()
 
+    // For 4xx errors, render within a full layout (nav + footer) so the user
+    // retains navigation context. For 5xx errors, use the minimal LayoutLogoOnly
+    // since the app itself may be broken.
+    const errorContent =
+      code < 500 ? (
+        <ErrorWithDefaultLayout
+          code={code}
+          message={message}
+          detail={displayStackTrace ? detail : undefined}
+        />
+      ) : (
+        <LayoutLogoOnly>
+          <ErrorPage
+            code={code}
+            message={message}
+            detail={displayStackTrace ? detail : undefined}
+          />
+        </LayoutLogoOnly>
+      )
+
     const html = renderToString(
       sheet.collectStyles(
         <Theme>
           <GlobalStyles />
-
-          <LayoutLogoOnly>
-            <ErrorPage
-              code={code}
-              message={message}
-              detail={displayStackTrace ? detail : undefined}
-            />
-          </LayoutLogoOnly>
+          {errorContent}
         </Theme>,
       ),
     )
@@ -104,4 +120,52 @@ Time: ${new Date().toUTCString()}`
     logger.error(err)
     res.status(code).send(enableLogging ? message : "")
   }
+}
+
+/**
+ * Renders an error page within a layout that mirrors LayoutDefault's structure
+ * (nav bar + content + footer) but uses static elements that don't require
+ * React context providers (SystemContext, StickyProvider, etc.).
+ */
+const ErrorWithDefaultLayout: React.FC<{
+  code: number
+  message: string
+  detail?: string
+}> = ({ code, message, detail }) => {
+  return (
+    <Flex
+      width="100%"
+      overflowX="hidden"
+      minHeight="100vh"
+      flexDirection="column"
+    >
+      <AppContainer>
+        <HorizontalPadding>
+          <Flex height={50} alignItems="center">
+            <a href="/" aria-label="Artsy">
+              <ArtsyMarkIcon height={40} width={40} />
+            </a>
+          </Flex>
+        </HorizontalPadding>
+      </AppContainer>
+
+      <AppContainer as="main" id="main" flex={1}>
+        <HorizontalPadding>
+          <ErrorPage code={code} message={message} detail={detail} />
+        </HorizontalPadding>
+      </AppContainer>
+
+      <Spacer y={4} />
+
+      <AppContainer>
+        <HorizontalPadding>
+          <Flex py={2} justifyContent="space-between">
+            <Text variant="xs" color="mono60">
+              &copy; {new Date().getFullYear()} Artsy
+            </Text>
+          </Flex>
+        </HorizontalPadding>
+      </AppContainer>
+    </Flex>
+  )
 }
