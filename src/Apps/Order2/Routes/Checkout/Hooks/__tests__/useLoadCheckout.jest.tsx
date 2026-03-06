@@ -104,7 +104,8 @@ describe("useLoadCheckout", () => {
   })
 
   afterEach(() => {
-    document.body.style.overflow = ""
+    document.body.style.removeProperty("overflow")
+    document.body.style.removeProperty("padding-right")
   })
 
   describe("scroll lock", () => {
@@ -119,6 +120,7 @@ describe("useLoadCheckout", () => {
       renderHook(() => useLoadCheckout(mockOrder))
 
       expect(document.body.style.overflow).toBe("hidden")
+      expect(document.body.style.paddingRight).toBe("1024px")
     })
 
     it("unlocks scroll when loading completes", () => {
@@ -133,12 +135,14 @@ describe("useLoadCheckout", () => {
       const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
 
       expect(document.body.style.overflow).toBe("hidden")
+      expect(document.body.style.paddingRight).toBe("1024px")
 
       // Simulate loading complete
       isLoading = false
       rerender()
 
       expect(document.body.style.overflow).toBe("")
+      expect(document.body.style.paddingRight).toBe("")
     })
 
     it("cleans up scroll lock on unmount", () => {
@@ -152,10 +156,12 @@ describe("useLoadCheckout", () => {
       const { unmount } = renderHook(() => useLoadCheckout(mockOrder))
 
       expect(document.body.style.overflow).toBe("hidden")
+      expect(document.body.style.paddingRight).toBe("1024px")
 
       unmount()
 
       expect(document.body.style.overflow).toBe("")
+      expect(document.body.style.paddingRight).toBe("")
     })
   })
 

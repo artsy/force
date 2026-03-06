@@ -55,16 +55,28 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const isExpressCheckoutLoaded =
     expressCheckoutPaymentMethodsReady || isInPostPaymentState
 
-  // Scroll lock during loading
+  // Scroll lock during loading.
+  // Pad the body by the scrollbar width while locked so the layout doesn't shift
+  // when the scrollbar appears on unlock (a scrollbar-width-wide shift otherwise occurs).
+  // Note: on very tall viewports where the real content doesn't need a scrollbar,
+  // the padding is measured at lock time when the skeleton is still showing (which
+  // always has a scrollbar due to header + 100vh skeleton > viewport). On those
+  // uncommon viewports the lock/unlock still produces a minor shift in the opposite
+  // direction, but this is an acceptable trade-off for the common case.
   useEffect(() => {
     if (isLoading) {
-      document.body.style.overflow = "hidden"
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth
+      document.body.style.setProperty("overflow", "hidden")
+      document.body.style.setProperty("padding-right", `${scrollbarWidth}px`)
     } else {
-      document.body.style.overflow = ""
+      document.body.style.removeProperty("overflow")
+      document.body.style.removeProperty("padding-right")
     }
 
     return () => {
-      document.body.style.overflow = ""
+      document.body.style.removeProperty("overflow")
+      document.body.style.removeProperty("padding-right")
     }
   }, [isLoading])
 

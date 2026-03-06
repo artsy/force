@@ -5,7 +5,6 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { Z } from "Apps/Components/constants"
 import { NavBarPrimaryLogo } from "Components/NavBar/NavBarPrimaryLogo"
-import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC } from "react"
 
@@ -28,9 +27,7 @@ export const LayoutCheckout: FC<React.PropsWithChildren<BaseLayoutProps>> = ({
           bg="mono0"
         >
           <HorizontalPadding>
-            <RouterLink to="/">
-              <NavBarPrimaryLogo />
-            </RouterLink>
+            <NavBarPrimaryLogo />
           </HorizontalPadding>
         </Box>
       )}
