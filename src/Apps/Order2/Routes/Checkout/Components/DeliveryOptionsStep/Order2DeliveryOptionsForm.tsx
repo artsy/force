@@ -282,44 +282,43 @@ const MultipleShippingOptionsForm = ({
         checkoutTracking.clickedSelectShippingOption(option.type)
       }}
     >
-      {options.map((option, i) => {
+      {options.map(option => {
         const label = deliveryOptionLabel(option.type)
         const timeEstimate = deliveryOptionTimeEstimate(option.type)
         const [prefix, timeRange] = timeEstimate || []
         const isSelected = selectedOption === option
 
         return (
-          <RadioOptionRow key={`${option.type}:${i}`} value={option}>
-            <Radio
-              flex={1}
-              label={
-                <>
-                  <Flex justifyContent="space-between" width="100%">
-                    <Text variant="sm-display">{label}</Text>
-                    <Text variant="sm">{option.amount?.display}</Text>
-                  </Flex>
-                </>
-              }
-              value={option}
-            >
-              <Flex width="100%">
-                <Flex flexDirection="column">
-                  {timeEstimate && (
-                    <Text variant="sm" color="mono60">
-                      {prefix} <strong>{timeRange}</strong>
-                    </Text>
-                  )}
-
-                  {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
-                    <Text variant="sm" color="mono60">
-                      This service includes custom packing, transportation on a
-                      fine art shuttle, and in-home delivery.
-                    </Text>
-                  )}
-                </Flex>
+          <Radio
+            key={option.type}
+            flex={1}
+            backgroundColor={isSelected ? "mono5" : "mono0"}
+            p={1}
+            label={
+              <Flex justifyContent="space-between" width="100%">
+                <Text variant="sm-display">{label}</Text>
+                <Text variant="sm">{option.amount?.display}</Text>
               </Flex>
-            </Radio>
-          </RadioOptionRow>
+            }
+            value={option}
+          >
+            <Flex width="100%">
+              <Flex flexDirection="column">
+                {timeEstimate && (
+                  <Text variant="sm" color="mono60">
+                    {prefix} <strong>{timeRange}</strong>
+                  </Text>
+                )}
+
+                {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
+                  <Text variant="sm" color="mono60">
+                    This service includes custom packing, transportation on a
+                    fine art shuttle, and in-home delivery.
+                  </Text>
+                )}
+              </Flex>
+            </Flex>
+          </Radio>
         )
       })}
     </RadioGroup>

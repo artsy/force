@@ -4,7 +4,6 @@ import {
   Clickable,
   Flex,
   Radio,
-  RadioGroup,
   Spacer,
   Text,
   usePrevious,
@@ -22,7 +21,6 @@ import {
   type ProcessedUserAddress,
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
-import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
@@ -226,20 +224,26 @@ export const SavedAddressOptions = ({
 
       <Spacer y={2} />
 
-      <RadioGroup
-        defaultValue={initialSelectedAddress}
-        onSelect={address => handleAddressClick(address)}
-      >
+      <Flex flexDirection="column">
         {savedAddresses.map(processedAddress => {
           const { address, internalID, phoneNumberParsed } = processedAddress
           const isSelected = selectedAddress?.internalID === internalID
           const textColor = isSelected ? "mono100" : "mono60"
 
           return (
-            <RadioOptionRow key={internalID} value={processedAddress}>
+            <Flex
+              key={internalID}
+              alignItems="flex-start"
+              backgroundColor={isSelected ? "mono5" : "mono0"}
+              p={1}
+            >
               <Radio
                 flex={1}
                 value={processedAddress}
+                selected={isSelected}
+                onSelect={({ value }) =>
+                  handleAddressClick(value as ProcessedUserAddress)
+                }
                 label={
                   <AddressDisplay
                     address={address}
@@ -248,13 +252,11 @@ export const SavedAddressOptions = ({
                   />
                 }
               />
-
               <Clickable
                 alignSelf="flex-start"
                 type="button"
                 aria-label={`Edit address for ${address.name}`}
-                onClick={e => {
-                  e.stopPropagation()
+                onClick={() => {
                   setUserAddressMode({
                     mode: "edit",
                     address: processedAddress,
@@ -270,10 +272,10 @@ export const SavedAddressOptions = ({
                   Edit
                 </Text>
               </Clickable>
-            </RadioOptionRow>
+            </Flex>
           )
         })}
-      </RadioGroup>
+      </Flex>
 
       <Spacer y={2} />
 
