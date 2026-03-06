@@ -12,6 +12,19 @@ jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
   useTrackFeatureVariantOnMount: jest.fn(),
 }))
 
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: () => ({
+    router: {
+      addNavigationListener: jest.fn(() => jest.fn()),
+    },
+    match: {},
+  }),
+}))
+
+jest.mock("System/Router/Utils/routeUtils", () => ({
+  findCurrentRoute: jest.fn(() => ({})),
+}))
+
 const mockUseVariant = useVariant as jest.Mock
 const mockUseTrackFeatureVariantOnMount =
   useTrackFeatureVariantOnMount as jest.Mock
