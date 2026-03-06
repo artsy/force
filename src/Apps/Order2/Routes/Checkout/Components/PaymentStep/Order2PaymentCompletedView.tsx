@@ -48,6 +48,7 @@ export const Order2PaymentCompletedView: React.FC<
           textDecoration="underline"
           cursor="pointer"
           type="button"
+          aria-label="Edit payment method"
           onClick={onClickEdit}
         >
           <Text variant="sm" fontWeight="normal" color="mono100">

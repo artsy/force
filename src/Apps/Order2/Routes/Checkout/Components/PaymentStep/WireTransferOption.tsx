@@ -1,6 +1,5 @@
 import ReceiptIcon from "@artsy/icons/ReceiptIcon"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { ORDER_SUPPORT_EMAIL } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { FadeInBox } from "Components/FadeInBox"
@@ -9,7 +8,6 @@ import { getENV } from "Utils/getENV"
 import type { WireTransferOption_order$key } from "__generated__/WireTransferOption_order.graphql"
 import type React from "react"
 import { graphql, useFragment } from "react-relay"
-import styled from "styled-components"
 
 interface WireTransferOptionProps {
   isSelected: boolean
@@ -36,24 +34,28 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
   return (
     <FadeInBox>
       <Box
+        as="button"
+        type="button"
         backgroundColor="mono5"
         borderRadius="5px"
         padding="1rem"
         marginBottom="10px"
         border={isSelected ? "1px solid" : "none"}
         borderColor="mono10"
-        style={{ cursor: "pointer" }}
+        width="100%"
+        style={{ cursor: "pointer", appearance: "none", textAlign: "left" }}
         onClick={onSelect}
+        aria-expanded={isSelected}
         data-testid="PaymentFormWire"
       >
-        <HoverFlex alignItems="center">
-          <HoverIcon height={18} />
+        <Flex alignItems="center">
+          <ReceiptIcon height={18} />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
-          <HoverText variant="sm" fontWeight={isSelected ? "bold" : "normal"}>
+          <Text variant="sm" fontWeight={isSelected ? "bold" : "normal"}>
             Wire transfer
-          </HoverText>
-        </HoverFlex>
+          </Text>
+        </Flex>
 
         <Collapse open={isSelected}>
           <Text color="mono100" variant="sm" ml="50px" mb={1}>
@@ -78,29 +80,6 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
     </FadeInBox>
   )
 }
-
-const HoverText = styled(Text)`
-  transition: color 0.25s;
-`
-
-const HoverIcon = styled(ReceiptIcon)`
-  svg {
-    transition: fill 0.25s;
-  }
-  g {
-    clip-path: none;
-  }
-`
-
-const HoverFlex = styled(Flex)`
-  &:hover ${HoverText} {
-    color: ${themeGet("colors.mono100")};
-  }
-
-  &:hover ${HoverIcon} svg {
-    fill: ${themeGet("colors.mono100")};
-  }
-`
 
 const ORDER_FRAGMENT = graphql`
   fragment WireTransferOption_order on Order {

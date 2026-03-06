@@ -5,6 +5,7 @@ import {
   Clickable,
   Flex,
   Radio,
+  RadioGroup,
   Spacer,
   Text,
   Tooltip,
@@ -20,7 +21,6 @@ import {
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
-import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -145,7 +145,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                       </Text>
                     }
                   >
-                    <Clickable ml={0.5}>
+                    <Clickable aria-label="Shipping information" ml={0.5}>
                       <InfoIcon />
                     </Clickable>
                   </Tooltip>
@@ -265,56 +265,54 @@ const MultipleShippingOptionsForm = ({
   const { checkoutTracking } = useCheckoutContext()
 
   return (
-    <Flex flexDirection="column">
-      {options.map((option, i) => {
+    <RadioGroup
+      flexDirection="column"
+      defaultValue={defaultOption}
+      onSelect={option => {
+        setSelectedOption(option)
+        setFieldValue("deliveryOption", option)
+        checkoutTracking.clickedSelectShippingOption(option.type)
+      }}
+    >
+      {options.map(option => {
         const label = deliveryOptionLabel(option.type)
         const timeEstimate = deliveryOptionTimeEstimate(option.type)
         const [prefix, timeRange] = timeEstimate || []
         const isSelected = selectedOption === option
 
         return (
-          <RadioOptionRow
-            key={`${option.type}:${i}`}
-            isSelected={isSelected}
-            onClick={() => {
-              setSelectedOption(option)
-              setFieldValue("deliveryOption", option)
-              checkoutTracking.clickedSelectShippingOption(option.type)
-            }}
-          >
-            <Radio
-              flex={1}
-              label={
-                <>
-                  <Flex justifyContent="space-between" width="100%">
-                    <Text variant="sm-display">{label}</Text>
-                    <Text variant="sm">{option.amount?.display}</Text>
-                  </Flex>
-                </>
-              }
-              value={option}
-              selected={isSelected}
-            >
-              <Flex width="100%">
-                <Flex flexDirection="column">
-                  {timeEstimate && (
-                    <Text variant="sm" color="mono60">
-                      {prefix} <strong>{timeRange}</strong>
-                    </Text>
-                  )}
-
-                  {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
-                    <Text variant="sm" color="mono60">
-                      This service includes custom packing, transportation on a
-                      fine art shuttle, and in-home delivery.
-                    </Text>
-                  )}
-                </Flex>
+          <Radio
+            key={option.type}
+            flex={1}
+            backgroundColor={isSelected ? "mono5" : "mono0"}
+            p={1}
+            label={
+              <Flex justifyContent="space-between" width="100%">
+                <Text variant="sm-display">{label}</Text>
+                <Text variant="sm">{option.amount?.display}</Text>
               </Flex>
-            </Radio>
-          </RadioOptionRow>
+            }
+            value={option}
+          >
+            <Flex width="100%">
+              <Flex flexDirection="column">
+                {timeEstimate && (
+                  <Text variant="sm" color="mono60">
+                    {prefix} <strong>{timeRange}</strong>
+                  </Text>
+                )}
+
+                {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
+                  <Text variant="sm" color="mono60">
+                    This service includes custom packing, transportation on a
+                    fine art shuttle, and in-home delivery.
+                  </Text>
+                )}
+              </Flex>
+            </Flex>
+          </Radio>
         )
       })}
-    </Flex>
+    </RadioGroup>
   )
 }

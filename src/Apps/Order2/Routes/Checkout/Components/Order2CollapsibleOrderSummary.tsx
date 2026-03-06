@@ -47,6 +47,8 @@ export const Order2CollapsibleOrderSummary: React.FC<
         py={1}
         px={2}
         justifyContent="space-between"
+        aria-expanded={isExpanded}
+        aria-label="Toggle order summary"
       >
         {imageUrl && (
           <RouterLink
