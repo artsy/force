@@ -44,6 +44,7 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             textDecoration="underline"
             cursor="pointer"
             type="button"
+            aria-label="Edit pickup details"
             onClick={onClickEdit}
           >
             <Text variant="sm" fontWeight="normal" color="mono100">
@@ -76,6 +77,7 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           textDecoration="underline"
           cursor="pointer"
           type="button"
+          aria-label="Edit delivery address"
           onClick={onClickEdit}
         >
           <Text variant="sm" fontWeight="normal" color="mono100">

@@ -1,13 +1,11 @@
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import LockIcon from "@artsy/icons/LockIcon"
 import { Box, Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import { FadeInBox } from "Components/FadeInBox"
 import type { Order2PaymentForm_me$data } from "__generated__/Order2PaymentForm_me.graphql"
 import type React from "react"
-import styled from "styled-components"
 
 interface SavedPaymentMethodOptionProps {
   me: Order2PaymentForm_me$data
@@ -34,23 +32,27 @@ export const SavedPaymentMethodOption: React.FC<
   return (
     <FadeInBox>
       <Box
+        as="button"
+        type="button"
         backgroundColor="mono5"
         borderRadius="5px"
         padding="1rem"
         marginBottom="10px"
         border={isSelected ? "1px solid" : "none"}
         borderColor="mono10"
-        style={{ cursor: "pointer" }}
+        width="100%"
+        style={{ cursor: "pointer", appearance: "none", textAlign: "left" }}
         onClick={onSelect}
+        aria-expanded={isSelected}
       >
-        <HoverFlex alignItems="center">
-          <HoverIcon />
+        <Flex alignItems="center">
+          <LockIcon />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
-          <HoverText variant="sm" fontWeight={isSelected ? "bold" : "normal"}>
+          <Text variant="sm" fontWeight={isSelected ? "bold" : "normal"}>
             Saved payments
-          </HoverText>
-        </HoverFlex>
+          </Text>
+        </Flex>
 
         <Collapse open={isSelected}>
           <Spacer y={1} />
@@ -127,23 +129,3 @@ export const SavedPaymentMethodOption: React.FC<
     </FadeInBox>
   )
 }
-
-const HoverText = styled(Text)`
-  transition: color 0.25s;
-`
-
-const HoverIcon = styled(LockIcon)`
-  svg {
-    transition: fill 0.25s;
-  }
-`
-
-const HoverFlex = styled(Flex)`
-  &:hover ${HoverText} {
-    color: ${themeGet("colors.mono100")};
-  }
-
-  &:hover ${HoverIcon} svg {
-    fill: ${themeGet("colors.mono100")};
-  }
-`

@@ -13,12 +13,10 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
-import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import {
   type ProcessedUserAddress,
   validateAddressFields,
@@ -26,6 +24,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { useFormikContext } from "formik"
 import { useCallback, useEffect, useState } from "react"
 
@@ -225,52 +224,58 @@ export const SavedAddressOptions = ({
 
       <Spacer y={2} />
 
-      {savedAddresses.map(processedAddress => {
-        const { address, internalID, phoneNumberParsed } = processedAddress
-        const isSelected = selectedAddress?.internalID === internalID
-        const textColor = isSelected ? "mono100" : "mono60"
+      <Flex flexDirection="column">
+        {savedAddresses.map(processedAddress => {
+          const { address, internalID, phoneNumberParsed } = processedAddress
+          const isSelected = selectedAddress?.internalID === internalID
+          const textColor = isSelected ? "mono100" : "mono60"
 
-        return (
-          <RadioOptionRow
-            key={internalID}
-            isSelected={isSelected}
-            onClick={() => handleAddressClick(processedAddress)}
-          >
-            <Radio
-              flex={1}
-              value={internalID}
-              selected={isSelected}
-              label={
-                <AddressDisplay
-                  address={address}
-                  phoneNumber={phoneNumberParsed?.display}
-                  textColor={textColor}
-                />
-              }
-            />
-
-            <Clickable
-              alignSelf="flex-start"
-              onClick={e => {
-                e.stopPropagation()
-                setUserAddressMode({
-                  mode: "edit",
-                  address: processedAddress,
-                })
-              }}
+          return (
+            <Flex
+              key={internalID}
+              alignItems="flex-start"
+              backgroundColor={isSelected ? "mono5" : "mono0"}
+              p={1}
             >
-              <Text
-                style={{ textDecoration: "underline" }}
-                variant="sm"
-                fontWeight="normal"
-                color={textColor}
+              <Radio
+                flex={1}
+                value={processedAddress}
+                selected={isSelected}
+                onSelect={({ value }) =>
+                  handleAddressClick(value as ProcessedUserAddress)
+                }
+                label={
+                  <AddressDisplay
+                    address={address}
+                    phoneNumber={phoneNumberParsed?.display}
+                    textColor={textColor}
+                  />
+                }
+              />
+              <Clickable
+                alignSelf="flex-start"
+                type="button"
+                aria-label={`Edit address for ${address.name}`}
+                onClick={() => {
+                  setUserAddressMode({
+                    mode: "edit",
+                    address: processedAddress,
+                  })
+                }}
               >
-                Edit
-              </Text>
-            </Clickable>
-          </RadioOptionRow>
-        )
-      })}
+                <Text
+                  style={{ textDecoration: "underline" }}
+                  variant="sm"
+                  fontWeight="normal"
+                  color={textColor}
+                >
+                  Edit
+                </Text>
+              </Clickable>
+            </Flex>
+          )
+        })}
+      </Flex>
 
       <Spacer y={2} />
 

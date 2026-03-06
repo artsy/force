@@ -1,10 +1,10 @@
+import { Elements } from "@stripe/react-stripe-js"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentFormTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { Elements } from "@stripe/react-stripe-js"
 import { Order2PaymentForm } from "../Order2PaymentForm"
 
 jest.unmock("react-relay")
@@ -1258,17 +1258,13 @@ describe("Order2PaymentForm", () => {
       await waitForPaymentElement()
 
       // Initially stripe-card section should be collapsed since no payment method is selected
-      expect(screen.getByTestId("stripe-card-collapse")).toHaveStyle({
-        height: "0px",
-      })
+      expect(screen.getByTestId("stripe-card-collapse")).not.toBeVisible()
 
       // Select ACH
       await userEvent.click(screen.getByTestId("mock-ach"))
 
       // Should still be collapsed since ACH is not a credit card
-      expect(screen.getByTestId("stripe-card-collapse")).toHaveStyle({
-        height: "0px",
-      })
+      expect(screen.getByTestId("stripe-card-collapse")).not.toBeVisible()
     })
   })
 

@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react"
-import { StripePaymentCheckboxes } from "../StripePaymentCheckboxes"
+import { fireEvent, render, screen } from "@testing-library/react"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import { StripePaymentCheckboxes } from "../StripePaymentCheckboxes"
 
 describe("StripePaymentCheckboxes", () => {
   const mockOnSavePaymentMethodChange = jest.fn()
@@ -44,12 +44,8 @@ describe("StripePaymentCheckboxes", () => {
         />,
       )
 
-      // Verify collapse is actually open. toBeVisible() alone is not sufficient
-      // because it returns true even when Collapse is closed (height: 0px + overflow: hidden)
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
-      expect(creditCardCollapse).not.toHaveStyle({ height: "0px" })
-
-      // Also check content is visible (checks display, visibility, opacity)
+      expect(creditCardCollapse).toBeVisible()
       expect(screen.getByText("Save credit card for later use")).toBeVisible()
     })
 
@@ -61,10 +57,8 @@ describe("StripePaymentCheckboxes", () => {
         />,
       )
 
-      // Collapse component hides content with height: 0px + overflow: hidden
-      // toBeVisible() doesn't detect this, so we check the collapse container directly
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
-      expect(creditCardCollapse).toHaveStyle({ height: "0px" })
+      expect(creditCardCollapse).not.toBeVisible()
     })
 
     it("shows billing address same as shipping checkbox when not PICKUP", () => {
@@ -76,10 +70,8 @@ describe("StripePaymentCheckboxes", () => {
         />,
       )
 
-      // Verify collapse is actually open. toBeVisible() alone is not sufficient
-      // because it returns true even when Collapse is closed (height: 0px + overflow: hidden)
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
-      expect(creditCardCollapse).not.toHaveStyle({ height: "0px" })
+      expect(creditCardCollapse).toBeVisible()
 
       expect(screen.getByText("Billing address same as shipping")).toBeVisible()
     })
@@ -139,10 +131,8 @@ describe("StripePaymentCheckboxes", () => {
         />,
       )
 
-      // Verify collapse is actually open. toBeVisible() alone is not sufficient
-      // because it returns true even when Collapse is closed (height: 0px + overflow: hidden)
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
-      expect(creditCardCollapse).not.toHaveStyle({ height: "0px" })
+      expect(creditCardCollapse).toBeVisible()
 
       expect(screen.getByText("Billing address")).toBeVisible()
     })
@@ -240,8 +230,8 @@ describe("StripePaymentCheckboxes", () => {
       // Both card and ACH collapses should be closed for SEPA
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
       const achCollapse = screen.getByTestId("stripe-ach-collapse")
-      expect(creditCardCollapse).toHaveStyle({ height: "0px" })
-      expect(achCollapse).toHaveStyle({ height: "0px" })
+      expect(creditCardCollapse).not.toBeVisible()
+      expect(achCollapse).not.toBeVisible()
     })
   })
 
@@ -257,8 +247,8 @@ describe("StripePaymentCheckboxes", () => {
       // Both collapses should be closed when no payment method is selected
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
       const achCollapse = screen.getByTestId("stripe-ach-collapse")
-      expect(creditCardCollapse).toHaveStyle({ height: "0px" })
-      expect(achCollapse).toHaveStyle({ height: "0px" })
+      expect(creditCardCollapse).not.toBeVisible()
+      expect(achCollapse).not.toBeVisible()
     })
   })
 
@@ -274,8 +264,8 @@ describe("StripePaymentCheckboxes", () => {
       // Both collapses should be closed for wire transfer
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
       const achCollapse = screen.getByTestId("stripe-ach-collapse")
-      expect(creditCardCollapse).toHaveStyle({ height: "0px" })
-      expect(achCollapse).toHaveStyle({ height: "0px" })
+      expect(creditCardCollapse).not.toBeVisible()
+      expect(achCollapse).not.toBeVisible()
     })
   })
 
@@ -291,8 +281,8 @@ describe("StripePaymentCheckboxes", () => {
       // Both collapses should be closed for saved payment method
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
       const achCollapse = screen.getByTestId("stripe-ach-collapse")
-      expect(creditCardCollapse).toHaveStyle({ height: "0px" })
-      expect(achCollapse).toHaveStyle({ height: "0px" })
+      expect(creditCardCollapse).not.toBeVisible()
+      expect(achCollapse).not.toBeVisible()
     })
   })
 })
