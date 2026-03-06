@@ -1,6 +1,5 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const MyCollectionInsightsMedianSalePriceAtAuction = loadable(
@@ -21,7 +20,6 @@ export const myCollectionInsightsRoutes: RouteProps[] = [
     onPreloadJS: () => {
       MyCollectionInsightsMedianSalePriceAtAuction.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query myCollectionInsightsRoutesQuery($artistID: String!) {
         artist(id: $artistID) @principalField {

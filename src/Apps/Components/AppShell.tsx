@@ -65,6 +65,9 @@ export const AppShell: React.FC<
           <UseSetupAuth />
 
           <Layout variant={routeConfig?.layout}>
+            {/* Inner error boundary: catches component crashes while preserving
+                nav/footer. Re-throws chunk load errors to the outer boundary in
+                Boot.tsx. See docs/error-handling.md for the two-tier system. */}
             <ContentErrorBoundary pathname={match?.location?.pathname}>
               {children}
             </ContentErrorBoundary>

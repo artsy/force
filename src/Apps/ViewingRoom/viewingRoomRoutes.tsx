@@ -1,6 +1,5 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -69,7 +68,6 @@ export const viewingRoomRoutes: RouteProps[] = [
     onPreloadJS: () => {
       ViewingRoomApp.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query viewingRoomRoutes_ViewingRoomQuery($slug: ID!) @cacheable {
         viewingRoom(id: $slug) @principalField {
@@ -81,7 +79,6 @@ export const viewingRoomRoutes: RouteProps[] = [
       {
         path: "",
         Component: StatementRoute,
-        render: defaultErrorRender,
         query: graphql`
           query viewingRoomRoutes_ViewingRoomStatementRouteQuery($slug: ID!)
           @cacheable {
@@ -104,7 +101,6 @@ export const viewingRoomRoutes: RouteProps[] = [
       {
         path: "artworks",
         Component: WorksRoute,
-        render: defaultErrorRender,
         query: graphql`
           query viewingRoomRoutes_ViewingRoomWorksRouteQuery($slug: ID!) {
             viewingRoom(id: $slug) @principalField {

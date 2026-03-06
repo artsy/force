@@ -47,10 +47,12 @@ export const replaceRoutes: RouteProps[] = [
 
     /*
      * If the content being served is slugged, it probably needs to enforce
-     * canonical slug redirects.
+     * canonical slug redirects. canonicalSlugRedirect() handles errors
+     * internally via renderRouteError().
      *
-     * If not, you can remove this render function, and the `slug` field in
-     * the query below.
+     * If not slugged, you can remove this render function and the `slug`
+     * field in the query below. Error handling for @principalField is
+     * automatic for routes without a custom render function.
      */
     render: canonicalSlugRedirect({
       entityName: "artist",

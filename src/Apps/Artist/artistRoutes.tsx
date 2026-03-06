@@ -1,7 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
 import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { compact } from "lodash"
 import { stringify } from "qs"
@@ -106,7 +105,6 @@ export const artistRoutes: RouteProps[] = [
       {
         path: "",
         getComponent: () => ArtistCombinedRoute,
-        render: defaultErrorRender,
         query: graphql`
           query artistRoutes_ArtistRootQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
@@ -158,7 +156,6 @@ export const artistRoutes: RouteProps[] = [
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistSubApp,
-    render: defaultErrorRender,
     query: graphql`
       query artistRoutes_ArtistSubAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
@@ -173,7 +170,6 @@ export const artistRoutes: RouteProps[] = [
         onPreloadJS: () => {
           ArticlesRoute.preload()
         },
-        render: defaultErrorRender,
         query: graphql`
           query artistRoutes_ArticlesQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
@@ -202,7 +198,6 @@ export const artistRoutes: RouteProps[] = [
         onPreloadJS: () => {
           ArtistSeriesRoute.preload()
         },
-        render: defaultErrorRender,
         query: graphql`
           query artistRoutes_ArtistSeriesQuery($artistID: String!) @cacheable {
             artist(id: $artistID) @principalField {
@@ -244,7 +239,6 @@ export const artistRoutes: RouteProps[] = [
     onPreloadJS: () => {
       AuctionResultRoute.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query artistRoutes_AuctionResultQuery($auctionResultId: String!)
       @cacheable {

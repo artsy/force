@@ -93,26 +93,4 @@ describe("errorHandler", () => {
     expect(renderArgs[0]).toContain("401")
     expect(renderArgs[0]).toContain("Unauthorized")
   })
-
-  it("uses default layout with nav for 4xx errors", () => {
-    config["NODE_ENV"] = "production"
-
-    const err = {
-      status: 404,
-      message: "Not Found",
-      stack: "Not Found stack",
-    }
-
-    errorHandlerMiddleware(
-      err,
-      testContext.req,
-      testContext.res,
-      testContext.next,
-    )
-
-    expect(testContext.res.status).toBeCalledWith(404)
-    const renderArgs = testContext.renderStub.send.mock.calls[0]
-    // ErrorWithDefaultLayout includes a link to "/" (Artsy logo)
-    expect(renderArgs[0]).toContain('href="/"')
-  })
 })

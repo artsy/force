@@ -3,7 +3,6 @@ import { ErrorPage } from "Components/ErrorPage"
 import type { RouteProps } from "System/Router/Route"
 import {
   type RenderArgs,
-  defaultErrorRender,
   renderRouteError,
 } from "System/Router/Utils/renderRouteError"
 import { extractNodes } from "Utils/extractNodes"
@@ -97,7 +96,6 @@ export const fairOrganizerRoutes: RouteProps[] = [
       const { page } = location.query
       return { page, slug }
     },
-    render: defaultErrorRender,
     query: graphql`
       query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(
         $slug: String!

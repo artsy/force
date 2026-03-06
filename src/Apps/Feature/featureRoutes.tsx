@@ -1,6 +1,5 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const FeatureApp = loadable(
@@ -17,7 +16,6 @@ export const featureRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FeatureApp.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query featureRoutes_FeatureQuery($slug: ID!) @cacheable {
         feature(id: $slug) @principalField {

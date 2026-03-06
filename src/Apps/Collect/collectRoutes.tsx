@@ -1,7 +1,6 @@
 import loadable from "@loadable/component"
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 import type { RouteProps } from "System/Router/Route"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const CollectApp = loadable(
@@ -48,7 +47,6 @@ export const collectRoutes: RouteProps[] = [
     onPreloadJS: () => {
       CollectionsApp.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query collectRoutes_MarketingCollectionsAppQuery {
         marketingCategories @principalField {
@@ -64,7 +62,6 @@ export const collectRoutes: RouteProps[] = [
       CollectionApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
-    render: defaultErrorRender,
     query: graphql`
       query collectRoutes_CollectionQuery($slug: String!) {
         collection: marketingCollection(slug: $slug) @principalField {

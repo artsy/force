@@ -1,7 +1,6 @@
 import loadable from "@loadable/component"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const ArticlesApp = loadable(
@@ -66,7 +65,6 @@ export const articlesRoutes: RouteProps[] = [
     onPreloadJS: () => {
       ChannelApp.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query articlesRoutes_ChannelQuery($id: ID!) {
         channel(id: $id) @principalField {
@@ -82,7 +80,6 @@ export const articlesRoutes: RouteProps[] = [
     onPreloadJS: () => {
       AuthorApp.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query articlesRoutes_AuthorQuery($id: String!) {
         author(id: $id) @principalField {

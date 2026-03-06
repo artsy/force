@@ -1,6 +1,5 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 // TODO: when cleanning up collector-profile ff,
@@ -25,7 +24,6 @@ export const myCollectionInsightsCollectorProfileRoutes: RouteProps[] = [
     onPreloadJS: () => {
       MyCollectionInsightsMedianSalePriceAtAuction.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query myCollectionInsightsCollectorProfileRoutesQuery(
         $artistID: String!

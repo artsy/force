@@ -1,3 +1,16 @@
+/**
+ * Route error handling for @principalField queries.
+ *
+ * found-relay only passes errors to routes that define a `render` function.
+ * Routes without one silently swallow @principalField errors and return
+ * HTTP 200 with blank content.
+ *
+ * For simple routes, this is handled automatically: `buildAppRoutes` injects
+ * `defaultErrorRender` on any route with a `query` but no custom `render`.
+ * Routes with custom render functions must call `renderRouteError()` manually.
+ *
+ * See docs/error-handling.md for the full error handling architecture.
+ */
 import { Spacer } from "@artsy/palette"
 import { ErrorPage } from "Components/ErrorPage"
 import { updateContext } from "Server/context"
@@ -34,10 +47,9 @@ export function renderRouteError(
 /**
  * Default render function for routes with @principalField queries.
  *
- * found-relay only passes `error` to a route's `render` function — routes
- * without one silently swallow errors and return HTTP 200 with blank content.
- * Add this as `render: defaultErrorRender` to any route with @principalField
- * that doesn't need custom render logic.
+ * Automatically injected by `buildAppRoutes` on routes that have a `query`
+ * but no custom `render` function. You generally don't need to use this
+ * directly -- it's only exported for use by the router infrastructure.
  */
 export function defaultErrorRender({
   Component,

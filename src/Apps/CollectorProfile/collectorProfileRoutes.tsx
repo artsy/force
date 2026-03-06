@@ -1,6 +1,5 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { graphql } from "react-relay"
 
 const CollectorProfileApp = loadable(
@@ -159,7 +158,6 @@ export const collectorProfileRoutes: RouteProps[] = [
     onPreloadJS: () => {
       MyCollectionArtwork.preload()
     },
-    render: defaultErrorRender,
     query: graphql`
       query collectorProfileRoutes_ArtworkQuery($artworkID: String!) {
         artwork(id: $artworkID) @principalField {
