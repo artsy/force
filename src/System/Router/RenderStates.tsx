@@ -1,9 +1,9 @@
-import { Box } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { AppShell } from "Apps/Components/AppShell"
 import { ErrorPage } from "Components/ErrorPage"
 import { sentryRouterTracing } from "System/Utils/setupSentryClient"
 import { getENV } from "Utils/getENV"
-import { HttpError, type Match } from "found"
+import type { Match } from "found"
 import StaticContainer from "found/StaticContainer"
 import ElementsRenderer from "found/cjs/ElementsRenderer"
 
@@ -46,13 +46,9 @@ export const renderStates = {
         ? String(error.data)
         : "Internal Error"
 
-    // Server-side 404s are handled by the error handler middleware
-    if (typeof window === "undefined" && typeof jest === "undefined") {
-      throw new HttpError(status, message)
-    }
-
     return (
       <AppShell>
+        <Spacer y={4} />
         <ErrorPage code={status} message={message} />
       </AppShell>
     )

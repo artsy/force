@@ -63,7 +63,15 @@ export const collectAssets = async ({
   const relaySSRMiddleware = (relayEnvironment as any)
     .relaySSRMiddleware as RelayServerSSR
 
-  const initialRelayData = await relaySSRMiddleware.getCache()
+  // getCache() awaits all cached Relay query Promises. If any query rejected
+  // (e.g. a route query that threw HttpError for a 404), getCache() re-throws.
+  // In that case, fall back to an empty cache — the client will re-fetch.
+  let initialRelayData: Awaited<ReturnType<RelayServerSSR["getCache"]>>
+  try {
+    initialRelayData = await relaySSRMiddleware.getCache()
+  } catch {
+    initialRelayData = []
+  }
 
   const manifest = loadAssetManifest("dist/manifest.json")
 

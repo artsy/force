@@ -1,5 +1,4 @@
 import { Button, Spacer } from "@artsy/palette"
-import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { ErrorPage } from "Components/ErrorPage"
 import { ErrorWithMetadata } from "Utils/errors"
 import { getENV } from "Utils/getENV"
@@ -11,28 +10,48 @@ import type { ErrorInfo } from "react"
 
 const logger = createLogger()
 
-interface Props {
-  children?: any
-  onCatch?: () => void
+interface ContentErrorBoundaryProps {
+  children?: React.ReactNode
+  pathname?: string
 }
 
 type Kind = "Pending" | "AsyncChunkLoadError" | "GenericError" | "RouterError"
 
-interface State {
+interface ContentErrorBoundaryState {
   kind: Kind
   detail?: string
   message?: string
   code?: number
+  originalError?: Error
 }
 
-export class ErrorBoundary extends React.Component<Props, State> {
-  state: State = {
+/**
+ * Inner error boundary that catches content-area errors (404s, data errors,
+ * component crashes) while preserving the Layout nav and footer.
+ *
+ * AsyncChunkLoadError is NOT handled here — it bubbles up to the outer
+ * ErrorBoundary in Boot.tsx since it's a network-level issue.
+ */
+export class ContentErrorBoundary extends React.Component<
+  ContentErrorBoundaryProps,
+  ContentErrorBoundaryState
+> {
+  state: ContentErrorBoundaryState = {
     detail: "",
     message: "",
     kind: "Pending",
   }
 
-  componentDidCatch(error: Error | HttpError, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error | HttpError, errorInfo: ErrorInfo): void {
+    // Skip reporting for AsyncChunkLoadError — it will be re-thrown in render()
+    // and reported by the outer ErrorBoundary to avoid double Sentry reports.
+    if (
+      error instanceof Error &&
+      error.message?.match(/Loading chunk .* failed/)
+    ) {
+      return
+    }
+
     const message = error instanceof HttpError ? error.status : error.message
     logger.error(new ErrorWithMetadata(message, errorInfo))
 
@@ -40,20 +59,41 @@ export class ErrorBoundary extends React.Component<Props, State> {
       scope.setContext("errorInfo", {
         componentStack: errorInfo.componentStack,
       })
-      scope.setTag("errorBoundary", "outer")
+      scope.setTag("errorBoundary", "content")
       captureException(error)
     })
+  }
 
-    if (this.props.onCatch) {
-      this.props.onCatch()
+  componentDidUpdate(prevProps: ContentErrorBoundaryProps): void {
+    if (
+      prevProps.pathname !== this.props.pathname &&
+      this.state.kind !== "Pending"
+    ) {
+      this.setState({
+        kind: "Pending",
+        detail: "",
+        message: "",
+        code: undefined,
+      })
     }
   }
 
-  static getDerivedStateFromError(error: Error | HttpError) {
+  static getDerivedStateFromError(
+    error: Error | HttpError,
+  ): ContentErrorBoundaryState {
     if (error instanceof HttpError) {
       return {
         kind: "RouterError",
         code: error.status,
+      }
+    }
+
+    // Capture AsyncChunkLoadError in state; re-throw in render() to bubble
+    // up to the outer ErrorBoundary.
+    if (error.message?.match(/Loading chunk .* failed/)) {
+      return {
+        kind: "AsyncChunkLoadError",
+        originalError: error,
       }
     }
 
@@ -65,21 +105,6 @@ Current URL: ${currentURL}
 Time: ${new Date().toUTCString()}`
     const detail = displayStackTrace ? error.stack : undefined
 
-    /**
-     * Check to see if there's been a network error while asynchronously loading
-     * a dynamic webpack split chunk bundle. Can happen if a user is navigating
-     * between routes and their network connection goes out.
-     *
-     * @see https://reactjs.org/docs/code-splitting.html
-     */
-    if (message.match(/Loading chunk .* failed/)) {
-      return {
-        kind: "AsyncChunkLoadError",
-        detail,
-        message,
-      }
-    }
-
     return {
       kind: "GenericError",
       detail,
@@ -87,7 +112,7 @@ Time: ${new Date().toUTCString()}`
     }
   }
 
-  render() {
+  render(): React.ReactNode {
     const { kind, detail, message, code } = this.state
 
     const handleClick = () => {
@@ -96,29 +121,15 @@ Time: ${new Date().toUTCString()}`
 
     switch (kind) {
       case "AsyncChunkLoadError": {
-        return (
-          <LayoutLogoOnly>
-            <ErrorPage
-              code="Error Loading Script"
-              message="Please check your network connection and try again."
-            >
-              <Spacer y={2} />
-
-              <Button
-                size="small"
-                variant="secondaryBlack"
-                onClick={handleClick}
-              >
-                Reload
-              </Button>
-            </ErrorPage>
-          </LayoutLogoOnly>
-        )
+        // Re-throw to bubble up to the outer ErrorBoundary in Boot.tsx
+        throw this.state.originalError
       }
 
       case "GenericError": {
         return (
-          <LayoutLogoOnly>
+          <>
+            <Spacer y={4} />
+
             <ErrorPage
               code="Something Went Wrong"
               message={message}
@@ -134,15 +145,16 @@ Time: ${new Date().toUTCString()}`
                 Reload
               </Button>
             </ErrorPage>
-          </LayoutLogoOnly>
+          </>
         )
       }
 
       case "RouterError": {
         return (
-          <LayoutLogoOnly>
+          <>
+            <Spacer y={4} />
             <ErrorPage code={code || 500} />
-          </LayoutLogoOnly>
+          </>
         )
       }
 
