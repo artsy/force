@@ -61,45 +61,17 @@ const ArtistCombinedRoute: React.FC<
     return Object.values(navigating).some(Boolean)
   }, [navigating])
 
-  // Given the initial sub-path (/artist/:id/(auction-results|about)),
-  // scroll to the appropriate section on initial load
   const {
     match: { location },
-    router,
   } = useRouter()
-  const section = location.pathname.split("/").pop()
-  const scrolledToSection = useRef(false)
   const scrolledToHash = useRef(false)
-
-  useEffect(() => {
-    if (scrolledToSection.current) return
-
-    const scrollToSection = async () => {
-      if (scrolledToSection.current) return
-
-      scrolledToSection.current = true
-
-      if (section === "auction-results") {
-        await waitUntil("auction")
-        jumpTo("marketSignalsTop")
-        // Remove the subpath from the URL
-        const newPath = location.pathname.replace(/\/auction-results$/, "")
-        router.replace(newPath)
-      } else if (section === "about") {
-        await waitUntil("about")
-        jumpTo("artistAboutTop")
-        // Remove the subpath from the URL
-        const newPath = location.pathname.replace(/\/about$/, "")
-        router.replace(newPath)
-      }
-    }
-
-    scrollToSection()
-  }, [section, jumpTo, waitUntil, location.pathname, router])
 
   // When the page is accessed via a URL that contains a hash to a jump link
   // anchor -- as in the case of the 301 redirects we've set up --
-  // we similarly scroll to the appropriate section and clean up the URL
+  // we scroll to the appropriate section and clean up the URL.
+  //
+  // Uses window.history.replaceState instead of router.replace to avoid
+  // triggering an extra pageview from Farce's UPDATE_LOCATION action.
   useEffect(() => {
     if (scrolledToHash.current) return
 
@@ -112,19 +84,19 @@ const ArtistCombinedRoute: React.FC<
         jumpTo("marketSignalsTop", { offset: 40 })
         // Remove the hash from the URL
         const newPath = location.pathname + location.search
-        router.replace(newPath)
+        window.history.replaceState({}, "", newPath)
       } else if (location.hash === "#JUMP--artistAboutTop") {
         scrolledToHash.current = true
         await waitUntil("about")
         jumpTo("artistAboutTop", { offset: 40 })
         // Remove the hash from the URL
         const newPath = location.pathname + location.search
-        router.replace(newPath)
+        window.history.replaceState({}, "", newPath)
       }
     }
 
     scrollToSectionFromHash()
-  }, [location, jumpTo, waitUntil, router])
+  }, [location, jumpTo, waitUntil])
 
   return (
     <SectionNavProvider>
