@@ -3,14 +3,36 @@ import type { buildAppRoutesQuery$data } from "__generated__/buildAppRoutesQuery
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { RouteProps } from "System/Router/Route"
 import { interceptLinks } from "System/Router/Utils/interceptLinks"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
 import { type Match, type Router, withRouter } from "found"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
 import { NavigationDataProvider } from "System/Contexts/NavigationDataContext"
 import { getENV } from "Utils/getENV"
 
+/**
+ * Recursively walks routes and injects `defaultErrorRender` on any route that
+ * has a `query` but no `render`. This ensures @principalField errors are always
+ * handled instead of being silently swallowed as HTTP 200.
+ */
+function injectDefaultErrorRender(routes: RouteProps[]): RouteProps[] {
+  return routes.map(route => {
+    const patched = { ...route }
+
+    if (patched.query && !patched.render) {
+      patched.render = defaultErrorRender
+    }
+
+    if (patched.children) {
+      patched.children = injectDefaultErrorRender(patched.children)
+    }
+
+    return patched
+  })
+}
+
 export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
-  const children = routes.flat()
+  const children = injectDefaultErrorRender(routes.flat())
   const enableServerDrivenNavigation = getENV("ENABLE_SERVER_DRIVEN_NAVIGATION")
 
   const Component: React.FC<
