@@ -22,7 +22,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -44,6 +43,8 @@ import {
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
 import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
+import { useFlag } from "System/FeatureFlags/useFlag"
+import { useVariant } from "System/FeatureFlags/useVariant"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump, useJump } from "Utils/Hooks/useJump"
