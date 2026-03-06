@@ -87,8 +87,7 @@ export const partnerRoutes: RouteProps[] = [
       }
     `,
     render: ({ Component, props, match, error }: RenderArgs) => {
-      const errorPage = renderRouteError(error)
-      if (errorPage) return errorPage
+      if (error) return renderRouteError(error)
 
       if (!(Component && props)) {
         return undefined

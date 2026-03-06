@@ -119,8 +119,7 @@ import { renderRouteError } from "System/Router/Utils/renderRouteError"
 
 {
   render: ({ Component, props, match, error }) => {
-    const errorPage = renderRouteError(error)
-    if (errorPage) return errorPage
+    if (error) return renderRouteError(error)
 
     if (!(Component && props)) return undefined
 

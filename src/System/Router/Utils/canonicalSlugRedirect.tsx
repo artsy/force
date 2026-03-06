@@ -44,8 +44,7 @@ export function canonicalSlugRedirect(config: CanonicalSlugRedirectConfig) {
   const { entityName, paramName, basePath } = config
 
   return ({ Component, props, match, error }: RenderArgs) => {
-    const errorPage = renderRouteError(error)
-    if (errorPage) return errorPage
+    if (error) return renderRouteError(error)
 
     if (!Component || !props) return
 

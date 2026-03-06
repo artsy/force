@@ -56,8 +56,7 @@ export function defaultErrorRender({
   props,
   error,
 }: RenderArgs): React.JSX.Element | undefined {
-  const errorPage = renderRouteError(error)
-  if (errorPage) return errorPage
+  if (error) return renderRouteError(error)!
 
   if (!(Component && props)) return undefined
 

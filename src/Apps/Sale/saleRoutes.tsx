@@ -70,8 +70,7 @@ export const saleRoutes: RouteProps[] = [
       },
       error,
     }: RenderArgs) => {
-      const errorPage = renderRouteError(error)
-      if (errorPage) return errorPage
+      if (error) return renderRouteError(error)
 
       if (!(Component && props)) {
         return undefined

@@ -41,8 +41,7 @@ export const fairOrganizerRoutes: RouteProps[] = [
       FairOrganizerApp.preload()
     },
     render: ({ Component, props, error }: RenderArgs) => {
-      const errorPage = renderRouteError(error)
-      if (errorPage) return errorPage
+      if (error) return renderRouteError(error)
 
       if (Component && props) {
         const { fairOrganizer } = props as Props
