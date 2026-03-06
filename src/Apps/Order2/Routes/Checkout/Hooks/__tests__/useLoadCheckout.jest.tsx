@@ -1,4 +1,5 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
+import { setNavigationGuardsEnabled } from "Apps/Order2/Order2App"
 import { CheckoutStepState } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   MAX_LOADING_MS,
@@ -9,6 +10,10 @@ import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hoo
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 
 // Mock dependencies
+jest.mock("Apps/Order2/Order2App", () => ({
+  setNavigationGuardsEnabled: jest.fn(),
+}))
+
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId")
 
 jest.mock("react-relay", () => ({
@@ -344,6 +349,69 @@ describe("useLoadCheckout", () => {
 
       // Callback should be stored
       expect(mockStripeCallback).not.toBeNull()
+    })
+  })
+
+  describe("navigation guards", () => {
+    it("disables navigation guards on critical error", () => {
+      useCheckoutModal.mockReturnValue({
+        checkoutModalError: "loading_timeout",
+        showCheckoutErrorModal: mockShowCheckoutErrorModal,
+      })
+
+      renderHook(() => useLoadCheckout(mockOrder))
+
+      expect(setNavigationGuardsEnabled).toHaveBeenCalledWith(false)
+    })
+
+    it("disables navigation guards when express checkout is active", () => {
+      useCheckoutContext.mockReturnValue({
+        isLoading: false,
+        expressCheckoutPaymentMethods: [],
+        expressCheckoutState: "active",
+        steps: [],
+        setLoadingComplete: mockSetLoadingComplete,
+      })
+
+      renderHook(() => useLoadCheckout(mockOrder))
+
+      expect(setNavigationGuardsEnabled).toHaveBeenCalledWith(false)
+    })
+
+    it("disables navigation guards when express checkout is submitting", () => {
+      useCheckoutContext.mockReturnValue({
+        isLoading: false,
+        expressCheckoutPaymentMethods: [],
+        expressCheckoutState: "submit",
+        steps: [],
+        setLoadingComplete: mockSetLoadingComplete,
+      })
+
+      renderHook(() => useLoadCheckout(mockOrder))
+
+      expect(setNavigationGuardsEnabled).toHaveBeenCalledWith(false)
+    })
+
+    it("re-enables navigation guards when express checkout is dismissed", () => {
+      let expressCheckoutState: "active" | "submit" | null = "active"
+
+      useCheckoutContext.mockImplementation(() => ({
+        isLoading: false,
+        expressCheckoutPaymentMethods: [],
+        expressCheckoutState,
+        steps: [],
+        setLoadingComplete: mockSetLoadingComplete,
+      }))
+
+      const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
+
+      expect(setNavigationGuardsEnabled).toHaveBeenCalledWith(false)
+
+      // User cancels express checkout
+      expressCheckoutState = null
+      rerender()
+
+      expect(setNavigationGuardsEnabled).toHaveBeenCalledWith(true)
     })
   })
 })
