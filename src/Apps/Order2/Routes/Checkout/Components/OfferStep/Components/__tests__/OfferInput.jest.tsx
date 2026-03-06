@@ -8,19 +8,9 @@ import type { OfferInputTestQuery } from "__generated__/OfferInputTestQuery.grap
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL<OfferInputTestQuery>({
-  Component: ({
-    me,
-    initialValue = 0,
-    onBlur,
-    showCurrencySymbol = false,
-  }: any) => (
+  Component: ({ me, initialValue = 0, onBlur }: any) => (
     <Formik initialValues={{ offerValue: initialValue }} onSubmit={() => {}}>
-      <OfferInput
-        name="offerValue"
-        order={me.order}
-        onBlur={onBlur}
-        showCurrencySymbol={showCurrencySymbol}
-      />
+      <OfferInput name="offerValue" order={me.order} onBlur={onBlur} />
     </Formik>
   ),
   query: graphql`

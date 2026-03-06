@@ -8,15 +8,9 @@ export interface OfferInputProps {
   name: string
   order: OfferInput_order$key
   onBlur?: (value: number | undefined) => void
-  showCurrencySymbol?: boolean
 }
 
-export const OfferInput: FC<OfferInputProps> = ({
-  name,
-  order,
-  onBlur,
-  showCurrencySymbol = false,
-}) => {
+export const OfferInput: FC<OfferInputProps> = ({ name, order, onBlur }) => {
   const [field, meta, helpers] = useField<number>(name)
   const { currencySymbol } = useFragment(FRAGMENT, order)
 
@@ -35,7 +29,7 @@ export const OfferInput: FC<OfferInputProps> = ({
 
   return (
     <Input
-      title={`Your offer${showCurrencySymbol && !!currencySymbol.length ? ` (${currencySymbol})` : ""}`}
+      title={`Your offer${!!currencySymbol.length ? ` (${currencySymbol})` : ""}`}
       type="text"
       pattern="[0-9]"
       error={!!meta.error}
