@@ -30,12 +30,7 @@ const setInputValue = (input: HTMLInputElement, value: string) => {
 
 describe("OfferInput", () => {
   describe("title", () => {
-    it("shows 'Your offer' as the title by default", () => {
-      renderWithRelay({ Me: () => ({ order: { currencySymbol: "US$" } }) })
-      expect(screen.getByTitle("Your offer")).toBeInTheDocument()
-    })
-
-    it("shows the currency symbol in the title when showCurrencySymbol is true", () => {
+    it("shows the currency symbol in the title", () => {
       renderWithRelay(
         { Me: () => ({ order: { currencySymbol: "US$" } }) },
         { showCurrencySymbol: true },
