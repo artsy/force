@@ -5,6 +5,10 @@ import {
   orderMutationError,
   orderMutationSuccess,
 } from "Apps/Order2/Routes/Checkout/__tests__/utils"
+import {
+  handleBackNavigation,
+  preventHardReload,
+} from "Apps/Order2/Utils/navigationGuards"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -1919,6 +1923,67 @@ describe("Order2CheckoutRoute", () => {
           ).not.toBeInTheDocument()
         })
       })
+    })
+  })
+
+  describe("Navigation guards", () => {
+    let addEventListenerSpy: jest.SpyInstance
+    let removeEventListenerSpy: jest.SpyInstance
+    let preventHardReloadMock: jest.Mock
+    let handleBackNavigationMock: jest.Mock
+    HTMLElement.prototype.scrollIntoView = jest.fn()
+
+    beforeEach(() => {
+      preventHardReloadMock = jest.fn()
+      handleBackNavigationMock = jest.fn()
+
+      addEventListenerSpy = jest.spyOn(window, "addEventListener")
+      removeEventListenerSpy = jest.spyOn(window, "removeEventListener")
+
+      addEventListenerSpy.mockImplementation(event => {
+        if (event === "beforeunload") {
+          Object.defineProperty(window, "preventHardReload", {
+            value: preventHardReloadMock,
+            configurable: true,
+          })
+        }
+
+        if (event === "popstate") {
+          Object.defineProperty(window, "handleBackNavigation", {
+            value: handleBackNavigationMock,
+            configurable: true,
+          })
+        }
+      })
+    })
+
+    afterEach(() => {
+      addEventListenerSpy.mockRestore()
+      removeEventListenerSpy.mockRestore()
+      jest.restoreAllMocks()
+    })
+
+    it("adds event listeners after loading completes", async () => {
+      await renderWithRelay({
+        Viewer: () => ({
+          ...baseProps,
+        }),
+      })
+
+      // Advance timers to complete loading
+      await act(async () => {
+        jest.advanceTimersByTime(1000)
+        await flushPromiseQueue()
+      })
+
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
+        "beforeunload",
+        preventHardReload,
+      )
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
+        "popstate",
+        handleBackNavigation,
+      )
     })
   })
 })
