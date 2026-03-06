@@ -269,12 +269,40 @@ The application behavior is controlled by various environment variables and conf
 
 ## Error Handling
 
-Error handling occurs at multiple layers:
+Force uses a two-tier error boundary system so that errors render inside the normal layout (with nav/footer) instead of dumping users to a logo-only page.
 
-1. **Route level**: Try-catch in route handlers
-2. **Middleware level**: Error handler middleware
-3. **React level**: Error boundaries in Boot component
-4. **Relay level**: Network and GraphQL error middleware
+```
+Boot.tsx
+|
++-- ErrorBoundary (outer)
+|   |   Catches: chunk load failures, Layout crashes.
+|   |   Replaces entire page. Last resort.
+|   |
+|   +-- Providers -> Router -> AppShell
+|       |
+|       +-- Layout (NavBar + footer)
+|           |
+|           +-- ContentErrorBoundary (inner)
+|               |   Catches: component crashes, HttpErrors.
+|               |   Only replaces content area. Nav stays.
+|               |   Resets on pathname change.
+|               |
+|               +-- Route content
+```
+
+| Error type              | Caught by                                 | Nav preserved? | HTTP  |
+| ----------------------- | ----------------------------------------- | -------------- | ----- |
+| `@principalField` 404   | Route `render()` via `renderRouteError()` | Yes            | 404   |
+| Component crash         | `ContentErrorBoundary`                    | Yes            | 200\* |
+| Chunk load failure      | Outer `ErrorBoundary` (bubbled up)        | No             | 200\* |
+| Layout crash            | Outer `ErrorBoundary`                     | No             | 200\* |
+| Unmatched Express route | `errorHandlerMiddleware`                  | No             | 404   |
+
+\*Client-side -- page already delivered.
+
+Error handling for simple routes is **automatic** -- `buildAppRoutes` injects a default error render on any route with a `query` but no custom `render`. Routes with custom `render` functions must handle errors explicitly via `renderRouteError()`. See [adding_new_app.md](./adding_new_app.md#error-handling-for-principalfield-routes).
+
+For a detailed deep-dive, see [error-handling.md](./error-handling.md).
 
 ## Cache Flow Architecture
 
