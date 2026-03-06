@@ -17,6 +17,11 @@ interface TrackingMiddlewareOptions {
 }
 
 export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
+  // Referrer saved from an excluded path so the next tracked pageview
+  // can attribute the navigation to the original source, making redirects
+  // through excluded intermediate paths transparent to analytics.
+  let savedReferrer: string | null = null
+
   return store => next => action => {
     const { excludePaths = [], excludeReferrers = [] } = options
     const { type, payload } = action
@@ -34,17 +39,35 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
             state.found.match.location.search,
         )
 
-        const getFullReferrerUrl = () => {
-          const fullReferrerUrl = getENV("APP_URL") + clientSideRoutingReferrer
-          return fullReferrerUrl
-        }
-
         // Pluck segment analytics instance from force
         const analytics =
           typeof window.analytics !== "undefined" && window.analytics
 
         if (analytics) {
-          // window.sd.routerReferrer = referrer
+          const foundExcludedPath = excludePaths.some(excludedPath => {
+            const matcher = match(excludedPath, { decode: decodeURIComponent })
+            const foundMatch = !!matcher(pathname)
+            return foundMatch
+          })
+
+          if (foundExcludedPath) {
+            // Preserve the referrer from before the excluded path so the
+            // next tracked pageview attributes correctly to the original source.
+            if (!savedReferrer && clientSideRoutingReferrer) {
+              savedReferrer = clientSideRoutingReferrer
+            }
+
+            return next(action)
+          }
+
+          // Use the saved referrer when coming from an excluded redirect,
+          // otherwise fall back to the store's current location.
+          const effectiveReferrer = savedReferrer || clientSideRoutingReferrer
+          savedReferrer = null
+
+          const getFullReferrerUrl = () => {
+            return getENV("APP_URL") + effectiveReferrer
+          }
 
           /**
            * Store a global reference to the referrer. Since we're in an SPA
@@ -53,33 +76,22 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
            *
            * Attaching to the analytics object in the absence of a more
            * "global" location.
-           *
-           * For our new reaction apps, all tracking goes through this location:
-           * https://github.com/damassi/force/blob/399919f7ef053701f0ed3b20b32dddf0490459b0/src/desktop/assets/analytics.coffee#L41
-           * which will read __artsyClientSideRoutingReferrer and update referrer appropriately.
            */
-
-          if (clientSideRoutingReferrer) {
+          if (effectiveReferrer) {
             analytics.__artsyClientSideRoutingReferrer = getFullReferrerUrl()
           }
-
-          const foundExcludedPath = excludePaths.some(excludedPath => {
-            const matcher = match(excludedPath, { decode: decodeURIComponent })
-            const foundMatch = !!matcher(pathname)
-            return foundMatch
-          })
 
           const foundExcludedReferrer = excludeReferrers.some(
             excludedReferrer => {
               const matcher = match(excludedReferrer, {
                 decode: decodeURIComponent,
               })
-              const foundMatch = !!matcher(clientSideRoutingReferrer)
+              const foundMatch = !!matcher(effectiveReferrer)
               return foundMatch
             },
           )
 
-          if (!foundExcludedPath && !foundExcludedReferrer) {
+          if (!foundExcludedReferrer) {
             const url = getENV("APP_URL") + pathname
             const trackingData: {
               path: string
@@ -90,7 +102,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               url,
             }
 
-            if (clientSideRoutingReferrer) {
+            if (effectiveReferrer) {
               trackingData.referrer = getFullReferrerUrl()
             } else if (window.__artsyInitialReferrer) {
               // consume then clear to avoid recording stale external referrer

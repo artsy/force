@@ -34,6 +34,14 @@ jest.mock("System/Hooks/useSystemContext", () => ({
   }),
 }))
 
+jest.mock("@unleash/proxy-client-react", () => ({
+  useVariant: jest.fn(() => ({ enabled: false, name: "control" })),
+}))
+
+jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
+  useTrackFeatureVariantOnMount: jest.fn(),
+}))
+
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
   // not sure why this is neccessary :(
@@ -45,6 +53,7 @@ jest.mock(
 
 const featureFlags = {
   isEnabled: jest.fn(() => false),
+  getVariant: jest.fn(() => ({ enabled: false, name: "control" })),
 }
 
 describe("OrderApp routing redirects", () => {
@@ -87,8 +96,14 @@ describe("OrderApp routing redirects", () => {
   })
 
   describe("new checkout flow redirects", () => {
-    it("redirects from the legacy shipping step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      featureFlags.isEnabled.mockReturnValue(true)
+    beforeEach(() => {
+      featureFlags.getVariant.mockReturnValue({
+        enabled: true,
+        name: "experiment",
+      })
+    })
+
+    it("redirects from the legacy shipping step to the new checkout flow if in experiment variant", async () => {
       const res = await render(
         "/orders/2939023/shipping",
         mockResolver({
@@ -100,8 +115,7 @@ describe("OrderApp routing redirects", () => {
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
 
-    it("redirects from the legacy payment step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      featureFlags.isEnabled.mockReturnValue(true)
+    it("redirects from the legacy payment step to the new checkout flow if in experiment variant", async () => {
       const res = await render(
         "/orders/2939023/payment",
         mockResolver({
@@ -113,8 +127,7 @@ describe("OrderApp routing redirects", () => {
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
 
-    it("redirects from the legacy review step to the new checkout flow if feature flag is enabled and order is BUY mode", async () => {
-      featureFlags.isEnabled.mockReturnValue(true)
+    it("redirects from the legacy review step to the new checkout flow if in experiment variant", async () => {
       const res = await render(
         "/orders/2939023/review",
         mockResolver({
@@ -126,8 +139,7 @@ describe("OrderApp routing redirects", () => {
       expect(res.redirect.url).toBe("/orders2/2939023/checkout")
     })
 
-    it("redirects from the legacy review step to the new checkout flow if feature flag is enabled and order is OFFER mode", async () => {
-      featureFlags.isEnabled.mockReturnValue(true)
+    it("redirects from the legacy offer step to the new checkout flow if in experiment variant", async () => {
       const res = await render(
         "/orders/2939023/offer",
         mockResolver({
@@ -677,6 +689,11 @@ describe("OrderApp", () => {
   })
 
   const mockGetENV = getENV as jest.Mock
+  const mockUseVariant = require("@unleash/proxy-client-react")
+    .useVariant as jest.Mock
+  const mockUseTrackFeatureVariantOnMount =
+    require("System/Hooks/useTrackFeatureVariant")
+      .useTrackFeatureVariantOnMount as jest.Mock
 
   const getWrapper = ({ props, context, breakpoint = "lg" }: any) => {
     return render(
@@ -757,6 +774,28 @@ describe("OrderApp", () => {
     })
 
     expect(screen.getByTestId("error-page")).toBeInTheDocument()
+  })
+
+  describe("experiment tracking", () => {
+    it("tracks the experiment variant on mount", () => {
+      mockUseVariant.mockReturnValue({ enabled: true, name: "experiment" })
+      const props = getProps() as any
+      getWrapper({ props })
+      expect(mockUseTrackFeatureVariantOnMount).toHaveBeenCalledWith({
+        experimentName: "emerald_checkout-redesign",
+        variantName: "experiment",
+      })
+    })
+
+    it("tracks the control variant on mount", () => {
+      mockUseVariant.mockReturnValue({ enabled: true, name: "control" })
+      const props = getProps() as any
+      getWrapper({ props })
+      expect(mockUseTrackFeatureVariantOnMount).toHaveBeenCalledWith({
+        experimentName: "emerald_checkout-redesign",
+        variantName: "control",
+      })
+    })
   })
 
   describe("chat bubble", () => {

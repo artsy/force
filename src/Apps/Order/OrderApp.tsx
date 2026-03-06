@@ -5,7 +5,10 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
 import { ErrorPage } from "Components/ErrorPage"
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
+import { useVariant } from "@unleash/proxy-client-react"
+import { CHECKOUT_REDESIGN_FLAG } from "Apps/Order/redirects"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 import { Media } from "Utils/Responsive"
 import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
@@ -42,6 +45,12 @@ export const preventHardReload = event => {
 const OrderApp: FC<React.PropsWithChildren<OrderAppProps>> = props => {
   const { order, children, match, router } = props
   const { isEigen } = useSystemContext()
+  const variant = useVariant(CHECKOUT_REDESIGN_FLAG)
+
+  useTrackFeatureVariantOnMount({
+    experimentName: CHECKOUT_REDESIGN_FLAG,
+    variantName: variant?.name,
+  })
 
   const removeNavigationListenerRef = useRef<null | (() => void)>(null)
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4cd08194017112200d50804dcd43e126>>
+ * @generated SignedSource<<532f716c9b8e263a2a93328dabfdb6b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,6 @@ export type ArtistHeaderImage_artwork$data = {
     readonly width: number | null | undefined;
   } | null | undefined;
   readonly imageTitle: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
   readonly " $fragmentType": "ArtistHeaderImage_artwork";
 };
 export type ArtistHeaderImage_artwork$key = {
@@ -99,17 +98,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Details_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "218b6a1df3bb87d68b4ab1b44b28e14b";
+(node as any).hash = "85b91f8a515072f51c2a233631fa668e";
 
 export default node;

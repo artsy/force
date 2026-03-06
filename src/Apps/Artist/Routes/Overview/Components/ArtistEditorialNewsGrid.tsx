@@ -10,6 +10,7 @@ import {
   Skeleton,
   SkeletonBox,
   SkeletonText,
+  Stack,
   Text,
 } from "@artsy/palette"
 import { GridColumns, ResponsiveBox } from "@artsy/palette"
@@ -60,14 +61,20 @@ const ArtistEditorialNewsGrid: FC<
     // diamond_editorial-section
     if (showEmptyStateWhenNoArticles) {
       return (
-        <EmptyState
-          title="There are currently no editorial pieces about this artist."
-          description="Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy."
-          action={{
-            label: "Browse Artsy Editorial",
-            href: "/editorial",
-          }}
-        />
+        <Stack gap={2}>
+          <Text variant="lg-display">
+            Artsy Editorial Featuring {artist.name}
+          </Text>
+
+          <EmptyState
+            title="There are currently no editorial pieces about this artist."
+            description="Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy."
+            action={{
+              label: "Browse Artsy Editorial",
+              href: "/articles",
+            }}
+          />
+        </Stack>
       )
     }
 
