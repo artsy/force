@@ -28,6 +28,7 @@ const MOCK_PRICE_RANGE_ORDER = {
   source: "artwork_page",
   buyerStateExpiresAt: null,
   currencyCode: "USD",
+  currencySymbol: "US$",
   selectedFulfillmentOption: null,
   pendingOffer: null,
   lineItems: [
@@ -352,11 +353,11 @@ describe("Order2OfferStep", () => {
 
     // Custom input should appear
     await waitFor(() => {
-      expect(screen.getByTitle("Your offer")).toBeInTheDocument()
+      expect(screen.getByTitle("Your offer (US$)")).toBeInTheDocument()
     })
 
     // Enter custom amount
-    const customInput = screen.getByTitle("Your offer")
+    const customInput = screen.getByTitle("Your offer (US$)")
     fireEvent.change(customInput, { target: { value: "1800" } })
 
     // Submit the offer
@@ -732,11 +733,11 @@ describe("Order2OfferStep", () => {
 
       // Custom input should appear
       await waitFor(() => {
-        expect(screen.getByTitle("Your offer")).toBeInTheDocument()
+        expect(screen.getByTitle("Your offer (US$)")).toBeInTheDocument()
       })
 
       // Enter custom amount
-      const customInput = screen.getByTitle("Your offer")
+      const customInput = screen.getByTitle("Your offer (US$)")
       fireEvent.change(customInput, { target: { value: "1800" } })
 
       // Blur the input to trigger the tracking

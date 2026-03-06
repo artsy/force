@@ -8,19 +8,9 @@ import type { OfferInputTestQuery } from "__generated__/OfferInputTestQuery.grap
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL<OfferInputTestQuery>({
-  Component: ({
-    me,
-    initialValue = 0,
-    onBlur,
-    showCurrencySymbol = false,
-  }: any) => (
+  Component: ({ me, initialValue = 0, onBlur }: any) => (
     <Formik initialValues={{ offerValue: initialValue }} onSubmit={() => {}}>
-      <OfferInput
-        name="offerValue"
-        order={me.order}
-        onBlur={onBlur}
-        showCurrencySymbol={showCurrencySymbol}
-      />
+      <OfferInput name="offerValue" order={me.order} onBlur={onBlur} />
     </Formik>
   ),
   query: graphql`
@@ -40,12 +30,7 @@ const setInputValue = (input: HTMLInputElement, value: string) => {
 
 describe("OfferInput", () => {
   describe("title", () => {
-    it("shows 'Your offer' as the title by default", () => {
-      renderWithRelay({ Me: () => ({ order: { currencySymbol: "US$" } }) })
-      expect(screen.getByTitle("Your offer")).toBeInTheDocument()
-    })
-
-    it("shows the currency symbol in the title when showCurrencySymbol is true", () => {
+    it("shows the currency symbol in the title", () => {
       renderWithRelay(
         { Me: () => ({ order: { currencySymbol: "US$" } }) },
         { showCurrencySymbol: true },
