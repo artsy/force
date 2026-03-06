@@ -97,41 +97,6 @@ export const myNewAppRoutes: AppRouteConfig[] = [
 ]
 ```
 
-### Error handling for `@principalField` routes
-
-Error handling for `@principalField` queries is **automatic**. The router (`buildAppRoutes`) injects a default error render function on any route that has a `query` but no custom `render`. This means simple routes need no extra configuration.
-
-For routes that need a custom `render` function (e.g., canonical slug redirects), you must handle errors yourself. Two options:
-
-Use `canonicalSlugRedirect()` which handles errors internally:
-
-```tsx
-import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
-
-render: canonicalSlugRedirect({
-  entityName: "artist",
-  paramName: "slug",
-  basePath: "/my-route",
-}),
-```
-
-Or call `renderRouteError()` at the top of a custom render function:
-
-```tsx
-import { renderRouteError } from "System/Router/Utils/renderRouteError"
-
-render: ({ Component, props, error }) => {
-  if (error) return renderRouteError(error)
-
-  if (!(Component && props)) return undefined
-
-  // Your custom logic here...
-  return <Component {...props} />
-},
-```
-
-See [error-handling.md](./error-handling.md) for the full error handling architecture.
-
 ### Advanced Setup
 
 For most apps we don't need more than the above to get a new route and SSR rendering out of the box. However, sometimes we need additional server-side functionality, be it redirects or something else that interacts directly with the request / response cycle. For that, we can leverage express.js middleware.

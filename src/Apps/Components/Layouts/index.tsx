@@ -39,10 +39,7 @@ export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
 }) => {
   const { match } = useRouter()
 
-  // When match is undefined (e.g. error pages rendered outside of Found's
-  // router context), skip the fetching/previous-layout logic entirely and
-  // render the requested layout variant directly.
-  const isFetching = !!match && !match.elements
+  const isFetching = !match.elements
 
   // If we're fetching, we want to render the previous layout and not execute
   // the new one right away.
@@ -52,14 +49,11 @@ export const Layout: FC<React.PropsWithChildren<LayoutProps>> = ({
       ? LAYOUTS[previousVariant]
       : previousVariant
 
-  const Component = typeof variant === "string" ? LAYOUTS[variant] : variant
-
   if (isFetching) {
-    // During client-side navigation, show the previous layout while loading.
-    // On SSR or if no previous layout exists (e.g. error pages), use current.
-    const FetchingLayout = Previous || Component
-    return <FetchingLayout>{children}</FetchingLayout>
+    return <Previous>{children}</Previous>
   }
+
+  const Component = typeof variant === "string" ? LAYOUTS[variant] : variant
 
   return <Component>{children}</Component>
 }
