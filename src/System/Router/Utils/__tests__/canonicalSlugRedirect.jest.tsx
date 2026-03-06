@@ -4,10 +4,6 @@ import {
   checkForCanonicalSlugRedirect,
 } from "System/Router/Utils/canonicalSlugRedirect"
 
-jest.mock("Server/context", () => ({
-  updateContext: jest.fn(),
-}))
-
 const MockComponent = () => null
 
 const createMatch = (
@@ -230,40 +226,6 @@ describe("canonicalSlugRedirect", () => {
         "/fair/art-basel-2024/artworks?medium=painting",
       )
     }
-  })
-
-  it("returns ErrorPage when error is provided with a status", () => {
-    const { updateContext } = require("Server/context")
-    const render = createRender()
-
-    const result = render({
-      Component: MockComponent,
-      props: { artist: { slug: "banksy" } },
-      match: createMatch({ artistID: "banksy" }),
-      error: { status: 404 },
-    })
-
-    expect(result).toBeDefined()
-    const errorPage = result!.props.children[1]
-    expect(errorPage.props.code).toBe(404)
-    expect(updateContext).toHaveBeenCalledWith("statusCode", 404)
-  })
-
-  it("defaults to 500 when error has no status", () => {
-    const { updateContext } = require("Server/context")
-    const render = createRender()
-
-    const result = render({
-      Component: MockComponent,
-      props: { artist: { slug: "banksy" } },
-      match: createMatch({ artistID: "banksy" }),
-      error: {},
-    })
-
-    expect(result).toBeDefined()
-    const errorPage = result!.props.children[1]
-    expect(errorPage.props.code).toBe(500)
-    expect(updateContext).toHaveBeenCalledWith("statusCode", 500)
   })
 })
 

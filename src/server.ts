@@ -66,7 +66,7 @@ app.get(
         return
       }
 
-      renderServerApp({ req, res, code: status, ...rest })
+      renderServerApp({ req, res, ...rest })
     } catch (error) {
       console.error(error)
       next(error)

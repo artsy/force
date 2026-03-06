@@ -1,10 +1,6 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
 import { checkForCanonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
-import {
-  type RenderArgs,
-  renderRouteError,
-} from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
@@ -86,9 +82,7 @@ export const partnerRoutes: RouteProps[] = [
         }
       }
     `,
-    render: ({ Component, props, match, error }: RenderArgs) => {
-      if (error) return renderRouteError(error)
-
+    render: ({ Component, props, match }) => {
       if (!(Component && props)) {
         return undefined
       }
@@ -158,10 +152,7 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match, error }: RenderArgs) => {
-          const errorPage = renderRouteError(error)
-          if (errorPage) return errorPage
-
+        render: ({ Component, props, match }) => {
           if (!(Component && props)) {
             return
           }
@@ -223,10 +214,7 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match, error }: RenderArgs) => {
-          const errorPage = renderRouteError(error)
-          if (errorPage) return errorPage
-
+        render: ({ Component, props, match }) => {
           if (!(Component && props)) {
             return
           }
@@ -283,10 +271,7 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match, error }: RenderArgs) => {
-          const errorPage = renderRouteError(error)
-          if (errorPage) return errorPage
-
+        render: ({ Component, props, match }) => {
           const pageProps = props as any
 
           if (!(Component && pageProps && pageProps.partner)) {
@@ -330,10 +315,7 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match, error }: RenderArgs) => {
-          const errorPage = renderRouteError(error)
-          if (errorPage) return errorPage
-
+        render: ({ Component, props, match }) => {
           if (!(Component && props)) {
             return
           }
@@ -374,10 +356,7 @@ export const partnerRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ Component, props, match, error }: RenderArgs) => {
-          const errorPage = renderRouteError(error)
-          if (errorPage) return errorPage
-
+        render: ({ Component, props, match }) => {
           if (!(Component && props)) {
             return undefined
           }

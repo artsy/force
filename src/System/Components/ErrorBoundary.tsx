@@ -4,7 +4,6 @@ import { ErrorPage } from "Components/ErrorPage"
 import { ErrorWithMetadata } from "Utils/errors"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import { captureException, withScope } from "@sentry/browser"
 import { HttpError } from "found"
 import * as React from "react"
 import type { ErrorInfo } from "react"
@@ -36,14 +35,6 @@ export class ErrorBoundary extends React.Component<Props, State> {
     const message = error instanceof HttpError ? error.status : error.message
     logger.error(new ErrorWithMetadata(message, errorInfo))
 
-    withScope(scope => {
-      scope.setContext("errorInfo", {
-        componentStack: errorInfo.componentStack,
-      })
-      scope.setTag("errorBoundary", "outer")
-      captureException(error)
-    })
-
     if (this.props.onCatch) {
       this.props.onCatch()
     }
@@ -58,10 +49,8 @@ export class ErrorBoundary extends React.Component<Props, State> {
     }
 
     const displayStackTrace = getENV("NODE_ENV") === "development"
-    const currentURL =
-      typeof window !== "undefined" ? window.location.href : "SSR"
     const message = `${error.message || "Internal Error"}
-Current URL: ${currentURL}
+Current URL: ${window.location.href}
 Time: ${new Date().toUTCString()}`
     const detail = displayStackTrace ? error.stack : undefined
 

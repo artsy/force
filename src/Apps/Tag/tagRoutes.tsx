@@ -16,6 +16,7 @@ export const tagRoutes: RouteProps[] = [
     onPreloadJS: () => {
       TagApp.preload()
     },
+
     query: graphql`
       query tagRoutes_TagQuery($slug: String!) @cacheable {
         tag(id: $slug) @principalField {
