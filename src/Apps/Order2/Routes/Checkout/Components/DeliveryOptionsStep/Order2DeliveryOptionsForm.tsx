@@ -21,7 +21,6 @@ import {
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
-import { RadioOptionRow } from "Apps/Order2/Routes/Checkout/Components/RadioOptionRow"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -146,14 +145,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                       </Text>
                     }
                   >
-                    <Clickable
-                      aria-label="Shipping information"
-                      height={20}
-                      width={40}
-                      ml={0.5}
-                      style={{ lineHeight: 0 }}
-                      alignContent="center"
-                    >
+                    <Clickable aria-label="Shipping information" ml={0.5}>
                       <InfoIcon />
                     </Clickable>
                   </Tooltip>
