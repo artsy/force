@@ -16,11 +16,13 @@ import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutM
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
 import type {
   Order2ReviewStep_order$data,
   Order2ReviewStep_order$key,
 } from "__generated__/Order2ReviewStep_order.graphql"
+import { DateTime } from "luxon"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -47,6 +49,22 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   // Get the offer ID for offer orders (only call the hook when needed)
   const offerId = orderData.pendingOffer?.internalID ?? null
   const confirmationToken = orderData.stripeConfirmationToken ?? undefined
+
+  const isOfferOnTopOfPartnerOffer =
+    isOffer && orderData.source === "PARTNER_OFFER"
+
+  // Calculate timer for partner offer
+  const partnerOfferEndTime =
+    (isOfferOnTopOfPartnerOffer && orderData.buyerStateExpiresAt) || ""
+  const partnerOfferStartTime = isOfferOnTopOfPartnerOffer
+    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
+    : ""
+
+  const timer = useCountdownTimer({
+    startTime: partnerOfferStartTime,
+    endTime: partnerOfferEndTime,
+    imminentTime: 1,
+  })
   const {
     steps,
     savePaymentMethod,
@@ -220,6 +238,16 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
             List price: {artworkData.price}
           </Text>
+          {isOfferOnTopOfPartnerOffer &&
+            orderData.lineItems?.[0]?.listPrice?.__typename === "Money" &&
+            timer.hasValidRemainingTime && (
+              <Text variant="sm" color="blue100" textAlign="left">
+                Gallery offer: {orderData.lineItems[0].listPrice.display}{" "}
+                <span style={{ whiteSpace: "nowrap" }}>
+                  (Exp. {timer.remainingTime})
+                </span>
+              </Text>
+            )}
           {artworkData.attributionClass?.shortDescription && (
             <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
               {artworkData.attributionClass.shortDescription}
@@ -318,6 +346,7 @@ const FRAGMENT = graphql`
     internalID
     mode
     source
+    buyerStateExpiresAt
     stripeConfirmationToken
     paymentMethod
     buyerTotal {
@@ -333,6 +362,12 @@ const FRAGMENT = graphql`
       display
     }
     lineItems {
+      listPrice {
+        __typename
+        ... on Money {
+          display
+        }
+      }
       artworkOrEditionSet {
         __typename
         ... on Artwork {

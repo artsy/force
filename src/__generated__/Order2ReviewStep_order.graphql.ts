@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56a04a83127ac271ec5c87c2f4e986ee>>
+ * @generated SignedSource<<147942823bc1ad50516be355c46e3230>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACC
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2ReviewStep_order$data = {
+  readonly buyerStateExpiresAt: string | null | undefined;
   readonly buyerTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -68,6 +69,10 @@ export type Order2ReviewStep_order$data = {
       } | null | undefined;
       readonly title: string | null | undefined;
     } | null | undefined;
+    readonly listPrice: {
+      readonly __typename: "Money";
+      readonly display: string | null | undefined;
+    } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
@@ -98,23 +103,24 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
+  "storageKey": null
+},
+v2 = [
+  (v1/*: any*/)
 ],
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -148,14 +154,14 @@ v3 = [
     "storageKey": null
   }
 ],
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": [
     {
@@ -174,7 +180,7 @@ v5 = {
   "name": "resized",
   "plural": false,
   "selections": [
-    (v4/*: any*/)
+    (v5/*: any*/)
   ],
   "storageKey": "resized(height:138,width:185)"
 };
@@ -208,6 +214,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "buyerStateExpiresAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "stripeConfirmationToken",
       "storageKey": null
     },
@@ -225,7 +238,7 @@ return {
       "kind": "LinkedField",
       "name": "buyerTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -235,7 +248,7 @@ return {
       "kind": "LinkedField",
       "name": "itemsTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -245,7 +258,7 @@ return {
       "kind": "LinkedField",
       "name": "shippingTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -255,7 +268,7 @@ return {
       "kind": "LinkedField",
       "name": "taxTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -269,21 +282,34 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "listPrice",
+          "plural": false,
+          "selections": [
+            (v3/*: any*/),
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": null,
           "kind": "LinkedField",
           "name": "artworkOrEditionSet",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            (v3/*: any*/),
             {
               "kind": "InlineFragment",
-              "selections": (v3/*: any*/),
+              "selections": (v4/*: any*/),
               "type": "Artwork",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": (v3/*: any*/),
+              "selections": (v4/*: any*/),
               "type": "EditionSet",
               "abstractKey": null
             }
@@ -345,8 +371,8 @@ return {
               "name": "image",
               "plural": false,
               "selections": [
-                (v4/*: any*/),
-                (v5/*: any*/)
+                (v5/*: any*/),
+                (v6/*: any*/)
               ],
               "storageKey": null
             }
@@ -376,11 +402,11 @@ return {
               "name": "figures",
               "plural": true,
               "selections": [
-                (v2/*: any*/),
+                (v3/*: any*/),
                 {
                   "kind": "InlineFragment",
                   "selections": [
-                    (v5/*: any*/)
+                    (v6/*: any*/)
                   ],
                   "type": "Image",
                   "abstractKey": null
@@ -412,6 +438,6 @@ return {
 };
 })();
 
-(node as any).hash = "c1391f79711e91a6f8030b0ee21dc46f";
+(node as any).hash = "25394104b6283c57bd1949e264ce61ec";
 
 export default node;

@@ -56,6 +56,19 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal", () => ({
   useCheckoutModal: () => mockCheckoutModal,
 }))
 
+let mockCountdownTimer = {
+  remainingTime: "2d 22h",
+  isImminent: false,
+  percentComplete: 0,
+  isLoading: false,
+  isExpired: false,
+  hasValidRemainingTime: true,
+}
+
+jest.mock("Utils/Hooks/useCountdownTimer", () => ({
+  useCountdownTimer: () => mockCountdownTimer,
+}))
+
 const { renderWithRelay } = setupTestWrapperTL<Order2ReviewStepTestQuery>({
   Component: (props: any) => <Order2ReviewStep order={props.me.order} />,
   query: graphql`
@@ -128,6 +141,15 @@ describe("Order2ReviewStep", () => {
     jest.clearAllMocks()
     // Reset savePaymentMethod to default
     mockCheckoutContext.savePaymentMethod = false
+    // Reset countdown timer to default
+    mockCountdownTimer = {
+      remainingTime: "2d 22h",
+      isImminent: false,
+      percentComplete: 0,
+      isLoading: false,
+      isExpired: false,
+      hasValidRemainingTime: true,
+    }
   })
 
   describe("Submitting an offer order", () => {
@@ -588,6 +610,124 @@ describe("Order2ReviewStep", () => {
           error: CheckoutModalError.ARTWORK_NOT_FOR_SALE,
         })
       })
+    })
+  })
+
+  describe("Gallery offer display", () => {
+    it("shows gallery offer line with timer when in offer mode on partner offer", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            ...createOfferOrder(),
+            source: "PARTNER_OFFER",
+            buyerStateExpiresAt: "2025-12-31T23:59:59Z",
+            lineItems: [
+              {
+                listPrice: {
+                  __typename: "Money",
+                  display: "$5,000",
+                },
+                artworkOrEditionSet: {
+                  __typename: "Artwork",
+                  price: "$5,000",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      const galleryOfferText = screen.getByText(/Gallery offer:/)
+      expect(galleryOfferText).toBeInTheDocument()
+      expect(galleryOfferText.textContent).toContain("$5,000")
+      expect(galleryOfferText.textContent).toContain("(Exp. 2d 22h)")
+    })
+
+    it("does not show gallery offer line when not a partner offer", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            ...createOfferOrder(),
+            source: "ARTWORK_PAGE",
+            lineItems: [
+              {
+                listPrice: {
+                  __typename: "Money",
+                  display: "$5,000",
+                },
+                artworkOrEditionSet: {
+                  __typename: "Artwork",
+                  price: "$5,000",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Gallery offer:/)).not.toBeInTheDocument()
+    })
+
+    it("does not show gallery offer line when timer is invalid", () => {
+      mockCountdownTimer = {
+        remainingTime: "NaNh NaNm",
+        isImminent: false,
+        percentComplete: 0,
+        isLoading: false,
+        isExpired: false,
+        hasValidRemainingTime: false,
+      }
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            ...createOfferOrder(),
+            source: "PARTNER_OFFER",
+            buyerStateExpiresAt: "2025-12-31T23:59:59Z",
+            lineItems: [
+              {
+                listPrice: {
+                  __typename: "Money",
+                  display: "$5,000",
+                },
+                artworkOrEditionSet: {
+                  __typename: "Artwork",
+                  price: "$5,000",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Gallery offer:/)).not.toBeInTheDocument()
+    })
+
+    it("does not show gallery offer line in buy mode with partner offer", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            ...baseOrderData,
+            mode: "BUY",
+            source: "PARTNER_OFFER",
+            buyerStateExpiresAt: "2025-12-31T23:59:59Z",
+            lineItems: [
+              {
+                listPrice: {
+                  __typename: "Money",
+                  display: "$5,000",
+                },
+                artworkOrEditionSet: {
+                  __typename: "Artwork",
+                  price: "$5,000",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Gallery offer:/)).not.toBeInTheDocument()
     })
   })
 })
