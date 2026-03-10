@@ -327,7 +327,6 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
               name="offerValue"
               onBlur={onCustomOfferBlur}
               order={orderData}
-              showCurrencySymbol
             />
             <Spacer y={4} />
           </>

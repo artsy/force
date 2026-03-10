@@ -4,7 +4,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { RouteProps } from "System/Router/Route"
 import { interceptLinks } from "System/Router/Utils/interceptLinks"
 import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
-import { type Match, type Router, withRouter } from "found"
+import { type Match, Redirect, type Router, withRouter } from "found"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
 import { NavigationDataProvider } from "System/Contexts/NavigationDataContext"
@@ -17,6 +17,12 @@ import { getENV } from "Utils/getENV"
  */
 function injectDefaultErrorRender(routes: RouteProps[]): RouteProps[] {
   return routes.map(route => {
+    // Skip Found Redirect instances — spreading them into plain objects
+    // destroys their prototype `render()` method, breaking the redirect.
+    if (route instanceof Redirect) {
+      return route
+    }
+
     const patched = { ...route }
 
     if (patched.query && !patched.render) {
