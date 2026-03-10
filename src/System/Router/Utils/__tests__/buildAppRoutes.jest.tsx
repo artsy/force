@@ -3,6 +3,7 @@ import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { buildAppRoutes } from "System/Router/Utils/buildAppRoutes"
 import { setupClientRouter } from "System/Router/clientRouter"
+import { Redirect } from "found"
 import { getRequest } from "relay-runtime"
 import { getENV } from "Utils/getENV"
 
@@ -109,6 +110,27 @@ describe("buildAppRoutes", () => {
       expect(screen.getByText("AppShell")).toBeInTheDocument()
       expect(screen.getByText("foo route")).toBeInTheDocument()
     })
+  })
+
+  it("preserves Found Redirect instances instead of spreading them", () => {
+    const redirect = new Redirect({
+      from: "/",
+      to: "/foo/bar",
+    })
+
+    const routes = buildAppRoutes([
+      [
+        {
+          path: "/foo",
+          children: [redirect as any],
+        },
+      ],
+    ])
+
+    const child = routes[0].children![0].children![0]
+    expect(child).toBe(redirect)
+    expect(child).toBeInstanceOf(Redirect)
+    expect(typeof child.render).toBe("function")
   })
 
   describe("ENABLE_SERVER_DRIVEN_NAVIGATION feature flag", () => {

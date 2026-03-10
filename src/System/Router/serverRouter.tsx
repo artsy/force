@@ -99,8 +99,6 @@ export const setupServerRouter = async ({
     return farceResult
   }
 
-  const status = elementResult.status
-
   const headTags = [
     <style key="fresnel" type="text/css">
       {createMediaStyle()}
@@ -109,26 +107,35 @@ export const setupServerRouter = async ({
 
   const matchingMediaQueries = matchingMediaQueriesForUserAgent(userAgent)
 
-  const ServerRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
-    return (
-      <Boot
-        context={matchContext}
-        headTags={headTags}
-        relayEnvironment={relayEnvironment}
-        routes={routes}
-        user={user}
-        onlyMatchMediaQueries={matchingMediaQueries as MatchingMediaQueries}
-      >
-        {elementResult.element}
-      </Boot>
-    )
+  const makeServerRouter = (
+    element: React.ReactNode,
+  ): React.FC<React.PropsWithChildren<unknown>> => {
+    return () => {
+      return (
+        <Boot
+          context={matchContext}
+          headTags={headTags}
+          relayEnvironment={relayEnvironment}
+          routes={routes}
+          user={user}
+          onlyMatchMediaQueries={matchingMediaQueries as MatchingMediaQueries}
+        >
+          {element}
+        </Boot>
+      )
+    }
   }
 
-  const { html, stream, extractScriptTags, styleTags } = await collectAssets({
+  const ServerRouter = makeServerRouter(elementResult.element)
+  const status = elementResult.status
+
+  const assetsResult = await collectAssets({
     ServerRouter,
     relayEnvironment,
     req,
   })
+
+  const { html, stream, extractScriptTags, styleTags } = assetsResult
 
   // Sentry names transactions according to their Express route.
   // Overwrite this with the matched React route.
@@ -162,7 +169,7 @@ export const setupServerRouter = async ({
 const isRedirect = (
   farceResult: FarceElementResult | FarceRedirectResult,
 ): farceResult is FarceRedirectResult => {
-  return farceResult.hasOwnProperty("redirect")
+  return "redirect" in farceResult
 }
 
 export const __TEST_INTERNAL_SERVER_APP__ =

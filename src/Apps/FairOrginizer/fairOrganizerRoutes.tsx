@@ -1,6 +1,10 @@
 import loadable from "@loadable/component"
 import { ErrorPage } from "Components/ErrorPage"
 import type { RouteProps } from "System/Router/Route"
+import {
+  type RenderArgs,
+  renderRouteError,
+} from "System/Router/Utils/renderRouteError"
 import { extractNodes } from "Utils/extractNodes"
 import type { fairOrganizerRoutes_FairOrganizerQuery$data } from "__generated__/fairOrganizerRoutes_FairOrganizerQuery.graphql"
 import { RedirectException, type RenderProps } from "found"
@@ -36,7 +40,9 @@ export const fairOrganizerRoutes: RouteProps[] = [
     onPreloadJS: () => {
       FairOrganizerApp.preload()
     },
-    render: ({ Component, props }) => {
+    render: ({ Component, props, error }: RenderArgs) => {
+      if (error) return renderRouteError(error)
+
       if (Component && props) {
         const { fairOrganizer } = props as Props
         const { profile, runningFairs } = fairOrganizer as NonNullable<
