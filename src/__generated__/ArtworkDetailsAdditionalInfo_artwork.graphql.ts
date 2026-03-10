@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06460b098da11fc825af2d40d20f3282>>
+ * @generated SignedSource<<6816ffdc041a0b8e08c425cefa43133b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,10 @@ export type ArtworkDetailsAdditionalInfo_artwork$data = {
   readonly framed: {
     readonly details: string | null | undefined;
     readonly label: string | null | undefined;
+  } | null | undefined;
+  readonly framedDimensions: {
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
   } | null | undefined;
   readonly imageRights: string | null | undefined;
   readonly internalID: string;
@@ -68,6 +72,22 @@ var v0 = [
     "args": null,
     "kind": "ScalarField",
     "name": "details",
+    "storageKey": null
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
     "storageKey": null
   }
 ];
@@ -146,6 +166,16 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "dimensions",
+      "kind": "LinkedField",
+      "name": "framedDimensions",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "ArtworkInfoRow",
       "kind": "LinkedField",
       "name": "signatureInfo",
@@ -198,22 +228,7 @@ return {
       "kind": "LinkedField",
       "name": "dimensions",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "in",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cm",
-          "storageKey": null
-        }
-      ],
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -252,6 +267,6 @@ return {
 };
 })();
 
-(node as any).hash = "359c654c0144eefef15b95f1ed2d120e";
+(node as any).hash = "7d6efffffec9b9eb95e4a91b8058da1c";
 
 export default node;

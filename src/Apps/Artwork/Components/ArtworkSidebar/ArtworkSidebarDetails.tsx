@@ -12,11 +12,19 @@ interface ArtworkSidebarDetailsProps {
 const ArtworkSidebarDetails: React.FC<
   React.PropsWithChildren<ArtworkSidebarDetailsProps>
 > = ({ artwork }) => {
-  const { medium, dimensions, framed, editionOf, editionSets, isUnlisted } =
-    artwork
+  const {
+    medium,
+    dimensions,
+    framed,
+    framedDimensions,
+    editionOf,
+    editionSets,
+    isUnlisted,
+  } = artwork
 
-  const dimensionsPresent = dimensions =>
-    /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)
+  const hasDimensions = (dims: typeof dimensions | typeof framedDimensions) => {
+    return /\d/.test(dims?.in ?? "") || /\d/.test(dims?.cm ?? "")
+  }
 
   const getFrameString = (
     frameDetails?: string | null,
@@ -33,11 +41,16 @@ const ArtworkSidebarDetails: React.FC<
     return `Frame ${frameDetails.toLowerCase()}`
   }
 
+  // Prefer framed dimensions if available, otherwise fall back to regular dimensions
+  const displayDimensions = hasDimensions(framedDimensions)
+    ? framedDimensions
+    : dimensions
+
   return (
     <Box color="mono60">
       <Text variant="sm">{medium}</Text>
-      {!!dimensionsPresent(dimensions) && (editionSets?.length ?? 0) < 2 && (
-        <Text variant="sm">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>
+      {hasDimensions(displayDimensions) && (editionSets?.length ?? 0) < 2 && (
+        <Text variant="sm">{`${displayDimensions?.in} | ${displayDimensions?.cm}`}</Text>
       )}
       {!!getFrameString(framed?.details, isUnlisted) && (
         <Text variant="sm">{getFrameString(framed?.details, isUnlisted)}</Text>
@@ -73,6 +86,10 @@ export const ArtworkSidebarDetailsFragmentContainer = createFragmentContainer(
         }
         framed {
           details
+        }
+        framedDimensions {
+          in
+          cm
         }
         editionOf
         isEdition

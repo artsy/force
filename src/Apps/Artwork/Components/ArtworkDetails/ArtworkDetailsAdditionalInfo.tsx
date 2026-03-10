@@ -11,12 +11,12 @@ import {
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import {
   DefinitionList,
   type DefinitionListItem,
 } from "Components/DefinitionList"
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
-import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ArtworkDetailsAdditionalInfo_artwork$data } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
 import type { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
@@ -72,6 +72,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     internalID,
     canRequestLotConditionsReport,
     framed,
+    framedDimensions,
     signatureInfo,
     conditionDescription,
     certificateOfAuthenticity,
@@ -85,6 +86,10 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   const { dimensionsLabel } = useArtworkDimensions(
     selectedEditionSet ? selectedEditionSet?.dimensions : dimensions,
   )
+
+  // Added: Format framed dimensions
+  const { dimensionsLabel: framedDimensionsLabel } =
+    useArtworkDimensions(framedDimensions)
 
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -102,6 +107,10 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     {
       term: "Size",
       value: dimensionsLabel,
+    },
+    {
+      term: "Framed Size",
+      value: framedDimensionsLabel,
     },
     {
       term: "Rarity",
@@ -243,6 +252,10 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer =
         framed {
           label
           details
+        }
+        framedDimensions {
+          in
+          cm
         }
         signatureInfo {
           label
