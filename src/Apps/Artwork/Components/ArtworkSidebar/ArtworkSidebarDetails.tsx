@@ -1,4 +1,5 @@
 import { Box, Spacer, Text } from "@artsy/palette"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import type { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"
@@ -22,39 +23,20 @@ const ArtworkSidebarDetails: React.FC<
     isUnlisted,
   } = artwork
 
-  const hasDimensions = (dims: typeof dimensions | typeof framedDimensions) => {
-    return /\d/.test(dims?.in ?? "") || /\d/.test(dims?.cm ?? "")
-  }
-
-  const getFrameString = (
-    frameDetails?: string | null,
-    isUnlisted?: boolean,
-  ) => {
-    if (frameDetails !== "Included") {
-      if (isUnlisted) {
-        return "Frame not included"
-      } else {
-        return
-      }
-    }
-
-    return `Frame ${frameDetails.toLowerCase()}`
-  }
-
-  // Prefer framed dimensions if available, otherwise fall back to regular dimensions
-  const displayDimensions = hasDimensions(framedDimensions)
-    ? framedDimensions
-    : dimensions
+  const { dimensionsLabel, frameText } = useArtworkDimensions(
+    dimensions,
+    framedDimensions,
+    framed,
+    isUnlisted,
+  )
 
   return (
     <Box color="mono60">
       <Text variant="sm">{medium}</Text>
-      {hasDimensions(displayDimensions) && (editionSets?.length ?? 0) < 2 && (
-        <Text variant="sm">{`${displayDimensions?.in} | ${displayDimensions?.cm}`}</Text>
+      {dimensionsLabel && (editionSets?.length ?? 0) < 2 && (
+        <Text variant="sm">{dimensionsLabel}</Text>
       )}
-      {!!getFrameString(framed?.details, isUnlisted) && (
-        <Text variant="sm">{getFrameString(framed?.details, isUnlisted)}</Text>
-      )}
+      {frameText && <Text variant="sm">{frameText}</Text>}
       {!!editionOf && <Text variant="sm">{editionOf}</Text>}
 
       {/* classification */}
