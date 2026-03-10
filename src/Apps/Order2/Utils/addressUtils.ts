@@ -9,6 +9,12 @@ import { COUNTRIES, type CountryData } from "Utils/countries"
 export function getShippableCountries(
   availableShippingCountries: ReadonlyArray<string>,
 ): CountryData[] {
+  // If there are no available shipping countries (ex. no artwork location),
+  // then just return all shippalbe countries and let the partner choose to
+  // approve or reject the offer
+  if (availableShippingCountries.length === 0) {
+    return COUNTRIES
+  }
   const lowercaseCountryCodes = availableShippingCountries.map(code =>
     code.toLowerCase(),
   )
