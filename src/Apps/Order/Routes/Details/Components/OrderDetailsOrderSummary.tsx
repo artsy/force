@@ -39,8 +39,12 @@ export const OrderDetailsOrderSummary: React.FC<
   const dimensions = isArtworkOrEdition
     ? artworkOrEditionSet.dimensions
     : undefined
+  const framedDimensions =
+    artworkOrEditionSet?.__typename === "Artwork"
+      ? artworkOrEditionSet.framedDimensions
+      : undefined
   const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
-  const { dimensionsLabel } = useArtworkDimensions(dimensions)
+  const { dimensionsLabel } = useArtworkDimensions(dimensions, framedDimensions)
 
   return (
     <Box backgroundColor="mono0" px={[2, 4]} py={2}>
@@ -171,6 +175,10 @@ const FRAGMENT = graphql`
         ... on Artwork {
           price
           dimensions {
+            in
+            cm
+          }
+          framedDimensions {
             in
             cm
           }
