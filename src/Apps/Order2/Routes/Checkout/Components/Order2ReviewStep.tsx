@@ -50,21 +50,25 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const offerId = orderData.pendingOffer?.internalID ?? null
   const confirmationToken = orderData.stripeConfirmationToken ?? undefined
 
+  // Limited partner offer variables
   const isOfferOnTopOfPartnerOffer =
     isOffer && orderData.source === "PARTNER_OFFER"
-
-  // Calculate timer for partner offer
   const partnerOfferEndTime =
     (isOfferOnTopOfPartnerOffer && orderData.buyerStateExpiresAt) || ""
   const partnerOfferStartTime = isOfferOnTopOfPartnerOffer
     ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
     : ""
-
   const timer = useCountdownTimer({
     startTime: partnerOfferStartTime,
     endTime: partnerOfferEndTime,
     imminentTime: 1,
   })
+  const itemPrice = orderData.lineItems?.[0]?.listPrice
+  const displayLimitedOfferLine =
+    isOfferOnTopOfPartnerOffer &&
+    itemPrice?.__typename === "Money" &&
+    timer.hasValidRemainingTime
+
   const {
     steps,
     savePaymentMethod,
@@ -238,16 +242,14 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
             List price: {artworkData.price}
           </Text>
-          {isOfferOnTopOfPartnerOffer &&
-            orderData.lineItems?.[0]?.listPrice?.__typename === "Money" &&
-            timer.hasValidRemainingTime && (
-              <Text variant="sm" color="blue100" textAlign="left">
-                Gallery offer: {orderData.lineItems[0].listPrice.display}{" "}
-                <span style={{ whiteSpace: "nowrap" }}>
-                  (Exp. {timer.remainingTime})
-                </span>
-              </Text>
-            )}
+          {displayLimitedOfferLine && (
+            <Text variant="sm" color="blue100" textAlign="left">
+              Gallery offer: {itemPrice.display}{" "}
+              <span style={{ whiteSpace: "nowrap" }}>
+                (Exp. {timer.remainingTime})
+              </span>
+            </Text>
+          )}
           {artworkData.attributionClass?.shortDescription && (
             <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
               {artworkData.attributionClass.shortDescription}
