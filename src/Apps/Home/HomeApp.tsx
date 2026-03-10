@@ -1,7 +1,9 @@
 import { Join, Spacer } from "@artsy/palette"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
+import { HomeArtworkRecommendationsRailQueryRenderer } from "Apps/Home/Components/HomeArtworkRecommendationsRail"
 import { HomeAuctionLotsTabBar } from "Apps/Home/Components/HomeAuctionLotsTabBar"
 import { HomeNewWorksFromGalleriesYouFollowRailQueryRenderer } from "Apps/Home/Components/HomeNewWorksFromGalleriesYouFollowRail"
+import { HomeRecommendedArtistsRailQueryRenderer } from "Apps/Home/Components/HomeRecommendedArtistsRail"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { FlashBannerQueryRenderer } from "Components/FlashBanner"
 import type { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
@@ -19,8 +21,6 @@ import { HomeMeta } from "./Components/HomeMeta"
 import { HomeStructuredData } from "./Components/HomeStructuredData"
 import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
-import { HomeRecommendedArtistsRailQueryRenderer } from "Apps/Home/Components/HomeRecommendedArtistsRail"
-import { HomeArtworkRecommendationsRailQueryRenderer } from "Apps/Home/Components/HomeArtworkRecommendationsRail"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null

@@ -13,7 +13,7 @@ import {
   usePrevious,
 } from "@artsy/palette"
 import type { Address } from "Components/Address/utils"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag } from "System/FeatureFlags/useFlag"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useReducer } from "react"
