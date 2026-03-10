@@ -55,16 +55,23 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const isExpressCheckoutLoaded =
     expressCheckoutPaymentMethodsReady || isInPostPaymentState
 
-  // Scroll lock during loading
+  // Scroll lock during loading.
+  // Pad the body by the scrollbar width while locked so the layout doesn't shift
+  // when the scrollbar appears on unlock (a scrollbar-width-wide shift otherwise occurs).
   useEffect(() => {
     if (isLoading) {
-      document.body.style.overflow = "hidden"
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth
+      document.body.style.setProperty("overflow", "hidden")
+      document.body.style.setProperty("padding-right", `${scrollbarWidth}px`)
     } else {
-      document.body.style.overflow = ""
+      document.body.style.removeProperty("overflow")
+      document.body.style.removeProperty("padding-right")
     }
 
     return () => {
-      document.body.style.overflow = ""
+      document.body.style.removeProperty("overflow")
+      document.body.style.removeProperty("padding-right")
     }
   }, [isLoading])
 
