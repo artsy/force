@@ -57,7 +57,7 @@ export const order2Routes: RouteProps[] = [
           }
         `,
         render: args => {
-          const { props, Component } = args
+          const { props, Component, resolving } = args
           if (!(Component && props)) {
             return
           }
@@ -74,22 +74,24 @@ export const order2Routes: RouteProps[] = [
             return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
           }
 
-          if (order.buyerState !== "INCOMPLETE") {
-            const redirectUrl = `/orders/${order.internalID}/details`
-            throw new RedirectException(redirectUrl)
-          }
-
-          if (!newCheckoutEnabled({ order, featureFlags })) {
-            const redirectUrl =
-              order.mode === "OFFER"
-                ? `/orders/${order.internalID}/offer`
-                : `/orders/${order.internalID}/shipping`
-            if (process.env.NODE_ENV === "development") {
-              console.error(
-                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
-              )
+          if (resolving) {
+            if (order.buyerState !== "INCOMPLETE") {
+              const redirectUrl = `/orders/${order.internalID}/details`
+              throw new RedirectException(redirectUrl)
             }
-            throw new RedirectException(redirectUrl)
+
+            if (!newCheckoutEnabled({ order, featureFlags })) {
+              const redirectUrl =
+                order.mode === "OFFER"
+                  ? `/orders/${order.internalID}/offer`
+                  : `/orders/${order.internalID}/shipping`
+              if (process.env.NODE_ENV === "development") {
+                console.error(
+                  `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
+                )
+              }
+              throw new RedirectException(redirectUrl)
+            }
           }
 
           return <Component viewer={viewer} />
@@ -116,7 +118,7 @@ export const order2Routes: RouteProps[] = [
           }
         `,
         render: args => {
-          const { props, Component } = args
+          const { props, Component, resolving } = args
           if (!(Component && props)) {
             return
           }
@@ -133,25 +135,29 @@ export const order2Routes: RouteProps[] = [
             return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
           }
 
-          if (order.mode !== "OFFER") {
-            logger.warn("Order is not an offer order - redirecting to checkout")
-            const redirectUrl = `/orders2/${order.internalID}/checkout`
-            throw new RedirectException(redirectUrl)
-          }
-
-          if (order.buyerState !== "INCOMPLETE") {
-            const redirectUrl = `/orders/${order.internalID}/details`
-            throw new RedirectException(redirectUrl)
-          }
-
-          if (!newCheckoutEnabled({ order, featureFlags })) {
-            const redirectUrl = `/orders/${order.internalID}/offer`
-            if (process.env.NODE_ENV === "development") {
-              console.error(
-                `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
+          if (resolving) {
+            if (order.mode !== "OFFER") {
+              logger.warn(
+                "Order is not an offer order - redirecting to checkout",
               )
+              const redirectUrl = `/orders2/${order.internalID}/checkout`
+              throw new RedirectException(redirectUrl)
             }
-            throw new RedirectException(redirectUrl)
+
+            if (order.buyerState !== "INCOMPLETE") {
+              const redirectUrl = `/orders/${order.internalID}/details`
+              throw new RedirectException(redirectUrl)
+            }
+
+            if (!newCheckoutEnabled({ order, featureFlags })) {
+              const redirectUrl = `/orders/${order.internalID}/offer`
+              if (process.env.NODE_ENV === "development") {
+                console.error(
+                  `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
+                )
+              }
+              throw new RedirectException(redirectUrl)
+            }
           }
 
           return <Component viewer={viewer} />

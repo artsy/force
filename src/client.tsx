@@ -17,7 +17,7 @@ setupWebVitals()
 ;(async () => {
   const unleashClient = getOrInitUnleashClient()
 
-  const { ClientRouter } = await setupClientRouter({
+  const routerConfig = {
     routes: getAppRoutes(),
     context: {
       featureFlags: {
@@ -25,7 +25,37 @@ setupWebVitals()
         getVariant: unleashClient.getVariant.bind(unleashClient),
       },
     },
-  })
+  }
+
+  let clientRouterResult
+  try {
+    clientRouterResult = await setupClientRouter(routerConfig)
+  } catch (e: any) {
+    if (!e?.isFoundRedirectException) throw e
+
+    // A route render function threw a RedirectException during initial route
+    // resolution (getStoreRenderArgs). This happens when the client-side
+    // Unleash state disagrees with the server's routing decision — either
+    // because Unleash hasn't fetched yet (cold start, no localStorage) or
+    // because localStorage has a stale value from before a flag change.
+    //
+    // Wait for the network fetch to provide the correct flag state, then
+    // retry. Cold start: wait for "ready" (fires after first network fetch).
+    // Stale cache: "ready" already fired from localStorage, so wait for
+    // "update" (fires ~100–300ms later when the network response arrives).
+    await new Promise<void>(resolve => {
+      if (!unleashClient.isReady()) {
+        unleashClient.once("ready", resolve)
+      } else {
+        unleashClient.once("update", resolve)
+      }
+      setTimeout(resolve, 3000)
+    })
+
+    clientRouterResult = await setupClientRouter(routerConfig)
+  }
+
+  const { ClientRouter } = clientRouterResult
 
   loadableReady().then(() => {
     hydrateRoot(
