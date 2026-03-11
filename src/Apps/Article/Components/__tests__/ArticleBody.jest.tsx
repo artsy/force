@@ -161,6 +161,44 @@ describe("ArticleBody", () => {
     })
   })
 
+  describe("updated at timestamp", () => {
+    it("shows updated timestamp when updatedAt is later than publishedAt", () => {
+      renderWithRelay({
+        Article: () => ({
+          newsSource: null,
+          publishedAt: "2026-03-09T13:00:00.000Z",
+          updatedAt: "2026-03-09T18:30:00.000Z",
+        }),
+      })
+
+      expect(screen.getByText(/Updated/)).toBeInTheDocument()
+    })
+
+    it("does not show updated timestamp when updatedAt equals publishedAt", () => {
+      renderWithRelay({
+        Article: () => ({
+          newsSource: null,
+          publishedAt: "2026-03-09T13:00:00.000Z",
+          updatedAt: "2026-03-09T13:00:00.000Z",
+        }),
+      })
+
+      expect(screen.queryByText(/Updated/)).not.toBeInTheDocument()
+    })
+
+    it("does not show updated timestamp when difference is below threshold", () => {
+      renderWithRelay({
+        Article: () => ({
+          newsSource: null,
+          publishedAt: "2026-02-27T16:47:16.906Z",
+          updatedAt: "2026-02-27T16:47:58.585Z",
+        }),
+      })
+
+      expect(screen.queryByText(/Updated/)).not.toBeInTheDocument()
+    })
+  })
+
   describe("when only author names are present", () => {
     it("renders a plain byline", () => {
       renderWithRelay({

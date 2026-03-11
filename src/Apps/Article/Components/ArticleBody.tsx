@@ -41,6 +41,21 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
 }) => {
   const centered = article.layout === "FEATURE" || article.layout === "NEWS"
 
+  const publishedAtText = article.publishedAt
+    ? DateTime.fromISO(article.publishedAt).toFormat("MMM d, yyyy h:mma")
+    : null
+
+  const updatedAtText = article.updatedAt
+    ? DateTime.fromISO(article.updatedAt).toFormat("MMM d, yyyy h:mma.")
+    : null
+
+  const shouldShowUpdatedAt =
+    !!article.publishedAt &&
+    !!article.updatedAt &&
+    DateTime.fromISO(article.updatedAt)
+      .diff(DateTime.fromISO(article.publishedAt))
+      .as("seconds") > UPDATED_AT_THRESHOLD_SECONDS
+
   return (
     <Analytics contextPageOwnerId={article.internalID}>
       <ArticleContextProvider articleId={article.internalID}>
@@ -113,10 +128,12 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                 alignItems="center"
                 lineHeight={1}
               >
-                {!!article.publishedAt &&
-                  DateTime.fromISO(article.publishedAt).toFormat(
-                    "MMM d, yyyy h:mma",
-                  )}
+                {publishedAtText && (
+                  <>
+                    {publishedAtText}
+                    {shouldShowUpdatedAt && `. Updated ${updatedAtText}`}
+                  </>
+                )}
 
                 <ArticleNewsSourceFragmentContainer article={article} />
               </Text>
@@ -259,6 +276,8 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
   )
 }
 
+const UPDATED_AT_THRESHOLD_SECONDS = 60
+
 export const CENTERED_LAYOUT_COLUMNS: {
   span: ColumnSpan[]
   start: ColumnStart[]
@@ -297,6 +316,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         title
         href
         publishedAt
+        updatedAt
         sections {
           ...ArticleSection_section
         }

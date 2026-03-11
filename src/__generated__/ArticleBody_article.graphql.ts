@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<644a8d9be736074538f3c71e66a87903>>
+ * @generated SignedSource<<12c4e4fd22196f3ff737b1da05d440a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,6 +48,7 @@ export type ArticleBody_article$data = {
   } | null | undefined;
   readonly slug: string | null | undefined;
   readonly title: string | null | undefined;
+  readonly updatedAt: string | null | undefined;
   readonly vertical: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article">;
   readonly " $fragmentType": "ArticleBody_article";
@@ -212,6 +213,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "updatedAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "sections",
@@ -300,6 +308,6 @@ return {
 };
 })();
 
-(node as any).hash = "642ae5b6500092f504903186ec80b55a";
+(node as any).hash = "55d6cec15f0261d4054df87536948104";
 
 export default node;
