@@ -20,7 +20,6 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
-import { DateTime } from "luxon"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
@@ -30,6 +29,7 @@ import { ArticleHeroFragmentContainer } from "./ArticleHero"
 import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
 import { ArticleSectionFragmentContainer } from "./ArticleSection"
 import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
+import { ArticleTimestamp } from "./ArticleTimestamp"
 import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 
 interface ArticleBodyProps {
@@ -40,21 +40,6 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
   article,
 }) => {
   const centered = article.layout === "FEATURE" || article.layout === "NEWS"
-
-  const publishedAtText = article.publishedAt
-    ? DateTime.fromISO(article.publishedAt).toFormat("MMM d, yyyy h:mma")
-    : null
-
-  const updatedAtText = article.updatedAt
-    ? DateTime.fromISO(article.updatedAt).toFormat("MMM d, yyyy h:mma.")
-    : null
-
-  const shouldShowUpdatedAt =
-    !!article.publishedAt &&
-    !!article.updatedAt &&
-    DateTime.fromISO(article.updatedAt)
-      .diff(DateTime.fromISO(article.publishedAt))
-      .as("seconds") > UPDATED_AT_THRESHOLD_SECONDS
 
   return (
     <Analytics contextPageOwnerId={article.internalID}>
@@ -128,12 +113,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                 alignItems="center"
                 lineHeight={1}
               >
-                {publishedAtText && (
-                  <>
-                    {publishedAtText}
-                    {shouldShowUpdatedAt && `. Updated ${updatedAtText}`}
-                  </>
-                )}
+                <ArticleTimestamp article={article} />
 
                 <ArticleNewsSourceFragmentContainer article={article} />
               </Text>
@@ -276,8 +256,6 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
   )
 }
 
-const UPDATED_AT_THRESHOLD_SECONDS = 60
-
 export const CENTERED_LAYOUT_COLUMNS: {
   span: ColumnSpan[]
   start: ColumnStart[]
@@ -295,6 +273,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         ...ArticleByline_article
         ...ArticleSectionAd_article
         ...ArticleNewsSource_article
+        ...ArticleTimestamp_article
         hero {
           __typename
         }
@@ -315,8 +294,6 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         leadParagraph
         title
         href
-        publishedAt
-        updatedAt
         sections {
           ...ArticleSection_section
         }
