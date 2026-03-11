@@ -3,7 +3,7 @@ import { DateTime } from "luxon"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
-const UPDATED_AT_THRESHOLD_SECONDS = 60
+const UPDATED_AT_THRESHOLD_SECONDS = 24 * 60 * 60 // 24 hours
 
 interface ArticleTimestampProps {
   article: ArticleTimestamp_article$key

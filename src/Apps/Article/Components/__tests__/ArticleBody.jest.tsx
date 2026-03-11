@@ -167,7 +167,7 @@ describe("ArticleBody", () => {
         Article: () => ({
           newsSource: null,
           publishedAt: "2026-03-09T13:00:00.000Z",
-          updatedAt: "2026-03-09T18:30:00.000Z",
+          updatedAt: "2026-03-11T13:00:00.000Z",
         }),
       })
 
