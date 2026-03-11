@@ -55,12 +55,6 @@ export const SavedPaymentMethodOption: React.FC<
         </Flex>
 
         <Collapse open={isSelected}>
-          <Spacer y={1} />
-
-          <Text variant="sm">
-            Select a saved payment method or add a new one.
-          </Text>
-
           <Spacer y={2} />
 
           <RadioGroup
