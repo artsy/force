@@ -46,10 +46,14 @@ export const SavedPaymentMethodOption: React.FC<
         aria-expanded={isSelected}
       >
         <Flex alignItems="center">
-          <LockIcon />
+          <LockIcon color="mono100" />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
-          <Text variant="sm" fontWeight={isSelected ? "bold" : "normal"}>
+          <Text
+            textColor="mono100"
+            variant="sm"
+            fontWeight={isSelected ? "bold" : "normal"}
+          >
             Saved payments
           </Text>
         </Flex>
