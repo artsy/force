@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b0dbdb021fe6a1ac42e52d04dcb758e>>
+ * @generated SignedSource<<a8c7f686aee0b8d9088be0e51046c836>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,10 @@ export type ArtworkSidebarDetails_artwork$data = {
   readonly framed: {
     readonly details: string | null | undefined;
   } | null | undefined;
+  readonly framedDimensions: {
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
   readonly isEdition: boolean | null | undefined;
   readonly isUnlisted: boolean;
   readonly medium: string | null | undefined;
@@ -33,7 +37,24 @@ export type ArtworkSidebarDetails_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarDetails_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -60,22 +81,7 @@ const node: ReaderFragment = {
       "kind": "LinkedField",
       "name": "dimensions",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "in",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cm",
-          "storageKey": null
-        }
-      ],
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
@@ -94,6 +100,16 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "dimensions",
+      "kind": "LinkedField",
+      "name": "framedDimensions",
+      "plural": false,
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
@@ -147,7 +163,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "8aa73ee524c057a59188f0e36247cac6";
+(node as any).hash = "ec96741cfd3ebb65793dea09f4f2789b";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77d12b580ad1119ed09938175492ff80>>
+ * @generated SignedSource<<3cee13b7ec62f9b450fc95ef12146beb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,37 +45,59 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = {
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ArtworkInfoRow"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "dimensions"
 };
 return {
   "fragment": {
@@ -187,6 +209,16 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "dimensions",
+            "kind": "LinkedField",
+            "name": "framedDimensions",
+            "plural": false,
+            "selections": (v2/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ArtworkInfoRow",
             "kind": "LinkedField",
             "name": "signatureInfo",
@@ -229,7 +261,7 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -247,22 +279,7 @@ return {
             "kind": "LinkedField",
             "name": "dimensions",
             "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "in",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "cm",
-                "storageKey": null
-              }
-            ],
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -273,8 +290,8 @@ return {
             "name": "attributionClass",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -285,14 +302,14 @@ return {
             "name": "medium",
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"xxx\")"
       }
     ]
   },
   "params": {
-    "cacheID": "a952b7911a9ccdba584f79f321deb6e0",
+    "cacheID": "a7bc1a49bcda3789e30eb865c19ef1b5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -308,43 +325,41 @@ return {
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v4/*: any*/),
-        "artwork.attributionClass.name": (v5/*: any*/),
+        "artwork.attributionClass.id": (v5/*: any*/),
+        "artwork.attributionClass.name": (v6/*: any*/),
         "artwork.canRequestLotConditionsReport": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.category": (v5/*: any*/),
-        "artwork.certificateOfAuthenticity": (v6/*: any*/),
-        "artwork.certificateOfAuthenticity.details": (v5/*: any*/),
-        "artwork.certificateOfAuthenticity.label": (v5/*: any*/),
-        "artwork.conditionDescription": (v6/*: any*/),
-        "artwork.conditionDescription.details": (v5/*: any*/),
-        "artwork.conditionDescription.label": (v5/*: any*/),
-        "artwork.dimensions": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "dimensions"
-        },
-        "artwork.dimensions.cm": (v5/*: any*/),
-        "artwork.dimensions.in": (v5/*: any*/),
-        "artwork.framed": (v6/*: any*/),
-        "artwork.framed.details": (v5/*: any*/),
-        "artwork.framed.label": (v5/*: any*/),
-        "artwork.id": (v4/*: any*/),
-        "artwork.imageRights": (v5/*: any*/),
-        "artwork.internalID": (v4/*: any*/),
+        "artwork.category": (v6/*: any*/),
+        "artwork.certificateOfAuthenticity": (v7/*: any*/),
+        "artwork.certificateOfAuthenticity.details": (v6/*: any*/),
+        "artwork.certificateOfAuthenticity.label": (v6/*: any*/),
+        "artwork.conditionDescription": (v7/*: any*/),
+        "artwork.conditionDescription.details": (v6/*: any*/),
+        "artwork.conditionDescription.label": (v6/*: any*/),
+        "artwork.dimensions": (v8/*: any*/),
+        "artwork.dimensions.cm": (v6/*: any*/),
+        "artwork.dimensions.in": (v6/*: any*/),
+        "artwork.framed": (v7/*: any*/),
+        "artwork.framed.details": (v6/*: any*/),
+        "artwork.framed.label": (v6/*: any*/),
+        "artwork.framedDimensions": (v8/*: any*/),
+        "artwork.framedDimensions.cm": (v6/*: any*/),
+        "artwork.framedDimensions.in": (v6/*: any*/),
+        "artwork.id": (v5/*: any*/),
+        "artwork.imageRights": (v6/*: any*/),
+        "artwork.internalID": (v5/*: any*/),
         "artwork.isUnlisted": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.manufacturer": (v5/*: any*/),
-        "artwork.medium": (v5/*: any*/),
+        "artwork.manufacturer": (v6/*: any*/),
+        "artwork.medium": (v6/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
@@ -357,18 +372,18 @@ return {
           "plural": false,
           "type": "String"
         },
-        "artwork.mediumType.longDescription": (v5/*: any*/),
-        "artwork.mediumType.name": (v5/*: any*/),
-        "artwork.publisher": (v5/*: any*/),
-        "artwork.series": (v5/*: any*/),
-        "artwork.signatureInfo": (v6/*: any*/),
-        "artwork.signatureInfo.details": (v5/*: any*/),
-        "artwork.signatureInfo.label": (v5/*: any*/)
+        "artwork.mediumType.longDescription": (v6/*: any*/),
+        "artwork.mediumType.name": (v6/*: any*/),
+        "artwork.publisher": (v6/*: any*/),
+        "artwork.series": (v6/*: any*/),
+        "artwork.signatureInfo": (v7/*: any*/),
+        "artwork.signatureInfo.details": (v6/*: any*/),
+        "artwork.signatureInfo.label": (v6/*: any*/)
       }
     },
     "name": "ArtworkDetailsAdditionalInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsAdditionalInfo_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ArtworkDetailsAdditionalInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n"
+    "text": "query ArtworkDetailsAdditionalInfo_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ArtworkDetailsAdditionalInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  framedDimensions {\n    in\n    cm\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n"
   }
 };
 })();

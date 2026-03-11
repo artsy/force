@@ -60,7 +60,10 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const { showCheckoutErrorModal } = useCheckoutModal()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
-  const { dimensionsLabel } = useArtworkDimensions(artworkData.dimensions)
+  const { dimensionsLabel } = useArtworkDimensions(
+    artworkData.dimensions,
+    artworkData.framedDimensions,
+  )
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
@@ -291,6 +294,10 @@ const extractLineItemMetadata = (
   const dimensions = isArtworkOrEdition
     ? artworkOrEditionSet.dimensions
     : undefined
+  const framedDimensions =
+    artworkOrEditionSet?.__typename === "Artwork"
+      ? artworkOrEditionSet.framedDimensions
+      : undefined
   const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
   const attributionClass = artworkVersion?.attributionClass
 
@@ -307,6 +314,7 @@ const extractLineItemMetadata = (
     date: artworkVersion?.date,
     price,
     dimensions,
+    framedDimensions,
     attributionClass,
     artworkInternalID: artwork?.internalID,
   }
@@ -338,6 +346,10 @@ const FRAGMENT = graphql`
         ... on Artwork {
           price
           dimensions {
+            in
+            cm
+          }
+          framedDimensions {
             in
             cm
           }

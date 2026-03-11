@@ -1,25 +1,71 @@
+import { SystemContext } from "System/Contexts/SystemContext"
+import { useContext } from "react"
+
 interface ArtworkDimensions {
   in: string | null | undefined
   cm: string | null | undefined
 }
 
-export const useArtworkDimensions = (
-  dimensions: ArtworkDimensions | null | undefined,
-) => {
-  const hasCmDimensions = !!dimensions?.cm
-  const hasInDimensions = !!dimensions?.in
+const hasDimensions = (dims: ArtworkDimensions | null | undefined) => {
+  return /\d/.test(dims?.in ?? "") || /\d/.test(dims?.cm ?? "")
+}
 
-  if (hasInDimensions && hasCmDimensions) {
-    return {
-      hasCmDimensions,
-      hasInDimensions,
-      dimensionsLabel: `${dimensions?.in} | ${dimensions.cm}`,
+const formatDimensions = (dims: ArtworkDimensions | null | undefined) => {
+  const hasCm = !!dims?.cm
+  const hasIn = !!dims?.in
+
+  if (hasIn && hasCm) {
+    return `${dims?.in} | ${dims.cm}`
+  }
+
+  return dims?.in ?? dims?.cm ?? ""
+}
+
+interface FramedInfo {
+  details?: string | null
+}
+
+const getFrameString = (frameDetails?: string | null, isUnlisted?: boolean) => {
+  if (frameDetails !== "Included") {
+    if (isUnlisted) {
+      return "Frame not included"
+    } else {
+      return null
     }
   }
+
+  return `Frame ${frameDetails.toLowerCase()}`
+}
+
+export const useArtworkDimensions = (
+  dimensions: ArtworkDimensions | null | undefined,
+  framedDimensions?: ArtworkDimensions | null | undefined,
+  framed?: FramedInfo | null,
+  isUnlisted?: boolean,
+) => {
+  const { featureFlags } = useContext(SystemContext)
+  const isFeatureEnabled =
+    featureFlags?.isEnabled("topaz_framed-dims-on-artwork-page") ?? false
+
+  // Decide which dimensions to use based on feature flag and availability
+  const hasFramedDims = hasDimensions(framedDimensions)
+  const shouldUseFramedDims = isFeatureEnabled && hasFramedDims
+  const activeDimensions = shouldUseFramedDims ? framedDimensions : dimensions
+
+  const hasCmDimensions = !!activeDimensions?.cm
+  const hasInDimensions = !!activeDimensions?.in
+
+  const shouldShowFrameText = !shouldUseFramedDims
+  const frameText = shouldShowFrameText
+    ? getFrameString(framed?.details, isUnlisted)
+    : null
 
   return {
     hasCmDimensions,
     hasInDimensions,
-    dimensionsLabel: dimensions?.in ?? dimensions?.cm ?? "",
+    dimensionsLabel: formatDimensions(activeDimensions),
+    isShowingFramedDimensions: shouldUseFramedDims,
+    shouldShowFrameText,
+    frameText,
   }
 }
