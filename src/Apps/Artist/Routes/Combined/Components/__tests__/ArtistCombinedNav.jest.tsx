@@ -68,7 +68,7 @@ describe("ArtistCombinedNav", () => {
       />,
     )
 
-    expect(screen.queryByText("Editorial")).not.toBeInTheDocument()
+    expect(screen.queryByText("Articles")).not.toBeInTheDocument()
   })
 
   it("renders editorial tab and jumps to editorial section", async () => {
@@ -80,7 +80,7 @@ describe("ArtistCombinedNav", () => {
       />,
     )
 
-    fireEvent.click(screen.getByText("Editorial"))
+    fireEvent.click(screen.getByText("Articles"))
 
     await waitFor(() => {
       expect(waitUntil).toHaveBeenCalledWith("about")
