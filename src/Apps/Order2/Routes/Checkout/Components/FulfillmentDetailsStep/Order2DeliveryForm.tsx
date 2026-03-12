@@ -336,6 +336,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                   type="submit"
                   loading={isSubmitting}
                   disabled={!!status?.errorBanner}
+                  width="100%"
                 >
                   {/* TODO: This would not apply for flat shipping */}
                   See Shipping Methods

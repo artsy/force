@@ -2,11 +2,9 @@ import { Flex, Radio, RadioGroup, Spacer, Text } from "@artsy/palette"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import type { OfferFormProps } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
-import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
 import type { Order2OfferOptions_order$key } from "__generated__/Order2OfferOptions_order.graphql"
 import { useFormikContext } from "formik"
-import { DateTime } from "luxon"
 import { useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -62,23 +60,8 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
   const artwork = orderData.lineItems?.[0]?.artworkOrEditionSet
   const artworkListPrice = artwork?.listPrice
 
-  // exact price case
   const lineItemListPrice = orderData.lineItems?.[0]?.listPrice
-
   const isLimitedPartnerOffer = orderData.source === "PARTNER_OFFER"
-
-  // Calculate timer directly in this component to ensure re-renders
-  const partnerOfferEndTime =
-    (isLimitedPartnerOffer && orderData.buyerStateExpiresAt) || ""
-  const partnerOfferStartTime = isLimitedPartnerOffer
-    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
-    : ""
-
-  const timer = useCountdownTimer({
-    startTime: partnerOfferStartTime,
-    endTime: partnerOfferEndTime,
-    imminentTime: 1,
-  })
 
   const priceOptions = useMemo((): PriceOption[] => {
     // Handle price range case
@@ -181,9 +164,6 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
     <RadioGroup defaultValue={selectedRadio} onSelect={handleRadioSelect}>
       {[
         ...priceOptions.map(({ value: optionValue, description, key }) => {
-          const isGalleryOffer =
-            isLimitedPartnerOffer && key === PriceOptionKey.MAX
-          const showTimer = isGalleryOffer && timer.hasValidRemainingTime
           const isSelected = selectedRadio === key
 
           return (
@@ -193,23 +173,11 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
               backgroundColor={isSelected ? "mono5" : "mono0"}
               p={1}
               value={key}
-              label={
-                isGalleryOffer ? (
-                  <Text variant="sm-display" color="blue100">
-                    {formatCurrency(optionValue)}
-                  </Text>
-                ) : (
-                  formatCurrency(optionValue)
-                )
-              }
+              label={formatCurrency(optionValue)}
             >
               <Spacer y={0.5} />
-              <Text
-                variant="sm-display"
-                color={isGalleryOffer ? "blue100" : "mono60"}
-              >
+              <Text variant="sm-display" color="mono60">
                 {description}
-                {showTimer && ` (Exp. ${timer.remainingTime})`}
               </Text>
             </Radio>
           )
@@ -218,7 +186,9 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
         <Radio
           key="price-option-custom"
           flex={1}
-          backgroundColor={selectedRadio === PriceOptionKey.CUSTOM ? "mono5" : "mono0"}
+          backgroundColor={
+            selectedRadio === PriceOptionKey.CUSTOM ? "mono5" : "mono0"
+          }
           p={1}
           value={PriceOptionKey.CUSTOM}
           label="Other amount"

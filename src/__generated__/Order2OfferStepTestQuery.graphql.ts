@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a496213fc1b8bb638ddcc4357daf5df9>>
+ * @generated SignedSource<<056e141189a2a9399eb38b398e780da4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -58,33 +58,6 @@ v4 = [
   (v1/*: any*/)
 ],
 v5 = {
-  "kind": "InlineFragment",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "maxPrice",
-      "plural": false,
-      "selections": (v4/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "minPrice",
-      "plural": false,
-      "selections": (v4/*: any*/),
-      "storageKey": null
-    }
-  ],
-  "type": "PriceRange",
-  "abstractKey": null
-},
-v6 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -93,52 +66,65 @@ v6 = {
   "plural": false,
   "selections": [
     (v3/*: any*/),
-    (v5/*: any*/)
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "maxPrice",
+          "plural": false,
+          "selections": (v4/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "minPrice",
+          "plural": false,
+          "selections": (v4/*: any*/),
+          "storageKey": null
+        }
+      ],
+      "type": "PriceRange",
+      "abstractKey": null
+    }
   ],
   "storageKey": null
 },
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v8 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v9 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
 },
 v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v11 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "ListPrice"
-},
-v12 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
   "type": "Float"
-},
-v13 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Money"
 };
 return {
   "fragment": {
@@ -332,7 +318,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v6/*: any*/)
+                              (v5/*: any*/)
                             ],
                             "type": "Artwork",
                             "abstractKey": null
@@ -340,7 +326,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v6/*: any*/),
+                              (v5/*: any*/),
                               (v2/*: any*/)
                             ],
                             "type": "EditionSet",
@@ -370,46 +356,7 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "slug",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "isPriceHidden",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": null,
-                            "kind": "LinkedField",
-                            "name": "listPrice",
-                            "plural": false,
-                            "selections": [
-                              (v3/*: any*/),
-                              {
-                                "kind": "InlineFragment",
-                                "selections": (v4/*: any*/),
-                                "type": "Money",
-                                "abstractKey": null
-                              },
-                              (v5/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "EditionSet",
-                            "kind": "LinkedField",
-                            "name": "editionSets",
-                            "plural": true,
-                            "selections": [
-                              (v7/*: any*/),
-                              (v2/*: any*/)
-                            ],
                             "storageKey": null
                           },
                           (v2/*: any*/)
@@ -419,7 +366,13 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v7/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -452,7 +405,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8f915a8590b4c395149f912a664f2085",
+    "cacheID": "1b1d5f56a8147cb0e5d936bbff2af64d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -468,18 +421,18 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "viewer.me.id": (v8/*: any*/),
+        "viewer.me.id": (v6/*: any*/),
         "viewer.me.order": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Order"
         },
-        "viewer.me.order.buyerStateExpiresAt": (v9/*: any*/),
-        "viewer.me.order.currencyCode": (v10/*: any*/),
-        "viewer.me.order.currencySymbol": (v10/*: any*/),
-        "viewer.me.order.id": (v8/*: any*/),
-        "viewer.me.order.internalID": (v8/*: any*/),
+        "viewer.me.order.buyerStateExpiresAt": (v7/*: any*/),
+        "viewer.me.order.currencyCode": (v8/*: any*/),
+        "viewer.me.order.currencySymbol": (v8/*: any*/),
+        "viewer.me.order.id": (v6/*: any*/),
+        "viewer.me.order.internalID": (v6/*: any*/),
         "viewer.me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -492,48 +445,37 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "viewer.me.order.lineItems.artwork.editionSets": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "EditionSet"
-        },
-        "viewer.me.order.lineItems.artwork.editionSets.id": (v8/*: any*/),
-        "viewer.me.order.lineItems.artwork.editionSets.internalID": (v8/*: any*/),
-        "viewer.me.order.lineItems.artwork.id": (v8/*: any*/),
+        "viewer.me.order.lineItems.artwork.id": (v6/*: any*/),
         "viewer.me.order.lineItems.artwork.isPriceHidden": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "viewer.me.order.lineItems.artwork.listPrice": (v11/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.__typename": (v10/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.major": (v12/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.maxPrice": (v13/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.maxPrice.major": (v12/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.minPrice": (v13/*: any*/),
-        "viewer.me.order.lineItems.artwork.listPrice.minPrice.major": (v12/*: any*/),
-        "viewer.me.order.lineItems.artwork.slug": (v8/*: any*/),
         "viewer.me.order.lineItems.artworkOrEditionSet": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkOrEditionSetType"
         },
-        "viewer.me.order.lineItems.artworkOrEditionSet.__isNode": (v10/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.__typename": (v10/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.id": (v8/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice": (v11/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.__typename": (v10/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice": (v13/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice.major": (v12/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice": (v13/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice.major": (v12/*: any*/),
-        "viewer.me.order.lineItems.id": (v8/*: any*/),
-        "viewer.me.order.lineItems.listPrice": (v13/*: any*/),
-        "viewer.me.order.lineItems.listPrice.__typename": (v10/*: any*/),
-        "viewer.me.order.lineItems.listPrice.major": (v12/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.__isNode": (v8/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.__typename": (v8/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.id": (v6/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ListPrice"
+        },
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.__typename": (v8/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice": (v9/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice.major": (v10/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice": (v9/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice.major": (v10/*: any*/),
+        "viewer.me.order.lineItems.id": (v6/*: any*/),
+        "viewer.me.order.lineItems.listPrice": (v9/*: any*/),
+        "viewer.me.order.lineItems.listPrice.__typename": (v8/*: any*/),
+        "viewer.me.order.lineItems.listPrice.major": (v10/*: any*/),
         "viewer.me.order.mode": {
           "enumValues": [
             "BUY",
@@ -549,17 +491,17 @@ return {
           "plural": false,
           "type": "Offer"
         },
-        "viewer.me.order.pendingOffer.amount": (v13/*: any*/),
-        "viewer.me.order.pendingOffer.amount.display": (v9/*: any*/),
-        "viewer.me.order.pendingOffer.amount.major": (v12/*: any*/),
+        "viewer.me.order.pendingOffer.amount": (v9/*: any*/),
+        "viewer.me.order.pendingOffer.amount.display": (v7/*: any*/),
+        "viewer.me.order.pendingOffer.amount.major": (v10/*: any*/),
         "viewer.me.order.pendingOffer.amount.minor": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Long"
         },
-        "viewer.me.order.pendingOffer.id": (v8/*: any*/),
-        "viewer.me.order.pendingOffer.note": (v9/*: any*/),
+        "viewer.me.order.pendingOffer.id": (v6/*: any*/),
+        "viewer.me.order.pendingOffer.note": (v7/*: any*/),
         "viewer.me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
@@ -595,7 +537,7 @@ return {
     },
     "name": "Order2OfferStepTestQuery",
     "operationKind": "query",
-    "text": "query Order2OfferStepTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2OfferStep_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment OfferInput_order on Order {\n  currencySymbol\n}\n\nfragment Order2OfferOptions_order on Order {\n  ...OfferInput_order\n  source\n  buyerStateExpiresAt\n  currencyCode\n  lineItems {\n    listPrice {\n      __typename\n      major\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n      }\n      ... on EditionSet {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OfferStep_order on Order {\n  ...useCompleteOfferData_order\n  ...Order2OfferOptions_order\n  ...OfferInput_order\n  internalID\n  mode\n  source\n  currencyCode\n  selectedFulfillmentOption {\n    type\n  }\n  pendingOffer {\n    amount {\n      display\n      major\n    }\n    note\n    id\n  }\n  lineItems {\n    artwork {\n      slug\n      isPriceHidden\n      listPrice {\n        __typename\n        ... on Money {\n          major\n        }\n        ... on PriceRange {\n          maxPrice {\n            major\n          }\n          minPrice {\n            major\n          }\n        }\n      }\n      editionSets {\n        internalID\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n"
+    "text": "query Order2OfferStepTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2OfferStep_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment OfferInput_order on Order {\n  currencySymbol\n}\n\nfragment Order2OfferOptions_order on Order {\n  ...OfferInput_order\n  source\n  buyerStateExpiresAt\n  currencyCode\n  lineItems {\n    listPrice {\n      __typename\n      major\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n      }\n      ... on EditionSet {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OfferStep_order on Order {\n  ...useCompleteOfferData_order\n  ...Order2OfferOptions_order\n  ...OfferInput_order\n  internalID\n  mode\n  source\n  currencyCode\n  selectedFulfillmentOption {\n    type\n  }\n  pendingOffer {\n    amount {\n      display\n      major\n    }\n    note\n    id\n  }\n  lineItems {\n    artwork {\n      isPriceHidden\n      id\n    }\n    id\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n"
   }
 };
 })();

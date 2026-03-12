@@ -49,10 +49,14 @@ export const WireTransferOption: React.FC<WireTransferOptionProps> = ({
         data-testid="PaymentFormWire"
       >
         <Flex alignItems="center">
-          <ReceiptIcon height={18} />
+          <ReceiptIcon height={18} color="mono100" />
           {/* Spacer has to be 31px to match Stripe's spacing */}
           <Spacer x="31px" />
-          <Text variant="sm" fontWeight={isSelected ? "bold" : "normal"}>
+          <Text
+            textColor="mono100"
+            variant="sm"
+            fontWeight={isSelected ? "bold" : "normal"}
+          >
             Wire transfer
           </Text>
         </Flex>

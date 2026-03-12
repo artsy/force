@@ -392,25 +392,7 @@ const FRAGMENT = graphql`
     }
     lineItems {
       artwork {
-        slug
         isPriceHidden
-        listPrice {
-          __typename
-          ... on Money {
-            major
-          }
-          ... on PriceRange {
-            maxPrice {
-              major
-            }
-            minPrice {
-              major
-            }
-          }
-        }
-        editionSets {
-          internalID
-        }
       }
     }
   }

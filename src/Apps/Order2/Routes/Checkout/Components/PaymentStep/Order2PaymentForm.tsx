@@ -151,6 +151,7 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           fontFamily: theme.fonts.sans,
           colorPrimary: theme.colors.mono100, // Accordian selected.
           colorTextSecondary: theme.colors.mono100, // Accordian not selected.
+          iconColor: theme.colors.mono60,
         },
         rules: {
           ".AccordionItem": {
@@ -171,6 +172,22 @@ export const Order2PaymentForm: React.FC<Order2PaymentFormProps> = ({
           },
           ".Label": {
             color: "var(--colorPrimary)",
+          },
+          ".PickerItem": {
+            backgroundColor: theme.colors.mono0,
+            borderColor: theme.colors.mono0,
+          },
+          ".PickerItem:hover": {
+            backgroundColor: theme.colors.mono10,
+            borderColor: theme.colors.mono10,
+          },
+          ".PickerItem--selected": {
+            color: theme.colors.mono100,
+            backgroundColor: theme.colors.mono0,
+          },
+          ".PickerItem--selected:hover": {
+            color: theme.colors.mono100,
+            backgroundColor: theme.colors.mono0,
           },
         },
       },

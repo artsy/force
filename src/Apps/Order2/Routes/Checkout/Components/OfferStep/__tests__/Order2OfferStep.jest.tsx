@@ -34,16 +34,7 @@ const MOCK_PRICE_RANGE_ORDER = {
   lineItems: [
     {
       artwork: {
-        slug: "artwork-slug",
-        priceDisplay: "range",
-        isPriceRange: true,
-        listPrice: {
-          __typename: "PriceRange",
-          maxPrice: { major: 2000 },
-          minPrice: { major: 1000 },
-        },
-        editionSets: [],
-        price: "$1,000 - $2,000",
+        isPriceHidden: false,
       },
       artworkOrEditionSet: {
         __typename: "Artwork",
@@ -69,15 +60,7 @@ const MOCK_EXACT_PRICE_ORDER = {
   lineItems: [
     {
       artwork: {
-        slug: "artwork-slug",
-        priceDisplay: "exact",
-        isPriceRange: false,
-        listPrice: {
-          __typename: "Money",
-          major: 5000,
-        },
-        editionSets: [],
-        price: "$5,000",
+        isPriceHidden: false,
       },
       listPrice: {
         __typename: "Money",
@@ -106,13 +89,7 @@ const MOCK_HIDDEN_PRICE_ORDER = {
   lineItems: [
     {
       artwork: {
-        slug: "artwork-slug",
-        priceDisplay: "hidden",
-        isPriceRange: false,
         isPriceHidden: true,
-        listPrice: null,
-        editionSets: [],
-        price: null,
       },
     },
   ],
@@ -129,16 +106,7 @@ const MOCK_EDITION_SET_PRICE_RANGE_ORDER = {
   lineItems: [
     {
       artwork: {
-        slug: "artwork-slug",
-        priceDisplay: "range",
-        isPriceRange: true,
-        listPrice: {
-          __typename: "PriceRange",
-          maxPrice: { major: 3000 },
-          minPrice: { major: 1500 },
-        },
-        editionSets: [],
-        price: "$1,500 - $3,000",
+        isPriceHidden: false,
       },
       artworkOrEditionSet: {
         __typename: "EditionSet",
@@ -164,15 +132,7 @@ const MOCK_PARTNER_OFFER_ORDER = {
   lineItems: [
     {
       artwork: {
-        slug: "artwork-slug",
-        priceDisplay: "exact",
-        isPriceRange: false,
-        listPrice: {
-          __typename: "Money",
-          major: 5000,
-        },
-        editionSets: [],
-        price: "$5,000",
+        isPriceHidden: false,
       },
       listPrice: {
         __typename: "Money",
@@ -910,11 +870,7 @@ describe("Order2OfferStep", () => {
       })
 
       // Should show "Gallery offer" instead of "List price"
-      expect(
-        screen.getByText((content, element) => {
-          return content.includes("Gallery offer") && content.includes("Exp.")
-        }),
-      ).toBeInTheDocument()
+      expect(screen.getByText("Gallery offer")).toBeInTheDocument()
       expect(screen.queryByText("List price")).not.toBeInTheDocument()
 
       // Should show modified descriptions (these are in separate Text elements)
@@ -930,23 +886,6 @@ describe("Order2OfferStep", () => {
       ).toBeInTheDocument()
     })
 
-    it("displays timer with expiration time for active partner offers", () => {
-      renderWithRelay({
-        Viewer: () => ({
-          me: {
-            order: MOCK_PARTNER_OFFER_ORDER,
-          },
-        }),
-      })
-
-      // Timer should be displayed
-      expect(
-        screen.getByText((content, element) => {
-          return content.includes("Exp.")
-        }),
-      ).toBeInTheDocument()
-    })
-
     it("tracks clickedOfferOption with 'Gallery offer' when selecting partner offer", () => {
       renderWithRelay({
         Viewer: () => ({
@@ -956,10 +895,8 @@ describe("Order2OfferStep", () => {
         }),
       })
 
-      // Select the gallery offer option - it's in the text that includes timer
-      const galleryOfferText = screen.getByText((content, element) => {
-        return content.includes("Gallery offer") && content.includes("Exp.")
-      })
+      // Select the gallery offer option
+      const galleryOfferText = screen.getByText("Gallery offer")
       fireEvent.click(galleryOfferText)
 
       expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
