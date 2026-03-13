@@ -1,12 +1,12 @@
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
-import { Z } from "Apps/Components/constants"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
+import type { NavBarSubMenuServer_navigationVersion$key } from "__generated__/NavBarSubMenuServer_navigationVersion.graphql"
 import { useEffect, useRef } from "react"
 import { NavBarSubMenuServer } from "./Menus/NavBarSubMenuServer"
+import { useNavBarDropdown } from "./NavBarDropdownContext"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
-import type { NavBarSubMenuServer_navigationVersion$key } from "__generated__/NavBarSubMenuServer_navigationVersion.graphql"
-import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
 import { useNavBarTracking } from "./useNavBarTracking"
 
 interface NavBarDropdownPanelServerProps {
@@ -18,9 +18,7 @@ interface NavBarDropdownPanelServerProps {
   href: string
   contextModule: string
   menuType: "whatsNew" | "artists" | "artworks"
-  onMenuEnter?: () => void
   handleClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  shouldTransition?: boolean
 }
 
 export const NavBarDropdownPanelServer: React.FC<
@@ -32,12 +30,11 @@ export const NavBarDropdownPanelServer: React.FC<
   href,
   contextModule,
   menuType,
-  onMenuEnter,
   handleClick,
-  shouldTransition,
 }) => {
   const { prefetch } = usePrefetchRoute()
   const tracking = useNavBarTracking()
+  const { shouldTransition, handleMenuEnter, getZIndex } = useNavBarDropdown()
 
   // Filter out null/undefined from featured link data
   const validFeaturedLinkData = featuredLinkData?.filter(
@@ -47,7 +44,7 @@ export const NavBarDropdownPanelServer: React.FC<
 
   return (
     <Dropdown
-      zIndex={Z.navDropdown}
+      zIndex={getZIndex(label)}
       keepInDOM
       placement="bottom"
       offset={0}
@@ -110,7 +107,7 @@ export const NavBarDropdownPanelServer: React.FC<
             data-testid="server-dropdown"
             onMouseEnter={e => {
               onMouseEnter?.(e)
-              onMenuEnter?.()
+              handleMenuEnter(label)
             }}
             {...restAnchorProps}
           >

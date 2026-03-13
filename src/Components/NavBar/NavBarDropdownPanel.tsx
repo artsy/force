@@ -1,10 +1,10 @@
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
-import { Z } from "Apps/Components/constants"
 import type { MenuData } from "Components/NavBar/menuData"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { useEffect, useRef } from "react"
 import { NavBarSubMenu } from "./Menus"
+import { useNavBarDropdown } from "./NavBarDropdownContext"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
 import { useNavBarTracking } from "./useNavBarTracking"
 
@@ -13,9 +13,7 @@ interface NavBarDropdownPanelProps {
   label: string
   menu: MenuData
   contextModule: string
-  onMenuEnter: () => void
   handleClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  shouldTransition: boolean
 }
 
 export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
@@ -23,20 +21,21 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
   label,
   menu,
   contextModule,
-  onMenuEnter,
   handleClick,
-  shouldTransition,
 }) => {
   const { prefetch } = usePrefetchRoute()
+
   const tracking = useNavBarTracking()
+
+  const { shouldTransition, handleMenuEnter, getZIndex } = useNavBarDropdown()
 
   return (
     <Dropdown
-      zIndex={Z.navDropdown}
+      zIndex={getZIndex(label)}
       keepInDOM
       placement="bottom"
       offset={0}
-      delay={shouldTransition ? 100 : 0}
+      delay={{ open: 100, close: 200 }}
       transition={shouldTransition}
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ setVisible, visible }) => {
@@ -91,7 +90,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
             data-testid="static-dropdown"
             onMouseEnter={e => {
               onMouseEnter?.(e)
-              onMenuEnter()
+              handleMenuEnter(label)
             }}
             {...restAnchorProps}
           >
