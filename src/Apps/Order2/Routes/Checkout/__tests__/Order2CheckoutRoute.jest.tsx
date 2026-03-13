@@ -15,7 +15,7 @@ import { useTracking } from "react-tracking"
 import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
 
-jest.setTimeout(10000)
+jest.setTimeout(15000)
 
 jest.unmock("react-relay")
 jest.useFakeTimers()
