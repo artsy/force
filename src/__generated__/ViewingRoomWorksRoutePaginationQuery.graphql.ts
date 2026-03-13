@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0061e86076fc1bfb4b6c36c69e8bd89e>>
+ * @generated SignedSource<<74682220833fad28fb63cde7bddfcaf2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,138 +10,19 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
-export type ViewingRoomWorksRouteTestQuery$variables = {
+export type ViewingRoomWorksRoutePaginationQuery$variables = {
   after?: string | null | undefined;
   count: number;
   slug: string;
 };
-export type ViewingRoomWorksRouteTestQuery$data = {
+export type ViewingRoomWorksRoutePaginationQuery$data = {
   readonly viewingRoom: {
     readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
   } | null | undefined;
 };
-export type ViewingRoomWorksRouteTestQuery$rawResponse = {
-  readonly viewingRoom: {
-    readonly artworksConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly cursor: string;
-        readonly node: {
-          readonly __typename: "Artwork";
-          readonly additionalInformation: string | null | undefined;
-          readonly artist: {
-            readonly id: string;
-            readonly targetSupply: {
-              readonly isP1: boolean | null | undefined;
-            };
-          } | null | undefined;
-          readonly artists: ReadonlyArray<{
-            readonly href: string | null | undefined;
-            readonly id: string;
-            readonly name: string | null | undefined;
-          } | null | undefined> | null | undefined;
-          readonly attributionClass: {
-            readonly id: string;
-            readonly name: string | null | undefined;
-          } | null | undefined;
-          readonly collecting_institution: string | null | undefined;
-          readonly collectorSignals: {
-            readonly auction: {
-              readonly bidCount: number;
-              readonly liveBiddingStarted: boolean;
-              readonly lotClosesAt: string | null | undefined;
-              readonly onlineBiddingExtended: boolean;
-              readonly registrationEndsAt: string | null | undefined;
-            } | null | undefined;
-            readonly partnerOffer: {
-              readonly endAt: string | null | undefined;
-              readonly id: string;
-              readonly priceWithDiscount: {
-                readonly display: string | null | undefined;
-              } | null | undefined;
-            } | null | undefined;
-            readonly primaryLabel: LabelSignalEnum | null | undefined;
-          } | null | undefined;
-          readonly cultural_maker: string | null | undefined;
-          readonly date: string | null | undefined;
-          readonly href: string | null | undefined;
-          readonly id: string;
-          readonly images: ReadonlyArray<{
-            readonly internalID: string | null | undefined;
-            readonly resized: {
-              readonly height: number | null | undefined;
-              readonly src: string;
-              readonly srcSet: string;
-              readonly width: number | null | undefined;
-            } | null | undefined;
-            readonly solo: {
-              readonly height: number | null | undefined;
-              readonly src: string;
-              readonly srcSet: string;
-              readonly width: number | null | undefined;
-            } | null | undefined;
-          } | null | undefined> | null | undefined;
-          readonly internalID: string;
-          readonly marketPriceInsights: {
-            readonly demandRank: number | null | undefined;
-          } | null | undefined;
-          readonly mediumType: {
-            readonly filterGene: {
-              readonly id: string;
-              readonly name: string | null | undefined;
-            } | null | undefined;
-          } | null | undefined;
-          readonly partner: {
-            readonly href: string | null | undefined;
-            readonly id: string;
-            readonly name: string | null | undefined;
-          } | null | undefined;
-          readonly sale: {
-            readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
-            readonly endAt: string | null | undefined;
-            readonly extendedBiddingIntervalMinutes: number | null | undefined;
-            readonly id: string;
-            readonly is_auction: boolean | null | undefined;
-            readonly is_closed: boolean | null | undefined;
-            readonly startAt: string | null | undefined;
-          } | null | undefined;
-          readonly saleArtwork: {
-            readonly id: string;
-            readonly lotID: string | null | undefined;
-          } | null | undefined;
-          readonly sale_artwork: {
-            readonly counts: {
-              readonly bidder_positions: any | null | undefined;
-            } | null | undefined;
-            readonly endAt: string | null | undefined;
-            readonly extendedBiddingEndAt: string | null | undefined;
-            readonly formattedEndDateTime: string | null | undefined;
-            readonly highest_bid: {
-              readonly display: string | null | undefined;
-            } | null | undefined;
-            readonly id: string;
-            readonly lotID: string | null | undefined;
-            readonly lotLabel: string | null | undefined;
-            readonly opening_bid: {
-              readonly display: string | null | undefined;
-            } | null | undefined;
-          } | null | undefined;
-          readonly sale_message: string | null | undefined;
-          readonly title: string | null | undefined;
-        } | null | undefined;
-      } | null | undefined> | null | undefined;
-      readonly pageInfo: {
-        readonly endCursor: string | null | undefined;
-        readonly hasNextPage: boolean;
-      };
-    } | null | undefined;
-    readonly slug: string;
-  } | null | undefined;
-};
-export type ViewingRoomWorksRouteTestQuery = {
-  rawResponse: ViewingRoomWorksRouteTestQuery$rawResponse;
-  response: ViewingRoomWorksRouteTestQuery$data;
-  variables: ViewingRoomWorksRouteTestQuery$variables;
+export type ViewingRoomWorksRoutePaginationQuery = {
+  response: ViewingRoomWorksRoutePaginationQuery$data;
+  variables: ViewingRoomWorksRoutePaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -280,55 +161,7 @@ v15 = {
 v16 = [
   (v14/*: any*/),
   (v12/*: any*/)
-],
-v17 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v18 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v19 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v20 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
-},
-v21 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Boolean"
-},
-v22 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "ResizedImageUrl"
-},
-v23 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Int"
-},
-v24 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "SaleArtwork"
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -338,7 +171,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ViewingRoomWorksRouteTestQuery",
+    "name": "ViewingRoomWorksRoutePaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -368,7 +201,7 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "ViewingRoomWorksRouteTestQuery",
+    "name": "ViewingRoomWorksRoutePaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -899,247 +732,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6cc8d5b6f01079fffc22cb8abaf7e72f",
+    "cacheID": "41aae76989997b04dec46d1844d9f0d3",
     "id": null,
-    "metadata": {
-      "relayTestingSelectionTypeInfo": {
-        "viewingRoom": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ViewingRoom"
-        },
-        "viewingRoom.artworksConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkConnection"
-        },
-        "viewingRoom.artworksConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "ArtworkEdge"
-        },
-        "viewingRoom.artworksConnection.edges.cursor": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artwork"
-        },
-        "viewingRoom.artworksConnection.edges.node.__typename": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.additionalInformation": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.artist": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artist"
-        },
-        "viewingRoom.artworksConnection.edges.node.artist.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.artist.targetSupply": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ArtistTargetSupply"
-        },
-        "viewingRoom.artworksConnection.edges.node.artist.targetSupply.isP1": (v20/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.artists": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Artist"
-        },
-        "viewingRoom.artworksConnection.edges.node.artists.href": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.artists.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.artists.name": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.attributionClass": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "AttributionClass"
-        },
-        "viewingRoom.artworksConnection.edges.node.attributionClass.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.attributionClass.name": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collecting_institution": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CollectorSignals"
-        },
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.auction": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "AuctionCollectorSignals"
-        },
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.auction.bidCount": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Int"
-        },
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.auction.liveBiddingStarted": (v21/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.auction.lotClosesAt": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.auction.onlineBiddingExtended": (v21/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.auction.registrationEndsAt": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.partnerOffer": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerOfferToCollector"
-        },
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.partnerOffer.endAt": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.partnerOffer.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.partnerOffer.priceWithDiscount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.partnerOffer.priceWithDiscount.display": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.collectorSignals.primaryLabel": {
-          "enumValues": [
-            "CURATORS_PICK",
-            "INCREASED_INTEREST",
-            "PARTNER_OFFER"
-          ],
-          "nullable": true,
-          "plural": false,
-          "type": "LabelSignalEnum"
-        },
-        "viewingRoom.artworksConnection.edges.node.cultural_maker": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.date": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.href": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "Image"
-        },
-        "viewingRoom.artworksConnection.edges.node.images.internalID": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ID"
-        },
-        "viewingRoom.artworksConnection.edges.node.images.resized": (v22/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.resized.height": (v23/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.resized.src": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.resized.srcSet": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.resized.width": (v23/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo": (v22/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo.height": (v23/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo.src": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo.srcSet": (v17/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.images.solo.width": (v23/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.internalID": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.marketPriceInsights": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkPriceInsights"
-        },
-        "viewingRoom.artworksConnection.edges.node.marketPriceInsights.demandRank": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Float"
-        },
-        "viewingRoom.artworksConnection.edges.node.mediumType": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkMedium"
-        },
-        "viewingRoom.artworksConnection.edges.node.mediumType.filterGene": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Gene"
-        },
-        "viewingRoom.artworksConnection.edges.node.mediumType.filterGene.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.mediumType.filterGene.name": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "viewingRoom.artworksConnection.edges.node.partner.href": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.partner.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.partner.name": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Sale"
-        },
-        "viewingRoom.artworksConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v23/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale.endAt": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v23/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale.is_auction": (v20/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale.is_closed": (v20/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale.startAt": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.saleArtwork": (v24/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.saleArtwork.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.saleArtwork.lotID": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork": (v24/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.counts": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "SaleArtworkCounts"
-        },
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.counts.bidder_positions": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
-        },
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.endAt": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.extendedBiddingEndAt": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.formattedEndDateTime": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.highest_bid": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "SaleArtworkHighestBid"
-        },
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.id": (v19/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.lotID": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.lotLabel": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.opening_bid": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "SaleArtworkOpeningBid"
-        },
-        "viewingRoom.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.sale_message": (v18/*: any*/),
-        "viewingRoom.artworksConnection.edges.node.title": (v18/*: any*/),
-        "viewingRoom.artworksConnection.pageInfo": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "PageInfo"
-        },
-        "viewingRoom.artworksConnection.pageInfo.endCursor": (v18/*: any*/),
-        "viewingRoom.artworksConnection.pageInfo.hasNextPage": (v21/*: any*/),
-        "viewingRoom.slug": (v17/*: any*/)
-      }
-    },
-    "name": "ViewingRoomWorksRouteTestQuery",
+    "metadata": {},
+    "name": "ViewingRoomWorksRoutePaginationQuery",
     "operationKind": "query",
-    "text": "query ViewingRoomWorksRouteTestQuery(\n  $slug: ID!\n  $count: Int!\n  $after: String\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom_2Q1lIr\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  ...Details_artwork\n  id\n  additionalInformation(format: HTML)\n  href\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom_2Q1lIr on ViewingRoom {\n  slug\n  artworksConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          solo: resized(quality: 85, width: 600, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n          resized(quality: 85, height: 550, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ViewingRoomWorksRoutePaginationQuery(\n  $slug: ID!\n  $count: Int!\n  $after: String\n) {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomWorksRoute_viewingRoom_2Q1lIr\n  }\n}\n\nfragment BidTimerLine_artwork on Artwork {\n  saleArtwork {\n    lotID\n    id\n  }\n  collectorSignals {\n    auction {\n      lotClosesAt\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  collectorSignals {\n    primaryLabel\n    auction {\n      bidCount\n      lotClosesAt\n      liveBiddingStarted\n      registrationEndsAt\n      onlineBiddingExtended\n    }\n  }\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist(shallow: true) {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...PrimaryLabelLine_artwork\n  ...BidTimerLine_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment PrimaryLabelLine_artwork on Artwork {\n  internalID\n  collectorSignals {\n    primaryLabel\n    partnerOffer {\n      endAt\n      priceWithDiscount {\n        display\n      }\n      id\n    }\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  ...Details_artwork\n  id\n  additionalInformation(format: HTML)\n  href\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom_2Q1lIr on ViewingRoom {\n  slug\n  artworksConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          solo: resized(quality: 85, width: 600, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n          resized(quality: 85, height: 550, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "144b96c2672579252e53b8ac5178501f";
+(node as any).hash = "d7c776e840197159f0c6c5b158e8ada5";
 
 export default node;
