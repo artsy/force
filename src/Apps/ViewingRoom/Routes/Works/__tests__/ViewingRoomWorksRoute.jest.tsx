@@ -144,7 +144,9 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRouteTestQuery$rawResponse =
         },
         edges: [
           {
+            cursor: "cursor-1",
             node: {
+              __typename: "Artwork",
               saleArtwork: {
                 id: "opaque-sale-artwork-id",
                 lotID: "lot-id",
@@ -276,7 +278,9 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRouteTestQuery$rawResponse =
             },
           },
           {
+            cursor: "cursor-2",
             node: {
+              __typename: "Artwork",
               internalID: "5de6b3a46882b7000eee31f8",
               saleArtwork: {
                 id: "opaque-sale-artwork-id-2",
