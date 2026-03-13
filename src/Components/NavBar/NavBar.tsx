@@ -11,19 +11,24 @@ import {
   ARTWORKS_SUBMENU_DATA,
   WHATS_NEW_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
+import { useNavigationData } from "System/Contexts/NavigationDataContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useNavigationData } from "System/Contexts/NavigationDataContext"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import type * as React from "react"
 import { useEffect, useState } from "react"
+import {
+  NavBarDropdownProvider,
+  useNavBarDropdown,
+} from "./NavBarDropdownContext"
 import {
   NavBarMobileMenu,
   NavBarMobileMenuIcon,
 } from "./NavBarMobileMenu/NavBarMobileMenu"
 
 import { AppDownloadBanner } from "Components/AppDownloadBanner"
+import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
@@ -31,9 +36,9 @@ import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/
 import { SearchBar } from "Components/Search/SearchBar"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { Media } from "Utils/Responsive"
+import { getENV } from "Utils/getENV"
 import { track } from "react-tracking"
 import styled from "styled-components"
-import { useNavBarTracking } from "./useNavBarTracking"
 import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
@@ -41,8 +46,7 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
-import { getENV } from "Utils/getENV"
-import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
+import { useNavBarTracking } from "./useNavBarTracking"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -82,10 +86,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && mode !== "More"
-
-  const [transitionCount, setTransitionCount] = useState(0)
-
-  const shouldTransition = transitionCount <= 1
 
   const GALLERY_PARTNERSHIPS_URL =
     "https://partners.artsy.net/gallery-partnerships/?utm_medium=internal-banner&utm_source=artsy&utm_campaign=b2b-2025-gallery-partnerships-application-banner-link&utm_sfc=701Hu000001jeLjIAI"
@@ -147,15 +147,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   const handleMobileSearchBarClose = () => {
     setMode("Idle")
-  }
-
-  const handleMenuEnter = () => {
-    setTransitionCount(count => count + 1)
-  }
-
-  const handleMenuLeave = () => {
-    // Reset the counter when leaving the navigation area completely
-    setTransitionCount(0)
   }
 
   if (isEigen) {
@@ -362,170 +353,156 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
               variant="sm"
               lineHeight={1}
             >
-              <Flex
-                alignItems="stretch"
-                minWidth={0}
-                onMouseLeave={handleMenuLeave}
-              >
-                {shouldUseServerNav ? (
-                  <>
-                    {navigationData?.whatsNewNavigation && (
-                      <NavBarDropdownPanelServer
-                        navigationData={navigationData.whatsNewNavigation}
-                        featuredLinkData={navigationData.whatsNewFeaturedLink}
-                        label="What’s New"
+              <NavBarDropdownProvider>
+                <NavBarDropdownArea>
+                  {shouldUseServerNav ? (
+                    <>
+                      {navigationData?.whatsNewNavigation && (
+                        <NavBarDropdownPanelServer
+                          navigationData={navigationData.whatsNewNavigation}
+                          featuredLinkData={navigationData.whatsNewFeaturedLink}
+                          label="What’s New"
+                          href="/collection/new-this-week"
+                          contextModule={
+                            DeprecatedAnalyticsSchema.ContextModule
+                              .HeaderWhatsNewDropdown
+                          }
+                          menuType="whatsNew"
+                          handleClick={handleClick}
+                        />
+                      )}
+
+                      {navigationData?.artistsNavigation && (
+                        <NavBarDropdownPanelServer
+                          navigationData={navigationData.artistsNavigation}
+                          featuredLinkData={navigationData.artistsFeaturedLink}
+                          label="Artists"
+                          href="/artists"
+                          contextModule={
+                            DeprecatedAnalyticsSchema.ContextModule
+                              .HeaderArtistsDropdown
+                          }
+                          menuType="artists"
+                          handleClick={handleClick}
+                        />
+                      )}
+
+                      {navigationData?.artworksNavigation && (
+                        <NavBarDropdownPanelServer
+                          navigationData={navigationData.artworksNavigation}
+                          featuredLinkData={navigationData.artworksFeaturedLink}
+                          label="Artworks"
+                          href="/collect"
+                          contextModule={
+                            DeprecatedAnalyticsSchema.ContextModule
+                              .HeaderArtworksDropdown
+                          }
+                          menuType="artworks"
+                          handleClick={handleClick}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <NavBarDropdownPanel
                         href="/collection/new-this-week"
+                        label={WHATS_NEW_SUBMENU_DATA.text}
+                        menu={WHATS_NEW_SUBMENU_DATA.menu}
                         contextModule={
                           DeprecatedAnalyticsSchema.ContextModule
                             .HeaderWhatsNewDropdown
                         }
-                        menuType="whatsNew"
-                        onMenuEnter={handleMenuEnter}
                         handleClick={handleClick}
-                        shouldTransition={shouldTransition}
                       />
-                    )}
 
-                    {navigationData?.artistsNavigation && (
-                      <NavBarDropdownPanelServer
-                        navigationData={navigationData.artistsNavigation}
-                        featuredLinkData={navigationData.artistsFeaturedLink}
-                        label="Artists"
+                      <NavBarDropdownPanel
                         href="/artists"
+                        label="Artists"
+                        menu={ARTISTS_SUBMENU_DATA.menu}
                         contextModule={
                           DeprecatedAnalyticsSchema.ContextModule
                             .HeaderArtistsDropdown
                         }
-                        menuType="artists"
-                        onMenuEnter={handleMenuEnter}
                         handleClick={handleClick}
-                        shouldTransition={shouldTransition}
                       />
-                    )}
 
-                    {navigationData?.artworksNavigation && (
-                      <NavBarDropdownPanelServer
-                        navigationData={navigationData.artworksNavigation}
-                        featuredLinkData={navigationData.artworksFeaturedLink}
-                        label="Artworks"
+                      <NavBarDropdownPanel
                         href="/collect"
+                        label="Artworks"
+                        menu={ARTWORKS_SUBMENU_DATA.menu}
                         contextModule={
                           DeprecatedAnalyticsSchema.ContextModule
                             .HeaderArtworksDropdown
                         }
-                        menuType="artworks"
-                        onMenuEnter={handleMenuEnter}
                         handleClick={handleClick}
-                        shouldTransition={shouldTransition}
                       />
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <NavBarDropdownPanel
-                      href="/collection/new-this-week"
-                      label={WHATS_NEW_SUBMENU_DATA.text}
-                      menu={WHATS_NEW_SUBMENU_DATA.menu}
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderWhatsNewDropdown
-                      }
-                      onMenuEnter={handleMenuEnter}
-                      handleClick={handleClick}
-                      shouldTransition={shouldTransition}
-                    />
+                    </>
+                  )}
 
-                    <NavBarDropdownPanel
-                      href="/artists"
-                      label="Artists"
-                      menu={ARTISTS_SUBMENU_DATA.menu}
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderArtistsDropdown
-                      }
-                      onMenuEnter={handleMenuEnter}
-                      handleClick={handleClick}
-                      shouldTransition={shouldTransition}
-                    />
+                  <NavBarItemLink
+                    href="/auctions"
+                    onMouseOver={() => prefetch("/auctions")}
+                    onClick={handleClick}
+                    data-label="Auctions"
+                  >
+                    Auctions
+                  </NavBarItemLink>
 
-                    <NavBarDropdownPanel
-                      href="/collect"
-                      label="Artworks"
-                      menu={ARTWORKS_SUBMENU_DATA.menu}
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderArtworksDropdown
-                      }
-                      onMenuEnter={handleMenuEnter}
-                      handleClick={handleClick}
-                      shouldTransition={shouldTransition}
-                    />
-                  </>
-                )}
+                  <NavBarItemLink
+                    href="/viewing-rooms"
+                    onMouseOver={() => prefetch("/viewing-rooms")}
+                    onClick={handleClick}
+                    data-label="Viewing Rooms"
+                  >
+                    Viewing Rooms
+                  </NavBarItemLink>
 
-                <NavBarItemLink
-                  href="/auctions"
-                  onMouseOver={() => prefetch("/auctions")}
-                  onClick={handleClick}
-                  data-label="Auctions"
-                >
-                  Auctions
-                </NavBarItemLink>
+                  <NavBarItemLink
+                    href="/galleries"
+                    onMouseOver={() => prefetch("/galleries")}
+                    onClick={handleClick}
+                    data-label="Galleries"
+                  >
+                    Galleries
+                  </NavBarItemLink>
 
-                <NavBarItemLink
-                  href="/viewing-rooms"
-                  onMouseOver={() => prefetch("/viewing-rooms")}
-                  onClick={handleClick}
-                  data-label="Viewing Rooms"
-                >
-                  Viewing Rooms
-                </NavBarItemLink>
+                  <NavBarItemFairsLink
+                    href="/art-fairs"
+                    onMouseOver={() => prefetch("/art-fairs")}
+                    onClick={handleClick}
+                    data-label="Fairs & Events"
+                  >
+                    Fairs & Events
+                  </NavBarItemFairsLink>
 
-                <NavBarItemLink
-                  href="/galleries"
-                  onMouseOver={() => prefetch("/galleries")}
-                  onClick={handleClick}
-                  data-label="Galleries"
-                >
-                  Galleries
-                </NavBarItemLink>
+                  <NavBarItemLink
+                    href="/shows"
+                    onMouseOver={() => prefetch("/shows")}
+                    onClick={handleClick}
+                    data-label="Shows"
+                  >
+                    Shows
+                  </NavBarItemLink>
 
-                <NavBarItemFairsLink
-                  href="/art-fairs"
-                  onMouseOver={() => prefetch("/art-fairs")}
-                  onClick={handleClick}
-                  data-label="Fairs & Events"
-                >
-                  Fairs & Events
-                </NavBarItemFairsLink>
+                  <NavBarItemInstitutionsLink
+                    href="/institutions"
+                    onMouseOver={() => prefetch("/institutions")}
+                    onClick={handleClick}
+                    data-label="Institutions"
+                  >
+                    Museums
+                  </NavBarItemInstitutionsLink>
 
-                <NavBarItemLink
-                  href="/shows"
-                  onMouseOver={() => prefetch("/shows")}
-                  onClick={handleClick}
-                  data-label="Shows"
-                >
-                  Shows
-                </NavBarItemLink>
-
-                <NavBarItemInstitutionsLink
-                  href="/institutions"
-                  onMouseOver={() => prefetch("/institutions")}
-                  onClick={handleClick}
-                  data-label="Institutions"
-                >
-                  Museums
-                </NavBarItemInstitutionsLink>
-
-                <NavBarItemLink
-                  href="/feature/how-to-buy-art"
-                  onMouseOver={() => prefetch("/feature/how-to-buy-art")}
-                  onClick={handleClick}
-                  data-label="Collecting 101"
-                >
-                  Collecting 101
-                </NavBarItemLink>
-              </Flex>
+                  <NavBarItemLink
+                    href="/feature/how-to-buy-art"
+                    onMouseOver={() => prefetch("/feature/how-to-buy-art")}
+                    onClick={handleClick}
+                    data-label="Collecting 101"
+                  >
+                    Collecting 101
+                  </NavBarItemLink>
+                </NavBarDropdownArea>
+              </NavBarDropdownProvider>
             </Text>
           </HorizontalPadding>
         </AppContainer>
@@ -550,6 +527,18 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
     </>
   )
 })
+
+const NavBarDropdownArea: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const { handleMenuLeave } = useNavBarDropdown()
+
+  return (
+    <Flex alignItems="stretch" minWidth={0} onMouseLeave={handleMenuLeave}>
+      {children}
+    </Flex>
+  )
+}
 
 // Hide these links earlier to ensure "Collecting 101" has space on smaller widths
 
