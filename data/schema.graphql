@@ -4084,6 +4084,15 @@ type ArtworkTemplateEdge {
   node: ArtworkTemplate
 }
 
+enum ArtworkTemplatesSort {
+  ARTIST_NAME_ASC
+  ARTIST_NAME_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  TITLE_ASC
+  TITLE_DESC
+}
+
 type ArtworkVersion implements Node {
   # The names for the artists related to this Artwork Version
   artistNames: String
@@ -10315,6 +10324,40 @@ type CreateImagePayload {
   image: ARImage!
 }
 
+type CreateInstagramPostFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateInstagramPostInput {
+  # The ID of the artwork to post
+  artworkId: String!
+
+  # Post caption (auto-generated from artwork data if omitted)
+  caption: String
+  clientMutationId: String
+
+  # Up to 3 Instagram usernames to invite as collaborators
+  collaborators: [String!]
+
+  # The internal ID of the Instagram account to post from
+  instagramAccountId: String!
+}
+
+type CreateInstagramPostPayload {
+  clientMutationId: String
+
+  # On success: the created Instagram post
+  instagramPostOrError: CreateInstagramPostResponseOrError
+}
+
+union CreateInstagramPostResponseOrError =
+  | CreateInstagramPostFailure
+  | CreateInstagramPostSuccess
+
+type CreateInstagramPostSuccess {
+  instagramPost: InstagramPost
+}
+
 type CreateInvoicePaymentFailure {
   mutationError: GravityMutationError
 }
@@ -10571,6 +10614,33 @@ union CreatePartnerArtistDocumentResponseOrError =
 type CreatePartnerArtistDocumentSuccess {
   document: PartnerDocument
   partner: Partner
+}
+
+type CreatePartnerArtworksExportFailure {
+  mutationError: GravityMutationError
+}
+
+input CreatePartnerArtworksExportMutationInput {
+  clientMutationId: String
+
+  # The ID of the partner.
+  partnerId: String!
+}
+
+type CreatePartnerArtworksExportMutationPayload {
+  clientMutationId: String
+
+  # On success: the export job ID. On error: the error that occurred.
+  partnerArtworksExportOrError: CreatePartnerArtworksExportResponseOrError
+}
+
+union CreatePartnerArtworksExportResponseOrError =
+  | CreatePartnerArtworksExportFailure
+  | CreatePartnerArtworksExportSuccess
+
+type CreatePartnerArtworksExportSuccess {
+  # The ID of the enqueued export job.
+  exportId: String!
 }
 
 type CreatePartnerContactFailure {
@@ -11942,8 +12012,8 @@ type DeletePartnerShowFailure {
 input DeletePartnerShowMutationInput {
   clientMutationId: String
 
-  # The id of the partner.
-  partnerId: String!
+  # The id of the partner. Required for partner-scoped shows, omit for partner-less reference shows.
+  partnerId: String
 
   # The id of the show to delete.
   showId: String!
@@ -15599,6 +15669,66 @@ enum InstagramAccountStatus {
   EXPIRED
 }
 
+type InstagramPost {
+  artworkId: String!
+  caption: String
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # A globally unique ID.
+  id: ID!
+  instagramAccountId: String!
+  instagramMediaId: String
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  partnerId: String!
+  permalink: String
+  publishedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  status: InstagramPostStatus
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+}
+
+# A connection to a list of items.
+type InstagramPostConnection {
+  # A list of edges.
+  edges: [InstagramPostEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type InstagramPostEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: InstagramPost
+}
+
+enum InstagramPostStatus {
+  FAILED
+  PENDING
+  PUBLISHED
+}
+
 enum IntendedState {
   ACCEPTED
   REJECTED
@@ -17796,6 +17926,11 @@ type Mutation {
   createInquiryOrder(
     input: CommerceCreateInquiryOrderWithArtworkInput!
   ): CommerceCreateInquiryOrderWithArtworkPayload
+
+  # Create and publish an Instagram post from an artwork
+  createInstagramPost(
+    input: CreateInstagramPostInput!
+  ): CreateInstagramPostPayload
   createInvoicePayment(
     input: CreateInvoicePaymentInput!
   ): CreateInvoicePaymentPayload
@@ -17823,6 +17958,11 @@ type Mutation {
   createPartnerArtistDocument(
     input: CreatePartnerArtistDocumentMutationInput!
   ): CreatePartnerArtistDocumentMutationPayload
+
+  # Enqueue a CSV export of all artworks for a partner.
+  createPartnerArtworksExport(
+    input: CreatePartnerArtworksExportMutationInput!
+  ): CreatePartnerArtworksExportMutationPayload
 
   # Creates a new contact for a partner
   createPartnerContact(
@@ -19670,6 +19810,7 @@ type Partner implements Node {
     first: Int
     last: Int
     page: Int
+    sort: ArtworkTemplatesSort
   ): ArtworkTemplateConnection
 
   # A connection of artworks from a Partner.
@@ -22455,6 +22596,23 @@ type Query {
     size: Int
     userId: String
   ): IdentityVerificationConnection
+
+  # An Instagram post by ID
+  instagramPost(
+    # The internal ID of the Instagram post
+    id: String!
+  ): InstagramPost
+
+  # A connection of Instagram posts for a partner
+  instagramPostsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # The partner ID to filter posts by
+    partnerId: String!
+  ): InstagramPostConnection
   invoice(token: String!): Invoice
   job(id: ID!): Job!
   jobs: [Job!]!
@@ -27155,6 +27313,11 @@ input UpdatePartnerShowFairLocationInput {
 }
 
 input UpdatePartnerShowMutationInput {
+  # Artist slugs to append to the show. Cannot be combined with artistIds.
+  addArtistIds: [String]
+
+  # Artist slugs for the show. Replaces all existing artists. Cannot be combined with addArtistIds or removeArtistIds.
+  artistIds: [String]
   clientMutationId: String
 
   # The description of the show.
@@ -27185,11 +27348,14 @@ input UpdatePartnerShowMutationInput {
   # The city of the partner for reference shows.
   partnerCity: String
 
-  # The id of the partner to update.
-  partnerId: String!
+  # The id of the partner. Required for partner-scoped shows, omit for partner-less reference shows.
+  partnerId: String
 
   # The press release of the show.
   pressRelease: String
+
+  # Artist slugs to remove from the show. Cannot be combined with artistIds.
+  removeArtistIds: [String]
 
   # The id of the show to update.
   showId: String!
@@ -29038,6 +29204,23 @@ type Viewer {
     size: Int
     userId: String
   ): IdentityVerificationConnection
+
+  # An Instagram post by ID
+  instagramPost(
+    # The internal ID of the Instagram post
+    id: String!
+  ): InstagramPost
+
+  # A connection of Instagram posts for a partner
+  instagramPostsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # The partner ID to filter posts by
+    partnerId: String!
+  ): InstagramPostConnection
   invoice(token: String!): Invoice
   job(id: ID!): Job!
   jobs: [Job!]!
