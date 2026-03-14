@@ -101,10 +101,20 @@ export const viewingRoomRoutes: RouteProps[] = [
       {
         path: "artworks",
         Component: WorksRoute,
+        prepareVariables: (params: { slug?: string }) => ({
+          slug: params.slug,
+          count: 12,
+          after: null,
+        }),
         query: graphql`
-          query viewingRoomRoutes_ViewingRoomWorksRouteQuery($slug: ID!) {
+          query viewingRoomRoutes_ViewingRoomWorksRouteQuery(
+            $slug: ID!
+            $count: Int!
+            $after: String
+          ) {
             viewingRoom(id: $slug) @principalField {
               ...ViewingRoomWorksRoute_viewingRoom
+                @arguments(first: $count, after: $after)
             }
           }
         `,

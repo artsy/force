@@ -41,16 +41,21 @@ describe("ViewingRoomWorksRoute", () => {
       )
     },
     query: graphql`
-      query ViewingRoomWorksRouteTestQuery($slug: ID!)
-      @raw_response_type
-      @relay_test_operation {
+      query ViewingRoomWorksRouteTestQuery(
+        $slug: ID!
+        $count: Int!
+        $after: String
+      ) @raw_response_type @relay_test_operation {
         viewingRoom(id: $slug) {
           ...ViewingRoomWorksRoute_viewingRoom
+            @arguments(first: $count, after: $after)
         }
       }
     `,
     variables: {
       slug,
+      count: 12,
+      after: null,
     },
   })
 
@@ -131,10 +136,17 @@ describe("ViewingRoomWorksRoute", () => {
 const ViewingRoomWorksRouteFixture: ViewingRoomWorksRouteTestQuery$rawResponse =
   {
     viewingRoom: {
+      slug: "subscription-demo-gg-guy-yanai",
       artworksConnection: {
+        pageInfo: {
+          hasNextPage: false,
+          endCursor: null,
+        },
         edges: [
           {
+            cursor: "cursor-1",
             node: {
+              __typename: "Artwork",
               saleArtwork: {
                 id: "opaque-sale-artwork-id",
                 lotID: "lot-id",
@@ -266,7 +278,9 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRouteTestQuery$rawResponse =
             },
           },
           {
+            cursor: "cursor-2",
             node: {
+              __typename: "Artwork",
               internalID: "5de6b3a46882b7000eee31f8",
               saleArtwork: {
                 id: "opaque-sale-artwork-id-2",
