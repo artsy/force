@@ -19,6 +19,13 @@ const ArtistApp = loadable(
   { resolveComponent: component => component.ArtistAppFragmentContainer },
 )
 
+const Artist2App = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Artist2App"),
+  {
+    resolveComponent: component => component.Artist2App,
+  },
+)
+
 const ArtistSubApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSubApp"),
   { resolveComponent: component => component.ArtistSubAppFragmentContainer },
@@ -82,6 +89,42 @@ const ArtistCombinedRoute = loadable(
 )
 
 export const artistRoutes: RouteProps[] = [
+  {
+    path: "/artist2/:artistID",
+    ignoreScrollBehaviorBetweenChildren: true,
+    getComponent: () => Artist2App,
+    onPreloadJS: () => {
+      Artist2App.preload()
+      ArtistCombinedRoute.preload()
+    },
+    render: canonicalSlugRedirect({
+      entityName: "artist",
+      paramName: "artistID",
+      basePath: "/artist2",
+    }),
+    query: graphql`
+      query artistRoutes_Artist2AppQuery($artistID: String!) @cacheable {
+        artist(id: $artistID) @principalField {
+          slug
+          ...Artist2App_artist
+          ...ArtistCombinedRoute_artist
+        }
+      }
+    `,
+    children: [
+      {
+        path: "",
+        getComponent: () => ArtistCombinedRoute,
+        query: graphql`
+          query artistRoutes_Artist2RootQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
+              ...ArtistCombinedRoute_artist
+            }
+          }
+        `,
+      },
+    ],
+  },
   {
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
