@@ -324,10 +324,9 @@ const extractLineItemMetadata = (
   const dimensions = isArtworkOrEdition
     ? artworkOrEditionSet.dimensions
     : undefined
-  const framedDimensions =
-    artworkOrEditionSet?.__typename === "Artwork"
-      ? artworkOrEditionSet.framedDimensions
-      : undefined
+  const framedDimensions = isArtworkOrEdition
+    ? artworkOrEditionSet.framedDimensions
+    : undefined
   const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
   const attributionClass = artworkVersion?.attributionClass
 
@@ -394,6 +393,10 @@ const FRAGMENT = graphql`
         ... on EditionSet {
           price
           dimensions {
+            in
+            cm
+          }
+          framedDimensions {
             in
             cm
           }

@@ -60,10 +60,17 @@ export const useArtworkDimensions = (
     ? getFrameString(framed?.details, isUnlisted)
     : null
 
+  const formattedDimensions = formatDimensions(activeDimensions)
+  const dimensionsLabel =
+    shouldUseFramedDims && formattedDimensions
+      ? `${formattedDimensions} with frame included`
+      : formattedDimensions
+
   return {
     hasCmDimensions,
     hasInDimensions,
-    dimensionsLabel: formatDimensions(activeDimensions),
+    dimensionsLabel,
+    dimensionsLabelWithoutFrameText: formattedDimensions,
     isShowingFramedDimensions: shouldUseFramedDims,
     shouldShowFrameText,
     frameText,

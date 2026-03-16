@@ -130,7 +130,12 @@ describe("useArtworkDimensions", () => {
         { wrapper: wrapper(true) },
       )
 
-      expect(result.current.dimensionsLabel).toBe("12 × 22 in | 30.5 × 55.9 cm")
+      expect(result.current.dimensionsLabel).toBe(
+        "12 × 22 in | 30.5 × 55.9 cm with frame included",
+      )
+      expect(result.current.dimensionsLabelWithoutFrameText).toBe(
+        "12 × 22 in | 30.5 × 55.9 cm",
+      )
       expect(result.current.isShowingFramedDimensions).toBe(true)
       expect(result.current.shouldShowFrameText).toBe(false)
     })

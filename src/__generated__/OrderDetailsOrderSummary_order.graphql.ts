@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b1e934581bc42411391abf1d322fdc4>>
+ * @generated SignedSource<<993164ce0644cefc347494ed8cbf6b8a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,10 @@ export type OrderDetailsOrderSummary_order$data = {
     } | {
       readonly __typename: "EditionSet";
       readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly framedDimensions: {
         readonly cm: string | null | undefined;
         readonly in: string | null | undefined;
       } | null | undefined;
@@ -92,14 +96,7 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "price",
-  "storageKey": null
-},
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -115,16 +112,35 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "dimensions",
-  "kind": "LinkedField",
-  "name": "dimensions",
-  "plural": false,
-  "selections": (v2/*: any*/),
-  "storageKey": null
-};
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "dimensions",
+    "plural": false,
+    "selections": (v1/*: any*/),
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "framedDimensions",
+    "plural": false,
+    "selections": (v1/*: any*/),
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -258,29 +274,13 @@ return {
             },
             {
               "kind": "InlineFragment",
-              "selections": [
-                (v1/*: any*/),
-                (v3/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "dimensions",
-                  "kind": "LinkedField",
-                  "name": "framedDimensions",
-                  "plural": false,
-                  "selections": (v2/*: any*/),
-                  "storageKey": null
-                }
-              ],
+              "selections": (v2/*: any*/),
               "type": "Artwork",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": [
-                (v1/*: any*/),
-                (v3/*: any*/)
-              ],
+              "selections": (v2/*: any*/),
               "type": "EditionSet",
               "abstractKey": null
             }
@@ -400,6 +400,6 @@ return {
 };
 })();
 
-(node as any).hash = "7e6e0b4bf741b38d12f8d283c74b2382";
+(node as any).hash = "b7eb1dd5a3f3a791e9ef17bee14e4c7b";
 
 export default node;

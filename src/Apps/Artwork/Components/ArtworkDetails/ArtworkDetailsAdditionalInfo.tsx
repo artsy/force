@@ -90,7 +90,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
 
   // For the "Framed Size" field and frame text logic, check framed dimensions
   const {
-    dimensionsLabel: framedDimensionsLabel,
+    dimensionsLabelWithoutFrameText: framedDimensionsLabel,
     shouldShowFrameText,
     isShowingFramedDimensions,
   } = useArtworkDimensions(dimensions, framedDimensions)

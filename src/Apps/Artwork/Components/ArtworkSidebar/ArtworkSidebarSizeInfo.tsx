@@ -12,13 +12,12 @@ interface ArtworkSidebarSizeInfoProps {
 const ArtworkSidebarSizeInfo: React.FC<
   React.PropsWithChildren<ArtworkSidebarSizeInfoProps>
 > = ({ piece }) => {
-  const { dimensions, editionOf } = piece
+  const { dimensions, framedDimensions, editionOf } = piece
 
-  const {
-    hasCmDimensions,
-    hasInDimensions,
-    dimensionsLabel: label,
-  } = useArtworkDimensions(dimensions)
+  const { hasInDimensions, dimensionsLabel: label } = useArtworkDimensions(
+    dimensions,
+    framedDimensions,
+  )
 
   const sizeInfoMissing = (dimensions, editionOf) => {
     const dimensionsPresent =
@@ -42,12 +41,7 @@ const ArtworkSidebarSizeInfo: React.FC<
 
       <Media lessThan="md">
         <Box color="mono60">
-          {hasInDimensions && (
-            <Text variant="sm-display">{dimensions?.in}</Text>
-          )}
-          {hasCmDimensions && (
-            <Text variant="sm-display">{dimensions?.cm}</Text>
-          )}
+          {hasInDimensions && <Text variant="sm-display">{label}</Text>}
           {editionOf && <Text variant="sm-display">{editionOf}</Text>}
         </Box>
       </Media>
@@ -65,6 +59,12 @@ export const ArtworkSidebarSizeInfoFragmentContainer = createFragmentContainer(
           cm
         }
         editionOf
+        ... on EditionSet {
+          framedDimensions {
+            in
+            cm
+          }
+        }
       }
     `,
   },

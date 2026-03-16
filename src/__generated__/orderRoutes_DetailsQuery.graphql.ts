@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af78cb12b426de66f9958021f1c176ed>>
+ * @generated SignedSource<<4d1c47d5ab26848483f3b271fb04e56d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,25 +95,35 @@ v7 = {
 v8 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "title",
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "framedDimensions",
+  "plural": false,
+  "selections": (v6/*: any*/),
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "displayName",
+  "name": "title",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "amountFallbackText",
+  "name": "displayName",
   "storageKey": null
 },
 v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "amountFallbackText",
+  "storageKey": null
+},
+v12 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
@@ -138,12 +148,12 @@ v11 = {
   ],
   "storageKey": null
 },
-v12 = [
-  (v9/*: any*/),
-  (v10/*: any*/),
-  (v11/*: any*/)
-],
 v13 = [
+  (v10/*: any*/),
+  (v11/*: any*/),
+  (v12/*: any*/)
+],
+v14 = [
   {
     "alias": null,
     "args": null,
@@ -343,16 +353,7 @@ return {
                             "selections": [
                               (v5/*: any*/),
                               (v7/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "dimensions",
-                                "kind": "LinkedField",
-                                "name": "framedDimensions",
-                                "plural": false,
-                                "selections": (v6/*: any*/),
-                                "storageKey": null
-                              }
+                              (v8/*: any*/)
                             ],
                             "type": "Artwork",
                             "abstractKey": null
@@ -362,6 +363,7 @@ return {
                             "selections": [
                               (v5/*: any*/),
                               (v7/*: any*/),
+                              (v8/*: any*/),
                               (v2/*: any*/)
                             ],
                             "type": "EditionSet",
@@ -386,7 +388,7 @@ return {
                         "name": "artworkVersion",
                         "plural": false,
                         "selections": [
-                          (v8/*: any*/),
+                          (v9/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -510,7 +512,7 @@ return {
                         "name": "messageType",
                         "storageKey": null
                       },
-                      (v8/*: any*/)
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -599,21 +601,21 @@ return {
                       (v4/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v12/*: any*/),
+                        "selections": (v13/*: any*/),
                         "type": "ShippingLine",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v12/*: any*/),
+                        "selections": (v13/*: any*/),
                         "type": "TaxLine",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v9/*: any*/),
-                          (v11/*: any*/)
+                          (v10/*: any*/),
+                          (v12/*: any*/)
                         ],
                         "type": "SubtotalLine",
                         "abstractKey": null
@@ -621,8 +623,8 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v9/*: any*/),
                           (v10/*: any*/),
+                          (v11/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -630,7 +632,7 @@ return {
                             "kind": "LinkedField",
                             "name": "amount",
                             "plural": false,
-                            "selections": (v13/*: any*/),
+                            "selections": (v14/*: any*/),
                             "storageKey": null
                           }
                         ],
@@ -647,7 +649,7 @@ return {
                     "kind": "LinkedField",
                     "name": "totalListPrice",
                     "plural": false,
-                    "selections": (v13/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -657,7 +659,7 @@ return {
                     "kind": "LinkedField",
                     "name": "itemsTotal",
                     "plural": false,
-                    "selections": (v13/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -667,7 +669,7 @@ return {
                     "kind": "LinkedField",
                     "name": "shippingTotal",
                     "plural": false,
-                    "selections": (v13/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -677,7 +679,7 @@ return {
                     "kind": "LinkedField",
                     "name": "taxTotal",
                     "plural": false,
-                    "selections": (v13/*: any*/),
+                    "selections": (v14/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -882,12 +884,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ad84f1a4946137975cc90dd28007afde",
+    "cacheID": "b525f8c82e8141648d3503fc7a08352c",
     "id": null,
     "metadata": {},
     "name": "orderRoutes_DetailsQuery",
     "operationKind": "query",
-    "text": "query orderRoutes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...OrderDetailsRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment OrderDetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment OrderDetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment OrderDetailsMessage_me on Me {\n  collectorProfile {\n    isEmailConfirmed\n    location {\n      country\n      id\n    }\n    profession\n    isIdentityVerified\n    otherRelevantPositions\n    id\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n\nfragment OrderDetailsOrderSummary_order on Order {\n  ...OrderDetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n        framedDimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPage_me on Me {\n  ...OrderDetailsMessage_me\n}\n\nfragment OrderDetailsPage_order on Order {\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  mode\n  source\n  displayTexts {\n    messageType\n  }\n  ...OrderDetailsHeader_order\n  ...OrderDetailsMessage_order\n  ...OrderDetailsOrderSummary_order\n  ...OrderDetailsPricingBreakdown_order\n  ...OrderDetailsPaymentInfo_order\n  ...OrderDetailsFulfillmentInfo_order\n  ...Order2HelpLinks_order\n}\n\nfragment OrderDetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment OrderDetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment OrderDetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    ...OrderDetailsPage_me\n    order(id: $orderID) {\n      internalID\n      ...OrderDetailsPage_order\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query orderRoutes_DetailsQuery(\n  $orderID: ID!\n) {\n  viewer {\n    ...OrderDetailsRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment OrderDetailsFulfillmentInfo_order on Order {\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment OrderDetailsHeader_order on Order {\n  code\n  displayTexts {\n    title\n  }\n}\n\nfragment OrderDetailsMessage_me on Me {\n  collectorProfile {\n    isEmailConfirmed\n    location {\n      country\n      id\n    }\n    profession\n    isIdentityVerified\n    otherRelevantPositions\n    id\n  }\n}\n\nfragment OrderDetailsMessage_order on Order {\n  buyerStateExpiresAt\n  code\n  currencyCode\n  internalID\n  impulseConversationId\n  displayTexts {\n    messageType\n  }\n  deliveryInfo {\n    shipperName\n    trackingNumber\n    trackingURL\n    estimatedDelivery\n    estimatedDeliveryWindow\n  }\n  source\n  mode\n}\n\nfragment OrderDetailsOrderSummary_order on Order {\n  ...OrderDetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n        framedDimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        framedDimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPage_me on Me {\n  ...OrderDetailsMessage_me\n}\n\nfragment OrderDetailsPage_order on Order {\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  mode\n  source\n  displayTexts {\n    messageType\n  }\n  ...OrderDetailsHeader_order\n  ...OrderDetailsMessage_order\n  ...OrderDetailsOrderSummary_order\n  ...OrderDetailsPricingBreakdown_order\n  ...OrderDetailsPaymentInfo_order\n  ...OrderDetailsFulfillmentInfo_order\n  ...Order2HelpLinks_order\n}\n\nfragment OrderDetailsPaymentInfo_order on Order {\n  creditCardWalletType\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment OrderDetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n\nfragment OrderDetailsRoute_viewer_3HPek8 on Viewer {\n  me {\n    ...OrderDetailsPage_me\n    order(id: $orderID) {\n      internalID\n      ...OrderDetailsPage_order\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -28,14 +28,14 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
   const { editionSets } = artwork || {}
 
   // Get dimensions for edition set or artwork
-  // Note: framedDimensions not available on EditionSet or ArtworkVersion in order context
   const editionSet =
     editionSetId && editionSets
       ? editionSets.find(e => e?.internalID === editionSetId)
       : null
   const dimensions = editionSet?.dimensions || artworkDimensions
+  const framedDimensions = editionSet?.framedDimensions
 
-  const { dimensionsLabel } = useArtworkDimensions(dimensions)
+  const { dimensionsLabel } = useArtworkDimensions(dimensions, framedDimensions)
 
   return (
     <BorderBox p={[2, 4]}>
@@ -80,6 +80,10 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
         editionSets {
           internalID
           dimensions {
+            in
+            cm
+          }
+          framedDimensions {
             in
             cm
           }

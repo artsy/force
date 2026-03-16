@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34d55aeb3dc58ae5cd09077237159635>>
+ * @generated SignedSource<<897d7fbd5a24b9fd5cf2b9de9bb359c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,6 +50,10 @@ export type Order2ReviewStep_order$data = {
     } | {
       readonly __typename: "EditionSet";
       readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly framedDimensions: {
         readonly cm: string | null | undefined;
         readonly in: string | null | undefined;
       } | null | undefined;
@@ -124,14 +128,7 @@ v3 = {
   "name": "__typename",
   "storageKey": null
 },
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "price",
-  "storageKey": null
-},
-v5 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -147,24 +144,43 @@ v5 = [
     "storageKey": null
   }
 ],
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "dimensions",
+    "plural": false,
+    "selections": (v4/*: any*/),
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "framedDimensions",
+    "plural": false,
+    "selections": (v4/*: any*/),
+    "storageKey": null
+  }
+],
 v6 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "dimensions",
-  "kind": "LinkedField",
-  "name": "dimensions",
-  "plural": false,
-  "selections": (v5/*: any*/),
-  "storageKey": null
-},
-v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": [
     {
@@ -183,7 +199,7 @@ v8 = {
   "name": "resized",
   "plural": false,
   "selections": [
-    (v7/*: any*/)
+    (v6/*: any*/)
   ],
   "storageKey": "resized(height:138,width:185)"
 };
@@ -306,29 +322,13 @@ return {
             (v3/*: any*/),
             {
               "kind": "InlineFragment",
-              "selections": [
-                (v4/*: any*/),
-                (v6/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "dimensions",
-                  "kind": "LinkedField",
-                  "name": "framedDimensions",
-                  "plural": false,
-                  "selections": (v5/*: any*/),
-                  "storageKey": null
-                }
-              ],
+              "selections": (v5/*: any*/),
               "type": "Artwork",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": [
-                (v4/*: any*/),
-                (v6/*: any*/)
-              ],
+              "selections": (v5/*: any*/),
               "type": "EditionSet",
               "abstractKey": null
             }
@@ -390,8 +390,8 @@ return {
               "name": "image",
               "plural": false,
               "selections": [
-                (v7/*: any*/),
-                (v8/*: any*/)
+                (v6/*: any*/),
+                (v7/*: any*/)
               ],
               "storageKey": null
             }
@@ -425,7 +425,7 @@ return {
                 {
                   "kind": "InlineFragment",
                   "selections": [
-                    (v8/*: any*/)
+                    (v7/*: any*/)
                   ],
                   "type": "Image",
                   "abstractKey": null
@@ -457,6 +457,6 @@ return {
 };
 })();
 
-(node as any).hash = "56535cd45157a8be2c41714140a9cf52";
+(node as any).hash = "d6b5cbd7d34813cbed75c979055a0854";
 
 export default node;

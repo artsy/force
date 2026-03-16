@@ -23,17 +23,18 @@ const ArtworkSidebarDetails: React.FC<
     isUnlisted,
   } = artwork
 
-  const { dimensionsLabel, frameText, isShowingFramedDimensions } =
-    useArtworkDimensions(dimensions, framedDimensions, framed, isUnlisted)
+  const { dimensionsLabel, frameText } = useArtworkDimensions(
+    dimensions,
+    framedDimensions,
+    framed,
+    isUnlisted,
+  )
 
   return (
     <Box color="mono60">
       <Text variant="sm">{medium}</Text>
       {dimensionsLabel && (editionSets?.length ?? 0) < 2 && (
-        <Text variant="sm">
-          {dimensionsLabel}
-          {isShowingFramedDimensions && " with frame included"}
-        </Text>
+        <Text variant="sm">{dimensionsLabel}</Text>
       )}
       {frameText && <Text variant="sm">{frameText}</Text>}
       {!!editionOf && <Text variant="sm">{editionOf}</Text>}
