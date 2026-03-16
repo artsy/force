@@ -7,23 +7,50 @@ import {
   ResponsiveBox,
   Shelf,
   Spacer,
+  Spinner,
 } from "@artsy/palette"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
 import { compact } from "lodash"
 import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { useState } from "react"
+import {
+  type RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
 import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"
+
+const PAGE_SIZE = 20
 
 interface WorksRouteProps {
   viewingRoom: ViewingRoomWorksRoute_viewingRoom$data
+  relay: RelayPaginationProp
 }
 
 const ViewingRoomWorksRoute: React.FC<
   React.PropsWithChildren<WorksRouteProps>
-> = ({ viewingRoom }) => {
+> = ({ viewingRoom, relay }) => {
   const artworks = extractNodes(viewingRoom.artworksConnection)
+  const [isLoadingNextPage, setIsLoadingNextPage] = useState(false)
+
+  const handleLoadMore = () => {
+    if (!relay.hasMore() || relay.isLoading()) {
+      return
+    }
+
+    setIsLoadingNextPage(true)
+
+    relay.loadMore(PAGE_SIZE, error => {
+      if (error) {
+        console.error(error)
+      }
+
+      setIsLoadingNextPage(false)
+    })
+  }
 
   return (
     <GridColumns>
@@ -95,17 +122,46 @@ const ViewingRoomWorksRoute: React.FC<
             )
           })}
         </Join>
+
+        {relay.hasMore() && (
+          <InfiniteScrollSentinel onNext={handleLoadMore} once={false} />
+        )}
+
+        {isLoadingNextPage && (
+          <Box position="relative" height={300}>
+            <Spinner />
+          </Box>
+        )}
       </Column>
     </GridColumns>
   )
 }
 
-export const ViewingRoomWorksRouteFragmentContainer = createFragmentContainer(
+const VIEWING_ROOM_WORKS_PAGINATION_QUERY = graphql`
+  query ViewingRoomWorksRoutePaginationQuery(
+    $slug: ID!
+    $count: Int!
+    $after: String
+  ) {
+    viewingRoom(id: $slug) @principalField {
+      ...ViewingRoomWorksRoute_viewingRoom
+        @arguments(first: $count, after: $after)
+    }
+  }
+`
+
+export const ViewingRoomWorksRouteFragmentContainer = createPaginationContainer(
   ViewingRoomWorksRoute,
   {
     viewingRoom: graphql`
-      fragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {
-        artworksConnection {
+      fragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom
+      @argumentDefinitions(
+        first: { type: "Int", defaultValue: 12 }
+        after: { type: "String" }
+      ) {
+        slug
+        artworksConnection(first: $first, after: $after)
+          @connection(key: "ViewingRoomWorksRoute_artworksConnection") {
           edges {
             node {
               internalID
@@ -131,5 +187,22 @@ export const ViewingRoomWorksRouteFragmentContainer = createFragmentContainer(
         }
       }
     `,
+  },
+  {
+    direction: "forward",
+    getConnectionFromProps(props) {
+      return props.viewingRoom?.artworksConnection
+    },
+    getFragmentVariables(prevVars, totalCount) {
+      return { ...prevVars, count: totalCount }
+    },
+    getVariables(props, { count, cursor }, fragmentVariables) {
+      return {
+        slug: props.viewingRoom.slug,
+        count,
+        after: cursor,
+      }
+    },
+    query: VIEWING_ROOM_WORKS_PAGINATION_QUERY,
   },
 )
