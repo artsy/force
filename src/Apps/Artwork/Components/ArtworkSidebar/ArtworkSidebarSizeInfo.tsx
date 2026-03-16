@@ -14,10 +14,10 @@ const ArtworkSidebarSizeInfo: React.FC<
 > = ({ piece }) => {
   const { dimensions, framedDimensions, editionOf } = piece
 
-  const { hasInDimensions, dimensionsLabel: label } = useArtworkDimensions(
+  const { hasInDimensions, dimensionsLabel: label } = useArtworkDimensions({
     dimensions,
     framedDimensions,
-  )
+  })
 
   const sizeInfoMissing = (dimensions, editionOf) => {
     const dimensionsPresent =

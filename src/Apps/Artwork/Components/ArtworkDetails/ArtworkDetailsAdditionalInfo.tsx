@@ -84,16 +84,18 @@ export const useArtworkDetailsAdditionalInfoFields = ({
   const { selectedEditionSet } = useSelectedEditionSetContext()
 
   // For the "Size" field, use selected edition dimensions or regular dimensions
-  const { dimensionsLabel } = useArtworkDimensions(
-    selectedEditionSet ? selectedEditionSet?.dimensions : dimensions,
-  )
+  const { dimensionsLabel } = useArtworkDimensions({
+    dimensions: selectedEditionSet
+      ? selectedEditionSet?.dimensions
+      : dimensions,
+  })
 
   // For the "Framed Size" field and frame text logic, check framed dimensions
   const {
     dimensionsLabelWithoutFrameText: framedDimensionsLabel,
     shouldShowFrameText,
     isShowingFramedDimensions,
-  } = useArtworkDimensions(dimensions, framedDimensions)
+  } = useArtworkDimensions({ dimensions, framedDimensions })
 
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =

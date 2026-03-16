@@ -39,12 +39,19 @@ const getFrameString = (frameDetails?: string | null, isUnlisted?: boolean) => {
   return `Frame ${frameDetails.toLowerCase()}`
 }
 
-export const useArtworkDimensions = (
-  dimensions: ArtworkDimensions | null | undefined,
-  framedDimensions?: ArtworkDimensions | null | undefined,
-  framed?: FramedInfo | null,
-  isUnlisted?: boolean,
-) => {
+interface UseArtworkDimensionsOptions {
+  dimensions: ArtworkDimensions | null | undefined
+  framedDimensions?: ArtworkDimensions | null | undefined
+  framed?: FramedInfo | null
+  isUnlisted?: boolean
+}
+
+export const useArtworkDimensions = ({
+  dimensions,
+  framedDimensions,
+  framed,
+  isUnlisted,
+}: UseArtworkDimensionsOptions) => {
   const { featureFlags } = useContext(SystemContext)
   const isFeatureEnabled =
     featureFlags?.isEnabled("topaz_framed-dims-on-artwork-page") ?? false

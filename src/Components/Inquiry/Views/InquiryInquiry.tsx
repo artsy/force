@@ -114,7 +114,9 @@ const InquiryInquiry: React.FC<
 
   const showErrorMessage = hasAttemptedSubmit && isFormInvalid
 
-  const { dimensionsLabel } = useArtworkDimensions(artwork.dimensions)
+  const { dimensionsLabel } = useArtworkDimensions({
+    dimensions: artwork.dimensions,
+  })
 
   const artworkDetailItems = [
     { label: "Price", value: artwork.saleMessage },

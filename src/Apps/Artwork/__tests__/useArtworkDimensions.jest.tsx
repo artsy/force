@@ -29,8 +29,10 @@ describe("useArtworkDimensions", () => {
       const { result } = renderHook(
         () =>
           useArtworkDimensions({
-            in: "10 × 20 in",
-            cm: "25.4 × 50.8 cm",
+            dimensions: {
+              in: "10 × 20 in",
+              cm: "25.4 × 50.8 cm",
+            },
           }),
         { wrapper: wrapper(false) },
       )
@@ -44,8 +46,10 @@ describe("useArtworkDimensions", () => {
       const { result } = renderHook(
         () =>
           useArtworkDimensions({
-            in: "10 × 20 in",
-            cm: null,
+            dimensions: {
+              in: "10 × 20 in",
+              cm: null,
+            },
           }),
         { wrapper: wrapper(false) },
       )
@@ -59,8 +63,10 @@ describe("useArtworkDimensions", () => {
       const { result } = renderHook(
         () =>
           useArtworkDimensions({
-            in: null,
-            cm: "25.4 × 50.8 cm",
+            dimensions: {
+              in: null,
+              cm: "25.4 × 50.8 cm",
+            },
           }),
         { wrapper: wrapper(false) },
       )
@@ -74,8 +80,10 @@ describe("useArtworkDimensions", () => {
       const { result } = renderHook(
         () =>
           useArtworkDimensions({
-            in: null,
-            cm: null,
+            dimensions: {
+              in: null,
+              cm: null,
+            },
           }),
         { wrapper: wrapper(false) },
       )
@@ -86,17 +94,23 @@ describe("useArtworkDimensions", () => {
     })
 
     it("returns null when dimensions is null", () => {
-      const { result } = renderHook(() => useArtworkDimensions(null), {
-        wrapper: wrapper(false),
-      })
+      const { result } = renderHook(
+        () => useArtworkDimensions({ dimensions: null }),
+        {
+          wrapper: wrapper(false),
+        },
+      )
 
       expect(result.current.dimensionsLabel).toBeNull()
     })
 
     it("returns null when dimensions is undefined", () => {
-      const { result } = renderHook(() => useArtworkDimensions(undefined), {
-        wrapper: wrapper(false),
-      })
+      const { result } = renderHook(
+        () => useArtworkDimensions({ dimensions: undefined }),
+        {
+          wrapper: wrapper(false),
+        },
+      )
 
       expect(result.current.dimensionsLabel).toBeNull()
     })
@@ -106,10 +120,10 @@ describe("useArtworkDimensions", () => {
     it("shows regular dimensions when framed dimensions provided but flag is off", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framedDimensions: { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
+          }),
         { wrapper: wrapper(false) },
       )
 
@@ -123,10 +137,10 @@ describe("useArtworkDimensions", () => {
     it("shows framed dimensions when flag is on and framed dimensions exist", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framedDimensions: { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
+          }),
         { wrapper: wrapper(true) },
       )
 
@@ -143,10 +157,10 @@ describe("useArtworkDimensions", () => {
     it("shows regular dimensions when flag is on but framed dimensions are null", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            null,
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framedDimensions: null,
+          }),
         { wrapper: wrapper(true) },
       )
 
@@ -158,10 +172,10 @@ describe("useArtworkDimensions", () => {
     it("shows regular dimensions when flag is on but framed dimensions are empty", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            { in: null, cm: null },
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framedDimensions: { in: null, cm: null },
+          }),
         { wrapper: wrapper(true) },
       )
 
@@ -173,10 +187,10 @@ describe("useArtworkDimensions", () => {
     it("shows regular dimensions when flag is on but framed dimensions have no numbers", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            { in: "N/A", cm: "N/A" },
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framedDimensions: { in: "N/A", cm: "N/A" },
+          }),
         { wrapper: wrapper(true) },
       )
 
@@ -190,11 +204,10 @@ describe("useArtworkDimensions", () => {
     it("returns 'Frame included' when frame details is 'Included'", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            undefined,
-            { details: "Included" },
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framed: { details: "Included" },
+          }),
         { wrapper: wrapper(false) },
       )
 
@@ -205,12 +218,11 @@ describe("useArtworkDimensions", () => {
     it("returns 'Frame not included' when unlisted and frame is not included", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            undefined,
-            { details: "Not included" },
-            true, // isUnlisted
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framed: { details: "Not included" },
+            isUnlisted: true,
+          }),
         { wrapper: wrapper(false) },
       )
 
@@ -220,12 +232,11 @@ describe("useArtworkDimensions", () => {
     it("returns null when frame details is not 'Included' and not unlisted", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            undefined,
-            { details: "Not included" },
-            false, // isUnlisted
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framed: { details: "Not included" },
+            isUnlisted: false,
+          }),
         { wrapper: wrapper(false) },
       )
 
@@ -235,11 +246,11 @@ describe("useArtworkDimensions", () => {
     it("returns null when framed dimensions are shown", () => {
       const { result } = renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
-            { details: "Included" },
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framedDimensions: { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
+            framed: { details: "Included" },
+          }),
         { wrapper: wrapper(true) }, // flag ON
       )
 
@@ -250,7 +261,10 @@ describe("useArtworkDimensions", () => {
 
     it("handles missing framed info", () => {
       const { result } = renderHook(
-        () => useArtworkDimensions({ in: "10 × 20 in", cm: "25.4 × 50.8 cm" }),
+        () =>
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+          }),
         { wrapper: wrapper(false) },
       )
 
@@ -262,10 +276,10 @@ describe("useArtworkDimensions", () => {
     it("checks the correct feature flag name", () => {
       renderHook(
         () =>
-          useArtworkDimensions(
-            { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
-            { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
-          ),
+          useArtworkDimensions({
+            dimensions: { in: "10 × 20 in", cm: "25.4 × 50.8 cm" },
+            framedDimensions: { in: "12 × 22 in", cm: "30.5 × 55.9 cm" },
+          }),
         { wrapper: wrapper(true) },
       )
 

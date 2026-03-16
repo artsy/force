@@ -23,12 +23,12 @@ const ArtworkSidebarDetails: React.FC<
     isUnlisted,
   } = artwork
 
-  const { dimensionsLabel, frameText } = useArtworkDimensions(
+  const { dimensionsLabel, frameText } = useArtworkDimensions({
     dimensions,
     framedDimensions,
     framed,
     isUnlisted,
-  )
+  })
 
   return (
     <Box color="mono60">
