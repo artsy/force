@@ -82,6 +82,7 @@ if (typeof window !== "undefined") {
     execute: jest.fn().mockResolvedValue("recaptcha-token"),
   }
   window.scrollTo = jest.fn()
+  Element.prototype.scrollIntoView = jest.fn()
   HTMLMediaElement.prototype.pause = jest.fn()
   HTMLMediaElement.prototype.play = jest.fn()
 
