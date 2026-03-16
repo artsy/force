@@ -297,13 +297,13 @@ const MultipleShippingOptionsForm = ({
             <Flex width="100%">
               <Flex flexDirection="column">
                 {timeEstimate && (
-                  <Text variant="sm" color="mono60">
+                  <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
                     {prefix} <strong>{timeRange}</strong>
                   </Text>
                 )}
 
                 {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
-                  <Text variant="sm" color="mono60">
+                  <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
                     This service includes custom packing, transportation on a
                     fine art shuttle, and in-home delivery.
                   </Text>

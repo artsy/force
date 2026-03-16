@@ -152,7 +152,7 @@ export const AuthDialogImageCarousel: FC = () => {
             <Dot
               key={dotIndex}
               data-index={dotIndex}
-              backgroundColor="mono0"
+              backgroundColor="white"
               onClick={() => handleClick(dotIndex)}
             />
           ))}

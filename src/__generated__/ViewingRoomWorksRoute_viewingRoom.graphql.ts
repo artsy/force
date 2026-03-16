@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<085990ada8b1d1e7a23118c6654040f6>>
+ * @generated SignedSource<<dc9818ff1f3aaa54087301d29f3f73dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,7 @@ export type ViewingRoomWorksRoute_viewingRoom$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly slug: string;
   readonly " $fragmentType": "ViewingRoomWorksRoute_viewingRoom";
 };
 export type ViewingRoomWorksRoute_viewingRoom$key = {
@@ -91,17 +92,46 @@ v3 = [
   }
 ];
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": 12,
+      "kind": "LocalArgument",
+      "name": "first"
+    }
+  ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": [
+          "artworksConnection"
+        ]
+      }
+    ]
+  },
   "name": "ViewingRoomWorksRoute_viewingRoom",
   "selections": [
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": "artworksConnection",
+      "args": null,
       "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
-      "name": "artworksConnection",
+      "name": "__ViewingRoomWorksRoute_artworksConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -180,8 +210,47 @@ return {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "ViewingRoomArtworkDetails_artwork"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
           ],
@@ -196,6 +265,6 @@ return {
 };
 })();
 
-(node as any).hash = "142035b04d50d64b6b605a0bba0561e0";
+(node as any).hash = "8f6b07743007271b7b0776c812e538cf";
 
 export default node;

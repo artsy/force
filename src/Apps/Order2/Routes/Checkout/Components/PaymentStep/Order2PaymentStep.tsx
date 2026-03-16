@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   CheckoutStepName,
@@ -61,6 +61,10 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
       >
         <Flex flexDirection="column">
           <SectionHeading>Payment</SectionHeading>
+          <Spacer y={1} />
+          <Text variant="sm">
+            Select a saved payment method or add a new one.
+          </Text>
           <Order2PaymentForm order={orderData} me={meData} />
         </Flex>
       </Box>

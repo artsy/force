@@ -1,3 +1,4 @@
+import { COUNTRIES } from "Utils/countries"
 import {
   countryCodePrefix,
   getShippableCountries,
@@ -20,9 +21,10 @@ describe("addressUtils", () => {
       ).toBe(true)
     })
 
-    it("handles empty shipping countries list", () => {
+    it("returns all countries when shipping countries list is empty", () => {
       const result = getShippableCountries([])
-      expect(result).toEqual([])
+      expect(result).toEqual(COUNTRIES)
+      expect(result.length).toBeGreaterThan(0)
     })
 
     it("handles case-insensitive matching", () => {

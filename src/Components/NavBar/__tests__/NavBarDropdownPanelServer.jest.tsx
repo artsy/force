@@ -1,5 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
+import { NavBarDropdownProvider } from "Components/NavBar/NavBarDropdownContext"
 import { act, render, screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -35,7 +36,9 @@ describe("NavBarDropdownPanelServer", () => {
 
   const getWrapper = (passedProps = {}) => {
     return render(
-      <NavBarDropdownPanelServer {...defaultProps} {...passedProps} />,
+      <NavBarDropdownProvider>
+        <NavBarDropdownPanelServer {...defaultProps} {...passedProps} />
+      </NavBarDropdownProvider>,
     )
   }
 
@@ -63,15 +66,6 @@ describe("NavBarDropdownPanelServer", () => {
   })
 
   describe("callbacks", () => {
-    it("calls onMenuEnter when mouse enters the anchor", () => {
-      const onMenuEnter = jest.fn()
-      getWrapper({ onMenuEnter })
-
-      fireEvent.mouseEnter(screen.getByTestId("server-dropdown"))
-
-      expect(onMenuEnter).toHaveBeenCalled()
-    })
-
     it("calls handleClick when anchor is clicked", () => {
       const handleClick = jest.fn()
       getWrapper({ handleClick })

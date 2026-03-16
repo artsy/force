@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e070c85a5ce7d98f6cfde1ec6577add3>>
+ * @generated SignedSource<<34d55aeb3dc58ae5cd09077237159635>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACC
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2ReviewStep_order$data = {
+  readonly buyerStateExpiresAt: string | null | undefined;
   readonly buyerTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
@@ -72,6 +73,10 @@ export type Order2ReviewStep_order$data = {
       } | null | undefined;
       readonly title: string | null | undefined;
     } | null | undefined;
+    readonly listPrice: {
+      readonly __typename: "Money";
+      readonly display: string | null | undefined;
+    } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
@@ -102,30 +107,31 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
+  "storageKey": null
+},
+v2 = [
+  (v1/*: any*/)
 ],
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -141,24 +147,24 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "dimensions",
   "plural": false,
-  "selections": (v4/*: any*/),
+  "selections": (v5/*: any*/),
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": [
     {
@@ -177,7 +183,7 @@ v7 = {
   "name": "resized",
   "plural": false,
   "selections": [
-    (v6/*: any*/)
+    (v7/*: any*/)
   ],
   "storageKey": "resized(height:138,width:185)"
 };
@@ -211,6 +217,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "buyerStateExpiresAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "stripeConfirmationToken",
       "storageKey": null
     },
@@ -228,7 +241,7 @@ return {
       "kind": "LinkedField",
       "name": "buyerTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -238,7 +251,7 @@ return {
       "kind": "LinkedField",
       "name": "itemsTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -248,7 +261,7 @@ return {
       "kind": "LinkedField",
       "name": "shippingTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -258,7 +271,7 @@ return {
       "kind": "LinkedField",
       "name": "taxTotal",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -272,17 +285,30 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "listPrice",
+          "plural": false,
+          "selections": [
+            (v3/*: any*/),
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": null,
           "kind": "LinkedField",
           "name": "artworkOrEditionSet",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            (v3/*: any*/),
             {
               "kind": "InlineFragment",
               "selections": [
-                (v3/*: any*/),
-                (v5/*: any*/),
+                (v4/*: any*/),
+                (v6/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -290,7 +316,7 @@ return {
                   "kind": "LinkedField",
                   "name": "framedDimensions",
                   "plural": false,
-                  "selections": (v4/*: any*/),
+                  "selections": (v5/*: any*/),
                   "storageKey": null
                 }
               ],
@@ -300,8 +326,8 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v3/*: any*/),
-                (v5/*: any*/)
+                (v4/*: any*/),
+                (v6/*: any*/)
               ],
               "type": "EditionSet",
               "abstractKey": null
@@ -364,8 +390,8 @@ return {
               "name": "image",
               "plural": false,
               "selections": [
-                (v6/*: any*/),
-                (v7/*: any*/)
+                (v7/*: any*/),
+                (v8/*: any*/)
               ],
               "storageKey": null
             }
@@ -395,11 +421,11 @@ return {
               "name": "figures",
               "plural": true,
               "selections": [
-                (v2/*: any*/),
+                (v3/*: any*/),
                 {
                   "kind": "InlineFragment",
                   "selections": [
-                    (v7/*: any*/)
+                    (v8/*: any*/)
                   ],
                   "type": "Image",
                   "abstractKey": null
@@ -431,6 +457,6 @@ return {
 };
 })();
 
-(node as any).hash = "a8977d5e630a544ba514ec2278f48bb2";
+(node as any).hash = "56535cd45157a8be2c41714140a9cf52";
 
 export default node;
