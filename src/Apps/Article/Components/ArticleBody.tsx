@@ -20,7 +20,6 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
-import { DateTime } from "luxon"
 import { type FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
@@ -30,6 +29,7 @@ import { ArticleHeroFragmentContainer } from "./ArticleHero"
 import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
 import { ArticleSectionFragmentContainer } from "./ArticleSection"
 import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
+import { ArticleTimestamp } from "./ArticleTimestamp"
 import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 
 interface ArticleBodyProps {
@@ -113,10 +113,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                 alignItems="center"
                 lineHeight={1}
               >
-                {!!article.publishedAt &&
-                  DateTime.fromISO(article.publishedAt).toFormat(
-                    "MMM d, yyyy h:mma",
-                  )}
+                <ArticleTimestamp article={article} />
 
                 <ArticleNewsSourceFragmentContainer article={article} />
               </Text>
@@ -276,6 +273,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         ...ArticleByline_article
         ...ArticleSectionAd_article
         ...ArticleNewsSource_article
+        ...ArticleTimestamp_article
         hero {
           __typename
         }
@@ -296,7 +294,6 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         leadParagraph
         title
         href
-        publishedAt
         sections {
           ...ArticleSection_section
         }
