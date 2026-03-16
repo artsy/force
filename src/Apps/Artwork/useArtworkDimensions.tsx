@@ -10,7 +10,9 @@ const hasDimensions = (dims: ArtworkDimensions | null | undefined) => {
   return /\d/.test(dims?.in ?? "") || /\d/.test(dims?.cm ?? "")
 }
 
-const formatDimensions = (dims: ArtworkDimensions | null | undefined) => {
+const formatDimensions = (
+  dims: ArtworkDimensions | null | undefined,
+): string | null => {
   const hasCm = !!dims?.cm
   const hasIn = !!dims?.in
 
@@ -18,7 +20,7 @@ const formatDimensions = (dims: ArtworkDimensions | null | undefined) => {
     return `${dims?.in} | ${dims.cm}`
   }
 
-  return dims?.in ?? dims?.cm ?? ""
+  return dims?.in ?? dims?.cm ?? null
 }
 
 interface FramedInfo {
@@ -61,7 +63,7 @@ export const useArtworkDimensions = (
     : null
 
   const formattedDimensions = formatDimensions(activeDimensions)
-  const dimensionsLabel =
+  const dimensionsLabel: string | null =
     shouldUseFramedDims && formattedDimensions
       ? `${formattedDimensions} with frame included`
       : formattedDimensions

@@ -70,7 +70,7 @@ describe("useArtworkDimensions", () => {
       expect(result.current.hasCmDimensions).toBe(true)
     })
 
-    it("returns empty string when no dimensions", () => {
+    it("returns null when no dimensions", () => {
       const { result } = renderHook(
         () =>
           useArtworkDimensions({
@@ -80,25 +80,25 @@ describe("useArtworkDimensions", () => {
         { wrapper: wrapper(false) },
       )
 
-      expect(result.current.dimensionsLabel).toBe("")
+      expect(result.current.dimensionsLabel).toBeNull()
       expect(result.current.hasInDimensions).toBe(false)
       expect(result.current.hasCmDimensions).toBe(false)
     })
 
-    it("returns empty string when dimensions is null", () => {
+    it("returns null when dimensions is null", () => {
       const { result } = renderHook(() => useArtworkDimensions(null), {
         wrapper: wrapper(false),
       })
 
-      expect(result.current.dimensionsLabel).toBe("")
+      expect(result.current.dimensionsLabel).toBeNull()
     })
 
-    it("returns empty string when dimensions is undefined", () => {
+    it("returns null when dimensions is undefined", () => {
       const { result } = renderHook(() => useArtworkDimensions(undefined), {
         wrapper: wrapper(false),
       })
 
-      expect(result.current.dimensionsLabel).toBe("")
+      expect(result.current.dimensionsLabel).toBeNull()
     })
   })
 
