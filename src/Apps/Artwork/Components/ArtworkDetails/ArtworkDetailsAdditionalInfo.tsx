@@ -116,7 +116,11 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     },
     {
       term: "Framed Size",
-      value: isShowingFramedDimensions ? framedDimensionsLabel : null,
+      // Hide framed size when edition set is selected until the backend work is complete
+      value:
+        isShowingFramedDimensions && !selectedEditionSet
+          ? framedDimensionsLabel
+          : null,
     },
     {
       term: "Rarity",
