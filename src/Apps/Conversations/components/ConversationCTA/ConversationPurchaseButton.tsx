@@ -133,6 +133,7 @@ export const ConversationPurchaseButton: React.FC<
     }
   }
 
+  // Opens a modal window to select an edition set on non-unique artworks
   if (!isConfirmModalVisible && !data.isUniqueArtwork) {
     return (
       <Box width="100%" {...boxProps} display="inline">
@@ -145,10 +146,7 @@ export const ConversationPurchaseButton: React.FC<
 
             showSelectEditionSetModal({
               isCreatingOfferOrder: false,
-              defaultEditionSetId:
-                data.artwork.editionSets?.length === 1
-                  ? data.artwork.editionSets[0]?.internalID
-                  : null,
+              defaultEditionSetId: data.artwork.editionSets?.[0]?.internalID,
             })
           }}
         >
