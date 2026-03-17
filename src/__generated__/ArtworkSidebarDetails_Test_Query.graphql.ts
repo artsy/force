@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e7b5bc871123b6d970328f82fff1eb8d>>
+ * @generated SignedSource<<783bcde3421d78dd7ca09e71332fc34a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,26 +29,68 @@ var v0 = [
     "value": "josef-albers-homage-to-the-square-85"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "dimensions",
+  "plural": false,
+  "selections": (v1/*: any*/),
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "framedDimensions",
+  "plural": false,
+  "selections": (v1/*: any*/),
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v3 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "dimensions"
+},
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -109,31 +151,7 @@ return {
             "name": "medium",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "dimensions",
-            "kind": "LinkedField",
-            "name": "dimensions",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "in",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "cm",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -152,6 +170,7 @@ return {
             ],
             "storageKey": null
           },
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -181,7 +200,9 @@ return {
                 "name": "internalID",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -200,7 +221,7 @@ return {
                 "name": "shortArrayDescription",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -277,21 +298,21 @@ return {
                     "name": "endAt",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ]
   },
   "params": {
-    "cacheID": "600eb317f8b7b40d483b04c150345e85",
+    "cacheID": "23bda4fe989956b2b9abe76dd4579297",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -307,7 +328,7 @@ return {
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v2/*: any*/),
+        "artwork.attributionClass.id": (v5/*: any*/),
         "artwork.attributionClass.shortArrayDescription": {
           "enumValues": null,
           "nullable": true,
@@ -336,51 +357,55 @@ return {
           "plural": false,
           "type": "Show"
         },
-        "artwork.collectorSignals.runningShow.endAt": (v3/*: any*/),
-        "artwork.collectorSignals.runningShow.href": (v3/*: any*/),
-        "artwork.collectorSignals.runningShow.id": (v2/*: any*/),
-        "artwork.collectorSignals.runningShow.name": (v3/*: any*/),
-        "artwork.collectorSignals.runningShow.startAt": (v3/*: any*/),
-        "artwork.dimensions": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "dimensions"
-        },
-        "artwork.dimensions.cm": (v3/*: any*/),
-        "artwork.dimensions.in": (v3/*: any*/),
-        "artwork.editionOf": (v3/*: any*/),
+        "artwork.collectorSignals.runningShow.endAt": (v6/*: any*/),
+        "artwork.collectorSignals.runningShow.href": (v6/*: any*/),
+        "artwork.collectorSignals.runningShow.id": (v5/*: any*/),
+        "artwork.collectorSignals.runningShow.name": (v6/*: any*/),
+        "artwork.collectorSignals.runningShow.startAt": (v6/*: any*/),
+        "artwork.dimensions": (v7/*: any*/),
+        "artwork.dimensions.cm": (v6/*: any*/),
+        "artwork.dimensions.in": (v6/*: any*/),
+        "artwork.editionOf": (v6/*: any*/),
         "artwork.editionSets": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "EditionSet"
         },
-        "artwork.editionSets.id": (v2/*: any*/),
-        "artwork.editionSets.internalID": (v2/*: any*/),
+        "artwork.editionSets.dimensions": (v7/*: any*/),
+        "artwork.editionSets.dimensions.cm": (v6/*: any*/),
+        "artwork.editionSets.dimensions.in": (v6/*: any*/),
+        "artwork.editionSets.framedDimensions": (v7/*: any*/),
+        "artwork.editionSets.framedDimensions.cm": (v6/*: any*/),
+        "artwork.editionSets.framedDimensions.in": (v6/*: any*/),
+        "artwork.editionSets.id": (v5/*: any*/),
+        "artwork.editionSets.internalID": (v5/*: any*/),
         "artwork.framed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkInfoRow"
         },
-        "artwork.framed.details": (v3/*: any*/),
-        "artwork.hasCertificateOfAuthenticity": (v4/*: any*/),
-        "artwork.id": (v2/*: any*/),
-        "artwork.isBiddable": (v4/*: any*/),
-        "artwork.isEdition": (v4/*: any*/),
+        "artwork.framed.details": (v6/*: any*/),
+        "artwork.framedDimensions": (v7/*: any*/),
+        "artwork.framedDimensions.cm": (v6/*: any*/),
+        "artwork.framedDimensions.in": (v6/*: any*/),
+        "artwork.hasCertificateOfAuthenticity": (v8/*: any*/),
+        "artwork.id": (v5/*: any*/),
+        "artwork.isBiddable": (v8/*: any*/),
+        "artwork.isEdition": (v8/*: any*/),
         "artwork.isUnlisted": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.medium": (v3/*: any*/)
+        "artwork.medium": (v6/*: any*/)
       }
     },
     "name": "ArtworkSidebarDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCollectorSignal_artwork on Artwork {\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n    runningShow {\n      name\n      href\n      startAt\n      endAt\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n  ...ArtworkSidebarCollectorSignal_artwork\n}\n"
+    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCollectorSignal_artwork on Artwork {\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n    runningShow {\n      name\n      href\n      startAt\n      endAt\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  framedDimensions {\n    in\n    cm\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    dimensions {\n      in\n      cm\n    }\n    framedDimensions {\n      in\n      cm\n    }\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n  ...ArtworkSidebarCollectorSignal_artwork\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c3750a4f050c737f43f0fd752764621>>
+ * @generated SignedSource<<198306d1822f226b19d073b2fd1c0563>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,10 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   } | null | undefined;
   readonly editionSets: ReadonlyArray<{
     readonly dimensions: {
+      readonly cm: string | null | undefined;
+      readonly in: string | null | undefined;
+    } | null | undefined;
+    readonly framedDimensions: {
       readonly cm: string | null | undefined;
       readonly in: string | null | undefined;
     } | null | undefined;
@@ -120,6 +124,22 @@ v7 = [
     "args": null,
     "kind": "ScalarField",
     "name": "display",
+    "storageKey": null
+  }
+],
+v8 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
     "storageKey": null
   }
 ];
@@ -260,22 +280,17 @@ return {
           "kind": "LinkedField",
           "name": "dimensions",
           "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "in",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cm",
-              "storageKey": null
-            }
-          ],
+          "selections": (v8/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "dimensions",
+          "kind": "LinkedField",
+          "name": "framedDimensions",
+          "plural": false,
+          "selections": (v8/*: any*/),
           "storageKey": null
         }
       ],
@@ -376,6 +391,6 @@ return {
 };
 })();
 
-(node as any).hash = "f9b0dd8c7ed20bb3b55fdf8f299354af";
+(node as any).hash = "d274629b65393e9240078166c9c4436f";
 
 export default node;

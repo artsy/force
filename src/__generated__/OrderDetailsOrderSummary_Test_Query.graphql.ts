@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<296d8385853a05982d516faf50c321d7>>
+ * @generated SignedSource<<e784ad5517c32a074c02cb9c76e271f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,12 +45,20 @@ export type OrderDetailsOrderSummary_Test_Query$rawResponse = {
             readonly cm: string | null | undefined;
             readonly in: string | null | undefined;
           } | null | undefined;
+          readonly framedDimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
           readonly id: string;
           readonly price: string | null | undefined;
         } | {
           readonly __typename: "EditionSet";
           readonly __isNode: "EditionSet";
           readonly dimensions: {
+            readonly cm: string | null | undefined;
+            readonly in: string | null | undefined;
+          } | null | undefined;
+          readonly framedDimensions: {
             readonly cm: string | null | undefined;
             readonly in: string | null | undefined;
           } | null | undefined;
@@ -215,29 +223,40 @@ v8 = {
   "name": "price",
   "storageKey": null
 },
-v9 = {
+v9 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v10 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "dimensions",
   "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "in",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "cm",
-      "storageKey": null
-    }
-  ],
+  "selections": (v9/*: any*/),
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "framedDimensions",
+  "plural": false,
+  "selections": (v9/*: any*/),
   "storageKey": null
 };
 return {
@@ -472,7 +491,8 @@ return {
                         "kind": "InlineFragment",
                         "selections": [
                           (v8/*: any*/),
-                          (v9/*: any*/)
+                          (v10/*: any*/),
+                          (v11/*: any*/)
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -481,7 +501,8 @@ return {
                         "kind": "InlineFragment",
                         "selections": [
                           (v8/*: any*/),
-                          (v9/*: any*/),
+                          (v10/*: any*/),
+                          (v11/*: any*/),
                           (v7/*: any*/)
                         ],
                         "type": "EditionSet",
@@ -619,12 +640,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3ee75f61d1ae469382f7e40d376d4316",
+    "cacheID": "99c5849cd70a7734edc93e74744eace7",
     "id": null,
     "metadata": {},
     "name": "OrderDetailsOrderSummary_Test_Query",
     "operationKind": "query",
-    "text": "query OrderDetailsOrderSummary_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...OrderDetailsOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsOrderSummary_order on Order {\n  ...OrderDetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query OrderDetailsOrderSummary_Test_Query {\n  me {\n    order(id: \"123\") {\n      ...OrderDetailsOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsOrderSummary_order on Order {\n  ...OrderDetailsPricingBreakdown_order\n  source\n  mode\n  totalListPrice {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      slug\n      published\n      partner {\n        name\n        id\n      }\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n        framedDimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        framedDimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        resized(height: 360, width: 700) {\n          url\n          width\n          height\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderDetailsPricingBreakdown_order on Order {\n  mode\n  source\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();

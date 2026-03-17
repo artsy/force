@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<147942823bc1ad50516be355c46e3230>>
+ * @generated SignedSource<<897d7fbd5a24b9fd5cf2b9de9bb359c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,10 +42,18 @@ export type Order2ReviewStep_order$data = {
         readonly cm: string | null | undefined;
         readonly in: string | null | undefined;
       } | null | undefined;
+      readonly framedDimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
       readonly price: string | null | undefined;
     } | {
       readonly __typename: "EditionSet";
       readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly framedDimensions: {
         readonly cm: string | null | undefined;
         readonly in: string | null | undefined;
       } | null | undefined;
@@ -125,6 +133,22 @@ v4 = [
     "alias": null,
     "args": null,
     "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
     "name": "price",
     "storageKey": null
   },
@@ -135,33 +159,28 @@ v4 = [
     "kind": "LinkedField",
     "name": "dimensions",
     "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "in",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "cm",
-        "storageKey": null
-      }
-    ],
+    "selections": (v4/*: any*/),
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "framedDimensions",
+    "plural": false,
+    "selections": (v4/*: any*/),
     "storageKey": null
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": [
     {
@@ -180,7 +199,7 @@ v6 = {
   "name": "resized",
   "plural": false,
   "selections": [
-    (v5/*: any*/)
+    (v6/*: any*/)
   ],
   "storageKey": "resized(height:138,width:185)"
 };
@@ -303,13 +322,13 @@ return {
             (v3/*: any*/),
             {
               "kind": "InlineFragment",
-              "selections": (v4/*: any*/),
+              "selections": (v5/*: any*/),
               "type": "Artwork",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": (v4/*: any*/),
+              "selections": (v5/*: any*/),
               "type": "EditionSet",
               "abstractKey": null
             }
@@ -371,8 +390,8 @@ return {
               "name": "image",
               "plural": false,
               "selections": [
-                (v5/*: any*/),
-                (v6/*: any*/)
+                (v6/*: any*/),
+                (v7/*: any*/)
               ],
               "storageKey": null
             }
@@ -406,7 +425,7 @@ return {
                 {
                   "kind": "InlineFragment",
                   "selections": [
-                    (v6/*: any*/)
+                    (v7/*: any*/)
                   ],
                   "type": "Image",
                   "abstractKey": null
@@ -438,6 +457,6 @@ return {
 };
 })();
 
-(node as any).hash = "25394104b6283c57bd1949e264ce61ec";
+(node as any).hash = "d6b5cbd7d34813cbed75c979055a0854";
 
 export default node;

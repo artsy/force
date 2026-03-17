@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c673fc35380f64aed751c867681efdd6>>
+ * @generated SignedSource<<528547b94b73f6a95efabfb063ea75e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,9 +28,24 @@ export type PrivateArtworkAdditionalInfo_artwork$data = {
     readonly cm: string | null | undefined;
     readonly in: string | null | undefined;
   } | null | undefined;
+  readonly editionSets: ReadonlyArray<{
+    readonly dimensions: {
+      readonly cm: string | null | undefined;
+      readonly in: string | null | undefined;
+    } | null | undefined;
+    readonly framedDimensions: {
+      readonly cm: string | null | undefined;
+      readonly in: string | null | undefined;
+    } | null | undefined;
+    readonly internalID: string;
+  } | null | undefined> | null | undefined;
   readonly framed: {
     readonly details: string | null | undefined;
     readonly label: string | null | undefined;
+  } | null | undefined;
+  readonly framedDimensions: {
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
   } | null | undefined;
   readonly imageRights: string | null | undefined;
   readonly internalID: string;
@@ -55,7 +70,14 @@ export type PrivateArtworkAdditionalInfo_artwork$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -70,7 +92,43 @@ var v0 = [
     "name": "details",
     "storageKey": null
   }
-];
+],
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "framedDimensions",
+  "plural": false,
+  "selections": (v2/*: any*/),
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "dimensions",
+  "plural": false,
+  "selections": (v2/*: any*/),
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -119,13 +177,7 @@ return {
       "name": "canRequestLotConditionsReport",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -140,7 +192,22 @@ return {
       "kind": "LinkedField",
       "name": "framed",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    (v3/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "EditionSet",
+      "kind": "LinkedField",
+      "name": "editionSets",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        (v4/*: any*/),
+        (v3/*: any*/)
+      ],
       "storageKey": null
     },
     {
@@ -150,7 +217,7 @@ return {
       "kind": "LinkedField",
       "name": "signatureInfo",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -160,7 +227,7 @@ return {
       "kind": "LinkedField",
       "name": "conditionDescription",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -170,7 +237,7 @@ return {
       "kind": "LinkedField",
       "name": "certificateOfAuthenticity",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -191,31 +258,7 @@ return {
       ],
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "dimensions",
-      "kind": "LinkedField",
-      "name": "dimensions",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "in",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cm",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
+    (v4/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -252,6 +295,6 @@ return {
 };
 })();
 
-(node as any).hash = "f7d379fa6683def26d117464d924c3c0";
+(node as any).hash = "c1253c5073088fdea31bfe0109bfb6e2";
 
 export default node;

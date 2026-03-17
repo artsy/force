@@ -11,12 +11,12 @@ import {
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { useEditionSetDimensions } from "Apps/Artwork/Components/useEditionSetDimensions"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import {
   DefinitionList,
   type DefinitionListItem,
 } from "Components/DefinitionList"
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
-import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ArtworkDetailsAdditionalInfo_artwork$data } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
 import type { PrivateArtworkAdditionalInfo_artwork$data } from "__generated__/PrivateArtworkAdditionalInfo_artwork.graphql"
@@ -72,19 +72,33 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     internalID,
     canRequestLotConditionsReport,
     framed,
+    framedDimensions,
     signatureInfo,
     conditionDescription,
     certificateOfAuthenticity,
     dimensions,
     attributionClass,
     medium,
+    editionSets,
   } = artwork
 
-  const { selectedEditionSet } = useSelectedEditionSetContext()
+  const {
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
+  } = useEditionSetDimensions({ editionSets, dimensions, framedDimensions })
 
-  const { dimensionsLabel } = useArtworkDimensions(
-    selectedEditionSet ? selectedEditionSet?.dimensions : dimensions,
-  )
+  const { dimensionsLabel } = useArtworkDimensions({
+    dimensions: dimensionsToUse,
+  })
+
+  const {
+    dimensionsLabelWithoutFrameText: framedDimensionsLabel,
+    shouldShowFrameText,
+    isShowingFramedDimensions,
+  } = useArtworkDimensions({
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
+  })
 
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -102,6 +116,10 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     {
       term: "Size",
       value: dimensionsLabel,
+    },
+    {
+      term: "Framed Size",
+      value: isShowingFramedDimensions ? framedDimensionsLabel : null,
     },
     {
       term: "Rarity",
@@ -209,7 +227,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     },
     {
       term: "Frame",
-      value: framed && framed.details,
+      value: shouldShowFrameText ? framed && framed.details : null,
     },
     { term: "Series", value: series },
     { term: "Publisher", value: publisher },
@@ -243,6 +261,21 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer =
         framed {
           label
           details
+        }
+        framedDimensions {
+          in
+          cm
+        }
+        editionSets {
+          internalID
+          dimensions {
+            in
+            cm
+          }
+          framedDimensions {
+            in
+            cm
+          }
         }
         signatureInfo {
           label

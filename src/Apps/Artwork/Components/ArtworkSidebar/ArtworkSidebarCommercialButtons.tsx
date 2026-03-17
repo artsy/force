@@ -667,6 +667,10 @@ const ARTWORK_FRAGMENT = graphql`
         in
         cm
       }
+      framedDimensions {
+        in
+        cm
+      }
     }
     partner {
       profile {

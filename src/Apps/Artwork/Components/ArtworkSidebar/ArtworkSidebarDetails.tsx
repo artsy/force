@@ -1,4 +1,6 @@
 import { Box, Spacer, Text } from "@artsy/palette"
+import { useEditionSetDimensions } from "Apps/Artwork/Components/useEditionSetDimensions"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import type { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarAuthenticityCertificateFragmentContainer } from "./ArtworkSidebarAuthenticityCertificate"
@@ -12,36 +14,35 @@ interface ArtworkSidebarDetailsProps {
 const ArtworkSidebarDetails: React.FC<
   React.PropsWithChildren<ArtworkSidebarDetailsProps>
 > = ({ artwork }) => {
-  const { medium, dimensions, framed, editionOf, editionSets, isUnlisted } =
-    artwork
+  const {
+    medium,
+    dimensions,
+    framed,
+    framedDimensions,
+    editionOf,
+    editionSets,
+    isUnlisted,
+  } = artwork
 
-  const dimensionsPresent = dimensions =>
-    /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)
+  const {
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
+  } = useEditionSetDimensions({ editionSets, dimensions, framedDimensions })
 
-  const getFrameString = (
-    frameDetails?: string | null,
-    isUnlisted?: boolean,
-  ) => {
-    if (frameDetails !== "Included") {
-      if (isUnlisted) {
-        return "Frame not included"
-      } else {
-        return
-      }
-    }
-
-    return `Frame ${frameDetails.toLowerCase()}`
-  }
+  const { dimensionsLabel, frameText } = useArtworkDimensions({
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
+    framed,
+    isUnlisted,
+  })
 
   return (
     <Box color="mono60">
       <Text variant="sm">{medium}</Text>
-      {!!dimensionsPresent(dimensions) && (editionSets?.length ?? 0) < 2 && (
-        <Text variant="sm">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>
+      {dimensionsLabel && (editionSets?.length ?? 0) < 2 && (
+        <Text variant="sm">{dimensionsLabel}</Text>
       )}
-      {!!getFrameString(framed?.details, isUnlisted) && (
-        <Text variant="sm">{getFrameString(framed?.details, isUnlisted)}</Text>
-      )}
+      {frameText && <Text variant="sm">{frameText}</Text>}
       {!!editionOf && <Text variant="sm">{editionOf}</Text>}
 
       {/* classification */}
@@ -74,10 +75,22 @@ export const ArtworkSidebarDetailsFragmentContainer = createFragmentContainer(
         framed {
           details
         }
+        framedDimensions {
+          in
+          cm
+        }
         editionOf
         isEdition
         editionSets {
           internalID
+          dimensions {
+            in
+            cm
+          }
+          framedDimensions {
+            in
+            cm
+          }
         }
         ...ArtworkSidebarClassification_artwork
         ...ArtworkSidebarAuthenticityCertificate_artwork

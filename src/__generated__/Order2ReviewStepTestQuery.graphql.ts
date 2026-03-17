@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a0b621297299be70b5478d3b31bd86b>>
+ * @generated SignedSource<<fddd017cb6e485898279d604ff2052f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -166,42 +166,53 @@ v11 = {
   "name": "price",
   "storageKey": null
 },
-v12 = {
+v12 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v13 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "dimensions",
   "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "in",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "cm",
-      "storageKey": null
-    }
-  ],
+  "selections": (v12/*: any*/),
   "storageKey": null
 },
-v13 = [
+v14 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "framedDimensions",
+  "plural": false,
+  "selections": (v12/*: any*/),
+  "storageKey": null
+},
+v15 = [
   (v9/*: any*/)
 ],
-v14 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v15 = {
+v17 = {
   "alias": null,
   "args": [
     {
@@ -220,41 +231,47 @@ v15 = {
   "name": "resized",
   "plural": false,
   "selections": [
-    (v14/*: any*/)
+    (v16/*: any*/)
   ],
   "storageKey": "resized(height:138,width:185)"
 },
-v16 = {
+v18 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v17 = {
+v19 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v18 = {
+v20 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v19 = {
+v21 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Money"
 },
-v20 = {
+v22 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ResizedImageUrl"
 },
-v21 = {
+v23 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "dimensions"
+},
+v24 = {
   "enumValues": null,
   "nullable": false,
   "plural": true,
@@ -447,7 +464,8 @@ return {
                         "kind": "InlineFragment",
                         "selections": [
                           (v11/*: any*/),
-                          (v12/*: any*/)
+                          (v13/*: any*/),
+                          (v14/*: any*/)
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -456,7 +474,8 @@ return {
                         "kind": "InlineFragment",
                         "selections": [
                           (v11/*: any*/),
-                          (v12/*: any*/),
+                          (v13/*: any*/),
+                          (v14/*: any*/),
                           (v9/*: any*/)
                         ],
                         "type": "EditionSet",
@@ -464,7 +483,7 @@ return {
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v13/*: any*/),
+                        "selections": (v15/*: any*/),
                         "type": "Node",
                         "abstractKey": "__isNode"
                       }
@@ -527,8 +546,8 @@ return {
                         "name": "image",
                         "plural": false,
                         "selections": [
-                          (v14/*: any*/),
-                          (v15/*: any*/)
+                          (v16/*: any*/),
+                          (v17/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -563,14 +582,14 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v15/*: any*/)
+                              (v17/*: any*/)
                             ],
                             "type": "Image",
                             "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v13/*: any*/),
+                            "selections": (v15/*: any*/),
                             "type": "Video",
                             "abstractKey": null
                           }
@@ -596,7 +615,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "39a0232a4d2778110043808b5e2c13d0",
+    "cacheID": "fa3667c7c334e1e2e6d68f22f2005258",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -606,21 +625,21 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v16/*: any*/),
+        "me.id": (v18/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Order"
         },
-        "me.order.__typename": (v17/*: any*/),
-        "me.order.buyerStateExpiresAt": (v18/*: any*/),
-        "me.order.buyerTotal": (v19/*: any*/),
-        "me.order.buyerTotal.display": (v18/*: any*/),
-        "me.order.id": (v16/*: any*/),
-        "me.order.internalID": (v16/*: any*/),
-        "me.order.itemsTotal": (v19/*: any*/),
-        "me.order.itemsTotal.display": (v18/*: any*/),
+        "me.order.__typename": (v19/*: any*/),
+        "me.order.buyerStateExpiresAt": (v20/*: any*/),
+        "me.order.buyerTotal": (v21/*: any*/),
+        "me.order.buyerTotal.display": (v20/*: any*/),
+        "me.order.id": (v18/*: any*/),
+        "me.order.internalID": (v18/*: any*/),
+        "me.order.itemsTotal": (v21/*: any*/),
+        "me.order.itemsTotal.display": (v20/*: any*/),
         "me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -639,61 +658,59 @@ return {
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "me.order.lineItems.artwork.figures.__typename": (v17/*: any*/),
-        "me.order.lineItems.artwork.figures.id": (v16/*: any*/),
-        "me.order.lineItems.artwork.figures.resized": (v20/*: any*/),
-        "me.order.lineItems.artwork.figures.resized.url": (v17/*: any*/),
-        "me.order.lineItems.artwork.id": (v16/*: any*/),
-        "me.order.lineItems.artwork.internalID": (v16/*: any*/),
+        "me.order.lineItems.artwork.figures.__typename": (v19/*: any*/),
+        "me.order.lineItems.artwork.figures.id": (v18/*: any*/),
+        "me.order.lineItems.artwork.figures.resized": (v22/*: any*/),
+        "me.order.lineItems.artwork.figures.resized.url": (v19/*: any*/),
+        "me.order.lineItems.artwork.id": (v18/*: any*/),
+        "me.order.lineItems.artwork.internalID": (v18/*: any*/),
         "me.order.lineItems.artworkOrEditionSet": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkOrEditionSetType"
         },
-        "me.order.lineItems.artworkOrEditionSet.__isNode": (v17/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.__typename": (v17/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.dimensions": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "dimensions"
-        },
-        "me.order.lineItems.artworkOrEditionSet.dimensions.cm": (v18/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.dimensions.in": (v18/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.id": (v16/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.price": (v18/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.__isNode": (v19/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.__typename": (v19/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.dimensions": (v23/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.dimensions.cm": (v20/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.dimensions.in": (v20/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.framedDimensions": (v23/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.framedDimensions.cm": (v20/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.framedDimensions.in": (v20/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.id": (v18/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.price": (v20/*: any*/),
         "me.order.lineItems.artworkVersion": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkVersion"
         },
-        "me.order.lineItems.artworkVersion.artistNames": (v18/*: any*/),
+        "me.order.lineItems.artworkVersion.artistNames": (v20/*: any*/),
         "me.order.lineItems.artworkVersion.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "me.order.lineItems.artworkVersion.attributionClass.id": (v16/*: any*/),
-        "me.order.lineItems.artworkVersion.attributionClass.shortDescription": (v18/*: any*/),
-        "me.order.lineItems.artworkVersion.date": (v18/*: any*/),
-        "me.order.lineItems.artworkVersion.id": (v16/*: any*/),
+        "me.order.lineItems.artworkVersion.attributionClass.id": (v18/*: any*/),
+        "me.order.lineItems.artworkVersion.attributionClass.shortDescription": (v20/*: any*/),
+        "me.order.lineItems.artworkVersion.date": (v20/*: any*/),
+        "me.order.lineItems.artworkVersion.id": (v18/*: any*/),
         "me.order.lineItems.artworkVersion.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "me.order.lineItems.artworkVersion.image.resized": (v20/*: any*/),
-        "me.order.lineItems.artworkVersion.image.resized.url": (v17/*: any*/),
-        "me.order.lineItems.artworkVersion.image.url": (v18/*: any*/),
-        "me.order.lineItems.artworkVersion.title": (v18/*: any*/),
-        "me.order.lineItems.id": (v16/*: any*/),
-        "me.order.lineItems.listPrice": (v19/*: any*/),
-        "me.order.lineItems.listPrice.__typename": (v17/*: any*/),
-        "me.order.lineItems.listPrice.display": (v18/*: any*/),
+        "me.order.lineItems.artworkVersion.image.resized": (v22/*: any*/),
+        "me.order.lineItems.artworkVersion.image.resized.url": (v19/*: any*/),
+        "me.order.lineItems.artworkVersion.image.url": (v20/*: any*/),
+        "me.order.lineItems.artworkVersion.title": (v20/*: any*/),
+        "me.order.lineItems.id": (v18/*: any*/),
+        "me.order.lineItems.listPrice": (v21/*: any*/),
+        "me.order.lineItems.listPrice.__typename": (v19/*: any*/),
+        "me.order.lineItems.listPrice.display": (v20/*: any*/),
         "me.order.mode": {
           "enumValues": [
             "BUY",
@@ -720,26 +737,26 @@ return {
           "plural": false,
           "type": "Offer"
         },
-        "me.order.pendingOffer.id": (v16/*: any*/),
-        "me.order.pendingOffer.internalID": (v16/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines": (v21/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.__typename": (v17/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount": (v19/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v18/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.currencySymbol": (v18/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.display": (v18/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amountFallbackText": (v18/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.displayName": (v17/*: any*/),
-        "me.order.pricingBreakdownLines": (v21/*: any*/),
-        "me.order.pricingBreakdownLines.__typename": (v17/*: any*/),
-        "me.order.pricingBreakdownLines.amount": (v19/*: any*/),
-        "me.order.pricingBreakdownLines.amount.amount": (v18/*: any*/),
-        "me.order.pricingBreakdownLines.amount.currencySymbol": (v18/*: any*/),
-        "me.order.pricingBreakdownLines.amount.display": (v18/*: any*/),
-        "me.order.pricingBreakdownLines.amountFallbackText": (v18/*: any*/),
-        "me.order.pricingBreakdownLines.displayName": (v17/*: any*/),
-        "me.order.shippingTotal": (v19/*: any*/),
-        "me.order.shippingTotal.display": (v18/*: any*/),
+        "me.order.pendingOffer.id": (v18/*: any*/),
+        "me.order.pendingOffer.internalID": (v18/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines": (v24/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.__typename": (v19/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount": (v21/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v20/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.currencySymbol": (v20/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.display": (v20/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amountFallbackText": (v20/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.displayName": (v19/*: any*/),
+        "me.order.pricingBreakdownLines": (v24/*: any*/),
+        "me.order.pricingBreakdownLines.__typename": (v19/*: any*/),
+        "me.order.pricingBreakdownLines.amount": (v21/*: any*/),
+        "me.order.pricingBreakdownLines.amount.amount": (v20/*: any*/),
+        "me.order.pricingBreakdownLines.amount.currencySymbol": (v20/*: any*/),
+        "me.order.pricingBreakdownLines.amount.display": (v20/*: any*/),
+        "me.order.pricingBreakdownLines.amountFallbackText": (v20/*: any*/),
+        "me.order.pricingBreakdownLines.displayName": (v19/*: any*/),
+        "me.order.shippingTotal": (v21/*: any*/),
+        "me.order.shippingTotal.display": (v20/*: any*/),
         "me.order.source": {
           "enumValues": [
             "ARTWORK_PAGE",
@@ -751,14 +768,14 @@ return {
           "plural": false,
           "type": "OrderSourceEnum"
         },
-        "me.order.stripeConfirmationToken": (v18/*: any*/),
-        "me.order.taxTotal": (v19/*: any*/),
-        "me.order.taxTotal.display": (v18/*: any*/)
+        "me.order.stripeConfirmationToken": (v20/*: any*/),
+        "me.order.taxTotal": (v21/*: any*/),
+        "me.order.taxTotal.display": (v20/*: any*/)
       }
     },
     "name": "Order2ReviewStepTestQuery",
     "operationKind": "query",
-    "text": "query Order2ReviewStepTestQuery {\n  me {\n    order(id: \"order-id\") {\n      __typename\n      ...Order2ReviewStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2ReviewStep_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  internalID\n  mode\n  source\n  buyerStateExpiresAt\n  stripeConfirmationToken\n  paymentMethod\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    listPrice {\n      __typename\n      display\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        url\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      figures(includeAll: false) {\n        __typename\n        ... on Image {\n          resized(width: 185, height: 138) {\n            url\n          }\n        }\n        ... on Video {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n}\n"
+    "text": "query Order2ReviewStepTestQuery {\n  me {\n    order(id: \"order-id\") {\n      __typename\n      ...Order2ReviewStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2ReviewStep_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  internalID\n  mode\n  source\n  buyerStateExpiresAt\n  stripeConfirmationToken\n  paymentMethod\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    listPrice {\n      __typename\n      display\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        price\n        dimensions {\n          in\n          cm\n        }\n        framedDimensions {\n          in\n          cm\n        }\n      }\n      ... on EditionSet {\n        price\n        dimensions {\n          in\n          cm\n        }\n        framedDimensions {\n          in\n          cm\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    artworkVersion {\n      title\n      artistNames\n      date\n      attributionClass {\n        shortDescription\n        id\n      }\n      image {\n        url\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      figures(includeAll: false) {\n        __typename\n        ... on Image {\n          resized(width: 185, height: 138) {\n            url\n          }\n        }\n        ... on Video {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();

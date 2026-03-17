@@ -110,6 +110,10 @@ export const ArtworkSidebarEditionSetFragmentContainer =
             cm
             in
           }
+          framedDimensions {
+            cm
+            in
+          }
           ...ArtworkSidebarSizeInfo_piece
         }
       }
