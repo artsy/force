@@ -2,6 +2,7 @@ import {
   ActionType,
   type ClickedArticleGroup,
   ContextModule,
+  type EntityModuleType,
   OwnerType,
 } from "@artsy/cohesion"
 import {
@@ -71,7 +72,22 @@ const ArtistEditorialNewsGrid: FC<
             description="Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy."
             action={{
               label: "Browse Artsy Editorial",
-              href: "/articles",
+              onClick: () => {
+                const trackingEvent: ClickedArticleGroup = {
+                  action: ActionType.clickedArticleGroup,
+                  context_module: ContextModule.marketNews,
+                  context_page_owner_type: contextPageOwnerType!,
+                  context_page_owner_id: contextPageOwnerId,
+                  context_page_owner_slug: contextPageOwnerSlug,
+                  destination_page_owner_type: OwnerType.articles,
+                  type: "emptyState" as EntityModuleType,
+                }
+                trackEvent(trackingEvent)
+
+                setTimeout(() => {
+                  window.location.href = "/articles"
+                }, 10000)
+              },
             }}
           />
         </Stack>
