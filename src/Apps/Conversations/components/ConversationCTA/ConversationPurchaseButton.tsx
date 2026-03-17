@@ -25,8 +25,11 @@ export const ConversationPurchaseButton: React.FC<
   const partnerOfferCheckout = usePartnerOfferCheckoutMutation()
   const { sendToast } = useToasts()
 
-  const { showSelectEditionSetModal, isConfirmModalVisible } =
-    useConversationsContext()
+  const {
+    showSelectEditionSetModal,
+    isConfirmModalVisible,
+    selectedEditionSetId,
+  } = useConversationsContext()
 
   const data = useConversationPurchaseButtonData(conversation)
 
@@ -58,8 +61,9 @@ export const ConversationPurchaseButton: React.FC<
       variables: {
         input: {
           partnerOfferId: partnerOffer?.internalID,
-          editionSetId: data.artwork.editionSets?.[0]?.internalID,
-          impulseConversationId: data.conversation.internalID, // # Requires schema update
+          editionSetId:
+            selectedEditionSetId || data.artwork.editionSets?.[0]?.internalID,
+          impulseConversationId: data.conversation.internalID,
         },
       },
       rejectIf: res => {
@@ -87,7 +91,8 @@ export const ConversationPurchaseButton: React.FC<
       variables: {
         input: {
           artworkId: data.artwork.internalID,
-          editionSetId: data.artwork.editionSets?.[0]?.internalID,
+          editionSetId:
+            selectedEditionSetId || data.artwork.editionSets?.[0]?.internalID,
           impulseConversationId: data.conversation.internalID as string,
         },
       },
@@ -128,8 +133,6 @@ export const ConversationPurchaseButton: React.FC<
     }
   }
 
-  // Opens a modal window to select an edition set on non-unique artworks, and
-  // if the modal is already open, use the standard purchase button below.
   if (!isConfirmModalVisible && !data.isUniqueArtwork) {
     return (
       <Box width="100%" {...boxProps} display="inline">
@@ -142,6 +145,10 @@ export const ConversationPurchaseButton: React.FC<
 
             showSelectEditionSetModal({
               isCreatingOfferOrder: false,
+              defaultEditionSetId:
+                data.artwork.editionSets?.length === 1
+                  ? data.artwork.editionSets[0]?.internalID
+                  : null,
             })
           }}
         >

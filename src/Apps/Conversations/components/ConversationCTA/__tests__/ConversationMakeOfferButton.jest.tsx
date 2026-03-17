@@ -19,6 +19,8 @@ jest.mock("Apps/Conversations/ConversationsContext", () => ({
   useConversationsContext: jest.fn().mockReturnValue({
     isConfirmModalVisible: false,
     showSelectEditionSetModal: jest.fn(),
+    selectedEditionSetId: null,
+    setSelectedEditionSetId: jest.fn(),
   }),
 }))
 

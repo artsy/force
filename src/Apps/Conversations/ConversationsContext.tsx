@@ -9,8 +9,13 @@ import { graphql, useFragment } from "react-relay"
 interface ConversationsContextProps {
   isConfirmModalVisible: boolean
   isCreatingOfferOrder: boolean
+  selectedEditionSetId: string | null
+  setSelectedEditionSetId: (editionSetId: string | null) => void
   findPartnerOffer: (artworkID: string) => PartnerOffer | null
-  showSelectEditionSetModal: (props: { isCreatingOfferOrder: boolean }) => void
+  showSelectEditionSetModal: (props: {
+    isCreatingOfferOrder: boolean
+    defaultEditionSetId?: string | null
+  }) => void
   hideSelectEditionSetModal: () => void
 }
 
@@ -40,6 +45,9 @@ export const ConversationsProvider: React.FC<
 > = ({ children, viewer }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false)
   const [isCreatingOfferOrder, setCreatingOfferOrder] = useState(false)
+  const [selectedEditionSetId, setSelectedEditionSetId] = useState<
+    string | null
+  >(null)
   const { me } = useFragment(VIEWER_FRAGMENT, viewer)
 
   const partnerOfferMap: Record<string, PartnerOffer> = extractNodes(
@@ -54,11 +62,23 @@ export const ConversationsProvider: React.FC<
   const findPartnerOffer = (artworkID: string): PartnerOffer | null =>
     partnerOfferMap[artworkID] ?? null
 
-  const showSelectEditionSetModal = ({ isCreatingOfferOrder }) => {
+  const showSelectEditionSetModal = ({
+    isCreatingOfferOrder,
+    defaultEditionSetId,
+  }: {
+    isCreatingOfferOrder: boolean
+    defaultEditionSetId?: string | null
+  }) => {
     setCreatingOfferOrder(isCreatingOfferOrder)
+    if (defaultEditionSetId) {
+      setSelectedEditionSetId(defaultEditionSetId)
+    }
     setIsConfirmModalVisible(true)
   }
-  const hideSelectEditionSetModal = () => setIsConfirmModalVisible(false)
+  const hideSelectEditionSetModal = () => {
+    setIsConfirmModalVisible(false)
+    setSelectedEditionSetId(null)
+  }
 
   return (
     <ConversationsContext.Provider
@@ -66,6 +86,8 @@ export const ConversationsProvider: React.FC<
         findPartnerOffer,
         isConfirmModalVisible,
         isCreatingOfferOrder,
+        selectedEditionSetId,
+        setSelectedEditionSetId,
         showSelectEditionSetModal,
         hideSelectEditionSetModal,
       }}
