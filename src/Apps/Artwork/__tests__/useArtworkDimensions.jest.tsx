@@ -38,8 +38,7 @@ describe("useArtworkDimensions", () => {
       )
 
       expect(result.current.dimensionsLabel).toBe("10 × 20 in | 25.4 × 50.8 cm")
-      expect(result.current.hasInDimensions).toBe(true)
-      expect(result.current.hasCmDimensions).toBe(true)
+      expect(result.current.hasDimensions).toBe(true)
     })
 
     it("formats dimensions with only in", () => {
@@ -55,8 +54,7 @@ describe("useArtworkDimensions", () => {
       )
 
       expect(result.current.dimensionsLabel).toBe("10 × 20 in")
-      expect(result.current.hasInDimensions).toBe(true)
-      expect(result.current.hasCmDimensions).toBe(false)
+      expect(result.current.hasDimensions).toBe(true)
     })
 
     it("formats dimensions with only cm", () => {
@@ -72,8 +70,7 @@ describe("useArtworkDimensions", () => {
       )
 
       expect(result.current.dimensionsLabel).toBe("25.4 × 50.8 cm")
-      expect(result.current.hasInDimensions).toBe(false)
-      expect(result.current.hasCmDimensions).toBe(true)
+      expect(result.current.hasDimensions).toBe(true)
     })
 
     it("returns null when no dimensions", () => {
@@ -89,8 +86,7 @@ describe("useArtworkDimensions", () => {
       )
 
       expect(result.current.dimensionsLabel).toBeNull()
-      expect(result.current.hasInDimensions).toBe(false)
-      expect(result.current.hasCmDimensions).toBe(false)
+      expect(result.current.hasDimensions).toBe(false)
     })
 
     it("returns null when dimensions is null", () => {

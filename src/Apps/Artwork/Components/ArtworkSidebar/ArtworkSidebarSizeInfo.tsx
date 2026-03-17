@@ -14,7 +14,7 @@ const ArtworkSidebarSizeInfo: React.FC<
 > = ({ piece }) => {
   const { dimensions, framedDimensions, editionOf } = piece
 
-  const { hasInDimensions, dimensionsLabel: label } = useArtworkDimensions({
+  const { hasDimensions, dimensionsLabel: label } = useArtworkDimensions({
     dimensions,
     framedDimensions,
   })
@@ -41,7 +41,7 @@ const ArtworkSidebarSizeInfo: React.FC<
 
       <Media lessThan="md">
         <Box color="mono60">
-          {hasInDimensions && <Text variant="sm-display">{label}</Text>}
+          {hasDimensions && <Text variant="sm-display">{label}</Text>}
           {editionOf && <Text variant="sm-display">{editionOf}</Text>}
         </Box>
       </Media>

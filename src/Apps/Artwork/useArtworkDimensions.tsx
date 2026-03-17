@@ -61,8 +61,7 @@ export const useArtworkDimensions = ({
   const shouldUseFramedDims = isFeatureEnabled && hasFramedDims
   const activeDimensions = shouldUseFramedDims ? framedDimensions : dimensions
 
-  const hasCmDimensions = !!activeDimensions?.cm
-  const hasInDimensions = !!activeDimensions?.in
+  const hasActiveDimensions = hasDimensions(activeDimensions)
 
   const shouldShowFrameText = !shouldUseFramedDims
   const frameText = shouldShowFrameText
@@ -76,8 +75,7 @@ export const useArtworkDimensions = ({
       : formattedDimensions
 
   return {
-    hasCmDimensions,
-    hasInDimensions,
+    hasDimensions: hasActiveDimensions,
     dimensionsLabel,
     dimensionsLabelWithoutFrameText: formattedDimensions,
     isShowingFramedDimensions: shouldUseFramedDims,
