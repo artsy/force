@@ -74,6 +74,7 @@ describe("ArtworkDetailsAdditionalInfo", () => {
           cm: "135.3 × 84.5 cm",
           in: "53 1/4 × 33 1/4 in",
         },
+        editionSets: [],
         medium:
           "Oil on cotton, hand-dyed silk organza, backed with vintage kantha quilt",
       }),

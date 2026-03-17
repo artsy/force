@@ -1,10 +1,12 @@
 import { screen } from "@testing-library/react"
 import { ArtworkSidebarDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarDetails"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtworkSidebarDetails_Test_Query } from "__generated__/ArtworkSidebarDetails_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
+jest.mock("Apps/Artwork/Components/SelectedEditionSetContext")
 
 const { renderWithRelay } =
   setupTestWrapperTL<ArtworkSidebarDetails_Test_Query>({
@@ -21,6 +23,12 @@ const { renderWithRelay } =
   })
 
 describe("ArtworkSidebarDetails", () => {
+  beforeEach(() => {
+    ;(useSelectedEditionSetContext as jest.Mock).mockImplementation(() => ({
+      selectedEditionSet: null,
+    }))
+  })
+
   it("renders the correct fields with edition and frame included", () => {
     renderWithRelay({
       Artwork: () => ({
@@ -29,6 +37,7 @@ describe("ArtworkSidebarDetails", () => {
           in: "10 × 10 in",
           cm: "25.4 × 25.4 cm",
         },
+        editionSets: [],
         framed: {
           details: "Included",
         },
@@ -52,6 +61,7 @@ describe("ArtworkSidebarDetails", () => {
           in: "10 × 10 in",
           cm: "25.4 × 25.4 cm",
         },
+        editionSets: [],
         framed: {
           details: "Not included",
         },
@@ -136,6 +146,11 @@ describe("ArtworkSidebarDetails", () => {
           editionSets: [
             {
               internalID: "1",
+              dimensions: {
+                in: "10 × 10 in",
+                cm: "25.4 × 25.4 cm",
+              },
+              framedDimensions: null,
             },
           ],
           dimensions: {
