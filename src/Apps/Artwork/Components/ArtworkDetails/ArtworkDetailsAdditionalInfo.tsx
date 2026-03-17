@@ -90,12 +90,19 @@ export const useArtworkDetailsAdditionalInfoFields = ({
       : dimensions,
   })
 
-  // For the "Framed Size" field and frame text logic, check framed dimensions
+  // For the "Framed Size" field, use selected edition's framed dimensions if available
   const {
     dimensionsLabelWithoutFrameText: framedDimensionsLabel,
     shouldShowFrameText,
     isShowingFramedDimensions,
-  } = useArtworkDimensions({ dimensions, framedDimensions })
+  } = useArtworkDimensions({
+    dimensions: selectedEditionSet
+      ? selectedEditionSet?.dimensions
+      : dimensions,
+    framedDimensions: selectedEditionSet
+      ? selectedEditionSet?.framedDimensions
+      : framedDimensions,
+  })
 
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -116,11 +123,7 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     },
     {
       term: "Framed Size",
-      // Hide framed size when edition set is selected until the backend work is complete
-      value:
-        isShowingFramedDimensions && !selectedEditionSet
-          ? framedDimensionsLabel
-          : null,
+      value: isShowingFramedDimensions ? framedDimensionsLabel : null,
     },
     {
       term: "Rarity",
