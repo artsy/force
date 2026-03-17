@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e2011a24bb1780233b0ad6f011d4bbb>>
+ * @generated SignedSource<<783bcde3421d78dd7ca09e71332fc34a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,29 +48,49 @@ v1 = [
 v2 = {
   "alias": null,
   "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "dimensions",
+  "plural": false,
+  "selections": (v1/*: any*/),
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "framedDimensions",
+  "plural": false,
+  "selections": (v1/*: any*/),
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "dimensions"
 },
-v6 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -131,16 +151,7 @@ return {
             "name": "medium",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "dimensions",
-            "kind": "LinkedField",
-            "name": "dimensions",
-            "plural": false,
-            "selections": (v1/*: any*/),
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -159,16 +170,7 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "dimensions",
-            "kind": "LinkedField",
-            "name": "framedDimensions",
-            "plural": false,
-            "selections": (v1/*: any*/),
-            "storageKey": null
-          },
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -198,7 +200,9 @@ return {
                 "name": "internalID",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -217,7 +221,7 @@ return {
                 "name": "shortArrayDescription",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -294,21 +298,21 @@ return {
                     "name": "endAt",
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ]
   },
   "params": {
-    "cacheID": "b85decc75afc4db4b0be61962e2655ed",
+    "cacheID": "23bda4fe989956b2b9abe76dd4579297",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -324,7 +328,7 @@ return {
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v3/*: any*/),
+        "artwork.attributionClass.id": (v5/*: any*/),
         "artwork.attributionClass.shortArrayDescription": {
           "enumValues": null,
           "nullable": true,
@@ -353,49 +357,55 @@ return {
           "plural": false,
           "type": "Show"
         },
-        "artwork.collectorSignals.runningShow.endAt": (v4/*: any*/),
-        "artwork.collectorSignals.runningShow.href": (v4/*: any*/),
-        "artwork.collectorSignals.runningShow.id": (v3/*: any*/),
-        "artwork.collectorSignals.runningShow.name": (v4/*: any*/),
-        "artwork.collectorSignals.runningShow.startAt": (v4/*: any*/),
-        "artwork.dimensions": (v5/*: any*/),
-        "artwork.dimensions.cm": (v4/*: any*/),
-        "artwork.dimensions.in": (v4/*: any*/),
-        "artwork.editionOf": (v4/*: any*/),
+        "artwork.collectorSignals.runningShow.endAt": (v6/*: any*/),
+        "artwork.collectorSignals.runningShow.href": (v6/*: any*/),
+        "artwork.collectorSignals.runningShow.id": (v5/*: any*/),
+        "artwork.collectorSignals.runningShow.name": (v6/*: any*/),
+        "artwork.collectorSignals.runningShow.startAt": (v6/*: any*/),
+        "artwork.dimensions": (v7/*: any*/),
+        "artwork.dimensions.cm": (v6/*: any*/),
+        "artwork.dimensions.in": (v6/*: any*/),
+        "artwork.editionOf": (v6/*: any*/),
         "artwork.editionSets": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "EditionSet"
         },
-        "artwork.editionSets.id": (v3/*: any*/),
-        "artwork.editionSets.internalID": (v3/*: any*/),
+        "artwork.editionSets.dimensions": (v7/*: any*/),
+        "artwork.editionSets.dimensions.cm": (v6/*: any*/),
+        "artwork.editionSets.dimensions.in": (v6/*: any*/),
+        "artwork.editionSets.framedDimensions": (v7/*: any*/),
+        "artwork.editionSets.framedDimensions.cm": (v6/*: any*/),
+        "artwork.editionSets.framedDimensions.in": (v6/*: any*/),
+        "artwork.editionSets.id": (v5/*: any*/),
+        "artwork.editionSets.internalID": (v5/*: any*/),
         "artwork.framed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkInfoRow"
         },
-        "artwork.framed.details": (v4/*: any*/),
-        "artwork.framedDimensions": (v5/*: any*/),
-        "artwork.framedDimensions.cm": (v4/*: any*/),
-        "artwork.framedDimensions.in": (v4/*: any*/),
-        "artwork.hasCertificateOfAuthenticity": (v6/*: any*/),
-        "artwork.id": (v3/*: any*/),
-        "artwork.isBiddable": (v6/*: any*/),
-        "artwork.isEdition": (v6/*: any*/),
+        "artwork.framed.details": (v6/*: any*/),
+        "artwork.framedDimensions": (v7/*: any*/),
+        "artwork.framedDimensions.cm": (v6/*: any*/),
+        "artwork.framedDimensions.in": (v6/*: any*/),
+        "artwork.hasCertificateOfAuthenticity": (v8/*: any*/),
+        "artwork.id": (v5/*: any*/),
+        "artwork.isBiddable": (v8/*: any*/),
+        "artwork.isEdition": (v8/*: any*/),
         "artwork.isUnlisted": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.medium": (v4/*: any*/)
+        "artwork.medium": (v6/*: any*/)
       }
     },
     "name": "ArtworkSidebarDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCollectorSignal_artwork on Artwork {\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n    runningShow {\n      name\n      href\n      startAt\n      endAt\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  framedDimensions {\n    in\n    cm\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n  ...ArtworkSidebarCollectorSignal_artwork\n}\n"
+    "text": "query ArtworkSidebarDetails_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarAuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCollectorSignal_artwork on Artwork {\n  collectorSignals {\n    primaryLabel(ignore: [PARTNER_OFFER])\n    runningShow {\n      name\n      href\n      startAt\n      endAt\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarDetails_artwork on Artwork {\n  isUnlisted\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  framedDimensions {\n    in\n    cm\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    dimensions {\n      in\n      cm\n    }\n    framedDimensions {\n      in\n      cm\n    }\n    id\n  }\n  ...ArtworkSidebarClassification_artwork\n  ...ArtworkSidebarAuthenticityCertificate_artwork\n  ...ArtworkSidebarCollectorSignal_artwork\n}\n"
   }
 };
 })();

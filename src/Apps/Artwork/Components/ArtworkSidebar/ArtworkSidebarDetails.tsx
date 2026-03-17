@@ -1,4 +1,5 @@
 import { Box, Spacer, Text } from "@artsy/palette"
+import { useEditionSetDimensions } from "Apps/Artwork/Components/useEditionSetDimensions"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import type { ArtworkSidebarDetails_artwork$data } from "__generated__/ArtworkSidebarDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -23,9 +24,14 @@ const ArtworkSidebarDetails: React.FC<
     isUnlisted,
   } = artwork
 
+  const {
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
+  } = useEditionSetDimensions({ editionSets, dimensions, framedDimensions })
+
   const { dimensionsLabel, frameText } = useArtworkDimensions({
-    dimensions,
-    framedDimensions,
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
     framed,
     isUnlisted,
   })
@@ -77,6 +83,14 @@ export const ArtworkSidebarDetailsFragmentContainer = createFragmentContainer(
         isEdition
         editionSets {
           internalID
+          dimensions {
+            in
+            cm
+          }
+          framedDimensions {
+            in
+            cm
+          }
         }
         ...ArtworkSidebarClassification_artwork
         ...ArtworkSidebarAuthenticityCertificate_artwork

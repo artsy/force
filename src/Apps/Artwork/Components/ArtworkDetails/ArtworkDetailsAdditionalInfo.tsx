@@ -11,7 +11,7 @@ import {
 import { ConditionInfoModal } from "Apps/Artwork/Components/ArtworkDetails/ConditionInfoModal"
 import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { useEditionSetDimensions } from "Apps/Artwork/Components/useEditionSetDimensions"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import {
   DefinitionList,
@@ -79,29 +79,25 @@ export const useArtworkDetailsAdditionalInfoFields = ({
     dimensions,
     attributionClass,
     medium,
+    editionSets,
   } = artwork
 
-  const { selectedEditionSet } = useSelectedEditionSetContext()
+  const {
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
+  } = useEditionSetDimensions({ editionSets, dimensions, framedDimensions })
 
-  // For the "Size" field, use selected edition dimensions or regular dimensions
   const { dimensionsLabel } = useArtworkDimensions({
-    dimensions: selectedEditionSet
-      ? selectedEditionSet?.dimensions
-      : dimensions,
+    dimensions: dimensionsToUse,
   })
 
-  // For the "Framed Size" field, use selected edition's framed dimensions if available
   const {
     dimensionsLabelWithoutFrameText: framedDimensionsLabel,
     shouldShowFrameText,
     isShowingFramedDimensions,
   } = useArtworkDimensions({
-    dimensions: selectedEditionSet
-      ? selectedEditionSet?.dimensions
-      : dimensions,
-    framedDimensions: selectedEditionSet
-      ? selectedEditionSet?.framedDimensions
-      : framedDimensions,
+    dimensions: dimensionsToUse,
+    framedDimensions: framedDimensionsToUse,
   })
 
   const { trackEvent } = useTracking()
@@ -269,6 +265,17 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer =
         framedDimensions {
           in
           cm
+        }
+        editionSets {
+          internalID
+          dimensions {
+            in
+            cm
+          }
+          framedDimensions {
+            in
+            cm
+          }
         }
         signatureInfo {
           label

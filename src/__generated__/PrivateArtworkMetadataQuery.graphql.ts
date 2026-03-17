@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91f927881d74d72f282251296b7620b3>>
+ * @generated SignedSource<<edcc932dd8ffc2f8704ddf53f95ddb61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,7 +29,14 @@ var v0 = [
     "value": "foo"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -45,7 +52,7 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -61,21 +68,41 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "name",
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "framedDimensions",
+  "plural": false,
+  "selections": (v3/*: any*/),
   "storageKey": null
 },
-v4 = {
+v5 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "dimensions",
+  "kind": "LinkedField",
+  "name": "dimensions",
+  "plural": false,
+  "selections": (v3/*: any*/),
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = [
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v8 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -165,13 +192,7 @@ return {
             "name": "canRequestLotConditionsReport",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -186,17 +207,23 @@ return {
             "kind": "LinkedField",
             "name": "framed",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "dimensions",
+            "concreteType": "EditionSet",
             "kind": "LinkedField",
-            "name": "framedDimensions",
-            "plural": false,
-            "selections": (v2/*: any*/),
+            "name": "editionSets",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              (v5/*: any*/),
+              (v4/*: any*/),
+              (v6/*: any*/)
+            ],
             "storageKey": null
           },
           {
@@ -206,7 +233,7 @@ return {
             "kind": "LinkedField",
             "name": "signatureInfo",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -216,7 +243,7 @@ return {
             "kind": "LinkedField",
             "name": "conditionDescription",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -226,7 +253,7 @@ return {
             "kind": "LinkedField",
             "name": "certificateOfAuthenticity",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -244,7 +271,7 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v3/*: any*/),
+              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -255,16 +282,7 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "dimensions",
-            "kind": "LinkedField",
-            "name": "dimensions",
-            "plural": false,
-            "selections": (v2/*: any*/),
-            "storageKey": null
-          },
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -273,8 +291,8 @@ return {
             "name": "attributionClass",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
-              (v4/*: any*/)
+              (v7/*: any*/),
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -287,31 +305,31 @@ return {
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v8/*: any*/),
             "kind": "ScalarField",
             "name": "provenance",
             "storageKey": "provenance(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v8/*: any*/),
             "kind": "ScalarField",
             "name": "exhibitionHistory",
             "storageKey": "exhibitionHistory(format:\"HTML\")"
           },
-          (v4/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": "artwork(id:\"foo\")"
       }
     ]
   },
   "params": {
-    "cacheID": "5605bf456f2a0477eb5ed72a57397089",
+    "cacheID": "73407da4c1205a59542d6268018b7d6f",
     "id": null,
     "metadata": {},
     "name": "PrivateArtworkMetadataQuery",
     "operationKind": "query",
-    "text": "query PrivateArtworkMetadataQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  framedDimensions {\n    in\n    cm\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment PrivateArtworkMetadata_artwork on Artwork {\n  ...ArtworkDetailsAdditionalInfo_artwork\n  conditionDescription {\n    details\n  }\n  provenance(format: HTML)\n  exhibitionHistory(format: HTML)\n}\n"
+    "text": "query PrivateArtworkMetadataQuery {\n  artwork(id: \"foo\") {\n    ...PrivateArtworkMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  imageRights\n  canRequestLotConditionsReport\n  internalID\n  isUnlisted\n  framed {\n    label\n    details\n  }\n  framedDimensions {\n    in\n    cm\n  }\n  editionSets {\n    internalID\n    dimensions {\n      in\n      cm\n    }\n    framedDimensions {\n      in\n      cm\n    }\n    id\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment PrivateArtworkMetadata_artwork on Artwork {\n  ...ArtworkDetailsAdditionalInfo_artwork\n  conditionDescription {\n    details\n  }\n  provenance(format: HTML)\n  exhibitionHistory(format: HTML)\n}\n"
   }
 };
 })();

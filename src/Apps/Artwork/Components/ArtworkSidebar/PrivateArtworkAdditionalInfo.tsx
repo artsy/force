@@ -107,6 +107,17 @@ const privateArtworkAdditionalInfoFragment = graphql`
       in
       cm
     }
+    editionSets {
+      internalID
+      dimensions {
+        in
+        cm
+      }
+      framedDimensions {
+        in
+        cm
+      }
+    }
     signatureInfo {
       label
       details
