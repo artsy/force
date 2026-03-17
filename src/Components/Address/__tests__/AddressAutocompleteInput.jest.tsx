@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event"
 import {
   AddressAutocompleteInput,
   type AddressAutocompleteInputProps,
+  _cancelThrottlesForTest,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import compact from "lodash/compact"
@@ -24,14 +25,20 @@ jest.mock("react-tracking")
 let mockFetch: jest.Mock
 
 jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(flag => flag === "address_autocomplete_us"),
+  useFlag: jest.fn(
+    flag =>
+      flag === "address_autocomplete_us" ||
+      flag === "address_autocomplete_international",
+  ),
 }))
 
 beforeEach(() => {
+  _cancelThrottlesForTest()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
   }))
   mockFetch = jest.fn().mockResolvedValue({
+    ok: true,
     json: jest.fn().mockResolvedValue({
       suggestions: [
         {
@@ -120,6 +127,9 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
       >
         <option value="US">United States</option>
         <option value="CA">Canada</option>
+        <option value="GB">United Kingdom</option>
+        <option value="DE">Germany</option>
+        <option value="JP">Japan</option>
       </select>
       <div>
         {formattedAddressLines.map((line, index) => (
@@ -127,6 +137,7 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
         ))}
       </div>
       <button
+        type="button"
         onClick={() => {
           setAddress({ ...address, line2: String(Date.now()) })
         }}
@@ -147,12 +158,21 @@ describe("AddressAutocompleteInput", () => {
       expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
     })
 
-    it("renders a normal input for a non-US address", async () => {
+    it("renders a normal input for a non-US address when both flags are disabled", async () => {
+      const { useFlag } = jest.requireMock("@unleash/proxy-client-react")
+      useFlag.mockImplementation(() => false)
+
       render(<TestImplementation initialAddress={{ country: "CA" }} />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
       await userEvent.type(line1Input, "40")
       expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
+
+      useFlag.mockImplementation(
+        (flag: string) =>
+          flag === "address_autocomplete_us" ||
+          flag === "address_autocomplete_international",
+      )
     })
 
     it("shows suggestions for a US address", async () => {
@@ -286,6 +306,195 @@ describe("AddressAutocompleteInput", () => {
 
       await userEvent.type(line1Input, "40")
       expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
+    })
+
+    it("renders a normal input for a non-US address when international flag is off", async () => {
+      const { useFlag } = jest.requireMock("@unleash/proxy-client-react")
+      useFlag.mockImplementation(
+        (flag: string) => flag === "address_autocomplete_us",
+      )
+
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "10 Downing")
+      expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
+
+      useFlag.mockImplementation(
+        (flag: string) =>
+          flag === "address_autocomplete_us" ||
+          flag === "address_autocomplete_international",
+      )
+    })
+
+    it("renders an autocomplete input for a non-US address when international flag is on", async () => {
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      // Type 2 chars (below 3-char fetch threshold) so loading stays false
+      await userEvent.type(line1Input, "10")
+      expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
+    })
+
+    it("shows suggestions for an international address", async () => {
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          candidates: [
+            {
+              street: "10 Downing St",
+              locality: "London",
+              administrative_area: "England",
+              postal_code: "SW1A 2AA",
+              country_iso3: "GBR",
+              entries: 1,
+            },
+          ],
+        }),
+        ok: true,
+      })
+
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "10 Downing")
+
+      const listbox = await screen.findByRole("listbox", { hidden: true })
+      expect(listbox).toHaveTextContent(
+        "10 Downing St, London, England, SW1A 2AA",
+      )
+    })
+
+    it("maps international suggestion fields correctly on select", async () => {
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          candidates: [
+            {
+              street: "10 Downing St",
+              locality: "London",
+              administrative_area: "England",
+              postal_code: "SW1A 2AA",
+              country_iso3: "GBR",
+              entries: 1,
+            },
+          ],
+        }),
+        ok: true,
+      })
+
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "10 Downing")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      const option = within(dropdown).getByText(
+        "10 Downing St, London, England, SW1A 2AA",
+      )
+      await userEvent.click(option)
+      await flushPromiseQueue()
+
+      expect(mockOnSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: {
+            addressLine1: "10 Downing St",
+            addressLine2: "",
+            city: "London",
+            region: "England",
+            postalCode: "SW1A 2AA",
+            country: "GB",
+          },
+        }),
+        0,
+      )
+    })
+
+    it("handles missing administrative_area and postal_code for international addresses", async () => {
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          candidates: [
+            {
+              street: "Shibuya 1-1",
+              locality: "Tokyo",
+              administrative_area: "",
+              postal_code: "",
+              country_iso3: "JPN",
+              entries: 1,
+            },
+          ],
+        }),
+        ok: true,
+      })
+
+      render(<TestImplementation initialAddress={{ country: "JP" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "Shibuya")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      const option = within(dropdown).getByText("Shibuya 1-1, Tokyo")
+      await userEvent.click(option)
+      await flushPromiseQueue()
+
+      expect(mockOnSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: expect.objectContaining({
+            addressLine1: "Shibuya 1-1",
+            city: "Tokyo",
+            region: "",
+            postalCode: "",
+            country: "JP",
+          }),
+        }),
+        0,
+      )
+    })
+
+    it("resets international suggestions when the country changes", async () => {
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          candidates: [
+            {
+              street: "10 Downing St",
+              locality: "London",
+              administrative_area: "England",
+              postal_code: "SW1A 2AA",
+              country_iso3: "GBR",
+              entries: 1,
+            },
+          ],
+        }),
+        ok: true,
+      })
+
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "10 Downing")
+
+      const listbox = await screen.findByRole("listbox", { hidden: true })
+      expect(listbox).toBeInTheDocument()
+
+      const countrySelect = screen.getByTestId("AddressForm_country")
+      await userEvent.selectOptions(countrySelect, ["Germany"])
+
+      expect(listbox).not.toBeInTheDocument()
+    })
+
+    it("falls back to plain input if the international API returns an error", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        json: jest.fn().mockResolvedValue({}),
+      })
+
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "10 Downing")
+
+      await waitFor(() => {
+        expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
+      })
     })
 
     // See TestImplementation for implementation details

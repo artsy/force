@@ -13,6 +13,10 @@ import {
   usePrevious,
 } from "@artsy/palette"
 import type { Address } from "Components/Address/utils"
+import {
+  ISO2_TO_ISO3,
+  ISO3_TO_ISO2,
+} from "Components/Address/utils/countryISO3Codes"
 import { useFlag } from "@unleash/proxy-client-react"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
@@ -64,6 +68,15 @@ type ProviderSuggestion = {
   source?: "postal" | "other"
 }
 
+type ProviderSuggestionInternational = {
+  street: string
+  locality: string
+  administrative_area: string
+  postal_code: string
+  country_iso3: string
+  entries: number
+}
+
 interface AddressAutocompleteSuggestion extends AutocompleteInputOptionType {
   address: Omit<Address, "name">
   // entries are null if secondary suggestions are not enabled
@@ -84,6 +97,7 @@ interface State {
   fetching: boolean
   serviceAvailability: ServiceAvailability | null
   providerSuggestions: ProviderSuggestion[]
+  internationalProviderSuggestions: ProviderSuggestionInternational[]
 }
 
 const initialState: State = {
@@ -91,6 +105,7 @@ const initialState: State = {
   serviceAvailability: null,
   fetching: false,
   providerSuggestions: [],
+  internationalProviderSuggestions: [],
 }
 
 type Action =
@@ -98,7 +113,12 @@ type Action =
   | { type: "FETCHING_STARTED" }
   | { type: "FETCHING_COMPLETE" }
   | { type: "SET_SUGGESTIONS"; providerSuggestions: ProviderSuggestion[] }
+  | {
+      type: "SET_INTERNATIONAL_SUGGESTIONS"
+      internationalProviderSuggestions: ProviderSuggestionInternational[]
+    }
   | { type: "RESET_SUGGESTIONS" }
+  | { type: "DISABLE_SERVICE" }
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -129,10 +149,29 @@ const reducer = (state: State, action: Action): State => {
         providerSuggestions: action.providerSuggestions,
       }
     }
+    case "SET_INTERNATIONAL_SUGGESTIONS": {
+      return {
+        ...state,
+        internationalProviderSuggestions:
+          action.internationalProviderSuggestions,
+      }
+    }
     case "RESET_SUGGESTIONS": {
       return {
         ...initialState,
+        loading: false,
+        serviceAvailability: state.serviceAvailability,
         providerSuggestions: [],
+        internationalProviderSuggestions: [],
+      }
+    }
+    case "DISABLE_SERVICE": {
+      return {
+        ...state,
+        fetching: false,
+        serviceAvailability: { enabled: false },
+        providerSuggestions: [],
+        internationalProviderSuggestions: [],
       }
     }
     default: {
@@ -168,10 +207,17 @@ export const AddressAutocompleteInput = ({
 }: AddressAutocompleteInputProps) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const { serviceAvailability, providerSuggestions } = state
+  const {
+    serviceAvailability,
+    providerSuggestions,
+    internationalProviderSuggestions,
+  } = state
   const isUSAddress = address.country === "US"
 
-  const isFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
+  const isUSFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
+  const isInternationalFeatureFlagEnabled = !!useFlag(
+    "address_autocomplete_international",
+  )
 
   const { trackEvent } = useTracking()
 
@@ -207,10 +253,14 @@ export const AddressAutocompleteInput = ({
     trackEvent(event)
   }
 
-  // Load service availaibilty when country changes
+  // Load service availability when country changes
   useEffect(() => {
     const isAPIKeyPresent = !!API_KEY
-    const enabled = isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
+    const enabled =
+      isAPIKeyPresent &&
+      ((isUSFeatureFlagEnabled && isUSAddress) ||
+        (isInternationalFeatureFlagEnabled && !isUSAddress))
+
     if (enabled !== serviceAvailability?.enabled) {
       dispatch({
         type: "SET_AVAILABILITY",
@@ -219,17 +269,22 @@ export const AddressAutocompleteInput = ({
           : { enabled: false },
       })
     }
-  }, [isFeatureFlagEnabled, isUSAddress, serviceAvailability])
+  }, [
+    isUSFeatureFlagEnabled,
+    isInternationalFeatureFlagEnabled,
+    isUSAddress,
+    serviceAvailability,
+  ])
 
-  // reset suggestions if the country changes
+  // reset suggestions when the country changes (not on initial mount)
+  const previousCountry = usePrevious(address.country)
   useEffect(() => {
-    if (providerSuggestions.length > 0 && !isUSAddress) {
+    if (previousCountry !== undefined && previousCountry !== address.country) {
       dispatch({ type: "RESET_SUGGESTIONS" })
     }
-  }, [isUSAddress, providerSuggestions.length])
+  }, [previousCountry, address.country])
 
   const fetchForAutocomplete = useCallback(
-    // these are the parameters to the Smarty API call
     async ({ search, selected }: { search: string; selected?: string }) => {
       if (!serviceAvailability?.enabled) return
 
@@ -241,50 +296,96 @@ export const AddressAutocompleteInput = ({
       try {
         dispatch({ type: "FETCHING_STARTED" })
 
-        const response = await fetchSuggestionsWithThrottle({
-          search,
-          selected,
-          apiKey: serviceAvailability.apiKey,
-        })
+        if (isUSAddress) {
+          const response = await fetchSuggestionsWithThrottle({
+            search,
+            selected,
+            apiKey: serviceAvailability.apiKey,
+          })
 
-        dispatch({ type: "FETCHING_COMPLETE" })
-        const finalSuggestions = filterSecondarySuggestions(
-          response.suggestions,
-        )
+          dispatch({ type: "FETCHING_COMPLETE" })
+          const finalSuggestions = filterSecondarySuggestions(
+            response.suggestions,
+          )
 
-        dispatch({
-          type: "SET_SUGGESTIONS",
-          providerSuggestions: finalSuggestions.slice(0, 5),
-        })
+          dispatch({
+            type: "SET_SUGGESTIONS",
+            providerSuggestions: finalSuggestions.slice(0, 5),
+          })
+        } else {
+          const iso3Country = ISO2_TO_ISO3[address.country]
+          if (!iso3Country) {
+            dispatch({ type: "FETCHING_COMPLETE" })
+            return
+          }
+
+          const response = await fetchInternationalSuggestionsWithThrottle({
+            search,
+            country: iso3Country,
+            apiKey: serviceAvailability.apiKey,
+          })
+
+          dispatch({ type: "FETCHING_COMPLETE" })
+          dispatch({
+            type: "SET_INTERNATIONAL_SUGGESTIONS",
+            internationalProviderSuggestions: (response.candidates ?? []).slice(
+              0,
+              5,
+            ),
+          })
+        }
       } catch (e) {
         console.error(e)
-        dispatch({ type: "RESET_SUGGESTIONS" })
-        dispatch({ type: "FETCHING_COMPLETE" })
-        // Disable autocomplete into some error state?
+        // Fall back to plain input for the remainder of the session
+        dispatch({ type: "DISABLE_SERVICE" })
       }
     },
-    [serviceAvailability],
+    [serviceAvailability, isUSAddress, address.country],
   )
 
-  const autocompleteOptions = providerSuggestions.map(
-    (suggestion: ProviderSuggestion): AddressAutocompleteSuggestion => {
-      const text = buildAddressText(suggestion)
+  const autocompleteOptions: AddressAutocompleteSuggestion[] = isUSAddress
+    ? providerSuggestions.map(
+        (suggestion: ProviderSuggestion): AddressAutocompleteSuggestion => {
+          const text = buildUSAddressText(suggestion)
 
-      return {
-        text,
-        value: text,
-        entries: null,
-        address: {
-          addressLine1: suggestion.street_line,
-          addressLine2: suggestion.secondary || "",
-          city: suggestion.city,
-          region: suggestion.state,
-          postalCode: suggestion.zipcode,
-          country: "US",
+          return {
+            text,
+            value: text,
+            entries: null,
+            address: {
+              addressLine1: suggestion.street_line,
+              addressLine2: suggestion.secondary || "",
+              city: suggestion.city,
+              region: suggestion.state,
+              postalCode: suggestion.zipcode,
+              country: "US",
+            },
+          }
         },
-      }
-    },
-  )
+      )
+    : internationalProviderSuggestions.map(
+        (
+          suggestion: ProviderSuggestionInternational,
+        ): AddressAutocompleteSuggestion => {
+          const iso2Country =
+            ISO3_TO_ISO2[suggestion.country_iso3] ?? address.country
+          const text = buildInternationalAddressText(suggestion)
+
+          return {
+            text,
+            value: text,
+            entries: null,
+            address: {
+              addressLine1: suggestion.street,
+              addressLine2: "",
+              city: suggestion.locality,
+              region: suggestion.administrative_area || "",
+              postalCode: suggestion.postal_code || "",
+              country: iso2Country,
+            },
+          }
+        },
+      )
 
   const definitelyDisabled =
     disableAutocomplete || (!state.loading && !serviceAvailability?.enabled)
@@ -293,16 +394,17 @@ export const AddressAutocompleteInput = ({
   const serializedOptions = JSON.stringify(autocompleteOptions)
   const serializedPreviousOptions = JSON.stringify(previousOptions)
 
+  const totalSuggestions = isUSAddress
+    ? providerSuggestions.length
+    : internationalProviderSuggestions.length
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       serviceAvailability?.enabled &&
       serializedOptions !== serializedPreviousOptions
     ) {
-      trackReceivedAutocompleteResult(
-        value as string,
-        providerSuggestions.length,
-      )
+      trackReceivedAutocompleteResult(value as string, totalSuggestions)
     }
   }, [serviceAvailability, serializedOptions, serializedPreviousOptions])
 
@@ -362,7 +464,7 @@ const fetchSuggestionsWithThrottle = throttle(
     selected?: string
     apiKey: string
   }) => {
-    const params = {
+    const params: Record<string, string> = {
       key: apiKey,
       search: search,
     }
@@ -384,7 +486,51 @@ const fetchSuggestionsWithThrottle = throttle(
   },
 )
 
-const buildAddressText = (suggestion: ProviderSuggestion): string => {
+const fetchInternationalSuggestionsWithThrottle = throttle(
+  async ({
+    search,
+    country,
+    apiKey,
+  }: {
+    search: string
+    country: string
+    apiKey: string
+  }) => {
+    const params: Record<string, string> = {
+      key: apiKey,
+      search,
+      country,
+      max_results: "5",
+    }
+
+    const url = `https://international-autocomplete.api.smarty.com/v2/lookup?${new URLSearchParams(params).toString()}`
+
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(
+        `International autocomplete request failed: ${response.status}`,
+      )
+    }
+    const json = await response.json()
+    return json
+  },
+  THROTTLE_DELAY,
+  {
+    leading: true,
+    trailing: true,
+  },
+)
+
+/**
+ * Resets throttle state between tests so stale results from a previous test
+ * don't bleed into the next one. Only call this from test setup code.
+ */
+export const _cancelThrottlesForTest = () => {
+  fetchSuggestionsWithThrottle.cancel()
+  fetchInternationalSuggestionsWithThrottle.cancel()
+}
+
+const buildUSAddressText = (suggestion: ProviderSuggestion): string => {
   let buildingAddress = suggestion.street_line
   if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
 
@@ -395,12 +541,21 @@ const buildAddressText = (suggestion: ProviderSuggestion): string => {
   ].join(" ")
 }
 
+const buildInternationalAddressText = (
+  suggestion: ProviderSuggestionInternational,
+): string => {
+  const parts = [suggestion.street, suggestion.locality]
+  if (suggestion.administrative_area) parts.push(suggestion.administrative_area)
+  if (suggestion.postal_code) parts.push(suggestion.postal_code)
+  return parts.filter(Boolean).join(", ")
+}
+
 const filterSecondarySuggestions = (suggestions: ProviderSuggestion[]) => {
   const noSecondaryData = suggestions.map(({ secondary, ...suggestion }) => ({
     ...suggestion,
     secondary: "",
   }))
   return uniqBy(noSecondaryData, (suggestion: ProviderSuggestion) =>
-    buildAddressText(suggestion),
+    buildUSAddressText(suggestion),
   )
 }
