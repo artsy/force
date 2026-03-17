@@ -94,22 +94,8 @@ export const CellPartnerFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment CellPartner_partner on Partner {
         ...EntityHeaderPartner_partner
-        internalID
-        slug
-        name
         href
         initials
-        locationsConnection(first: 15) {
-          edges {
-            node {
-              city
-            }
-          }
-        }
-        categories {
-          name
-          slug
-        }
         profile {
           image {
             cropped(

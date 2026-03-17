@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d10fdb8cfacb4e660377a25c55a909f>>
+ * @generated SignedSource<<af6e0f12bbadcff57759559bb8552444>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,21 +11,8 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellPartner_partner$data = {
-  readonly categories: ReadonlyArray<{
-    readonly name: string | null | undefined;
-    readonly slug: string;
-  } | null | undefined> | null | undefined;
   readonly href: string | null | undefined;
   readonly initials: string | null | undefined;
-  readonly internalID: string;
-  readonly locationsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly city: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
-  readonly name: string | null | undefined;
   readonly profile: {
     readonly image: {
       readonly cropped: {
@@ -34,7 +21,6 @@ export type CellPartner_partner$data = {
       } | null | undefined;
     } | null | undefined;
   } | null | undefined;
-  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
   readonly " $fragmentType": "CellPartner_partner";
 };
@@ -43,22 +29,7 @@ export type CellPartner_partner$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -73,15 +44,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    (v0/*: any*/),
-    (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "href",
       "storageKey": null
     },
@@ -90,65 +52,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "initials",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 15
-        }
-      ],
-      "concreteType": "LocationConnection",
-      "kind": "LinkedField",
-      "name": "locationsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "LocationEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Location",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "locationsConnection(first:15)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "PartnerCategory",
-      "kind": "LinkedField",
-      "name": "categories",
-      "plural": true,
-      "selections": [
-        (v1/*: any*/),
-        (v0/*: any*/)
-      ],
       "storageKey": null
     },
     {
@@ -223,8 +126,7 @@ return {
   "type": "Partner",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "964a81aa9dfdd0182864e9b4d12d3308";
+(node as any).hash = "4532457cf05e07c10799062ca93d89c0";
 
 export default node;

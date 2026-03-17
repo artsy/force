@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<012871cfad9f584ec7eab7896b66ad1b>>
+ * @generated SignedSource<<15a045bb6075e1b856ab569bf6826194>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -358,7 +358,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c6602bf059cf0f30ff7888d08971b20e",
+    "cacheID": "6c6866e52f98dc48f5947ce59bbe2e00",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -428,7 +428,7 @@ return {
     },
     "name": "CellPartnerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...CellPartner_partner\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CellPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...CellPartner_partner\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  href\n  initials\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
