@@ -10216,6 +10216,7 @@ input CreateFeaturedLinkMutationInput {
   clientMutationId: String
   description: String
   href: String!
+  orderedSetID: String
   sourceBucket: String
   sourceKey: String
   subtitle: String
@@ -19007,6 +19008,9 @@ type NavigationVersion {
     timezone: String
   ): String!
 
+  # A list of featured links for the visual component
+  featuredLinksSet: [FeaturedLink]
+
   # A globally unique ID.
   id: ID!
 
@@ -19015,6 +19019,7 @@ type NavigationVersion {
 
   # An ordered list of nested navigation items (e.g., By Price, By Seller, etc.)
   items: [NavigationItem!]!
+  orderedSetID: String
   publishedAt(
     format: String
 
