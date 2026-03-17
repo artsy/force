@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c3970e2ef3159e754089ebc34d2a1cac>>
+ * @generated SignedSource<<049c5570bf94cb0b64a31968f54a383d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -268,6 +268,31 @@ return {
             "name": "internalID",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "formattedNationalityAndBirthday",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtistCounts",
+            "kind": "LinkedField",
+            "name": "counts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "follows",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v5/*: any*/)
         ],
         "storageKey": null
@@ -275,12 +300,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8ff33d156d0c7abc18c6966c62af599f",
+    "cacheID": "2b6a610769976f7e0a3325bbd3e6860d",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_Artist2AppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_Artist2AppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    slug\n    ...Artist2App_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment Artist2App_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistAbove_artist\n  internalID\n  name\n}\n\nfragment ArtistAbout_artist on Artist {\n  internalID\n}\n\nfragment ArtistAbove_artist on Artist {\n  ...ArtistBreadcrumb_artist\n  ...ArtistTombstone_artist\n  ...ArtistNotableWorks_artist\n  ...ArtistAbout_artist\n  ...ArtistRepresentation_artist\n  ...ArtistEditorial_artist\n}\n\nfragment ArtistBreadcrumb_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n\nfragment ArtistEditorial_artist on Artist {\n  internalID\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistNotableWorks_artist on Artist {\n  internalID\n}\n\nfragment ArtistRepresentation_artist on Artist {\n  internalID\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ArtistTombstone_artist on Artist {\n  internalID\n}\n"
+    "text": "query artistRoutes_Artist2AppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    slug\n    ...Artist2App_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment Artist2App_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistAbove_artist\n  internalID\n  name\n}\n\nfragment ArtistAbout_artist on Artist {\n  internalID\n}\n\nfragment ArtistAbove_artist on Artist {\n  ...ArtistBreadcrumb_artist\n  ...ArtistTombstone_artist\n  ...ArtistNotableWorks_artist\n  ...ArtistAbout_artist\n  ...ArtistRepresentation_artist\n  ...ArtistEditorial_artist\n}\n\nfragment ArtistBreadcrumb_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n\nfragment ArtistEditorial_artist on Artist {\n  internalID\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistNotableWorks_artist on Artist {\n  internalID\n}\n\nfragment ArtistRepresentation_artist on Artist {\n  internalID\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ArtistTombstone_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
