@@ -360,7 +360,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                       {navigationData?.whatsNewNavigation && (
                         <NavBarDropdownPanelServer
                           navigationData={navigationData.whatsNewNavigation}
-                          featuredLinkData={navigationData.whatsNewFeaturedLink}
                           label="What’s New"
                           href="/collection/new-this-week"
                           contextModule={
@@ -375,7 +374,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                       {navigationData?.artistsNavigation && (
                         <NavBarDropdownPanelServer
                           navigationData={navigationData.artistsNavigation}
-                          featuredLinkData={navigationData.artistsFeaturedLink}
                           label="Artists"
                           href="/artists"
                           contextModule={
@@ -390,7 +388,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                       {navigationData?.artworksNavigation && (
                         <NavBarDropdownPanelServer
                           navigationData={navigationData.artworksNavigation}
-                          featuredLinkData={navigationData.artworksFeaturedLink}
                           label="Artworks"
                           href="/collect"
                           contextModule={

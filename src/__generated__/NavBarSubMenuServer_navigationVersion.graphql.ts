@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4cde11321f4d819b135a0499bcf459b2>>
+ * @generated SignedSource<<0525b18e6b776299337d95b5f06763bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavBarSubMenuServer_navigationVersion$data = {
+  readonly featuredLinksSet: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMenuItemFeaturedLinkColumn_featuredLinkData">;
+  } | null | undefined> | null | undefined;
   readonly items: ReadonlyArray<{
     readonly children: ReadonlyArray<{
       readonly href: string | null | undefined;
@@ -51,6 +54,22 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "FeaturedLink",
+      "kind": "LinkedField",
+      "name": "featuredLinksSet",
+      "plural": true,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "NavBarMenuItemFeaturedLinkColumn_featuredLinkData"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "NavigationItem",
       "kind": "LinkedField",
       "name": "items",
@@ -87,6 +106,6 @@ return {
 };
 })();
 
-(node as any).hash = "6019fb78d3eaf0b0e3ee8c930ee9e8a7";
+(node as any).hash = "2fcd647a283b3ac4b3aa8425fb257b5f";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b67a57fa9e1800d2c88faba28770dd8>>
+ * @generated SignedSource<<9a34cdd86046c92490b6b4a7a2da3d75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,21 +15,12 @@ export type buildAppRoutesQuery$variables = {
   requestedVersionState: NavigationVersionState;
 };
 export type buildAppRoutesQuery$data = {
-  readonly artistsFeaturedLink: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMenuItemFeaturedLinkColumn_featuredLinkData">;
-  } | null | undefined> | null | undefined;
   readonly artistsNavigation: {
     readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenuServer_navigationVersion" | "NavBarSubMenuServer_navigationVersion">;
   } | null | undefined;
-  readonly artworksFeaturedLink: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMenuItemFeaturedLinkColumn_featuredLinkData">;
-  } | null | undefined> | null | undefined;
   readonly artworksNavigation: {
     readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenuServer_navigationVersion" | "NavBarSubMenuServer_navigationVersion">;
   } | null | undefined;
-  readonly whatsNewFeaturedLink: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMenuItemFeaturedLinkColumn_featuredLinkData">;
-  } | null | undefined> | null | undefined;
   readonly whatsNewNavigation: {
     readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenuServer_navigationVersion" | "NavBarSubMenuServer_navigationVersion">;
   } | null | undefined;
@@ -88,63 +79,132 @@ v5 = [
   },
   (v1/*: any*/)
 ],
-v6 = [
-  {
-    "kind": "Literal",
-    "name": "key",
-    "value": "nav-visual:whats-new"
-  }
-],
-v7 = [
-  {
-    "args": null,
-    "kind": "FragmentSpread",
-    "name": "NavBarMenuItemFeaturedLinkColumn_featuredLinkData"
-  }
-],
-v8 = [
-  {
-    "kind": "Literal",
-    "name": "key",
-    "value": "nav-visual:artists"
-  }
-],
-v9 = [
-  {
-    "kind": "Literal",
-    "name": "key",
-    "value": "nav-visual:artworks"
-  }
-],
-v10 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "position",
-  "storageKey": null
-},
-v12 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v13 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v14 = [
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "position",
+  "storageKey": null
+},
+v10 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "FeaturedLink",
+    "kind": "LinkedField",
+    "name": "featuredLinksSet",
+    "plural": true,
+    "selections": [
+      (v6/*: any*/),
+      {
+        "alias": null,
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "format",
+            "value": "PLAIN"
+          }
+        ],
+        "kind": "ScalarField",
+        "name": "subtitle",
+        "storageKey": "subtitle(format:\"PLAIN\")"
+      },
+      (v7/*: any*/),
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Image",
+        "kind": "LinkedField",
+        "name": "image",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "height",
+                "value": 400
+              },
+              {
+                "kind": "Literal",
+                "name": "version",
+                "value": [
+                  "main",
+                  "wide",
+                  "large_rectangle"
+                ]
+              },
+              {
+                "kind": "Literal",
+                "name": "width",
+                "value": 400
+              }
+            ],
+            "concreteType": "CroppedImageUrl",
+            "kind": "LinkedField",
+            "name": "cropped",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "src",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "srcSet",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "width",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "height",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "cropped(height:400,version:[\"main\",\"wide\",\"large_rectangle\"],width:400)"
+          }
+        ],
+        "storageKey": null
+      },
+      (v8/*: any*/)
+    ],
+    "storageKey": null
+  },
   {
     "alias": null,
     "args": null,
@@ -153,8 +213,8 @@ v14 = [
     "name": "items",
     "plural": true,
     "selections": [
-      (v10/*: any*/),
-      (v11/*: any*/),
+      (v6/*: any*/),
+      (v9/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -163,153 +223,18 @@ v14 = [
         "name": "children",
         "plural": true,
         "selections": [
-          (v10/*: any*/),
-          (v12/*: any*/),
-          (v11/*: any*/),
-          (v13/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/),
+          (v9/*: any*/),
+          (v8/*: any*/)
         ],
         "storageKey": null
       },
-      (v13/*: any*/)
+      (v8/*: any*/)
     ],
     "storageKey": null
   },
-  (v13/*: any*/)
-],
-v15 = [
-  (v13/*: any*/)
-],
-v16 = [
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": null,
-    "kind": "LinkedField",
-    "name": "items",
-    "plural": true,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "__typename",
-        "storageKey": null
-      },
-      {
-        "kind": "InlineFragment",
-        "selections": [
-          (v10/*: any*/),
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "PLAIN"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "subtitle",
-            "storageKey": "subtitle(format:\"PLAIN\")"
-          },
-          (v12/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 400
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": [
-                      "main",
-                      "wide",
-                      "large_rectangle"
-                    ]
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 400
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "width",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "height",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "cropped(height:400,version:[\"main\",\"wide\",\"large_rectangle\"],width:400)"
-              }
-            ],
-            "storageKey": null
-          },
-          (v13/*: any*/)
-        ],
-        "type": "FeaturedLink",
-        "abstractKey": null
-      },
-      {
-        "kind": "InlineFragment",
-        "selections": (v15/*: any*/),
-        "type": "Node",
-        "abstractKey": "__isNode"
-      },
-      {
-        "kind": "InlineFragment",
-        "selections": (v15/*: any*/),
-        "type": "Profile",
-        "abstractKey": null
-      },
-      {
-        "kind": "InlineFragment",
-        "selections": (v15/*: any*/),
-        "type": "Video",
-        "abstractKey": null
-      }
-    ],
-    "storageKey": null
-  },
-  (v13/*: any*/)
+  (v8/*: any*/)
 ];
 return {
   "fragment": {
@@ -347,36 +272,6 @@ return {
         "plural": false,
         "selections": (v3/*: any*/),
         "storageKey": null
-      },
-      {
-        "alias": "whatsNewFeaturedLink",
-        "args": (v6/*: any*/),
-        "concreteType": "OrderedSet",
-        "kind": "LinkedField",
-        "name": "orderedSets",
-        "plural": true,
-        "selections": (v7/*: any*/),
-        "storageKey": "orderedSets(key:\"nav-visual:whats-new\")"
-      },
-      {
-        "alias": "artistsFeaturedLink",
-        "args": (v8/*: any*/),
-        "concreteType": "OrderedSet",
-        "kind": "LinkedField",
-        "name": "orderedSets",
-        "plural": true,
-        "selections": (v7/*: any*/),
-        "storageKey": "orderedSets(key:\"nav-visual:artists\")"
-      },
-      {
-        "alias": "artworksFeaturedLink",
-        "args": (v9/*: any*/),
-        "concreteType": "OrderedSet",
-        "kind": "LinkedField",
-        "name": "orderedSets",
-        "plural": true,
-        "selections": (v7/*: any*/),
-        "storageKey": "orderedSets(key:\"nav-visual:artworks\")"
       }
     ],
     "type": "Query",
@@ -395,7 +290,7 @@ return {
         "kind": "LinkedField",
         "name": "navigationVersion",
         "plural": false,
-        "selections": (v14/*: any*/),
+        "selections": (v10/*: any*/),
         "storageKey": null
       },
       {
@@ -405,7 +300,7 @@ return {
         "kind": "LinkedField",
         "name": "navigationVersion",
         "plural": false,
-        "selections": (v14/*: any*/),
+        "selections": (v10/*: any*/),
         "storageKey": null
       },
       {
@@ -415,52 +310,22 @@ return {
         "kind": "LinkedField",
         "name": "navigationVersion",
         "plural": false,
-        "selections": (v14/*: any*/),
+        "selections": (v10/*: any*/),
         "storageKey": null
-      },
-      {
-        "alias": "whatsNewFeaturedLink",
-        "args": (v6/*: any*/),
-        "concreteType": "OrderedSet",
-        "kind": "LinkedField",
-        "name": "orderedSets",
-        "plural": true,
-        "selections": (v16/*: any*/),
-        "storageKey": "orderedSets(key:\"nav-visual:whats-new\")"
-      },
-      {
-        "alias": "artistsFeaturedLink",
-        "args": (v8/*: any*/),
-        "concreteType": "OrderedSet",
-        "kind": "LinkedField",
-        "name": "orderedSets",
-        "plural": true,
-        "selections": (v16/*: any*/),
-        "storageKey": "orderedSets(key:\"nav-visual:artists\")"
-      },
-      {
-        "alias": "artworksFeaturedLink",
-        "args": (v9/*: any*/),
-        "concreteType": "OrderedSet",
-        "kind": "LinkedField",
-        "name": "orderedSets",
-        "plural": true,
-        "selections": (v16/*: any*/),
-        "storageKey": "orderedSets(key:\"nav-visual:artworks\")"
       }
     ]
   },
   "params": {
-    "cacheID": "b489190942fb970749053858ff31ccca",
+    "cacheID": "2a1d019146186a6ef7ed5f5484a17a17",
     "id": null,
     "metadata": {},
     "name": "buildAppRoutesQuery",
     "operationKind": "query",
-    "text": "query buildAppRoutesQuery(\n  $requestedVersionState: NavigationVersionState!\n) @cacheable {\n  whatsNewNavigation: navigationVersion(groupID: \"whats-new\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artistsNavigation: navigationVersion(groupID: \"artists\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artworksNavigation: navigationVersion(groupID: \"artworks\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  whatsNewFeaturedLink: orderedSets(key: \"nav-visual:whats-new\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  artistsFeaturedLink: orderedSets(key: \"nav-visual:artists\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  artworksFeaturedLink: orderedSets(key: \"nav-visual:artworks\") {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      title\n      subtitle(format: PLAIN)\n      href\n      image {\n        cropped(width: 400, height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment NavBarMobileSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n\nfragment NavBarSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query buildAppRoutesQuery(\n  $requestedVersionState: NavigationVersionState!\n) @cacheable {\n  whatsNewNavigation: navigationVersion(groupID: \"whats-new\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artistsNavigation: navigationVersion(groupID: \"artists\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artworksNavigation: navigationVersion(groupID: \"artworks\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on FeaturedLink {\n  title\n  subtitle(format: PLAIN)\n  href\n  image {\n    cropped(width: 400, height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment NavBarMobileSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n\nfragment NavBarSubMenuServer_navigationVersion on NavigationVersion {\n  featuredLinksSet {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b9313fac02d9fbfc84822d92ff55f14f";
+(node as any).hash = "6a785a17bb48757ef23e9a936a72a552";
 
 export default node;

@@ -244,9 +244,6 @@ describe("NavBar", () => {
           whatsNewNavigation: {},
           artistsNavigation: {},
           artworksNavigation: {},
-          whatsNewFeaturedLink: null,
-          artistsFeaturedLink: null,
-          artworksFeaturedLink: null,
         })
 
         getWrapper()
