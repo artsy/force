@@ -19,7 +19,6 @@ import type {
   ConversationConfirmModal_artwork$key,
 } from "__generated__/ConversationConfirmModal_artwork.graphql"
 import type { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
-import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 
@@ -38,14 +37,9 @@ export const ConversationConfirmModal: React.FC<
     isCreatingOfferOrder,
     isConfirmModalVisible,
     hideSelectEditionSetModal,
+    selectedEditionSetId,
+    setSelectedEditionSetId,
   } = useConversationsContext()
-
-  const firstEditionSet = data.editionSets?.[0]
-  const firstEditionSetID = firstEditionSet?.internalID as string
-
-  const [selectedEdition, setSelectedEdition] = useState<string | null>(
-    data.editionSets?.length === 1 ? firstEditionSetID : null,
-  )
 
   const isActionable =
     !!data?.isEdition ||
@@ -143,7 +137,7 @@ export const ConversationConfirmModal: React.FC<
               return null
             }
 
-            const selected = edition.internalID === selectedEdition
+            const selected = edition.internalID === selectedEditionSetId
 
             const isActionable =
               !!edition.isOfferableFromInquiry ||
@@ -155,7 +149,7 @@ export const ConversationConfirmModal: React.FC<
                 key={index}
                 onSelect={() => {
                   if (isActionable) {
-                    setSelectedEdition(edition.internalID)
+                    setSelectedEditionSetId(edition.internalID)
                   }
                 }}
                 disabled={!isActionable}

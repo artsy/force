@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0dc922053bdc3b7d9c2bd7909a034f0c>>
+ * @generated SignedSource<<f9bb4bd33fe687728745c2b22199ffde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,12 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistTombstone_artist$data = {
+  readonly counts: {
+    readonly follows: any | null | undefined;
+  } | null | undefined;
+  readonly formattedNationalityAndBirthday: string | null | undefined;
   readonly internalID: string;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ArtistTombstone_artist";
 };
 export type ArtistTombstone_artist$key = {
@@ -31,12 +36,44 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "formattedNationalityAndBirthday",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "follows",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "5515ff9bf9ff64df56346437ca42cb88";
+(node as any).hash = "47e803b9215253319d9e0a67ff6b90a8";
 
 export default node;

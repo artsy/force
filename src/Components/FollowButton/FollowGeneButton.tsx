@@ -13,21 +13,23 @@ import type { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.
 import type { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FollowButton } from "./Button"
+import { FollowButton, type FollowButtonRenderProps } from "./Button"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 
-interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
-  children?: React.ReactNode
-  // FIXME: REACT_18_UPGRADE
-  // children?: FollowButtonRenderProps
+interface FollowGeneButtonProps
+  extends Omit<ButtonProps, "variant" | "children"> {
+  children?: FollowButtonRenderProps
   gene: FollowGeneButton_gene$data
   contextModule?: AuthContextModule
   onFollow?: (followed: boolean) => void
 }
 
-const FollowGeneButton: React.FC<
-  React.PropsWithChildren<FollowGeneButtonProps>
-> = ({ gene, contextModule = ContextModule.geneHeader, onFollow, ...rest }) => {
+const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
+  gene,
+  contextModule = ContextModule.geneHeader,
+  onFollow,
+  ...rest
+}) => {
   const { isLoggedIn } = useSystemContext()
 
   const { trackFollow } = useFollowButtonTracking({
@@ -134,7 +136,7 @@ interface FollowGeneButtonQueryRendererProps
 }
 
 export const FollowGeneButtonQueryRenderer: React.FC<
-  React.PropsWithChildren<FollowGeneButtonQueryRendererProps>
+  FollowGeneButtonQueryRendererProps
 > = ({ id, ...rest }) => {
   const { isLoggedIn } = useSystemContext()
   return (

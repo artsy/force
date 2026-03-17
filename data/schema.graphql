@@ -1909,7 +1909,16 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   gender: String
 
   # A list of genes associated with an artist
-  genes: [Gene]
+  genes(
+    # Filter by gene family ID or slug.
+    geneFamilyID: String
+
+    # Minimum gene value (inclusive).
+    minValue: Int
+
+    # Number of genes to return
+    size: Int
+  ): [Gene!]!
   groupIndicator: ArtistGroupIndicator
   hasMetadata: Boolean
   highlights: ArtistHighlights
@@ -10216,6 +10225,7 @@ input CreateFeaturedLinkMutationInput {
   clientMutationId: String
   description: String
   href: String!
+  orderedSetID: String
   sourceBucket: String
   sourceKey: String
   subtitle: String
@@ -10861,8 +10871,8 @@ input CreatePartnerShowMutationInput {
   # The description of the show.
   description: String
 
-  # The end date of the show.
-  endAt: String!
+  # The end date of the show. Optional for fair booth shows, required for regular shows.
+  endAt: String
 
   # The id of the fair to create the show for.
   fairId: String
@@ -19007,6 +19017,9 @@ type NavigationVersion {
     timezone: String
   ): String!
 
+  # A list of featured links for the visual component
+  featuredLinksSet: [FeaturedLink]
+
   # A globally unique ID.
   id: ID!
 
@@ -19015,6 +19028,7 @@ type NavigationVersion {
 
   # An ordered list of nested navigation items (e.g., By Price, By Seller, etc.)
   items: [NavigationItem!]!
+  orderedSetID: String
   publishedAt(
     format: String
 
@@ -27323,7 +27337,7 @@ input UpdatePartnerShowMutationInput {
   # Should the show be displayed on the partner profile page?
   displayOnPartnerProfile: Boolean
 
-  # The end date of the show.
+  # The end date of the show. Can be set to null for fair booth shows only.
   endAt: String
 
   # The id of the fair to update the show for.

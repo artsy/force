@@ -8,6 +8,9 @@ jest.unmock("react-relay")
 jest.mock("Apps/Conversations/ConversationsContext", () => ({
   useConversationsContext: jest.fn().mockReturnValue({
     isConfirmModalVisible: true,
+    selectedEditionSetId: null,
+    setSelectedEditionSetId: jest.fn(),
+    hideSelectEditionSetModal: jest.fn(),
   }),
 }))
 
@@ -156,6 +159,16 @@ describe("ConversationConfirmModal", () => {
     })
 
     it("One edition is always selected", async () => {
+      const {
+        useConversationsContext,
+      } = require("Apps/Conversations/ConversationsContext")
+      useConversationsContext.mockReturnValue({
+        isConfirmModalVisible: true,
+        selectedEditionSetId: "edition-1",
+        setSelectedEditionSetId: jest.fn(),
+        hideSelectEditionSetModal: jest.fn(),
+      })
+
       renderWithRelay(mockSingleEdition)
 
       expect(await screen.findByRole("radio")).toBeChecked()
@@ -178,6 +191,24 @@ describe("ConversationConfirmModal", () => {
     })
 
     it("Can select editions", async () => {
+      const mockSetSelectedEditionSetId = jest.fn()
+      const {
+        useConversationsContext,
+      } = require("Apps/Conversations/ConversationsContext")
+
+      let currentSelectedEdition: string | null = null
+      useConversationsContext.mockReturnValue({
+        isConfirmModalVisible: true,
+        get selectedEditionSetId() {
+          return currentSelectedEdition
+        },
+        setSelectedEditionSetId: (id: string | null) => {
+          currentSelectedEdition = id
+          mockSetSelectedEditionSetId(id)
+        },
+        hideSelectEditionSetModal: jest.fn(),
+      })
+
       renderWithRelay(mockEditions)
 
       await waitFor(() => {
@@ -190,12 +221,10 @@ describe("ConversationConfirmModal", () => {
         expect(editions[1]).toHaveTextContent("test-edition-2")
 
         fireEvent.click(editions[0])
-        expect(radios[0]).toBeChecked()
-        expect(radios[1]).not.toBeChecked()
+        expect(mockSetSelectedEditionSetId).toHaveBeenCalledWith("edition-1")
 
         fireEvent.click(editions[1])
-        expect(radios[0]).not.toBeChecked()
-        expect(radios[1]).toBeChecked()
+        expect(mockSetSelectedEditionSetId).toHaveBeenCalledWith("edition-2")
       })
     })
 

@@ -21,8 +21,11 @@ export const ConversationMakeOfferButton: React.FC<
   const { submitMutation } = useMakeInquiryOffer()
   const { sendToast } = useToasts()
 
-  const { showSelectEditionSetModal, isConfirmModalVisible } =
-    useConversationsContext()
+  const {
+    showSelectEditionSetModal,
+    isConfirmModalVisible,
+    selectedEditionSetId,
+  } = useConversationsContext()
 
   const data = useConversationPurchaseButtonData(conversation)
 
@@ -52,7 +55,8 @@ export const ConversationMakeOfferButton: React.FC<
         variables: {
           input: {
             artworkId: data.artwork.internalID,
-            editionSetId: data.artwork.editionSets?.[0]?.internalID,
+            editionSetId:
+              selectedEditionSetId || data.artwork.editionSets?.[0]?.internalID,
             impulseConversationId: data.conversation.internalID as string,
           },
         },
@@ -95,6 +99,7 @@ export const ConversationMakeOfferButton: React.FC<
 
             showSelectEditionSetModal({
               isCreatingOfferOrder: true,
+              defaultEditionSetId: data.artwork.editionSets?.[0]?.internalID,
             })
           }}
         >
