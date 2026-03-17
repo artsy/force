@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<644a8d9be736074538f3c71e66a87903>>
+ * @generated SignedSource<<1800663497839d986cf5cc6fd58a54c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,6 @@ export type ArticleBody_article$data = {
   readonly layout: ArticleLayout;
   readonly leadParagraph: string | null | undefined;
   readonly postscript: string | null | undefined;
-  readonly publishedAt: string | null | undefined;
   readonly relatedArticles: ReadonlyArray<{
     readonly byline: string | null | undefined;
     readonly href: string | null | undefined;
@@ -49,7 +48,7 @@ export type ArticleBody_article$data = {
   readonly slug: string | null | undefined;
   readonly title: string | null | undefined;
   readonly vertical: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article" | "ArticleTimestamp_article">;
   readonly " $fragmentType": "ArticleBody_article";
 };
 export type ArticleBody_article$key = {
@@ -118,6 +117,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleNewsSource_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleTimestamp_article"
     },
     {
       "alias": null,
@@ -202,13 +206,6 @@ return {
     },
     (v4/*: any*/),
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "publishedAt",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -300,6 +297,6 @@ return {
 };
 })();
 
-(node as any).hash = "642ae5b6500092f504903186ec80b55a";
+(node as any).hash = "1e7047080ec7d946d8d89ec0f04f49b3";
 
 export default node;

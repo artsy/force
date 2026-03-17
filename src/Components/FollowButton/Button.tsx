@@ -1,34 +1,27 @@
 import { Box, Button, type ButtonProps, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import type React from "react"
 import {
   type MouseEventHandler,
-  type Ref,
+  type ReactNode,
   forwardRef,
   useMemo,
   useState,
 } from "react"
 import styled from "styled-components"
 
-export type FollowButtonRenderProps = (
-  label: "Follow" | "Following" | "Unfollow",
-) => any
+export type FollowButtonLabel = "Follow" | "Following" | "Unfollow"
+export type FollowButtonRenderProps = (label: FollowButtonLabel) => ReactNode
 
 export interface FollowButtonProps
-  extends Omit<Partial<ButtonProps>, "variant">,
-    React.PropsWithChildren<FollowButtonRenderProps> {
+  extends Omit<Partial<ButtonProps>, "variant" | "children"> {
+  children?: FollowButtonRenderProps
   handleFollow?: MouseEventHandler<HTMLButtonElement>
   isFollowed?: boolean
 }
 
-export const FollowButton = forwardRef(
+export const FollowButton = forwardRef<HTMLButtonElement, FollowButtonProps>(
   (
-    {
-      children,
-      handleFollow,
-      isFollowed = false,
-      ...rest
-    }: FollowButtonProps & { ref?: Ref<HTMLElement>; children?: any },
+    { children, handleFollow, isFollowed = false, ...rest }: FollowButtonProps,
     forwardedRef,
   ) => {
     const [showUnfollow, setShowUnfollow] = useState(false)
@@ -41,7 +34,7 @@ export const FollowButton = forwardRef(
 
     return (
       <StyledButton
-        ref={forwardedRef as any}
+        ref={forwardedRef}
         onClick={handleFollow}
         variant="secondaryNeutral"
         success={isFollowed}

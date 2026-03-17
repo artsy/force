@@ -18,9 +18,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowButton, type FollowButtonRenderProps } from "./Button"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 
-interface FollowArtistButtonProps
-  extends ButtonProps,
-    React.PropsWithChildren<FollowButtonRenderProps> {
+interface FollowArtistButtonProps extends Omit<ButtonProps, "children"> {
+  children?: FollowButtonRenderProps
   artist: FollowArtistButton_artist$data
   contextModule?: AuthContextModule
   me: FollowArtistButton_me$data | null | undefined
