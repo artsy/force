@@ -43,10 +43,11 @@ export const OrderDetailsOrderSummary: React.FC<
     ? artworkOrEditionSet.framedDimensions
     : undefined
   const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
-  const { dimensionsLabel } = useArtworkDimensions({
-    dimensions,
-    framedDimensions,
-  })
+  const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
+    useArtworkDimensions({
+      dimensions,
+      framedDimensions,
+    })
 
   return (
     <Box backgroundColor="mono0" px={[2, 4]} py={2}>

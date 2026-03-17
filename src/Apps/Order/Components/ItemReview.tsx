@@ -35,10 +35,11 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
   const dimensions = editionSet?.dimensions || artworkDimensions
   const framedDimensions = editionSet?.framedDimensions
 
-  const { dimensionsLabel } = useArtworkDimensions({
-    dimensions,
-    framedDimensions,
-  })
+  const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
+    useArtworkDimensions({
+      dimensions,
+      framedDimensions,
+    })
 
   return (
     <BorderBox p={[2, 4]}>

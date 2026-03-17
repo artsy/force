@@ -82,10 +82,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const { showCheckoutErrorModal } = useCheckoutModal()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
-  const { dimensionsLabel } = useArtworkDimensions({
-    dimensions: artworkData.dimensions,
-    framedDimensions: artworkData.framedDimensions,
-  })
+  const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
+    useArtworkDimensions({
+      dimensions: artworkData.dimensions,
+      framedDimensions: artworkData.framedDimensions,
+    })
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
