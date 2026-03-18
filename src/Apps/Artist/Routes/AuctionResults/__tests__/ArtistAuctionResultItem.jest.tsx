@@ -1,14 +1,28 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
 import { graphql } from "react-relay"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Hooks/useSystemContext")
+jest.mock(
+  "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking",
+)
+jest.mock("System/Hooks/useAnalyticsContext")
 
 describe("ArtistAuctionResultItem", () => {
+  const trackClickedAuctionResultItem = jest.fn()
+
+  beforeAll(() => {
+    ;(useAuctionResultsTracking as jest.Mock).mockImplementation(() => ({
+      trackClickedAuctionResultItem,
+    }))
+  })
+
   const { renderWithRelay } =
     setupTestWrapperTL<ArtistAuctionResultItemTestQuery>({
       Component: (props: any) => {
@@ -39,6 +53,13 @@ describe("ArtistAuctionResultItem", () => {
 
   beforeEach(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({ user: null }))
+    ;(useAnalyticsContext as jest.Mock).mockImplementation(() => ({
+      contextPageOwnerType: "artist",
+    }))
+  })
+
+  afterEach(() => {
+    trackClickedAuctionResultItem.mockClear()
   })
 
   it("renders the auction result data", () => {
@@ -74,6 +95,48 @@ describe("ArtistAuctionResultItem", () => {
       "href",
       "/auction-result/auction-result-id",
     )
+  })
+
+  describe("tracking", () => {
+    beforeEach(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        user: { name: "Logged In", email: "loggedin@example.com" },
+      }))
+    })
+
+    it("tracks auction result item click on Artist page", () => {
+      ;(useAnalyticsContext as jest.Mock).mockImplementation(() => ({
+        contextPageOwnerType: "artist",
+      }))
+
+      renderWithRelay(mockResolver)
+
+      const auctionResultLink = screen.getByRole("link")
+      fireEvent.click(auctionResultLink)
+
+      expect(trackClickedAuctionResultItem).toBeCalledWith({
+        type: "thumbnail",
+        expanded: undefined,
+        context_page_owner_type: "artist",
+      })
+    })
+
+    it("tracks auction result item click on Auction Result page", () => {
+      ;(useAnalyticsContext as jest.Mock).mockImplementation(() => ({
+        contextPageOwnerType: "artistAuctionResults",
+      }))
+
+      renderWithRelay(mockResolver)
+
+      const auctionResultLink = screen.getByRole("link")
+      fireEvent.click(auctionResultLink)
+
+      expect(trackClickedAuctionResultItem).toBeCalledWith({
+        type: "thumbnail",
+        expanded: undefined,
+        context_page_owner_type: "artistAuctionResults",
+      })
+    })
   })
 
   describe("when showArtistName is true", () => {

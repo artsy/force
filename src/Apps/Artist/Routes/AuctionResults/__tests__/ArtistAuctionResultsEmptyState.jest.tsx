@@ -28,7 +28,9 @@ describe("ArtistAuctionResultsEmptyState", () => {
     render(<ArtistAuctionResultsEmptyState />)
 
     expect(
-      screen.getByText("There are currently no HIJAZ results for this artist."),
+      screen.getByText(
+        "There are currently no auction results for this artist.",
+      ),
     ).toBeInTheDocument()
     expect(
       screen.getByRole("button", { name: /view the artsy database/i }),

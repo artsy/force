@@ -20,6 +20,7 @@ export const useAuctionResultsTracking = () => {
           | OwnerType.myCollectionArtworkInsights
           | OwnerType.myCollectionInsights
           | OwnerType.artist
+          | OwnerType.auctionResult
       } = {},
     ) => {
       const {
