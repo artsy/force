@@ -63,9 +63,6 @@ export const ArtistAuctionResultItem: React.FC<
   const onAuctionResultClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
-    console.log("HIJAZ!!!Auction result clicked!")
-    console.log("contextPageOwnerType:", contextPageOwnerType)
-
     trackClickedAuctionResultItem({
       type: "thumbnail" as EntityModuleType,
       expanded: undefined,
