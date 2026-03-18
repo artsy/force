@@ -30,10 +30,15 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
   const hasMediums = artist.mediumGenes?.length > 0
   const hasKeyFacts = hasMovements || hasMediums
 
+  if (!hasBiography && !hasKeyFacts) {
+    return null
+  }
+
   return (
-    <Flex flexDirection={"column"}>
+    <Flex data-testid="artist-about" flexDirection={"column"}>
       {hasBiography && (
         <Flex
+          data-testid="artist-bio"
           flexDirection={["column"]}
           border="solid 1px"
           borderColor="mono10"

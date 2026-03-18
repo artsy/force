@@ -156,4 +156,20 @@ describe("ArtistAbout", () => {
       expect(screen.queryByTestId("artist-key-facts")).not.toBeInTheDocument()
     })
   })
+
+  it("renders null when neither bio nor key facts are present", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Francesca Mollett",
+        biographyBlurb: {
+          text: "",
+          credit: null,
+        },
+        movementGenes: [],
+        mediumGenes: [],
+      }),
+    })
+
+    expect(screen.queryByTestId("artist-about")).not.toBeInTheDocument()
+  })
 })
