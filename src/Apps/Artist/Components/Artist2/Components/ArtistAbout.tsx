@@ -1,4 +1,4 @@
-import { Box, Expandable, Flex, Stack, Text } from "@artsy/palette"
+import { Box, Expandable, Flex, ReadMore, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import type {
@@ -17,27 +17,35 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
 }) => {
   const artist = useFragment(fragment, artistRef)
 
-  // TODO: replace with actual bio/credit logic
+  const biographyText = artist.biographyBlurb?.text
+  const biographyCredit = artist.biographyBlurb?.credit
+  const hasBiography = !!biographyText
+  const hasCredit = !!biographyCredit
   const biographyContent =
-    "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."
-  const hasBiography = !!biographyContent
+    hasBiography && hasCredit
+      ? `${biographyText} ${biographyCredit}`
+      : biographyText
 
   const hasMovements = artist.movementGenes?.length > 0
   const hasMediums = artist.mediumGenes?.length > 0
   const hasKeyFacts = hasMovements || hasMediums
 
+  if (!hasBiography && !hasKeyFacts) {
+    return null
+  }
+
   return (
-    <Flex flexDirection={"column"}>
+    <Flex data-testid="artist-about" flexDirection={"column"}>
       {hasBiography && (
         <Flex
+          data-testid="artist-bio"
           flexDirection={["column"]}
           border="solid 1px"
           borderColor="mono10"
           p={2}
-          gap={1}
         >
           <Text variant={"xs"}>About {artist.name}</Text>
-          <Text variant={"sm"}>{biographyContent}</Text>
+          <ReadMore maxLines={2} content={biographyContent!} />
         </Flex>
       )}
 
@@ -137,6 +145,10 @@ const KeyFactsContent: React.FC<{ artist: ArtistAbout_artist$data }> = ({
 const fragment = graphql`
   fragment ArtistAbout_artist on Artist {
     name
+    biographyBlurb(format: HTML) {
+      text
+      credit
+    }
     movementGenes: genes(
       geneFamilyID: "styles-and-movements"
       minValue: 50

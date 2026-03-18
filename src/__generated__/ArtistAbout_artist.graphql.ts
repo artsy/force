@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a60b06df5a1eb54fc28e3c40cada4c94>>
+ * @generated SignedSource<<5146eb48a0875fc6ae81943cd3f10946>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,10 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAbout_artist$data = {
+  readonly biographyBlurb: {
+    readonly credit: string | null | undefined;
+    readonly text: string | null | undefined;
+  } | null | undefined;
   readonly mediumGenes: ReadonlyArray<{
     readonly name: string | null | undefined;
     readonly slug: string;
@@ -63,6 +67,37 @@ return {
   "selections": [
     (v0/*: any*/),
     {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
+      "concreteType": "ArtistBlurb",
+      "kind": "LinkedField",
+      "name": "biographyBlurb",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "text",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "credit",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "biographyBlurb(format:\"HTML\")"
+    },
+    {
       "alias": "movementGenes",
       "args": [
         {
@@ -104,6 +139,6 @@ return {
 };
 })();
 
-(node as any).hash = "57995893a84237c296886c511ca19c09";
+(node as any).hash = "af7fc8500daef2eeb7aaecbc1db82935";
 
 export default node;
