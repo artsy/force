@@ -19,16 +19,71 @@ describe("ArtistAbout", () => {
     `,
   })
 
-  it("renders the biography section", () => {
+  it("renders the biography section heading", () => {
     renderWithRelay({
       Artist: () => ({
         name: "Francesca Mollett",
+        biographyBlurb: {
+          text: "A painter of landscapes.",
+          credit: null,
+        },
         movementGenes: [],
         mediumGenes: [],
       }),
     })
 
     expect(screen.getByText("About Francesca Mollett")).toBeInTheDocument()
+  })
+
+  it("renders the biography text", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Francesca Mollett",
+        biographyBlurb: {
+          text: "A painter of landscapes.",
+          credit: null,
+        },
+        movementGenes: [],
+        mediumGenes: [],
+      }),
+    })
+
+    expect(screen.getByText(/A painter of landscapes\./)).toBeInTheDocument()
+  })
+
+  it("appends credit to biography text when both are present", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Francesca Mollett",
+        biographyBlurb: {
+          text: "A painter of landscapes.",
+          credit: "Submitted by [Galerie Foo](/foo)",
+        },
+        movementGenes: [],
+        mediumGenes: [],
+      }),
+    })
+
+    expect(
+      screen.getByText(
+        /A painter of landscapes\. Submitted by \[Galerie Foo\]\(\/foo\)/,
+      ),
+    ).toBeInTheDocument()
+  })
+
+  it("does not render biography section when biographyBlurb is absent", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Francesca Mollett",
+        biographyBlurb: null,
+        movementGenes: [],
+        mediumGenes: [],
+      }),
+    })
+
+    expect(
+      screen.queryByText("About Francesca Mollett"),
+    ).not.toBeInTheDocument()
   })
 
   it("renders the key facts section", () => {

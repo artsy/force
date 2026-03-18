@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3f2967ad5983d7737be853c31802e92>>
+ * @generated SignedSource<<2a67ec4de4ab323842d29786b3e9c877>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -66,21 +66,21 @@ v5 = [
 ],
 v6 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v7 = {
   "enumValues": null,
   "nullable": false,
-  "plural": true,
-  "type": "Gene"
+  "plural": false,
+  "type": "ID"
 },
 v8 = {
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
+  "nullable": false,
+  "plural": true,
+  "type": "Gene"
 };
 return {
   "fragment": {
@@ -125,6 +125,37 @@ return {
         "selections": [
           (v1/*: any*/),
           {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "HTML"
+              }
+            ],
+            "concreteType": "ArtistBlurb",
+            "kind": "LinkedField",
+            "name": "biographyBlurb",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "text",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "credit",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "biographyBlurb(format:\"HTML\")"
+          },
+          {
             "alias": "movementGenes",
             "args": [
               {
@@ -167,7 +198,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d2c58d290cba0486fe7233a5bb5a0ea6",
+    "cacheID": "f8f4910d83fd9b6aaf0058d8dd92a27b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -177,21 +208,29 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.id": (v6/*: any*/),
-        "artist.mediumGenes": (v7/*: any*/),
-        "artist.mediumGenes.id": (v6/*: any*/),
-        "artist.mediumGenes.name": (v8/*: any*/),
-        "artist.mediumGenes.slug": (v6/*: any*/),
-        "artist.movementGenes": (v7/*: any*/),
-        "artist.movementGenes.id": (v6/*: any*/),
-        "artist.movementGenes.name": (v8/*: any*/),
-        "artist.movementGenes.slug": (v6/*: any*/),
-        "artist.name": (v8/*: any*/)
+        "artist.biographyBlurb": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistBlurb"
+        },
+        "artist.biographyBlurb.credit": (v6/*: any*/),
+        "artist.biographyBlurb.text": (v6/*: any*/),
+        "artist.id": (v7/*: any*/),
+        "artist.mediumGenes": (v8/*: any*/),
+        "artist.mediumGenes.id": (v7/*: any*/),
+        "artist.mediumGenes.name": (v6/*: any*/),
+        "artist.mediumGenes.slug": (v7/*: any*/),
+        "artist.movementGenes": (v8/*: any*/),
+        "artist.movementGenes.id": (v7/*: any*/),
+        "artist.movementGenes.name": (v6/*: any*/),
+        "artist.movementGenes.slug": (v7/*: any*/),
+        "artist.name": (v6/*: any*/)
       }
     },
     "name": "ArtistAbout_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistAbout_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistAbout_artist\n    id\n  }\n}\n\nfragment ArtistAbout_artist on Artist {\n  name\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    name\n    slug\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    name\n    slug\n    id\n  }\n}\n"
+    "text": "query ArtistAbout_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistAbout_artist\n    id\n  }\n}\n\nfragment ArtistAbout_artist on Artist {\n  name\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    name\n    slug\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    name\n    slug\n    id\n  }\n}\n"
   }
 };
 })();
