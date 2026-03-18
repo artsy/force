@@ -6,7 +6,6 @@ import { RouterLink } from "System/Components/RouterLink"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
 import { graphql, useFragment } from "react-relay"
 import type { NavBarSubMenuServer_navigationVersion$key } from "__generated__/NavBarSubMenuServer_navigationVersion.graphql"
-import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
 import { NavBarMenuItemFeaturedLinkColumn } from "./NavBarMenuItemFeaturedLinkColumn"
 import { useNavBarTracking } from "../useNavBarTracking"
 
@@ -14,7 +13,6 @@ const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
 interface NavBarSubMenuServerProps {
   navigationVersion: NavBarSubMenuServer_navigationVersion$key
-  featuredLinkData?: ReadonlyArray<NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key> | null
   label: string
   menuType: "whatsNew" | "artists" | "artworks"
   contextModule: DeprecatedAnalyticsSchema.ContextModule
@@ -27,7 +25,6 @@ interface NavBarSubMenuServerProps {
 /** Component for full-width sub-menus (Artworks, Artists, What’s New) - Server-driven version */
 export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
   navigationVersion: navigationVersionProp,
-  featuredLinkData,
   label,
   menuType,
   contextModule,
@@ -45,7 +42,9 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
     return null
   }
 
-  const shouldShowFeaturedLink = featuredLinkData && featuredLinkData.length > 0
+  const featuredLink =
+    navigationVersion.featuredLinksSet?.find(item => item != null) ?? null
+  const shouldShowFeaturedLink = featuredLink != null
   const columnSpan = 3
 
   // Determine header text for featured link based on menu type
@@ -170,7 +169,7 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
             {/* Right outer column: visual component */}
             {shouldShowFeaturedLink && (
               <NavBarMenuItemFeaturedLinkColumn
-                orderedSet={featuredLinkData[0]}
+                featuredLink={featuredLink}
                 contextModule={contextModule}
                 label={label}
                 headerText={featuredLinkHeaderText}
@@ -186,6 +185,9 @@ export const NavBarSubMenuServer: React.FC<NavBarSubMenuServerProps> = ({
 
 const NAVIGATION_VERSION_FRAGMENT = graphql`
   fragment NavBarSubMenuServer_navigationVersion on NavigationVersion {
+    featuredLinksSet {
+      ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData
+    }
     items {
       title
       position

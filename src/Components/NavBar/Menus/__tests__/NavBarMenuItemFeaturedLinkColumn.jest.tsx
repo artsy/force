@@ -19,34 +19,26 @@ jest.mock("react-relay", () => ({
 }))
 
 const MOCK_FEATURED_LINK_DATA = {
-  items: [
-    {
-      __typename: "FeaturedLink",
-      title: "Test Featured Title",
-      subtitle: "Test Featured Subtitle",
-      href: "/collection/test-featured",
-      image: {
-        cropped: {
-          src: "https://example.com/image.jpg",
-          srcSet: "https://example.com/image.jpg 1x",
-          width: 400,
-          height: 400,
-        },
-      },
+  title: "Test Featured Title",
+  subtitle: "Test Featured Subtitle",
+  href: "/collection/test-featured",
+  image: {
+    cropped: {
+      src: "https://example.com/image.jpg",
+      srcSet: "https://example.com/image.jpg 1x",
+      width: 400,
+      height: 400,
     },
-  ],
+  },
 }
 
 describe("NavBarMenuItemFeaturedLinkColumn", () => {
   const trackEvent = jest.fn()
 
-  const getWrapper = (passedProps = {}) => {
-    const { useFragment } = require("react-relay")
-    ;(useFragment as jest.Mock).mockReturnValue(MOCK_FEATURED_LINK_DATA)
-
+  const renderComponent = (passedProps = {}) => {
     return render(
       <NavBarMenuItemFeaturedLinkColumn
-        orderedSet={{} as any}
+        featuredLink={{} as any}
         contextModule={
           DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown
         }
@@ -55,6 +47,13 @@ describe("NavBarMenuItemFeaturedLinkColumn", () => {
         {...passedProps}
       />,
     )
+  }
+
+  const getWrapper = (passedProps = {}) => {
+    const { useFragment } = require("react-relay")
+    ;(useFragment as jest.Mock).mockReturnValue(MOCK_FEATURED_LINK_DATA)
+
+    return renderComponent(passedProps)
   }
 
   beforeAll(() => {
@@ -102,20 +101,11 @@ describe("NavBarMenuItemFeaturedLinkColumn", () => {
       expect(img).not.toBeInTheDocument()
     })
 
-    it("returns null when no FeaturedLink in items", () => {
+    it("returns null when no featured link data", () => {
       const { useFragment } = require("react-relay")
-      ;(useFragment as jest.Mock).mockReturnValue({ items: [] })
+      ;(useFragment as jest.Mock).mockReturnValue(null)
 
-      const { container } = render(
-        <NavBarMenuItemFeaturedLinkColumn
-          orderedSet={{} as any}
-          contextModule={
-            DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown
-          }
-          label="Artworks"
-          headerText="Get Inspired"
-        />,
-      )
+      const { container } = renderComponent()
 
       expect(container.firstChild).toBeNull()
     })
@@ -123,27 +113,13 @@ describe("NavBarMenuItemFeaturedLinkColumn", () => {
     it("returns null when FeaturedLink has no image.cropped", () => {
       const { useFragment } = require("react-relay")
       ;(useFragment as jest.Mock).mockReturnValue({
-        items: [
-          {
-            __typename: "FeaturedLink",
-            title: "No Image",
-            subtitle: "Subtitle",
-            href: "/link",
-            image: { cropped: null },
-          },
-        ],
+        title: "No Image",
+        subtitle: "Subtitle",
+        href: "/link",
+        image: { cropped: null },
       })
 
-      const { container } = render(
-        <NavBarMenuItemFeaturedLinkColumn
-          orderedSet={{} as any}
-          contextModule={
-            DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown
-          }
-          label="Artworks"
-          headerText="Get Inspired"
-        />,
-      )
+      const { container } = renderComponent()
 
       expect(container.firstChild).toBeNull()
     })

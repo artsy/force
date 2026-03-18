@@ -71,9 +71,6 @@ export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
             whatsNewNavigation: props.whatsNewNavigation,
             artistsNavigation: props.artistsNavigation,
             artworksNavigation: props.artworksNavigation,
-            whatsNewFeaturedLink: props.whatsNewFeaturedLink,
-            artistsFeaturedLink: props.artistsFeaturedLink,
-            artworksFeaturedLink: props.artworksFeaturedLink,
           }
         : null
 
@@ -126,18 +123,6 @@ export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
         ) {
           ...NavBarSubMenuServer_navigationVersion
           ...NavBarMobileSubMenuServer_navigationVersion
-        }
-
-        whatsNewFeaturedLink: orderedSets(key: "nav-visual:whats-new") {
-          ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData
-        }
-
-        artistsFeaturedLink: orderedSets(key: "nav-visual:artists") {
-          ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData
-        }
-
-        artworksFeaturedLink: orderedSets(key: "nav-visual:artworks") {
-          ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData
         }
       }
     `

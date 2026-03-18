@@ -7,14 +7,13 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { compact } from "lodash"
 import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Components/RouterLink"
 import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
 import { useNavBarTracking } from "../useNavBarTracking"
 
 export interface NavBarMenuItemFeaturedLinkColumnProps {
-  orderedSet: NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key
+  featuredLink: NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key
   contextModule: DeprecatedAnalyticsSchema.ContextModule
   label: string
   headerText?: string
@@ -25,7 +24,7 @@ export interface NavBarMenuItemFeaturedLinkColumnProps {
 export const NavBarMenuItemFeaturedLinkColumn: React.FC<
   NavBarMenuItemFeaturedLinkColumnProps
 > = ({
-  orderedSet: orderedSetKey,
+  featuredLink: featuredLinkKey,
   contextModule,
   label,
   headerText,
@@ -33,12 +32,7 @@ export const NavBarMenuItemFeaturedLinkColumn: React.FC<
 }) => {
   const tracking = useNavBarTracking()
 
-  const orderedSetData = useFragment(FEATURED_LINK_DATA_FRAGMENT, orderedSetKey)
-
-  const featuredLinks = compact(orderedSetData.items).flatMap(item =>
-    item.__typename === "FeaturedLink" ? [item] : [],
-  )
-  const item = featuredLinks[0]
+  const item = useFragment(FEATURED_LINK_DATA_FRAGMENT, featuredLinkKey)
 
   if (!item || !item.image?.cropped) {
     return null
@@ -109,25 +103,20 @@ export const NavBarMenuItemFeaturedLinkColumn: React.FC<
 }
 
 const FEATURED_LINK_DATA_FRAGMENT = graphql`
-  fragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on OrderedSet {
-    items {
-      __typename
-      ... on FeaturedLink {
-        title
-        subtitle(format: PLAIN)
-        href
-        image {
-          cropped(
-            width: 400
-            height: 400
-            version: ["main", "wide", "large_rectangle"]
-          ) {
-            src
-            srcSet
-            width
-            height
-          }
-        }
+  fragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on FeaturedLink {
+    title
+    subtitle(format: PLAIN)
+    href
+    image {
+      cropped(
+        width: 400
+        height: 400
+        version: ["main", "wide", "large_rectangle"]
+      ) {
+        src
+        srcSet
+        width
+        height
       }
     }
   }

@@ -63,9 +63,6 @@ interface GetWrapperProps {
     whatsNewNavigation: unknown
     artistsNavigation: unknown
     artworksNavigation: unknown
-    whatsNewFeaturedLink: unknown
-    artistsFeaturedLink: unknown
-    artworksFeaturedLink: unknown
   }> | null
 }
 
