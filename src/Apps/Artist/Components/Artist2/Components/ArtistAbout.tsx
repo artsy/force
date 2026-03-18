@@ -1,4 +1,12 @@
-import { Column, Flex, GridColumns, Spacer, Stack, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  Flex,
+  GridColumns,
+  Spacer,
+  Stack,
+  Text,
+} from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ArtistAbout_artist$key } from "__generated__/ArtistAbout_artist.graphql"
 import type React from "react"
@@ -23,60 +31,83 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
   const hasKeyFacts = hasMovements || hasMediums
 
   return (
-    <Stack gap={0}>
+    <Flex flexDirection={"column"}>
       {hasBiography && (
-        <GridColumns
-          data-testid="artist-biography"
-          border={"solid 1px"}
-          borderColor={"mono10"}
+        <Flex
+          flexDirection={["column"]}
+          border="solid 1px"
+          borderColor="mono10"
           p={2}
-          gridRowGap={1}
+          gap={1}
         >
-          <Column span={12}>
-            <Text variant={"xs"}>About {artist.name}</Text>
-            <Spacer y={1} />
-            <Text variant={"sm"}>{biographyContent}</Text>
-          </Column>
-        </GridColumns>
+          <Text variant={"xs"}>About {artist.name}</Text>
+          <Text variant={"sm"}>{biographyContent}</Text>
+        </Flex>
       )}
 
       {hasKeyFacts && (
-        <GridColumns
-          data-testid="artist-key-facts"
-          border={"solid 1px"}
-          borderColor={"mono10"}
+        <Flex
+          flexDirection={"column"}
+          border="solid 1px"
+          borderColor="mono10"
           borderTop={hasBiography ? "none" : undefined}
           p={2}
-          gridRowGap={1}
+          gap={[2, 2, 1]}
         >
-          <Column span={[12, 12, 2]}>
-            <Text variant={"xs"}>Movements</Text>
-          </Column>
-          <Column span={[12, 12, 10]}>
-            <Flex gap={1}>
-              {artist.movementGenes.map(g => (
-                <RouterLink key={g.slug} to={`/gene/${g.slug}`} color="mono60">
-                  <Text variant={"xs"}>{g.name}</Text>
-                </RouterLink>
-              ))}
+          {hasMovements && (
+            <Flex flexDirection={["column", "column", "row"]}>
+              <Box width={["auto", "auto", "15%"]} maxWidth={"6em"}>
+                <Text as="span" variant={"xs"}>
+                  Movements
+                </Text>
+              </Box>
+              <Flex flexWrap={"wrap"}>
+                {artist.movementGenes.map(g => (
+                  <RouterLink
+                    key={g.slug}
+                    to={`/gene/${g.slug}`}
+                    color="mono60"
+                  >
+                    <Text
+                      as="span"
+                      variant={"xs"}
+                      mr={1}
+                      lineHeight={1}
+                      style={{ whiteSpace: "nowrap" }}
+                    >
+                      {g.name}
+                    </Text>
+                  </RouterLink>
+                ))}
+              </Flex>
             </Flex>
-          </Column>
+          )}
 
-          <Column span={[12, 12, 2]}>
-            <Text variant={"xs"}>Mediums</Text>
-          </Column>
-          <Column span={[12, 12, 10]}>
-            <Flex gap={1}>
-              {artist.mediumGenes.map(g => (
-                <RouterLink key={g.slug} to={`/gene/${g.slug}`} color="mono60">
-                  <Text variant={"xs"}>{g.name}</Text>
-                </RouterLink>
-              ))}
+          {hasMediums && (
+            <Flex flexDirection={["column", "column", "row"]}>
+              <Box width={["auto", "auto", "15%"]} maxWidth={"6em"}>
+                <Text as="span" variant={"xs"}>
+                  Mediums
+                </Text>
+              </Box>
+              <Box>
+                {artist.mediumGenes.map(g => (
+                  <RouterLink
+                    key={g.slug}
+                    to={`/gene/${g.slug}`}
+                    color="mono60"
+                  >
+                    <Text as="span" variant={"xs"} mr={1} lineHeight={1}>
+                      {g.name}
+                    </Text>
+                  </RouterLink>
+                ))}
+              </Box>
             </Flex>
-          </Column>
-        </GridColumns>
+          )}
+        </Flex>
       )}
-    </Stack>
+    </Flex>
   )
 }
 
