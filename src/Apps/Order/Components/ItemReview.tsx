@@ -1,6 +1,7 @@
 import type * as React from "react"
 
 import { BorderBox, Flex, Image, Text } from "@artsy/palette"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import type { ItemReview_lineItem$data } from "__generated__/ItemReview_lineItem.graphql"
 import type { CommerceOrderSourceEnum } from "__generated__/orderRoutes_OrderQuery.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,12 +10,6 @@ interface ItemReviewProps {
   lineItem: ItemReview_lineItem$data
   orderSource: CommerceOrderSourceEnum
 }
-
-const dimensionsDisplay = dimensions => (
-  <Text variant="sm" color="mono60">
-    {dimensions.in} ({dimensions.cm})
-  </Text>
-)
 
 export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
   lineItem: { artwork, artworkVersion, editionSetId },
@@ -32,6 +27,20 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
   } = artworkVersion || {}
   const { editionSets } = artwork || {}
 
+  // Get dimensions for edition set or artwork
+  const editionSet =
+    editionSetId && editionSets
+      ? editionSets.find(e => e?.internalID === editionSetId)
+      : null
+  const dimensions = editionSet?.dimensions || artworkDimensions
+  const framedDimensions = editionSet?.framedDimensions
+
+  const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
+    useArtworkDimensions({
+      dimensions,
+      framedDimensions,
+    })
+
   return (
     <BorderBox p={[2, 4]}>
       <Flex flexGrow={1} flexDirection="column">
@@ -45,17 +54,11 @@ export const ItemReview: React.FC<React.PropsWithChildren<ItemReviewProps>> = ({
         <Text variant="sm" color="mono60">
           {medium}
         </Text>
-        <Text>
-          {!isPrivateSale &&
-            editionSetId &&
-            editionSets &&
-            dimensionsDisplay(
-              editionSets.find(e => e?.internalID === editionSetId)?.dimensions,
-            )}
-          {!editionSetId &&
-            artworkDimensions &&
-            dimensionsDisplay(artworkDimensions)}
-        </Text>
+        {!isPrivateSale && dimensionsLabel && (
+          <Text variant="sm" color="mono60">
+            {dimensionsLabel}
+          </Text>
+        )}
         {attributionClass?.shortDescription && (
           <Text variant="sm" color="mono60">
             {attributionClass.shortDescription}
@@ -81,6 +84,10 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
         editionSets {
           internalID
           dimensions {
+            in
+            cm
+          }
+          framedDimensions {
             in
             cm
           }

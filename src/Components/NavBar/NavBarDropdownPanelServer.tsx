@@ -1,7 +1,6 @@
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
-import type { NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key } from "__generated__/NavBarMenuItemFeaturedLinkColumn_featuredLinkData.graphql"
 import type { NavBarSubMenuServer_navigationVersion$key } from "__generated__/NavBarSubMenuServer_navigationVersion.graphql"
 import { useEffect, useRef } from "react"
 import { NavBarSubMenuServer } from "./Menus/NavBarSubMenuServer"
@@ -11,9 +10,6 @@ import { useNavBarTracking } from "./useNavBarTracking"
 
 interface NavBarDropdownPanelServerProps {
   navigationData: NavBarSubMenuServer_navigationVersion$key
-  featuredLinkData?: ReadonlyArray<
-    NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key | null | undefined
-  > | null
   label: string
   href: string
   contextModule: string
@@ -23,24 +19,10 @@ interface NavBarDropdownPanelServerProps {
 
 export const NavBarDropdownPanelServer: React.FC<
   NavBarDropdownPanelServerProps
-> = ({
-  navigationData,
-  featuredLinkData,
-  label,
-  href,
-  contextModule,
-  menuType,
-  handleClick,
-}) => {
+> = ({ navigationData, label, href, contextModule, menuType, handleClick }) => {
   const { prefetch } = usePrefetchRoute()
   const tracking = useNavBarTracking()
   const { shouldTransition, handleMenuEnter, getZIndex } = useNavBarDropdown()
-
-  // Filter out null/undefined from featured link data
-  const validFeaturedLinkData = featuredLinkData?.filter(
-    (item): item is NavBarMenuItemFeaturedLinkColumn_featuredLinkData$key =>
-      item != null,
-  )
 
   return (
     <Dropdown
@@ -55,7 +37,6 @@ export const NavBarDropdownPanelServer: React.FC<
         return (
           <NavBarSubMenuServer
             navigationVersion={navigationData}
-            featuredLinkData={validFeaturedLinkData}
             label={label}
             menuType={menuType}
             contextModule={

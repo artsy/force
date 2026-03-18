@@ -5,9 +5,6 @@ type NavigationDataKeys =
   | "whatsNewNavigation"
   | "artistsNavigation"
   | "artworksNavigation"
-  | "whatsNewFeaturedLink"
-  | "artistsFeaturedLink"
-  | "artworksFeaturedLink"
 
 export type NavigationData = Pick<buildAppRoutesQuery$data, NavigationDataKeys>
 

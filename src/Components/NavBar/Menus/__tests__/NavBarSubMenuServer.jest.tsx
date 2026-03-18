@@ -26,7 +26,19 @@ jest.mock("Components/NavBar/Menus/NavBarMenuItemFeaturedLinkColumn", () => ({
   }) => <div data-testid="featured-link-column">{headerText}</div>,
 }))
 
-const MOCK_NAVIGATION_VERSION = {
+const MOCK_NAVIGATION_VERSION: {
+  featuredLinksSet: Array<Record<string, never>> | null
+  items: Array<{
+    title: string
+    position: number
+    children: Array<{
+      title: string
+      href: string
+      position: number
+    }>
+  }>
+} = {
+  featuredLinksSet: null,
   items: [
     {
       title: "The Home Edit",
@@ -45,9 +57,12 @@ const MOCK_NAVIGATION_VERSION = {
 describe("NavBarSubMenuServer", () => {
   const trackEvent = jest.fn()
 
-  const getWrapper = (passedProps = {}) => {
+  const getWrapper = (
+    passedProps = {},
+    fragmentData = MOCK_NAVIGATION_VERSION,
+  ) => {
     const { useFragment } = require("react-relay")
-    ;(useFragment as jest.Mock).mockReturnValue(MOCK_NAVIGATION_VERSION)
+    ;(useFragment as jest.Mock).mockReturnValue(fragmentData)
 
     return render(
       <NavBarSubMenuServer
@@ -121,16 +136,20 @@ describe("NavBarSubMenuServer", () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  it("renders featured link when featuredLinkData is provided", () => {
-    const { container } = getWrapper({
-      featuredLinkData: [{} as any],
-    })
+  it("renders featured link when featuredLinksSet is provided", () => {
+    const { container } = getWrapper(
+      {},
+      {
+        ...MOCK_NAVIGATION_VERSION,
+        featuredLinksSet: [{}],
+      },
+    )
 
     expect(container.textContent).toContain("Get Inspired")
   })
 
-  it("does not render featured link when no featuredLinkData", () => {
-    const { container } = getWrapper({ featuredLinkData: null })
+  it("does not render featured link when no featuredLinksSet", () => {
+    const { container } = getWrapper()
 
     expect(container.textContent).not.toContain("Get Inspired")
     expect(container.textContent).not.toContain("What's Next")
@@ -164,28 +183,40 @@ describe("NavBarSubMenuServer", () => {
   })
 
   it("uses correct featured link header text per menuType", () => {
-    const { getByTestId } = getWrapper({
-      menuType: "whatsNew",
-      featuredLinkData: [{} as any],
-    })
+    const { getByTestId } = getWrapper(
+      { menuType: "whatsNew" },
+      {
+        ...MOCK_NAVIGATION_VERSION,
+        featuredLinksSet: [{}],
+      },
+    )
+
     expect(getByTestId("featured-link-column")).toHaveTextContent("What’s Next")
   })
 
   it("uses Artists to Discover header when menuType is artists", () => {
-    const { getByTestId } = getWrapper({
-      menuType: "artists",
-      featuredLinkData: [{} as any],
-    })
+    const { getByTestId } = getWrapper(
+      { menuType: "artists" },
+      {
+        ...MOCK_NAVIGATION_VERSION,
+        featuredLinksSet: [{}],
+      },
+    )
+
     expect(getByTestId("featured-link-column")).toHaveTextContent(
       "Artists to Discover",
     )
   })
 
   it("uses Get Inspired header when menuType is artworks", () => {
-    const { getByTestId } = getWrapper({
-      menuType: "artworks",
-      featuredLinkData: [{} as any],
-    })
+    const { getByTestId } = getWrapper(
+      { menuType: "artworks" },
+      {
+        ...MOCK_NAVIGATION_VERSION,
+        featuredLinksSet: [{}],
+      },
+    )
+
     expect(getByTestId("featured-link-column")).toHaveTextContent(
       "Get Inspired",
     )

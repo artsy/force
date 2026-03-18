@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react"
 import { ArtworkDetailsFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails"
+import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtworkDetailsTestQuery } from "__generated__/ArtworkDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
@@ -7,9 +8,13 @@ import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
+jest.mock("Apps/Artwork/Components/SelectedEditionSetContext")
 ;(useTracking as jest.Mock).mockImplementation(() => {
   return {}
 })
+;(useSelectedEditionSetContext as jest.Mock).mockImplementation(() => ({
+  selectedEditionSet: null,
+}))
 
 jest.mock("Components/EntityHeaders/EntityHeaderPartner", () => ({
   EntityHeaderPartnerFragmentContainer: () =>
@@ -117,6 +122,7 @@ describe("ArtworkDetails", () => {
         category: null,
         attributionClass: null,
         dimensions: null,
+        editionSets: [],
         medium: null,
         series: null,
         publisher: null,

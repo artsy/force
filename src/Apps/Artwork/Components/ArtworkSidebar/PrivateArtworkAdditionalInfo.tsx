@@ -29,7 +29,7 @@ export const PrivateArtworkAdditionalInfo: React.FC<
   const { listItems, openConditionModal, setOpenConditionModal } =
     useArtworkDetailsAdditionalInfoFields({ artwork: data })
 
-  const itemsToRemove = ["Materials", "Size", "Rarity", "Frame"]
+  const itemsToRemove = ["Materials", "Size", "Framed Size", "Rarity", "Frame"]
 
   const privateListItems = listItems.filter(
     item => !itemsToRemove.includes(item.term),
@@ -102,6 +102,21 @@ const privateArtworkAdditionalInfoFragment = graphql`
     framed {
       label
       details
+    }
+    framedDimensions {
+      in
+      cm
+    }
+    editionSets {
+      internalID
+      dimensions {
+        in
+        cm
+      }
+      framedDimensions {
+        in
+        cm
+      }
     }
     signatureInfo {
       label

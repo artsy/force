@@ -12823,7 +12823,6 @@ interface EntityWithFilterArtworksConnectionInterface {
   id: ID!
 }
 
-# A user-readable error
 type Error {
   # Error code
   code: String!
@@ -12868,9 +12867,7 @@ type ErrorTypeCount {
   errorType: ArtworkImportError!
 }
 
-# A user-readable list of errors
 type Errors {
-  # List of Errors.
   errors: [Error!]!
 }
 
@@ -25786,12 +25783,6 @@ type TotalLine {
 
 input TransferMyCollectionInput {
   clientMutationId: String
-
-  # Email of the source user.
-  emailFrom: String
-
-  # Email of the destination user.
-  emailTo: String
 
   # ID of the source user.
   idFrom: String

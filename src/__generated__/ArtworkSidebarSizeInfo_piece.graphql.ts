@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e03c739b7a743e1cbd5d7355aa36c7f7>>
+ * @generated SignedSource<<eaa2fb5259278a209b909080b53ed78c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,10 @@ export type ArtworkSidebarSizeInfo_piece$data = {
     readonly in: string | null | undefined;
   } | null | undefined;
   readonly editionOf: string | null | undefined;
+  readonly framedDimensions?: {
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarSizeInfo_piece";
 };
 export type ArtworkSidebarSizeInfo_piece$key = {
@@ -23,7 +27,24 @@ export type ArtworkSidebarSizeInfo_piece$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -36,22 +57,7 @@ const node: ReaderFragment = {
       "kind": "LinkedField",
       "name": "dimensions",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "in",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cm",
-          "storageKey": null
-        }
-      ],
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
@@ -60,12 +66,30 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "editionOf",
       "storageKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "dimensions",
+          "kind": "LinkedField",
+          "name": "framedDimensions",
+          "plural": false,
+          "selections": (v0/*: any*/),
+          "storageKey": null
+        }
+      ],
+      "type": "EditionSet",
+      "abstractKey": null
     }
   ],
   "type": "Sellable",
   "abstractKey": "__isSellable"
 };
+})();
 
-(node as any).hash = "a986776b32a0b3f3f9bab3199809c7e2";
+(node as any).hash = "c83d20f7928915d10ad5f643e62ee67e";
 
 export default node;

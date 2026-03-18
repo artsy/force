@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c939e66e223100eb781118110e79ce08>>
+ * @generated SignedSource<<cdb32880064db7fa699c4508f8bfff11>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,10 @@ export type ItemReview_lineItem$data = {
   readonly artwork: {
     readonly editionSets: ReadonlyArray<{
       readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly framedDimensions: {
         readonly cm: string | null | undefined;
         readonly in: string | null | undefined;
       } | null | undefined;
@@ -47,29 +51,30 @@ export type ItemReview_lineItem$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "dimensions",
   "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "in",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "cm",
-      "storageKey": null
-    }
-  ],
+  "selections": (v0/*: any*/),
   "storageKey": null
 };
 return {
@@ -101,7 +106,17 @@ return {
               "name": "internalID",
               "storageKey": null
             },
-            (v0/*: any*/)
+            (v1/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "dimensions",
+              "kind": "LinkedField",
+              "name": "framedDimensions",
+              "plural": false,
+              "selections": (v0/*: any*/),
+              "storageKey": null
+            }
           ],
           "storageKey": null
         }
@@ -197,7 +212,7 @@ return {
           ],
           "storageKey": null
         },
-        (v0/*: any*/)
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -214,6 +229,6 @@ return {
 };
 })();
 
-(node as any).hash = "1a3fe10edfce0207b339f3dd75c77079";
+(node as any).hash = "f4cfb1dc0725fcb6853149f5b9df5fb2";
 
 export default node;
