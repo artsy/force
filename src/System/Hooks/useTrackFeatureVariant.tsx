@@ -20,7 +20,7 @@ export function useTrackFeatureVariant({
   const trackFeatureVariant = () => {
     // HACK: Temporary hack while we refactor useAnalyticsContext
     // to update upon page navigation.
-    const path = router.match.location.pathname
+    const path = router?.match?.location?.pathname ?? ""
 
     if (!path) return
 
@@ -57,7 +57,7 @@ export const useTrackFeatureVariantOnMount = (
   },
 ) => {
   const router = useRouter()
-  const pathname = router.match.location.pathname ?? ""
+  const pathname = router?.match?.location?.pathname ?? ""
 
   const { trackFeatureVariant } = useTrackFeatureVariant({
     ...props,
