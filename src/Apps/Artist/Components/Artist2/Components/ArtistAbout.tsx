@@ -1,14 +1,10 @@
-import {
-  Box,
-  Column,
-  Flex,
-  GridColumns,
-  Spacer,
-  Stack,
-  Text,
-} from "@artsy/palette"
+import { Box, Expandable, Flex, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import type { ArtistAbout_artist$key } from "__generated__/ArtistAbout_artist.graphql"
+import { Media } from "Utils/Responsive"
+import type {
+  ArtistAbout_artist$data,
+  ArtistAbout_artist$key,
+} from "__generated__/ArtistAbout_artist.graphql"
 import type React from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -26,8 +22,8 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
     "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."
   const hasBiography = !!biographyContent
 
-  const hasMovements = artist.movementGenes.length > 0
-  const hasMediums = artist.mediumGenes.length > 0
+  const hasMovements = artist.movementGenes?.length > 0
+  const hasMediums = artist.mediumGenes?.length > 0
   const hasKeyFacts = hasMovements || hasMediums
 
   return (
@@ -46,68 +42,95 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
       )}
 
       {hasKeyFacts && (
-        <Flex
-          flexDirection={"column"}
-          border="solid 1px"
-          borderColor="mono10"
-          borderTop={hasBiography ? "none" : undefined}
-          p={2}
-          gap={[2, 2, 1]}
-        >
-          {hasMovements && (
-            <Flex flexDirection={["column", "column", "row"]}>
-              <Box width={["auto", "auto", "15%"]} maxWidth={"6em"}>
-                <Text as="span" variant={"xs"}>
-                  Movements
-                </Text>
-              </Box>
-              <Flex flexWrap={"wrap"}>
-                {artist.movementGenes.map(g => (
-                  <RouterLink
-                    key={g.slug}
-                    to={`/gene/${g.slug}`}
-                    color="mono60"
-                  >
-                    <Text
-                      as="span"
-                      variant={"xs"}
-                      mr={1}
-                      lineHeight={1}
-                      style={{ whiteSpace: "nowrap" }}
-                    >
-                      {g.name}
-                    </Text>
-                  </RouterLink>
-                ))}
-              </Flex>
+        <>
+          {/* Collapse at small screen sizes */}
+          <Media at="xs">
+            <Flex
+              data-testid="artist-key-facts"
+              flexDirection={"column"}
+              border="solid 1px"
+              borderColor="mono10"
+              borderTop={hasBiography ? "none" : undefined}
+              paddingX={2}
+              paddingTop={0}
+              paddingBottom={1}
+            >
+              <Expandable
+                label={<Text color="mono60">Key facts</Text>}
+                borderColor={"transparent"}
+              >
+                <Stack gap={2}>
+                  <KeyFactsContent artist={artist} />
+                </Stack>
+              </Expandable>
             </Flex>
-          )}
+          </Media>
 
-          {hasMediums && (
-            <Flex flexDirection={["column", "column", "row"]}>
-              <Box width={["auto", "auto", "15%"]} maxWidth={"6em"}>
-                <Text as="span" variant={"xs"}>
-                  Mediums
-                </Text>
-              </Box>
-              <Box>
-                {artist.mediumGenes.map(g => (
-                  <RouterLink
-                    key={g.slug}
-                    to={`/gene/${g.slug}`}
-                    color="mono60"
-                  >
-                    <Text as="span" variant={"xs"} mr={1} lineHeight={1}>
-                      {g.name}
-                    </Text>
-                  </RouterLink>
-                ))}
-              </Box>
+          {/* Display normally at larger screen sizes */}
+          <Media greaterThan="xs">
+            <Flex
+              flexDirection={"column"}
+              border="solid 1px"
+              borderColor="mono10"
+              borderTop={hasBiography ? "none" : undefined}
+              padding={2}
+            >
+              <Stack gap={[2, 2, 1]}>
+                <KeyFactsContent artist={artist} />
+              </Stack>
             </Flex>
-          )}
-        </Flex>
+          </Media>
+        </>
       )}
     </Flex>
+  )
+}
+
+/**
+ * Extracted for re-use at multiple `<Media>` breakpoints
+ */
+const KeyFactsContent: React.FC<{ artist: ArtistAbout_artist$data }> = ({
+  artist,
+}) => {
+  const hasMovements = artist.movementGenes?.length > 0
+  const hasMediums = artist.mediumGenes?.length > 0
+
+  return (
+    <>
+      {hasMovements && (
+        <Flex flexDirection={["column", "column", "row"]}>
+          <Box width={["auto", "auto", "6em"]}>
+            <Text variant={"xs"}>Movements</Text>
+          </Box>
+          <Flex flexWrap={"wrap"}>
+            {artist.movementGenes.map(g => (
+              <RouterLink key={g.slug} to={`/gene/${g.slug}`} color="mono60">
+                <Text variant={"xs"} mr={1}>
+                  {g.name}
+                </Text>
+              </RouterLink>
+            ))}
+          </Flex>
+        </Flex>
+      )}
+
+      {hasMediums && (
+        <Flex flexDirection={["column", "column", "row"]}>
+          <Box width={["auto", "auto", "6em"]}>
+            <Text variant={"xs"}>Mediums</Text>
+          </Box>
+          <Flex flexWrap={"wrap"}>
+            {artist.mediumGenes.map(g => (
+              <RouterLink key={g.slug} to={`/gene/${g.slug}`} color="mono60">
+                <Text variant={"xs"} mr={1}>
+                  {g.name}
+                </Text>
+              </RouterLink>
+            ))}
+          </Flex>
+        </Flex>
+      )}
+    </>
   )
 }
 
