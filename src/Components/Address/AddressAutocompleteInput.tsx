@@ -14,7 +14,10 @@ import {
 } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import type { Address } from "Components/Address/utils"
-import { ISO2_TO_ISO3 } from "Components/Address/utils/countryISO3Codes"
+import {
+  ISO2_TO_ISO3,
+  ISO3_TO_ISO2,
+} from "Components/Address/utils/countryISO3Codes"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useReducer } from "react"
@@ -78,10 +81,22 @@ type ProviderSuggestionInternational = {
   entries: number
 }
 
+// Structured components returned by GET /v2/lookup/{address_id}
+type InternationalAddressComponents = {
+  country_iso3: string
+  administrative_area: string
+  locality: string
+  postal_code: string
+  thoroughfare: string
+  premise: string
+}
+
 interface AddressAutocompleteSuggestion extends AutocompleteInputOptionType {
   address: Omit<Address, "name">
   // null if secondary suggestions are not enabled; > 1 means drill-down required
   entries: number | null
+  // address_id for fetching structured components on selection
+  addressId?: string
 }
 
 type ServiceAvailability =
@@ -364,6 +379,7 @@ export const AddressAutocompleteInput = ({
             text: suggestion.address_text,
             value: suggestion.address_text,
             entries: suggestion.entries,
+            addressId: suggestion.address_id,
             address: {
               addressLine1: parsed.addressLine1,
               addressLine2: "",
@@ -434,7 +450,47 @@ export const AddressAutocompleteInput = ({
         onClear()
         fetchForAutocomplete({ search: "" })
       }}
-      onSelect={(option, index) => {
+      onSelect={async (option, index) => {
+        if (!isUSAddress && option.entries === 1 && option.addressId) {
+          const iso3Country = ISO2_TO_ISO3[address.country]
+          if (iso3Country && serviceAvailability?.enabled) {
+            try {
+              const response = await fetchInternationalAddressById({
+                addressId: option.addressId,
+                country: iso3Country,
+                apiKey: serviceAvailability.apiKey,
+              })
+              const components = response.candidates?.[0]?.components
+              if (components) {
+                const iso2Country =
+                  ISO3_TO_ISO2[components.country_iso3] || address.country
+                const enrichedOption = {
+                  ...option,
+                  address: {
+                    addressLine1:
+                      [components.thoroughfare, components.premise]
+                        .filter(Boolean)
+                        .join(" ") || option.address.addressLine1,
+                    addressLine2: "",
+                    city: components.locality || option.address.city,
+                    region: components.administrative_area,
+                    postalCode:
+                      components.postal_code || option.address.postalCode,
+                    country: iso2Country,
+                  },
+                }
+                trackSelectedAutocompletedAddress(
+                  enrichedOption,
+                  value as string,
+                )
+                onSelect(enrichedOption, index)
+                return
+              }
+            } catch (e) {
+              console.error("Failed to fetch address components:", e)
+            }
+          }
+        }
         trackSelectedAutocompletedAddress(option, value as string)
         onSelect(option, index)
       }}
@@ -510,6 +566,32 @@ const fetchInternationalSuggestionsWithThrottle = throttle(
   },
 )
 
+const fetchInternationalAddressById = async ({
+  addressId,
+  country,
+  apiKey,
+}: {
+  addressId: string
+  country: string
+  apiKey: string
+}): Promise<{
+  candidates: Array<{
+    components?: InternationalAddressComponents
+  }>
+}> => {
+  const params = new URLSearchParams({
+    key: apiKey,
+    country,
+    license: INTERNATIONAL_LICENSE,
+  })
+  const url = `${SMARTY_INTL_AUTOCOMPLETE_URL}/${encodeURIComponent(addressId)}?${params}`
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`Address component lookup failed: ${response.status}`)
+  }
+  return response.json()
+}
+
 /**
  * Resets throttle state between tests so stale results from a previous test
  * don't bleed into the next one. Only call this from test setup code.
@@ -532,12 +614,26 @@ const buildUSAddressText = (suggestion: ProviderSuggestion): string => {
 
 /**
  * Parse a Smarty international address_text string into structured components.
- * Most countries use "{street} {postal_code} {city}" where postal code is 4-7 digits.
+ * Handles three common Smarty address_text formats:
+ *   1. Netherlands-style: "{street} {4-digit} {2-letter} {city}" e.g. "Herengracht 1 1015 BA Amsterdam"
+ *   2. Most European: "{street} {4-7 digit postcode} {city}" e.g. "Krausenstr. 9-10 10117 Berlin"
+ *   3. UK-style: "{street} {city} {postcode}" where postcode is at the end e.g. "10 Ashwood Close Worthing BN11 2AF"
  * Falls back to putting the full text in addressLine1 for unrecognized formats.
  */
-const parseInternationalAddressText = (
+export const parseInternationalAddressText = (
   text: string,
 ): { addressLine1: string; postalCode: string; city: string } => {
+  // Netherlands/Belgium: "{street} {4-digit} {2-uppercase-letter} {city}"
+  const nlMatch = text.match(/^(.+?)\s+(\d{4}\s[A-Z]{2})\s+(.+)$/)
+  if (nlMatch) {
+    return {
+      addressLine1: nlMatch[1],
+      postalCode: nlMatch[2],
+      city: nlMatch[3],
+    }
+  }
+
+  // Most of Europe: "{street} {4-7 numeric digits} {city}"
   const numericMatch = text.match(/^(.+?)\s+(\d{4,7})\s+(.+)$/)
   if (numericMatch) {
     return {
@@ -546,6 +642,19 @@ const parseInternationalAddressText = (
       city: numericMatch[3],
     }
   }
+
+  // UK: "{street} {city} {postcode}" where postcode ends the string
+  const ukMatch = text.match(
+    /^(.+)\s+(.+?)\s+([A-Z]{1,2}\d{1,2}[A-Z]?\s\d[A-Z]{2})$/,
+  )
+  if (ukMatch) {
+    return {
+      addressLine1: ukMatch[1],
+      city: ukMatch[2],
+      postalCode: ukMatch[3],
+    }
+  }
+
   return { addressLine1: text, postalCode: "", city: "" }
 }
 
