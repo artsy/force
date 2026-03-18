@@ -158,11 +158,11 @@ describe("AddressAutocompleteInput", () => {
       expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
     })
 
-    it("renders a normal input for a non-US address when both flags are disabled", async () => {
+    it("renders a normal input for a US address when the US flag is disabled", async () => {
       const { useFlag } = jest.requireMock("@unleash/proxy-client-react")
       useFlag.mockImplementation(() => false)
 
-      render(<TestImplementation initialAddress={{ country: "CA" }} />)
+      render(<TestImplementation initialAddress={{ country: "US" }} />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
       await userEvent.type(line1Input, "40")
@@ -341,11 +341,8 @@ describe("AddressAutocompleteInput", () => {
         json: jest.fn().mockResolvedValue({
           candidates: [
             {
-              street: "10 Downing St",
-              locality: "London",
-              administrative_area: "England",
-              postal_code: "SW1A 2AA",
-              country_iso3: "GBR",
+              address_text: "10 Downing St SW1A 2AA London",
+              address_id: "abc123",
               entries: 1,
             },
           ],
@@ -359,9 +356,7 @@ describe("AddressAutocompleteInput", () => {
       await userEvent.type(line1Input, "10 Downing")
 
       const listbox = await screen.findByRole("listbox", { hidden: true })
-      expect(listbox).toHaveTextContent(
-        "10 Downing St, London, England, SW1A 2AA",
-      )
+      expect(listbox).toHaveTextContent("10 Downing St SW1A 2AA London")
     })
 
     it("maps international suggestion fields correctly on select", async () => {
@@ -369,11 +364,9 @@ describe("AddressAutocompleteInput", () => {
         json: jest.fn().mockResolvedValue({
           candidates: [
             {
-              street: "10 Downing St",
-              locality: "London",
-              administrative_area: "England",
-              postal_code: "SW1A 2AA",
-              country_iso3: "GBR",
+              // German-style: {street} {5-digit postal} {city}
+              address_text: "Unter den Linden 1 10117 Berlin",
+              address_id: "abc123",
               entries: 1,
             },
           ],
@@ -381,14 +374,14 @@ describe("AddressAutocompleteInput", () => {
         ok: true,
       })
 
-      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+      render(<TestImplementation initialAddress={{ country: "DE" }} />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.paste(line1Input, "10 Downing")
+      await userEvent.paste(line1Input, "Unter den Linden")
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
       const option = within(dropdown).getByText(
-        "10 Downing St, London, England, SW1A 2AA",
+        "Unter den Linden 1 10117 Berlin",
       )
       await userEvent.click(option)
       await flushPromiseQueue()
@@ -396,28 +389,25 @@ describe("AddressAutocompleteInput", () => {
       expect(mockOnSelect).toHaveBeenCalledWith(
         expect.objectContaining({
           address: {
-            addressLine1: "10 Downing St",
+            addressLine1: "Unter den Linden 1",
             addressLine2: "",
-            city: "London",
-            region: "England",
-            postalCode: "SW1A 2AA",
-            country: "GB",
+            city: "Berlin",
+            region: "",
+            postalCode: "10117",
+            country: "DE",
           },
         }),
         0,
       )
     })
 
-    it("handles missing administrative_area and postal_code for international addresses", async () => {
+    it("falls back to full address_text in addressLine1 when postal code cannot be parsed", async () => {
       mockFetch.mockResolvedValue({
         json: jest.fn().mockResolvedValue({
           candidates: [
             {
-              street: "Shibuya 1-1",
-              locality: "Tokyo",
-              administrative_area: "",
-              postal_code: "",
-              country_iso3: "JPN",
+              address_text: "1-1 Shibuya Tokyo",
+              address_id: "abc123",
               entries: 1,
             },
           ],
@@ -431,16 +421,15 @@ describe("AddressAutocompleteInput", () => {
       await userEvent.paste(line1Input, "Shibuya")
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
-      const option = within(dropdown).getByText("Shibuya 1-1, Tokyo")
+      const option = within(dropdown).getByText("1-1 Shibuya Tokyo")
       await userEvent.click(option)
       await flushPromiseQueue()
 
       expect(mockOnSelect).toHaveBeenCalledWith(
         expect.objectContaining({
           address: expect.objectContaining({
-            addressLine1: "Shibuya 1-1",
-            city: "Tokyo",
-            region: "",
+            addressLine1: "1-1 Shibuya Tokyo",
+            city: "",
             postalCode: "",
             country: "JP",
           }),
@@ -449,16 +438,45 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
+    it("calls parent onSelect even when entries > 1 (street-level result)", async () => {
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          candidates: [
+            {
+              address_text: "Unter den Linden 10117 Berlin",
+              address_id: "building-id",
+              entries: 29,
+            },
+          ],
+        }),
+        ok: true,
+      })
+
+      render(<TestImplementation initialAddress={{ country: "DE" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "Unter den Linden")
+
+      const firstDropdown = await screen.findByRole("listbox", { hidden: true })
+      const buildingOption = within(firstDropdown).getByText(
+        "Unter den Linden 10117 Berlin",
+      )
+      await userEvent.click(buildingOption)
+      await flushPromiseQueue()
+
+      expect(mockOnSelect).toHaveBeenCalledTimes(1)
+      expect(mockOnSelect.mock.calls[0][0].address.addressLine1).toBe(
+        "Unter den Linden",
+      )
+    })
+
     it("resets international suggestions when the country changes", async () => {
       mockFetch.mockResolvedValue({
         json: jest.fn().mockResolvedValue({
           candidates: [
             {
-              street: "10 Downing St",
-              locality: "London",
-              administrative_area: "England",
-              postal_code: "SW1A 2AA",
-              country_iso3: "GBR",
+              address_text: "10 Downing St SW1A 2AA London",
+              address_id: "abc123",
               entries: 1,
             },
           ],
@@ -480,20 +498,28 @@ describe("AddressAutocompleteInput", () => {
       expect(listbox).not.toBeInTheDocument()
     })
 
-    it("falls back to plain input if the international API returns an error", async () => {
+    it("keeps the autocomplete input active and shows no suggestions if the international API errors", async () => {
       mockFetch.mockResolvedValue({
         ok: false,
-        status: 500,
+        status: 401,
         json: jest.fn().mockResolvedValue({}),
       })
 
       render(<TestImplementation initialAddress={{ country: "GB" }} />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.type(line1Input, "10 Downing")
+      // Type 2 chars (below fetch threshold) to confirm autocomplete is still rendered
+      await userEvent.type(line1Input, "10")
+      expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
 
+      // Type a 3rd char to trigger the failing fetch
+      await userEvent.type(line1Input, " D")
       await waitFor(() => {
-        expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
+        // No suggestions shown, but input remains as autocomplete (clear button still present)
+        expect(
+          screen.queryByRole("listbox", { hidden: true }),
+        ).not.toBeInTheDocument()
+        expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
       })
     })
 

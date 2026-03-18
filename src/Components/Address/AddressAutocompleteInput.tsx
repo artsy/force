@@ -12,12 +12,9 @@ import {
   Input,
   usePrevious,
 } from "@artsy/palette"
-import type { Address } from "Components/Address/utils"
-import {
-  ISO2_TO_ISO3,
-  ISO3_TO_ISO2,
-} from "Components/Address/utils/countryISO3Codes"
 import { useFlag } from "@unleash/proxy-client-react"
+import type { Address } from "Components/Address/utils"
+import { ISO2_TO_ISO3 } from "Components/Address/utils/countryISO3Codes"
 import { getENV } from "Utils/getENV"
 import { throttle, uniqBy } from "lodash"
 import { useCallback, useEffect, useReducer } from "react"
@@ -28,6 +25,11 @@ import { useTracking } from "react-tracking"
 const { key: API_KEY } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
 
 const THROTTLE_DELAY = 500
+const INTERNATIONAL_LICENSE = "international-autocomplete-v2-cloud"
+const SMARTY_US_AUTOCOMPLETE_URL =
+  "https://us-autocomplete-pro.api.smarty.com/lookup"
+const SMARTY_INTL_AUTOCOMPLETE_URL =
+  "https://international-autocomplete.api.smarty.com/v2/lookup"
 
 interface AutocompleteTrackingValues {
   contextPageOwnerId: string
@@ -68,18 +70,17 @@ type ProviderSuggestion = {
   source?: "postal" | "other"
 }
 
+// Response shape for the Smarty international autocomplete v2 cloud API.
+// Both the initial search and the address_id drill-down return this shape.
 type ProviderSuggestionInternational = {
-  street: string
-  locality: string
-  administrative_area: string
-  postal_code: string
-  country_iso3: string
+  address_text: string
+  address_id: string
   entries: number
 }
 
 interface AddressAutocompleteSuggestion extends AutocompleteInputOptionType {
   address: Omit<Address, "name">
-  // entries are null if secondary suggestions are not enabled
+  // null if secondary suggestions are not enabled; > 1 means drill-down required
   entries: number | null
 }
 
@@ -118,7 +119,6 @@ type Action =
       internationalProviderSuggestions: ProviderSuggestionInternational[]
     }
   | { type: "RESET_SUGGESTIONS" }
-  | { type: "DISABLE_SERVICE" }
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -165,15 +165,6 @@ const reducer = (state: State, action: Action): State => {
         internationalProviderSuggestions: [],
       }
     }
-    case "DISABLE_SERVICE": {
-      return {
-        ...state,
-        fetching: false,
-        serviceAvailability: { enabled: false },
-        providerSuggestions: [],
-        internationalProviderSuggestions: [],
-      }
-    }
     default: {
       return state
     }
@@ -215,9 +206,8 @@ export const AddressAutocompleteInput = ({
   const isUSAddress = address.country === "US"
 
   const isUSFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
-  const isInternationalFeatureFlagEnabled = !!useFlag(
-    "address_autocomplete_international",
-  )
+  const isInternationalFeatureFlagEnabled =
+    true || !!useFlag("address_autocomplete_international")
 
   const { trackEvent } = useTracking()
 
@@ -336,8 +326,9 @@ export const AddressAutocompleteInput = ({
         }
       } catch (e) {
         console.error(e)
-        // Fall back to plain input for the remainder of the session
-        dispatch({ type: "DISABLE_SERVICE" })
+        // Clear suggestions but keep the autocomplete input focused
+        dispatch({ type: "FETCHING_COMPLETE" })
+        dispatch({ type: "RESET_SUGGESTIONS" })
       }
     },
     [serviceAvailability, isUSAddress, address.country],
@@ -367,21 +358,19 @@ export const AddressAutocompleteInput = ({
         (
           suggestion: ProviderSuggestionInternational,
         ): AddressAutocompleteSuggestion => {
-          const iso2Country =
-            ISO3_TO_ISO2[suggestion.country_iso3] ?? address.country
-          const text = buildInternationalAddressText(suggestion)
+          const parsed = parseInternationalAddressText(suggestion.address_text)
 
           return {
-            text,
-            value: text,
-            entries: null,
+            text: suggestion.address_text,
+            value: suggestion.address_text,
+            entries: suggestion.entries,
             address: {
-              addressLine1: suggestion.street,
+              addressLine1: parsed.addressLine1,
               addressLine2: "",
-              city: suggestion.locality,
-              region: suggestion.administrative_area || "",
-              postalCode: suggestion.postal_code || "",
-              country: iso2Country,
+              city: parsed.city,
+              region: "",
+              postalCode: parsed.postalCode,
+              country: address.country,
             },
           }
         },
@@ -473,7 +462,7 @@ const fetchSuggestionsWithThrottle = throttle(
       params["selected"] = selected
     }
 
-    const url = `https://us-autocomplete-pro.api.smarty.com/lookup?${new URLSearchParams(params).toString()}`
+    const url = `${SMARTY_US_AUTOCOMPLETE_URL}?${new URLSearchParams(params).toString()}`
 
     const response = await fetch(url)
     const json = await response.json()
@@ -501,9 +490,10 @@ const fetchInternationalSuggestionsWithThrottle = throttle(
       search,
       country,
       max_results: "5",
+      license: INTERNATIONAL_LICENSE,
     }
 
-    const url = `https://international-autocomplete.api.smarty.com/v2/lookup?${new URLSearchParams(params).toString()}`
+    const url = `${SMARTY_INTL_AUTOCOMPLETE_URL}?${new URLSearchParams(params).toString()}`
 
     const response = await fetch(url)
     if (!response.ok) {
@@ -511,8 +501,7 @@ const fetchInternationalSuggestionsWithThrottle = throttle(
         `International autocomplete request failed: ${response.status}`,
       )
     }
-    const json = await response.json()
-    return json
+    return response.json()
   },
   THROTTLE_DELAY,
   {
@@ -541,13 +530,23 @@ const buildUSAddressText = (suggestion: ProviderSuggestion): string => {
   ].join(" ")
 }
 
-const buildInternationalAddressText = (
-  suggestion: ProviderSuggestionInternational,
-): string => {
-  const parts = [suggestion.street, suggestion.locality]
-  if (suggestion.administrative_area) parts.push(suggestion.administrative_area)
-  if (suggestion.postal_code) parts.push(suggestion.postal_code)
-  return parts.filter(Boolean).join(", ")
+/**
+ * Parse a Smarty international address_text string into structured components.
+ * Most countries use "{street} {postal_code} {city}" where postal code is 4-7 digits.
+ * Falls back to putting the full text in addressLine1 for unrecognized formats.
+ */
+const parseInternationalAddressText = (
+  text: string,
+): { addressLine1: string; postalCode: string; city: string } => {
+  const numericMatch = text.match(/^(.+?)\s+(\d{4,7})\s+(.+)$/)
+  if (numericMatch) {
+    return {
+      addressLine1: numericMatch[1],
+      postalCode: numericMatch[2],
+      city: numericMatch[3],
+    }
+  }
+  return { addressLine1: text, postalCode: "", city: "" }
 }
 
 const filterSecondarySuggestions = (suggestions: ProviderSuggestion[]) => {
