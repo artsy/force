@@ -86,7 +86,7 @@ const ArtistEditorialNewsGrid: FC<
 
                 setTimeout(() => {
                   window.location.href = "/articles"
-                }, 10000)
+                }, 100)
               },
             }}
           />
