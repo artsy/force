@@ -32,7 +32,12 @@ export const ArtistTombstone: React.FC<ArtistTombstoneProps> = ({
   )
 
   return (
-    <Box display="flex" flexDirection={["column", "row"]} gap={2}>
+    <Box
+      display="flex"
+      flexDirection={["column", "row"]}
+      alignItems={["flex-start", "center"]}
+      gap={2}
+    >
       <Box flex={1}>
         <Text as="h1" variant="xl">
           {artist.name}
