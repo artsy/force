@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5798fd96cd4d633e83ad0292862a160>>
+ * @generated SignedSource<<2a3a77c1aa43a485c9f63fb5f52d95d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type MobileSearchBarSuggestQuery$variables = {
   entities?: ReadonlyArray<SearchEntity | null | undefined> | null | undefined;
   hasTerm: boolean;
   term: string;
+  variant?: string | null | undefined;
 };
 export type MobileSearchBarSuggestQuery$data = {
   readonly viewer: {
@@ -43,38 +44,49 @@ v2 = {
   "name": "term"
 },
 v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "variant"
+},
+v4 = {
   "kind": "Variable",
   "name": "entities",
   "variableName": "entities"
 },
-v4 = {
+v5 = {
+  "kind": "Variable",
+  "name": "variant",
+  "variableName": "variant"
+},
+v6 = {
   "kind": "Literal",
   "name": "mode",
   "value": "AUTOSUGGEST"
 },
-v5 = {
+v7 = {
   "kind": "Variable",
   "name": "query",
   "variableName": "term"
 },
-v6 = [
-  (v3/*: any*/),
+v8 = [
+  (v4/*: any*/),
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   },
-  (v4/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/),
   (v5/*: any*/)
 ],
-v7 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v8 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -86,7 +98,8 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -102,7 +115,7 @@ return {
         "selections": [
           {
             "args": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Variable",
                 "name": "hasTerm",
@@ -112,7 +125,8 @@ return {
                 "kind": "Variable",
                 "name": "term",
                 "variableName": "term"
-              }
+              },
+              (v5/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "Overlay_viewer"
@@ -129,7 +143,8 @@ return {
     "argumentDefinitions": [
       (v2/*: any*/),
       (v1/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Operation",
     "name": "MobileSearchBarSuggestQuery",
@@ -157,8 +172,8 @@ return {
                 "name": "first",
                 "value": 0
               },
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "concreteType": "SearchableConnection",
             "kind": "LinkedField",
@@ -211,7 +226,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v8/*: any*/),
                 "concreteType": "SearchableConnection",
                 "kind": "LinkedField",
                 "name": "searchConnection",
@@ -289,7 +304,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v7/*: any*/),
+                              (v9/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -311,7 +326,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v7/*: any*/),
+                              (v9/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -371,7 +386,7 @@ return {
                                     ],
                                     "storageKey": null
                                   },
-                                  (v8/*: any*/)
+                                  (v10/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -382,7 +397,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v8/*: any*/)
+                              (v10/*: any*/)
                             ],
                             "type": "Node",
                             "abstractKey": "__isNode"
@@ -430,11 +445,12 @@ return {
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v8/*: any*/),
                 "filters": [
                   "query",
                   "entities",
-                  "mode"
+                  "mode",
+                  "variant"
                 ],
                 "handle": "connection",
                 "key": "SearchResultsList_searchConnection",
@@ -449,16 +465,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7b2e46bd76884544af47b5270df42e23",
+    "cacheID": "e93e6e4c9c3fbd216a8151d367525ade",
     "id": null,
     "metadata": {},
     "name": "MobileSearchBarSuggestQuery",
     "operationKind": "query",
-    "text": "query MobileSearchBarSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...Overlay_viewer_1B9obU\n  }\n}\n\nfragment Overlay_viewer_1B9obU on Viewer {\n  ...SearchInputPills_viewer_4hh6ED\n  ...SearchResultsList_viewer_plJt2 @include(if: $hasTerm)\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment SearchResultsList_viewer_plJt2 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10) {\n    edges {\n      highlights {\n        field\n        fragments\n      }\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          internalID\n          displayType\n          slug\n        }\n        ... on Artist {\n          internalID\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query MobileSearchBarSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n  $variant: String\n) {\n  viewer {\n    ...Overlay_viewer_gouck\n  }\n}\n\nfragment Overlay_viewer_gouck on Viewer {\n  ...SearchInputPills_viewer_4hh6ED\n  ...SearchResultsList_viewer_3X26Y1 @include(if: $hasTerm)\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment SearchResultsList_viewer_3X26Y1 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10, variant: $variant) {\n    edges {\n      highlights {\n        field\n        fragments\n      }\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          internalID\n          displayType\n          slug\n        }\n        ... on Artist {\n          internalID\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1141fc584725e614d6d5dbc0520224f5";
+(node as any).hash = "4255d2eee8d06917660df6318fce27b4";
 
 export default node;

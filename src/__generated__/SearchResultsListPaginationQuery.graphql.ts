@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e44bce2785c88b1e2d56e686a66a001>>
+ * @generated SignedSource<<78e5fd779ee86bc8ebca1f3e5fe4c144>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type SearchResultsListPaginationQuery$variables = {
   after?: string | null | undefined;
   entities?: ReadonlyArray<SearchEntity | null | undefined> | null | undefined;
   term: string;
+  variant?: string | null | undefined;
 };
 export type SearchResultsListPaginationQuery$data = {
   readonly viewer: {
@@ -43,18 +44,28 @@ v2 = {
   "name": "term"
 },
 v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "variant"
+},
+v4 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v4 = {
+v5 = {
   "kind": "Variable",
   "name": "entities",
   "variableName": "entities"
 },
-v5 = [
-  (v3/*: any*/),
+v6 = {
+  "kind": "Variable",
+  "name": "variant",
+  "variableName": "variant"
+},
+v7 = [
   (v4/*: any*/),
+  (v5/*: any*/),
   {
     "kind": "Literal",
     "name": "first",
@@ -69,16 +80,17 @@ v5 = [
     "kind": "Variable",
     "name": "query",
     "variableName": "term"
-  }
+  },
+  (v6/*: any*/)
 ],
-v6 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v7 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -90,7 +102,8 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -106,13 +119,14 @@ return {
         "selections": [
           {
             "args": [
-              (v3/*: any*/),
               (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Variable",
                 "name": "term",
                 "variableName": "term"
-              }
+              },
+              (v6/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "SearchResultsList_viewer"
@@ -129,7 +143,8 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v2/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Operation",
     "name": "SearchResultsListPaginationQuery",
@@ -144,7 +159,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v7/*: any*/),
             "concreteType": "SearchableConnection",
             "kind": "LinkedField",
             "name": "searchConnection",
@@ -222,7 +237,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v6/*: any*/),
+                          (v8/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -244,7 +259,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v6/*: any*/),
+                          (v8/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -304,7 +319,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v7/*: any*/)
+                              (v9/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -315,7 +330,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v7/*: any*/)
+                          (v9/*: any*/)
                         ],
                         "type": "Node",
                         "abstractKey": "__isNode"
@@ -363,11 +378,12 @@ return {
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v7/*: any*/),
             "filters": [
               "query",
               "entities",
-              "mode"
+              "mode",
+              "variant"
             ],
             "handle": "connection",
             "key": "SearchResultsList_searchConnection",
@@ -380,16 +396,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9df25c3e5830e3fea192d80eefa18694",
+    "cacheID": "3dbe47c0358a21bcb31ddf248c0c9b21",
     "id": null,
     "metadata": {},
     "name": "SearchResultsListPaginationQuery",
     "operationKind": "query",
-    "text": "query SearchResultsListPaginationQuery(\n  $after: String\n  $term: String!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchResultsList_viewer_1PWAgx\n  }\n}\n\nfragment SearchResultsList_viewer_1PWAgx on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10, after: $after) {\n    edges {\n      highlights {\n        field\n        fragments\n      }\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          internalID\n          displayType\n          slug\n        }\n        ... on Artist {\n          internalID\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SearchResultsListPaginationQuery(\n  $after: String\n  $term: String!\n  $entities: [SearchEntity]\n  $variant: String\n) {\n  viewer {\n    ...SearchResultsList_viewer_SZEC0\n  }\n}\n\nfragment SearchResultsList_viewer_SZEC0 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10, after: $after, variant: $variant) {\n    edges {\n      highlights {\n        field\n        fragments\n      }\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          internalID\n          displayType\n          slug\n        }\n        ... on Artist {\n          internalID\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a8463c54c8683b9c9ed438c2863f1df5";
+(node as any).hash = "25c6f3569f81689a58ccf5f2b5b8a17b";
 
 export default node;
