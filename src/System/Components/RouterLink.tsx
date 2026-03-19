@@ -52,9 +52,16 @@ export const RouterLink: React.FC<
     options: {
       threshold: 0.2,
     },
-    onIntersection: () => {
-      if (enablePrefetch) {
-        // Prefetch when link scrolls into viewport
+    onIntersection: entries => {
+      const target = entries[0]?.target as HTMLElement | undefined
+
+      if (!enablePrefetch || !target) return
+
+      const isHidden = target.checkVisibility
+        ? !target.checkVisibility({ visibilityProperty: true })
+        : target.closest("[style*='visibility: hidden']") !== null
+
+      if (!isHidden) {
         prefetch()
       }
     },
