@@ -373,19 +373,19 @@ export const AddressAutocompleteInput = ({
         (
           suggestion: ProviderSuggestionInternational,
         ): AddressAutocompleteSuggestion => {
-          const parsed = parseInternationalAddressText(suggestion.address_text)
-
           return {
             text: suggestion.address_text,
             value: suggestion.address_text,
             entries: suggestion.entries,
             addressId: suggestion.address_id,
+            // Populated with real components when the user selects this suggestion.
+            // Until then, address_text serves as the addressLine1 fallback.
             address: {
-              addressLine1: parsed.addressLine1,
+              addressLine1: suggestion.address_text,
               addressLine2: "",
-              city: parsed.city,
+              city: "",
               region: "",
-              postalCode: parsed.postalCode,
+              postalCode: "",
               country: address.country,
             },
           }
@@ -451,7 +451,7 @@ export const AddressAutocompleteInput = ({
         fetchForAutocomplete({ search: "" })
       }}
       onSelect={async (option, index) => {
-        if (!isUSAddress && option.entries === 1 && option.addressId) {
+        if (!isUSAddress && option.addressId) {
           const iso3Country = ISO2_TO_ISO3[address.country]
           if (iso3Country && serviceAvailability?.enabled) {
             try {
@@ -610,52 +610,6 @@ const buildUSAddressText = (suggestion: ProviderSuggestion): string => {
     suggestion.state,
     suggestion.zipcode,
   ].join(" ")
-}
-
-/**
- * Parse a Smarty international address_text string into structured components.
- * Handles three common Smarty address_text formats:
- *   1. Netherlands-style: "{street} {4-digit} {2-letter} {city}" e.g. "Herengracht 1 1015 BA Amsterdam"
- *   2. Most European: "{street} {4-7 digit postcode} {city}" e.g. "Krausenstr. 9-10 10117 Berlin"
- *   3. UK-style: "{street} {city} {postcode}" where postcode is at the end e.g. "10 Ashwood Close Worthing BN11 2AF"
- * Falls back to putting the full text in addressLine1 for unrecognized formats.
- */
-export const parseInternationalAddressText = (
-  text: string,
-): { addressLine1: string; postalCode: string; city: string } => {
-  // Netherlands/Belgium: "{street} {4-digit} {2-uppercase-letter} {city}"
-  const nlMatch = text.match(/^(.+?)\s+(\d{4}\s[A-Z]{2})\s+(.+)$/)
-  if (nlMatch) {
-    return {
-      addressLine1: nlMatch[1],
-      postalCode: nlMatch[2],
-      city: nlMatch[3],
-    }
-  }
-
-  // Most of Europe: "{street} {4-7 numeric digits} {city}"
-  const numericMatch = text.match(/^(.+?)\s+(\d{4,7})\s+(.+)$/)
-  if (numericMatch) {
-    return {
-      addressLine1: numericMatch[1],
-      postalCode: numericMatch[2],
-      city: numericMatch[3],
-    }
-  }
-
-  // UK: "{street} {city} {postcode}" where postcode ends the string
-  const ukMatch = text.match(
-    /^(.+)\s+(.+?)\s+([A-Z]{1,2}\d{1,2}[A-Z]?\s\d[A-Z]{2})$/,
-  )
-  if (ukMatch) {
-    return {
-      addressLine1: ukMatch[1],
-      city: ukMatch[2],
-      postalCode: ukMatch[3],
-    }
-  }
-
-  return { addressLine1: text, postalCode: "", city: "" }
 }
 
 const filterSecondarySuggestions = (suggestions: ProviderSuggestion[]) => {

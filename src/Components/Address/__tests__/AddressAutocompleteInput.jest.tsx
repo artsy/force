@@ -5,7 +5,6 @@ import {
   AddressAutocompleteInput,
   type AddressAutocompleteInputProps,
   _cancelThrottlesForTest,
-  parseInternationalAddressText,
 } from "Components/Address/AddressAutocompleteInput"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import compact from "lodash/compact"
@@ -360,20 +359,37 @@ describe("AddressAutocompleteInput", () => {
       expect(listbox).toHaveTextContent("10 Downing St SW1A 2AA London")
     })
 
-    it("maps international suggestion fields correctly on select", async () => {
-      mockFetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue({
-          candidates: [
-            {
-              // German-style: {street} {5-digit postal} {city}
-              address_text: "Unter den Linden 1 10117 Berlin",
-              address_id: "abc123",
-              entries: 1,
-            },
-          ],
-        }),
-        ok: true,
-      })
+    it("populates all fields from structured components on select (Germany)", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "Unter den Linden 1 10117 Berlin",
+                address_id: "de-addr-id",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                components: {
+                  country_iso3: "DEU",
+                  administrative_area: "Berlin",
+                  locality: "Berlin",
+                  postal_code: "10117",
+                  thoroughfare: "Unter den Linden",
+                  premise: "1",
+                },
+              },
+            ],
+          }),
+          ok: true,
+        })
 
       render(<TestImplementation initialAddress={{ country: "DE" }} />)
 
@@ -381,19 +397,20 @@ describe("AddressAutocompleteInput", () => {
       await userEvent.paste(line1Input, "Unter den Linden")
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
-      const option = within(dropdown).getByText(
-        "Unter den Linden 1 10117 Berlin",
+      await userEvent.click(
+        within(dropdown).getByText("Unter den Linden 1 10117 Berlin"),
       )
-      await userEvent.click(option)
       await flushPromiseQueue()
 
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+      expect(mockFetch.mock.calls[1][0]).toContain("/v2/lookup/de-addr-id")
       expect(mockOnSelect).toHaveBeenCalledWith(
         expect.objectContaining({
           address: {
             addressLine1: "Unter den Linden 1",
             addressLine2: "",
             city: "Berlin",
-            region: "",
+            region: "Berlin",
             postalCode: "10117",
             country: "DE",
           },
@@ -402,19 +419,194 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
-    it("falls back to full address_text in addressLine1 when postal code cannot be parsed", async () => {
-      mockFetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue({
-          candidates: [
-            {
-              address_text: "1-1 Shibuya Tokyo",
-              address_id: "abc123",
-              entries: 1,
-            },
-          ],
+    it("populates all fields from structured components on select (UK)", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "10 Ashwood Close Worthing BN11 2AF",
+                address_id: "uk-addr-id",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                components: {
+                  country_iso3: "GBR",
+                  administrative_area: "West Sussex",
+                  locality: "Worthing",
+                  postal_code: "BN11 2AF",
+                  thoroughfare: "10 Ashwood Close",
+                  premise: "",
+                },
+              },
+            ],
+          }),
+          ok: true,
+        })
+
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "10 Ashwood")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      await userEvent.click(
+        within(dropdown).getByText("10 Ashwood Close Worthing BN11 2AF"),
+      )
+      await flushPromiseQueue()
+
+      expect(mockFetch.mock.calls[1][0]).toContain("/v2/lookup/uk-addr-id")
+      expect(mockOnSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: {
+            addressLine1: "10 Ashwood Close",
+            addressLine2: "",
+            city: "Worthing",
+            region: "West Sussex",
+            postalCode: "BN11 2AF",
+            country: "GB",
+          },
         }),
-        ok: true,
+        0,
+      )
+    })
+
+    it("populates all fields from structured components on select (Netherlands)", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "Herengracht 1 1015 BA Amsterdam",
+                address_id: "nl-addr-id",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                components: {
+                  country_iso3: "NLD",
+                  administrative_area: "Noord-Holland",
+                  locality: "Amsterdam",
+                  postal_code: "1015 BA",
+                  thoroughfare: "Herengracht",
+                  premise: "1",
+                },
+              },
+            ],
+          }),
+          ok: true,
+        })
+
+      render(<TestImplementation initialAddress={{ country: "NL" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "Herengracht")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      await userEvent.click(
+        within(dropdown).getByText("Herengracht 1 1015 BA Amsterdam"),
+      )
+      await flushPromiseQueue()
+
+      expect(mockFetch.mock.calls[1][0]).toContain("/v2/lookup/nl-addr-id")
+      expect(mockOnSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: {
+            addressLine1: "Herengracht 1",
+            addressLine2: "",
+            city: "Amsterdam",
+            region: "Noord-Holland",
+            postalCode: "1015 BA",
+            country: "NL",
+          },
+        }),
+        0,
+      )
+    })
+
+    it("fetches components for street-level results (entries > 1) and populates form", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "Unter den Linden 10117 Berlin",
+                address_id: "street-id",
+                entries: 29,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                components: {
+                  country_iso3: "DEU",
+                  administrative_area: "Berlin",
+                  locality: "Berlin",
+                  postal_code: "10117",
+                  thoroughfare: "Unter den Linden",
+                  premise: "",
+                },
+              },
+            ],
+          }),
+          ok: true,
+        })
+
+      render(<TestImplementation initialAddress={{ country: "DE" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "Unter den Linden")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      await userEvent.click(
+        within(dropdown).getByText("Unter den Linden 10117 Berlin"),
+      )
+      await flushPromiseQueue()
+
+      expect(mockOnSelect).toHaveBeenCalledTimes(1)
+      expect(mockOnSelect.mock.calls[0][0].address).toMatchObject({
+        addressLine1: "Unter den Linden",
+        city: "Berlin",
+        postalCode: "10117",
+        country: "DE",
       })
+    })
+
+    it("falls back to full address_text in addressLine1 when components endpoint returns no data", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "1-1 Shibuya Tokyo",
+                address_id: "jp-addr-id",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({ candidates: [] }),
+          ok: true,
+        })
 
       render(<TestImplementation initialAddress={{ country: "JP" }} />)
 
@@ -422,8 +614,7 @@ describe("AddressAutocompleteInput", () => {
       await userEvent.paste(line1Input, "Shibuya")
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
-      const option = within(dropdown).getByText("1-1 Shibuya Tokyo")
-      await userEvent.click(option)
+      await userEvent.click(within(dropdown).getByText("1-1 Shibuya Tokyo"))
       await flushPromiseQueue()
 
       expect(mockOnSelect).toHaveBeenCalledWith(
@@ -439,7 +630,7 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
-    it("uses structured components from address_id lookup when entries === 1", async () => {
+    it("uses structured components from address_id lookup on selection", async () => {
       mockFetch
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
@@ -482,10 +673,8 @@ describe("AddressAutocompleteInput", () => {
       )
       await flushPromiseQueue()
 
-      // Should have fetched components via address_id
       expect(mockFetch).toHaveBeenCalledTimes(2)
       expect(mockFetch.mock.calls[1][0]).toContain("/v2/lookup/addr-id-123")
-
       expect(mockOnSelect).toHaveBeenCalledWith(
         expect.objectContaining({
           address: {
@@ -501,7 +690,7 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
-    it("falls back to regex parsing when components endpoint returns no components", async () => {
+    it("falls back to full address_text in addressLine1 when components endpoint returns no components", async () => {
       mockFetch
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
@@ -534,122 +723,12 @@ describe("AddressAutocompleteInput", () => {
       expect(mockOnSelect).toHaveBeenCalledWith(
         expect.objectContaining({
           address: expect.objectContaining({
-            addressLine1: "Unter den Linden 1",
-            city: "Berlin",
-            postalCode: "10117",
+            addressLine1: "Unter den Linden 1 10117 Berlin",
+            city: "",
+            postalCode: "",
           }),
         }),
         0,
-      )
-    })
-
-    it("maps UK suggestion fields correctly using postcode-at-end format on select", async () => {
-      mockFetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue({
-          candidates: [
-            {
-              // UK-style: {street} {city} {postcode}
-              address_text: "10 Ashwood Close Worthing BN11 2AF",
-              address_id: "uk-addr-id",
-              entries: 1,
-            },
-          ],
-        }),
-        ok: true,
-      })
-
-      render(<TestImplementation initialAddress={{ country: "GB" }} />)
-
-      const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.paste(line1Input, "10 Ashwood")
-
-      const dropdown = await screen.findByRole("listbox", { hidden: true })
-      await userEvent.click(
-        within(dropdown).getByText("10 Ashwood Close Worthing BN11 2AF"),
-      )
-      await flushPromiseQueue()
-
-      expect(mockOnSelect).toHaveBeenCalledWith(
-        expect.objectContaining({
-          address: expect.objectContaining({
-            addressLine1: "10 Ashwood Close",
-            city: "Worthing",
-            postalCode: "BN11 2AF",
-            country: "GB",
-          }),
-        }),
-        0,
-      )
-    })
-
-    it("maps Netherlands suggestion fields correctly using 4-digit + 2-letter postcode on select", async () => {
-      mockFetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue({
-          candidates: [
-            {
-              // Netherlands-style: {street} {4-digit} {2-letter} {city}
-              address_text: "Herengracht 1 1015 BA Amsterdam",
-              address_id: "nl-addr-id",
-              entries: 1,
-            },
-          ],
-        }),
-        ok: true,
-      })
-
-      render(<TestImplementation initialAddress={{ country: "NL" }} />)
-
-      const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.paste(line1Input, "Herengracht")
-
-      const dropdown = await screen.findByRole("listbox", { hidden: true })
-      await userEvent.click(
-        within(dropdown).getByText("Herengracht 1 1015 BA Amsterdam"),
-      )
-      await flushPromiseQueue()
-
-      expect(mockOnSelect).toHaveBeenCalledWith(
-        expect.objectContaining({
-          address: expect.objectContaining({
-            addressLine1: "Herengracht 1",
-            city: "Amsterdam",
-            postalCode: "1015 BA",
-            country: "NL",
-          }),
-        }),
-        0,
-      )
-    })
-
-    it("calls parent onSelect even when entries > 1 (street-level result)", async () => {
-      mockFetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue({
-          candidates: [
-            {
-              address_text: "Unter den Linden 10117 Berlin",
-              address_id: "building-id",
-              entries: 29,
-            },
-          ],
-        }),
-        ok: true,
-      })
-
-      render(<TestImplementation initialAddress={{ country: "DE" }} />)
-
-      const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.type(line1Input, "Unter den Linden")
-
-      const firstDropdown = await screen.findByRole("listbox", { hidden: true })
-      const buildingOption = within(firstDropdown).getByText(
-        "Unter den Linden 10117 Berlin",
-      )
-      await userEvent.click(buildingOption)
-      await flushPromiseQueue()
-
-      expect(mockOnSelect).toHaveBeenCalledTimes(1)
-      expect(mockOnSelect.mock.calls[0][0].address.addressLine1).toBe(
-        "Unter den Linden",
       )
     })
 
@@ -703,68 +782,6 @@ describe("AddressAutocompleteInput", () => {
           screen.queryByRole("listbox", { hidden: true }),
         ).not.toBeInTheDocument()
         expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
-      })
-    })
-
-    describe("parseInternationalAddressText", () => {
-      it("parses German address: {street} {5-digit postal} {city}", () => {
-        expect(
-          parseInternationalAddressText("Krausenstr. 9-10 10117 Berlin"),
-        ).toEqual({
-          addressLine1: "Krausenstr. 9-10",
-          postalCode: "10117",
-          city: "Berlin",
-        })
-      })
-
-      it("parses French address: {street} {5-digit postal} {city}", () => {
-        expect(
-          parseInternationalAddressText("9 Rue de Rivoli 75001 Paris"),
-        ).toEqual({
-          addressLine1: "9 Rue de Rivoli",
-          postalCode: "75001",
-          city: "Paris",
-        })
-      })
-
-      it("parses Netherlands address: {street} {4-digit} {2-letter} {city}", () => {
-        expect(
-          parseInternationalAddressText("Herengracht 1 1015 BA Amsterdam"),
-        ).toEqual({
-          addressLine1: "Herengracht 1",
-          postalCode: "1015 BA",
-          city: "Amsterdam",
-        })
-      })
-
-      it("parses UK address: {street} {city} {postcode} where postcode is at end", () => {
-        expect(
-          parseInternationalAddressText("10 Ashwood Close Worthing BN11 2AF"),
-        ).toEqual({
-          addressLine1: "10 Ashwood Close",
-          city: "Worthing",
-          postalCode: "BN11 2AF",
-        })
-      })
-
-      it("parses UK address with London SW postcode", () => {
-        expect(
-          parseInternationalAddressText(
-            "22 Baker Street Marylebone London NW1 6XE",
-          ),
-        ).toEqual({
-          addressLine1: "22 Baker Street Marylebone",
-          city: "London",
-          postalCode: "NW1 6XE",
-        })
-      })
-
-      it("falls back to full text in addressLine1 for unrecognized formats", () => {
-        expect(parseInternationalAddressText("1-1 Shibuya Tokyo")).toEqual({
-          addressLine1: "1-1 Shibuya Tokyo",
-          postalCode: "",
-          city: "",
-        })
       })
     })
 
