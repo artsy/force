@@ -12,6 +12,7 @@ import {
   Input,
   usePrevious,
 } from "@artsy/palette"
+import addressFormatter from "@fragaria/address-formatter"
 import { useFlag } from "@unleash/proxy-client-react"
 import type { Address } from "Components/Address/utils"
 import {
@@ -464,18 +465,24 @@ export const AddressAutocompleteInput = ({
               if (components) {
                 const iso2Country =
                   ISO3_TO_ISO2[components.country_iso3] || address.country
+                const formattedStreetLines = addressFormatter.format(
+                  {
+                    road: components.thoroughfare,
+                    houseNumber: components.premise,
+                    countryCode: iso2Country,
+                  },
+                  { output: "array" },
+                ) as string[]
+                const addressLine1 =
+                  formattedStreetLines[0] || option.address.addressLine1
                 const enrichedOption = {
                   ...option,
                   address: {
-                    addressLine1:
-                      [components.thoroughfare, components.premise]
-                        .filter(Boolean)
-                        .join(" ") || option.address.addressLine1,
+                    addressLine1,
                     addressLine2: "",
-                    city: components.locality || option.address.city,
+                    city: components.locality,
                     region: components.administrative_area,
-                    postalCode:
-                      components.postal_code || option.address.postalCode,
+                    postalCode: components.postal_code,
                     country: iso2Country,
                   },
                 }
