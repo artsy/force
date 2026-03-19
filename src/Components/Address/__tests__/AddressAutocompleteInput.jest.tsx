@@ -539,24 +539,31 @@ describe("AddressAutocompleteInput", () => {
               {
                 address_text: "Unter den Linden 10117 Berlin",
                 address_id: "street-id",
-                entries: 29,
+                entries: 2,
               },
             ],
           }),
           ok: true,
         })
+        // address_id lookup returns 2 sub-unit candidates (entries matches candidate count)
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
             candidates: [
               {
                 address_text: "Unter den Linden 1 10117 Berlin",
-                address_id: "sub-unit-id",
+                address_id: "sub-unit-id-1",
+                entries: 1,
+              },
+              {
+                address_text: "Unter den Linden 2 10117 Berlin",
+                address_id: "sub-unit-id-2",
                 entries: 1,
               },
             ],
           }),
           ok: true,
         })
+        // first sub-unit components fetch
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
             candidates: [
@@ -583,6 +590,7 @@ describe("AddressAutocompleteInput", () => {
       )
       await flushPromiseQueue()
 
+      // Verifies the first sub-unit (not the second) is used
       expect(mockOnSelect).toHaveBeenCalledTimes(1)
       expect(mockOnSelect.mock.calls[0][0].address).toMatchObject({
         addressLine1: "Unter den Linden 1",

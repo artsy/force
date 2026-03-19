@@ -221,9 +221,8 @@ export const AddressAutocompleteInput = ({
   const isUSAddress = address.country === "US"
 
   const isUSFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
-  const isInternationalFeatureFlagEnabled = !!useFlag(
-    "address_autocomplete_international",
-  )
+  const isInternationalFeatureFlagEnabled =
+    true || !!useFlag("address_autocomplete_international")
 
   const { trackEvent } = useTracking()
 
