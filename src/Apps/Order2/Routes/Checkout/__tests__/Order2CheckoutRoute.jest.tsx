@@ -1,4 +1,4 @@
-import { act, screen, waitFor, within } from "@testing-library/react"
+import { act, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import {
@@ -523,8 +523,7 @@ describe("Order2CheckoutRoute", () => {
       const phoneInput = screen.getByTestId("PickupPhoneNumberInput")
 
       act(() => {
-        // TODO: Does not trigger phone validation mutation - why? Maybe related to jest timers.
-        userEvent.type(phoneInput, "03012345678")
+        fireEvent.change(phoneInput, { target: { value: "03012345678" } })
       })
 
       await waitFor(() => {
@@ -612,23 +611,21 @@ describe("Order2CheckoutRoute", () => {
         expect(screen.getByTestId("addressFormFields.name")).toBeInTheDocument()
       })
 
-      await userEvent.type(
-        screen.getByTestId("addressFormFields.name"),
-        "John Doe",
-      )
-      await userEvent.type(
-        screen.getByTestId("addressFormFields.addressLine1"),
-        "123 Main St",
-      )
-      await userEvent.type(
-        screen.getByTestId("addressFormFields.city"),
-        "New York",
-      )
-      await userEvent.type(screen.getByTestId("addressFormFields.region"), "NY")
-      await userEvent.type(
-        screen.getByTestId("addressFormFields.postalCode"),
-        "10001",
-      )
+      fireEvent.change(screen.getByTestId("addressFormFields.name"), {
+        target: { value: "John Doe" },
+      })
+      fireEvent.change(screen.getByTestId("addressFormFields.addressLine1"), {
+        target: { value: "123 Main St" },
+      })
+      fireEvent.change(screen.getByTestId("addressFormFields.city"), {
+        target: { value: "New York" },
+      })
+      fireEvent.change(screen.getByTestId("addressFormFields.region"), {
+        target: { value: "NY" },
+      })
+      fireEvent.change(screen.getByTestId("addressFormFields.postalCode"), {
+        target: { value: "10001" },
+      })
 
       mockElements.submit.mockResolvedValueOnce({
         error: null,
@@ -1158,14 +1155,28 @@ describe("Order2CheckoutRoute", () => {
         addressInputValue.phoneNumberCountryCode,
       )
 
-      await act(async () => {
-        userEvent.type(nameInput, addressInputValue.name)
-        userEvent.type(addressLine1Input, addressInputValue.addressLine1)
-        userEvent.type(addressLine2Input, addressInputValue.addressLine2)
-        userEvent.type(cityInput, addressInputValue.city)
-        userEvent.type(regionInput, addressInputValue.region)
-        userEvent.type(postalCodeInput, addressInputValue.postalCode)
-        userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
+      act(() => {
+        fireEvent.change(nameInput, {
+          target: { value: addressInputValue.name },
+        })
+        fireEvent.change(addressLine1Input, {
+          target: { value: addressInputValue.addressLine1 },
+        })
+        fireEvent.change(addressLine2Input, {
+          target: { value: addressInputValue.addressLine2 },
+        })
+        fireEvent.change(cityInput, {
+          target: { value: addressInputValue.city },
+        })
+        fireEvent.change(regionInput, {
+          target: { value: addressInputValue.region },
+        })
+        fireEvent.change(postalCodeInput, {
+          target: { value: addressInputValue.postalCode },
+        })
+        fireEvent.change(phoneNumberInput, {
+          target: { value: addressInputValue.phoneNumber },
+        })
         userEvent.selectOptions(countrySelect, addressInputValue.country)
       })
 
@@ -1393,12 +1404,24 @@ describe("Order2CheckoutRoute", () => {
       )
 
       act(() => {
-        userEvent.type(nameInput, addressInputValue.name)
-        userEvent.type(addressLine1Input, addressInputValue.addressLine1)
-        userEvent.type(addressLine2Input, addressInputValue.addressLine2)
-        userEvent.type(cityInput, addressInputValue.city)
-        userEvent.type(regionInput, addressInputValue.region)
-        userEvent.type(phoneNumberInput, addressInputValue.phoneNumber)
+        fireEvent.change(nameInput, {
+          target: { value: addressInputValue.name },
+        })
+        fireEvent.change(addressLine1Input, {
+          target: { value: addressInputValue.addressLine1 },
+        })
+        fireEvent.change(addressLine2Input, {
+          target: { value: addressInputValue.addressLine2 },
+        })
+        fireEvent.change(cityInput, {
+          target: { value: addressInputValue.city },
+        })
+        fireEvent.change(regionInput, {
+          target: { value: addressInputValue.region },
+        })
+        fireEvent.change(phoneNumberInput, {
+          target: { value: addressInputValue.phoneNumber },
+        })
         userEvent.selectOptions(countrySelect, addressInputValue.country)
       })
 
@@ -1632,8 +1655,7 @@ describe("Order2CheckoutRoute", () => {
 
         // Modify the name field
         const nameField = screen.getByDisplayValue("John Doe")
-        await userEvent.clear(nameField)
-        await userEvent.type(nameField, "John Smith")
+        fireEvent.change(nameField, { target: { value: "John Smith" } })
 
         // Save the address
         await userEvent.click(screen.getByText("Save Address"))
