@@ -14,7 +14,7 @@ else
 fi
 
 if command -v code >/dev/null; then
-  echo "Installing Artsy VSCode extensions..."
+  echo "Installing VSCode extensions..."
   code --install-extension biomejs.biome
 else
   echo "Skipping VSCode extensions installation (VSCode not found)"
