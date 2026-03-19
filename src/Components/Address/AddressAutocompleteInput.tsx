@@ -62,8 +62,8 @@ export interface AddressAutocompleteInputProps
 
   trackingValues: AutocompleteTrackingValues
 }
-
-type ProviderSuggestion = {
+// Response shape for the Smarty US autocomplete API.
+type ProviderSuggestionUS = {
   city: string
   entries: number
   secondary: string
@@ -112,26 +112,23 @@ interface State {
   loading: boolean
   fetching: boolean
   serviceAvailability: ServiceAvailability | null
-  providerSuggestions: ProviderSuggestion[]
-  internationalProviderSuggestions: ProviderSuggestionInternational[]
+  suggestions: ProviderSuggestionUS[] | ProviderSuggestionInternational[]
 }
 
 const initialState: State = {
   loading: true,
   serviceAvailability: null,
   fetching: false,
-  providerSuggestions: [],
-  internationalProviderSuggestions: [],
+  suggestions: [],
 }
 
 type Action =
   | { type: "SET_AVAILABILITY"; serviceAvailability: ServiceAvailability }
   | { type: "FETCHING_STARTED" }
   | { type: "FETCHING_COMPLETE" }
-  | { type: "SET_SUGGESTIONS"; providerSuggestions: ProviderSuggestion[] }
   | {
-      type: "SET_INTERNATIONAL_SUGGESTIONS"
-      internationalProviderSuggestions: ProviderSuggestionInternational[]
+      type: "SET_SUGGESTIONS"
+      suggestions: ProviderSuggestionUS[] | ProviderSuggestionInternational[]
     }
   | { type: "RESET_SUGGESTIONS" }
 
@@ -161,14 +158,7 @@ const reducer = (state: State, action: Action): State => {
     case "SET_SUGGESTIONS": {
       return {
         ...state,
-        providerSuggestions: action.providerSuggestions,
-      }
-    }
-    case "SET_INTERNATIONAL_SUGGESTIONS": {
-      return {
-        ...state,
-        internationalProviderSuggestions:
-          action.internationalProviderSuggestions,
+        suggestions: action.suggestions,
       }
     }
     case "RESET_SUGGESTIONS": {
@@ -176,8 +166,6 @@ const reducer = (state: State, action: Action): State => {
         ...initialState,
         loading: false,
         serviceAvailability: state.serviceAvailability,
-        providerSuggestions: [],
-        internationalProviderSuggestions: [],
       }
     }
     default: {
@@ -213,11 +201,7 @@ export const AddressAutocompleteInput = ({
 }: AddressAutocompleteInputProps) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const {
-    serviceAvailability,
-    providerSuggestions,
-    internationalProviderSuggestions,
-  } = state
+  const { serviceAvailability, suggestions } = state
   const isUSAddress = address.country === "US"
 
   const isUSFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
@@ -316,7 +300,7 @@ export const AddressAutocompleteInput = ({
 
           dispatch({
             type: "SET_SUGGESTIONS",
-            providerSuggestions: finalSuggestions.slice(0, 5),
+            suggestions: finalSuggestions.slice(0, 5),
           })
         } else {
           const iso3Country = ISO2_TO_ISO3[address.country]
@@ -333,11 +317,8 @@ export const AddressAutocompleteInput = ({
 
           dispatch({ type: "FETCHING_COMPLETE" })
           dispatch({
-            type: "SET_INTERNATIONAL_SUGGESTIONS",
-            internationalProviderSuggestions: (response.candidates ?? []).slice(
-              0,
-              5,
-            ),
+            type: "SET_SUGGESTIONS",
+            suggestions: (response.candidates ?? []).slice(0, 5),
           })
         }
       } catch (e) {
@@ -351,8 +332,8 @@ export const AddressAutocompleteInput = ({
   )
 
   const autocompleteOptions: AddressAutocompleteSuggestion[] = isUSAddress
-    ? providerSuggestions.map(
-        (suggestion: ProviderSuggestion): AddressAutocompleteSuggestion => {
+    ? (suggestions as ProviderSuggestionUS[]).map(
+        (suggestion): AddressAutocompleteSuggestion => {
           const text = buildUSAddressText(suggestion)
 
           return {
@@ -370,10 +351,8 @@ export const AddressAutocompleteInput = ({
           }
         },
       )
-    : internationalProviderSuggestions.map(
-        (
-          suggestion: ProviderSuggestionInternational,
-        ): AddressAutocompleteSuggestion => {
+    : (suggestions as ProviderSuggestionInternational[]).map(
+        (suggestion): AddressAutocompleteSuggestion => {
           return {
             text: suggestion.address_text,
             value: suggestion.address_text,
@@ -400,9 +379,7 @@ export const AddressAutocompleteInput = ({
   const serializedOptions = JSON.stringify(autocompleteOptions)
   const serializedPreviousOptions = JSON.stringify(previousOptions)
 
-  const totalSuggestions = isUSAddress
-    ? providerSuggestions.length
-    : internationalProviderSuggestions.length
+  const totalSuggestions = suggestions.length
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -625,7 +602,7 @@ export const _cancelThrottlesForTest = () => {
   fetchInternationalSuggestionsWithThrottle.cancel()
 }
 
-const buildUSAddressText = (suggestion: ProviderSuggestion): string => {
+const buildUSAddressText = (suggestion: ProviderSuggestionUS): string => {
   let buildingAddress = suggestion.street_line
   if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
 
@@ -636,12 +613,12 @@ const buildUSAddressText = (suggestion: ProviderSuggestion): string => {
   ].join(" ")
 }
 
-const filterSecondarySuggestions = (suggestions: ProviderSuggestion[]) => {
+const filterSecondarySuggestions = (suggestions: ProviderSuggestionUS[]) => {
   const noSecondaryData = suggestions.map(({ secondary, ...suggestion }) => ({
     ...suggestion,
     secondary: "",
   }))
-  return uniqBy(noSecondaryData, (suggestion: ProviderSuggestion) =>
+  return uniqBy(noSecondaryData, (suggestion: ProviderSuggestionUS) =>
     buildUSAddressText(suggestion),
   )
 }
