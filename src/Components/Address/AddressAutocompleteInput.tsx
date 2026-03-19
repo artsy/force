@@ -469,6 +469,9 @@ export const AddressAutocompleteInput = ({
                   {
                     road: components.thoroughfare,
                     houseNumber: components.premise,
+                    city: components.locality,
+                    postcode: components.postal_code,
+                    state: components.administrative_area,
                     countryCode: iso2Country,
                   },
                   { output: "array" },
