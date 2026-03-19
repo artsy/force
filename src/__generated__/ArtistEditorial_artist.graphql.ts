@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<713ce284cb8326f3e1103eb21948d2ab>>
+ * @generated SignedSource<<7570caf7ef763dd06f3c8630b7707b5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,15 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistEditorial_artist$data = {
-  readonly internalID: string;
+  readonly articlesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistEditorialItem_article">;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ArtistEditorial_artist";
 };
 export type ArtistEditorial_artist$key = {
@@ -29,14 +37,70 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "name",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 3
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "PUBLISHED_AT_DESC"
+        }
+      ],
+      "concreteType": "ArticleConnection",
+      "kind": "LinkedField",
+      "name": "articlesConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArticleEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Article",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ArtistEditorialItem_article"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "articlesConnection(first:3,sort:\"PUBLISHED_AT_DESC\")"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "046584931cf13c0ac64cd94c3ccaa622";
+(node as any).hash = "42a8c955d70b601f4ff8db981b37ad5c";
 
 export default node;
