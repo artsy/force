@@ -81,7 +81,6 @@
     "@artsy/palette-tokens": "7.3.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/xapp": "2.0.0",
-    "@fragaria/address-formatter": "^6.7.1",
     "@loadable/component": "5.15.2",
     "@loadable/server": "5.15.2",
     "@segment/consent-manager": "5.7.0",

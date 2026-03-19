@@ -12,7 +12,6 @@ import {
   Input,
   usePrevious,
 } from "@artsy/palette"
-import addressFormatter from "@fragaria/address-formatter"
 import { useFlag } from "@unleash/proxy-client-react"
 import type { Address } from "Components/Address/utils"
 import {
@@ -82,14 +81,14 @@ type ProviderSuggestionInternational = {
   entries: number
 }
 
-// Structured components returned by GET /v2/lookup/{address_id}
+// Structured components returned by GET /v2/lookup/{address_id} for a final (entries=1) address.
+// When entries > 1, the same endpoint returns more ProviderSuggestionInternational sub-units instead.
 type InternationalAddressComponents = {
   country_iso3: string
   administrative_area: string
   locality: string
   postal_code: string
-  thoroughfare: string
-  premise: string
+  street: string // full street line including house number, pre-formatted by Smarty
 }
 
 interface AddressAutocompleteSuggestion extends AutocompleteInputOptionType {
@@ -222,9 +221,8 @@ export const AddressAutocompleteInput = ({
   const isUSAddress = address.country === "US"
 
   const isUSFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
-  const isInternationalFeatureFlagEnabled = !!useFlag(
-    "address_autocomplete_international",
-  )
+  const isInternationalFeatureFlagEnabled =
+    true || !!useFlag("address_autocomplete_international")
 
   const { trackEvent } = useTracking()
 
@@ -457,32 +455,18 @@ export const AddressAutocompleteInput = ({
           const iso3Country = ISO2_TO_ISO3[address.country]
           if (iso3Country && serviceAvailability?.enabled) {
             try {
-              const response = await fetchInternationalAddressById({
+              const components = await fetchInternationalComponents({
                 addressId: option.addressId,
                 country: iso3Country,
                 apiKey: serviceAvailability.apiKey,
               })
-              const components = response.candidates?.[0]?.components
               if (components) {
                 const iso2Country =
                   ISO3_TO_ISO2[components.country_iso3] || address.country
-                const formattedStreetLines = addressFormatter.format(
-                  {
-                    road: components.thoroughfare,
-                    houseNumber: components.premise,
-                    city: components.locality,
-                    postcode: components.postal_code,
-                    state: components.administrative_area,
-                    countryCode: iso2Country,
-                  },
-                  { output: "array" },
-                ) as string[]
-                const addressLine1 =
-                  formattedStreetLines[0] || option.address.addressLine1
                 const enrichedOption = {
                   ...option,
                   address: {
-                    addressLine1,
+                    addressLine1: components.street,
                     addressLine2: "",
                     city: components.locality,
                     region: components.administrative_area,
@@ -577,7 +561,17 @@ const fetchInternationalSuggestionsWithThrottle = throttle(
   },
 )
 
-const fetchInternationalAddressById = async ({
+/**
+ * Fetches structured address components for an international address by address_id.
+ *
+ * Smarty's /v2/lookup/{address_id} endpoint has two modes:
+ * - entries > 1 (multi-unit building): returns more ProviderSuggestionInternational sub-unit candidates
+ * - entries === 1 (final address): returns flat InternationalAddressComponents
+ *
+ * This function handles both by performing up to two fetches: if the first result
+ * looks like a sub-unit list, it fetches the first sub-unit's components.
+ */
+const fetchInternationalComponents = async ({
   addressId,
   country,
   apiKey,
@@ -585,22 +579,40 @@ const fetchInternationalAddressById = async ({
   addressId: string
   country: string
   apiKey: string
-}): Promise<{
-  candidates: Array<{
-    components?: InternationalAddressComponents
-  }>
-}> => {
-  const params = new URLSearchParams({
-    key: apiKey,
-    country,
-    license: INTERNATIONAL_LICENSE,
-  })
-  const url = `${SMARTY_INTL_AUTOCOMPLETE_URL}/${encodeURIComponent(addressId)}?${params}`
-  const response = await fetch(url)
-  if (!response.ok) {
-    throw new Error(`Address component lookup failed: ${response.status}`)
+}): Promise<InternationalAddressComponents | null> => {
+  const doFetch = async (id: string) => {
+    const params = new URLSearchParams({
+      key: apiKey,
+      country,
+      license: INTERNATIONAL_LICENSE,
+    })
+    const url = `${SMARTY_INTL_AUTOCOMPLETE_URL}/${encodeURIComponent(id)}?${params}`
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(`Address component lookup failed: ${response.status}`)
+    }
+    return response.json() as Promise<{
+      candidates: Array<
+        InternationalAddressComponents | ProviderSuggestionInternational
+      >
+    }>
   }
-  return response.json()
+
+  const first = await doFetch(addressId)
+  const candidate = first.candidates?.[0]
+  if (!candidate) return null
+
+  // Structured component: has "street" field
+  if ("street" in candidate) return candidate as InternationalAddressComponents
+
+  // Sub-unit candidate: has "address_id" — fetch the first sub-unit
+  if ("address_id" in candidate) {
+    const second = await doFetch(candidate.address_id)
+    const sub = second.candidates?.[0]
+    if (sub && "street" in sub) return sub as InternationalAddressComponents
+  }
+
+  return null
 }
 
 /**

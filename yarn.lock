@@ -1224,15 +1224,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fragaria/address-formatter@npm:^6.7.1":
-  version: 6.7.1
-  resolution: "@fragaria/address-formatter@npm:6.7.1"
-  dependencies:
-    mustache: "npm:^4.0.0"
-  checksum: 10c0/17a9c3378020243447fe26ec61bd6a32d2810e715e55af7d64eab7f6c1acee7d0754cdf4d109bcbc4273d70a82e128674deac44e53e5c940c3f3bb14c60caa4a
-  languageName: node
-  linkType: hard
-
 "@graphql-inspector/core@npm:1.14.0":
   version: 1.14.0
   resolution: "@graphql-inspector/core@npm:1.14.0"
@@ -8977,7 +8968,6 @@ __metadata:
     "@artsy/react-html-parser": "npm:^3.0.2"
     "@artsy/xapp": "npm:2.0.0"
     "@biomejs/biome": "npm:1.9.4"
-    "@fragaria/address-formatter": "npm:^6.7.1"
     "@graphql-inspector/core": "npm:1.14.0"
     "@graphql-tools/jest-transform": "npm:^2.0.0"
     "@loadable/component": "npm:5.15.2"
@@ -12911,15 +12901,6 @@ __metadata:
   version: 3.0.1
   resolution: "murmurhash3js@npm:3.0.1"
   checksum: 10c0/ec4f37dc65f3789f0dbfe6cceaa6ef825a343241c70652f9a2098890638733195789d36e610da3843380b82c26bb53603b6d057e5bc608a189b4198ea5f9b572
-  languageName: node
-  linkType: hard
-
-"mustache@npm:^4.0.0":
-  version: 4.2.0
-  resolution: "mustache@npm:4.2.0"
-  bin:
-    mustache: bin/mustache
-  checksum: 10c0/1f8197e8a19e63645a786581d58c41df7853da26702dbc005193e2437c98ca49b255345c173d50c08fe4b4dbb363e53cb655ecc570791f8deb09887248dd34a2
   languageName: node
   linkType: hard
 

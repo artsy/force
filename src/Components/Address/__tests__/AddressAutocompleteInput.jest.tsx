@@ -377,14 +377,11 @@ describe("AddressAutocompleteInput", () => {
           json: jest.fn().mockResolvedValue({
             candidates: [
               {
-                components: {
-                  country_iso3: "DEU",
-                  administrative_area: "Berlin",
-                  locality: "Berlin",
-                  postal_code: "10117",
-                  thoroughfare: "Unter den Linden",
-                  premise: "1",
-                },
+                country_iso3: "DEU",
+                administrative_area: "Berlin",
+                locality: "Berlin",
+                postal_code: "10117",
+                street: "Unter den Linden 1",
               },
             ],
           }),
@@ -437,14 +434,11 @@ describe("AddressAutocompleteInput", () => {
           json: jest.fn().mockResolvedValue({
             candidates: [
               {
-                components: {
-                  country_iso3: "GBR",
-                  administrative_area: "West Sussex",
-                  locality: "Worthing",
-                  postal_code: "BN11 2AF",
-                  thoroughfare: "10 Ashwood Close",
-                  premise: "",
-                },
+                country_iso3: "GBR",
+                administrative_area: "West Sussex",
+                locality: "Worthing",
+                postal_code: "BN11 2AF",
+                street: "10 Ashwood Close",
               },
             ],
           }),
@@ -496,14 +490,11 @@ describe("AddressAutocompleteInput", () => {
           json: jest.fn().mockResolvedValue({
             candidates: [
               {
-                components: {
-                  country_iso3: "NLD",
-                  administrative_area: "Noord-Holland",
-                  locality: "Amsterdam",
-                  postal_code: "1015 BA",
-                  thoroughfare: "Herengracht",
-                  premise: "1",
-                },
+                country_iso3: "NLD",
+                administrative_area: "Noord-Holland",
+                locality: "Amsterdam",
+                postal_code: "1015 BA",
+                street: "Herengracht 1",
               },
             ],
           }),
@@ -538,6 +529,9 @@ describe("AddressAutocompleteInput", () => {
     })
 
     it("fetches components for street-level results (entries > 1) and populates form", async () => {
+      // First fetch: autocomplete candidates (entries > 1 means sub-units exist)
+      // Second fetch: address_id lookup returns sub-unit list (still ProviderSuggestionInternational)
+      // Third fetch: sub-unit address_id lookup returns flat structured components
       mockFetch
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
@@ -555,14 +549,23 @@ describe("AddressAutocompleteInput", () => {
           json: jest.fn().mockResolvedValue({
             candidates: [
               {
-                components: {
-                  country_iso3: "DEU",
-                  administrative_area: "Berlin",
-                  locality: "Berlin",
-                  postal_code: "10117",
-                  thoroughfare: "Unter den Linden",
-                  premise: "",
-                },
+                address_text: "Unter den Linden 1 10117 Berlin",
+                address_id: "sub-unit-id",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                country_iso3: "DEU",
+                administrative_area: "Berlin",
+                locality: "Berlin",
+                postal_code: "10117",
+                street: "Unter den Linden 1",
               },
             ],
           }),
@@ -582,7 +585,7 @@ describe("AddressAutocompleteInput", () => {
 
       expect(mockOnSelect).toHaveBeenCalledTimes(1)
       expect(mockOnSelect.mock.calls[0][0].address).toMatchObject({
-        addressLine1: "Unter den Linden",
+        addressLine1: "Unter den Linden 1",
         city: "Berlin",
         postalCode: "10117",
         country: "DE",
@@ -648,14 +651,11 @@ describe("AddressAutocompleteInput", () => {
           json: jest.fn().mockResolvedValue({
             candidates: [
               {
-                components: {
-                  country_iso3: "DEU",
-                  administrative_area: "Berlin",
-                  locality: "Berlin",
-                  postal_code: "10117",
-                  thoroughfare: "Krausenstr.",
-                  premise: "9-10",
-                },
+                country_iso3: "DEU",
+                administrative_area: "Berlin",
+                locality: "Berlin",
+                postal_code: "10117",
+                street: "Krausenstr. 9-10",
               },
             ],
           }),
