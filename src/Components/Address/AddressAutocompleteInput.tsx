@@ -215,7 +215,7 @@ export const AddressAutocompleteInput = ({
 
   const isUSFeatureFlagEnabled = !!useFlag("address_autocomplete_us")
   const isInternationalFeatureFlagEnabled = !!useFlag(
-    "emerald_address_autocomplete_international",
+    "emerald_address-autocomplete-international",
   )
 
   const { trackEvent } = useTracking()

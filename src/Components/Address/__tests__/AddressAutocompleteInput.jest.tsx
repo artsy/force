@@ -28,7 +28,7 @@ jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn(
     flag =>
       flag === "address_autocomplete_us" ||
-      flag === "emerald_address_autocomplete_international",
+      flag === "emerald_address-autocomplete-international",
   ),
 }))
 
@@ -171,7 +171,7 @@ describe("AddressAutocompleteInput", () => {
       useFlag.mockImplementation(
         (flag: string) =>
           flag === "address_autocomplete_us" ||
-          flag === "emerald_address_autocomplete_international",
+          flag === "emerald_address-autocomplete-international",
       )
     })
 
@@ -323,7 +323,7 @@ describe("AddressAutocompleteInput", () => {
       useFlag.mockImplementation(
         (flag: string) =>
           flag === "address_autocomplete_us" ||
-          flag === "emerald_address_autocomplete_international",
+          flag === "emerald_address-autocomplete-international",
       )
     })
 
