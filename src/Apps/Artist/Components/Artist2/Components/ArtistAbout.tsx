@@ -1,6 +1,8 @@
 import {
   ActionType,
+  type ClickedGene,
   ContextModule,
+  OwnerType,
   type ToggledArtistBio,
 } from "@artsy/cohesion"
 import { Box, Expandable, Flex, ReadMore, Stack, Text } from "@artsy/palette"
@@ -130,6 +132,30 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
 const KeyFactsContent: React.FC<{ artist: ArtistAbout_artist$data }> = ({
   artist,
 }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
+
+  const trackGeneClick = (
+    gene:
+      | ArtistAbout_artist$data["movementGenes"][number]
+      | ArtistAbout_artist$data["mediumGenes"][number],
+  ) => {
+    if (!contextPageOwnerId || !contextPageOwnerSlug) return
+
+    const payload: ClickedGene = {
+      action: ActionType.clickedGene,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_page_owner_type: OwnerType.gene,
+      destination_page_owner_id: gene.internalID,
+      destination_page_owner_slug: gene.slug,
+    }
+    trackEvent(payload)
+  }
+
   const hasMovements = artist.movementGenes?.length > 0
   const hasMediums = artist.mediumGenes?.length > 0
 
@@ -142,7 +168,12 @@ const KeyFactsContent: React.FC<{ artist: ArtistAbout_artist$data }> = ({
           </Box>
           <Flex flexWrap={"wrap"}>
             {artist.movementGenes.map(g => (
-              <RouterLink key={g.slug} to={`/gene/${g.slug}`} color="mono60">
+              <RouterLink
+                key={g.slug}
+                to={`/gene/${g.slug}`}
+                color="mono60"
+                onClick={() => trackGeneClick(g)}
+              >
                 <Text variant={"xs"} mr={1}>
                   {g.name}
                 </Text>
@@ -159,7 +190,12 @@ const KeyFactsContent: React.FC<{ artist: ArtistAbout_artist$data }> = ({
           </Box>
           <Flex flexWrap={"wrap"}>
             {artist.mediumGenes.map(g => (
-              <RouterLink key={g.slug} to={`/gene/${g.slug}`} color="mono60">
+              <RouterLink
+                key={g.slug}
+                to={`/gene/${g.slug}`}
+                color="mono60"
+                onClick={() => trackGeneClick(g)}
+              >
                 <Text variant={"xs"} mr={1}>
                   {g.name}
                 </Text>
@@ -184,6 +220,7 @@ const fragment = graphql`
       minValue: 50
       size: 3
     ) {
+      internalID
       name
       slug
     }
@@ -192,6 +229,7 @@ const fragment = graphql`
       minValue: 50
       size: 3
     ) {
+      internalID
       name
       slug
     }

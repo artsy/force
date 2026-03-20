@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a67ec4de4ab323842d29786b3e9c877>>
+ * @generated SignedSource<<5fddd60f984e5771b74918aea6394d82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -54,6 +54,13 @@ v4 = {
   "storageKey": null
 },
 v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
+    "storageKey": null
+  },
   (v1/*: any*/),
   {
     "alias": null,
@@ -198,7 +205,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8f4910d83fd9b6aaf0058d8dd92a27b",
+    "cacheID": "06db63b09f7f2510f3e38e59c895d23d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -219,10 +226,12 @@ return {
         "artist.id": (v7/*: any*/),
         "artist.mediumGenes": (v8/*: any*/),
         "artist.mediumGenes.id": (v7/*: any*/),
+        "artist.mediumGenes.internalID": (v7/*: any*/),
         "artist.mediumGenes.name": (v6/*: any*/),
         "artist.mediumGenes.slug": (v7/*: any*/),
         "artist.movementGenes": (v8/*: any*/),
         "artist.movementGenes.id": (v7/*: any*/),
+        "artist.movementGenes.internalID": (v7/*: any*/),
         "artist.movementGenes.name": (v6/*: any*/),
         "artist.movementGenes.slug": (v7/*: any*/),
         "artist.name": (v6/*: any*/)
@@ -230,7 +239,7 @@ return {
     },
     "name": "ArtistAbout_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistAbout_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistAbout_artist\n    id\n  }\n}\n\nfragment ArtistAbout_artist on Artist {\n  name\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    name\n    slug\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    name\n    slug\n    id\n  }\n}\n"
+    "text": "query ArtistAbout_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistAbout_artist\n    id\n  }\n}\n\nfragment ArtistAbout_artist on Artist {\n  name\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    internalID\n    name\n    slug\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    internalID\n    name\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

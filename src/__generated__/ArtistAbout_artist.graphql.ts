@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5146eb48a0875fc6ae81943cd3f10946>>
+ * @generated SignedSource<<cad170304e86bd8267c47d6d47773050>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,12 @@ export type ArtistAbout_artist$data = {
     readonly text: string | null | undefined;
   } | null | undefined;
   readonly mediumGenes: ReadonlyArray<{
+    readonly internalID: string;
     readonly name: string | null | undefined;
     readonly slug: string;
   }>;
   readonly movementGenes: ReadonlyArray<{
+    readonly internalID: string;
     readonly name: string | null | undefined;
     readonly slug: string;
   }>;
@@ -50,6 +52,13 @@ v2 = {
   "value": 3
 },
 v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
+    "storageKey": null
+  },
   (v0/*: any*/),
   {
     "alias": null,
@@ -139,6 +148,6 @@ return {
 };
 })();
 
-(node as any).hash = "af7fc8500daef2eeb7aaecbc1db82935";
+(node as any).hash = "f7fee9c511e64f9ff2462580fed1bed1";
 
 export default node;
