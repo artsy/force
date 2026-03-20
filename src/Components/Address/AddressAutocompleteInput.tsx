@@ -34,6 +34,15 @@ const SMARTY_US_AUTOCOMPLETE_URL =
 const SMARTY_INTL_AUTOCOMPLETE_URL =
   "https://international-autocomplete.api.smarty.com/v2/lookup"
 
+/**
+ * ISO-2 country codes supported by the Smarty international autocomplete v2 API.
+ * Source: https://www.smarty.com/docs/cloud/international-address-autocomplete-api#supported-countries
+ * All countries in our ISO2_TO_ISO3 map (excluding US, which uses the separate US API) are supported.
+ */
+export const SUPPORTED_INTERNATIONAL_COUNTRY_CODES: Set<string> = new Set(
+  Object.keys(ISO2_TO_ISO3).filter(code => code !== "US"),
+)
+
 interface AutocompleteTrackingValues {
   contextPageOwnerId: string
   contextOwnerType: PageOwnerType
@@ -249,7 +258,9 @@ export const AddressAutocompleteInput = ({
     const enabled =
       isAPIKeyPresent &&
       ((isUSFeatureFlagEnabled && isUSAddress) ||
-        (isInternationalFeatureFlagEnabled && !isUSAddress))
+        (isInternationalFeatureFlagEnabled &&
+          !isUSAddress &&
+          SUPPORTED_INTERNATIONAL_COUNTRY_CODES.has(address.country)))
 
     if (enabled !== serviceAvailability?.enabled) {
       dispatch({
@@ -263,6 +274,7 @@ export const AddressAutocompleteInput = ({
     isUSFeatureFlagEnabled,
     isInternationalFeatureFlagEnabled,
     isUSAddress,
+    address.country,
     serviceAvailability,
   ])
 
@@ -408,6 +420,49 @@ export const AddressAutocompleteInput = ({
     )
   }
 
+  const handleSelect = async (
+    option: AddressAutocompleteSuggestion,
+    index: number,
+  ) => {
+    if (!isUSAddress && option.addressId) {
+      const iso3Country = ISO2_TO_ISO3[address.country]
+      if (iso3Country && serviceAvailability?.enabled) {
+        try {
+          const components = await fetchInternationalComponents({
+            addressId: option.addressId,
+            country: iso3Country,
+            apiKey: serviceAvailability.apiKey,
+          })
+          if (components) {
+            const iso2Country =
+              ISO3_TO_ISO2[components.country_iso3] || address.country
+            const enrichedOption = {
+              ...option,
+              address: {
+                addressLine1: components.street,
+                addressLine2: "",
+                city: components.locality,
+                region: components.administrative_area,
+                postalCode: components.postal_code,
+                country: iso2Country,
+              },
+            }
+            trackSelectedAutocompletedAddress(enrichedOption, value as string)
+            onSelect(enrichedOption, index)
+            return
+          }
+        } catch (e) {
+          // Component fetch failed (e.g. network error, API key issue).
+          // Fall through to call onSelect with the partial fallback address —
+          // the user can still complete the form manually.
+          console.error("Failed to fetch address components:", e)
+        }
+      }
+    }
+    trackSelectedAutocompletedAddress(option, value as string)
+    onSelect(option, index)
+  }
+
   return (
     <AutocompleteInput<AddressAutocompleteSuggestion>
       data-testid={dataTestId}
@@ -428,45 +483,7 @@ export const AddressAutocompleteInput = ({
         onClear()
         fetchForAutocomplete({ search: "" })
       }}
-      onSelect={async (option, index) => {
-        if (!isUSAddress && option.addressId) {
-          const iso3Country = ISO2_TO_ISO3[address.country]
-          if (iso3Country && serviceAvailability?.enabled) {
-            try {
-              const components = await fetchInternationalComponents({
-                addressId: option.addressId,
-                country: iso3Country,
-                apiKey: serviceAvailability.apiKey,
-              })
-              if (components) {
-                const iso2Country =
-                  ISO3_TO_ISO2[components.country_iso3] || address.country
-                const enrichedOption = {
-                  ...option,
-                  address: {
-                    addressLine1: components.street,
-                    addressLine2: "",
-                    city: components.locality,
-                    region: components.administrative_area,
-                    postalCode: components.postal_code,
-                    country: iso2Country,
-                  },
-                }
-                trackSelectedAutocompletedAddress(
-                  enrichedOption,
-                  value as string,
-                )
-                onSelect(enrichedOption, index)
-                return
-              }
-            } catch (e) {
-              console.error("Failed to fetch address components:", e)
-            }
-          }
-        }
-        trackSelectedAutocompletedAddress(option, value as string)
-        onSelect(option, index)
-      }}
+      onSelect={handleSelect}
       {...autocompleteProps}
     />
   )
