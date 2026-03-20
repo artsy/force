@@ -36,11 +36,34 @@ const SMARTY_INTL_AUTOCOMPLETE_URL =
 
 /**
  * ISO-2 country codes supported by the Smarty international autocomplete v2 API.
- * Source: https://www.smarty.com/docs/cloud/international-address-autocomplete-api#supported-countries
- * All countries in our ISO2_TO_ISO3 map (excluding US, which uses the separate US API) are supported.
+ * Derived from the ISO-3 list at:
+ * https://www.smarty.com/docs/cloud/international-address-autocomplete-api#supported-countries
+ * US territories (GU, PR, VI, MP, AS, UM, MH) are absent — they are covered by the US API.
  */
+// prettier-ignore
+const SMARTY_SUPPORTED_ISO3_CODES = [
+  "AFG","ALB","DZA","AND","AGO","AIA","ATA","ATG","ARG","ARM","ABW","AUS","AUT","AZE",
+  "BHS","BHR","BGD","BRB","BLR","BEL","BLZ","BEN","BMU","BTN","BOL","BES","BIH","BWA",
+  "BVT","BRA","IOT","BRN","BGR","BFA","BDI","KHM","CMR","CAN","CPV","CYM","CAF","TCD",
+  "CHL","CHN","CXR","CCK","COL","COM","COG","COD","COK","CRI","HRV","CUB","CUW","CYP",
+  "CZE","CIV","DNK","DJI","DMA","DOM","ECU","EGY","SLV","GNQ","ERI","EST","SWZ","ETH",
+  "FLK","FRO","FJI","FIN","FRA","GUF","PYF","ATF","GAB","GMB","GEO","DEU","GHA","GIB",
+  "GRC","GRL","GRD","GLP","GTM","GGY","GIN","GNB","GUY","HTI","HMD","VAT","HND","HKG",
+  "HUN","ISL","IND","IDN","IRN","IRQ","IRL","IMN","ISR","ITA","JAM","JPN","JEY","JOR",
+  "KAZ","KEN","KIR","PRK","KOR","XKX","KWT","KGZ","LAO","LVA","LBN","LSO","LBR","LBY",
+  "LIE","LTU","LUX","MAC","MKD","MDG","MWI","MYS","MDV","MLI","MLT","MTQ","MRT","MUS",
+  "MYT","MEX","FSM","MDA","MCO","MNG","MNE","MSR","MAR","MOZ","MMR","NAM","NRU","NPL",
+  "NLD","NCL","NZL","NIC","NER","NGA","NIU","NFK","NOR","OMN","PAK","PLW","PSE","PAN",
+  "PNG","PRY","PER","PHL","PCN","POL","PRT","QAT","SSD","ROU","RUS","RWA","REU","BLM",
+  "SHN","KNA","LCA","MAF","SPM","VCT","WSM","SMR","STP","SAU","SEN","SRB","SYC","SLE",
+  "SGP","SXM","SVK","SVN","SLB","SOM","ZAF","SGS","ESP","LKA","SDN","SUR","SJM","SWE",
+  "CHE","SYR","TWN","TJK","TZA","THA","TLS","TGO","TKL","TON","TTO","TUN","TUR","TKM",
+  "TCA","TUV","UGA","UKR","ARE","GBR","URY","UZB","VUT","VEN","VNM","VGB","WLF","ESH",
+  "YEM","ZMB","ZWE","ALA",
+] as const
+
 export const SUPPORTED_INTERNATIONAL_COUNTRY_CODES: Set<string> = new Set(
-  Object.keys(ISO2_TO_ISO3).filter(code => code !== "US"),
+  SMARTY_SUPPORTED_ISO3_CODES.map(iso3 => ISO3_TO_ISO2[iso3]).filter(Boolean),
 )
 
 interface AutocompleteTrackingValues {
