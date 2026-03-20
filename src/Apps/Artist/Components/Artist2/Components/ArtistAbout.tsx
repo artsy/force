@@ -1,5 +1,11 @@
+import {
+  ActionType,
+  ContextModule,
+  type ToggledArtistBio,
+} from "@artsy/cohesion"
 import { Box, Expandable, Flex, ReadMore, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { Media } from "Utils/Responsive"
 import type {
   ArtistAbout_artist$data,
@@ -7,6 +13,7 @@ import type {
 } from "__generated__/ArtistAbout_artist.graphql"
 import type React from "react"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistAboutProps {
   artist: ArtistAbout_artist$key
@@ -16,6 +23,24 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
   artist: artistRef,
 }) => {
   const artist = useFragment(fragment, artistRef)
+
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
+
+  const trackToggledArtistBio = (expand: boolean) => {
+    if (!contextPageOwnerId || !contextPageOwnerSlug) return
+
+    const payload: ToggledArtistBio = {
+      action: ActionType.toggledArtistBio,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      expand,
+    }
+    trackEvent(payload)
+  }
 
   const biographyText = artist.biographyBlurb?.text
   const biographyCredit = artist.biographyBlurb?.credit
@@ -45,7 +70,12 @@ export const ArtistAbout: React.FC<ArtistAboutProps> = ({
           p={2}
         >
           <Text variant={"xs"}>About {artist.name}</Text>
-          <ReadMore maxLines={2} content={biographyContent!} />
+          <ReadMore
+            maxLines={2}
+            content={biographyContent!}
+            onReadMoreClicked={() => trackToggledArtistBio(true)}
+            onReadLessClicked={() => trackToggledArtistBio(false)}
+          />
         </Flex>
       )}
 
