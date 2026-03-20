@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<70a0a86ca9d0c06f2eb604de1f411d93>>
+ * @generated SignedSource<<05f6b3e5d956f9045ff2dc2f561dd990>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,6 +46,7 @@ export type FilterArtworksInput = {
   includeAllJSON?: boolean | null | undefined;
   includeArtworksByFollowedArtists?: boolean | null | undefined;
   includeMediumFilterInAggregation?: boolean | null | undefined;
+  includeNonArtsyListed?: boolean | null | undefined;
   includeUnpublished?: boolean | null | undefined;
   inquireableOnly?: boolean | null | undefined;
   keyword?: string | null | undefined;
