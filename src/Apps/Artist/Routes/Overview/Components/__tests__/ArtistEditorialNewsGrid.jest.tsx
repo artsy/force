@@ -137,6 +137,33 @@ describe("ArtistEditorialNewsGrid", () => {
         type: "thumbnail",
       })
     })
+
+    it("tracks empty state button click", () => {
+      renderWithRelay(
+        {
+          Artist: () => ({
+            articlesConnection: {
+              edges: [],
+            },
+          }),
+        },
+        { showEmptyStateWhenNoArticles: true },
+      )
+
+      fireEvent.click(
+        screen.getByRole("link", { name: /browse artsy editorial/i }),
+      )
+
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedArticleGroup",
+        context_module: "marketNews",
+        context_page_owner_id: "example-artist-id",
+        context_page_owner_slug: "example-artist-slug",
+        context_page_owner_type: "artist",
+        destination_page_owner_type: "articles",
+        type: "emptyState",
+      })
+    })
   })
 
   describe("empty states", () => {

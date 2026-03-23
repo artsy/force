@@ -1,4 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
+import type { EntityModuleType } from "@artsy/cohesion"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import {
@@ -16,10 +17,12 @@ import {
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { DateTime, type LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 
 export interface Props {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
@@ -32,6 +35,8 @@ export const ArtistAuctionResultItem: React.FC<
 > = props => {
   const { user } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
+  const { trackClickedAuctionResultItem } = useAuctionResultsTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
 
   const {
     showArtistName,
@@ -58,6 +63,12 @@ export const ArtistAuctionResultItem: React.FC<
   const onAuctionResultClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => {
+    trackClickedAuctionResultItem({
+      type: "thumbnail" as EntityModuleType,
+      expanded: undefined,
+      context_page_owner_type: contextPageOwnerType as any,
+    })
+
     if (!user) {
       event.preventDefault()
       showAuthDialog({

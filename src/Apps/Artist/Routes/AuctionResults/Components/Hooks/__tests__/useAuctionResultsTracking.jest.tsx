@@ -30,7 +30,7 @@ describe("useAuctionResultsTracking", () => {
 
   describe("#trackClickedAuctionResultItem", () => {
     it("tracks without specifying owner type", () => {
-      setupHook().trackClickedAuctionResultItem(false)
+      setupHook().trackClickedAuctionResultItem({ expanded: false })
 
       expect(trackingSpy).toBeCalledWith({
         action: "clickedAuctionResultItem",
@@ -41,16 +41,31 @@ describe("useAuctionResultsTracking", () => {
     })
 
     it("track with specific owner type", () => {
-      setupHook().trackClickedAuctionResultItem(
-        true,
-        OwnerType.myCollectionInsights,
-      )
+      setupHook().trackClickedAuctionResultItem({
+        expanded: true,
+        context_page_owner_type: OwnerType.myCollectionInsights,
+      })
 
       expect(trackingSpy).toBeCalledWith({
         action: "clickedAuctionResultItem",
         context_module: "auctionResults",
         context_page_owner_type: "myCollectionInsights",
         expanded: true,
+      })
+    })
+
+    it("tracks with type specified", () => {
+      setupHook().trackClickedAuctionResultItem({
+        type: "thumbnail",
+        expanded: false,
+      })
+
+      expect(trackingSpy).toBeCalledWith({
+        action: "clickedAuctionResultItem",
+        context_module: "auctionResults",
+        context_page_owner_type: "artistAuctionResults",
+        type: "thumbnail",
+        expanded: false,
       })
     })
   })

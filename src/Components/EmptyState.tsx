@@ -6,7 +6,8 @@ interface EmptyStateProps {
   title: string
   description?: string | JSX.Element
   action?:
-    | ({ label: string } & ({ href: string } | { onClick: () => void }))
+    | { label: string; href: string; onClick: () => void }
+    | { label: string; onClick: () => void }
     | JSX.Element
 }
 
@@ -53,9 +54,12 @@ export const EmptyState: React.FC<React.PropsWithChildren<EmptyStateProps>> = ({
             ) : (
               <Button
                 variant="secondaryNeutral"
-                {...("href" in action
-                  ? { href: action.href, as: RouterLink }
-                  : { onClick: action.onClick })}
+                {...("href" in action && { href: action.href, as: RouterLink })}
+                onClick={e => {
+                  if ("onClick" in action && action.onClick) {
+                    action.onClick()
+                  }
+                }}
               >
                 {action.label}
               </Button>

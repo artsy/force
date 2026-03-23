@@ -1,9 +1,15 @@
+import type { EntityModuleType, OwnerType } from "@artsy/cohesion"
+import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 import { EmptyState } from "Components/EmptyState"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 
 export const ArtistAuctionResultsEmptyState: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
+  const { trackClickedAuctionResultItem } = useAuctionResultsTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
+
   return (
     <EmptyState
       title="There are currently no auction results for this artist."
@@ -16,8 +22,14 @@ export const ArtistAuctionResultsEmptyState: React.FC<
         </>
       }
       action={{
-        href: "/price-database",
         label: "View the Artsy Database",
+        href: "/price-database",
+        onClick: () => {
+          trackClickedAuctionResultItem({
+            type: "emptyState" as EntityModuleType,
+            context_page_owner_type: contextPageOwnerType as OwnerType.artist,
+          })
+        },
       }}
     />
   )
