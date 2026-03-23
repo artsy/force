@@ -23,14 +23,12 @@ export const ArtistAuctionResultsEmptyState: React.FC<
       }
       action={{
         label: "View the Artsy Database",
+        href: "/price-database",
         onClick: () => {
           trackClickedAuctionResultItem({
             type: "emptyState" as EntityModuleType,
             context_page_owner_type: contextPageOwnerType as OwnerType.artist,
           })
-          setTimeout(() => {
-            window.location.href = "/price-database"
-          }, 100)
         },
       }}
     />

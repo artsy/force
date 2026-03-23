@@ -33,7 +33,7 @@ describe("ArtistAuctionResultsEmptyState", () => {
       ),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: /view the artsy database/i }),
+      screen.getByRole("link", { name: /view the artsy database/i }),
     ).toBeInTheDocument()
   })
 
@@ -41,7 +41,7 @@ describe("ArtistAuctionResultsEmptyState", () => {
     render(<ArtistAuctionResultsEmptyState />)
 
     fireEvent.click(
-      screen.getByRole("button", { name: /view the artsy database/i }),
+      screen.getByRole("link", { name: /view the artsy database/i }),
     )
 
     expect(trackClickedAuctionResultItem).toBeCalledWith({

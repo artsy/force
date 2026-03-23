@@ -72,6 +72,7 @@ const ArtistEditorialNewsGrid: FC<
             description="Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy."
             action={{
               label: "Browse Artsy Editorial",
+              href: "/articles",
               onClick: () => {
                 const trackingEvent: ClickedArticleGroup = {
                   action: ActionType.clickedArticleGroup,
@@ -83,10 +84,6 @@ const ArtistEditorialNewsGrid: FC<
                   type: "emptyState" as EntityModuleType,
                 }
                 trackEvent(trackingEvent)
-
-                setTimeout(() => {
-                  window.location.href = "/articles"
-                }, 100)
               },
             }}
           />

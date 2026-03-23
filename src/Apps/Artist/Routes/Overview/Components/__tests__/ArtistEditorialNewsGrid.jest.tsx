@@ -151,7 +151,7 @@ describe("ArtistEditorialNewsGrid", () => {
       )
 
       fireEvent.click(
-        screen.getByRole("button", { name: /browse artsy editorial/i }),
+        screen.getByRole("link", { name: /browse artsy editorial/i }),
       )
 
       expect(trackEvent).toBeCalledWith({
