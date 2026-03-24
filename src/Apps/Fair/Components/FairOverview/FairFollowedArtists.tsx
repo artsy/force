@@ -134,6 +134,7 @@ export const FairFollowedArtistsFragmentContainer = createFragmentContainer(
         slug
         followedArtistArtworks: filterArtworksConnection(
           includeArtworksByFollowedArtists: true
+          sort: "-decayed_merch"
           first: 20
         ) {
           edges {

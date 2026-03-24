@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6108e66a717979bc30b9e20f19284f01>>
+ * @generated SignedSource<<17a01a75a92fcc97a9cf9c56bbde58bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -72,6 +72,11 @@ return {
           "kind": "Literal",
           "name": "includeArtworksByFollowedArtists",
           "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "-decayed_merch"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -152,7 +157,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:20,includeArtworksByFollowedArtists:true)"
+      "storageKey": "filterArtworksConnection(first:20,includeArtworksByFollowedArtists:true,sort:\"-decayed_merch\")"
     }
   ],
   "type": "Fair",
@@ -160,6 +165,6 @@ return {
 };
 })();
 
-(node as any).hash = "7e91e2bd451ffc90f0da649197e3439c";
+(node as any).hash = "45789a2e818e2a8be5b41db006e4eafb";
 
 export default node;
