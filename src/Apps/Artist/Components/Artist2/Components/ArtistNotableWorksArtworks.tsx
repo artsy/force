@@ -13,7 +13,16 @@ export const ArtistNotableWorksArtworks: React.FC<
 > = ({ artist: artistRef }) => {
   const artist = useFragment(fragment, artistRef)
 
-  const artworks = extractNodes(artist.artworksConnection)
+  const coverArtwork = artist.coverArtwork
+  const remaining = extractNodes(artist.artworksConnection).filter(
+    artwork => artwork.internalID !== coverArtwork?.internalID,
+  )
+
+  // Show the cover artwork first, then the remaining artworks
+  const artworks = [
+    ...(coverArtwork ? [coverArtwork] : []),
+    ...remaining,
+  ].slice(0, 3)
 
   return (
     <>
@@ -73,6 +82,20 @@ export const ArtistNotableWorksArtworks: React.FC<
 
 const fragment = graphql`
   fragment ArtistNotableWorksArtworks_artist on Artist {
+    coverArtwork {
+      internalID
+      href
+      title
+      date
+      image {
+        resized(width: 420, height: 420) {
+          width
+          height
+          src
+          srcSet
+        }
+      }
+    }
     artworksConnection(first: 3, sort: ICONICITY_DESC) {
       edges {
         node {
