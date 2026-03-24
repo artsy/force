@@ -26,17 +26,17 @@ export const ArtistNotableWorksArtworks: React.FC<
           <Box
             key={artwork.internalID}
             flex={1}
-            minWidth={0}
             display="flex"
             flexDirection="column"
             gap={1}
+            maxWidth={[200, "initial"]}
+            minWidth={[200, 0]}
           >
             <Box
               flex={1}
               display="flex"
               alignItems="center"
               justifyContent="center"
-              minWidth={[200, "initial"]}
             >
               <ResponsiveBox
                 // @ts-ignore
