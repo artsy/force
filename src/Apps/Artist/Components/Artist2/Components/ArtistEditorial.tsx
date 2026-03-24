@@ -31,7 +31,9 @@ export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
 
   return (
     <Stack gap={2}>
-      <Text variant="xs">Artsy Editorial Featuring {artist.name}</Text>
+      <Text variant={["sm-display", "xs"]}>
+        Artsy Editorial Featuring {artist.name}
+      </Text>
 
       <Media greaterThan="xs">
         <Stack gap={2}>
