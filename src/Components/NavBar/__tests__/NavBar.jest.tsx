@@ -3,8 +3,8 @@ import { NavBar } from "Components/NavBar/NavBar"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { render, screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
-import { getENV } from "Utils/getENV"
 import { useNavigationData } from "System/Contexts/NavigationDataContext"
 
 jest.mock("Components/Search/SearchBar", () => {
@@ -39,8 +39,15 @@ jest.mock("@artsy/palette", () => ({
   useDidMount: jest.fn().mockReturnValue(false), // SSR-render
 }))
 
+// Keep button semantics because the real mobile submenu is an interactive trigger.
 jest.mock("Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu", () => ({
-  NavBarMobileSubMenu: () => <></>,
+  NavBarMobileSubMenu: ({ children }: { children: React.ReactNode }) => (
+    <button type="button">{children}</button>
+  ),
+}))
+
+jest.mock("Components/NavBar/Menus/NavBarSubMenu", () => ({
+  NavBarSubMenu: () => null,
 }))
 
 jest.mock("react-dom", () => ({
@@ -72,7 +79,6 @@ jest.mock(
   }),
 )
 
-jest.mock("Utils/getENV")
 jest.mock("System/Contexts/NavigationDataContext", () => ({
   useNavigationData: jest.fn(() => null),
   NavigationDataProvider: ({ children }) => children,
@@ -80,6 +86,12 @@ jest.mock("System/Contexts/NavigationDataContext", () => ({
 
 describe("NavBar", () => {
   const trackEvent = jest.fn()
+  const mockUseNavigationData = useNavigationData as jest.Mock
+  const navigationData = {
+    whatsNewNavigation: {},
+    artistsNavigation: {},
+    artworksNavigation: {},
+  }
 
   const getWrapper = ({ user = null, isEigen = false } = {}) => {
     return render(
@@ -95,6 +107,10 @@ describe("NavBar", () => {
         trackEvent,
       }
     })
+  })
+
+  beforeEach(() => {
+    mockUseNavigationData.mockReturnValue(navigationData)
   })
 
   it("renders Artsy Logo and SearchBar", () => {
@@ -124,10 +140,13 @@ describe("NavBar", () => {
       ).toBeGreaterThanOrEqual(1)
     })
 
-    it("includes the sub-menus when rendering", () => {
-      const { container } = getWrapper()
-      expect(container.innerHTML).toContain("Browse by Identity")
-      expect(container.innerHTML).toContain("The Home Edit")
+    it("renders server-driven dropdowns when navigation data is available", () => {
+      getWrapper()
+
+      expect(screen.getAllByTestId("dropdown")).toHaveLength(3)
+      expect(screen.getByText("What’s New")).toBeInTheDocument()
+      expect(screen.getByText("Artists")).toBeInTheDocument()
+      expect(screen.getByText("Artworks")).toBeInTheDocument()
     })
 
     it("renders menu item price database", () => {
@@ -215,74 +234,22 @@ describe("NavBar", () => {
     })
   })
 
-  describe("shouldUseServerNav", () => {
-    const mockGetENV = getENV as jest.Mock
-    const mockUseNavigationData = useNavigationData as jest.Mock
+  describe("server-driven navigation", () => {
+    it("passes navigation data into the mobile menu", () => {
+      getWrapper()
 
-    beforeEach(() => {
-      mockGetENV.mockReset()
-      mockUseNavigationData.mockReset()
-    })
+      fireEvent.click(screen.getByLabelText("Menu"))
 
-    describe("conditional render (desktop dropdown)", () => {
-      it("renders client NavBarDropdownPanel when ENABLE_SERVER_DRIVEN_NAVIGATION is false", () => {
-        mockGetENV.mockImplementation((key: string) =>
-          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? false : undefined,
-        )
-        mockUseNavigationData.mockReturnValue(null)
-
-        getWrapper()
-
-        expect(screen.getAllByTestId("static-dropdown").length).toEqual(3)
-      })
-
-      it("renders NavBarDropdownPanelServer when ENABLE_SERVER_DRIVEN_NAVIGATION is true", () => {
-        mockGetENV.mockImplementation((key: string) =>
-          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? true : undefined,
-        )
-        mockUseNavigationData.mockReturnValue({
-          whatsNewNavigation: {},
-          artistsNavigation: {},
-          artworksNavigation: {},
-        })
-
-        getWrapper()
-
-        expect(screen.getAllByTestId("server-dropdown").length).toEqual(3)
-      })
-    })
-
-    describe("prop drill to NavBarMobileMenu", () => {
-      it("passes shouldUseServerNav=false to NavBarMobileMenu when flag is disabled", () => {
-        mockGetENV.mockImplementation((key: string) =>
-          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? false : undefined,
-        )
-        mockUseNavigationData.mockReturnValue(null)
-
-        getWrapper()
-
-        fireEvent.click(screen.getByLabelText("Menu"))
-
-        const mobileMenu = screen.getByTestId("NavBarMobileMenu")
-        expect(mobileMenu).toHaveAttribute(
-          "data-should-use-server-nav",
-          "false",
-        )
-      })
-
-      it("passes shouldUseServerNav=true to NavBarMobileMenu when flag is enabled", () => {
-        mockGetENV.mockImplementation((key: string) =>
-          key === "ENABLE_SERVER_DRIVEN_NAVIGATION" ? true : undefined,
-        )
-        mockUseNavigationData.mockReturnValue(null)
-
-        getWrapper()
-
-        fireEvent.click(screen.getByLabelText("Menu"))
-
-        const mobileMenu = screen.getByTestId("NavBarMobileMenu")
-        expect(mobileMenu).toHaveAttribute("data-should-use-server-nav", "true")
-      })
+      expect(screen.getByTestId("NavBarMobileMenu")).toBeInTheDocument()
+      expect(
+        screen.getByRole("button", { name: "What’s New" }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole("button", { name: "Artists" }),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole("button", { name: "Artworks" }),
+      ).toBeInTheDocument()
     })
   })
 })

@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { NavBarSubMenuServer } from "Components/NavBar/Menus/NavBarSubMenuServer"
+import { NavBarSubMenu } from "Components/NavBar/Menus/NavBarSubMenu"
 import { render } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -54,7 +54,7 @@ const MOCK_NAVIGATION_VERSION: {
   ],
 }
 
-describe("NavBarSubMenuServer", () => {
+describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()
 
   const getWrapper = (
@@ -65,7 +65,7 @@ describe("NavBarSubMenuServer", () => {
     ;(useFragment as jest.Mock).mockReturnValue(fragmentData)
 
     return render(
-      <NavBarSubMenuServer
+      <NavBarSubMenu
         navigationVersion={{} as any}
         label="Artworks"
         menuType="artworks"

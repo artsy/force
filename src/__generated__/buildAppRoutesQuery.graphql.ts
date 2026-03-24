@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a34cdd86046c92490b6b4a7a2da3d75>>
+ * @generated SignedSource<<6d3f4e724b89a10c2e8c7fb56b1ad8ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type buildAppRoutesQuery$variables = {
 };
 export type buildAppRoutesQuery$data = {
   readonly artistsNavigation: {
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenuServer_navigationVersion" | "NavBarSubMenuServer_navigationVersion">;
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenu_navigationVersion" | "NavBarSubMenu_navigationVersion">;
   } | null | undefined;
   readonly artworksNavigation: {
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenuServer_navigationVersion" | "NavBarSubMenuServer_navigationVersion">;
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenu_navigationVersion" | "NavBarSubMenu_navigationVersion">;
   } | null | undefined;
   readonly whatsNewNavigation: {
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenuServer_navigationVersion" | "NavBarSubMenuServer_navigationVersion">;
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenu_navigationVersion" | "NavBarSubMenu_navigationVersion">;
   } | null | undefined;
 };
 export type buildAppRoutesQuery = {
@@ -55,12 +55,12 @@ v3 = [
   {
     "args": null,
     "kind": "FragmentSpread",
-    "name": "NavBarSubMenuServer_navigationVersion"
+    "name": "NavBarSubMenu_navigationVersion"
   },
   {
     "args": null,
     "kind": "FragmentSpread",
-    "name": "NavBarMobileSubMenuServer_navigationVersion"
+    "name": "NavBarMobileSubMenu_navigationVersion"
   }
 ],
 v4 = [
@@ -316,16 +316,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2a1d019146186a6ef7ed5f5484a17a17",
+    "cacheID": "431e95cd452abae1950d4aa68a1721f1",
     "id": null,
     "metadata": {},
     "name": "buildAppRoutesQuery",
     "operationKind": "query",
-    "text": "query buildAppRoutesQuery(\n  $requestedVersionState: NavigationVersionState!\n) @cacheable {\n  whatsNewNavigation: navigationVersion(groupID: \"whats-new\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artistsNavigation: navigationVersion(groupID: \"artists\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n  artworksNavigation: navigationVersion(groupID: \"artworks\", state: $requestedVersionState) {\n    ...NavBarSubMenuServer_navigationVersion\n    ...NavBarMobileSubMenuServer_navigationVersion\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on FeaturedLink {\n  title\n  subtitle(format: PLAIN)\n  href\n  image {\n    cropped(width: 400, height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment NavBarMobileSubMenuServer_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n\nfragment NavBarSubMenuServer_navigationVersion on NavigationVersion {\n  featuredLinksSet {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query buildAppRoutesQuery(\n  $requestedVersionState: NavigationVersionState!\n) @cacheable {\n  whatsNewNavigation: navigationVersion(groupID: \"whats-new\", state: $requestedVersionState) {\n    ...NavBarSubMenu_navigationVersion\n    ...NavBarMobileSubMenu_navigationVersion\n    id\n  }\n  artistsNavigation: navigationVersion(groupID: \"artists\", state: $requestedVersionState) {\n    ...NavBarSubMenu_navigationVersion\n    ...NavBarMobileSubMenu_navigationVersion\n    id\n  }\n  artworksNavigation: navigationVersion(groupID: \"artworks\", state: $requestedVersionState) {\n    ...NavBarSubMenu_navigationVersion\n    ...NavBarMobileSubMenu_navigationVersion\n    id\n  }\n}\n\nfragment NavBarMenuItemFeaturedLinkColumn_featuredLinkData on FeaturedLink {\n  title\n  subtitle(format: PLAIN)\n  href\n  image {\n    cropped(width: 400, height: 400, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment NavBarMobileSubMenu_navigationVersion on NavigationVersion {\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n\nfragment NavBarSubMenu_navigationVersion on NavigationVersion {\n  featuredLinksSet {\n    ...NavBarMenuItemFeaturedLinkColumn_featuredLinkData\n    id\n  }\n  items {\n    title\n    position\n    children {\n      title\n      href\n      position\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6a785a17bb48757ef23e9a936a72a552";
+(node as any).hash = "39ede0365c8c2d3d74ed189c699a41d0";
 
 export default node;

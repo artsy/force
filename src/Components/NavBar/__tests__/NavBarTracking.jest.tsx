@@ -22,11 +22,6 @@ jest.mock("System/Relay/SystemQueryRenderer", () => ({
   ),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(() => false),
-  useVariant: jest.fn(() => ({ name: "disabled", enabled: false })),
-}))
-
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   useDidMount: jest.fn().mockReturnValue(false), // SSR-render
@@ -90,18 +85,13 @@ describe("NavBarTracking", () => {
         destination_path: "/art-fairs",
       })
 
-      const collectLinks = container.querySelectorAll('a[href="/collect"]')
-      const emptyCollectLink = Array.from(collectLinks).find(
-        link => link.textContent === "",
-      )
-      if (emptyCollectLink) {
-        fireEvent.click(emptyCollectLink)
-      }
+      const showsLink = container.querySelector('a[href="/shows"]')
+      fireEvent.click(showsLink!)
 
       expect(trackEvent).toHaveBeenLastCalledWith({
         action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-        subject: "Artworks",
-        destination_path: "/collect",
+        subject: "Shows",
+        destination_path: "/shows",
       })
     })
   })
