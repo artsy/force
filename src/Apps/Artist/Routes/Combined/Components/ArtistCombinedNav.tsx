@@ -104,7 +104,7 @@ export const ArtistCombinedNav = ({
                           handleClick("editorial")
                         }}
                       >
-                        Articles
+                        Stories
                       </BaseTab>
                     )}
 
