@@ -267,6 +267,22 @@ describe("AddressAutocompleteInput", () => {
     })
 
     it("calls the onSelect callback with the option and its index when the user selects a suggestion", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: jest.fn().mockResolvedValue({
+          suggestions: [
+            {
+              city: "New York",
+              entries: 1,
+              secondary: "",
+              state: "NY",
+              street_line: "401 Broadway",
+              zipcode: "10013",
+            },
+          ],
+        }),
+      })
+
       render(<TestImplementation />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
@@ -291,10 +307,120 @@ describe("AddressAutocompleteInput", () => {
             postalCode: "10013",
             region: "NY",
           },
-          entries: null,
+          entries: 1,
           text: "401 Broadway, New York NY 10013",
           value: "401 Broadway, New York NY 10013",
         },
+        0,
+      )
+    })
+
+    it("shows sub-unit options for a US address with multiple entries and selects one", async () => {
+      // First fetch: building with 2 units — Smarty returns the secondary descriptor type ("Apt")
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: true,
+          json: jest.fn().mockResolvedValue({
+            suggestions: [
+              {
+                city: "New York",
+                entries: 2,
+                secondary: "Apt",
+                state: "NY",
+                street_line: "401 Broadway",
+                zipcode: "10013",
+              },
+            ],
+          }),
+        })
+        // Second fetch: secondary lookup returns individual units
+        .mockResolvedValueOnce({
+          ok: true,
+          json: jest.fn().mockResolvedValue({
+            suggestions: [
+              {
+                city: "New York",
+                entries: 1,
+                secondary: "Apt 1",
+                state: "NY",
+                street_line: "401 Broadway",
+                zipcode: "10013",
+              },
+              {
+                city: "New York",
+                entries: 1,
+                secondary: "Apt 2",
+                state: "NY",
+                street_line: "401 Broadway",
+                zipcode: "10013",
+              },
+            ],
+          }),
+        })
+
+      render(<TestImplementation />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "401 Broadway")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+
+      // Aggregated multi-unit entry should not show "Apt" descriptor in display text
+      expect(
+        within(dropdown).getByText("401 Broadway, New York NY 10013"),
+      ).toBeInTheDocument()
+
+      await userEvent.click(
+        within(dropdown).getByText("401 Broadway, New York NY 10013"),
+      )
+
+      // Secondary lookup should include the descriptor type in the `selected` param
+      expect(mockFetch).toHaveBeenLastCalledWith(
+        expect.stringContaining(
+          "selected=401+Broadway+Apt+%282%29+New+York+NY+10013",
+        ),
+      )
+
+      // onSelect called immediately with building-level data to pre-fill the form
+      expect(mockOnSelect).toHaveBeenCalledTimes(1)
+      expect(mockOnSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: expect.objectContaining({
+            addressLine1: "401 Broadway",
+            city: "New York",
+            region: "NY",
+            postalCode: "10013",
+            country: "US",
+          }),
+        }),
+        0,
+      )
+
+      // Dropdown should still show sub-units for the user to pick one
+      await waitFor(() => {
+        expect(
+          within(dropdown).getByText("401 Broadway Apt 1, New York NY 10013"),
+        ).toBeInTheDocument()
+      })
+
+      // Select a specific unit
+      await userEvent.click(
+        within(dropdown).getByText("401 Broadway Apt 1, New York NY 10013"),
+      )
+      await flushPromiseQueue()
+
+      expect(mockOnSelect).toHaveBeenCalledTimes(2)
+      expect(mockOnSelect).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          address: expect.objectContaining({
+            addressLine1: "401 Broadway",
+            addressLine2: "Apt 1",
+            city: "New York",
+            region: "NY",
+            postalCode: "10013",
+            country: "US",
+          }),
+        }),
         0,
       )
     })
@@ -528,10 +654,10 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
-    it("fetches components for street-level results (entries > 1) and populates form", async () => {
+    it("shows sub-unit options for international addresses with multiple entries and selects one", async () => {
       // First fetch: autocomplete candidates (entries > 1 means sub-units exist)
-      // Second fetch: address_id lookup returns sub-unit list (still ProviderSuggestionInternational)
-      // Third fetch: sub-unit address_id lookup returns flat structured components
+      // Second fetch: address_id lookup returns sub-unit list
+      // Third fetch: selected sub-unit's components
       mockFetch
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
@@ -545,7 +671,7 @@ describe("AddressAutocompleteInput", () => {
           }),
           ok: true,
         })
-        // address_id lookup returns 2 sub-unit candidates (entries matches candidate count)
+        // address_id lookup returns 2 sub-unit candidates
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
             candidates: [
@@ -563,7 +689,7 @@ describe("AddressAutocompleteInput", () => {
           }),
           ok: true,
         })
-        // first sub-unit components fetch
+        // user selects the second sub-unit — its components
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
             candidates: [
@@ -572,7 +698,7 @@ describe("AddressAutocompleteInput", () => {
                 administrative_area: "Berlin",
                 locality: "Berlin",
                 postal_code: "10117",
-                street: "Unter den Linden 1",
+                street: "Unter den Linden 2",
               },
             ],
           }),
@@ -582,18 +708,35 @@ describe("AddressAutocompleteInput", () => {
       render(<TestImplementation initialAddress={{ country: "DE" }} />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.type(line1Input, "Unter den Linden")
+      // Use paste to avoid triggering trailing throttle calls that would consume mocks
+      await userEvent.paste(line1Input, "Unter den Linden")
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
       await userEvent.click(
         within(dropdown).getByText("Unter den Linden 10117 Berlin"),
       )
+
+      // onSelect not called yet — dropdown should show sub-units
+      expect(mockOnSelect).not.toHaveBeenCalled()
+      await waitFor(() => {
+        expect(
+          within(dropdown).getByText("Unter den Linden 1 10117 Berlin"),
+        ).toBeInTheDocument()
+        expect(
+          within(dropdown).getByText("Unter den Linden 2 10117 Berlin"),
+        ).toBeInTheDocument()
+      })
+
+      // User picks the second sub-unit
+      await userEvent.click(
+        within(dropdown).getByText("Unter den Linden 2 10117 Berlin"),
+      )
       await flushPromiseQueue()
 
-      // Verifies the first sub-unit (not the second) is used
+      expect(mockFetch.mock.calls[2][0]).toContain("/v2/lookup/sub-unit-id-2")
       expect(mockOnSelect).toHaveBeenCalledTimes(1)
       expect(mockOnSelect.mock.calls[0][0].address).toMatchObject({
-        addressLine1: "Unter den Linden 1",
+        addressLine1: "Unter den Linden 2",
         city: "Berlin",
         postalCode: "10117",
         country: "DE",
@@ -848,6 +991,22 @@ describe("AddressAutocompleteInput", () => {
       })
 
       it("tracks when an address is selected", async () => {
+        mockFetch.mockResolvedValue({
+          ok: true,
+          json: jest.fn().mockResolvedValue({
+            suggestions: [
+              {
+                city: "New York",
+                entries: 1,
+                secondary: "",
+                state: "NY",
+                street_line: "401 Broadway",
+                zipcode: "10013",
+              },
+            ],
+          }),
+        })
+
         render(<TestImplementation />)
 
         const line1Input = screen.getByPlaceholderText("Autocomplete input")

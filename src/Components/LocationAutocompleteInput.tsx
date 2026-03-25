@@ -77,6 +77,7 @@ export const LocationAutocompleteInput: FC<
     return res?.predictions
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: stable function
   const updateSuggestions = useCallback(async (value: string) => {
     setSuggestions([])
     if (!value.trim()) return
@@ -237,6 +238,7 @@ const PoweredByGoogleIcon: FC<React.PropsWithChildren<unknown>> = () => {
       viewBox="0 0 144 18"
       xmlSpace="preserve"
     >
+      <title>Powered by Google</title>
       <image
         width="144"
         height="18"

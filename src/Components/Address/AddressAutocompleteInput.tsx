@@ -129,6 +129,8 @@ interface AddressAutocompleteSuggestion extends AutocompleteInputOptionType {
   entries: number | null
   // address_id for fetching structured components on selection
   addressId?: string
+  // Secondary descriptor type (e.g. "Apt", "Suite") for building the Pro secondary lookup `selected` param
+  secondaryDescriptor?: string
 }
 
 type ServiceAvailability =
@@ -369,12 +371,22 @@ export const AddressAutocompleteInput = ({
   const autocompleteOptions: AddressAutocompleteSuggestion[] = isUSAddress
     ? (suggestions as ProviderSuggestionUS[]).map(
         (suggestion): AddressAutocompleteSuggestion => {
-          const text = buildUSAddressText(suggestion)
+          // For multi-unit buildings (entries > 1), secondary is a descriptor type like "Apt"
+          // or "Suite" — exclude it from the display text but keep it for the secondary lookup.
+          const displaySuggestion =
+            suggestion.entries > 1
+              ? { ...suggestion, secondary: "" }
+              : suggestion
+          const text = buildUSAddressText(displaySuggestion)
 
           return {
             text,
             value: text,
-            entries: null,
+            entries: suggestion.entries,
+            secondaryDescriptor:
+              suggestion.entries > 1
+                ? suggestion.secondary || undefined
+                : undefined,
             address: {
               addressLine1: suggestion.street_line,
               addressLine2: suggestion.secondary || "",
@@ -443,45 +455,108 @@ export const AddressAutocompleteInput = ({
     )
   }
 
-  const handleSelect = async (
+  const handleSelect = (
     option: AddressAutocompleteSuggestion,
     index: number,
   ) => {
+    // US multi-unit: fetch sub-units and keep dropdown open for user to pick one.
+    // Pre-fill the form with the building-level data so the user sees city/state/zip
+    // while they choose a specific unit from the dropdown.
+    if (isUSAddress && option.entries !== null && option.entries > 1) {
+      onSelect(option, index)
+      if (serviceAvailability?.enabled) {
+        const secondaryPart = option.secondaryDescriptor
+          ? ` ${option.secondaryDescriptor}`
+          : ""
+        // TODO: May need to set input to addressLine1+secondaryPart for the Pro secondary lookup to work correctly for continued typing
+        const selected = `${option.address.addressLine1}${secondaryPart} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
+        dispatch({ type: "FETCHING_STARTED" })
+        // Cancel any pending throttled search so it can't overwrite secondary results
+        fetchSuggestionsWithThrottle.cancel()
+        fetchUSSecondarySuggestions({
+          search: option.address.addressLine1,
+          selected,
+          apiKey: serviceAvailability.apiKey,
+        })
+          .then(response => {
+            dispatch({ type: "FETCHING_COMPLETE" })
+            if (response?.suggestions?.length > 0) {
+              dispatch({
+                type: "SET_SUGGESTIONS",
+                suggestions: response.suggestions.slice(0, 5),
+              })
+            }
+          })
+          .catch(e => {
+            dispatch({ type: "FETCHING_COMPLETE" })
+            console.error("Failed to fetch US secondary suggestions:", e)
+          })
+      }
+      return { keepOpen: true }
+    }
+    //us-autocomplete-pro.api.smarty.com/lookup?key=164965362009942753&search=3064+N+Central+Park+Ave&selected=3064+N+Central+Park+Ave++%283%29+Chicago+IL+60618
     if (!isUSAddress && option.addressId) {
       const iso3Country = ISO2_TO_ISO3[address.country]
       if (iso3Country && serviceAvailability?.enabled) {
-        try {
-          const components = await fetchInternationalComponents({
+        // International multi-unit: fetch sub-units and keep dropdown open
+        if (option.entries !== null && option.entries > 1) {
+          dispatch({ type: "FETCHING_STARTED" })
+          fetchInternationalSubUnits({
             addressId: option.addressId,
             country: iso3Country,
             apiKey: serviceAvailability.apiKey,
           })
-          if (components) {
-            const iso2Country =
-              ISO3_TO_ISO2[components.country_iso3] || address.country
-            const enrichedOption = {
-              ...option,
-              address: {
-                addressLine1: components.street,
-                addressLine2: "",
-                city: components.locality,
-                region: components.administrative_area,
-                postalCode: components.postal_code,
-                country: iso2Country,
-              },
-            }
-            trackSelectedAutocompletedAddress(enrichedOption, value as string)
-            onSelect(enrichedOption, index)
-            return
-          }
-        } catch (e) {
-          // Component fetch failed (e.g. network error, API key issue).
-          // Fall through to call onSelect with the partial fallback address —
-          // the user can still complete the form manually.
-          console.error("Failed to fetch address components:", e)
+            .then(subUnits => {
+              dispatch({ type: "FETCHING_COMPLETE" })
+              if (subUnits && subUnits.length > 0) {
+                dispatch({ type: "SET_SUGGESTIONS", suggestions: subUnits })
+              }
+            })
+            .catch(e => {
+              dispatch({ type: "FETCHING_COMPLETE" })
+              console.error("Failed to fetch sub-units:", e)
+            })
+          return { keepOpen: true }
         }
+
+        // International single entry: fetch components, then call onSelect
+        fetchInternationalComponents({
+          addressId: option.addressId,
+          country: iso3Country,
+          apiKey: serviceAvailability.apiKey,
+        })
+          .then(components => {
+            if (components) {
+              const iso2Country =
+                ISO3_TO_ISO2[components.country_iso3] || address.country
+              const enrichedOption = {
+                ...option,
+                address: {
+                  addressLine1: components.street,
+                  addressLine2: "",
+                  city: components.locality,
+                  region: components.administrative_area,
+                  postalCode: components.postal_code,
+                  country: iso2Country,
+                },
+              }
+              trackSelectedAutocompletedAddress(enrichedOption, value as string)
+              onSelect(enrichedOption, index)
+            } else {
+              trackSelectedAutocompletedAddress(option, value as string)
+              onSelect(option, index)
+            }
+          })
+          .catch(e => {
+            // Component fetch failed — fall back to partial address so user can complete manually
+            console.error("Failed to fetch address components:", e)
+            trackSelectedAutocompletedAddress(option, value as string)
+            onSelect(option, index)
+          })
+        return
       }
     }
+
     trackSelectedAutocompletedAddress(option, value as string)
     onSelect(option, index)
   }
@@ -543,6 +618,31 @@ const fetchSuggestionsWithThrottle = throttle(
     trailing: true,
   },
 )
+
+/**
+ * Unthrottled fetch for US secondary (unit) suggestions.
+ * Used when a user selects a multi-unit building to drill down to individual units.
+ * Not throttled because it's triggered by explicit selection, not by typing.
+ */
+const fetchUSSecondarySuggestions = async ({
+  search,
+  selected,
+  apiKey,
+}: {
+  search: string
+  selected: string
+  apiKey: string
+}) => {
+  const params: Record<string, string> = {
+    key: apiKey,
+    search,
+    selected,
+  }
+  const url = `${SMARTY_US_AUTOCOMPLETE_URL}?${new URLSearchParams(params).toString()}`
+  const response = await fetch(url)
+  const json = await response.json()
+  return json
+}
 
 const fetchInternationalSuggestionsWithThrottle = throttle(
   async ({
@@ -634,6 +734,40 @@ const fetchInternationalComponents = async ({
 }
 
 /**
+ * Fetches the list of sub-unit candidates for a multi-unit international address.
+ * Used when a selected candidate has entries > 1 (e.g. an apartment building).
+ * Returns the sub-unit ProviderSuggestionInternational candidates for user selection.
+ */
+const fetchInternationalSubUnits = async ({
+  addressId,
+  country,
+  apiKey,
+}: {
+  addressId: string
+  country: string
+  apiKey: string
+}): Promise<ProviderSuggestionInternational[] | null> => {
+  const params = new URLSearchParams({
+    key: apiKey,
+    country,
+    license: INTERNATIONAL_LICENSE,
+  })
+  const url = `${SMARTY_INTL_AUTOCOMPLETE_URL}/${encodeURIComponent(addressId)}?${params}`
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`Sub-unit lookup failed: ${response.status}`)
+  }
+  const json = (await response.json()) as {
+    candidates: Array<
+      InternationalAddressComponents | ProviderSuggestionInternational
+    >
+  }
+  return (json.candidates ?? []).filter(
+    (c): c is ProviderSuggestionInternational => "address_id" in c,
+  )
+}
+
+/**
  * Resets throttle state between tests so stale results from a previous test
  * don't bleed into the next one. Only call this from test setup code.
  */
@@ -654,11 +788,14 @@ const buildUSAddressText = (suggestion: ProviderSuggestionUS): string => {
 }
 
 const filterSecondarySuggestions = (suggestions: ProviderSuggestionUS[]) => {
+  // Strip secondary from the address text for deduplication and display,
+  // but preserve the secondary descriptor (e.g. "Apt", "Suite") on multi-unit
+  // suggestions so it can be included in the Pro secondary lookup `selected` param.
   const noSecondaryData = suggestions.map(({ secondary, ...suggestion }) => ({
     ...suggestion,
-    secondary: "",
+    secondary: suggestion.entries > 1 ? secondary : "",
   }))
   return uniqBy(noSecondaryData, (suggestion: ProviderSuggestionUS) =>
-    buildUSAddressText(suggestion),
+    buildUSAddressText({ ...suggestion, secondary: "" }),
   )
 }
