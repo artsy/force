@@ -78,6 +78,7 @@ export const ArtistAuctionResultItem: React.FC<
         },
         analytics: {
           contextModule: ContextModule.auctionResult,
+          intent: Intent.viewAuctionResults,
         },
       })
     }
@@ -342,9 +343,7 @@ const ArtistAuctionResultItemPrice: React.FC<
 
   const { showAuthDialog } = useAuthDialog()
 
-  const intent = isUpcoming
-    ? Intent.seeEstimateAuctionRecords
-    : Intent.seePriceAuctionRecords
+  const intent = Intent.viewAuctionResults
 
   if (!user) {
     return (
