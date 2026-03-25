@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e9daf0fab91730222fdf1a6c3b50d92>>
+ * @generated SignedSource<<56541953aeb5807f52ba2585421d6e30>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,8 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type Artist2App_artist$data = {
   readonly internalID: string;
   readonly name: string | null | undefined;
-  readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistAbove_artist" | "ArtistHeader_artist" | "ArtistMeta_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistAbove_artist" | "ArtistMeta_artist">;
   readonly " $fragmentType": "Artist2App_artist";
 };
 export type Artist2App_artist$key = {
@@ -39,22 +38,10 @@ const node: ReaderFragment = {
       "name": "ArtistAbove_artist"
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistHeader_artist"
-    },
-    {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
       "storageKey": null
     },
     {
@@ -69,6 +56,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6de163b40d68f6c3df5957ce5ab8381d";
+(node as any).hash = "f10440a56304de1d97e7057197cd8914";
 
 export default node;
