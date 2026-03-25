@@ -1,8 +1,16 @@
+import {
+  ActionType,
+  type ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { Box, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistNotableWorksArtworks_artist$key } from "__generated__/ArtistNotableWorksArtworks_artist.graphql"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistNotableWorksArtworksProps {
   artist: ArtistNotableWorksArtworks_artist$key
@@ -12,6 +20,11 @@ export const ArtistNotableWorksArtworks: React.FC<
   ArtistNotableWorksArtworksProps
 > = ({ artist: artistRef }) => {
   const artist = useFragment(fragment, artistRef)
+
+  const { trackEvent } = useTracking()
+
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const coverArtwork = artist.coverArtwork
   const remaining = extractNodes(artist.artworksConnection).filter(
@@ -26,7 +39,7 @@ export const ArtistNotableWorksArtworks: React.FC<
 
   return (
     <>
-      {artworks.map(artwork => {
+      {artworks.map((artwork, index) => {
         const image = artwork.image?.resized
 
         if (!image) return null
@@ -57,6 +70,22 @@ export const ArtistNotableWorksArtworks: React.FC<
                 aspectWidth={image.width ?? 1}
                 aspectHeight={image.height ?? 1}
                 maxWidth="100%"
+                onClick={() => {
+                  const trackingEvent: ClickedArtworkGroup = {
+                    action: ActionType.clickedArtworkGroup,
+                    context_module: ContextModule.topWorksRail,
+                    context_page_owner_type: contextPageOwnerType!,
+                    context_page_owner_id: contextPageOwnerId,
+                    context_page_owner_slug: contextPageOwnerSlug,
+                    destination_page_owner_type: OwnerType.artwork,
+                    destination_page_owner_id: artwork.internalID,
+                    destination_page_owner_slug: artwork.slug,
+                    horizontal_slide_position: index,
+                    type: "thumbnail",
+                  }
+
+                  trackEvent(trackingEvent)
+                }}
               >
                 <Image
                   src={image.src}
@@ -84,6 +113,7 @@ const fragment = graphql`
   fragment ArtistNotableWorksArtworks_artist on Artist {
     coverArtwork {
       internalID
+      slug
       href
       title
       date
@@ -100,6 +130,7 @@ const fragment = graphql`
       edges {
         node {
           internalID
+          slug
           href
           title
           date
