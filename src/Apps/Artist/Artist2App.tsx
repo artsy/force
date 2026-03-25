@@ -1,4 +1,6 @@
 import { Spacer } from "@artsy/palette"
+import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { isInExperimentGroup } from "Apps/Artist/Utils/artistAboveTheFoldExperiment"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
@@ -19,14 +21,24 @@ export const Artist2App: React.FC<React.PropsWithChildren<Artist2AppProps>> = ({
 
   useScrollToOpenArtistAuthModal({ name: artist.name })
 
+  const shouldShowExperiment = isInExperimentGroup(artist.slug)
+
   return (
     <>
       <ArtistMetaFragmentContainer artist={artist} />
 
       <Analytics contextPageOwnerId={artist.internalID}>
-        <Spacer y={2} />
-
-        <ArtistAbove artist={artist} />
+        {shouldShowExperiment ? (
+          <>
+            <Spacer y={2} />
+            <ArtistAbove artist={artist} />
+          </>
+        ) : (
+          <>
+            <Spacer y={[0, 4]} />
+            <ArtistHeaderFragmentContainer artist={artist} />
+          </>
+        )}
 
         <Spacer y={[0, 4]} />
 
@@ -42,7 +54,9 @@ const artistAppLayoutFragment = graphql`
   fragment Artist2App_artist on Artist {
     ...ArtistMeta_artist
     ...ArtistAbove_artist
+    ...ArtistHeader_artist
     internalID
+    slug
     name
   }
 `
