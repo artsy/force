@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<814ad5862b6c0870ff0115849d7f9d22>>
+ * @generated SignedSource<<142a0683b066d226eb3dfc82a2331448>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type ArtistNotableWorksArtworks_artist$data = {
           } | null | undefined;
         } | null | undefined;
         readonly internalID: string;
+        readonly slug: string;
         readonly title: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -41,6 +42,7 @@ export type ArtistNotableWorksArtworks_artist$data = {
       } | null | undefined;
     } | null | undefined;
     readonly internalID: string;
+    readonly slug: string;
     readonly title: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ArtistNotableWorksArtworks_artist";
@@ -57,6 +59,13 @@ var v0 = [
     "args": null,
     "kind": "ScalarField",
     "name": "internalID",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "slug",
     "storageKey": null
   },
   {
@@ -207,6 +216,6 @@ return {
 };
 })();
 
-(node as any).hash = "a1f95fb1086be0fd2a5a28db2504ece0";
+(node as any).hash = "9d7b47147588d3ea64567669881d8ad7";
 
 export default node;
