@@ -15,6 +15,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
+import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import {
@@ -22,6 +23,7 @@ import {
   type FormikContextWithAddress,
 } from "Components/Address/AddressFormFields"
 import createLogger from "Utils/logger"
+import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { Form, Formik } from "formik"
 import { useState } from "react"
 
@@ -50,16 +52,20 @@ interface UpdateAddressFormProps {
   ) => Promise<void>
   onDeleteAddress?: (addressID: string) => Promise<void>
   defaultInitialValues?: FormikContextWithAddress
+  orderAddressID?: string
 }
 export const UpdateAddressForm = ({
   onSaveAddress,
   onDeleteAddress,
   address,
+  orderAddressID,
 }: UpdateAddressFormProps) => {
   const updateUserAddress = useOrder2UpdateUserAddressMutation()
   const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
   const deleteUserAddress = useOrder2DeleteUserAddressMutation()
-  const { setUserAddressMode } = useCheckoutContext()
+  const unsetOrderFulfillmentOption =
+    useOrder2UnsetOrderFulfillmentOptionMutation()
+  const { setUserAddressMode, orderData } = useCheckoutContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<{
@@ -87,6 +93,19 @@ export const UpdateAddressForm = ({
         setDeleteError(errorInfo)
         logger.error("Error deleting address:", addressOrErrors.errors)
         return
+      }
+
+      const order = orderData as Order2CheckoutContext_order$data
+
+      // If the deleted address is currently associated with the order, unset it
+      if (orderAddressID === address.internalID) {
+        await unsetOrderFulfillmentOption.submitMutation({
+          variables: {
+            input: {
+              id: order.internalID,
+            },
+          },
+        })
       }
 
       if (onDeleteAddress) {

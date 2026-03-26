@@ -175,18 +175,19 @@ export const SavedAddressOptions = ({
         address => address.internalID !== deletedAddressID,
       )
 
-      if (remainingAddresses.length > 0) {
-        const addressToSelect = remainingAddresses.find(
-          address => address.isShippable && address.isValid,
-        )
+      const addressToSelect = remainingAddresses.find(
+        address => address.isShippable && address.isValid,
+      )
 
-        if (addressToSelect) {
-          setSelectedAddress(addressToSelect)
-          await onSelectAddress(addressToSelect)
-        }
+      if (addressToSelect) {
+        setSelectedAddress(addressToSelect)
+        await onSelectAddress(addressToSelect)
+      } else {
+        setSelectedAddress(undefined)
+        await onSelectAddress(newAddressInitialValues)
       }
     },
-    [savedAddresses, onSelectAddress],
+    [savedAddresses, onSelectAddress, newAddressInitialValues],
   )
 
   const handleAddressClick = useCallback(
@@ -214,6 +215,7 @@ export const SavedAddressOptions = ({
         onSaveAddress={onSaveAddress}
         onDeleteAddress={onDeleteAddress}
         defaultInitialValues={newAddressInitialValues}
+        orderAddressID={selectedAddress?.internalID}
       />
     )
   }
