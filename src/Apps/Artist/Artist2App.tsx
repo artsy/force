@@ -51,10 +51,11 @@ export const Artist2App: React.FC<React.PropsWithChildren<Artist2AppProps>> = ({
 }
 
 const artistAppLayoutFragment = graphql`
-  fragment Artist2App_artist on Artist {
+  fragment Artist2App_artist on Artist
+  @argumentDefinitions(shouldShowExperiment: { type: "Boolean!" }) {
     ...ArtistMeta_artist
-    ...ArtistAbove_artist
-    ...ArtistHeader_artist
+    ...ArtistAbove_artist @include(if: $shouldShowExperiment)
+    ...ArtistHeader_artist @skip(if: $shouldShowExperiment)
     internalID
     slug
     name

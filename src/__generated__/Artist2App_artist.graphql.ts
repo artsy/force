@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e9daf0fab91730222fdf1a6c3b50d92>>
+ * @generated SignedSource<<ea59254f5361074c00e149fb26bf9219>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,13 @@ export type Artist2App_artist$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "shouldShowExperiment"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "Artist2App_artist",
@@ -34,14 +40,28 @@ const node: ReaderFragment = {
       "name": "ArtistMeta_artist"
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistAbove_artist"
+      "condition": "shouldShowExperiment",
+      "kind": "Condition",
+      "passingValue": true,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistAbove_artist"
+        }
+      ]
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistHeader_artist"
+      "condition": "shouldShowExperiment",
+      "kind": "Condition",
+      "passingValue": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistHeader_artist"
+        }
+      ]
     },
     {
       "alias": null,
@@ -69,6 +89,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6de163b40d68f6c3df5957ce5ab8381d";
+(node as any).hash = "9fd4c743a27a9ed2863ed53ad3d99854";
 
 export default node;
