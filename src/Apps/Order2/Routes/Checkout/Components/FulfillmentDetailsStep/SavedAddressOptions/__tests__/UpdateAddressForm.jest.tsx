@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
+import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation"
 import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import type { ProcessedUserAddress } from "../../utils"
@@ -16,12 +17,16 @@ jest.mock(
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation",
 )
+jest.mock(
+  "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation",
+)
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 jest.mock("Utils/logger")
 
 const mockUpdateUserAddress = jest.fn()
 const mockDeleteUserAddress = jest.fn()
 const mockUpdateUserDefaultAddress = jest.fn()
+const mockUnsetOrderFulfillmentOption = jest.fn()
 const mockSetUserAddressMode = jest.fn()
 
 const mockUseOrder2UpdateUserAddressMutation =
@@ -35,6 +40,10 @@ const mockUseOrder2DeleteUserAddressMutation =
 const mockUseOrder2UpdateUserDefaultAddressMutation =
   useOrder2UpdateUserDefaultAddressMutation as jest.MockedFunction<
     typeof useOrder2UpdateUserDefaultAddressMutation
+  >
+const mockUseOrder2UnsetOrderFulfillmentOptionMutation =
+  useOrder2UnsetOrderFulfillmentOptionMutation as jest.MockedFunction<
+    typeof useOrder2UnsetOrderFulfillmentOptionMutation
   >
 const mockUseCheckoutContext = useCheckoutContext as jest.MockedFunction<
   typeof useCheckoutContext
@@ -104,8 +113,13 @@ describe("UpdateAddressForm", () => {
       submitMutation: mockUpdateUserDefaultAddress,
     } as any)
 
+    mockUseOrder2UnsetOrderFulfillmentOptionMutation.mockReturnValue({
+      submitMutation: mockUnsetOrderFulfillmentOption,
+    } as any)
+
     mockUseCheckoutContext.mockReturnValue({
       setUserAddressMode: mockSetUserAddressMode,
+      orderData: { internalID: "order-id-123" },
     } as any)
   })
 
@@ -413,6 +427,69 @@ describe("UpdateAddressForm", () => {
       await userEvent.click(deleteButtonAgain)
 
       expect(screen.queryByText("An error occurred")).not.toBeInTheDocument()
+    })
+  })
+
+  describe("Unsetting fulfillment option on delete", () => {
+    beforeEach(() => {
+      mockDeleteUserAddress.mockResolvedValue({
+        deleteUserAddress: {
+          userAddressOrErrors: {
+            __typename: "UserAddress",
+            internalID: "address-id-123",
+          },
+        },
+      })
+      mockUnsetOrderFulfillmentOption.mockResolvedValue({})
+    })
+
+    it("calls unsetOrderFulfillmentOption when the deleted address is the order address", async () => {
+      render(
+        <UpdateAddressForm
+          {...mockUSProps}
+          orderAddressID="address-id-123"
+        />,
+      )
+
+      await userEvent.click(screen.getByText("Delete address"))
+      await userEvent.click(screen.getByText("Delete"))
+
+      await waitFor(() => {
+        expect(mockUnsetOrderFulfillmentOption).toHaveBeenCalledWith({
+          variables: { input: { id: "order-id-123" } },
+        })
+      })
+    })
+
+    it("does not call unsetOrderFulfillmentOption when the deleted address is not the order address", async () => {
+      render(
+        <UpdateAddressForm
+          {...mockUSProps}
+          orderAddressID="different-address-id"
+        />,
+      )
+
+      await userEvent.click(screen.getByText("Delete address"))
+      await userEvent.click(screen.getByText("Delete"))
+
+      await waitFor(() => {
+        expect(mockUSProps.onDeleteAddress).toHaveBeenCalled()
+      })
+
+      expect(mockUnsetOrderFulfillmentOption).not.toHaveBeenCalled()
+    })
+
+    it("does not call unsetOrderFulfillmentOption when orderAddressID is not provided", async () => {
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      await userEvent.click(screen.getByText("Delete address"))
+      await userEvent.click(screen.getByText("Delete"))
+
+      await waitFor(() => {
+        expect(mockUSProps.onDeleteAddress).toHaveBeenCalled()
+      })
+
+      expect(mockUnsetOrderFulfillmentOption).not.toHaveBeenCalled()
     })
   })
 
