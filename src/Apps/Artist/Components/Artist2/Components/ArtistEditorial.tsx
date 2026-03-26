@@ -8,6 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArtistEditorialItem } from "Apps/Artist/Components/Artist2/Components/ArtistEditorialItem"
+import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistEditorial_artist$key } from "__generated__/ArtistEditorial_artist.graphql"
@@ -24,6 +25,7 @@ export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
   const artist = useFragment(fragment, artistRef)
 
   const articles = extractNodes(artist.articlesConnection)
+  const totalCount = artist.articlesConnection?.totalCount ?? 0
 
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -31,9 +33,28 @@ export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
 
   return (
     <Stack gap={2}>
-      <Text variant={["sm-display", "xs"]}>
-        Artsy Editorial Featuring {artist.name}
-      </Text>
+      <Stack
+        gap={1}
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="top"
+      >
+        <Text variant={["sm-display", "xs"]}>
+          Artsy Editorial Featuring {artist.name}
+        </Text>
+
+        {totalCount > 3 && (
+          <Text
+            variant="xs"
+            color="mono60"
+            flexShrink={0}
+            as={RouterLink}
+            to={`${artist.href}/articles`}
+          >
+            View All
+          </Text>
+        )}
+      </Stack>
 
       <Media greaterThan="xs">
         <Stack gap={2}>
@@ -63,7 +84,9 @@ export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
             })}
           </Swiper>
 
-          <ProgressDots amount={articles.length} activeIndex={activeIndex} />
+          {articles.length > 1 && (
+            <ProgressDots amount={articles.length} activeIndex={activeIndex} />
+          )}
         </Stack>
       </Media>
     </Stack>
@@ -73,11 +96,13 @@ export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
 const fragment = graphql`
   fragment ArtistEditorial_artist on Artist {
     name
+    href
     articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
+      totalCount
       edges {
         node {
-          internalID
           ...ArtistEditorialItem_article
+          internalID
         }
       }
     }

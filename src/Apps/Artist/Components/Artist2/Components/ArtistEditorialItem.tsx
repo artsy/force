@@ -38,7 +38,7 @@ export const ArtistEditorialItem: React.FC<ArtistEditorialItemProps> = ({
       onClick={() => {
         const trackingEvent: ClickedArticleGroup = {
           action: ActionType.clickedArticleGroup,
-          context_module: ContextModule.marketNews,
+          context_module: ContextModule.artistHeader,
           context_page_owner_type: contextPageOwnerType!,
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
