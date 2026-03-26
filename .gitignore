@@ -23,6 +23,7 @@
 *.projectile
 *.seed
 claude.local.md
+.playwright-mcp
 dump.rdb
 lib-cov
 logs
