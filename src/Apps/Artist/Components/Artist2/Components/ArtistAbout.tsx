@@ -164,7 +164,7 @@ const KeyFactsContent: React.FC<{ artist: ArtistAbout_artist$data }> = ({
       {hasMovements && (
         <Flex flexDirection={["column", "column", "row"]}>
           <Box width={["auto", "auto", "6em"]}>
-            <Text variant={"xs"}>Movements</Text>
+            <Text variant={"xs"}>Styles</Text>
           </Box>
           <Flex flexWrap={"wrap"}>
             {artist.movementGenes.map(g => (
@@ -186,7 +186,7 @@ const KeyFactsContent: React.FC<{ artist: ArtistAbout_artist$data }> = ({
       {hasMediums && (
         <Flex flexDirection={["column", "column", "row"]}>
           <Box width={["auto", "auto", "6em"]}>
-            <Text variant={"xs"}>Mediums</Text>
+            <Text variant={"xs"}>Techniques</Text>
           </Box>
           <Flex flexWrap={"wrap"}>
             {artist.mediumGenes.map(g => (
