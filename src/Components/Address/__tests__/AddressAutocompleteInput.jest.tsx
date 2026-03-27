@@ -528,76 +528,33 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
-    it("fetches components for street-level results (entries > 1) and populates form", async () => {
-      // First fetch: autocomplete candidates (entries > 1 means sub-units exist)
-      // Second fetch: address_id lookup returns sub-unit list (still ProviderSuggestionInternational)
-      // Third fetch: sub-unit address_id lookup returns flat structured components
-      mockFetch
-        .mockResolvedValueOnce({
-          json: jest.fn().mockResolvedValue({
-            candidates: [
-              {
-                address_text: "Unter den Linden 10117 Berlin",
-                address_id: "street-id",
-                entries: 2,
-              },
-            ],
-          }),
-          ok: true,
-        })
-        // address_id lookup returns 2 sub-unit candidates (entries matches candidate count)
-        .mockResolvedValueOnce({
-          json: jest.fn().mockResolvedValue({
-            candidates: [
-              {
-                address_text: "Unter den Linden 1 10117 Berlin",
-                address_id: "sub-unit-id-1",
-                entries: 1,
-              },
-              {
-                address_text: "Unter den Linden 2 10117 Berlin",
-                address_id: "sub-unit-id-2",
-                entries: 1,
-              },
-            ],
-          }),
-          ok: true,
-        })
-        // first sub-unit components fetch
-        .mockResolvedValueOnce({
-          json: jest.fn().mockResolvedValue({
-            candidates: [
-              {
-                country_iso3: "DEU",
-                administrative_area: "Berlin",
-                locality: "Berlin",
-                postal_code: "10117",
-                street: "Unter den Linden 1",
-              },
-            ],
-          }),
-          ok: true,
-        })
+    it("filters out international suggestions with entries > 1", async () => {
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          candidates: [
+            {
+              address_text: "Unter den Linden 1 10117 Berlin",
+              address_id: "unit-id-1",
+              entries: 1,
+            },
+            {
+              address_text: "Unter den Linden 10117 Berlin",
+              address_id: "street-id",
+              entries: 5,
+            },
+          ],
+        }),
+        ok: true,
+      })
 
       render(<TestImplementation initialAddress={{ country: "DE" }} />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
       await userEvent.type(line1Input, "Unter den Linden")
 
-      const dropdown = await screen.findByRole("listbox", { hidden: true })
-      await userEvent.click(
-        within(dropdown).getByText("Unter den Linden 10117 Berlin"),
-      )
-      await flushPromiseQueue()
-
-      // Verifies the first sub-unit (not the second) is used
-      expect(mockOnSelect).toHaveBeenCalledTimes(1)
-      expect(mockOnSelect.mock.calls[0][0].address).toMatchObject({
-        addressLine1: "Unter den Linden 1",
-        city: "Berlin",
-        postalCode: "10117",
-        country: "DE",
-      })
+      const listbox = await screen.findByRole("listbox", { hidden: true })
+      expect(listbox).toHaveTextContent("Unter den Linden 1 10117 Berlin")
+      expect(listbox).not.toHaveTextContent("Unter den Linden 10117 Berlin")
     })
 
     it("falls back to full address_text in addressLine1 when components endpoint returns no data", async () => {
