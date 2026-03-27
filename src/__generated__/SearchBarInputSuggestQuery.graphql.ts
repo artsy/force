@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb2f49294f6b4e5a0acf8c0a79288f64>>
+ * @generated SignedSource<<605408d0d9dbf6f4cb705cf4ea48fdc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,10 @@ export type SearchBarInputSuggestQuery$data = {
   readonly viewer: {
     readonly searchConnection?: {
       readonly edges: ReadonlyArray<{
+        readonly highlights: ReadonlyArray<{
+          readonly field: string;
+          readonly fragments: ReadonlyArray<string>;
+        }> | null | undefined;
         readonly node: {
           readonly __typename: string;
           readonly coverArtwork?: {
@@ -91,42 +95,67 @@ v5 = [
 v6 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "displayLabel",
+  "concreteType": "SearchHighlight",
+  "kind": "LinkedField",
+  "name": "highlights",
+  "plural": true,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "field",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "fragments",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "displayLabel",
   "storageKey": null
 },
 v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "imageUrl",
+  "name": "href",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "imageUrl",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "__typename",
   "storageKey": null
 },
 v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v12 = {
   "kind": "InlineFragment",
   "selections": [
-    (v10/*: any*/),
+    (v11/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -145,7 +174,7 @@ v11 = {
   "type": "SearchableItem",
   "abstractKey": null
 },
-v12 = {
+v13 = {
   "alias": null,
   "args": null,
   "concreteType": "ArtistStatuses",
@@ -170,7 +199,7 @@ v12 = {
   ],
   "storageKey": null
 },
-v13 = {
+v14 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -196,7 +225,7 @@ v13 = {
   ],
   "storageKey": null
 },
-v14 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -254,6 +283,7 @@ return {
                     "name": "edges",
                     "plural": true,
                     "selections": [
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -262,16 +292,16 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
-                          (v11/*: any*/),
+                          (v10/*: any*/),
+                          (v12/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v10/*: any*/),
-                              (v12/*: any*/),
+                              (v11/*: any*/),
+                              (v13/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -280,7 +310,7 @@ return {
                                 "name": "coverArtwork",
                                 "plural": false,
                                 "selections": [
-                                  (v13/*: any*/)
+                                  (v14/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -407,6 +437,7 @@ return {
                     "name": "edges",
                     "plural": true,
                     "selections": [
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -415,16 +446,16 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
-                          (v11/*: any*/),
+                          (v10/*: any*/),
+                          (v12/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v10/*: any*/),
-                              (v12/*: any*/),
+                              (v11/*: any*/),
+                              (v13/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -433,8 +464,8 @@ return {
                                 "name": "coverArtwork",
                                 "plural": false,
                                 "selections": [
-                                  (v13/*: any*/),
-                                  (v14/*: any*/)
+                                  (v14/*: any*/),
+                                  (v15/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -445,7 +476,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v14/*: any*/)
+                              (v15/*: any*/)
                             ],
                             "type": "Node",
                             "abstractKey": "__isNode"
@@ -467,16 +498,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d8cfef25897af22a42603591c16e0e81",
+    "cacheID": "599cacbc4a0029f8b82aed60ad74841b",
     "id": null,
     "metadata": {},
     "name": "SearchBarInputSuggestQuery",
     "operationKind": "query",
-    "text": "query SearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchInputPills_viewer_4hh6ED\n    searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n      edges {\n        node {\n          displayLabel\n          href\n          imageUrl\n          __typename\n          ... on SearchableItem {\n            internalID\n            displayType\n            slug\n          }\n          ... on Artist {\n            internalID\n            statuses {\n              artworks\n              auctionLots\n            }\n            coverArtwork {\n              image {\n                src: url(version: [\"square\"])\n              }\n              id\n            }\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchInputPills_viewer_4hh6ED\n    searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n      edges {\n        highlights {\n          field\n          fragments\n        }\n        node {\n          displayLabel\n          href\n          imageUrl\n          __typename\n          ... on SearchableItem {\n            internalID\n            displayType\n            slug\n          }\n          ... on Artist {\n            internalID\n            statuses {\n              artworks\n              auctionLots\n            }\n            coverArtwork {\n              image {\n                src: url(version: [\"square\"])\n              }\n              id\n            }\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e06c7690c9c7e5c2d1bebaa4eb0379f9";
+(node as any).hash = "cbf8ccccb9aab118c884b5fc6cda45e7";
 
 export default node;

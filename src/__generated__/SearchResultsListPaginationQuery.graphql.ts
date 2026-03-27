@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86e977ed1fcde02f7082bf6d3577c92f>>
+ * @generated SignedSource<<8e44bce2785c88b1e2d56e686a66a001>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -158,6 +158,31 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "SearchHighlight",
+                    "kind": "LinkedField",
+                    "name": "highlights",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "field",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "fragments",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -355,12 +380,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0e61ec307e9c3299b4dd459d1c05dcc6",
+    "cacheID": "9df25c3e5830e3fea192d80eefa18694",
     "id": null,
     "metadata": {},
     "name": "SearchResultsListPaginationQuery",
     "operationKind": "query",
-    "text": "query SearchResultsListPaginationQuery(\n  $after: String\n  $term: String!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchResultsList_viewer_1PWAgx\n  }\n}\n\nfragment SearchResultsList_viewer_1PWAgx on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10, after: $after) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          internalID\n          displayType\n          slug\n        }\n        ... on Artist {\n          internalID\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SearchResultsListPaginationQuery(\n  $after: String\n  $term: String!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchResultsList_viewer_1PWAgx\n  }\n}\n\nfragment SearchResultsList_viewer_1PWAgx on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10, after: $after) {\n    edges {\n      highlights {\n        field\n        fragments\n      }\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          internalID\n          displayType\n          slug\n        }\n        ... on Artist {\n          internalID\n          statuses {\n            artworks\n            auctionLots\n          }\n          coverArtwork {\n            image {\n              src: url(version: [\"small\"])\n            }\n            id\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
