@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1a6ad732c40d4acc5d4f2e6b8e4e073>>
+ * @generated SignedSource<<c863c316837c3cae0c76342b2e0af518>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type ArtistApp_artist$data = {
   readonly internalID: string;
   readonly name: string | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist" | "ArtistMeta_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistAbove_artist" | "ArtistHeader_artist" | "ArtistMeta_artist">;
   readonly " $fragmentType": "ArtistApp_artist";
 };
 export type ArtistApp_artist$key = {
@@ -23,7 +23,13 @@ export type ArtistApp_artist$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldShowExperiment"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistApp_artist",
@@ -34,9 +40,28 @@ const node: ReaderFragment = {
       "name": "ArtistMeta_artist"
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistHeader_artist"
+      "condition": "shouldShowExperiment",
+      "kind": "Condition",
+      "passingValue": true,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistAbove_artist"
+        }
+      ]
+    },
+    {
+      "condition": "shouldShowExperiment",
+      "kind": "Condition",
+      "passingValue": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistHeader_artist"
+        }
+      ]
     },
     {
       "alias": null,
@@ -64,6 +89,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d599f72de65cace018cb122c7029e1bf";
+(node as any).hash = "4e101847e647f62606b149e7fd259b62";
 
 export default node;
