@@ -16,7 +16,6 @@ import {
   type SearchNodeOption,
   formatOptions,
 } from "Components/Search/utils/formatOptions"
-import { extractNodes } from "Utils/extractNodes"
 import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
 import { type FC, useEffect } from "react"
 import {
@@ -44,7 +43,7 @@ const SearchResultsList: FC<
   const tracking = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
-  const options = extractNodes(viewer.searchConnection)
+  const edges = viewer.searchConnection?.edges ?? []
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -57,7 +56,7 @@ const SearchResultsList: FC<
         query: query,
       }
 
-      if (options.length > 0) {
+      if (edges.length > 0) {
         const event: SearchedWithResults = {
           action: ActionType.searchedWithResults,
           ...baseEvent,
@@ -75,11 +74,16 @@ const SearchResultsList: FC<
   }, [viewer.searchConnection])
 
   const formattedOptions: SuggestionItemOptionProps[] = formatOptions(
-    options.map(option => {
-      return {
-        ...option,
-        imageUrl: option.coverArtwork?.image?.src || option.imageUrl,
-      }
+    edges.flatMap(edge => {
+      const option = edge?.node
+      if (!option) return []
+      return [
+        {
+          ...option,
+          imageUrl: option.coverArtwork?.image?.src || option.imageUrl,
+          highlights: edge?.highlights ?? null,
+        },
+      ]
     }) as SearchNodeOption[],
   )
 
@@ -168,6 +172,10 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
           after: $after
         ) @connection(key: "SearchResultsList_searchConnection") {
           edges {
+            highlights {
+              field
+              fragments
+            }
             node {
               displayLabel
               href

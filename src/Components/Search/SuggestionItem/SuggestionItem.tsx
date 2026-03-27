@@ -3,6 +3,7 @@ import { QuickNavigationItem } from "Components/Search/SuggestionItem/QuickNavig
 import type { FC } from "react"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { SuggestionItemLink } from "./SuggestionItemLink"
+import type { SearchHighlightData } from "./parseHighlightFragments"
 
 export interface SuggestionItemOptionProps {
   text: string
@@ -15,6 +16,7 @@ export interface SuggestionItemOptionProps {
   item_id?: string
   item_number?: number
   item_type?: string
+  highlights?: ReadonlyArray<SearchHighlightData> | null
 }
 
 interface SuggestionItemProps {
