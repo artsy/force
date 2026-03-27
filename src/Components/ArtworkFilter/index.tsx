@@ -6,7 +6,6 @@ import {
   type ImmersiveViewOptionViewed,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
-import { useDismissibleContext } from "@artsy/dismissible"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ExpandIcon from "@artsy/icons/ExpandIcon"
 import FilterIcon from "@artsy/icons/FilterIcon"
@@ -22,7 +21,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -38,10 +37,6 @@ import { ImmersiveView } from "Components/ArtworkFilter/ImmersiveView"
 import type { ArtworkGridLayout } from "Components/ArtworkGrid/ArtworkGrid"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
-import {
-  KEY as IMMERSIVE_KEY,
-  ProgressiveOnboardingImmersiveView,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingImmersiveView"
 import { Sticky } from "Components/Sticky"
 import { useStickyBackdrop } from "Components/Sticky/useStickyBackdrop"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -141,9 +136,6 @@ export const BaseArtworkFilter: React.FC<
   ...rest
 }) => {
   const tracking = useTracking()
-  const variant = useVariant("diamond_remove_tooltip_experiment")
-
-  const showTooltip = variant.name !== "experiment"
 
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
@@ -154,7 +146,6 @@ export const BaseArtworkFilter: React.FC<
   const [isOpen, setIsOpen] = useState(false)
 
   const [isImmersed, setIsImmersed] = useState(false)
-  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isMobile = getENV("IS_MOBILE")
   const enableImmersiveView = useFlag("onyx_enable-immersive-view") && !isMobile
@@ -456,46 +447,20 @@ export const BaseArtworkFilter: React.FC<
                       </HorizontalOverflow>
 
                       <Flex gap={1}>
-                        {enableImmersiveView &&
-                          (showTooltip ? (
-                            <div data-testid="immersive-view-with-tooltip">
-                              <ProgressiveOnboardingImmersiveView>
-                                <Button
-                                  variant={"tertiary"}
-                                  size={"small"}
-                                  onClick={() => {
-                                    setIsImmersed(true)
-                                    trackClickedImmersiveView()
-                                    if (!isDismissed(IMMERSIVE_KEY).status) {
-                                      dismiss(IMMERSIVE_KEY)
-                                    }
-                                  }}
-                                  disabled={Number(total) === 0}
-                                >
-                                  <ExpandIcon mr={0.5} />
-                                  Immersive View
-                                </Button>
-                              </ProgressiveOnboardingImmersiveView>
-                            </div>
-                          ) : (
-                            <div data-testid="immersive-view-without-tooltip">
-                              <Button
-                                variant={"tertiary"}
-                                size={"small"}
-                                onClick={() => {
-                                  setIsImmersed(true)
-                                  trackClickedImmersiveView()
-                                  if (!isDismissed(IMMERSIVE_KEY).status) {
-                                    dismiss(IMMERSIVE_KEY)
-                                  }
-                                }}
-                                disabled={Number(total) === 0}
-                              >
-                                <ExpandIcon mr={0.5} />
-                                Immersive View
-                              </Button>
-                            </div>
-                          ))}
+                        {enableImmersiveView && (
+                          <Button
+                            variant={"tertiary"}
+                            size={"small"}
+                            onClick={() => {
+                              setIsImmersed(true)
+                              trackClickedImmersiveView()
+                            }}
+                            disabled={Number(total) === 0}
+                          >
+                            <ExpandIcon mr={0.5} />
+                            Immersive View
+                          </Button>
+                        )}
 
                         <ArtworkFilterSort />
                       </Flex>
