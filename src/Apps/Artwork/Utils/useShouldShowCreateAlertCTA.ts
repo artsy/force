@@ -1,11 +1,9 @@
-import { useState } from "react"
-import { graphql, useFragment } from "react-relay"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import type { useShouldShowCreateAlertCTA_artwork$key } from "__generated__/useShouldShowCreateAlertCTA_artwork.graphql"
-
-export const CREATE_ALERT_EXPERIMENT = "diamond_create-alert-cta-experiment"
+import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
 
 export const useShouldShowCreateAlertCTA = (
   artworkRef: useShouldShowCreateAlertCTA_artwork$key,

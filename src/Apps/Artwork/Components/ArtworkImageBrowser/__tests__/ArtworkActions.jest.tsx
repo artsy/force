@@ -1,6 +1,5 @@
 import type { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
-import { useVariant } from "@unleash/proxy-client-react"
 import { ArtworkActionsFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActions"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -33,12 +32,6 @@ jest.mock("Utils/user", () => ({
   userIsAdmin: jest.fn(),
   userIsTeam: jest.fn(),
 }))
-
-jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
-  useTrackFeatureVariantOnMount: jest.fn(),
-}))
-
-const mockUseVariant = useVariant as jest.Mock
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => null,
@@ -177,34 +170,6 @@ describe("ArtworkActions", () => {
           expect(screen.queryByText("Download")).not.toBeInTheDocument()
         })
       })
-    })
-  })
-
-  describe("diamond_create-alert-cta-experiment", () => {
-    const renderWithRelay = getWrapperWithBreakpoint("lg")
-
-    it("shows the Create Alert button in ArtworkActions for the experiment variant", () => {
-      mockUseVariant.mockReturnValue({ name: "experiment", enabled: true })
-
-      renderWithRelay({
-        Artwork: () => ({
-          isEligibleToCreateAlert: true,
-        }),
-      })
-
-      expect(screen.getByText("Create Alert")).toBeInTheDocument()
-    })
-
-    it("does not show the Create Alert button in ArtworkActions for the control variant", () => {
-      mockUseVariant.mockReturnValue({ name: "control", enabled: true })
-
-      renderWithRelay({
-        Artwork: () => ({
-          isEligibleToCreateAlert: true,
-        }),
-      })
-
-      expect(screen.queryByText("Create Alert")).not.toBeInTheDocument()
     })
   })
 
