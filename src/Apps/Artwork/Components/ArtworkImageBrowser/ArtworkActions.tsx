@@ -1,13 +1,7 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
-import { ArtworkActionsAlertButton } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsAlertButton"
 import { ArtworkActionsSaveButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButton"
 import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
-import {
-  CREATE_ALERT_EXPERIMENT,
-  useShouldShowCreateAlertCTA,
-} from "Apps/Artwork/Utils/useShouldShowCreateAlertCTA"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import {
   ViewInRoomFragmentContainer,
@@ -19,7 +13,6 @@ import { getENV } from "Utils/getENV"
 import { userIsAdmin, userIsTeam } from "Utils/user"
 import type { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
 import * as React from "react"
-import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -37,32 +30,6 @@ export const ArtworkActions: React.FC<
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)
-
-  const shouldShowCreateAlertCTA = useShouldShowCreateAlertCTA(artwork)
-
-  // Note: In order to avoid double-firing the event, the CREATE_ALERT_EXPERIMENT
-  // view is not tracked here, since it is already reliably tracked over where
-  // the `control` CTA is displayed, in <ArtworkSidebar />, for both mobile
-  // and desktop.
-
-  const variant = useVariant(CREATE_ALERT_EXPERIMENT)
-  const shouldRenderExperiment =
-    variant.enabled && variant.name === "experiment"
-
-  // when the Unleash flag is resolved client-side, the Create Alert CTA
-  // flashes in, which causes a layout shift, which in turn messes up the
-  // positioning of the progressive onboarding popover.
-  //
-  // To fix this, we dispatch a window resize event if and only if the
-  // experiment CTA is rendered, thus triggering the Palette Popover to
-  // recalculate its position.
-  useEffect(() => {
-    if (shouldShowCreateAlertCTA && shouldRenderExperiment) {
-      requestAnimationFrame(() => {
-        window.dispatchEvent(new Event("resize"))
-      })
-    }
-  }, [shouldShowCreateAlertCTA, shouldRenderExperiment])
 
   const tracking = useTracking()
 
@@ -145,11 +112,6 @@ export const ArtworkActions: React.FC<
       name: "save",
       condition: true,
       content: SaveButton,
-    },
-    {
-      name: "alert",
-      condition: shouldRenderExperiment && shouldShowCreateAlertCTA,
-      content: <ArtworkActionsAlertButton />,
     },
     {
       name: "viewInRoom",
@@ -258,7 +220,6 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         ...ArtworkSharePanel_artwork
           @arguments(includeAllImages: $includeAllImages)
         ...ViewInRoom_artwork
-        ...useShouldShowCreateAlertCTA_artwork
         isUnlisted
         slug
         downloadableImageUrl

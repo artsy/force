@@ -159,8 +159,8 @@ describe("ArtistAbout", () => {
         }),
       })
 
-      expect(screen.queryByText("Movements")).not.toBeInTheDocument()
-      expect(screen.queryByText("Mediums")).toBeInTheDocument()
+      expect(screen.queryByText("Styles")).not.toBeInTheDocument()
+      expect(screen.queryByText("Techniques")).toBeInTheDocument()
     })
 
     it("does not render mediums when empty", () => {
@@ -175,8 +175,8 @@ describe("ArtistAbout", () => {
         }),
       })
 
-      expect(screen.queryByText("Movements")).toBeInTheDocument()
-      expect(screen.queryByText("Mediums")).not.toBeInTheDocument()
+      expect(screen.queryByText("Styles")).toBeInTheDocument()
+      expect(screen.queryByText("Techniques")).not.toBeInTheDocument()
     })
 
     it("does not render key facts section at all when all genes are empty", () => {
@@ -188,8 +188,8 @@ describe("ArtistAbout", () => {
         }),
       })
 
-      expect(screen.queryByText("Movements")).not.toBeInTheDocument()
-      expect(screen.queryByText("Mediums")).not.toBeInTheDocument()
+      expect(screen.queryByText("Styles")).not.toBeInTheDocument()
+      expect(screen.queryByText("Techniques")).not.toBeInTheDocument()
       expect(screen.queryByTestId("artist-key-facts")).not.toBeInTheDocument()
     })
   })
