@@ -8,7 +8,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionInfoPolling"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBiddingClosedMessage"
@@ -20,14 +19,10 @@ import { ArtworkSidebarLinksFragmentContainer } from "Apps/Artwork/Components/Ar
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPartnerInfo"
 import { ArtworkSidebarPrivateArtwork } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPrivateArtwork"
 import { PrivateArtworkAdditionalInfo } from "Apps/Artwork/Components/ArtworkSidebar/PrivateArtworkAdditionalInfo"
-import {
-  CREATE_ALERT_EXPERIMENT,
-  useShouldShowCreateAlertCTA,
-} from "Apps/Artwork/Utils/useShouldShowCreateAlertCTA"
+import { useShouldShowCreateAlertCTA } from "Apps/Artwork/Utils/useShouldShowCreateAlertCTA"
 import { ArtsyShippingEstimate } from "Components/ArtsyShippingEstimate"
 import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useAuctionWebsocket } from "Utils/Hooks/useAuctionWebsocket"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -113,16 +108,6 @@ export const ArtworkSidebar: React.FC<
   const { hasEnded } = useTimer(timerEndAt as string, startAt as string)
 
   const shouldShowCreateAlertCTA = useShouldShowCreateAlertCTA(artwork)
-
-  const variant = useVariant(CREATE_ALERT_EXPERIMENT)
-  const experimentNotEnabled = !variant.feature_enabled
-  const shouldRenderControl =
-    experimentNotEnabled || (variant.enabled && variant.name === "control")
-
-  useTrackFeatureVariantOnMount({
-    experimentName: CREATE_ALERT_EXPERIMENT,
-    variantName: variant.name,
-  })
 
   const shoudlDisplayLotLabel = !!isInAuction && !!lotLabel
 
@@ -269,7 +254,7 @@ export const ArtworkSidebar: React.FC<
 
       <Spacer y={2} />
 
-      {shouldRenderControl && shouldShowCreateAlertCTA && (
+      {shouldShowCreateAlertCTA && (
         <ArtworkSidebarCreateAlertFragmentContainer artwork={artwork} />
       )}
 
