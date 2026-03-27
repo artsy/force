@@ -34,6 +34,10 @@ const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
         content={article.metaPublishedAt}
       />
 
+      {article.updatedAt && (
+        <Meta property="article:modified_time" content={article.updatedAt} />
+      )}
+
       <Meta
         property="article:publisher"
         content="https://www.facebook.com/artsy"
@@ -53,6 +57,7 @@ export const ArticleMetaTagsFragmentContainer = createFragmentContainer(
         href
         keywords
         metaPublishedAt: publishedAt
+        updatedAt
         title
         searchTitle
         description
