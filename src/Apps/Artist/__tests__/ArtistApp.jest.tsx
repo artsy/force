@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react"
-import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
+import { ArtistApp } from "Apps/Artist/ArtistApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 import type { ArtistAppTestQuery } from "__generated__/ArtistAppTestQuery.graphql"
@@ -17,6 +17,10 @@ jest.mock("../Components/ArtistHeader/ArtistHeader", () => ({
   ArtistHeaderFragmentContainer: () => null,
 }))
 
+jest.mock("../Components/Artist2/ArtistAbove", () => ({
+  ArtistAbove: () => null,
+}))
+
 jest.mock("../Components/ArtistBackLink.tsx", () => ({
   ArtistBackLinkFragmentContainer: () => null,
 }))
@@ -25,7 +29,7 @@ describe("ArtistApp", () => {
   const mockfindCurrentRoute = findCurrentRoute as jest.Mock
 
   const { renderWithRelay } = setupTestWrapperTL<ArtistAppTestQuery>({
-    Component: ArtistAppFragmentContainer,
+    Component: ArtistApp,
     query: graphql`
       query ArtistAppTestQuery @relay_test_operation {
         artist(id: "example") {
