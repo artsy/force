@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { isInExperimentGroup } from "Apps/Artist/Utils/artistAboveTheFoldExperiment"
 import type { RouteProps } from "System/Router/Route"
 import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
@@ -102,11 +103,21 @@ export const artistRoutes: RouteProps[] = [
       paramName: "artistID",
       basePath: "/artist2",
     }),
+    prepareVariables: params => {
+      const { artistID } = params
+      const shouldShowExperiment = isInExperimentGroup(artistID)
+      const variables = { artistID, shouldShowExperiment }
+      return variables
+    },
     query: graphql`
-      query artistRoutes_Artist2AppQuery($artistID: String!) @cacheable {
+      query artistRoutes_Artist2AppQuery(
+        $artistID: String!
+        $shouldShowExperiment: Boolean!
+      ) @cacheable {
         artist(id: $artistID) @principalField {
           slug
           ...Artist2App_artist
+            @arguments(shouldShowExperiment: $shouldShowExperiment)
           ...ArtistCombinedRoute_artist
         }
       }

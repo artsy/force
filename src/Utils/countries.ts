@@ -1430,6 +1430,12 @@ export const COUNTRIES: CountryData[] = [
     text: "🇺🇬 + 256",
   },
   {
+    name: "Ukraine (Україна)",
+    value: "ua",
+    countryCode: "380",
+    text: "🇺🇦 + 380",
+  },
+  {
     name: "United Arab Emirates (‫الإمارات العربية المتحدة‬‎)",
     countryCode: "971",
     value: "ae",
