@@ -28,7 +28,7 @@ export const ArtistNotableWorksArtworks: React.FC<
 
   const coverArtwork = artist.coverArtwork
   const remaining = extractNodes(artist.artworksConnection).filter(
-    artwork => artwork.internalID !== coverArtwork?.internalID,
+    artwork => artwork.slug !== coverArtwork?.slug,
   )
 
   // Show the cover artwork first, then the remaining artworks
