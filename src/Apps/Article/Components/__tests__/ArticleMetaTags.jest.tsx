@@ -44,17 +44,29 @@ describe("ArticleMetaTags", () => {
     )
   })
 
-  it("renders article:modified_time when updatedAt is present", () => {
+  it("renders article:modified_time when updatedAt is more than 24 hours after publishedAt", () => {
     renderWithRelay({
       Article: () => ({
         metaPublishedAt: "2026-01-01T00:00:00+00:00",
-        updatedAt: "2026-03-17T00:00:00+00:00",
+        updatedAt: "2026-01-02T01:00:00+00:00",
       }),
     })
 
     expect(getMetaContent("article:modified_time")).toBe(
-      "2026-03-17T00:00:00+00:00",
+      "2026-01-02T01:00:00+00:00",
     )
+  })
+
+  it("does not render article:modified_time when updatedAt is within 24 hours of publishedAt", () => {
+    renderWithRelay({
+      Article: () => ({
+        metaPublishedAt: "2026-01-01T00:00:00+00:00",
+        updatedAt: "2026-01-01T23:00:00+00:00",
+      }),
+    })
+
+    expect(getMetaContent("article:modified_time")).toBeNull()
+    expect(getMetaTag("article:modified_time")).toBeUndefined()
   })
 
   it("does not render article:modified_time when updatedAt is absent", () => {
