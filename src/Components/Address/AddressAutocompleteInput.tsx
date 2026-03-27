@@ -354,6 +354,9 @@ export const AddressAutocompleteInput = ({
           dispatch({
             type: "SET_SUGGESTIONS",
             suggestions: (response.candidates ?? [])
+              // Only include suggestions with a single entry.
+              // Multiple entry suggestions require secondary address selection which we
+              // don't have a UI for yet.
               .filter((c: ProviderSuggestionInternational) => c.entries === 1)
               .slice(0, 5),
           })
