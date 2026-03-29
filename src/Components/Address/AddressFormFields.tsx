@@ -8,7 +8,7 @@ import {
   SelectInput,
   Spacer,
 } from "@artsy/palette"
-import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
+import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput/AddressAutocompleteInput"
 import {
   type Address,
   basicPhoneValidator,

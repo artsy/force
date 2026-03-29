@@ -32,7 +32,7 @@ import {
   getInitialShippingValues,
 } from "Apps/Order/Routes/Shipping/Utils/shippingUtils"
 import { ScrollToFieldError } from "Apps/Order/Utils/scrollToFieldError"
-import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput"
+import { AddressAutocompleteInput } from "Components/Address/AddressAutocompleteInput/AddressAutocompleteInput"
 import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
