@@ -17,14 +17,7 @@ const artistWithCanonicalSlugRedirect = canonicalSlugRedirect({
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
-  { resolveComponent: component => component.ArtistAppFragmentContainer },
-)
-
-const Artist2App = loadable(
-  () => import(/* webpackChunkName: "artistBundle" */ "./Artist2App"),
-  {
-    resolveComponent: component => component.Artist2App,
-  },
+  { resolveComponent: component => component.ArtistApp },
 )
 
 const ArtistSubApp = loadable(
@@ -91,52 +84,6 @@ const ArtistCombinedRoute = loadable(
 
 export const artistRoutes: RouteProps[] = [
   {
-    path: "/artist2/:artistID",
-    ignoreScrollBehaviorBetweenChildren: true,
-    getComponent: () => Artist2App,
-    onPreloadJS: () => {
-      Artist2App.preload()
-      ArtistCombinedRoute.preload()
-    },
-    render: canonicalSlugRedirect({
-      entityName: "artist",
-      paramName: "artistID",
-      basePath: "/artist2",
-    }),
-    prepareVariables: params => {
-      const { artistID } = params
-      const shouldShowExperiment = isInExperimentGroup(artistID)
-      const variables = { artistID, shouldShowExperiment }
-      return variables
-    },
-    query: graphql`
-      query artistRoutes_Artist2AppQuery(
-        $artistID: String!
-        $shouldShowExperiment: Boolean!
-      ) @cacheable {
-        artist(id: $artistID) @principalField {
-          slug
-          ...Artist2App_artist
-            @arguments(shouldShowExperiment: $shouldShowExperiment)
-          ...ArtistCombinedRoute_artist
-        }
-      }
-    `,
-    children: [
-      {
-        path: "",
-        getComponent: () => ArtistCombinedRoute,
-        query: graphql`
-          query artistRoutes_Artist2RootQuery($artistID: String!) @cacheable {
-            artist(id: $artistID) @principalField {
-              ...ArtistCombinedRoute_artist
-            }
-          }
-        `,
-      },
-    ],
-  },
-  {
     path: "/artist/:artistID",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistApp,
@@ -146,11 +93,23 @@ export const artistRoutes: RouteProps[] = [
       ArtistCombinedRoute.preload()
     },
     render: artistWithCanonicalSlugRedirect,
+    prepareVariables: params => {
+      const { artistID } = params
+
+      return {
+        artistID,
+        shouldShowExperiment: isInExperimentGroup(artistID),
+      }
+    },
     query: graphql`
-      query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
+      query artistRoutes_ArtistAppQuery(
+        $artistID: String!
+        $shouldShowExperiment: Boolean!
+      ) @cacheable {
         artist(id: $artistID) @principalField {
           slug
           ...ArtistApp_artist
+            @arguments(shouldShowExperiment: $shouldShowExperiment)
           ...ArtistCombinedRoute_artist
         }
       }
