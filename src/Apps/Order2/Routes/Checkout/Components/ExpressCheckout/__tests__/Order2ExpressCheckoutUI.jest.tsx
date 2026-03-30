@@ -329,7 +329,6 @@ describe("ExpressCheckoutUI", () => {
     )
     expect(orderSubmission.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      confirmationToken: "ctoken_123",
     })
 
     await flushPromiseQueue()
@@ -437,7 +436,6 @@ describe("ExpressCheckoutUI", () => {
     )
     expect(mutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      confirmationToken: "ctoken_123",
     })
 
     await flushPromiseQueue()
@@ -646,7 +644,10 @@ describe("ExpressCheckoutUI", () => {
     it("does not track cancel event when there is an existing error", async () => {
       // Set up a pre-existing error in context (e.g. from a failed payment)
       mockMessages.EXPRESS_CHECKOUT = {
-        error: { title: "An error occurred", message: "Something went wrong" } as any,
+        error: {
+          title: "An error occurred",
+          message: "Something went wrong",
+        } as any,
       }
       mockCheckoutContext.messages = { ...mockMessages }
 

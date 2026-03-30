@@ -556,7 +556,6 @@ export const Order2ExpressCheckoutUI: React.FC<
         variables: {
           input: {
             id: orderData.internalID,
-            confirmationToken: confirmationToken.id,
           },
         },
       })
