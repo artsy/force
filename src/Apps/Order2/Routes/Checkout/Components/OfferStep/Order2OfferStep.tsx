@@ -14,7 +14,7 @@ import {
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import { Order2OfferOptions } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/Order2OfferOptions"
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useCompleteOfferData"
-import { useOfferInputType } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useOfferInputType"
+import { useOfferPriceInputType } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useOfferPriceInputType"
 import {
   Order2OfferCompletedView,
   type Order2OfferCompletedViewProps,
@@ -262,7 +262,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     submitForm()
   }
 
-  const { showPriceInputOnly } = useOfferInputType(orderData)
+  const { showPriceInputOnly } = useOfferPriceInputType(orderData)
 
   return (
     <Flex
