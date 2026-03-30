@@ -82,7 +82,7 @@ export const StripePaymentCheckboxes: React.FC<
             selected={savePaymentMethod}
             onSelect={onSavePaymentMethodChange}
           >
-            Save credit card for later use
+            Save credit card to your Artsy account
           </Checkbox>
 
           {needsBillingAddress() && (
