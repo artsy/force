@@ -108,7 +108,6 @@ export const onLocalSignup = (
       sign_up_referer: req.body.signupReferer,
       accepted_terms_of_service: req.body.accepted_terms_of_service,
       agreed_to_receive_emails: req.body.agreed_to_receive_emails,
-      signup_validator: req.body.signup_validator,
       recaptcha_token: req.body.recaptcha_token,
     })
     .end((err, sres) => {

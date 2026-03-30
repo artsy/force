@@ -128,7 +128,6 @@ export const signUp = async (args: {
   email: string
   password: string
   agreedToReceiveEmails?: boolean
-  signupValidator?: string
 }) => {
   const signUpUrl = `${getENV("APP_URL")}${getENV("AP").signupPagePath}`
 
@@ -151,7 +150,6 @@ export const signUp = async (args: {
       password: args.password,
       recaptcha_token: recaptchaToken,
       session_id: getENV("SESSION_ID"),
-      signup_validator: args.signupValidator,
     }),
   }).then(async response => {
     if (response.ok) {
