@@ -125,9 +125,9 @@ const mapSuggestion = (
 // ---------------------------------------------------------------------------
 
 /**
- * Throttled fetch for typing. Only includes suggestions with a single entry —
- * multiple entry suggestions require secondary address selection which is not
- * yet supported.
+ * Throttled fetch for typing. Returns up to 5 candidates, including those with
+ * `entries > 1` (multi-unit addresses). The caller handles drill-down when
+ * the user selects a multi-entry suggestion.
  */
 export const fetchSuggestions = throttle(
   async ({
@@ -158,7 +158,6 @@ export const fetchSuggestions = throttle(
     const json = await response.json()
 
     return (json.candidates ?? [])
-      .filter((c: IntlProviderSuggestion) => c.entries === 1)
       .slice(0, 5)
       .map((suggestion: IntlProviderSuggestion) =>
         mapSuggestion(suggestion, country),
@@ -167,6 +166,47 @@ export const fetchSuggestions = throttle(
   THROTTLE_DELAY,
   { leading: true, trailing: true },
 )
+
+/**
+ * Fetches secondary candidates for a multi-entry address_id (entries > 1).
+ * Returns all sub-address candidates without capping — the caller is
+ * responsible for display limits and client-side filtering.
+ *
+ * Note: this hits the same /{address_id} endpoint as `enrichSuggestion`, but
+ * when entries > 1 the API returns more IntlProviderSuggestion candidates
+ * rather than a final IntlProviderAddress. This call is NOT billed as a
+ * selection (no street component is returned yet).
+ */
+export const fetchSecondarySuggestions = async ({
+  addressId,
+  apiKey,
+  country,
+  search,
+}: {
+  addressId: string
+  apiKey: string
+  country: string
+  search: string
+}): Promise<AddressAutocompleteSuggestion[]> => {
+  const iso3Country = ISO2_TO_ISO3[country]
+  if (!iso3Country) return []
+
+  const params = new URLSearchParams({
+    key: apiKey,
+    country: iso3Country,
+    license: INTERNATIONAL_LICENSE,
+    search,
+  })
+  const url = `${SMARTY_INTL_AUTOCOMPLETE_URL}/${encodeURIComponent(addressId)}?${params}`
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`Secondary address lookup failed: ${response.status}`)
+  }
+  const json = await response.json()
+  return (json.candidates ?? []).map((s: IntlProviderSuggestion) =>
+    mapSuggestion(s, country),
+  )
+}
 
 /**
  * Fetches structured address components for a suggestion by its address_id,

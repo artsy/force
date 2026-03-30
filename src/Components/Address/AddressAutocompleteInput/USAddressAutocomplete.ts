@@ -88,8 +88,9 @@ const mapSuggestion = (
 // ---------------------------------------------------------------------------
 
 /**
- * Throttled fetch for typing. Deduplicates multi-unit buildings into a single
- * suggestion (unit selection is handled separately). Returns up to 5 results.
+ * Throttled fetch for keystroke-level typing. Deduplicates multi-unit
+ * buildings into a single suggestion and returns up to 5 results.
+ * US API is billed per request so throttling is important.
  */
 export const fetchSuggestions = throttle(
   async ({
@@ -102,9 +103,8 @@ export const fetchSuggestions = throttle(
     const params = new URLSearchParams({ key: apiKey, search })
     const response = await fetch(`${SMARTY_US_AUTOCOMPLETE_URL}?${params}`)
     const json = await response.json()
-    return filterSecondarySuggestions(json.suggestions ?? [])
-      .slice(0, 5)
-      .map(mapSuggestion)
+    const raw: USProviderSuggestion[] = json.suggestions ?? []
+    return filterSecondarySuggestions(raw).slice(0, 5).map(mapSuggestion)
   },
   THROTTLE_DELAY,
   { leading: true, trailing: true },

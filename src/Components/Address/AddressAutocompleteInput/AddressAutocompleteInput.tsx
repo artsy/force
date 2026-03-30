@@ -3,9 +3,17 @@ import {
   type AddressAutoCompletionResult,
   type SelectedItemFromAddressAutoCompletion,
 } from "@artsy/cohesion"
-import { AutocompleteInput, Input, usePrevious } from "@artsy/palette"
+import {
+  type AutocompleteInputHandle,
+  AutocompleteInput,
+  Flex,
+  Input,
+  Text,
+  usePrevious,
+} from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import * as IntlAutocomplete from "Components/Address/AddressAutocompleteInput/internationalAddressAutocomplete"
+import type { IntlProviderSuggestion } from "Components/Address/AddressAutocompleteInput/internationalAddressAutocomplete"
 import * as USAutocomplete from "Components/Address/AddressAutocompleteInput/USAddressAutocomplete"
 import {
   API_KEY,
@@ -14,11 +22,25 @@ import {
   initialState,
   reducer,
 } from "Components/Address/AddressAutocompleteInput/types"
-import { useCallback, useEffect, useReducer } from "react"
+import {
+  type ChangeEvent,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+} from "react"
 import { useTracking } from "react-tracking"
 
 export type { AddressAutocompleteInputProps }
 export { IntlAutocomplete, USAutocomplete }
+
+type SecondaryMode =
+  | { active: false }
+  | {
+      active: true
+      kind: "intl"
+      allSuggestions: AddressAutocompleteSuggestion[]
+    }
 
 export const SUPPORTED_INTERNATIONAL_COUNTRY_CODES =
   IntlAutocomplete.SUPPORTED_COUNTRIES
@@ -125,10 +147,17 @@ export const AddressAutocompleteInput = ({
     serviceAvailability,
   ])
 
-  // Reset suggestions when the country changes (not on initial mount)
+  // Imperative handle for the underlying AutocompleteInput
+  const controlRef = useRef<AutocompleteInputHandle>(null)
+
+  // Tracks whether we're in secondary-unit selection mode and what data to use
+  const secondaryModeRef = useRef<SecondaryMode>({ active: false })
+
+  // Reset suggestions and secondary mode when the country changes (not on initial mount)
   const previousCountry = usePrevious(address.country)
   useEffect(() => {
     if (previousCountry !== undefined && previousCountry !== address.country) {
+      secondaryModeRef.current = { active: false }
       dispatch({ type: "RESET_SUGGESTIONS" })
     }
   }, [previousCountry, address.country])
@@ -138,7 +167,19 @@ export const AddressAutocompleteInput = ({
       if (!serviceAvailability?.enabled) return
 
       if (search.length < 3) {
+        secondaryModeRef.current = { active: false }
         dispatch({ type: "RESET_SUGGESTIONS" })
+        return
+      }
+
+      const sm = secondaryModeRef.current
+
+      if (sm.active) {
+        // International secondary mode: filter the already-fetched candidates client-side
+        const filtered = sm.allSuggestions.filter(s =>
+          s.text.toLowerCase().includes(search.toLowerCase()),
+        )
+        dispatch({ type: "SET_SUGGESTIONS", suggestions: filtered })
         return
       }
 
@@ -164,6 +205,7 @@ export const AddressAutocompleteInput = ({
         dispatch({ type: "RESET_SUGGESTIONS" })
       }
     },
+    // secondaryModeRef is a ref — reads .current directly, no dep needed
     [serviceAvailability, isUSAddress, address.country],
   )
 
@@ -205,6 +247,48 @@ export const AddressAutocompleteInput = ({
     option: AddressAutocompleteSuggestion,
     index: number,
   ) => {
+    const { entries, providerSuggestion } = option
+
+    // International multi-entry: fetch sub-address candidates and enter secondary mode
+    if (
+      !isUSAddress &&
+      entries !== null &&
+      entries > 1 &&
+      serviceAvailability?.enabled
+    ) {
+      const prov = providerSuggestion as IntlProviderSuggestion
+      try {
+        dispatch({ type: "FETCHING_STARTED" })
+        const results = await IntlAutocomplete.fetchSecondarySuggestions({
+          addressId: prov.address_id,
+          apiKey: serviceAvailability.apiKey,
+          country: address.country,
+          search: option.text,
+        })
+        dispatch({ type: "FETCHING_COMPLETE" })
+        secondaryModeRef.current = {
+          active: true,
+          kind: "intl",
+          allSuggestions: results,
+        }
+        dispatch({ type: "SET_SUGGESTIONS", suggestions: results })
+        controlRef.current?.open()
+        controlRef.current?.setQuery(option.text)
+        // Update the external controlled value (Formik field) to match the
+        // building text, so it overrides the original query in the input display
+        onChange({
+          target: { value: option.text, name: name ?? "" },
+          currentTarget: { value: option.text, name: name ?? "" },
+        } as ChangeEvent<HTMLInputElement>)
+        controlRef.current?.focus()
+      } catch (e) {
+        console.error(e)
+        dispatch({ type: "FETCHING_COMPLETE" })
+      }
+      return
+    }
+
+    // International single-entry: enrich with structured components (billed)
     if (!isUSAddress && serviceAvailability?.enabled) {
       const enriched = await IntlAutocomplete.enrichSuggestion(
         option,
@@ -215,6 +299,8 @@ export const AddressAutocompleteInput = ({
       onSelect(enriched, index)
       return
     }
+
+    // US single address (entries 0 or 1)
     trackSelectedAutocompletedAddress(option, value as string)
     onSelect(option, index)
   }
@@ -231,15 +317,46 @@ export const AddressAutocompleteInput = ({
       title="Street address"
       value={value}
       error={error}
+      controlRef={controlRef}
       onChange={event => {
         onChange(event)
         fetchForAutocomplete({ search: event.target.value })
       }}
       onClear={() => {
+        secondaryModeRef.current = { active: false }
         onClear()
         fetchForAutocomplete({ search: "" })
       }}
       onSelect={handleSelect}
+      renderOption={option => {
+        if (option.entries !== null && option.entries > 1) {
+          return (
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              px={2}
+              py={1}
+            >
+              <Text
+                variant="sm-display"
+                lineHeight={1}
+                overflowEllipsis
+                flex={1}
+              >
+                {option.text}
+              </Text>
+              <Text variant="xs" color="black60" ml={1} flexShrink={0}>
+                + {option.entries} addresses
+              </Text>
+            </Flex>
+          )
+        }
+        return (
+          <Text variant="sm-display" lineHeight={1} p={2} overflowEllipsis>
+            {option.text}
+          </Text>
+        )
+      }}
       {...autocompleteProps}
     />
   )
