@@ -1,5 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { useFlag, useVariant } from "@unleash/proxy-client-react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ArtworkFilter, getTotalCountLabel } from "Components/ArtworkFilter"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
@@ -40,8 +40,6 @@ jest.mock("@unleash/proxy-client-react", () => ({
     name: "control",
   })),
 }))
-
-const mockUseVariant = useVariant as jest.Mock
 
 jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
   useTrackFeatureVariantOnMount: jest.fn(),
@@ -388,48 +386,6 @@ describe("ArtworkFilter", () => {
       fireEvent.click(screen.getByText("Show Results"))
 
       expect(screen.queryByText("Clear all")).not.toBeInTheDocument()
-    })
-  })
-
-  describe("diamond_remove_tooltip_experiment", () => {
-    beforeEach(() => {
-      ;(useFlag as jest.Mock).mockImplementation(
-        flag => flag === "onyx_enable-immersive-view",
-      )
-    })
-
-    it("renders Immersive View button with tooltip in control variant", () => {
-      mockUseVariant.mockReturnValue({
-        enabled: true,
-        name: "control",
-      })
-
-      renderWithRelay({
-        Viewer: () => ({
-          ...ArtworkFilterFixture.viewer,
-        }),
-      })
-
-      expect(
-        screen.getByTestId("immersive-view-with-tooltip"),
-      ).toBeInTheDocument()
-    })
-
-    it("renders Immersive View button without tooltip in experiment variant", () => {
-      mockUseVariant.mockReturnValue({
-        enabled: true,
-        name: "experiment",
-      })
-
-      renderWithRelay({
-        Viewer: () => ({
-          ...ArtworkFilterFixture.viewer,
-        }),
-      })
-
-      expect(
-        screen.getByTestId("immersive-view-without-tooltip"),
-      ).toBeInTheDocument()
     })
   })
 })

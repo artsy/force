@@ -143,7 +143,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     try {
       const input: {
         id: string
-        confirmationToken?: string
         confirmedSetupIntentId?: string
         offerID?: string
         oneTimeUse?: boolean
@@ -169,8 +168,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         if (confirmedSetupIntentId) {
           input.confirmedSetupIntentId = confirmedSetupIntentId
         }
-      } else {
-        input.confirmationToken = confirmationToken
       }
 
       const submitOrderResult = await submitOrderMutation.submitMutation({

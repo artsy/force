@@ -47,7 +47,7 @@ export const ArticleStructuredData: React.FC<
             return {
               "@type": "Person",
               name: author.name,
-              href: `${getENV("APP_URL")}${path}`,
+              url: `${getENV("APP_URL")}${path}`,
             }
           }),
         ),

@@ -46,7 +46,9 @@ describe("StripePaymentCheckboxes", () => {
 
       const creditCardCollapse = screen.getByTestId("stripe-card-collapse")
       expect(creditCardCollapse).toBeVisible()
-      expect(screen.getByText("Save credit card for later use")).toBeVisible()
+      expect(
+        screen.getByText("Save credit card to your Artsy account"),
+      ).toBeVisible()
     })
 
     it("does not show credit card options when stripe-card is not selected", () => {
@@ -99,7 +101,9 @@ describe("StripePaymentCheckboxes", () => {
         />,
       )
 
-      const checkbox = screen.getByText("Save credit card for later use")
+      const checkbox = screen.getByText(
+        "Save credit card to your Artsy account",
+      )
       fireEvent.click(checkbox)
 
       expect(mockOnSavePaymentMethodChange).toHaveBeenCalledWith(true)

@@ -7,7 +7,7 @@ import {
   ShelfPrevious,
 } from "@artsy/palette"
 import type { SearchInputPills_viewer$data } from "__generated__/SearchInputPills_viewer.graphql"
-import { type FC, useEffect, useRef, useState } from "react"
+import { type FC, useCallback, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { PILLS, type PillType, TOP_PILL } from "./constants"
@@ -62,6 +62,8 @@ const PillsContainer = styled(Flex)`
 `
 
 const GRADIENT_BG_WIDTH = 30
+// Extra clearance so pills aren't hidden behind the gradient overlay
+const SCROLL_PADDING = 80
 
 interface SearchInputPillsProps {
   viewer: SearchInputPills_viewer$data
@@ -94,27 +96,48 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
     return !aggregation?.counts?.find(agg => agg?.name === key)
   }
 
-  const showNextChevronHandler = () => {
+  const showNextChevronHandler = useCallback(() => {
     if (pillsRef.current) {
       const pillsContainer = pillsRef.current
       setShowNextChevron(
         pillsContainer.scrollWidth > pillsContainer.clientWidth,
       )
     }
-  }
+  }, [])
 
   useEffect(() => {
     showNextChevronHandler()
-  }, [])
+  }, [showNextChevronHandler])
+
+  // On mount (dropdown reopen) or pill change, scroll the selected pill into view.
+  // The component remounts each time the dropdown opens, resetting scrollLeft to 0,
+  // but selectedPill persists in the parent, so a rightward pill can be off-screen.
+  useEffect(() => {
+    if (!pillsRef.current) return
+
+    const selectedIndex = PILLS.findIndex(pill => pill.key === selectedPill.key)
+    if (selectedIndex <= 0) return
+
+    const selectedElement = pillsRef.current.children[
+      selectedIndex
+    ] as HTMLElement
+    if (!selectedElement) return
+
+    const container = pillsRef.current
+    const pillRight = selectedElement.offsetLeft + selectedElement.offsetWidth
+    const visibleRight = container.scrollLeft + container.clientWidth
+
+    // If the pill's right edge extends into the right gradient zone,
+    // scroll right so the pill clears it.
+    if (pillRight > visibleRight - SCROLL_PADDING) {
+      container.scrollLeft = pillRight - container.clientWidth + SCROLL_PADDING
+    }
+  }, [selectedPill.key])
 
   useEffect(() => {
-    const handleResize = () => {
-      showNextChevronHandler()
-    }
-
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+    window.addEventListener("resize", showNextChevronHandler)
+    return () => window.removeEventListener("resize", showNextChevronHandler)
+  }, [showNextChevronHandler])
 
   const scrollToLeft = () => {
     return scroll("left")
@@ -149,7 +172,7 @@ const SearchInputPills: FC<React.PropsWithChildren<SearchInputPillsProps>> = ({
           : currentPill.nextElementSibling
       ) as HTMLElement
       let scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
-      scrollBy = direction == "left" ? -scrollBy : scrollBy
+      scrollBy = direction === "left" ? -scrollBy : scrollBy
 
       pillsContainer.scrollBy({
         left: scrollBy,

@@ -350,7 +350,7 @@ describe("Order2ReviewStep", () => {
 
       // Verify oneTimeUse is set for new payment methods (has confirmationToken)
       expect(input.oneTimeUse).toBe(true) // savePaymentMethod is false by default
-      expect(input.confirmationToken).toBe("test-token")
+      expect(input.confirmationToken).toBeUndefined()
       expect(input.offerID).toBeUndefined()
     })
 
@@ -420,7 +420,7 @@ describe("Order2ReviewStep", () => {
 
       // When savePaymentMethod is true, oneTimeUse should be false
       expect(input.oneTimeUse).toBe(false)
-      expect(input.confirmationToken).toBe("test-token")
+      expect(input.confirmationToken).toBeUndefined()
     })
 
     it("always sets oneTimeUse to true for SEPA payment method", async () => {
@@ -455,7 +455,7 @@ describe("Order2ReviewStep", () => {
 
       // SEPA cannot be saved, so oneTimeUse should always be true
       expect(input.oneTimeUse).toBe(true)
-      expect(input.confirmationToken).toBe("test-token")
+      expect(input.confirmationToken).toBeUndefined()
     })
   })
 

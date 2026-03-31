@@ -1,8 +1,10 @@
 import { MetaTags } from "Components/MetaTags"
 import type { ArticleMetaTags_article$data } from "__generated__/ArticleMetaTags_article.graphql"
+import { DateTime } from "luxon"
 import type { FC } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
+import { UPDATED_AT_THRESHOLD_SECONDS } from "./ArticleTimestamp"
 
 interface ArticleMetaTagsProps {
   article: ArticleMetaTags_article$data
@@ -11,6 +13,13 @@ interface ArticleMetaTagsProps {
 const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
   article,
 }) => {
+  const shouldShowUpdatedAt =
+    article.metaPublishedAt &&
+    article.updatedAt &&
+    DateTime.fromISO(article.updatedAt)
+      .diff(DateTime.fromISO(article.metaPublishedAt))
+      .as("seconds") > UPDATED_AT_THRESHOLD_SECONDS
+
   return (
     <>
       <MetaTags
@@ -34,6 +43,10 @@ const ArticleMetaTags: FC<React.PropsWithChildren<ArticleMetaTagsProps>> = ({
         content={article.metaPublishedAt}
       />
 
+      {shouldShowUpdatedAt && (
+        <Meta property="article:modified_time" content={article.updatedAt} />
+      )}
+
       <Meta
         property="article:publisher"
         content="https://www.facebook.com/artsy"
@@ -53,6 +66,7 @@ export const ArticleMetaTagsFragmentContainer = createFragmentContainer(
         href
         keywords
         metaPublishedAt: publishedAt
+        updatedAt
         title
         searchTitle
         description

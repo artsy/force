@@ -106,6 +106,12 @@ export const SearchBarInput: FC<
     }
   }, [debouncedValue, selectedPill.searchEntityName])
 
+  useEffect(() => {
+    if (!value) {
+      setSelectedPill(TOP_PILL)
+    }
+  }, [value])
+
   const searchRequest = (value: string, entity?: SearchEntity) => {
     const entities = entity ? [entity] : []
 
@@ -164,6 +170,7 @@ export const SearchBarInput: FC<
 
   const resetValue = () => {
     setValue("")
+    setSelectedPill(TOP_PILL)
   }
 
   const redirect = (to: string) => {

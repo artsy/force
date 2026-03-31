@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b095345976f92c7fe2d9bf60c4b5bdf>>
+ * @generated SignedSource<<c2e7328dd5e9b0bda1adb9c310417b50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type ArticleMetaTags_article$data = {
     readonly url: string | null | undefined;
   } | null | undefined;
   readonly title: string | null | undefined;
+  readonly updatedAt: string | null | undefined;
   readonly " $fragmentType": "ArticleMetaTags_article";
 };
 export type ArticleMetaTags_article$key = {
@@ -61,6 +62,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "publishedAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "updatedAt",
       "storageKey": null
     },
     {
@@ -114,6 +122,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "79c17ffae9985576d77cb87aad7750d9";
+(node as any).hash = "2a39c280e3eb8194c634fd346c8da4f1";
 
 export default node;
