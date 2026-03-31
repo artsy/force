@@ -28,6 +28,12 @@ jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({}),
 }))
 
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    match: { location: { pathname: "/artwork/test-artwork" } },
+  }),
+}))
+
 jest.mock("Utils/user", () => ({
   userIsAdmin: jest.fn(),
   userIsTeam: jest.fn(),
