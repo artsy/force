@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa48fd0e9e3daff01e2985b2b0535054>>
+ * @generated SignedSource<<00da4db12d3aafab729c9743253d5b32>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,16 +33,16 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v2 = [
-  {
-    "kind": "Literal",
-    "name": "version",
-    "value": "large"
-  }
-],
 v3 = {
   "alias": null,
   "args": null,
@@ -61,6 +61,12 @@ v5 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -110,11 +116,19 @@ return {
             "name": "slug",
             "storageKey": null
           },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "alternateNames",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "awards",
             "storageKey": null
           },
           {
@@ -142,10 +156,17 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "hometown",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "nationality",
             "storageKey": null
           },
-          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": "biographyBlurbPlain",
             "args": [
@@ -188,14 +209,64 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": (v2/*: any*/),
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": "url(version:\"large\")"
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 900
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": [
+                          "larger",
+                          "large"
+                        ]
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 1200
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "width",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "height",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "cropped(height:900,version:[\"larger\",\"large\"],width:1200)"
                   },
                   {
                     "alias": "large",
-                    "args": (v2/*: any*/),
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "large"
+                      }
+                    ],
                     "kind": "ScalarField",
                     "name": "url",
                     "storageKey": "url(version:\"large\")"
@@ -209,52 +280,48 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 10
-              }
-            ],
-            "concreteType": "PartnerArtistConnection",
+            "args": null,
+            "concreteType": "VerifiedRepresentative",
             "kind": "LinkedField",
-            "name": "partnersConnection",
-            "plural": false,
+            "name": "verifiedRepresentatives",
+            "plural": true,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "PartnerArtistEdge",
+                "concreteType": "Partner",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "partner",
+                "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Partner",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v1/*: any*/),
-                      (v3/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
+                  (v1/*: any*/),
+                  (v2/*: any*/),
                   (v3/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v3/*: any*/)
             ],
-            "storageKey": "partnersConnection(first:10)"
+            "storageKey": null
           },
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "alternateNames",
-            "storageKey": null
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 10
+              }
+            ],
+            "concreteType": "Gene",
+            "kind": "LinkedField",
+            "name": "genes",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              (v3/*: any*/)
+            ],
+            "storageKey": "genes(size:10)"
           },
           (v3/*: any*/)
         ],
@@ -263,7 +330,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "317ff98372dc2fd23819e5a4e78ab16c",
+    "cacheID": "cb19a27a4a3a24fc1f6091d1b2a4b0d1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -279,6 +346,7 @@ return {
           "plural": true,
           "type": "String"
         },
+        "artist.awards": (v4/*: any*/),
         "artist.biographyBlurbPlain": {
           "enumValues": null,
           "nullable": true,
@@ -300,41 +368,58 @@ return {
           "plural": false,
           "type": "Image"
         },
+        "artist.coverArtwork.image.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artist.coverArtwork.image.cropped.height": (v6/*: any*/),
+        "artist.coverArtwork.image.cropped.src": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "artist.coverArtwork.image.cropped.width": (v6/*: any*/),
         "artist.coverArtwork.image.large": (v4/*: any*/),
-        "artist.coverArtwork.image.url": (v4/*: any*/),
         "artist.deathday": (v4/*: any*/),
         "artist.gender": (v4/*: any*/),
+        "artist.genes": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "Gene"
+        },
+        "artist.genes.id": (v5/*: any*/),
+        "artist.genes.name": (v4/*: any*/),
+        "artist.hometown": (v4/*: any*/),
         "artist.href": (v4/*: any*/),
         "artist.id": (v5/*: any*/),
         "artist.name": (v4/*: any*/),
         "artist.nationality": (v4/*: any*/),
-        "artist.partnersConnection": {
+        "artist.slug": (v5/*: any*/),
+        "artist.verifiedRepresentatives": {
           "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerArtistConnection"
-        },
-        "artist.partnersConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
-          "type": "PartnerArtistEdge"
+          "type": "VerifiedRepresentative"
         },
-        "artist.partnersConnection.edges.id": (v5/*: any*/),
-        "artist.partnersConnection.edges.node": {
+        "artist.verifiedRepresentatives.id": (v5/*: any*/),
+        "artist.verifiedRepresentatives.partner": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "Partner"
         },
-        "artist.partnersConnection.edges.node.href": (v4/*: any*/),
-        "artist.partnersConnection.edges.node.id": (v5/*: any*/),
-        "artist.slug": (v5/*: any*/)
+        "artist.verifiedRepresentatives.partner.href": (v4/*: any*/),
+        "artist.verifiedRepresentatives.partner.id": (v5/*: any*/),
+        "artist.verifiedRepresentatives.partner.name": (v4/*: any*/)
       }
     },
     "name": "ArtistMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  birthday\n  deathday\n  gender\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      url(version: \"large\")\n    }\n    id\n  }\n  partnersConnection(first: 10) {\n    edges {\n      node {\n        href\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

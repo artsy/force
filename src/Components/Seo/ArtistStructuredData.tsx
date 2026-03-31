@@ -1,13 +1,23 @@
-import { StructuredData } from "Components/Seo/StructuredData"
+import { ORGANIZATION_STUB_SCHEMA } from "Apps/About/Components/AboutStructuredData"
 import { getArtistMeta } from "Apps/Artist/Utils/getArtistMeta"
-import { getENV } from "Utils/getENV"
+import { StructuredData } from "Components/Seo/StructuredData"
 import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
+import { getArtistSubRoute } from "Utils/url"
 import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
 import compact from "lodash/compact"
+import { useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface ArtistStructuredDataProps {
   artist: ArtistStructuredData_artist$key
+}
+
+const SUB_ROUTE_LABELS: Record<string, string> = {
+  articles: "Articles",
+  cv: "CV",
+  shows: "Shows",
+  series: "Series",
 }
 
 export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
@@ -17,22 +27,86 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
   const { match } = useRouter()
   const pathname = match.location.pathname
 
-  const artistUrl = `${getENV("APP_URL")}${data.href}`
-  const pageUrl = `${getENV("APP_URL")}${pathname}`
+  const appUrl = getENV("APP_URL")
+  const artistUrl = `${appUrl}${data.href}`
+  const pageUrl = `${appUrl}${pathname}`
+  const subRoute = getArtistSubRoute(pathname)
 
   const memberOf = compact(
-    data.partnersConnection?.edges?.map(edge => {
-      const partner = edge?.node
-      return partner?.href
-        ? { "@id": `${getENV("APP_URL")}${partner.href}` }
-        : null
+    data.verifiedRepresentatives?.map(rep => {
+      const partner = rep?.partner
+      if (!partner?.href) return null
+      const partnerUrl = `${appUrl}${partner.href}`
+      return {
+        "@type": "Organization" as const,
+        "@id": partnerUrl,
+        name: partner.name ?? undefined,
+        url: partnerUrl,
+      }
     }),
   )
 
   const { title, description } = getArtistMeta({
     name: data.name,
     biographyBlurb: data.biographyBlurbPlain,
+    subRoute,
   })
+
+  const knowsAbout = compact(data.genes?.map(gene => gene?.name))
+
+  const coverImage = data.coverArtwork?.image
+  const image = coverImage?.cropped
+    ? {
+        "@type": "ImageObject" as const,
+        url: coverImage.cropped.src,
+        width: {
+          "@type": "QuantitativeValue" as const,
+          value: coverImage.cropped.width,
+          unitCode: "E37",
+        },
+        height: {
+          "@type": "QuantitativeValue" as const,
+          value: coverImage.cropped.height,
+          unitCode: "E37",
+        },
+      }
+    : undefined
+
+  const breadcrumbItems = useMemo(() => {
+    const items = [
+      {
+        "@type": "ListItem" as const,
+        position: 1,
+        name: "Home",
+        item: appUrl,
+      },
+      {
+        "@type": "ListItem" as const,
+        position: 2,
+        name: "Artists",
+        item: `${appUrl}/artists`,
+      },
+      {
+        "@type": "ListItem" as const,
+        position: 3,
+        name: data.name ?? undefined,
+        item: artistUrl,
+      },
+    ]
+
+    const label = subRoute ? SUB_ROUTE_LABELS[subRoute] : undefined
+
+    if (label) {
+      items.push({
+        "@type": "ListItem" as const,
+        position: 4,
+        name: label,
+        item: pageUrl,
+      })
+    }
+
+    return items
+  }, [appUrl, artistUrl, pageUrl, data.name, subRoute])
 
   return (
     <StructuredData
@@ -40,15 +114,39 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "WebSite",
+            "@id": `${appUrl}#website`,
+            url: appUrl,
+            name: "Artsy",
+            publisher: { "@id": "https://www.artsy.net/#organization" },
+            inLanguage: "en",
+          },
+          ORGANIZATION_STUB_SCHEMA,
+          {
             "@type": "Person",
             "@id": artistUrl,
             additionalType: "Artist",
+            hasOccupation: {
+              "@type": "Occupation",
+              name: "Artist",
+            },
+            alternateName: data.alternateNames?.length
+              ? compact(data.alternateNames)
+              : undefined,
+            award: data.awards ?? undefined,
             birthDate: data.birthday ?? undefined,
             deathDate: data.deathday ?? undefined,
             description,
             gender: data.gender ?? undefined,
-            image: data.coverArtwork?.image?.url ?? undefined,
-            mainEntityOfPage: pageUrl,
+            homeLocation: data.hometown
+              ? {
+                  "@type": "Place",
+                  name: data.hometown,
+                }
+              : undefined,
+            image,
+            knowsAbout: knowsAbout.length ? knowsAbout : undefined,
+            mainEntityOfPage: { "@id": pageUrl },
             memberOf: memberOf.length ? memberOf : undefined,
             name: data.name ?? undefined,
             nationality: data.nationality
@@ -62,9 +160,18 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
             url: pageUrl,
             name: title,
             description,
+            isPartOf: { "@id": `${appUrl}#website` },
+            publisher: { "@id": "https://www.artsy.net/#organization" },
+            breadcrumb: { "@id": `${pageUrl}#breadcrumb` },
+            inLanguage: "en",
             mainEntity: {
               "@id": artistUrl,
             },
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": `${pageUrl}#breadcrumb`,
+            itemListElement: breadcrumbItems,
           },
         ],
       }}
@@ -76,9 +183,12 @@ const fragment = graphql`
   fragment ArtistStructuredData_artist on Artist {
     slug
     name
+    alternateNames
+    awards
     birthday
     deathday
     gender
+    hometown
     nationality
     href
     biographyBlurbPlain: biographyBlurb(format: PLAIN) {
@@ -86,15 +196,21 @@ const fragment = graphql`
     }
     coverArtwork {
       image {
-        url(version: "large")
-      }
-    }
-    partnersConnection(first: 10) {
-      edges {
-        node {
-          href
+        cropped(width: 1200, height: 900, version: ["larger", "large"]) {
+          src
+          width
+          height
         }
       }
+    }
+    verifiedRepresentatives {
+      partner {
+        name
+        href
+      }
+    }
+    genes(size: 10) {
+      name
     }
   }
 `
