@@ -15,7 +15,7 @@ export function useTrackFeatureVariant({
   payload,
 }: VariantTrackingProperties) {
   const router = useRouter()
-  const experimentViewTracked = useRef<boolean>(false)
+  const experimentViewTrackedForPath = useRef<string | null>(null)
 
   const trackFeatureVariant = () => {
     // HACK: Temporary hack while we refactor useAnalyticsContext
@@ -28,7 +28,10 @@ export function useTrackFeatureVariant({
     const pageSlug = pageParts[2]
     const pageType = pathToOwnerType(path)
 
-    if (!experimentViewTracked.current && variantName !== "disabled") {
+    if (
+      experimentViewTrackedForPath.current !== path &&
+      variantName !== "disabled"
+    ) {
       // HACK: We are using window.analytics.track over trackEvent from useTracking because
       // the trackEvent wasn't behaving as expected, it was never firing the event and
       // moving to using the solution below fixed the issue.
@@ -41,7 +44,7 @@ export function useTrackFeatureVariant({
         context_owner_slug: pageSlug,
       })
 
-      experimentViewTracked.current = true
+      experimentViewTrackedForPath.current = path
     }
   }
 
@@ -53,18 +56,22 @@ export const useTrackFeatureVariantOnMount = (
     variantName?: string
   },
 ) => {
+  const router = useRouter()
+  const pathname = router.match.location.pathname ?? ""
+
   const { trackFeatureVariant } = useTrackFeatureVariant({
     ...props,
     variantName: props.variantName ?? "",
   })
 
-  const isTracked = useRef(false)
+  const lastTrackedPath = useRef<string | null>(null)
 
   useEffect(() => {
-    if (isTracked.current) return
+    if (!pathname) return
     if (props.variantName === "disabled") return
+    if (lastTrackedPath.current === pathname) return
 
-    isTracked.current = true
     trackFeatureVariant()
-  }, [trackFeatureVariant, props.variantName])
+    lastTrackedPath.current = pathname
+  }, [trackFeatureVariant, props.variantName, pathname])
 }
