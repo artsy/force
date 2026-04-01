@@ -3502,6 +3502,9 @@ type ArtworkImport implements Node {
     first: Int
     last: Int
   ): ArtworkImportRowConnection
+
+  # Source of the import: 'bulk_import' or 'multi_add'
+  source: String
   state: ArtworkImportState
   statistics: ArtworkImportStatistics
   summary: ArtworkImportSummary
@@ -3544,6 +3547,7 @@ enum ArtworkImportError {
   INVALID_ARTIST_PROOF
   INVALID_ARTSY_DOMESTIC_SHIPPING
   INVALID_ARTSY_INTERNATIONAL_SHIPPING
+  INVALID_AVAILABILITY
   INVALID_BUY_NOW
   INVALID_CERTIFICATE_OF_AUTHENTICITY
   INVALID_CLASSIFICATION
@@ -3620,6 +3624,7 @@ type ArtworkImportRow {
   # A type-specific ID likely used as a database ID.
   internalID: ID!
   internationalShipping: Money
+  location: Location
   lowEstimate: Money
   openingBid: Money
   priceListed: Money
@@ -3736,6 +3741,7 @@ type ArtworkImportTransformedData {
   artworkCondition: String
   artworkDescription: String
   artworkTitle: String
+  availability: String
   availableEditions: [String]
   bibliography: String
   buyNow: String
@@ -9986,6 +9992,9 @@ input CreateArtworkImportInput {
   partnerID: String!
   s3Bucket: String!
   s3Key: String!
+
+  # Source of the import: 'bulk_import' or 'multi_add'. Defaults to 'bulk_import'.
+  source: String = "bulk_import"
 }
 
 type CreateArtworkImportPayload {
@@ -10005,6 +10014,9 @@ type CreateArtworkImportSuccess {
 input CreateArtworkMutationInput {
   # The IDs of the artists associated with the artwork.
   artistIds: [String!]!
+
+  # Whether the artwork is listed on Artsy. If absent, it defaults to true
+  artsyListing: Boolean
   clientMutationId: String
 
   # The S3 bucket where the artwork image is stored.
@@ -19852,6 +19864,9 @@ type Partner implements Node {
     before: String
     first: Int
     last: Int
+
+    # Filter by import source: 'bulk_import' or 'multi_add'. Returns all sources if omitted.
+    source: String
   ): ArtworkImportConnection
 
   # A connection of artwork templates for this partner
@@ -24624,6 +24639,15 @@ enum SearchEntity {
   VIEWING_ROOM
 }
 
+# A highlighted field from an OpenSearch query match, containing the field name and highlighted fragments with <em> tags around matched terms
+type SearchHighlight {
+  # The base field name that matched (e.g. name, alternate_names, artist_names, venue, description)
+  field: String!
+
+  # Highlighted text fragments with <em> tags wrapping matched terms
+  fragments: [String!]!
+}
+
 enum SearchMode {
   AUTOSUGGEST
   INTERNAL_AUTOSUGGEST
@@ -24655,6 +24679,9 @@ type SearchableConnection {
 type SearchableEdge {
   # A cursor for use in pagination
   cursor: String!
+
+  # Server-side search highlights from OpenSearch indicating which fields matched and where
+  highlights: [SearchHighlight!]!
 
   # The item at the end of the edge
   node: Searchable
