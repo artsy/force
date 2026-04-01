@@ -168,13 +168,13 @@ export const ViewingRoomWorksRouteFragmentContainer = createPaginationContainer(
               title
               images {
                 internalID
-                solo: resized(quality: 85, width: 600, version: "normalized") {
+                solo: resized(width: 600, version: "normalized") {
                   src
                   srcSet
                   width
                   height
                 }
-                resized(quality: 85, height: 550, version: "normalized") {
+                resized(height: 550, version: "normalized") {
                   src
                   srcSet
                   width

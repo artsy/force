@@ -86,7 +86,6 @@ export const ViewingRoomWorksArtworkFragmentContainer = createFragmentContainer(
         title
         image {
           resized(
-            quality: 85
             width: 445
             version: ["main", "normalized", "larger", "large"]
           ) {

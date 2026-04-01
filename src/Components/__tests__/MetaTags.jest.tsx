@@ -119,7 +119,7 @@ describe("MetaTags", () => {
         name: null,
         property: "og:image",
         content:
-          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200",
+          "?height=630&quality=85&resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200",
       },
       {
         content: "308278682573501",
@@ -147,7 +147,7 @@ describe("MetaTags", () => {
         name: null,
         property: "twitter:image",
         content:
-          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200",
+          "?height=630&quality=85&resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200",
       },
     ])
   })
