@@ -149,6 +149,58 @@ const MOCK_PARTNER_OFFER_ORDER = {
   ],
 }
 
+const MOCK_UNDER_PRICE_ORDER = {
+  internalID: "order-id",
+  mode: "OFFER",
+  source: "artwork_page",
+  buyerStateExpiresAt: null,
+  currencyCode: "USD",
+  currencySymbol: "US$",
+  selectedFulfillmentOption: null,
+  pendingOffer: null,
+  lineItems: [
+    {
+      artwork: {
+        isPriceHidden: false,
+      },
+      artworkOrEditionSet: {
+        __typename: "Artwork",
+        listPrice: {
+          __typename: "PriceRange",
+          maxPrice: { major: 5000 },
+          minPrice: null,
+        },
+      },
+    },
+  ],
+}
+
+const MOCK_OVER_PRICE_ORDER = {
+  internalID: "order-id",
+  mode: "OFFER",
+  source: "artwork_page",
+  buyerStateExpiresAt: null,
+  currencyCode: "USD",
+  currencySymbol: "US$",
+  selectedFulfillmentOption: null,
+  pendingOffer: null,
+  lineItems: [
+    {
+      artwork: {
+        isPriceHidden: false,
+      },
+      artworkOrEditionSet: {
+        __typename: "Artwork",
+        listPrice: {
+          __typename: "PriceRange",
+          maxPrice: null,
+          minPrice: { major: 10000 },
+        },
+      },
+    },
+  ],
+}
+
 describe("Order2OfferStep", () => {
   let mockSetOfferAmountComplete: jest.Mock
   let mockSubmitMutation: jest.Mock
@@ -905,6 +957,130 @@ describe("Order2OfferStep", () => {
         4500,
         "Gallery offer",
       )
+    })
+  })
+
+  describe("Partial Price Range", () => {
+    it("shows simple input for 'Under $XXX' artworks (no minPrice)", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_UNDER_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Should NOT show preset range options or radio buttons
+      expect(screen.queryByText("Top-end of range")).not.toBeInTheDocument()
+      expect(screen.queryByText("Midpoint")).not.toBeInTheDocument()
+      expect(screen.queryByText("Low-end of range")).not.toBeInTheDocument()
+      expect(screen.queryByText("Other amount")).not.toBeInTheDocument()
+
+      // Should show simple input field like hidden price
+      expect(screen.getByTitle("Your offer (US$)")).toBeInTheDocument()
+    })
+
+    it("shows simple input for 'Over $XXX' artworks (no maxPrice)", () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_OVER_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Should NOT show preset range options or radio buttons
+      expect(screen.queryByText("Top-end of range")).not.toBeInTheDocument()
+      expect(screen.queryByText("Midpoint")).not.toBeInTheDocument()
+      expect(screen.queryByText("Low-end of range")).not.toBeInTheDocument()
+      expect(screen.queryByText("Other amount")).not.toBeInTheDocument()
+
+      // Should show simple input field like hidden price
+      expect(screen.getByTitle("Your offer (US$)")).toBeInTheDocument()
+    })
+
+    it("allows submitting custom offer for 'Under $XXX' artworks", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_UNDER_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Enter custom amount
+      const customInput = screen.getByTitle("Your offer (US$)")
+      fireEvent.change(customInput, { target: { value: "3000" } })
+
+      // Blur to trigger tracking
+      fireEvent.blur(customInput)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        3000,
+        "Custom amount",
+      )
+
+      // Submit the offer
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      await waitFor(() => {
+        expect(mockSubmitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              orderID: "order-id",
+              amountMinor: 300000,
+              note: "",
+            },
+          },
+        })
+      })
+    })
+
+    it("allows submitting custom offer for 'Over $XXX' artworks", async () => {
+      renderWithRelay({
+        Viewer: () => ({
+          me: {
+            order: MOCK_OVER_PRICE_ORDER,
+          },
+        }),
+      })
+
+      // Enter custom amount
+      const customInput = screen.getByTitle("Your offer (US$)")
+      fireEvent.change(customInput, { target: { value: "15000" } })
+
+      // Blur to trigger tracking
+      fireEvent.blur(customInput)
+
+      expect(mockCheckoutTracking.clickedOfferOption).toHaveBeenCalledWith(
+        "USD",
+        "order-id",
+        15000,
+        "Custom amount",
+      )
+
+      // Submit the offer
+      const continueButton = screen.getByRole("button", {
+        name: "Save and Continue",
+      })
+      fireEvent.click(continueButton)
+
+      await waitFor(() => {
+        expect(mockSubmitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              orderID: "order-id",
+              amountMinor: 1500000,
+              note: "",
+            },
+          },
+        })
+      })
     })
   })
 })

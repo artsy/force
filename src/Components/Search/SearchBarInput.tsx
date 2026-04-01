@@ -65,26 +65,31 @@ export const SearchBarInput: FC<
 
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
-  const options = extractNodes(data?.viewer?.searchConnection)
+  const edges = data?.viewer?.searchConnection?.edges ?? []
 
   const formattedOptions: SuggestionItemOptionProps[] = [
-    ...options.map((option, index) => {
-      return {
-        text: option.displayLabel ?? "Unknown",
-        value: option.displayLabel ?? "unknown",
-        subtitle:
-          getLabel({
-            displayType: option.displayType ?? "",
-            typename: option.__typename,
-          }) ?? "",
-        imageUrl: option.coverArtwork?.image?.src || option.imageUrl || "",
-        showAuctionResultsButton: !!option.statuses?.auctionLots,
-        href: option.href ?? "/",
-        typename: option.__typename,
-        item_id: option.internalID,
-        item_number: index,
-        item_type: option.displayType ?? undefined,
-      }
+    ...edges.flatMap((edge, index) => {
+      const option = edge?.node
+      if (!option) return []
+      return [
+        {
+          text: option.displayLabel ?? "Unknown",
+          value: option.displayLabel ?? "unknown",
+          subtitle:
+            getLabel({
+              displayType: option.displayType ?? "",
+              typename: option.__typename,
+            }) ?? "",
+          imageUrl: option.coverArtwork?.image?.src || option.imageUrl || "",
+          showAuctionResultsButton: !!option.statuses?.auctionLots,
+          href: option.href ?? "/",
+          typename: option.__typename,
+          item_id: option.internalID,
+          item_number: index,
+          item_type: option.displayType ?? undefined,
+          highlights: edge?.highlights ?? null,
+        },
+      ]
     }),
     {
       text: value,
@@ -329,6 +334,10 @@ const QUERY = graphql`
         first: 7
       ) @include(if: $hasTerm) {
         edges {
+          highlights {
+            field
+            fragments
+          }
           node {
             displayLabel
             href

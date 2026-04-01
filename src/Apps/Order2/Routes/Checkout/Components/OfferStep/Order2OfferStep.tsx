@@ -13,12 +13,13 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { OfferInput } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/OfferInput"
 import { Order2OfferOptions } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Components/Order2OfferOptions"
+import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useCompleteOfferData"
+import { useOfferPriceInputType } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useOfferPriceInputType"
 import {
   Order2OfferCompletedView,
   type Order2OfferCompletedViewProps,
 } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferCompletedView"
 import type { OfferNoteValue } from "Apps/Order2/Routes/Checkout/Components/OfferStep/types"
-import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2AddInitialOfferMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2AddInitialOfferMutation"
@@ -261,7 +262,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
     submitForm()
   }
 
-  const isPriceHidden = orderData.lineItems?.[0]?.artwork?.isPriceHidden
+  const { showPriceInputOnly } = useOfferPriceInputType(orderData)
 
   return (
     <Flex
@@ -321,7 +322,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         px={[2, 2, 4]}
         hidden={currentStep !== CheckoutStepState.ACTIVE}
       >
-        {isPriceHidden ? (
+        {showPriceInputOnly ? (
           <>
             <OfferInput
               name="offerValue"
@@ -393,6 +394,34 @@ const FRAGMENT = graphql`
     lineItems {
       artwork {
         isPriceHidden
+      }
+      artworkOrEditionSet {
+        ... on Artwork {
+          listPrice {
+            __typename
+            ... on PriceRange {
+              maxPrice {
+                major
+              }
+              minPrice {
+                major
+              }
+            }
+          }
+        }
+        ... on EditionSet {
+          listPrice {
+            __typename
+            ... on PriceRange {
+              maxPrice {
+                major
+              }
+              minPrice {
+                major
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -5,7 +5,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
-import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/useCompleteOfferData"
+import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useCompleteOfferData"
 import { useCompletePaymentData } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/useCompletePaymentData"
 import type { useBuildInitialSteps_order$key } from "__generated__/useBuildInitialSteps_order.graphql"
 import { graphql, useFragment } from "react-relay"

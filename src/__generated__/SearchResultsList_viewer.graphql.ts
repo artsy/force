@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ded4266cca31d8892b20c850b6f82f5>>
+ * @generated SignedSource<<8c8519bad078876b03abba1b7c72555f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type SearchResultsList_viewer$data = {
   readonly searchConnection: {
     readonly edges: ReadonlyArray<{
+      readonly highlights: ReadonlyArray<{
+        readonly field: string;
+        readonly fragments: ReadonlyArray<string>;
+      }>;
       readonly node: {
         readonly __typename: string;
         readonly coverArtwork?: {
@@ -118,6 +122,31 @@ return {
           "name": "edges",
           "plural": true,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "SearchHighlight",
+              "kind": "LinkedField",
+              "name": "highlights",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "field",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "fragments",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -293,6 +322,6 @@ return {
 };
 })();
 
-(node as any).hash = "a67cada8e53b6181a5cd66c1114ce7b1";
+(node as any).hash = "da34787d6a2323ebd8c6e53df57ea657";
 
 export default node;

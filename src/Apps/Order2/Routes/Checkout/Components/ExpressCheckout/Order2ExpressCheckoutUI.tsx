@@ -616,7 +616,8 @@ export const Order2ExpressCheckoutUI: React.FC<
           onShippingAddressChange={handleShippingAddressChange}
           onShippingRateChange={handleShippingRateChange}
           onLoadError={e => {
-            logger.error("Express checkout element error", e)
+            logger.error("Express checkout element load error", e)
+            setExpressCheckoutLoaded([])
           }}
           onConfirm={handleConfirm}
         />

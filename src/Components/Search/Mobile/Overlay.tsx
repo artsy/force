@@ -51,15 +51,16 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [debouncedValue] = useDebounce(inputValue, SEARCH_DEBOUNCE_DELAY)
   const disablePills = !shouldStartSearching(inputValue)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    inputRef.current?.focus()
-
-    tracking.trackEvent({
-      action_type: ActionType.focusedOnSearchInput,
-      context_module: selectedPill.analyticsContextModule,
-    })
-    // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Should only focus and track once on mount, not re-run when pill changes
+  const inputCallbackRef = useCallback((node: HTMLInputElement | null) => {
+    inputRef.current = node
+    if (node) {
+      node.focus()
+      tracking.trackEvent({
+        action_type: ActionType.focusedOnSearchInput,
+        context_module: selectedPill.analyticsContextModule,
+      })
+    }
   }, [])
 
   useEffect(() => {
@@ -114,7 +115,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           <Box mt={-15}>
             <LabeledInput
               mx={2}
-              ref={inputRef}
+              ref={inputCallbackRef}
               value={inputValue}
               placeholder="Search Artsy"
               label={<SearchIcon fill="mono60" aria-hidden size={18} />}

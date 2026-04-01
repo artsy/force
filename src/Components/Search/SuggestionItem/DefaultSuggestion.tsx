@@ -1,10 +1,12 @@
 import { Flex, Spacer, Text } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
-import type { FC } from "react"
+import type { FC, ReactNode } from "react"
 import { Highlight } from "./Highlight"
 import type { SuggestionItemOptionProps } from "./SuggestionItem"
 import { SuggestionItemPreview } from "./SuggestionItemPreview"
+import { parseHighlightFragments } from "./parseHighlightFragments"
 
 interface DefaultSuggestionProps {
   option: SuggestionItemOptionProps
@@ -14,10 +16,11 @@ interface DefaultSuggestionProps {
 export const DefaultSuggestion: FC<
   React.PropsWithChildren<DefaultSuggestionProps>
 > = ({ option, query }) => {
-  const matches = match(option.text, query)
-  const parts = parse(option.text, matches)
-  const partTags = parts.map(({ highlight, text }, index) =>
-    highlight ? <Highlight key={index}>{text}</Highlight> : text,
+  const enableServerHighlights = useFlag("onyx_search-highlighting")
+
+  const { nameParts, alternateParts } = resolveSuggestionParts(
+    enableServerHighlights ? option : { ...option, highlights: null },
+    query
   )
 
   return (
@@ -29,7 +32,13 @@ export const DefaultSuggestion: FC<
       <Spacer x={1} />
       <Flex flexDirection="column" flex={1} overflow="hidden">
         <Text variant="sm-display" overflowEllipsis>
-          {partTags}
+          {nameParts}
+          {alternateParts && (
+            <Text as="span" variant="sm-display" color="mono60">
+              {" "}
+              ({alternateParts})
+            </Text>
+          )}
         </Text>
 
         <Text color="mono60" variant="xs" overflowEllipsis>
@@ -38,4 +47,48 @@ export const DefaultSuggestion: FC<
       </Flex>
     </Flex>
   )
+}
+
+function resolveSuggestionParts(
+  option: SuggestionItemOptionProps,
+  query: string
+): { nameParts: ReactNode[]; alternateParts: ReactNode[] | null } {
+  const nameHighlight = option.highlights?.find((h) => h.field === "name")
+  const alternateHighlight = option.highlights?.find(
+    (h) => h.field === "alternate_names"
+  )
+
+  const firstNameFragment = nameHighlight?.fragments?.[0]
+  const firstAlternateFragment = alternateHighlight?.fragments?.[0]
+
+  const clientMatches = match(option.text, query)
+  const hasClientHighlights = clientMatches.length > 0
+  const hasNameHighlight = Boolean(firstNameFragment)
+
+  const alternateParts =
+    !hasClientHighlights && !hasNameHighlight && firstAlternateFragment
+      ? parseHighlightFragments(firstAlternateFragment)
+      : null
+
+  if (hasClientHighlights) {
+    return {
+      nameParts: parse(option.text, clientMatches).map(
+        ({ highlight, text }, index) =>
+          highlight ? <Highlight key={index}>{text}</Highlight> : text
+      ),
+      alternateParts,
+    }
+  }
+
+  if (firstNameFragment) {
+    return {
+      nameParts: parseHighlightFragments(firstNameFragment),
+      alternateParts,
+    }
+  }
+
+  return {
+    nameParts: [option.text],
+    alternateParts,
+  }
 }

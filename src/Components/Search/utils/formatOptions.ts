@@ -1,4 +1,5 @@
 import type { SuggestionItemOptionProps } from "Components/Search/SuggestionItem/SuggestionItem"
+import type { SearchHighlightData } from "Components/Search/SuggestionItem/parseHighlightFragments"
 import { getLabel } from "./getLabel"
 
 export interface SearchNodeOption {
@@ -11,6 +12,7 @@ export interface SearchNodeOption {
   }
   href?: string
   internalID?: string
+  highlights?: ReadonlyArray<SearchHighlightData> | null
 }
 
 export const formatOptions = (
@@ -32,6 +34,7 @@ export const formatOptions = (
       item_id: option.internalID!,
       item_number: index,
       item_type: option.displayType!,
+      highlights: option.highlights ?? null,
     }
   })
 }
