@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f53094ba5e01cd0cfe2b005231d0c4e9>>
+ * @generated SignedSource<<6510affde2f7d7a3e6e6503c8d145d81>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -703,6 +703,7 @@ return {
             "APPROVED",
             "CANCELED",
             "COMPLETED",
+            "COUNTEROFFER_SENT",
             "DECLINED_BY_BUYER",
             "DECLINED_BY_SELLER",
             "INCOMPLETE",
