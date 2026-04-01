@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<605408d0d9dbf6f4cb705cf4ea48fdc2>>
+ * @generated SignedSource<<18810152d175a80ae676c948c048c970>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,7 @@ export type SearchBarInputSuggestQuery$data = {
         readonly highlights: ReadonlyArray<{
           readonly field: string;
           readonly fragments: ReadonlyArray<string>;
-        }> | null | undefined;
+        }>;
         readonly node: {
           readonly __typename: string;
           readonly coverArtwork?: {
