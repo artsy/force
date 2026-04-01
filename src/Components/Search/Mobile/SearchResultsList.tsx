@@ -6,7 +6,6 @@ import {
 } from "@artsy/cohesion"
 import { Flex, Spinner } from "@artsy/palette"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
@@ -16,6 +15,7 @@ import {
   type SearchNodeOption,
   formatOptions,
 } from "Components/Search/utils/formatOptions"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
 import { type FC, useEffect } from "react"
 import {
@@ -107,22 +107,17 @@ const SearchResultsList: FC<
     })
   }
 
-  const handleRedirect = (
-    option: SuggestionItemOptionProps,
-    quickNavigation = false,
-  ) => {
-    if (!quickNavigation) {
-      const event: SelectedItemFromSearch = {
-        action: ActionType.selectedItemFromSearch,
-        context_module: selectedPill.analyticsContextModule,
-        destination_path: option.href,
-        query: query,
-        item_id: option.item_id!,
-        item_number: option.item_number!,
-        item_type: option.item_type!,
-      }
-      tracking.trackEvent(event)
+  const handleRedirect = (option: SuggestionItemOptionProps) => {
+    const event: SelectedItemFromSearch = {
+      action: ActionType.selectedItemFromSearch,
+      context_module: selectedPill.analyticsContextModule,
+      destination_path: option.href,
+      query: query,
+      item_id: option.item_id!,
+      item_number: option.item_number!,
+      item_type: option.item_type!,
     }
+    tracking.trackEvent(event)
 
     onClose()
   }
