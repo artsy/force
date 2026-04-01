@@ -286,9 +286,9 @@ const mockMe = {
             formattedNationalityAndBirthday: "British, b. 1974",
             image: {
               cropped: {
-                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=45",
                 srcSet:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=90 2x",
+                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FX9vVvod7QY73ZwLDSZzljw%2Flarge.jpg&width=90 2x",
               },
             },
             initials: "B",
@@ -308,9 +308,9 @@ const mockMe = {
             formattedNationalityAndBirthday: "Spanish, 1893–1983",
             image: {
               cropped: {
-                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=45",
                 srcSet:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=90 2x",
+                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FDvZH9-qtZotZ5w1596tctA%2Flarge.jpg&width=90 2x",
               },
             },
             initials: "JM",
@@ -330,9 +330,9 @@ const mockMe = {
             formattedNationalityAndBirthday: "German, b. 1962",
             image: {
               cropped: {
-                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=45",
                 srcSet:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=90 2x",
+                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F4F7gPHDcx-zo1-KQMZrhOQ%2Flarge.jpg&width=90 2x",
               },
             },
             initials: "DR",
@@ -349,9 +349,9 @@ const mockMe = {
             formattedNationalityAndBirthday: "German, b. 1932",
             image: {
               cropped: {
-                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=45",
                 srcSet:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=90 2x",
+                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FrRTvzzrz1FIybrFzbrPagQ%2Flarge.jpg&width=90 2x",
               },
             },
             initials: "GR",
@@ -368,9 +368,9 @@ const mockMe = {
             formattedNationalityAndBirthday: "German, 1888–1976",
             image: {
               cropped: {
-                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=45",
                 srcSet:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=90 2x",
+                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FKVLI9Ht_Dt2WJN1ByAv0yg%2Fsquare.jpg&width=90 2x",
               },
             },
             initials: "HR",
@@ -387,9 +387,9 @@ const mockMe = {
             formattedNationalityAndBirthday: "Japanese, b. 1970",
             image: {
               cropped: {
-                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=45",
                 srcSet:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=90 2x",
+                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8SRr_x1xJiobS88sZdn52Q%2Flarge.jpg&width=90 2x",
               },
             },
             initials: "S",
@@ -406,9 +406,9 @@ const mockMe = {
             formattedNationalityAndBirthday: "American, 1928–1987",
             image: {
               cropped: {
-                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=45",
+                src: "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=45",
                 srcSet:
-                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=50&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=90 2x",
+                  "https://d196wkiy8qx2u5.cloudfront.net?height=45&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=45 1x, https://d196wkiy8qx2u5.cloudfront.net?height=90&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg&width=90 2x",
               },
             },
             initials: "AW",

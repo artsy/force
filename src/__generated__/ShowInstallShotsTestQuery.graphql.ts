@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ae9f241183c47777088e0fd985a99d9>>
+ * @generated SignedSource<<74f6dd697c38996b723acdd8d408f2b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -177,11 +177,6 @@ return {
                   },
                   {
                     "kind": "Literal",
-                    "name": "quality",
-                    "value": 85
-                  },
-                  {
-                    "kind": "Literal",
                     "name": "version",
                     "value": [
                       "main",
@@ -218,7 +213,7 @@ return {
                   (v1/*: any*/),
                   (v2/*: any*/)
                 ],
-                "storageKey": "resized(height:900,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:900)"
+                "storageKey": "resized(height:900,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:900)"
               }
             ],
             "storageKey": "images(default:false,size:100)"
@@ -236,7 +231,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f0c9f71e0e98670c52f536dea53cc94",
+    "cacheID": "324a9a560e23f4d8c61392bc015c64b1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -289,7 +284,7 @@ return {
     },
     "name": "ShowInstallShotsTestQuery",
     "operationKind": "query",
-    "text": "query ShowInstallShotsTestQuery {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    versions\n    zoom: resized(quality: 85, width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ShowInstallShotsTestQuery {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n    versions\n    zoom: resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();
