@@ -24,7 +24,7 @@ interface SuggestionItemProps {
   option: SuggestionItemOptionProps
   onClick: (
     option: SuggestionItemOptionProps,
-    event?: MouseEvent<HTMLAnchorElement>,
+    event?: MouseEvent<HTMLElement>,
   ) => void
 }
 
@@ -33,7 +33,7 @@ export const SuggestionItem: FC<
 > = props => {
   const { option, onClick } = props
 
-  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     onClick(option, event)
   }
 

@@ -236,7 +236,7 @@ export const SearchBarInput: FC<
 
   const handleSuggestionClick = (
     option: SuggestionItemOptionProps,
-    event?: MouseEvent<HTMLAnchorElement>,
+    event?: MouseEvent<HTMLElement>,
   ) => {
     trackSelection(option)
 
