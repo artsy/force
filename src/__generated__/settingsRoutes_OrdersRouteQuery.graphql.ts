@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6cb714a81b90a95fc260f6254303dfae>>
+ * @generated SignedSource<<65790fffaf339b65342984d5d76893da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -172,6 +172,7 @@ return {
                 "value": [
                   "SUBMITTED",
                   "OFFER_RECEIVED",
+                  "COUNTEROFFER_SENT",
                   "PAYMENT_FAILED",
                   "PROCESSING_PAYMENT",
                   "PROCESSING_OFFLINE_PAYMENT",
@@ -633,12 +634,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "79b4688669a66c3badb95065963e9d75",
+    "cacheID": "ecbe96aea6954073be56356a5c883490",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_OrdersRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_OrdersRouteQuery(\n  $page: Int\n) {\n  me {\n    ...SettingsOrdersRoute_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsOrdersRoute_me_2Pg8Wv on Me {\n  ...SettingsOrders_me_2Pg8Wv\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n    }\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrders_me_2Pg8Wv on Me {\n  ordersConnection(first: 10, page: $page, buyerState: [SUBMITTED, OFFER_RECEIVED, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, CANCELED, REFUNDED, DECLINED_BY_SELLER, DECLINED_BY_BUYER]) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...SettingsOrdersRow_order\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_OrdersRouteQuery(\n  $page: Int\n) {\n  me {\n    ...SettingsOrdersRoute_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsOrdersRoute_me_2Pg8Wv on Me {\n  ...SettingsOrders_me_2Pg8Wv\n}\n\nfragment SettingsOrdersRow_order on Order {\n  source\n  internalID\n  code\n  buyerState\n  createdAt\n  creditCardWalletType\n  displayTexts {\n    stateName\n    actionPrompt\n  }\n  deliveryInfo {\n    trackingURL\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n    }\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      __typename\n    }\n  }\n  buyerTotal {\n    display\n  }\n  lineItems {\n    artwork {\n      href\n      partner {\n        href\n        initials\n        name\n        profile {\n          icon {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        id\n      }\n      shippingOrigin\n      title\n      artistNames\n      artists(shallow: true) {\n        href\n        id\n      }\n      id\n    }\n    artworkVersion {\n      image {\n        cropped(width: 45, height: 45) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsOrders_me_2Pg8Wv on Me {\n  ordersConnection(first: 10, page: $page, buyerState: [SUBMITTED, OFFER_RECEIVED, COUNTEROFFER_SENT, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, CANCELED, REFUNDED, DECLINED_BY_SELLER, DECLINED_BY_BUYER]) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...SettingsOrdersRow_order\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
