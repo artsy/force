@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db10351882bec4b59212b60232496227>>
+ * @generated SignedSource<<8c8519bad078876b03abba1b7c72555f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type SearchResultsList_viewer$data = {
       readonly highlights: ReadonlyArray<{
         readonly field: string;
         readonly fragments: ReadonlyArray<string>;
-      }> | null | undefined;
+      }>;
       readonly node: {
         readonly __typename: string;
         readonly coverArtwork?: {

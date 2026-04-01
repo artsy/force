@@ -1,6 +1,6 @@
 import { Box, Pill } from "@artsy/palette"
 import { QuickNavigationItem } from "Components/Search/SuggestionItem/QuickNavigationItem"
-import type { FC } from "react"
+import type { FC, MouseEvent } from "react"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { SuggestionItemLink } from "./SuggestionItemLink"
 import type { SearchHighlightData } from "./parseHighlightFragments"
@@ -22,7 +22,10 @@ export interface SuggestionItemOptionProps {
 interface SuggestionItemProps {
   query: string
   option: SuggestionItemOptionProps
-  onClick: (option?: SuggestionItemOptionProps) => void
+  onClick: (
+    option: SuggestionItemOptionProps,
+    event?: MouseEvent<HTMLAnchorElement>,
+  ) => void
 }
 
 export const SuggestionItem: FC<
@@ -30,13 +33,22 @@ export const SuggestionItem: FC<
 > = props => {
   const { option, onClick } = props
 
-  const handleClick = () => {
-    onClick(option)
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    onClick(option, event)
+  }
+
+  const handleMouseDown = (event: MouseEvent<HTMLAnchorElement>) => {
+    // Prevent AutocompleteInput mousedown selection so native link behavior is preserved.
+    event.stopPropagation()
   }
 
   return (
     <Box position="relative">
-      <SuggestionItemLink onClick={handleClick} to={option.href}>
+      <SuggestionItemLink
+        onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        to={option.href}
+      >
         <DefaultSuggestion {...props} />
 
         {/* We size out a placeholder here so that we can avoid nesting the anchor tags */}

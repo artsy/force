@@ -1,5 +1,12 @@
 import { AutocompleteInput, useDidMount } from "@artsy/palette"
-import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
+import {
+  type ChangeEvent,
+  type FC,
+  type MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 
 import {
   ActionType,
@@ -204,10 +211,10 @@ export const SearchBarInput: FC<
     }
   }
 
-  const handleSelect = (option: SuggestionItemOptionProps) => {
+  const trackSelection = (option: SuggestionItemOptionProps) => {
     // Only track if this is an actual search result, not the footer
     if (option.typename !== "Footer") {
-      const event: SelectedItemFromSearch = {
+      const analyticsEvent: SelectedItemFromSearch = {
         action: ActionType.selectedItemFromSearch,
         context_module: selectedPill.analyticsContextModule,
         destination_path: option.href,
@@ -216,7 +223,29 @@ export const SearchBarInput: FC<
         item_number: option.item_number!,
         item_type: option.item_type!,
       }
-      tracking.trackEvent(event)
+      tracking.trackEvent(analyticsEvent)
+    }
+  }
+
+  const handleSelect = (option: SuggestionItemOptionProps) => {
+    trackSelection(option)
+
+    resetValue()
+    redirect(option.href)
+  }
+
+  const handleSuggestionClick = (
+    option: SuggestionItemOptionProps,
+    event?: MouseEvent<HTMLAnchorElement>,
+  ) => {
+    trackSelection(option)
+
+    const isModifiedClick =
+      !!event &&
+      (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+
+    if (isModifiedClick) {
+      return
     }
 
     resetValue()
@@ -306,7 +335,7 @@ export const SearchBarInput: FC<
           <SuggestionItem
             query={value}
             option={option}
-            onClick={handleSelect}
+            onClick={handleSuggestionClick}
           />
         )
       }}
