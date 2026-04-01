@@ -1,10 +1,7 @@
-import { getENV } from "./getENV"
 import { crop, resize } from "./resizer"
 
-export const MOBILE_QUALITY: [number, number] = [80, 50]
-export const DESKTOP_QUALITY: [number, number] = [80, 80]
-export const optimizedQuality = () =>
-  getENV("IS_MOBILE") ? MOBILE_QUALITY : DESKTOP_QUALITY
+export const DEFAULT_QUALITY: [number, number] = [85, 85]
+export const optimizedQuality = () => DEFAULT_QUALITY
 
 export type Sized = { src: string; srcSet: string; quality2x: string }
 type Resize = Parameters<typeof resize>

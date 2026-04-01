@@ -36,15 +36,15 @@ describe("#resized", () => {
     })
 
     expect(src).toContain("d7hftxdivxxvm")
-    expect(src).toContain("quality=80")
+    expect(src).toContain("quality=85")
     expect(src).toContain("width=100")
     expect(src).toContain("resize_to=width")
     expect(srcSet).toContain("1x, ")
     expect(srcSet).toContain("width=100")
-    expect(srcSet).toContain("quality=80")
+    expect(srcSet).toContain("quality=85")
     expect(srcSet).toContain("2x")
     expect(srcSet).toContain("width=200")
-    expect(srcSet).toContain("quality=80")
+    expect(srcSet).toContain("quality=85")
   })
 
   it("resizeds to a height", () => {
@@ -54,14 +54,14 @@ describe("#resized", () => {
 
     expect(src).toContain("d7hftxdivxxvm")
     expect(src).toContain("height=100")
-    expect(src).toContain("quality=80")
+    expect(src).toContain("quality=85")
     expect(src).toContain("resize_to=height")
     expect(srcSet).toContain("1x, ")
     expect(srcSet).toContain("height=100")
-    expect(srcSet).toContain("quality=80")
+    expect(srcSet).toContain("quality=85")
     expect(srcSet).toContain("2x")
     expect(srcSet).toContain("height=200")
-    expect(srcSet).toContain("quality=80")
+    expect(srcSet).toContain("quality=85")
   })
 })
 
