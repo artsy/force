@@ -49,7 +49,7 @@ describe("PartnerOfferCreatedNotification", () => {
     // artwork
     expect(screen.getByRole("presentation")).toHaveAttribute(
       "src",
-      "undefined?quality=80&resize_to=width&src=artwork-image-one&width=600",
+      "undefined?quality=85&resize_to=width&src=artwork-image-one&width=600",
     )
     expect(screen.getByText("(List price: $1,000)")).toBeInTheDocument()
 

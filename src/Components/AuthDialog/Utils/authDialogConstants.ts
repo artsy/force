@@ -48,7 +48,7 @@ export const GALLERY_IMAGE = {
 
 export const getResizedAuthDialogImages = () =>
   DEFAULT_IMAGES.map(image => ({
-    ...resized(image.src, { width: image.width, quality: 80 }),
+    ...resized(image.src, { width: image.width }),
     title: image.title,
     subtitle: image.subtitle,
     photoAuthor: image.photoAuthor,
@@ -61,10 +61,9 @@ export const getResizedAuthDialogGalleryImagePlaceholder = () =>
   resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width, quality: 1 })
 
 export const getResizedAuthDialogGalleryImage = () =>
-  resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width, quality: 80 })
+  resized(GALLERY_IMAGE.src, { width: GALLERY_IMAGE.width })
 
 export const getResizedAuthDialogSEOImage = () =>
   resized(DEFAULT_IMAGES[0].src, {
     width: DEFAULT_IMAGES[0].width,
-    quality: 80,
   })
