@@ -171,6 +171,10 @@ export const SavedAddressOptions = ({
 
   const onDeleteAddress = useCallback(
     async (deletedAddressID: string) => {
+      if (selectedAddress?.internalID !== deletedAddressID) {
+        return
+      }
+
       const remainingAddresses = savedAddresses.filter(
         address => address.internalID !== deletedAddressID,
       )
@@ -187,7 +191,7 @@ export const SavedAddressOptions = ({
         await onSelectAddress(newAddressInitialValues)
       }
     },
-    [savedAddresses, onSelectAddress, newAddressInitialValues],
+    [selectedAddress, savedAddresses, onSelectAddress, newAddressInitialValues],
   )
 
   const handleAddressClick = useCallback(

@@ -9,6 +9,20 @@ import { SavedAddressOptions } from "../Order2SavedAddressOptions"
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
+jest.mock("../UpdateAddressForm", () => ({
+  UpdateAddressForm: ({
+    onDeleteAddress,
+    address,
+  }: {
+    onDeleteAddress: (id: string) => Promise<void>
+    address: ProcessedUserAddress
+  }) => (
+    <button type="button" onClick={() => onDeleteAddress(address.internalID)}>
+      Delete address
+    </button>
+  ),
+}))
+
 let mockCheckoutContext: ReturnType<typeof useCheckoutContext>
 
 const mockUseCheckoutContext = useCheckoutContext as jest.MockedFunction<
@@ -728,6 +742,84 @@ describe("SavedAddressOptions", () => {
         expect(mockCheckoutContext.setUserAddressMode).not.toHaveBeenCalledWith(
           expect.objectContaining({ mode: "edit" }),
         )
+      })
+    })
+  })
+
+  describe("Address deletion", () => {
+    const mockUSAddress3: ProcessedUserAddress = {
+      internalID: "address-id-abc",
+      phoneNumber: "555-1111",
+      phoneNumberCountryCode: "+1",
+      isValid: true,
+      isShippable: true,
+      isDefault: false,
+      address: {
+        name: "Alice Johnson",
+        addressLine1: "789 Pine Rd",
+        addressLine2: "",
+        city: "Chicago",
+        region: "IL",
+        postalCode: "60601",
+        country: "US",
+      },
+      phoneNumberParsed: {
+        display: "+1 555-1111",
+        isValid: true,
+      },
+    }
+
+    it("preserves the selected address when a different address is deleted", async () => {
+      const onSelectAddress = jest.fn()
+
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        userAddressMode: { mode: "edit", address: mockUSAddress3 },
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2, mockUSAddress3]}
+            initialSelectedAddress={mockUSAddress2}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await userEvent.click(
+        screen.getByRole("button", { name: /Delete address/i }),
+      )
+
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
+    it("selects another valid address when the selected address is deleted", async () => {
+      const onSelectAddress = jest.fn()
+
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        userAddressMode: { mode: "edit", address: mockUSAddress1 },
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await userEvent.click(
+        screen.getByRole("button", { name: /Delete address/i }),
+      )
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress2)
       })
     })
   })
