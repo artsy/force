@@ -12592,6 +12592,7 @@ enum DisplayTextsMessageTypeEnum {
   CANCELED
   COMPLETED_PICKUP
   COMPLETED_SHIP
+  COUNTEROFFER_SENT
   DECLINED_BY_BUYER
   DECLINED_BY_SELLER
   OFFER_RECEIVED
@@ -19385,9 +19386,6 @@ type Order {
   lineItems: [LineItem]!
   mode: OrderModeEnum!
 
-  # List of submitted offers for this order
-  offers: [Offer!]! @deprecated(reason: "Use `submittedOffers` field instead")
-
   # Payment method used for the order
   paymentMethod: OrderPaymentMethodEnum
 
@@ -19452,6 +19450,9 @@ enum OrderBuyerStateEnum {
 
   # Order is completed
   COMPLETED
+
+  # Order is an offer in negotiation awaiting response from the seller
+  COUNTEROFFER_SENT
 
   # Order was declined by the buyer
   DECLINED_BY_BUYER
