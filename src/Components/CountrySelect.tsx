@@ -442,6 +442,7 @@ export const SMS_UNSUPPORTED_COUNTRY_CODES = [
   { text: "Tuvalu", value: "TV" },
   { text: "Uganda", value: "UG" },
   { text: "Ukraine", value: "UA" },
+  { text: "United Arab Emirates", value: "AE" },
   { text: "Uzbekistan", value: "UZ" },
   { text: "Virgin Islands, U.S.", value: "VI" },
   { text: "Vanuatu", value: "VU" },
