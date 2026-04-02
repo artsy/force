@@ -32,19 +32,22 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
   const pageUrl = `${appUrl}${pathname}`
   const subRoute = getArtistSubRoute(pathname)
 
-  const memberOf = compact(
-    data.verifiedRepresentatives?.map(rep => {
-      const partner = rep?.partner
-      if (!partner?.href) return null
-      const partnerUrl = `${appUrl}${partner.href}`
-      return {
-        "@type": "Organization" as const,
-        "@id": partnerUrl,
-        name: partner.name ?? undefined,
-        url: partnerUrl,
-      }
-    }),
-  )
+  const memberOf = useMemo(() => {
+    return compact(
+      data.verifiedRepresentatives.map(({ partner }) => {
+        if (!partner.href) return null
+
+        const url = `${appUrl}${partner.href}`
+
+        return {
+          "@type": "Organization" as const,
+          "@id": url,
+          name: partner.name ?? undefined,
+          url,
+        }
+      }),
+    )
+  }, [appUrl, data.verifiedRepresentatives])
 
   const { title, description } = getArtistMeta({
     name: data.name,
@@ -53,6 +56,25 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
   })
 
   const knowsAbout = compact(data.genes?.map(gene => gene?.name))
+
+  const notableWorks = useMemo(() => {
+    return compact(
+      data.notableArtworks.map(artwork => {
+        if (!artwork.href) return null
+
+        const url = `${appUrl}${artwork.href}`
+
+        return {
+          "@type": "VisualArtwork" as const,
+          "@id": `${url}#visual-artwork`,
+          name: artwork.title ?? "Untitled",
+          url,
+          dateCreated: artwork.date ?? undefined,
+          creator: { "@id": artistUrl },
+        }
+      }),
+    )
+  }, [appUrl, artistUrl, data.notableArtworks])
 
   const coverImage = data.coverArtwork?.image
   const image = coverImage?.cropped
@@ -173,6 +195,7 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
             "@id": `${pageUrl}#breadcrumb`,
             itemListElement: breadcrumbItems,
           },
+          ...notableWorks,
         ],
       }}
     />
@@ -208,6 +231,11 @@ const fragment = graphql`
         name
         href
       }
+    }
+    notableArtworks(size: 3) {
+      title
+      href
+      date
     }
     genes(size: 10) {
       name

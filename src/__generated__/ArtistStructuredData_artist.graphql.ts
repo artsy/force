@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5c13ee125c92aba45cc39bbd0f8d2aa>>
+ * @generated SignedSource<<92e9bc4f0eeebb17af04109bb6a430df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,11 @@ export type ArtistStructuredData_artist$data = {
   readonly href: string | null | undefined;
   readonly name: string | null | undefined;
   readonly nationality: string | null | undefined;
+  readonly notableArtworks: ReadonlyArray<{
+    readonly date: string | null | undefined;
+    readonly href: string | null | undefined;
+    readonly title: string | null | undefined;
+  }>;
   readonly slug: string;
   readonly verifiedRepresentatives: ReadonlyArray<{
     readonly partner: {
@@ -255,6 +260,38 @@ return {
         {
           "kind": "Literal",
           "name": "size",
+          "value": 3
+        }
+      ],
+      "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "notableArtworks",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        },
+        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "date",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "notableArtworks(size:3)"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "size",
           "value": 10
         }
       ],
@@ -273,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "eebc1682435fdb5b9df2548fdd8c44e8";
+(node as any).hash = "208034e52429162bc2a35d986858c777";
 
 export default node;
