@@ -51,6 +51,7 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
         buyerState: [
           "SUBMITTED",
           "OFFER_RECEIVED",
+          "COUNTEROFFER_SENT",
           "PAYMENT_FAILED",
           "PROCESSING_PAYMENT",
           "PROCESSING_OFFLINE_PAYMENT",
@@ -87,6 +88,7 @@ const SettingsOrders: FC<React.PropsWithChildren<SettingsOrdersProps>> = ({
         buyerState: [
           "SUBMITTED",
           "OFFER_RECEIVED",
+          "COUNTEROFFER_SENT",
           "PAYMENT_FAILED",
           "PROCESSING_PAYMENT",
           "PROCESSING_OFFLINE_PAYMENT",
@@ -153,6 +155,7 @@ export const SettingsOrdersFragmentContainer = createRefetchContainer(
           defaultValue: [
             SUBMITTED
             OFFER_RECEIVED
+            COUNTEROFFER_SENT
             PAYMENT_FAILED
             PROCESSING_PAYMENT
             PROCESSING_OFFLINE_PAYMENT
