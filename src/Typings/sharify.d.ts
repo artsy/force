@@ -49,7 +49,6 @@ declare module "sharify" {
       ENABLE_NEW_AUCTIONS_FILTER: boolean
       ENABLE_PREFETCH: boolean
       ENABLE_QUERY_BATCHING: boolean
-      ENABLE_SERVER_DRIVEN_NAVIGATION: boolean
       ENABLE_SSR_STREAMING: boolean
       ENABLE_WEB_CRAWLING: string
       ENABLE_WEB_VITALS_LOGGING: boolean

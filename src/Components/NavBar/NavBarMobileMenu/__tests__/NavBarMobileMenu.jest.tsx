@@ -34,31 +34,15 @@ jest.mock("Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu", () => ({
   NavBarMobileSubMenu: ({ children }: { children: React.ReactNode }) => (
     <>
       <button type="button">{children}</button>
-      <div data-testid="static-mobile-sub-menu" />
+      <div data-testid="mobile-sub-menu" />
     </>
   ),
 }))
-jest.mock(
-  "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenuServer",
-  () => ({
-    NavBarMobileSubMenuServer: ({
-      children,
-    }: {
-      children: React.ReactNode
-    }) => (
-      <>
-        <button type="button">{children}</button>
-        <div data-testid="server-mobile-sub-menu" />
-      </>
-    ),
-  }),
-)
 
 jest.mock("Utils/auth", () => ({ logout: jest.fn() }))
 
 interface GetWrapperProps {
   user?: { type: string; lab_features?: string[] } | null
-  shouldUseServerNav?: boolean
   navigationData?: Partial<{
     whatsNewNavigation: unknown
     artistsNavigation: unknown
@@ -72,20 +56,18 @@ describe("NavBarMobileMenu", () => {
   const trackEvent = jest.fn()
   const noop = () => {}
   const getWrapper = (props: GetWrapperProps = {}) => {
-    const {
-      user,
-      shouldUseServerNav,
-      navigationData,
-      ...navBarMobileMenuProps
-    } = props
+    const { user, navigationData, ...navBarMobileMenuProps } = props
     return render(
       <SystemContextProvider user={user} isLoggedIn={!!user}>
         <NavBarMobileMenu
           isOpen
           onClose={noop}
-          shouldUseServerNav={shouldUseServerNav}
           navigationData={
-            navigationData as buildAppRoutesQuery["response"] | null | undefined
+            (navigationData ?? {
+              whatsNewNavigation: {},
+              artistsNavigation: {},
+              artworksNavigation: {},
+            }) as buildAppRoutesQuery["response"] | null | undefined
           }
           {...navBarMobileMenuProps}
         />
@@ -212,14 +194,8 @@ describe("NavBarMobileMenu", () => {
     })
   })
 
-  describe("shouldUseServerNav", () => {
-    it("renders static NavBarMobileSubMenu content when shouldUseServerNav is false", () => {
-      getWrapper({ shouldUseServerNav: false })
-
-      expect(screen.getAllByTestId("static-mobile-sub-menu").length).toEqual(3)
-    })
-
-    it("renders NavBarMobileSubMenuServer when shouldUseServerNav is true and navigationData is provided", () => {
+  describe("server-driven navigation", () => {
+    it("renders NavBarMobileSubMenu when navigationData is provided", () => {
       const { useFragment } = require("react-relay")
       ;(useFragment as jest.Mock).mockReturnValue({
         items: [
@@ -238,7 +214,6 @@ describe("NavBarMobileMenu", () => {
       })
 
       getWrapper({
-        shouldUseServerNav: true,
         navigationData: {
           whatsNewNavigation: {},
           artistsNavigation: {},
@@ -246,7 +221,7 @@ describe("NavBarMobileMenu", () => {
         },
       })
 
-      expect(screen.getAllByTestId("server-mobile-sub-menu").length).toEqual(3)
+      expect(screen.getAllByTestId("mobile-sub-menu").length).toEqual(3)
     })
   })
 

@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { NavBarMobileSubMenuServer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenuServer"
+import { NavBarMobileSubMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
 import { NavBarMobileMenuNavigationProvider } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNavigation"
 import { render } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
@@ -35,7 +35,7 @@ const MOCK_NAVIGATION_VERSION = {
   ],
 }
 
-describe("NavBarMobileSubMenuServer", () => {
+describe("NavBarMobileSubMenu", () => {
   const trackEvent = jest.fn()
 
   const getWrapper = (passedProps = {}) => {
@@ -44,13 +44,13 @@ describe("NavBarMobileSubMenuServer", () => {
 
     return render(
       <NavBarMobileMenuNavigationProvider>
-        <NavBarMobileSubMenuServer
+        <NavBarMobileSubMenu
           navigationVersion={{} as any}
           menuType="artworks"
           {...passedProps}
         >
           Artworks
-        </NavBarMobileSubMenuServer>
+        </NavBarMobileSubMenu>
       </NavBarMobileMenuNavigationProvider>,
     )
   }
@@ -72,12 +72,12 @@ describe("NavBarMobileSubMenuServer", () => {
 
       const { container } = render(
         <NavBarMobileMenuNavigationProvider>
-          <NavBarMobileSubMenuServer
+          <NavBarMobileSubMenu
             navigationVersion={{} as any}
             menuType="artworks"
           >
             Artworks
-          </NavBarMobileSubMenuServer>
+          </NavBarMobileSubMenu>
         </NavBarMobileMenuNavigationProvider>,
       )
 
@@ -90,12 +90,12 @@ describe("NavBarMobileSubMenuServer", () => {
 
       const { container } = render(
         <NavBarMobileMenuNavigationProvider>
-          <NavBarMobileSubMenuServer
+          <NavBarMobileSubMenu
             navigationVersion={{} as any}
             menuType="artworks"
           >
             Artworks
-          </NavBarMobileSubMenuServer>
+          </NavBarMobileSubMenu>
         </NavBarMobileMenuNavigationProvider>,
       )
 
@@ -128,12 +128,9 @@ describe("NavBarMobileSubMenuServer", () => {
 
       const { container } = render(
         <NavBarMobileMenuNavigationProvider>
-          <NavBarMobileSubMenuServer
-            navigationVersion={{} as any}
-            menuType="artists"
-          >
+          <NavBarMobileSubMenu navigationVersion={{} as any} menuType="artists">
             Artists
-          </NavBarMobileSubMenuServer>
+          </NavBarMobileSubMenu>
         </NavBarMobileMenuNavigationProvider>,
       )
 

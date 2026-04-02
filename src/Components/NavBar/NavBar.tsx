@@ -6,11 +6,6 @@ import { Box, Clickable, Flex, Spacer, THEME, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
-import {
-  ARTISTS_SUBMENU_DATA,
-  ARTWORKS_SUBMENU_DATA,
-  WHATS_NEW_SUBMENU_DATA,
-} from "Components/NavBar/menuData"
 import { useNavigationData } from "System/Contexts/NavigationDataContext"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -28,7 +23,7 @@ import {
 } from "./NavBarMobileMenu/NavBarMobileMenu"
 
 import { AppDownloadBanner } from "Components/AppDownloadBanner"
-import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
+import { NavBarDropdownPanel } from "Components/NavBar/NavBarDropdownPanel"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
@@ -36,10 +31,8 @@ import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/
 import { SearchBar } from "Components/Search/SearchBar"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { Media } from "Utils/Responsive"
-import { getENV } from "Utils/getENV"
 import { track } from "react-tracking"
 import styled from "styled-components"
-import { NavBarDropdownPanel } from "./NavBarDropdownPanel"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
@@ -73,8 +66,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
 
   // Get navigation data from context (provided by buildAppRoutes query)
   const navigationData = useNavigationData()
-
-  const shouldUseServerNav = getENV("ENABLE_SERVER_DRIVEN_NAVIGATION")
 
   const [mode, setMode] = useState<"Idle" | "Search" | "Profile" | "More">(
     "Idle",
@@ -355,85 +346,46 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
             >
               <NavBarDropdownProvider>
                 <NavBarDropdownArea>
-                  {shouldUseServerNav ? (
-                    <>
-                      {navigationData?.whatsNewNavigation && (
-                        <NavBarDropdownPanelServer
-                          navigationData={navigationData.whatsNewNavigation}
-                          label="What’s New"
-                          href="/collection/new-this-week"
-                          contextModule={
-                            DeprecatedAnalyticsSchema.ContextModule
-                              .HeaderWhatsNewDropdown
-                          }
-                          menuType="whatsNew"
-                          handleClick={handleClick}
-                        />
-                      )}
+                  {navigationData?.whatsNewNavigation && (
+                    <NavBarDropdownPanel
+                      navigationData={navigationData.whatsNewNavigation}
+                      label="What’s New"
+                      href="/collection/new-this-week"
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderWhatsNewDropdown
+                      }
+                      menuType="whatsNew"
+                      handleClick={handleClick}
+                    />
+                  )}
 
-                      {navigationData?.artistsNavigation && (
-                        <NavBarDropdownPanelServer
-                          navigationData={navigationData.artistsNavigation}
-                          label="Artists"
-                          href="/artists"
-                          contextModule={
-                            DeprecatedAnalyticsSchema.ContextModule
-                              .HeaderArtistsDropdown
-                          }
-                          menuType="artists"
-                          handleClick={handleClick}
-                        />
-                      )}
+                  {navigationData?.artistsNavigation && (
+                    <NavBarDropdownPanel
+                      navigationData={navigationData.artistsNavigation}
+                      label="Artists"
+                      href="/artists"
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtistsDropdown
+                      }
+                      menuType="artists"
+                      handleClick={handleClick}
+                    />
+                  )}
 
-                      {navigationData?.artworksNavigation && (
-                        <NavBarDropdownPanelServer
-                          navigationData={navigationData.artworksNavigation}
-                          label="Artworks"
-                          href="/collect"
-                          contextModule={
-                            DeprecatedAnalyticsSchema.ContextModule
-                              .HeaderArtworksDropdown
-                          }
-                          menuType="artworks"
-                          handleClick={handleClick}
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <NavBarDropdownPanel
-                        href="/collection/new-this-week"
-                        label={WHATS_NEW_SUBMENU_DATA.text}
-                        menu={WHATS_NEW_SUBMENU_DATA.menu}
-                        contextModule={
-                          DeprecatedAnalyticsSchema.ContextModule
-                            .HeaderWhatsNewDropdown
-                        }
-                        handleClick={handleClick}
-                      />
-
-                      <NavBarDropdownPanel
-                        href="/artists"
-                        label="Artists"
-                        menu={ARTISTS_SUBMENU_DATA.menu}
-                        contextModule={
-                          DeprecatedAnalyticsSchema.ContextModule
-                            .HeaderArtistsDropdown
-                        }
-                        handleClick={handleClick}
-                      />
-
-                      <NavBarDropdownPanel
-                        href="/collect"
-                        label="Artworks"
-                        menu={ARTWORKS_SUBMENU_DATA.menu}
-                        contextModule={
-                          DeprecatedAnalyticsSchema.ContextModule
-                            .HeaderArtworksDropdown
-                        }
-                        handleClick={handleClick}
-                      />
-                    </>
+                  {navigationData?.artworksNavigation && (
+                    <NavBarDropdownPanel
+                      navigationData={navigationData.artworksNavigation}
+                      label="Artworks"
+                      href="/collect"
+                      contextModule={
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtworksDropdown
+                      }
+                      menuType="artworks"
+                      handleClick={handleClick}
+                    />
                   )}
 
                   <NavBarItemLink
@@ -511,7 +463,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
           onClose={() => setMode("Idle")}
           isOpen
           onNavButtonClick={handleMobileNavClick}
-          shouldUseServerNav={shouldUseServerNav}
         />
       )}
 
