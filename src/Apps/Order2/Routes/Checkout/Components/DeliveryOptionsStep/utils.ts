@@ -63,32 +63,11 @@ export const deliveryOptionTimeEstimate = (
         }),
       ]
     case "ARTSY_STANDARD":
-      return [
-        "Estimated delivery between",
-        dateRangeString({
-          from,
-          startOffsetDays: 8,
-          endOffsetDays: 11,
-        }),
-      ]
+      return ["Estimated delivery", "3-5 days after shipping"]
     case "ARTSY_EXPRESS":
-      return [
-        "Estimated delivery between",
-        dateRangeString({
-          from,
-          startOffsetDays: 8,
-          endOffsetDays: 9,
-        }),
-      ]
+      return ["Estimated delivery", "1 day after shipping"]
     case "ARTSY_WHITE_GLOVE":
-      return [
-        "Estimated delivery between",
-        dateRangeString({
-          from,
-          startOffsetDays: 14,
-          endOffsetDays: 56,
-        }),
-      ]
+      return ["", "Delivery timing varies"]
     case "SHIPPING_TBD":
       return [
         "Shipping details will be updated after checkout. You will be able to review and approve the final total before purchase",

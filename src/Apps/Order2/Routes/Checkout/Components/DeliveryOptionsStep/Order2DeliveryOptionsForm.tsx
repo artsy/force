@@ -24,7 +24,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
+import { SHIPPING_AND_RETURNS_FAQS_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
   Order2DeliveryOptionsForm_order$data,
@@ -159,21 +159,18 @@ export const Order2DeliveryOptionsForm: React.FC<
                   </Text>
                 )}
 
+                <Spacer y={0.5} />
+
                 <Text variant="xs" color="mono60">
-                  All options are protected against damage and loss with{" "}
                   <RouterLink
-                    onClick={() =>
-                      checkoutTracking.clickedBuyerProtection(
-                        ContextModule.ordersShippingMethods,
-                      )
-                    }
                     inline
                     target="_blank"
-                    to={BUYER_GUARANTEE_URL}
+                    to={SHIPPING_AND_RETURNS_FAQS_URL}
                   >
-                    Artsy&rsquo;s Buyer Guarantee
-                  </RouterLink>
-                  .
+                    All shipping options
+                  </RouterLink>{" "}
+                  are protected against damage and loss with The Artsy
+                  Guarantee.
                 </Text>
 
                 <Spacer y={2} />
@@ -304,8 +301,8 @@ const MultipleShippingOptionsForm = ({
 
                 {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
                   <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
-                    This service includes custom packing, transportation on a
-                    fine art shuttle, and in-home delivery.
+                    Includes custom packing, transportation on a fine art
+                    shuttle, and in-home delivery.
                   </Text>
                 )}
               </Flex>
