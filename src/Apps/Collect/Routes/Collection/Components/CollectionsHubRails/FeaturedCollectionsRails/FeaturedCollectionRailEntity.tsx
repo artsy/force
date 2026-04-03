@@ -3,7 +3,6 @@ import { Box, Image, ReadMore, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { FeaturedCollectionRailEntity_member$data } from "__generated__/FeaturedCollectionRailEntity_member.graphql"
-import currency from "currency.js"
 import { type FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -40,10 +39,9 @@ export const FeaturedCollectionRailEntity: FC<
   const formattedPrice = useMemo(() => {
     if (!priceGuidance) return null
 
-    return currency(priceGuidance, {
-      separator: ",",
-      precision: 0,
-    }).format()
+    return new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 0,
+    }).format(priceGuidance)
   }, [priceGuidance])
 
   const img = thumbnailImage?.cropped

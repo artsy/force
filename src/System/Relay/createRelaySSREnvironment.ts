@@ -1,7 +1,6 @@
 import { getENV } from "Utils/getENV"
 import { getTimeZone } from "Utils/getTimeZone"
 import createLogger from "Utils/logger"
-import "isomorphic-fetch"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import {
   hasNoCacheParamPresent,
