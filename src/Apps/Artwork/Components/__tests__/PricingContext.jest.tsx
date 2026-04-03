@@ -17,16 +17,11 @@ jest.mock("@artsy/palette", () => {
   }
 })
 
-// Mock Waypoint to capture onEnter callback
-jest.mock("react-waypoint", () => ({
-  __esModule: true,
-  default: ({ onEnter, children }: any) => {
-    // Expose onEnter callback via data attribute
-    return (
-      <button data-testid="waypoint" onClick={onEnter} type="button">
-        {children}
-      </button>
-    )
+let mockOnIntersection: (() => void) | undefined
+jest.mock("Utils/Hooks/useIntersectionObserver", () => ({
+  useIntersectionObserver: ({ onIntersection }: any) => {
+    mockOnIntersection = onIntersection
+    return { ref: { current: null } }
   },
 }))
 
@@ -317,11 +312,11 @@ describe("PricingContext", () => {
       )
 
       await waitFor(() => {
-        expect(screen.getByTestId("waypoint")).toBeInTheDocument()
+        expect(screen.getByText(/Price ranges/)).toBeInTheDocument()
       })
 
-      // Trigger waypoint onEnter
-      fireEvent.click(screen.getByTestId("waypoint"))
+      // Simulate intersection observer triggering
+      mockOnIntersection?.()
 
       expect(trackEvent).toBeCalledWith({
         action_type: "Impression",

@@ -6613,13 +6613,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"consolidated-events@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "consolidated-events@npm:1.1.1"
-  checksum: 10c0/537aebaecff9ca891b1f64563e087856fec3aa82a6eab065272e337d4ecace19e35cc8ac5f2bb140d7e3896476457a21f48c45259f1685927efcd41dd4a242e3
-  languageName: node
-  linkType: hard
-
 "constants-browserify@npm:^1.0.0":
   version: 1.0.0
   resolution: "constants-browserify@npm:1.0.0"
@@ -9092,7 +9085,6 @@ __metadata:
     react-streaming: "npm:^0.3.43"
     react-test-renderer: "npm:16.8.6"
     react-tracking: "npm:^7.0.1"
-    react-waypoint: "npm:8.0.0"
     relay-compiler: "npm:^18.2.0"
     relay-mock-network-layer: "npm:3.0.0"
     relay-runtime: "npm:^18.2.0"
@@ -14316,7 +14308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -15025,18 +15017,6 @@ __metadata:
     prop-types: ^15.x
     react: ^16.8
   checksum: 10c0/aa0843ee306f14c56848407240458905a779131123aff60ebcbfb5d18249355d3016669498b7fff5ef67decbbe7ece046e4e06d361e79bb7599f9389fc2b4775
-  languageName: node
-  linkType: hard
-
-"react-waypoint@npm:8.0.0":
-  version: 8.0.0
-  resolution: "react-waypoint@npm:8.0.0"
-  dependencies:
-    consolidated-events: "npm:^1.1.0"
-    prop-types: "npm:^15.0.0"
-  peerDependencies:
-    react: ^0.14.9 || ^15.0.0 || ^16.0.0
-  checksum: 10c0/bd1fcabc73daab87611685edb9988af1bd2e419ccbb472f2e374ce30b30f23f8d0fe7a8a1411284cc69cf2f0cdb58c2a59b4efc984b7dcb13db62e0043dce6e3
   languageName: node
   linkType: hard
 

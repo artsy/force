@@ -161,7 +161,6 @@
     "react-stickynode": "^5.0.2",
     "react-streaming": "^0.3.43",
     "react-tracking": "^7.0.1",
-    "react-waypoint": "8.0.0",
     "relay-mock-network-layer": "3.0.0",
     "relay-runtime": "^18.2.0",
     "s3": "4.4.0",

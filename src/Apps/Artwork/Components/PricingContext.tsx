@@ -13,17 +13,15 @@ import {
 import { BarChart, type BarDescriptor } from "@artsy/palette-charts"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import type {
   AnalyticsPricingContextDimensionEnum,
   PricingContext_artwork$data,
 } from "__generated__/PricingContext_artwork.graphql"
-import { once } from "lodash"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-// eslint-disable-next-line no-restricted-imports
-import Waypoint from "react-waypoint"
 import {
   type FilterCategory,
   createCollectUrl,
@@ -60,14 +58,17 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
 
   const artistId = artwork.artists?.[0]?.slug
 
-  const handleImpression = once(() => {
-    tracking.trackEvent({
-      action_type: DeprecatedSchema.ActionType.Impression,
-      context_module: DeprecatedSchema.ContextModule.PriceContext,
-      flow: DeprecatedSchema.Flow.ArtworkPriceContext,
-      subject: DeprecatedSchema.Subject.HistogramBar,
-      type: DeprecatedSchema.Type.Chart,
-    })
+  const { ref: impressionRef } = useIntersectionObserver<HTMLDivElement>({
+    once: true,
+    onIntersection: () => {
+      tracking.trackEvent({
+        action_type: DeprecatedSchema.ActionType.Impression,
+        context_module: DeprecatedSchema.ContextModule.PriceContext,
+        flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+        subject: DeprecatedSchema.Subject.HistogramBar,
+        type: DeprecatedSchema.Type.Chart,
+      })
+    },
   })
 
   const handleBarChartHover = () => {
@@ -91,10 +92,7 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
   }
 
   return (
-    <BorderBox mb={2} flexDirection="column">
-      {/* Impression Tracking */}
-      <Waypoint onEnter={handleImpression} />
-
+    <BorderBox ref={impressionRef} mb={2} flexDirection="column">
       <Flex alignItems="center">
         <Text variant="xs" lineHeight={1}>
           {artwork.pricingContext.appliedFiltersDisplay}
@@ -119,10 +117,10 @@ export const PricingContext: React.FC<PricingContextProps> = ({ artwork }) => {
 
       <BarChart
         minLabel="$0"
-        maxLabel={
+        maxLabel={`${
           artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
-            .maxPrice + "+"
-        }
+            .maxPrice
+        }+`}
         bars={artwork.pricingContext.bins.map((bin, index): BarDescriptor => {
           const isFirstBin = index === 0
           const isLastBin = artwork?.pricingContext?.bins?.length
