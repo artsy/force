@@ -8325,7 +8325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:4.0.7, eventemitter3@npm:^4.0.0":
+"eventemitter3@npm:^4.0.0":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 10c0/5f6d97cbcbac47be798e6355e3a7639a84ee1f7d9b199a07017f1d2f1e2fe236004d14fa5dfaeba661f94ea57805385e326236a6debbc7145c8877fbc0297c6b
@@ -9023,7 +9023,6 @@ __metadata:
     dotenv: "npm:4.0.0"
     easy-peasy: "npm:^6.1.0"
     ejs: "npm:3.1.10"
-    eventemitter3: "npm:4.0.7"
     express: "npm:4.22.1"
     express-ipfilter: "npm:0.2.6"
     express-request-id: "npm:1.4.0"
