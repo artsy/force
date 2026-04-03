@@ -7126,13 +7126,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"currency.js@npm:1.2.1":
-  version: 1.2.1
-  resolution: "currency.js@npm:1.2.1"
-  checksum: 10c0/b9d95d54a65b2d59f68577603a2a648867ce8805fcb7d7f51dbadb5440716dd65dbec484744e9aa7f99c41a56934a6661e9ffc04e76263a5bb7c3e86494ccaa7
-  languageName: node
-  linkType: hard
-
 "d3-color@npm:1":
   version: 1.4.1
   resolution: "d3-color@npm:1.4.1"
@@ -9008,7 +9001,6 @@ __metadata:
     cookie-session: "npm:2.0.0-beta.3"
     cookies-js: "npm:1.2.3"
     csurf: "npm:^1.9.0"
-    currency.js: "npm:1.2.1"
     danger: "npm:^10.9.0"
     date-fns: "npm:^2.30.0"
     dd-trace: "npm:2.31.0"
