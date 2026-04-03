@@ -5218,7 +5218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.2.3, async@npm:^3.2.4":
+"async@npm:^3.2.3":
   version: 3.2.4
   resolution: "async@npm:3.2.4"
   checksum: 10c0/b5d02fed64717edf49e35b2b156debd9cf524934ea670108fa5528e7615ed66a5e0bf6c65f832c9483b63aa7f0bffe3e588ebe8d58a539b833798d324516e1c9
@@ -8810,7 +8810,6 @@ __metadata:
     "@unleash/proxy-client-react": "npm:^4.5.2"
     actioncable: "npm:^5.2.7-1"
     analytics-node: "npm:2.4.1"
-    async: "npm:^3.2.4"
     autosuggest-highlight: "npm:3.1.1"
     blurhash: "npm:^2.0.5"
     body-parser: "npm:1.20.3"
