@@ -68,7 +68,6 @@
   },
   "dependencies": {
     "@artsy/cohesion": "4.351.0",
-    "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.2.0",
     "@artsy/dismissible": "^0.8.0",
     "@artsy/express-reloadable": "^1.7.0",
@@ -129,8 +128,6 @@
     "http-shutdown": "1.2.1",
     "ip": "^1.1.9",
     "isomorphic-fetch": "^2.2.1",
-    "jsdom": "20.0.3",
-    "jwt-decode": "2.2.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.23",
     "luxon": "^3.2.1",
@@ -156,7 +153,6 @@
     "react-dropzone": "^11.4.2",
     "react-head": "3.0.2",
     "react-is": "^18.2.0",
-    "react-lines-ellipsis": "^0.14.0",
     "react-linkify": "1.0.0-alpha",
     "react-multi-split-pane": "^0.3.3",
     "react-relay": "^18.2.0",
@@ -221,7 +217,6 @@
     "@types/google-maps": "^3.2.3",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/jest": "27.0.2",
-    "@types/jwt-decode": "2.2.0",
     "@types/loadable__component": "5.13.1",
     "@types/lodash": "4.14.111",
     "@types/luxon": "^3.2.0",
@@ -258,10 +253,9 @@
     "jest-junit": "^15.0.0",
     "jest-styled-components": "7.2.0",
     "jest-watch-typeahead": "^2.2.2",
+    "jsdom": "20.0.3",
     "lint-staged": "10.2.6",
-    "node-polyfill-webpack-plugin": "^1.1.4",
     "patch-package": "6.2.0",
-    "postinstall-prepare": "1.0.1",
     "prettier": "^3.4.2",
     "pull-lock": "1.0.0",
     "react-test-renderer": "16.8.6",
@@ -273,8 +267,7 @@
     "storybook-states": "1.2.0",
     "typescript": "^5.6.3",
     "typescript-styled-plugin": "0.15.0",
-    "webpack-node-externals": "3.0.0",
-    "webpack-retry-chunk-load-plugin": "2.2.0"
+    "webpack-node-externals": "3.0.0"
   },
   "optionalDependencies": {
     "fsevents": "*"
