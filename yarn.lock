@@ -9071,7 +9071,6 @@ __metadata:
     relay-mock-network-layer: "npm:3.0.0"
     relay-runtime: "npm:^18.2.0"
     relay-test-utils: "npm:^16.0.0"
-    rewire: "npm:2.2.0"
     s3: "npm:4.4.0"
     schema-dts: "npm:^1.1.5"
     serialize-javascript: "npm:5.0.1"
@@ -15415,13 +15414,6 @@ __metadata:
   version: 0.10.1
   resolution: "retry@npm:0.10.1"
   checksum: 10c0/d5a7cbc7eca5589a4cf048355150c6746965ace4193080c46b34fe92059506ce39887f5d2bbc58d1d14ecf3b53c5c86d01bd82d158eac9b58aa2f075c2ae7b21
-  languageName: node
-  linkType: hard
-
-"rewire@npm:2.2.0":
-  version: 2.2.0
-  resolution: "rewire@npm:2.2.0"
-  checksum: 10c0/06ebe1140a18e06c5b28401c2a6953d26cd6f6a946e118e8bec44426ca36b61e5328e36335f60d1df1bc8c743e18db9ca1b00feafb5506f76dba7d9d79a3ed2d
   languageName: node
   linkType: hard
 
