@@ -99,7 +99,6 @@
     "blurhash": "^2.0.5",
     "body-parser": "1.20.3",
     "chalk": "4.1.0",
-    "cheerio": "0.22.0",
     "compression": "1.7.2",
     "connect-timeout": "1.9.0",
     "cookie-parser": "1.4.3",
