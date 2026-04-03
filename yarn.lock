@@ -3962,21 +3962,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:*, @testing-library/jest-dom@npm:^6.6.3":
-  version: 6.6.3
-  resolution: "@testing-library/jest-dom@npm:6.6.3"
-  dependencies:
-    "@adobe/css-tools": "npm:^4.4.0"
-    aria-query: "npm:^5.0.0"
-    chalk: "npm:^3.0.0"
-    css.escape: "npm:^1.5.1"
-    dom-accessibility-api: "npm:^0.6.3"
-    lodash: "npm:^4.17.21"
-    redent: "npm:^3.0.0"
-  checksum: 10c0/5566b6c0b7b0709bc244aec3aa3dc9e5f4663e8fb2b99d8cd456fc07279e59db6076cbf798f9d3099a98fca7ef4cd50e4e1f4c4dec5a60a8fad8d24a638a5bf6
-  languageName: node
-  linkType: hard
-
 "@testing-library/jest-dom@npm:6.5.0":
   version: 6.5.0
   resolution: "@testing-library/jest-dom@npm:6.5.0"
@@ -3989,6 +3974,21 @@ __metadata:
     lodash: "npm:^4.17.21"
     redent: "npm:^3.0.0"
   checksum: 10c0/fd5936a547f04608d8de15a7de3ae26516f21023f8f45169b10c8c8847015fd20ec259b7309f08aa1031bcbc37c6e5e6f532d1bb85ef8f91bad654193ec66a4c
+  languageName: node
+  linkType: hard
+
+"@testing-library/jest-dom@npm:^6.6.3":
+  version: 6.6.3
+  resolution: "@testing-library/jest-dom@npm:6.6.3"
+  dependencies:
+    "@adobe/css-tools": "npm:^4.4.0"
+    aria-query: "npm:^5.0.0"
+    chalk: "npm:^3.0.0"
+    css.escape: "npm:^1.5.1"
+    dom-accessibility-api: "npm:^0.6.3"
+    lodash: "npm:^4.17.21"
+    redent: "npm:^3.0.0"
+  checksum: 10c0/5566b6c0b7b0709bc244aec3aa3dc9e5f4663e8fb2b99d8cd456fc07279e59db6076cbf798f9d3099a98fca7ef4cd50e4e1f4c4dec5a60a8fad8d24a638a5bf6
   languageName: node
   linkType: hard
 
@@ -4014,7 +4014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:*, @testing-library/react@npm:^16.0.1":
+"@testing-library/react@npm:^16.0.1":
   version: 16.0.1
   resolution: "@testing-library/react@npm:16.0.1"
   dependencies:
@@ -4357,13 +4357,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/memoize-one@npm:3.1.1":
-  version: 3.1.1
-  resolution: "@types/memoize-one@npm:3.1.1"
-  checksum: 10c0/2efbeca4361fb3e6d0690bf9a6ec14a7e358045ec710ed07cd97f78fc9ea68abdc983038a4b2a44c4396fabc1a96870b6d4e0cdc2a199d29a1b819b7c5fef318
-  languageName: node
-  linkType: hard
-
 "@types/mime@npm:*":
   version: 2.0.0
   resolution: "@types/mime@npm:2.0.0"
@@ -4579,15 +4572,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-transition-group@npm:2.0.11":
-  version: 2.0.11
-  resolution: "@types/react-transition-group@npm:2.0.11"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: 10c0/d569c80fae414210426330e1e17a6615ea01b0a5c9595f7ff8c84ac0fee179a2197c6b0a7990dca0ae50790dbfcbaa029c5c275e9ecfaa75c3796b698eaed46c
-  languageName: node
-  linkType: hard
-
 "@types/react@npm:^18.3.12":
   version: 18.3.12
   resolution: "@types/react@npm:18.3.12"
@@ -4705,24 +4689,6 @@ __metadata:
     "@types/cookiejar": "npm:*"
     "@types/node": "npm:*"
   checksum: 10c0/98109e94d4c0b2f9360ae31a411f8a830109704a080b6a7b5f12da2bb549e596fc6a4072f45fb2c3ddfcf23974c41ac68e3cbcbf9fd6f32fca64f81cc867d5e6
-  languageName: node
-  linkType: hard
-
-"@types/testing-library__jest-dom@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@types/testing-library__jest-dom@npm:6.0.0"
-  dependencies:
-    "@testing-library/jest-dom": "npm:*"
-  checksum: 10c0/824950dc82752ddb656fa7ca851bf454804332f7a7a8571231abfc3553902198c6b96de209bb3dd1f1a15ee6a269a1efa56866041f5692ee0129308772e658e0
-  languageName: node
-  linkType: hard
-
-"@types/testing-library__react@npm:^10.2.0":
-  version: 10.2.0
-  resolution: "@types/testing-library__react@npm:10.2.0"
-  dependencies:
-    "@testing-library/react": "npm:*"
-  checksum: 10c0/1246ec65e8757df1c0d9ec7f1ab28b5e274c6a2f5b79e218363a7a39417e906e7648704713b925b037feb4a7048847466e6ffdd2a4c40a842e3f98cab779347f
   languageName: node
   linkType: hard
 
@@ -5088,27 +5054,6 @@ __metadata:
     normalize-path: "npm:^3.0.0"
     picomatch: "npm:^2.0.4"
   checksum: 10c0/57b06ae984bc32a0d22592c87384cd88fe4511b1dd7581497831c56d41939c8a001b28e7b853e1450f2bf61992dfcaa8ae2d0d161a0a90c4fb631ef07098fbac
-  languageName: node
-  linkType: hard
-
-"apollo-link@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "apollo-link@npm:1.2.3"
-  dependencies:
-    apollo-utilities: "npm:^1.0.0"
-    zen-observable-ts: "npm:^0.8.10"
-  peerDependencies:
-    graphql: ^0.11.3 || ^0.12.3 || ^0.13.0 || ^14.0.0
-  checksum: 10c0/868fb7455fc393a89528c57618e41693b075262c2fb127c93de53c325d16525a21dccfa17898b6ac2da4a1f1ce08ff170c09484fa97709c5d78a841481228e63
-  languageName: node
-  linkType: hard
-
-"apollo-utilities@npm:^1.0.0, apollo-utilities@npm:^1.0.1":
-  version: 1.0.25
-  resolution: "apollo-utilities@npm:1.0.25"
-  dependencies:
-    fast-json-stable-stringify: "npm:^2.0.0"
-  checksum: 10c0/73654eda57e117a1c7de0ef27a0eda1199e22f396ace5a9ee9a1ee504843be6a26aee2103b607ee582718c46788c67562c8c6ebb4de0ebe4b5f29e66905526e6
   languageName: node
   linkType: hard
 
@@ -7517,13 +7462,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deprecated-decorator@npm:^0.1.6":
-  version: 0.1.6
-  resolution: "deprecated-decorator@npm:0.1.6"
-  checksum: 10c0/52427ae3389b6b20d98624db92a89f1f4f568649fe2d15091d71a2d6171cf42c3114d6f98b458518d949681a8baec6a123a61015a4576e8894a219b35cf89ad0
-  languageName: node
-  linkType: hard
-
 "deprecation@npm:^2.0.0, deprecation@npm:^2.3.1":
   version: 2.3.1
   resolution: "deprecation@npm:2.3.1"
@@ -8615,7 +8553,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-json-stable-stringify@npm:^2.0.0, fast-json-stable-stringify@npm:^2.1.0":
+"fast-json-stable-stringify@npm:^2.1.0":
   version: 2.1.0
   resolution: "fast-json-stable-stringify@npm:2.1.0"
   checksum: 10c0/7f081eb0b8a64e0057b3bb03f974b3ef00135fbf36c1c710895cd9300f13c94ba809bb3a81cf4e1b03f6e5285610a61abbd7602d0652de423144dfee5a389c9b
@@ -8960,7 +8898,6 @@ __metadata:
     "@types/loadable__component": "npm:5.13.1"
     "@types/lodash": "npm:4.14.111"
     "@types/luxon": "npm:^3.2.0"
-    "@types/memoize-one": "npm:3.1.1"
     "@types/morgan": "npm:1.9.2"
     "@types/node": "npm:12.20.13"
     "@types/qrcode.react": "npm:1.0.0"
@@ -8972,15 +8909,12 @@ __metadata:
     "@types/react-stickynode": "npm:^4.0.0"
     "@types/react-test-renderer": "npm:16.0.1"
     "@types/react-tracking": "npm:7.0.0"
-    "@types/react-transition-group": "npm:2.0.11"
     "@types/relay-compiler": "npm:^14.0.0"
     "@types/relay-runtime": "npm:^18.1.1"
     "@types/relay-test-utils": "npm:^18.0.0"
     "@types/styled-system": "npm:5.1.10"
     "@types/styled-system__theme-get": "npm:5.0.0"
     "@types/superagent": "npm:^4.1.24"
-    "@types/testing-library__jest-dom": "npm:^6.0.0"
-    "@types/testing-library__react": "npm:^10.2.0"
     "@types/underscore.string": "npm:0.0.32"
     "@types/yup": "npm:^0.29.13"
     "@unleash/proxy-client-react": "npm:^4.5.2"
@@ -9068,7 +9002,6 @@ __metadata:
     react-test-renderer: "npm:16.8.6"
     react-tracking: "npm:^7.0.1"
     relay-compiler: "npm:^18.2.0"
-    relay-mock-network-layer: "npm:3.0.0"
     relay-runtime: "npm:^18.2.0"
     relay-test-utils: "npm:^16.0.0"
     s3: "npm:4.4.0"
@@ -9658,21 +9591,6 @@ __metadata:
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
-  languageName: node
-  linkType: hard
-
-"graphql-tools@npm:^4.0.2":
-  version: 4.0.3
-  resolution: "graphql-tools@npm:4.0.3"
-  dependencies:
-    apollo-link: "npm:^1.2.3"
-    apollo-utilities: "npm:^1.0.1"
-    deprecated-decorator: "npm:^0.1.6"
-    iterall: "npm:^1.1.3"
-    uuid: "npm:^3.1.0"
-  peerDependencies:
-    graphql: ^0.13.0 || ^14.0.0
-  checksum: 10c0/0ade607516229540c87a053c57090c5b83952e8bb643b4d5edbc31f3df5924676f9d88f2c36cab42e2c4e462d3b20b477d594eb62d2a1e43a02c22183b31d417
   languageName: node
   linkType: hard
 
@@ -10893,7 +10811,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iterall@npm:^1.1.3, iterall@npm:^1.2.2":
+"iterall@npm:^1.2.2":
   version: 1.3.0
   resolution: "iterall@npm:1.3.0"
   checksum: 10c0/40de624e5fe937c4c0e511981b91caea9ff2142bfc0316cccc8506eaa03aa253820cc17c5bc5f0a98706c7268a373e5ebee9af9a0c8a359730cf7c05938b57b5
@@ -15192,17 +15110,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"relay-mock-network-layer@npm:3.0.0":
-  version: 3.0.0
-  resolution: "relay-mock-network-layer@npm:3.0.0"
-  dependencies:
-    graphql-tools: "npm:^4.0.2"
-  peerDependencies:
-    graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0
-  checksum: 10c0/90af1e1548ccbf4571b9e2c47a5e69a250b53a7c2a080890b181594bf5412187ba51d9f596ea3874e291da32b0972b6264bfa6d5ec8ba1bf1e2ed9b8f4d514fd
-  languageName: node
-  linkType: hard
-
 "relay-runtime@npm:16.0.0":
   version: 16.0.0
   resolution: "relay-runtime@npm:16.0.0"
@@ -17696,7 +17603,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^3.0.1, uuid@npm:^3.1.0":
+"uuid@npm:^3.0.1":
   version: 3.4.0
   resolution: "uuid@npm:3.4.0"
   bin:
@@ -18294,21 +18201,5 @@ __metadata:
     toposort: "npm:^2.0.2"
     type-fest: "npm:^2.19.0"
   checksum: 10c0/cc00e98af8617b779dd151d6a77779228cfe973a185c743628b2afdecda88c333187d058c1199518d696c15827ba9b757a6c57c1ace6766d970d3cd2368c3264
-  languageName: node
-  linkType: hard
-
-"zen-observable-ts@npm:^0.8.10":
-  version: 0.8.10
-  resolution: "zen-observable-ts@npm:0.8.10"
-  dependencies:
-    zen-observable: "npm:^0.8.0"
-  checksum: 10c0/d3edb011ea69c290f48bb81ea4c0641c00858378aeef9a8c9ba5cf30acc3db2e82bbf288a868690216c5e73242af5dd20e8b856114ace0a91ef3f0b228ff7698
-  languageName: node
-  linkType: hard
-
-"zen-observable@npm:^0.8.0":
-  version: 0.8.11
-  resolution: "zen-observable@npm:0.8.11"
-  checksum: 10c0/823837e8affc0d2039cb958cfb6c3c076f2149a183f4318e7e3d3c6fdb29e2fafbd5cc41a44cc71462d6603de920712e19abaec98e205795d8798678f1a99309
   languageName: node
   linkType: hard
