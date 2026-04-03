@@ -43,8 +43,8 @@ beforeEach(() => {
       suggestions: [
         {
           city: "New York",
-          entries: 2,
-          secondary: "Fl 25",
+          entries: 0,
+          secondary: "",
           state: "NY",
           street_line: "401 Broadway",
           zipcode: "10013",
@@ -299,6 +299,59 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
+    it("enters secondary mode when an international multi-entry address is selected", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "Unter den Linden 10117 Berlin",
+                address_id: "building-id",
+                entries: 5,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "Unter den Linden 1 10117 Berlin",
+                address_id: "unit-1",
+                entries: 1,
+              },
+              {
+                address_text: "Unter den Linden 2 10117 Berlin",
+                address_id: "unit-2",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+
+      render(<TestImplementation initialAddress={{ country: "DE" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "Unter den Linden")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      await userEvent.click(
+        within(dropdown).getByText("Unter den Linden 10117 Berlin"),
+      )
+      await flushPromiseQueue()
+
+      // onSelect is not called — secondary mode was entered instead
+      expect(mockOnSelect).not.toHaveBeenCalled()
+
+      // Secondary fetch was made with the building's address_id
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+      expect(mockFetch).toHaveBeenLastCalledWith(
+        expect.stringContaining("building-id"),
+      )
+    })
+
     it("can use props.disableAutocomplete to force a normal input", async () => {
       render(<TestImplementation disableAutocomplete />)
 
@@ -528,7 +581,7 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
-    it("filters out international suggestions with entries > 1", async () => {
+    it("shows multi-entry international suggestions in the dropdown for drill-down", async () => {
       mockFetch.mockResolvedValue({
         json: jest.fn().mockResolvedValue({
           candidates: [
@@ -554,7 +607,7 @@ describe("AddressAutocompleteInput", () => {
 
       const listbox = await screen.findByRole("listbox", { hidden: true })
       expect(listbox).toHaveTextContent("Unter den Linden 1 10117 Berlin")
-      expect(listbox).not.toHaveTextContent("Unter den Linden 10117 Berlin")
+      expect(listbox).toHaveTextContent("Unter den Linden 10117 Berlin")
     })
 
     it("falls back to full address_text in addressLine1 when components endpoint returns no data", async () => {
