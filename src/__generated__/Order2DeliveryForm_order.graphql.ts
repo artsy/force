@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<952b6f2c0ded60f74b5ab36e978f5489>>
+ * @generated SignedSource<<beff1ce3f0c779ca0a3aed144803f9f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,10 +37,6 @@ export type Order2DeliveryForm_order$data = {
   }>;
   readonly internalID: string;
   readonly mode: OrderModeEnum;
-  readonly selectedFulfillmentOption: {
-    readonly type: FulfillmentOptionTypeEnum;
-  } | null | undefined;
-  readonly shippingOrigin: string | null | undefined;
   readonly " $fragmentType": "Order2DeliveryForm_order";
 };
 export type Order2DeliveryForm_order$key = {
@@ -48,15 +44,7 @@ export type Order2DeliveryForm_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_order">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "type",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -67,18 +55,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FulfillmentOption",
-      "kind": "LinkedField",
-      "name": "selectedFulfillmentOption",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/)
-      ],
       "storageKey": null
     },
     {
@@ -98,19 +74,18 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "shippingOrigin",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "FulfillmentOption",
       "kind": "LinkedField",
       "name": "fulfillmentOptions",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -235,8 +210,7 @@ return {
   "type": "Order",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "55311e308e4f422ac34c411b1c7a9430";
+(node as any).hash = "212727df433c553279c39c931a0d7691";
 
 export default node;

@@ -38,6 +38,24 @@ export const Order2FulfillmentDetailsStep: React.FC<
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )?.state
 
+  const deliveryOptionCompleted = steps?.some(
+    step =>
+      step.name === CheckoutStepName.DELIVERY_OPTION &&
+      step.state === CheckoutStepState.COMPLETED,
+  )
+
+  // Show the address form when ACTIVE, or when COMPLETED but the delivery option
+  // step hasn't completed yet (both steps still interactable simultaneously).
+  const showForm =
+    stepState === CheckoutStepState.ACTIVE ||
+    (stepState === CheckoutStepState.COMPLETED && !deliveryOptionCompleted)
+
+  // Show the collapsed completed card only after both steps are done.
+  const showCompletedView =
+    stepState === CheckoutStepState.COMPLETED &&
+    deliveryOptionCompleted &&
+    !!completedViewProps
+
   const fulfillmentOptions = orderData?.fulfillmentOptions
   const pickupOption = fulfillmentOptions.find(
     option => option.type === "PICKUP",
@@ -63,12 +81,12 @@ export const Order2FulfillmentDetailsStep: React.FC<
           </Text>
         </Flex>
       </Box>
-      {stepState === CheckoutStepState.COMPLETED && completedViewProps && (
+      {showCompletedView && (
         <Box px={[2, 2, 4]}>
-          <Order2FulfillmentDetailsCompletedView {...completedViewProps} />
+          <Order2FulfillmentDetailsCompletedView {...completedViewProps!} />
         </Box>
       )}
-      <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
+      <Box hidden={!showForm}>
         {pickupOption ? (
           <Tabs
             fill
@@ -99,7 +117,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
             </Tab>
           </Tabs>
         ) : (
-          <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
+          <Box px={[2, 2, 4]}>
             <Order2DeliveryForm order={orderData} me={meData} />
           </Box>
         )}

@@ -75,6 +75,19 @@ export const useBuildInitialSteps = (
     firstUpcomingStep.state = CheckoutStepState.ACTIVE
   }
 
+  // FULFILLMENT_DETAILS and DELIVERY_OPTION are worked on simultaneously.
+  // When FULFILLMENT_DETAILS is the first step activated, also activate DELIVERY_OPTION.
+  if (firstUpcomingStep?.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+    const deliveryOptionStep = steps.find(
+      s =>
+        s.name === CheckoutStepName.DELIVERY_OPTION &&
+        s.state === CheckoutStepState.UPCOMING,
+    )
+    if (deliveryOptionStep) {
+      deliveryOptionStep.state = CheckoutStepState.ACTIVE
+    }
+  }
+
   return steps
 }
 

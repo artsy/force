@@ -1,4 +1,4 @@
-import { act, screen, waitFor } from "@testing-library/react"
+import { act, cleanup, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -20,6 +20,7 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
 }))
 
 beforeEach(() => {
+  cleanup()
   jest.clearAllMocks()
   jest.runAllTimers()
 
@@ -35,12 +36,14 @@ beforeEach(() => {
     setFulfillmentDetailsComplete: jest.fn(),
     setUserAddressMode: jest.fn(),
     setSectionErrorMessage: jest.fn(),
+    setAddressLoading: jest.fn(),
     userAddressMode: null,
     messages: {},
   }
 })
 
 afterEach(async () => {
+  cleanup()
   await flushPromiseQueue()
   act(() => {
     jest.runAllTimers()
@@ -96,7 +99,7 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
-      expect(screen.getByText("Continue to Payment")).toBeInTheDocument()
+      expect(screen.getByText("Save address")).toBeInTheDocument()
       expect(screen.getByPlaceholderText("Add full name")).toBeInTheDocument()
       expect(screen.getByLabelText("Street address")).toBeInTheDocument()
       expect(screen.getByLabelText("City")).toBeInTheDocument()
@@ -966,7 +969,7 @@ describe("Order2DeliveryForm", () => {
         ).not.toHaveBeenCalled()
       })
 
-      // TODO(EMI-3166): These two tests fail when run after the "no shipping option" test due to
+      // TODO:These two tests fail when run after the "no shipping option" test due to
       // test contamination — the component mounts with stale PICKUP fulfillmentOptions from the
       // previous test's Relay store, triggering the on-mount preload mutation unexpectedly.
       // The second saveAddressToOrder call then gets resolved with auto-generated mock data,
@@ -1085,7 +1088,7 @@ describe("Order2DeliveryForm", () => {
         })
       })
 
-      // TODO(EMI-3166): Same contamination issue as above — fails when run after the prior test.
+      // TODO:Same contamination issue as above — fails when run after the prior test.
       it("saves address to user profile when user has no saved addresses", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
@@ -1307,7 +1310,7 @@ describe("Order2DeliveryForm", () => {
       screen.getByText("Germany")
     })
 
-    it("pre-selects a matching saved address", async () => {
+    it("pre-selects a matching saved address and fires address mutation on click", async () => {
       const { mockResolveLastOperation } = renderWithRelay({
         Me: () => ({
           ...baseMeProps,
@@ -1334,17 +1337,8 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
-      // Wait for auto-selected shipping option to enable the button
-      await waitFor(() => {
-        expect(
-          screen.getByRole("button", { name: "Continue to Payment" }),
-        ).not.toBeDisabled()
-      })
-
-      // Click the button to submit the form
-      act(() => {
-        userEvent.click(screen.getByText("Continue to Payment"))
-      })
+      // Click the pre-selected address radio to trigger the silent mutation
+      userEvent.click(screen.getByText("New York, NY 10001"))
 
       let mutation
       await waitFor(() => {
@@ -1385,20 +1379,13 @@ describe("Order2DeliveryForm", () => {
         shippingName: "John Doe",
       })
 
-      await waitFor(() => {
-        mockResolveLastOperation({
-          setOrderFulfillmentOptionPayload: () =>
-            orderMutationSuccess(baseOrderProps, {}),
-        })
-      })
-      await flushPromiseQueue()
-
+      // Both steps remain simultaneously active — setFulfillmentDetailsComplete is NOT called
       expect(
         mockCheckoutContext.setFulfillmentDetailsComplete,
-      ).toHaveBeenCalledWith({})
+      ).not.toHaveBeenCalled()
     })
 
-    // TODO(EMI-3166): Fails when run after the contaminated tests above due to stale Relay store state.
+    // TODO:Fails when run after the contaminated tests above due to stale Relay store state.
     it("handles address selection from saved addresses", async () => {
       const { mockResolveLastOperation } = renderWithRelay({
         Me: () => ({

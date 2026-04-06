@@ -131,6 +131,7 @@ describe("Order2CheckoutContext", () => {
       expect(Object.keys(getState())).toEqual(
         expect.arrayContaining([
           "isLoading",
+          "isAddressLoading",
           "expressCheckoutState",
           "expressCheckoutPaymentMethods",
           "steps",
@@ -146,6 +147,7 @@ describe("Order2CheckoutContext", () => {
 
       expect(Object.keys(actions)).toEqual(
         expect.arrayContaining([
+          "setAddressLoading",
           "setExpressCheckoutLoaded",
           "setExpressCheckoutState",
           "setFulfillmentDetailsComplete",
@@ -170,6 +172,7 @@ describe("Order2CheckoutContext", () => {
 
       expect(state).toMatchObject({
         isLoading: true,
+        isAddressLoading: false,
         expressCheckoutState: null,
         expressCheckoutPaymentMethods: null,
         activeFulfillmentDetailsTab: null,
@@ -193,7 +196,7 @@ describe("Order2CheckoutContext", () => {
         },
         {
           name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.UPCOMING,
+          state: CheckoutStepState.ACTIVE,
         },
         { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.UPCOMING },
         {
@@ -273,7 +276,7 @@ describe("Order2CheckoutContext", () => {
         },
         {
           name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.UPCOMING,
+          state: CheckoutStepState.ACTIVE,
         },
         { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.UPCOMING },
         {
@@ -341,7 +344,7 @@ describe("Order2CheckoutContext", () => {
     })
 
     describe("setFulfillmentDetailsComplete", () => {
-      it("completes fulfillment details step and delivery option step together, activates payment", async () => {
+      it("completes fulfillment details step, keeps delivery option active", async () => {
         const { getState, actions } = await setup()
 
         act(() => {
@@ -353,17 +356,17 @@ describe("Order2CheckoutContext", () => {
         )
         expect(fulfillmentStep?.state).toBe(CheckoutStepState.COMPLETED)
 
-        // Delivery option is now completed inline (shipping selected in fulfillment step)
+        // Delivery option stays active — user still needs to pick a shipping method
         const deliveryStep = getState().steps.find(
           step => step.name === CheckoutStepName.DELIVERY_OPTION,
         )
-        expect(deliveryStep?.state).toBe(CheckoutStepState.COMPLETED)
+        expect(deliveryStep?.state).toBe(CheckoutStepState.ACTIVE)
 
-        // Payment should be the next active step
+        // Payment stays upcoming until delivery option is also completed
         const paymentStep = getState().steps.find(
           step => step.name === CheckoutStepName.PAYMENT,
         )
-        expect(paymentStep?.state).toBe(CheckoutStepState.ACTIVE)
+        expect(paymentStep?.state).toBe(CheckoutStepState.UPCOMING)
       })
 
       it("hides delivery option step for pickup", async () => {
@@ -377,6 +380,49 @@ describe("Order2CheckoutContext", () => {
           step => step.name === CheckoutStepName.DELIVERY_OPTION,
         )
         expect(deliveryStep?.state).toBe(CheckoutStepState.HIDDEN)
+
+        const paymentStep = getState().steps.find(
+          step => step.name === CheckoutStepName.PAYMENT,
+        )
+        expect(paymentStep?.state).toBe(CheckoutStepState.ACTIVE)
+      })
+    })
+
+    describe("setDeliveryOptionComplete", () => {
+      it("completes both DELIVERY_OPTION and FULFILLMENT_DETAILS when both are ACTIVE, activates PAYMENT", async () => {
+        const { getState, actions } = await setup()
+
+        // Both steps start ACTIVE; complete delivery option directly
+        act(() => {
+          actions.setDeliveryOptionComplete()
+        })
+
+        const fulfillmentStep = getState().steps.find(
+          step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+        )
+        expect(fulfillmentStep?.state).toBe(CheckoutStepState.COMPLETED)
+
+        const deliveryStep = getState().steps.find(
+          step => step.name === CheckoutStepName.DELIVERY_OPTION,
+        )
+        expect(deliveryStep?.state).toBe(CheckoutStepState.COMPLETED)
+
+        const paymentStep = getState().steps.find(
+          step => step.name === CheckoutStepName.PAYMENT,
+        )
+        expect(paymentStep?.state).toBe(CheckoutStepState.ACTIVE)
+      })
+
+      it("activates PAYMENT when FULFILLMENT_DETAILS is already COMPLETED", async () => {
+        const { getState, actions } = await setup()
+
+        act(() => {
+          actions.setFulfillmentDetailsComplete({})
+        })
+
+        act(() => {
+          actions.setDeliveryOptionComplete()
+        })
 
         const paymentStep = getState().steps.find(
           step => step.name === CheckoutStepName.PAYMENT,
