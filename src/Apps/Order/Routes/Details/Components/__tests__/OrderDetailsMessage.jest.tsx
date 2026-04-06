@@ -42,6 +42,10 @@ describe("OrderDetailsMessage", () => {
   it.each([
     ["SUBMITTED_ORDER", "Thank you! Your order is being processed"],
     ["SUBMITTED_OFFER", "Thank you! Your offer has been submitted"],
+    [
+      "COUNTEROFFER_SENT",
+      "Your counteroffer has been submitted to the gallery.",
+    ],
     ["PAYMENT_FAILED", "To complete your purchase"],
     ["PROCESSING_PAYMENT_PICKUP", "Thank you for your purchase"],
     ["PROCESSING_PAYMENT_SHIP", "Thank you for your purchase"],
