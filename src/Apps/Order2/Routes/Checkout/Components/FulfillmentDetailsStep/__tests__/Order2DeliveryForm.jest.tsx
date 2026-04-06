@@ -1085,6 +1085,7 @@ describe("Order2DeliveryForm", () => {
         })
       })
 
+      // TODO(EMI-3166): Same contamination issue as above — fails when run after the prior test.
       it("saves address to user profile when user has no saved addresses", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
@@ -1397,6 +1398,7 @@ describe("Order2DeliveryForm", () => {
       ).toHaveBeenCalledWith({})
     })
 
+    // TODO(EMI-3166): Fails when run after the contaminated tests above due to stale Relay store state.
     it("handles address selection from saved addresses", async () => {
       const { mockResolveLastOperation } = renderWithRelay({
         Me: () => ({
@@ -1429,6 +1431,23 @@ describe("Order2DeliveryForm", () => {
       await waitFor(() => {
         mockResolveLastOperation({
           updateOrderShippingAddressPayload: () =>
+            orderMutationSuccess(baseOrderProps, {
+              fulfillmentOptions: [
+                {
+                  type: "DOMESTIC_FLAT",
+                  selected: true,
+                  amount: { display: "Free" },
+                },
+              ],
+            }),
+        })
+      })
+      await flushPromiseQueue()
+
+      // Resolve the proactive setFulfillmentOption mutation triggered by the single flat-rate option
+      await waitFor(() => {
+        mockResolveLastOperation({
+          setOrderFulfillmentOptionPayload: () =>
             orderMutationSuccess(baseOrderProps, {}),
         })
       })

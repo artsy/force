@@ -1,6 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import {
+  Box,
   Button,
   Clickable,
   Flex,
@@ -25,6 +26,7 @@ import {
   deliveryAddressValidationSchema,
   findInitialSelectedAddress,
   processSavedAddresses,
+  validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import {
   deliveryOptionLabel,
@@ -150,6 +152,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
   const [isAddressMutating, setIsAddressMutating] = useState(false)
 
+  // When a saved address is unshippable or invalid, suppress shipping options
+  // so we don't show stale quotes alongside an address error banner.
+  const [suppressShippingOptions, setSuppressShippingOptions] = useState(false)
+
   const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({
       address: {
@@ -265,6 +271,23 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           setUserSelectedFulfillmentOption(null)
         }
 
+        // Proactively set the fulfillment option when there's a single flat-rate
+        // choice so the order summary tax total updates without waiting for submit.
+        if (realOptions.length === 1) {
+          setFulfillmentOptionMutation
+            .submitMutation({
+              variables: {
+                input: {
+                  id: orderData.internalID,
+                  fulfillmentOption: { type: realOptions[0].type as never },
+                },
+              },
+            })
+            .catch(e =>
+              logger.error("Error pre-setting fulfillment option:", e),
+            )
+        }
+
         return realOptions
       } catch (error) {
         if (!options.silent) throw error
@@ -274,7 +297,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         setIsAddressMutating(false)
       }
     },
-    [orderData.internalID, setOrderDeliveryAddressMutation, logger],
+    [
+      orderData.internalID,
+      setOrderDeliveryAddressMutation,
+      setFulfillmentOptionMutation,
+      logger,
+    ],
   )
 
   // On mount: fire address mutation to preload shipping options
@@ -506,6 +534,16 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 }
                 onSelectAddress={async values => {
                   await setValues(values)
+                  const isValid = validateAddressFields(values)
+                  const isShippable = (
+                    orderData.availableShippingCountries ?? []
+                  ).includes(values.address.country)
+                  if (!isValid || (!isShippable && !isOfferOrder)) {
+                    setSuppressShippingOptions(true)
+                    setUserSelectedFulfillmentOption(null)
+                    return
+                  }
+                  setSuppressShippingOptions(false)
                   await saveAddressToOrder(values, { silent: true })
                 }}
               />
@@ -524,10 +562,17 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               </Form>
             )}
 
+            {/* Matches the mono5 gap that Stack gap={1} produces between outer checkout steps */}
+            <Box backgroundColor="mono5" height={1} mx={[-2, -2, -4]} />
+
             <Spacer y={2} />
 
             <ShippingMethodSection
-              fulfillmentOptions={orderData.fulfillmentOptions ?? []}
+              fulfillmentOptions={
+                suppressShippingOptions
+                  ? []
+                  : (orderData.fulfillmentOptions ?? [])
+              }
               isLoading={isAddressMutating}
               selectedOption={selectedFulfillmentOption}
               onSelectOption={setUserSelectedFulfillmentOption}
