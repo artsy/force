@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<88c707d0a0b83f7a649b0fa6a4e6f45b>>
+ * @generated SignedSource<<00cae7800e9b3b5fad6050090035071a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -301,6 +301,39 @@ return {
               {
                 "kind": "Literal",
                 "name": "size",
+                "value": 3
+              }
+            ],
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "notableArtworks",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "date",
+                "storageKey": null
+              },
+              (v4/*: any*/)
+            ],
+            "storageKey": "notableArtworks(size:3)"
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "size",
                 "value": 10
               }
             ],
@@ -328,12 +361,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0803c3ee0931035e3326f5037943f07c",
+    "cacheID": "913344632c70bc646f0fab11c6262a4f",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistSubAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistSubAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistSubApp_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n\nfragment ArtistSubApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistBackLink_artist\n  internalID\n  name\n}\n"
+    "text": "query artistRoutes_ArtistSubAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistSubApp_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  notableArtworks(size: 3) {\n    title\n    href\n    date\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n\nfragment ArtistSubApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistBackLink_artist\n  internalID\n  name\n}\n"
   }
 };
 })();

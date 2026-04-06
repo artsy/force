@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00da4db12d3aafab729c9743253d5b32>>
+ * @generated SignedSource<<88c08428277c904688823495f7f900fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -310,6 +310,39 @@ return {
               {
                 "kind": "Literal",
                 "name": "size",
+                "value": 3
+              }
+            ],
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "notableArtworks",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "date",
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
+            "storageKey": "notableArtworks(size:3)"
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "size",
                 "value": 10
               }
             ],
@@ -330,7 +363,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cb19a27a4a3a24fc1f6091d1b2a4b0d1",
+    "cacheID": "a63bd16e7447821a82b9fb85ec9212e4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -398,6 +431,16 @@ return {
         "artist.id": (v5/*: any*/),
         "artist.name": (v4/*: any*/),
         "artist.nationality": (v4/*: any*/),
+        "artist.notableArtworks": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "Artwork"
+        },
+        "artist.notableArtworks.date": (v4/*: any*/),
+        "artist.notableArtworks.href": (v4/*: any*/),
+        "artist.notableArtworks.id": (v5/*: any*/),
+        "artist.notableArtworks.title": (v4/*: any*/),
         "artist.slug": (v5/*: any*/),
         "artist.verifiedRepresentatives": {
           "enumValues": null,
@@ -419,7 +462,7 @@ return {
     },
     "name": "ArtistMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n"
+    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  notableArtworks(size: 3) {\n    title\n    href\n    date\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
