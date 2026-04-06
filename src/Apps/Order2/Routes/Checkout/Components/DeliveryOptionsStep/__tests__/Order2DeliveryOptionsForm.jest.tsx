@@ -77,7 +77,7 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(screen.queryByRole("radio")).not.toBeInTheDocument()
     })
 
-    it("displays buyer guarantee link", () => {
+    it("displays shipping and returns link", () => {
       renderWithRelay({
         Me: () => ({
           order: {
@@ -98,7 +98,7 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(guaranteeLink).toHaveAttribute("target", "_blank")
       expect(guaranteeLink).toHaveAttribute(
         "href",
-        "https://support.artsy.net/s/article/The-Artsy-Guarantee",
+        "https://support.artsy.net/s/article/Shipping-and-Returns-FAQs",
       )
     })
   })
@@ -147,7 +147,7 @@ describe("Order2DeliveryOptionsForm", () => {
     it("displays time estimates for delivery options", () => {
       renderWithRelay(multipleOptionsData)
 
-      const timeEstimates = screen.getAllByText(/Estimated delivery between/)
+      const timeEstimates = screen.getAllByText(/Estimated delivery/)
       expect(timeEstimates.length).toBeGreaterThan(0)
     })
 
@@ -156,7 +156,7 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(
         screen.queryByText(
-          /custom packing, transportation on a fine art shuttle/,
+          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
         ),
       ).not.toBeInTheDocument()
 
@@ -165,7 +165,7 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(
         screen.getByText(
-          /custom packing, transportation on a fine art shuttle/,
+          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
         ),
       ).toBeInTheDocument()
     })
