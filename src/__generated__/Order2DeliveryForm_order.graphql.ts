@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<962a8e6767f24290eb8dfe52f7769e95>>
+ * @generated SignedSource<<952b6f2c0ded60f74b5ab36e978f5489>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,11 +28,19 @@ export type Order2DeliveryForm_order$data = {
     readonly postalCode: string | null | undefined;
     readonly region: string | null | undefined;
   } | null | undefined;
+  readonly fulfillmentOptions: ReadonlyArray<{
+    readonly amount: {
+      readonly display: string | null | undefined;
+    } | null | undefined;
+    readonly selected: boolean | null | undefined;
+    readonly type: FulfillmentOptionTypeEnum;
+  }>;
   readonly internalID: string;
   readonly mode: OrderModeEnum;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
+  readonly shippingOrigin: string | null | undefined;
   readonly " $fragmentType": "Order2DeliveryForm_order";
 };
 export type Order2DeliveryForm_order$key = {
@@ -40,7 +48,15 @@ export type Order2DeliveryForm_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "type",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -61,13 +77,7 @@ const node: ReaderFragment = {
       "name": "selectedFulfillmentOption",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -83,6 +93,50 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "availableShippingCountries",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "fulfillmentOptions",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "selected",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -181,7 +235,8 @@ const node: ReaderFragment = {
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "3f8dd0a2dec3c425455482916a5b6c02";
+(node as any).hash = "55311e308e4f422ac34c411b1c7a9430";
 
 export default node;

@@ -204,12 +204,18 @@ export const Order2CheckoutContext: ReturnType<
         return { ...step, state: CheckoutStepState.COMPLETED }
       }
 
-      // Hide delivery option if pickup is selected
-      if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
-        return { ...step, state: CheckoutStepState.HIDDEN }
+      // Hide delivery option if pickup is selected, complete it otherwise
+      // (shipping method is now selected inline in the fulfillment step)
+      if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+        return {
+          ...step,
+          state: isPickup
+            ? CheckoutStepState.HIDDEN
+            : CheckoutStepState.COMPLETED,
+        }
       }
 
-      // Activate the first upcoming step
+      // Activate the first upcoming step (should be PAYMENT)
       if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
         hasActivatedNext = true
         return { ...step, state: CheckoutStepState.ACTIVE }
@@ -352,22 +358,21 @@ export const Order2CheckoutContext: ReturnType<
   }),
 
   editDeliveryOption: action(state => {
+    // Shipping method is now selected inline in the fulfillment step,
+    // so editing delivery option re-opens the combined fulfillment+shipping view
     const newSteps: CheckoutStep[] = []
 
     for (const step of state.steps) {
-      const isAfterDeliveryOptionsStep = newSteps
+      const isAfterFulfillmentStep = newSteps
         .map(s => s.name)
-        .includes(CheckoutStepName.DELIVERY_OPTION)
+        .includes(CheckoutStepName.FULFILLMENT_DETAILS)
 
-      if (
-        isAfterDeliveryOptionsStep &&
-        step.state !== CheckoutStepState.HIDDEN
-      ) {
+      if (isAfterFulfillmentStep && step.state !== CheckoutStepState.HIDDEN) {
         newSteps.push({
           ...step,
           state: CheckoutStepState.UPCOMING,
         })
-      } else if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+      } else if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
         newSteps.push({
           ...step,
           state: CheckoutStepState.ACTIVE,

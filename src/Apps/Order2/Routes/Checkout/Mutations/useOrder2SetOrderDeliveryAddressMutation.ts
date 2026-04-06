@@ -18,6 +18,10 @@ export const useOrder2SetOrderDeliveryAddressMutation = () => {
                 ...Order2CheckoutApp_order
                 fulfillmentOptions {
                   type
+                  selected
+                  amount {
+                    display
+                  }
                 }
               }
             }

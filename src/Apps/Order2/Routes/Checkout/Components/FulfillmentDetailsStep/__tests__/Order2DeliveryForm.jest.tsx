@@ -29,6 +29,8 @@ beforeEach(() => {
       clickedOrderProgression: jest.fn(),
       clickedShippingAddress: jest.fn(),
       clickedAddNewShippingAddress: jest.fn(),
+      clickedSelectShippingOption: jest.fn(),
+      savedAddressViewed: jest.fn(),
     },
     setFulfillmentDetailsComplete: jest.fn(),
     setUserAddressMode: jest.fn(),
@@ -36,6 +38,14 @@ beforeEach(() => {
     userAddressMode: null,
     messages: {},
   }
+})
+
+afterEach(async () => {
+  await flushPromiseQueue()
+  act(() => {
+    jest.runAllTimers()
+  })
+  await flushPromiseQueue()
 })
 
 const { renderWithRelay } = setupTestWrapperTL<Order2DeliveryFormTestQuery>({
@@ -60,6 +70,9 @@ describe("Order2DeliveryForm", () => {
     selectedFulfillmentOption: null,
     availableShippingCountries: ["US", "CA", "DE"],
     fulfillmentDetails: null,
+    fulfillmentOptions: [
+      { type: "DOMESTIC_FLAT", selected: true, amount: { display: "Free" } },
+    ],
   }
 
   describe("with no saved addresses", () => {
@@ -83,7 +96,7 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
-      expect(screen.getByText("See Shipping Methods")).toBeInTheDocument()
+      expect(screen.getByText("Continue to Payment")).toBeInTheDocument()
       expect(screen.getByPlaceholderText("Add full name")).toBeInTheDocument()
       expect(screen.getByLabelText("Street address")).toBeInTheDocument()
       expect(screen.getByLabelText("City")).toBeInTheDocument()
@@ -177,7 +190,7 @@ describe("Order2DeliveryForm", () => {
 
         // Click the button to submit the form
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         // Wait for the form submission to start and resolve the mutations
@@ -199,6 +212,14 @@ describe("Order2DeliveryForm", () => {
                   },
                 },
               }),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {}),
           })
         })
         await flushPromiseQueue()
@@ -271,7 +292,7 @@ describe("Order2DeliveryForm", () => {
 
         // Click submit button
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         await waitFor(() => {
@@ -292,6 +313,14 @@ describe("Order2DeliveryForm", () => {
                   },
                 },
               }),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {}),
           })
         })
         await flushPromiseQueue()
@@ -332,7 +361,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Try to submit without filling required fields
-        await userEvent.click(screen.getByText("See Shipping Methods"))
+        await userEvent.click(screen.getByText("Continue to Payment"))
 
         // Should not trigger tracking because form validation should prevent submission
         expect(
@@ -391,7 +420,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         let shippingAddressMutation
@@ -432,6 +461,14 @@ describe("Order2DeliveryForm", () => {
           shippingCountry: "US",
           shippingName: "Jane Smith",
         })
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {}),
+          })
+        })
+        await flushPromiseQueue()
 
         let createAddressMutation
         await waitFor(() => {
@@ -536,7 +573,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         await waitFor(() => {
@@ -557,6 +594,14 @@ describe("Order2DeliveryForm", () => {
                   },
                 },
               }),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {}),
           })
         })
         await flushPromiseQueue()
@@ -638,7 +683,7 @@ describe("Order2DeliveryForm", () => {
 
         // Submit the form
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         // First mutation: unset existing fulfillment option
@@ -700,6 +745,16 @@ describe("Order2DeliveryForm", () => {
           shippingPostalCode: "90210",
           shippingCountry: "US",
           shippingName: "Jane Smith",
+        })
+
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(baseOrderProps, {}),
+            })
+          })
+          await flushPromiseQueue()
         })
 
         await act(async () => {
@@ -771,7 +826,7 @@ describe("Order2DeliveryForm", () => {
 
         // Submit the form
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         let mutation
@@ -848,7 +903,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         let shippingAddressMutation
@@ -894,51 +949,9 @@ describe("Order2DeliveryForm", () => {
           shippingCountry: "US",
           shippingName: "Jane Smith",
         })
-
-        let createAddressMutation
-        await waitFor(() => {
-          createAddressMutation = mockResolveLastOperation({
-            CreateUserAddressPayload: () => ({
-              userAddressOrErrors: {
-                __typename: "UserAddress",
-                internalID: "new-address-id",
-                name: "Jane Smith",
-                addressLine1: "456 Oak Ave",
-                addressLine2: "",
-                city: "Los Angeles",
-                region: "CA",
-                postalCode: "90210",
-                country: "US",
-                phoneNumber: "5559876543",
-                phoneNumberCountryCode: "us",
-              },
-            }),
-          })
-        })
         await flushPromiseQueue()
 
-        expect(createAddressMutation.operationName).toBe(
-          "useOrder2CreateUserAddressMutation",
-        )
-        expect(createAddressMutation.operationVariables.input).toEqual({
-          attributes: {
-            name: "Jane Smith",
-            addressLine1: "456 Oak Ave",
-            addressLine2: "",
-            city: "Los Angeles",
-            region: "CA",
-            postalCode: "90210",
-            country: "US",
-            phoneNumber: "5559876543",
-            phoneNumberCountryCode: "us",
-          },
-        })
-
-        // Should trigger tracking and context updates
-        expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
-          "standard",
-        )
-
+        // No real shipping options → error is thrown before setFulfillmentOption or createUserAddress
         expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
           {
             error: expect.objectContaining({
@@ -953,6 +966,13 @@ describe("Order2DeliveryForm", () => {
         ).not.toHaveBeenCalled()
       })
 
+      // TODO(EMI-3166): These two tests fail when run after the "no shipping option" test due to
+      // test contamination — the component mounts with stale PICKUP fulfillmentOptions from the
+      // previous test's Relay store, triggering the on-mount preload mutation unexpectedly.
+      // The second saveAddressToOrder call then gets resolved with auto-generated mock data,
+      // causing realOptions=[] and throwing LocalCheckoutError("no_shipping_options").
+      // Possible fixes: RTL cleanup() in afterEach, resolving the preload mutation first in these
+      // tests, or removing the on-mount preload effect entirely.
       it("allows OFFER mode orders to proceed with SHIPPING_TBD fulfillment option", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
@@ -1002,7 +1022,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         await waitFor(() => {
@@ -1048,17 +1068,21 @@ describe("Order2DeliveryForm", () => {
         await flushPromiseQueue()
 
         // OFFER mode should NOT show error for missing shipping options
-        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
-          {
+        await waitFor(() => {
+          expect(
+            mockCheckoutContext.setSectionErrorMessage,
+          ).toHaveBeenCalledWith({
             error: null,
             section: "FULFILLMENT_DETAILS",
-          },
-        )
+          })
+        })
 
         // Should proceed with checkout
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        await waitFor(() => {
+          expect(
+            mockCheckoutContext.setFulfillmentDetailsComplete,
+          ).toHaveBeenCalledWith({})
+        })
       })
 
       it("saves address to user profile when user has no saved addresses", async () => {
@@ -1109,7 +1133,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         // First mutation: update shipping address
@@ -1142,8 +1166,18 @@ describe("Order2DeliveryForm", () => {
           })
         })
         await flushPromiseQueue()
+        await act(async () => {})
 
-        // Second mutation: create user address (should happen since no saved addresses)
+        // Second mutation: set the fulfillment option
+        await waitFor(() => {
+          mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(baseOrderProps, {}),
+          })
+        })
+        await flushPromiseQueue()
+
+        // Third mutation: create user address (should happen since no saved addresses)
         let createAddressMutation
         await waitFor(() => {
           createAddressMutation = mockResolveLastOperation({
@@ -1198,7 +1232,7 @@ describe("Order2DeliveryForm", () => {
 
         // Try to submit without filling required fields
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Continue to Payment"))
         })
 
         // Advance timers to trigger validation
@@ -1299,9 +1333,16 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
+      // Wait for auto-selected shipping option to enable the button
+      await waitFor(() => {
+        expect(
+          screen.getByRole("button", { name: "Continue to Payment" }),
+        ).not.toBeDisabled()
+      })
+
       // Click the button to submit the form
       act(() => {
-        userEvent.click(screen.getByText("See Shipping Methods"))
+        userEvent.click(screen.getByText("Continue to Payment"))
       })
 
       let mutation
@@ -1343,6 +1384,14 @@ describe("Order2DeliveryForm", () => {
         shippingName: "John Doe",
       })
 
+      await waitFor(() => {
+        mockResolveLastOperation({
+          setOrderFulfillmentOptionPayload: () =>
+            orderMutationSuccess(baseOrderProps, {}),
+        })
+      })
+      await flushPromiseQueue()
+
       expect(
         mockCheckoutContext.setFulfillmentDetailsComplete,
       ).toHaveBeenCalledWith({})
@@ -1373,8 +1422,27 @@ describe("Order2DeliveryForm", () => {
       await waitFor(() => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
+      // Click Berlin address — this fires a silent address mutation to preload shipping options
       userEvent.click(screen.getByText("Berlin, Berlin 56789"))
-      userEvent.click(screen.getByText("See Shipping Methods"))
+
+      // Resolve the address-selection mutation (silent preload)
+      await waitFor(() => {
+        mockResolveLastOperation({
+          updateOrderShippingAddressPayload: () =>
+            orderMutationSuccess(baseOrderProps, {}),
+        })
+      })
+      await flushPromiseQueue()
+
+      // Now click Continue to Payment (button should be re-enabled after mutation resolves)
+      await waitFor(() => {
+        expect(
+          screen.getByRole("button", { name: "Continue to Payment" }),
+        ).not.toBeDisabled()
+      })
+      act(() => {
+        userEvent.click(screen.getByText("Continue to Payment"))
+      })
 
       let mutation
       await waitFor(() => {
@@ -1414,6 +1482,14 @@ describe("Order2DeliveryForm", () => {
         shippingCountry: "DE",
         shippingName: "John Doe",
       })
+
+      await waitFor(() => {
+        mockResolveLastOperation({
+          setOrderFulfillmentOptionPayload: () =>
+            orderMutationSuccess(baseOrderProps, {}),
+        })
+      })
+      await flushPromiseQueue()
 
       expect(
         mockCheckoutContext.setFulfillmentDetailsComplete,
@@ -1637,9 +1713,16 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
+      // Wait for auto-selected shipping option to enable the button
+      await waitFor(() => {
+        expect(
+          screen.getByRole("button", { name: "Continue to Payment" }),
+        ).not.toBeDisabled()
+      })
+
       // Submit the form directly since it's pre-filled
       act(() => {
-        userEvent.click(screen.getByText("See Shipping Methods"))
+        userEvent.click(screen.getByText("Continue to Payment"))
       })
 
       // Only expect the shipping address update mutation
@@ -1669,6 +1752,14 @@ describe("Order2DeliveryForm", () => {
       expect(shippingMutation.operationName).toBe(
         "useOrder2SetOrderDeliveryAddressMutation",
       )
+
+      await waitFor(() => {
+        mockResolveLastOperation({
+          setOrderFulfillmentOptionPayload: () =>
+            orderMutationSuccess(baseOrderProps, {}),
+        })
+      })
+      await flushPromiseQueue()
 
       expect(
         mockCheckoutContext.setFulfillmentDetailsComplete,
