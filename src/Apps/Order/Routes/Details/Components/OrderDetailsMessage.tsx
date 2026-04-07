@@ -145,6 +145,35 @@ const MessageContent = ({
           </Text>
         </>
       )
+    case "COUNTEROFFER_SENT":
+      return (
+        <>
+          <Text variant="sm">
+            Your counteroffer has been submitted to the gallery. You will
+            receive an email shortly with all the details. Please note making an
+            offer doesn&rsquo;t guarantee you the work.
+          </Text>
+          <Spacer y={2} />
+          <Text variant="sm">
+            The gallery will confirm by <b>{formattedStateExpireTime}</b>.
+          </Text>
+          <Spacer y={2} />
+          <Text variant="sm">
+            You can{" "}
+            {!!order.impulseConversationId ? (
+              <RouterLink
+                to={`/user/conversations/${order.impulseConversationId}`}
+                onClick={() => tracking.clickedContactGallery(order.internalID)}
+              >
+                contact the gallery
+              </RouterLink>
+            ) : (
+              "contact the gallery"
+            )}{" "}
+            with any questions.
+          </Text>
+        </>
+      )
     case "PAYMENT_FAILED":
       return (
         <>

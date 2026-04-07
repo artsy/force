@@ -1,4 +1,4 @@
-import EventEmitter from "eventemitter3"
+import { EventEmitter } from "events"
 
 declare global {
   interface Window {
@@ -6,11 +6,17 @@ declare global {
   }
 }
 
-const emitter =
-  typeof window !== "undefined"
-    ? window.__reactionEventsEventEmitter ||
-      (window.__reactionEventsEventEmitter = new EventEmitter())
-    : new EventEmitter()
+const getEmitter = () => {
+  if (typeof window === "undefined") return new EventEmitter()
+
+  if (!window.__reactionEventsEventEmitter) {
+    window.__reactionEventsEventEmitter = new EventEmitter()
+  }
+
+  return window.__reactionEventsEventEmitter
+}
+
+const emitter = getEmitter()
 
 /**
  * Post tracking event to Force
