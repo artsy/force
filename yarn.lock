@@ -8867,7 +8867,7 @@ __metadata:
     passport-google-oauth20: "npm:^2.0.0"
     passport-strategy: "npm:1.x.x"
     patch-package: "npm:6.2.0"
-    path-to-regexp: "npm:6.3.0"
+    path-to-regexp: "npm:8.4.0"
     prettier: "npm:^3.4.2"
     proportional-scale: "npm:^4.0.0"
     pull-lock: "npm:1.0.0"
@@ -13499,10 +13499,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-to-regexp@npm:6.3.0":
-  version: 6.3.0
-  resolution: "path-to-regexp@npm:6.3.0"
-  checksum: 10c0/73b67f4638b41cde56254e6354e46ae3a2ebc08279583f6af3d96fe4664fc75788f74ed0d18ca44fa4a98491b69434f9eee73b97bb5314bd1b5adb700f5c18d6
+"path-to-regexp@npm:8.4.0":
+  version: 8.4.0
+  resolution: "path-to-regexp@npm:8.4.0"
+  checksum: 10c0/171a540aed2a5dff3da6e7584f263ae65d868daea382ea3bd1ddeb828912661133d5a94fce83bd3125f0799df8dfd4924b270e2987a31930901cfd94ae164b45
   languageName: node
   linkType: hard
 
