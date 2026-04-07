@@ -9,7 +9,6 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import { cropped } from "Utils/resized"
 import type { ArtistSeriesEntity_member$data } from "__generated__/ArtistSeriesEntity_member.graphql"
-import currency from "currency.js"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -99,10 +98,9 @@ export const ArtistSeriesEntity: React.FC<
           {priceGuidance ? (
             <>
               From $
-              {currency(priceGuidance, {
-                separator: ",",
-                precision: 0,
-              }).format()}
+              {new Intl.NumberFormat("en-US", {
+                maximumFractionDigits: 0,
+              }).format(priceGuidance)}
             </>
           ) : (
             "—"

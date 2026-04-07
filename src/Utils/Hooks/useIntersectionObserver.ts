@@ -12,13 +12,13 @@ interface UseIntersectionObserverProperties {
   onOffIntersection?: (entries: IntersectionObserverEntry[]) => void
 }
 
-export const useIntersectionObserver = ({
+export const useIntersectionObserver = <T extends HTMLElement = HTMLElement>({
   once = true,
   options = { threshold: 0 },
   onIntersection,
   onOffIntersection,
 }: UseIntersectionObserverProperties) => {
-  const ref = useRef<HTMLElement | null>(null)
+  const ref = useRef<T | null>(null)
 
   const handleIntersect = (entries: IntersectionObserverEntry[]) => {
     if (!observer) return

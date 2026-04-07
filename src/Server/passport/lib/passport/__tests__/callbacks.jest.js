@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-imports */
-const rewire = require("rewire")
 const cbs = require("../callbacks")
 
 import options from "Server/passport/lib/options"

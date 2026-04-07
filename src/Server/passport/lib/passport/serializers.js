@@ -3,35 +3,20 @@
 // into a session.
 //
 
-// TODO: Remove let added for 'rewire'
 const opts = require("../options")
-// TODO: Remove let added for 'rewire'
-
 const request = require("superagent")
-const async = require("async")
 const pick = require("lodash/pick")
 
-module.exports.serialize = (req, user, done) =>
-  async.parallel(
-    [
-      cb =>
-        request
-          .get(`${opts.ARTSY_URL}/api/v1/me`)
-          .set({ "X-Access-Token": user.accessToken })
-          .end(cb),
-      cb =>
-        request
-          .get(`${opts.ARTSY_URL}/api/v1/me/authentications`)
-          .set({ "X-Access-Token": user.accessToken })
-          .end(cb),
-    ],
-    (err, results) => {
-      if (err) {
-        return done(err)
-      }
-
-      const [{ body: userData }, { body: authsData }] = Array.from(results)
-
+module.exports.serialize = (req, user, done) => {
+  Promise.all([
+    request
+      .get(`${opts.ARTSY_URL}/api/v1/me`)
+      .set({ "X-Access-Token": user.accessToken }),
+    request
+      .get(`${opts.ARTSY_URL}/api/v1/me/authentications`)
+      .set({ "X-Access-Token": user.accessToken }),
+  ])
+    .then(([{ body: userData }, { body: authsData }]) => {
       const data = pick(
         {
           ...userData,
@@ -44,8 +29,9 @@ module.exports.serialize = (req, user, done) =>
       req.user = data
 
       done(null, data)
-    },
-  )
+    })
+    .catch(err => done(err))
+}
 
 module.exports.deserialize = (user, done) => {
   done(null, user)
