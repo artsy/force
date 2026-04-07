@@ -29,6 +29,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
 
   const {
     steps,
+    isEditingShippingOnly,
     setActiveFulfillmentDetailsTab,
     checkoutTracking,
     setUserAddressMode,
@@ -37,6 +38,26 @@ export const Order2FulfillmentDetailsStep: React.FC<
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )?.state
+
+  const deliveryOptionCompleted = steps?.some(
+    step =>
+      step.name === CheckoutStepName.DELIVERY_OPTION &&
+      step.state === CheckoutStepState.COMPLETED,
+  )
+
+  // Show the address form when ACTIVE, or when COMPLETED but the delivery option
+  // step hasn't completed yet and we're not editing shipping only.
+  const showForm =
+    stepState === CheckoutStepState.ACTIVE ||
+    (stepState === CheckoutStepState.COMPLETED &&
+      !deliveryOptionCompleted &&
+      !isEditingShippingOnly)
+
+  // Show the collapsed completed card after both steps are done, or when editing shipping only.
+  const showCompletedView =
+    stepState === CheckoutStepState.COMPLETED &&
+    (deliveryOptionCompleted || isEditingShippingOnly) &&
+    !!completedViewProps
 
   const fulfillmentOptions = orderData?.fulfillmentOptions
   const pickupOption = fulfillmentOptions.find(
@@ -63,12 +84,12 @@ export const Order2FulfillmentDetailsStep: React.FC<
           </Text>
         </Flex>
       </Box>
-      {stepState === CheckoutStepState.COMPLETED && completedViewProps && (
+      {showCompletedView && (
         <Box px={[2, 2, 4]}>
-          <Order2FulfillmentDetailsCompletedView {...completedViewProps} />
+          <Order2FulfillmentDetailsCompletedView {...completedViewProps!} />
         </Box>
       )}
-      <Box hidden={stepState !== CheckoutStepState.ACTIVE}>
+      <Box hidden={!showForm}>
         {pickupOption ? (
           <Tabs
             fill
@@ -99,7 +120,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
             </Tab>
           </Tabs>
         ) : (
-          <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
+          <Box px={[2, 2, 4]}>
             <Order2DeliveryForm order={orderData} me={meData} />
           </Box>
         )}
