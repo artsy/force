@@ -30,6 +30,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
 
   const {
     isLoading,
+    isShippingPreloadComplete,
     setLoadingComplete,
     expressCheckoutPaymentMethods,
     expressCheckoutState,
@@ -166,6 +167,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         orderValidated,
         isExpressCheckoutLoaded,
         isStripeRedirectHandled,
+        isShippingPreloadComplete,
         isLoading,
         setLoadingComplete,
       ].every(Boolean)
@@ -177,6 +179,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     orderValidated,
     isExpressCheckoutLoaded,
     isStripeRedirectHandled,
+    isShippingPreloadComplete,
     isLoading,
     setLoadingComplete,
     checkoutModalError,

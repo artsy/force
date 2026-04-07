@@ -13,16 +13,15 @@ import {
   deliveryAddressValidationSchema,
   findInitialSelectedAddress,
   processSavedAddresses,
+  validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
-
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
-import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
+import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
-import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import {
   AddressFormFields,
   type FormikContextWithAddress,
@@ -32,15 +31,30 @@ import { useInitialLocationValues } from "Components/Address/utils/useInitialLoc
 import type { CountryData } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
-import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
-import { Form, Formik, type FormikHelpers } from "formik"
-import { useCallback, useMemo } from "react"
+import type {
+  Order2DeliveryForm_order$data,
+  Order2DeliveryForm_order$key,
+} from "__generated__/Order2DeliveryForm_order.graphql"
+import { Form, Formik, type FormikHelpers, useFormikContext } from "formik"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
   me: Order2DeliveryForm_me$key
 }
+
+type FulfillmentOption = NonNullable<
+  Order2DeliveryForm_order$data["fulfillmentOptions"]
+>[number]
+
+const REAL_OPTION_TYPES = [
+  "DOMESTIC_FLAT",
+  "INTERNATIONAL_FLAT",
+  "ARTSY_STANDARD",
+  "ARTSY_EXPRESS",
+  "ARTSY_WHITE_GLOVE",
+]
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
@@ -61,33 +75,34 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     CheckoutStepName.FULFILLMENT_DETAILS,
   )
 
-  // Get country options for locationBasedInitialValues
   const countryInputOptions = useMemo(() => {
     return sortCountriesForCountryInput(shippableCountries)
   }, [shippableCountries])
 
-  // Get initial values based on user location if no existing fulfillment details
   const locationBasedInitialValues =
     useInitialLocationValues(countryInputOptions)
 
   const checkoutContext = useCheckoutContext()
-
   const {
     setCheckoutMode,
     checkoutTracking,
     setFulfillmentDetailsComplete,
+    setAddressLoading,
+    setShippingPreloadComplete,
     setUserAddressMode,
     setSectionErrorMessage,
     messages,
   } = checkoutContext
+
+  const isOfferOrder = orderData.mode === "OFFER"
 
   const fulfillmentDetailsError =
     messages[CheckoutStepName.FULFILLMENT_DETAILS]?.error
 
   const setOrderDeliveryAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
-  const unsetOrderFulfillmentOption =
-    useOrder2UnsetOrderFulfillmentOptionMutation()
+  const setFulfillmentOptionMutation =
+    useOrder2SetOrderFulfillmentOptionMutation()
 
   const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({
@@ -156,6 +171,146 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     return findInitialSelectedAddress(processedAddresses, initialValues)
   }, [initialValues, processedAddresses])
 
+  /**
+   * Fires updateOrderShippingAddress and updates Relay store with fresh fulfillment options.
+   * Returns the real fulfillment options from the response.
+   * Silently swallows errors when silent=true (used for reactive/preload mutations).
+   */
+  const saveAddressToOrder = useCallback(
+    async (
+      values: FormikContextWithAddress,
+      options: { silent?: boolean } = {},
+    ): Promise<FulfillmentOption[]> => {
+      setAddressLoading(true)
+      try {
+        const result = await setOrderDeliveryAddressMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              buyerPhoneNumber: values.phoneNumber,
+              buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
+              shippingAddressLine1: values.address.addressLine1,
+              shippingAddressLine2: values.address.addressLine2,
+              shippingCity: values.address.city,
+              shippingRegion: values.address.region,
+              shippingPostalCode: values.address.postalCode,
+              shippingCountry: values.address.country,
+              shippingName: values.address.name,
+            },
+          },
+        })
+
+        const responseOrder = validateAndExtractOrderResponse(
+          result.updateOrderShippingAddress?.orderOrError,
+        ).order
+
+        const realOptions = (responseOrder.fulfillmentOptions ?? []).filter(o =>
+          REAL_OPTION_TYPES.includes(o.type),
+        ) as FulfillmentOption[]
+
+        // Proactively set the fulfillment option when there's a single flat-rate
+        // choice so the order summary tax total updates without waiting for submit.
+        if (realOptions.length === 1) {
+          setFulfillmentOptionMutation
+            .submitMutation({
+              variables: {
+                input: {
+                  id: orderData.internalID,
+                  fulfillmentOption: { type: realOptions[0].type as never },
+                },
+              },
+            })
+            .catch(e =>
+              logger.error("Error pre-setting fulfillment option:", e),
+            )
+        }
+
+        return realOptions
+      } catch (error) {
+        if (!options.silent) throw error
+        logger.error("Error saving address to order:", error)
+        return []
+      } finally {
+        setAddressLoading(false)
+      }
+    },
+    [
+      orderData.internalID,
+      setAddressLoading,
+      setOrderDeliveryAddressMutation,
+      setFulfillmentOptionMutation,
+      logger,
+    ],
+  )
+
+  // On mount: fire address mutation to preload shipping options, unless quotes are already
+  // present for the currently-selected address (e.g. after a page reload or back-navigation).
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
+  useEffect(() => {
+    const existingRealOptions = (orderData.fulfillmentOptions ?? []).filter(o =>
+      REAL_OPTION_TYPES.includes(o.type),
+    )
+
+    // Cheap key-field comparison — country + postalCode + addressLine1 are the fields
+    // that determine which shipping quotes are returned.
+    const selectedAddressMatchesFulfillmentDetails = (): boolean => {
+      const fd = orderData.fulfillmentDetails
+      if (!fd) return false
+      const addr = hasSavedAddresses
+        ? initialSelectedAddress?.address
+        : initialValues.address
+      if (!addr) return false
+      return (
+        addr.addressLine1 === (fd.addressLine1 ?? "") &&
+        addr.country === (fd.country ?? "") &&
+        addr.postalCode === (fd.postalCode ?? "")
+      )
+    }
+
+    if (
+      existingRealOptions.length > 0 &&
+      selectedAddressMatchesFulfillmentDetails()
+    ) {
+      // Quotes are already fresh — unlock the fulfillment step without re-fetching.
+      setSectionErrorMessage({
+        section: CheckoutStepName.FULFILLMENT_DETAILS,
+        error: null,
+      })
+      setFulfillmentDetailsComplete({})
+      setShippingPreloadComplete()
+      return
+    }
+
+    if (hasSavedAddresses && initialSelectedAddress) {
+      saveAddressToOrder(initialSelectedAddress, { silent: true }).then(
+        options => {
+          if (options.length > 0) {
+            setSectionErrorMessage({
+              section: CheckoutStepName.FULFILLMENT_DETAILS,
+              error: null,
+            })
+            setFulfillmentDetailsComplete({})
+          }
+          setShippingPreloadComplete()
+        },
+      )
+    } else if (!hasSavedAddresses) {
+      // Fire with country only to preload shipping options
+      const countryOnlyValues: FormikContextWithAddress = {
+        ...blankAddressValuesForUser,
+        address: {
+          ...blankAddressValuesForUser.address,
+          country:
+            initialValues.address.country ||
+            blankAddressValuesForUser.address.country,
+        },
+      }
+      saveAddressToOrder(countryOnlyValues, { silent: true }).then(() => {
+        setShippingPreloadComplete()
+      })
+    }
+  }, [])
+
   const saveAddressToUser = useCallback(
     async (values: FormikContextWithAddress) => {
       try {
@@ -194,64 +349,15 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           ContextModule.ordersFulfillment,
         )
 
-        // Unset the current fulfillment option if it exists
-        if (orderData.selectedFulfillmentOption?.type) {
-          const unsetFulfillmentOptionResult =
-            await unsetOrderFulfillmentOption.submitMutation({
-              variables: {
-                input: {
-                  id: orderData.internalID,
-                },
-              },
-            })
-          validateAndExtractOrderResponse(
-            unsetFulfillmentOptionResult.unsetOrderFulfillmentOption
-              ?.orderOrError,
-          )
-        }
+        // Save the full address to the order (updates fulfillment options in Relay store)
+        await saveAddressToOrder(values)
 
-        const input = {
-          id: orderData.internalID,
-          buyerPhoneNumber: values.phoneNumber,
-          buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
-          shippingAddressLine1: values.address.addressLine1,
-          shippingAddressLine2: values.address.addressLine2,
-          shippingCity: values.address.city,
-          shippingRegion: values.address.region,
-          shippingPostalCode: values.address.postalCode,
-          shippingCountry: values.address.country,
-          shippingName: values.address.name,
-        }
-
-        const setOrderDeliveryAddressResult =
-          await setOrderDeliveryAddressMutation.submitMutation({
-            variables: {
-              input,
-            },
-          })
-
-        const newOrder = validateAndExtractOrderResponse(
-          setOrderDeliveryAddressResult.updateOrderShippingAddress
-            ?.orderOrError,
-        ).order
-
-        const isMissingShippingOption = newOrder.fulfillmentOptions.every(
-          option => ["PICKUP", "SHIPPING_TBD"].includes(option.type),
-        )
-
-        if (!hasSavedAddresses) {
-          await saveAddressToUser(values)
-        }
-
-        if (isMissingShippingOption && orderData?.mode !== "OFFER") {
-          throw new LocalCheckoutError("no_shipping_options")
-        }
+        await saveAddressToUser(values)
 
         setSectionErrorMessage({
           section: CheckoutStepName.FULFILLMENT_DETAILS,
           error: null,
         })
-
         setSectionErrorMessage({
           section: "EXPRESS_CHECKOUT",
           error: null,
@@ -260,6 +366,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         setFulfillmentDetailsComplete({})
         setUserAddressMode(null)
       } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log("[onSubmit] ERROR caught:", error)
         handleError(
           error,
           formikHelpers,
@@ -274,19 +382,15 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     },
     [
       checkoutTracking,
-      hasSavedAddresses,
-      orderData.internalID,
-      orderData.selectedFulfillmentOption?.type,
-      orderData?.mode,
+      saveAddressToOrder,
       saveAddressToUser,
       setCheckoutMode,
       setFulfillmentDetailsComplete,
       setSectionErrorMessage,
       setUserAddressMode,
-      unsetOrderFulfillmentOption,
-      setOrderDeliveryAddressMutation,
     ],
   )
+
   return (
     <Formik
       initialValues={initialSelectedAddress || initialValues}
@@ -294,7 +398,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, setValues, status }) => {
+      {({ isSubmitting, setValues }) => {
         return (
           <Flex flexDirection={"column"} mb={2}>
             {fulfillmentDetailsError && (
@@ -318,6 +422,23 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 }
                 onSelectAddress={async values => {
                   await setValues(values)
+                  const isValid = validateAddressFields(values)
+                  const isShippable = (
+                    orderData.availableShippingCountries ?? []
+                  ).includes(values.address.country)
+                  if (!isValid || (!isShippable && !isOfferOrder)) {
+                    return
+                  }
+                  const options = await saveAddressToOrder(values, {
+                    silent: true,
+                  })
+                  if (options.length > 0 || isOfferOrder) {
+                    setSectionErrorMessage({
+                      section: CheckoutStepName.FULFILLMENT_DETAILS,
+                      error: null,
+                    })
+                    setFulfillmentDetailsComplete({})
+                  }
                 }}
               />
             ) : (
@@ -328,18 +449,15 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
                 <DeliveryFormFields
                   shippableCountries={shippableCountries as any}
+                  onCountryChange={values =>
+                    saveAddressToOrder(values, { silent: true })
+                  }
                 />
 
                 <Spacer y={4} />
 
-                <Button
-                  type="submit"
-                  loading={isSubmitting}
-                  disabled={!!status?.errorBanner}
-                  width="100%"
-                >
-                  {/* TODO: This would not apply for flat shipping */}
-                  See Shipping Methods
+                <Button type="submit" loading={isSubmitting}>
+                  Save address
                 </Button>
               </Form>
             )}
@@ -350,12 +468,16 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   )
 }
 
+// ─── Delivery form fields ─────────────────────────────────────────────────────
+
 interface DeliveryFormFieldsProps {
   shippableCountries: CountryData[]
+  onCountryChange: (values: FormikContextWithAddress) => void
 }
 
 const DeliveryFormFields: React.FC<DeliveryFormFieldsProps> = ({
   shippableCountries,
+  onCountryChange,
 }) => {
   const formRef = useScrollToFieldErrorOnSubmit()
 
@@ -365,9 +487,39 @@ const DeliveryFormFields: React.FC<DeliveryFormFieldsProps> = ({
         withPhoneNumber
         shippableCountries={shippableCountries as any}
       />
+      <CountryChangeEffect onCountryChange={onCountryChange} />
     </div>
   )
 }
+
+interface CountryChangeEffectProps {
+  onCountryChange: (values: FormikContextWithAddress) => void
+}
+
+const CountryChangeEffect: React.FC<CountryChangeEffectProps> = ({
+  onCountryChange,
+}) => {
+  const { values } = useFormikContext<FormikContextWithAddress>()
+  const isFirstRender = useRef(true)
+  const prevCountry = useRef(values.address.country)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only react to country changes
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      prevCountry.current = values.address.country
+      return
+    }
+    if (values.address.country !== prevCountry.current) {
+      prevCountry.current = values.address.country
+      onCountryChange(values)
+    }
+  }, [values.address.country])
+
+  return null
+}
+
+// ─── Relay fragments ──────────────────────────────────────────────────────────
 
 const ME_FRAGMENT = graphql`
   fragment Order2DeliveryForm_me on Me {
@@ -398,11 +550,15 @@ const ME_FRAGMENT = graphql`
 const ORDER_FRAGMENT = graphql`
   fragment Order2DeliveryForm_order on Order {
     internalID
-    selectedFulfillmentOption {
-      type
-    }
     mode
     availableShippingCountries
+    fulfillmentOptions {
+      type
+      selected
+      amount {
+        display
+      }
+    }
     fulfillmentDetails {
       addressLine1
       addressLine2
