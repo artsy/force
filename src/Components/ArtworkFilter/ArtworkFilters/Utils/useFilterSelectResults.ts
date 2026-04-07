@@ -1,4 +1,4 @@
-import type { FilterSelectChangeState, FilterSelectItems } from "@artsy/palette"
+import type { FilterSelectChangeState } from "@artsy/palette"
 import {
   type SelectedFiltersCountsLabels,
   type Slice,
@@ -22,18 +22,21 @@ export const useFilterSelectResults = ({
   slice,
 }: UseFilterSelectResultsProps) => {
   const { aggregations, setFilter } = useArtworkFilterContext()
+
   const selectedFilters = useCurrentlySelectedFilters()
   const filtersCount = useFilterLabelCountByKey(filtersCountKey)
+
   const labelWithCount = `${label}${filtersCount}`
   const filtersByFaceName = selectedFilters[facetName] ?? []
 
-  const items = aggregations
-    ?.find(aggregation => aggregation.slice === slice)
-    ?.counts.map(item => ({ label: item.name, ...item })) as FilterSelectItems
+  const items =
+    aggregations
+      ?.find(aggregation => aggregation.slice === slice)
+      ?.counts.map(item => ({ label: item.name, ...item })) ?? []
 
-  const selectedItems = filtersByFaceName.map(selectedFacetName => {
-    return items.find(item => item.value === selectedFacetName)
-  }) as FilterSelectItems
+  const selectedItems = filtersByFaceName.flatMap(selectedFacetName => {
+    return items.find(item => item.value === selectedFacetName) ?? []
+  })
 
   const handleFilterSelectChange = (state: FilterSelectChangeState) => {
     const selectedNationalities = state.selectedItems.map(item => item.value)
@@ -42,7 +45,7 @@ export const useFilterSelectResults = ({
 
   return {
     handleFilterSelectChange,
-    items: items ?? [],
+    items,
     labelWithCount,
     selectedItems,
   }
