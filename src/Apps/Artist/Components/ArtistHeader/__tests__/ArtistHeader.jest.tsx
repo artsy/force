@@ -4,7 +4,6 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-// import { useVariant } from "@unleash/proxy-client-react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -27,19 +26,6 @@ jest.mock(
     ProgressiveOnboardingFollowArtist: ({ children }) => children,
   }),
 )
-
-// jest.mock("@unleash/proxy-client-react", () => ({
-//   useVariant: jest.fn(() => ({
-//     enabled: true,
-//     name: "control",
-//   })),
-// }))
-
-// const mockUseVariant = useVariant as jest.Mock
-
-// jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
-//   useTrackFeatureVariantOnMount: jest.fn(),
-// }))
 
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()
