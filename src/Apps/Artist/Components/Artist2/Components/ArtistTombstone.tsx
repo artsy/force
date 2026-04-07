@@ -1,8 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Text } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { ArtistTombstone_artist$key } from "__generated__/ArtistTombstone_artist.graphql"
 import { useMemo } from "react"
@@ -16,9 +14,6 @@ export const ArtistTombstone: React.FC<ArtistTombstoneProps> = ({
   artist: artistRef,
 }) => {
   const artist = useFragment(fragment, artistRef)
-
-  const variant = useVariant("diamond_remove_tooltip_experiment")
-  const showTooltip = variant.name !== "experiment"
 
   const followButton = useMemo(
     () => (
@@ -55,15 +50,7 @@ export const ArtistTombstone: React.FC<ArtistTombstoneProps> = ({
         width="fit-content"
         gap={[1, 0.5]}
       >
-        {showTooltip ? (
-          <Box data-testid="follow-button-with-tooltip">
-            <ProgressiveOnboardingFollowArtist>
-              {followButton}
-            </ProgressiveOnboardingFollowArtist>
-          </Box>
-        ) : (
-          <Box data-testid="follow-button-without-tooltip">{followButton}</Box>
-        )}
+        {followButton}
 
         {!!artist.counts?.follows && (
           <Text variant="xs" color="mono60" textAlign="center" flexShrink={0}>
