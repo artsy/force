@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<962a8e6767f24290eb8dfe52f7769e95>>
+ * @generated SignedSource<<beff1ce3f0c779ca0a3aed144803f9f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,11 +28,15 @@ export type Order2DeliveryForm_order$data = {
     readonly postalCode: string | null | undefined;
     readonly region: string | null | undefined;
   } | null | undefined;
+  readonly fulfillmentOptions: ReadonlyArray<{
+    readonly amount: {
+      readonly display: string | null | undefined;
+    } | null | undefined;
+    readonly selected: boolean | null | undefined;
+    readonly type: FulfillmentOptionTypeEnum;
+  }>;
   readonly internalID: string;
   readonly mode: OrderModeEnum;
-  readonly selectedFulfillmentOption: {
-    readonly type: FulfillmentOptionTypeEnum;
-  } | null | undefined;
   readonly " $fragmentType": "Order2DeliveryForm_order";
 };
 export type Order2DeliveryForm_order$key = {
@@ -56,24 +60,6 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "FulfillmentOption",
-      "kind": "LinkedField",
-      "name": "selectedFulfillmentOption",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
       "name": "mode",
       "storageKey": null
@@ -83,6 +69,49 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "availableShippingCountries",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "fulfillmentOptions",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "selected",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -182,6 +211,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3f8dd0a2dec3c425455482916a5b6c02";
+(node as any).hash = "212727df433c553279c39c931a0d7691";
 
 export default node;

@@ -1089,7 +1089,7 @@ describe("Order2CheckoutRoute", () => {
 
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
-      const submitButton = screen.getByText("See Shipping Methods")
+      const submitButton = screen.getByText("Continue to Payment")
 
       // Verify submit button does not work
       act(() => {
@@ -1360,7 +1360,7 @@ describe("Order2CheckoutRoute", () => {
 
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
-      const submitButton = screen.getByText("See Shipping Methods")
+      const submitButton = screen.getByText("Continue to Payment")
 
       const addressInputValue = {
         name: "John Doe",
@@ -1535,7 +1535,7 @@ describe("Order2CheckoutRoute", () => {
         await waitFor(() => {
           expect(screen.getByText("Delivery address")).toBeInTheDocument()
         })
-        await userEvent.click(screen.getByText("See Shipping Methods"))
+        await userEvent.click(screen.getByText("Continue to Payment"))
 
         await flushPromiseQueue()
 
@@ -1685,7 +1685,7 @@ describe("Order2CheckoutRoute", () => {
 
         // Verify we're back to the address selection view
         await waitFor(() => {
-          expect(screen.getByText("See Shipping Methods")).toBeInTheDocument()
+          expect(screen.getByText("Continue to Payment")).toBeInTheDocument()
         })
       })
     })

@@ -12,7 +12,14 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => mockCheckoutContext,
 }))
 
-const mockSetOrderFulfillmentOption = jest.fn()
+const mockSetOrderFulfillmentOption = jest.fn().mockResolvedValue({
+  setOrderFulfillmentOption: {
+    orderOrError: {
+      __typename: "OrderWithMutationSuccess",
+      order: { internalID: "order-123" },
+    },
+  },
+})
 
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation",
@@ -32,7 +39,9 @@ beforeEach(() => {
       clickedSelectShippingOption: jest.fn(),
     },
     setDeliveryOptionComplete: jest.fn(),
+    setSectionErrorMessage: jest.fn(),
     messages: {},
+    isAddressLoading: false,
   }
 })
 
@@ -184,6 +193,23 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(standardRadio).not.toBeChecked()
     })
 
+    it("fires setOrderFulfillmentOption mutation immediately when selecting a shipping option", async () => {
+      renderWithRelay(multipleOptionsData)
+
+      const expressRadio = screen.getByRole("radio", { name: /Express/ })
+      await userEvent.click(expressRadio)
+
+      expect(mockSetOrderFulfillmentOption).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: expect.objectContaining({
+              fulfillmentOption: { type: "ARTSY_EXPRESS" },
+            }),
+          },
+        }),
+      )
+    })
+
     it("calls clickedSelectShippingOption tracking when selecting a shipping option", async () => {
       renderWithRelay(multipleOptionsData)
 
@@ -256,6 +282,48 @@ describe("Order2DeliveryOptionsForm", () => {
       ).toBeInTheDocument()
       expect(screen.getByText("Ships from New York, NY")).toBeInTheDocument()
     })
+
+    it("enables the submit button for SHIPPING_TBD without requiring a selectedFulfillmentOption", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            selectedFulfillmentOption: null,
+            fulfillmentOptions: [
+              {
+                type: "SHIPPING_TBD",
+                amount: { display: null },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByRole("button", { name: "Continue to Payment" }),
+      ).not.toBeDisabled()
+    })
+
+    it("does not fire the fulfillment option mutation for SHIPPING_TBD", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            selectedFulfillmentOption: null,
+            fulfillmentOptions: [
+              {
+                type: "SHIPPING_TBD",
+                amount: { display: null },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(mockSetOrderFulfillmentOption).not.toHaveBeenCalled()
+    })
   })
 
   describe("with no delivery options", () => {
@@ -300,12 +368,13 @@ describe("Order2DeliveryOptionsForm", () => {
       ).toBeInTheDocument()
     })
 
-    it("disables the submit button", () => {
+    it("disables the submit button when there are no delivery options", () => {
       renderWithRelay({
         Me: () => ({
           order: {
             internalID: "order-123",
             fulfillmentOptions: [],
+            selectedFulfillmentOption: null,
           },
         }),
       })
@@ -313,6 +382,50 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(
         screen.getByRole("button", { name: "Continue to Payment" }),
       ).toBeDisabled()
+    })
+
+    it("disables the submit button when no selectedFulfillmentOption on order", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            selectedFulfillmentOption: null,
+            fulfillmentOptions: [
+              {
+                type: "ARTSY_STANDARD",
+                amount: { display: "$25.00" },
+                selected: false,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByRole("button", { name: "Continue to Payment" }),
+      ).toBeDisabled()
+    })
+
+    it("enables the submit button when selectedFulfillmentOption is set", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
+            fulfillmentOptions: [
+              {
+                type: "ARTSY_STANDARD",
+                amount: { display: "$25.00" },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByRole("button", { name: "Continue to Payment" }),
+      ).not.toBeDisabled()
     })
   })
 
