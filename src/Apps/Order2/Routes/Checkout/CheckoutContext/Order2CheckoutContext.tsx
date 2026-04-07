@@ -61,6 +61,10 @@ export interface Order2CheckoutModel {
   isLoading: boolean
   /** True while the address mutation is in-flight; used by DELIVERY_OPTION step to show skeleton */
   isAddressLoading: boolean
+  /** True once the on-mount shipping preload (address mutation + auto-select) has finished; gates the checkout loading screen */
+  isShippingPreloadComplete: boolean
+  /** True when editDeliveryOption was triggered (Edit clicked on shipping completed card only) */
+  isEditingShippingOnly: boolean
   /** Express checkout loading state: 'submit' when submitting payment, 'active' when waiting for user to complete payment, null when idle */
   expressCheckoutState: "submit" | "active" | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
@@ -80,6 +84,7 @@ export interface Order2CheckoutModel {
 
   // Actions
   setAddressLoading: Action<this, boolean>
+  setShippingPreloadComplete: Action<this>
   setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
   setExpressCheckoutState: Action<this, "submit" | "active" | null>
   setFulfillmentDetailsComplete: Action<
@@ -118,6 +123,8 @@ export const Order2CheckoutContext: ReturnType<
   // Initial state with defaults
   isLoading: true,
   isAddressLoading: false,
+  isShippingPreloadComplete: false,
+  isEditingShippingOnly: false,
   expressCheckoutState: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
@@ -141,6 +148,10 @@ export const Order2CheckoutContext: ReturnType<
   // Actions
   setAddressLoading: action((state, isAddressLoading) => {
     state.isAddressLoading = isAddressLoading
+  }),
+
+  setShippingPreloadComplete: action(state => {
+    state.isShippingPreloadComplete = true
   }),
 
   setExpressCheckoutLoaded: action((state, availablePaymentMethods) => {
@@ -228,6 +239,7 @@ export const Order2CheckoutContext: ReturnType<
       return
     }
 
+    state.isEditingShippingOnly = false
     state.steps = state.steps.map(step => {
       // Complete FULFILLMENT_DETAILS if still ACTIVE (saved-addresses path: both steps run simultaneously)
       if (
@@ -263,6 +275,7 @@ export const Order2CheckoutContext: ReturnType<
 
   editFulfillmentDetails: action(state => {
     // Re-activates both FULFILLMENT_DETAILS and DELIVERY_OPTION (they work simultaneously).
+    state.isEditingShippingOnly = false
     state.steps = state.steps.map(step => {
       if (step.name === CheckoutStepName.FULFILLMENT_DETAILS)
         return { ...step, state: CheckoutStepState.ACTIVE }
@@ -284,7 +297,8 @@ export const Order2CheckoutContext: ReturnType<
   }),
 
   editDeliveryOption: action(state => {
-    // Re-activates DELIVERY_OPTION; FULFILLMENT_DETAILS stays completed.
+    // Re-activates DELIVERY_OPTION only; FULFILLMENT_DETAILS stays completed.
+    state.isEditingShippingOnly = true
     state.steps = state.steps.map(step => {
       if (step.name === CheckoutStepName.DELIVERY_OPTION)
         return { ...step, state: CheckoutStepState.ACTIVE }
@@ -393,6 +407,8 @@ export const Order2CheckoutContextProvider: React.FC<
     // Default values
     isLoading: true,
     isAddressLoading: false,
+    isShippingPreloadComplete: false,
+    isEditingShippingOnly: false,
     expressCheckoutState: null,
     expressCheckoutPaymentMethods: null,
     activeFulfillmentDetailsTab: null,

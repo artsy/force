@@ -29,6 +29,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
 
   const {
     steps,
+    isEditingShippingOnly,
     setActiveFulfillmentDetailsTab,
     checkoutTracking,
     setUserAddressMode,
@@ -45,15 +46,17 @@ export const Order2FulfillmentDetailsStep: React.FC<
   )
 
   // Show the address form when ACTIVE, or when COMPLETED but the delivery option
-  // step hasn't completed yet (both steps still interactable simultaneously).
+  // step hasn't completed yet and we're not editing shipping only.
   const showForm =
     stepState === CheckoutStepState.ACTIVE ||
-    (stepState === CheckoutStepState.COMPLETED && !deliveryOptionCompleted)
+    (stepState === CheckoutStepState.COMPLETED &&
+      !deliveryOptionCompleted &&
+      !isEditingShippingOnly)
 
-  // Show the collapsed completed card only after both steps are done.
+  // Show the collapsed completed card after both steps are done, or when editing shipping only.
   const showCompletedView =
     stepState === CheckoutStepState.COMPLETED &&
-    deliveryOptionCompleted &&
+    (deliveryOptionCompleted || isEditingShippingOnly) &&
     !!completedViewProps
 
   const fulfillmentOptions = orderData?.fulfillmentOptions

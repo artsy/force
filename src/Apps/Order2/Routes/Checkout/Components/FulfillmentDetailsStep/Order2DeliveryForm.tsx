@@ -88,6 +88,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     checkoutTracking,
     setFulfillmentDetailsComplete,
     setAddressLoading,
+    setShippingPreloadComplete,
     setUserAddressMode,
     setSectionErrorMessage,
     messages,
@@ -276,6 +277,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         error: null,
       })
       setFulfillmentDetailsComplete({})
+      setShippingPreloadComplete()
       return
     }
 
@@ -289,6 +291,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             })
             setFulfillmentDetailsComplete({})
           }
+          setShippingPreloadComplete()
         },
       )
     } else if (!hasSavedAddresses) {
@@ -302,7 +305,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             blankAddressValuesForUser.address.country,
         },
       }
-      saveAddressToOrder(countryOnlyValues, { silent: true })
+      saveAddressToOrder(countryOnlyValues, { silent: true }).then(() => {
+        setShippingPreloadComplete()
+      })
     }
   }, [])
 
