@@ -35,7 +35,15 @@ export const Order2DeliveryOptionsStep: React.FC<
   }
 
   if (stepState === CheckoutStepState.COMPLETED && completedViewProps) {
-    return <Order2DeliveryOptionsCompletedView {...completedViewProps} />
+    const isFlat = ["DOMESTIC_FLAT", "INTERNATIONAL_FLAT"].includes(
+      orderData.selectedFulfillmentOption?.type ?? "",
+    )
+    return (
+      <Order2DeliveryOptionsCompletedView
+        {...completedViewProps}
+        allowEdit={!isFlat}
+      />
+    )
   }
 
   return (

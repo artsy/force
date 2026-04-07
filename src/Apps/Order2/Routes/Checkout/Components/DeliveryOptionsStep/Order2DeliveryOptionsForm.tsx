@@ -6,6 +6,8 @@ import {
   Flex,
   Radio,
   RadioGroup,
+  Skeleton,
+  SkeletonBox,
   Spacer,
   Text,
   Tooltip,
@@ -30,8 +32,7 @@ import type {
   Order2DeliveryOptionsForm_order$data,
   Order2DeliveryOptionsForm_order$key,
 } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
-import { Form, Formik, type FormikConfig, useFormikContext } from "formik"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
@@ -41,9 +42,15 @@ interface Order2DeliveryOptionsFormProps {
 type DeliveryOption =
   Order2DeliveryOptionsForm_order$data["fulfillmentOptions"][number]
 
-interface FormValues {
-  deliveryOption: DeliveryOption
-}
+// Types that can be set via setOrderFulfillmentOption mutation.
+// SHIPPING_TBD and PICKUP are excluded — they are not user-selectable.
+const SELECTABLE_OPTION_TYPES = [
+  "DOMESTIC_FLAT",
+  "INTERNATIONAL_FLAT",
+  "ARTSY_STANDARD",
+  "ARTSY_EXPRESS",
+  "ARTSY_WHITE_GLOVE",
+]
 
 export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
@@ -54,9 +61,13 @@ export const Order2DeliveryOptionsForm: React.FC<
     setDeliveryOptionComplete,
     setSectionErrorMessage,
     messages,
+    isAddressLoading,
   } = useCheckoutContext()
+
   const setFulfillmentOptionMutation =
     useOrder2SetOrderFulfillmentOptionMutation()
+  const [isSavingOption, setIsSavingOption] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const deliveryOptionError = messages[CheckoutStepName.DELIVERY_OPTION]?.error
   const errorBannerRef = useScrollToErrorBanner(
@@ -67,146 +78,203 @@ export const Order2DeliveryOptionsForm: React.FC<
   const deliveryOptions = fulfillmentOptions.filter(
     option => option.type !== "PICKUP",
   )
+  // Options that can be saved via mutation. SHIPPING_TBD is display-only.
+  const selectableOptions = deliveryOptions.filter(o =>
+    SELECTABLE_OPTION_TYPES.includes(o.type),
+  )
+  // When all available options are SHIPPING_TBD, no mutation is needed — the
+  // seller will confirm shipping after checkout.
+  const onlyShippingTBD =
+    deliveryOptions.length > 0 && selectableOptions.length === 0
 
-  const handleSubmit: FormikConfig<FormValues>["onSubmit"] = async ({
-    deliveryOption,
-  }) => {
+  // Saves the selected option to the order without tracking (used for auto-selection on load).
+  const saveOption = useCallback(
+    async (option: DeliveryOption) => {
+      setIsSavingOption(true)
+      try {
+        const result = await setFulfillmentOptionMutation.submitMutation({
+          variables: {
+            input: {
+              id: orderData.internalID,
+              fulfillmentOption: { type: option.type as never },
+            },
+          },
+        })
+        validateAndExtractOrderResponse(
+          result.setOrderFulfillmentOption?.orderOrError,
+        ).order
+        setSectionErrorMessage({
+          section: CheckoutStepName.DELIVERY_OPTION,
+          error: null,
+        })
+      } catch (error) {
+        setSectionErrorMessage({
+          section: CheckoutStepName.DELIVERY_OPTION,
+          error: fallbackError("selecting your shipping method", error?.code),
+        })
+      } finally {
+        setIsSavingOption(false)
+      }
+    },
+    [
+      orderData.internalID,
+      setFulfillmentOptionMutation,
+      setSectionErrorMessage,
+    ],
+  )
+
+  // User-initiated selection: track the click then save.
+  const handleOptionSelect = useCallback(
+    async (option: DeliveryOption) => {
+      checkoutTracking.clickedSelectShippingOption(option.type)
+      await saveOption(option)
+    },
+    [checkoutTracking, saveOption],
+  )
+
+  // Auto-select the first selectable option on load (or when fresh quotes arrive)
+  // if the order has no selectedFulfillmentOption yet.
+  // SHIPPING_TBD is excluded — it is not submittable via the mutation.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: saveOption is stable; only re-run when option list or loading state changes
+  useEffect(() => {
+    if (
+      !orderData.selectedFulfillmentOption &&
+      selectableOptions.length > 0 &&
+      !isAddressLoading &&
+      !isSavingOption
+    ) {
+      saveOption(selectableOptions[0])
+    }
+  }, [
+    orderData.selectedFulfillmentOption,
+    selectableOptions.length,
+    isAddressLoading,
+  ])
+
+  const handleSubmit = useCallback(async () => {
+    setIsSubmitting(true)
     try {
       checkoutTracking.clickedOrderProgression(
         ContextModule.ordersShippingMethods,
       )
-      const setFulfillmentOptionResult =
-        await setFulfillmentOptionMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              fulfillmentOption: {
-                type: deliveryOption.type,
-              },
-            },
-          },
-        })
-
-      validateAndExtractOrderResponse(
-        setFulfillmentOptionResult.setOrderFulfillmentOption?.orderOrError,
-      ).order
-
       setSectionErrorMessage({
         section: CheckoutStepName.DELIVERY_OPTION,
         error: null,
       })
       setDeliveryOptionComplete()
     } catch (error) {
-      console.error("Error setting delivery option:", error)
+      console.error("Error completing delivery option:", error)
       setSectionErrorMessage({
         section: CheckoutStepName.DELIVERY_OPTION,
         error: fallbackError("selecting your shipping method", error?.code),
       })
+    } finally {
+      setIsSubmitting(false)
     }
-  }
+  }, [checkoutTracking, setDeliveryOptionComplete, setSectionErrorMessage])
 
   return (
-    <Formik<FormValues>
-      initialValues={{ deliveryOption: deliveryOptions[0] }}
-      onSubmit={handleSubmit}
-    >
-      {({ isSubmitting }) => {
-        return (
-          <Form>
-            <Flex
-              flexDirection="column"
-              backgroundColor="mono0"
-              py={2}
-              px={[2, 2, 4]}
-            >
-              {deliveryOptionError && (
-                <>
-                  <CheckoutErrorBanner
-                    ref={errorBannerRef}
-                    error={deliveryOptionError}
-                    analytics={{ flow: "User setting delivery method" }}
-                  />
-                  <Spacer y={2} />
-                </>
-              )}
-              <Flex flexDirection="column">
-                <Flex alignItems="center">
-                  <SectionHeading>Shipping method</SectionHeading>
+    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
+      {deliveryOptionError && (
+        <>
+          <CheckoutErrorBanner
+            ref={errorBannerRef}
+            error={deliveryOptionError}
+            analytics={{ flow: "User setting delivery method" }}
+          />
+          <Spacer y={2} />
+        </>
+      )}
+      <Flex flexDirection="column">
+        <Flex alignItems="center">
+          <SectionHeading>Shipping method</SectionHeading>
 
-                  <Tooltip
-                    variant="defaultDark"
-                    placement="top"
-                    width={250}
-                    pointer={true}
-                    content={
-                      <Text variant="xs">
-                        Shipping options depend on location and artwork size.
-                        International orders or works in shows may take longer.
-                      </Text>
-                    }
-                  >
-                    <Clickable aria-label="Shipping information" ml={0.5}>
-                      <InfoIcon />
-                    </Clickable>
-                  </Tooltip>
-                </Flex>
+          <Tooltip
+            variant="defaultDark"
+            placement="top"
+            width={250}
+            pointer={true}
+            content={
+              <Text variant="xs">
+                Shipping options depend on location and artwork size.
+                International orders or works in shows may take longer.
+              </Text>
+            }
+          >
+            <Clickable aria-label="Shipping information" ml={0.5}>
+              <InfoIcon />
+            </Clickable>
+          </Tooltip>
+        </Flex>
 
-                <Spacer y={1} />
+        <Spacer y={1} />
 
-                {shippingOrigin && (
-                  <Text variant="xs" color="mono60">
-                    Ships from {shippingOrigin}
-                  </Text>
-                )}
+        {shippingOrigin && (
+          <Text variant="xs" color="mono60">
+            Ships from {shippingOrigin}
+          </Text>
+        )}
 
-                <Text variant="xs" color="mono60">
-                  All options are protected against damage and loss with{" "}
-                  <RouterLink
-                    onClick={() =>
-                      checkoutTracking.clickedBuyerProtection(
-                        ContextModule.ordersShippingMethods,
-                      )
-                    }
-                    inline
-                    target="_blank"
-                    to={BUYER_GUARANTEE_URL}
-                  >
-                    Artsy&rsquo;s Buyer Guarantee
-                  </RouterLink>
-                  .
-                </Text>
+        <Text variant="xs" color="mono60">
+          All options are protected against damage and loss with{" "}
+          <RouterLink
+            onClick={() =>
+              checkoutTracking.clickedBuyerProtection(
+                ContextModule.ordersShippingMethods,
+              )
+            }
+            inline
+            target="_blank"
+            to={BUYER_GUARANTEE_URL}
+          >
+            Artsy&rsquo;s Buyer Guarantee
+          </RouterLink>
+          .
+        </Text>
 
-                <Spacer y={2} />
+        <Spacer y={2} />
 
-                {deliveryOptions.length === 1 ? (
-                  <SingleShippingOption option={deliveryOptions[0]} />
-                ) : deliveryOptions.length > 1 ? (
-                  <MultipleShippingOptionsForm options={deliveryOptions} />
-                ) : (
-                  <Flex flexDirection="column">
-                    <Text variant="sm-display" color="mono100">
-                      Unable to find shipping quotes. Please contact
-                      orders@artsy.net.
-                    </Text>
-                  </Flex>
-                )}
-              </Flex>
-
-              <Spacer y={4} />
-
-              <Button
-                loading={isSubmitting}
-                disabled={deliveryOptions.length === 0}
-                variant="primaryBlack"
-                width="100%"
-              >
-                Continue to Payment
-              </Button>
+        {isAddressLoading ? (
+          <Skeleton>
+            <Flex flexDirection="column" gap={1}>
+              {[0, 1, 2].map(i => (
+                <SkeletonBox key={i} height="52px" width="100%" />
+              ))}
             </Flex>
-          </Form>
-        )
-      }}
-    </Formik>
+          </Skeleton>
+        ) : deliveryOptions.length === 1 ? (
+          <SingleShippingOption option={deliveryOptions[0]} />
+        ) : deliveryOptions.length > 1 ? (
+          <MultipleShippingOptionsForm
+            options={deliveryOptions}
+            onSelectOption={handleOptionSelect}
+          />
+        ) : (
+          <Flex flexDirection="column">
+            <Text variant="sm-display" color="mono100">
+              Unable to find shipping quotes. Please contact orders@artsy.net.
+            </Text>
+          </Flex>
+        )}
+      </Flex>
+
+      <Spacer y={4} />
+
+      <Button
+        loading={isSubmitting || isSavingOption}
+        disabled={
+          (!orderData.selectedFulfillmentOption && !onlyShippingTBD) ||
+          deliveryOptions.length === 0 ||
+          isAddressLoading ||
+          isSavingOption
+        }
+        variant="primaryBlack"
+        width="100%"
+        onClick={handleSubmit}
+      >
+        Continue to Payment
+      </Button>
+    </Flex>
   )
 }
 
@@ -219,6 +287,9 @@ const FRAGMENT = graphql`
       }
       type
       selected
+    }
+    selectedFulfillmentOption {
+      type
     }
     shippingOrigin
   }
@@ -254,15 +325,15 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
 
 interface MultipleShippingOptionsFormProps {
   options: DeliveryOption[]
+  onSelectOption: (option: DeliveryOption) => void
 }
 
 const MultipleShippingOptionsForm = ({
   options,
+  onSelectOption,
 }: MultipleShippingOptionsFormProps) => {
   const defaultOption = options.find(option => option.selected) || options[0]
   const [selectedOption, setSelectedOption] = useState(defaultOption)
-  const { setFieldValue } = useFormikContext<FormValues>()
-  const { checkoutTracking } = useCheckoutContext()
 
   return (
     <RadioGroup
@@ -270,8 +341,7 @@ const MultipleShippingOptionsForm = ({
       defaultValue={defaultOption}
       onSelect={option => {
         setSelectedOption(option)
-        setFieldValue("deliveryOption", option)
-        checkoutTracking.clickedSelectShippingOption(option.type)
+        onSelectOption(option)
       }}
     >
       {options.map(option => {
