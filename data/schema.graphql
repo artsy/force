@@ -10374,9 +10374,6 @@ type CreateInstagramPostFailure {
 }
 
 input CreateInstagramPostInput {
-  # The ID of the artwork to post
-  artworkId: String!
-
   # Post caption (auto-generated from artwork data if omitted)
   caption: String
   clientMutationId: String
@@ -10386,6 +10383,9 @@ input CreateInstagramPostInput {
 
   # The internal ID of the Instagram account to post from
   instagramAccountId: String!
+
+  # Slides for the Instagram post. Each slide references an artwork and a custom image. The order determines the carousel position.
+  slides: [InstagramPostSlideInput!]!
 }
 
 type CreateInstagramPostPayload {
@@ -15733,7 +15733,7 @@ enum InstagramAccountStatus {
 }
 
 type InstagramPost {
-  artworkId: String!
+  artworkIds: [String!]!
   caption: String
   createdAt(
     format: String
@@ -15784,6 +15784,15 @@ type InstagramPostEdge {
 
   # The item at the end of the edge
   node: InstagramPost
+}
+
+# A slide in an Instagram carousel post. The order of slides in the array determines their position in the carousel.
+input InstagramPostSlideInput {
+  # The ID of the artwork for this slide
+  artworkId: String!
+
+  # Custom image URL to use instead of the artwork's default image
+  imageUrl: String!
 }
 
 enum InstagramPostStatus {
@@ -17992,7 +18001,7 @@ type Mutation {
     input: CommerceCreateInquiryOrderWithArtworkInput!
   ): CommerceCreateInquiryOrderWithArtworkPayload
 
-  # Create and publish an Instagram post from an artwork
+  # Create and publish an Instagram post from one or more artworks or images.
   createInstagramPost(
     input: CreateInstagramPostInput!
   ): CreateInstagramPostPayload
