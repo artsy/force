@@ -2745,6 +2745,7 @@ type Artwork implements Node & Searchable & Sellable {
 
   # This field is intended for use exclusively on the individual Artwork page for alt tags
   caption: String
+  catalogArtwork: CatalogArtwork
 
   # Represents the "**medium type**", such as _Painting_. (This field is also commonly referred to as just "medium", but should not be confused with the artwork attribute called `medium`.)
   category: String @deprecated(reason: "Prefer to use `mediumType`.")
@@ -5585,6 +5586,33 @@ type CareerHighlight implements Node {
   partner: Partner!
   solo: Boolean!
   venue: String!
+}
+
+type CatalogArtwork {
+  artworkId: String
+  availability: String
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  medium: String
+  priceCurrency: String
+  priceListed: Money
+  privateNotes: String
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
 }
 
 type CausalityLotState {
