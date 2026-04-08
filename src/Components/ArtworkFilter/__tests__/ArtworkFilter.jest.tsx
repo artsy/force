@@ -32,19 +32,6 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  ...jest.requireActual("@unleash/proxy-client-react"),
-  useFlag: jest.fn(),
-  useVariant: jest.fn(() => ({
-    enabled: true,
-    name: "control",
-  })),
-}))
-
-jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
-  useTrackFeatureVariantOnMount: jest.fn(),
-}))
-
 describe("ArtworkFilter", () => {
   const onFilterClick = jest.fn()
   const onChange = jest.fn()
