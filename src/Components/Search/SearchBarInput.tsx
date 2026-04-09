@@ -32,7 +32,8 @@ import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
-const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT = "onyx_search-autosuggest-variant"
+const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT =
+  "onyx_search-autosuggest-experiment"
 
 export interface SearchBarInputProps {
   searchTerm: string
