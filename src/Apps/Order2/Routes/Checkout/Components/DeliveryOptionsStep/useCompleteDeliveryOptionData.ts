@@ -53,6 +53,7 @@ export const useCompleteDeliveryOptionData = (
     label: label || "",
     timeEstimatePrefix: timeEstimate?.[0] || null,
     timeEstimateRange: timeEstimate?.[1] || null,
+    price: orderData.selectedFulfillmentOption?.amount?.display || null,
   }
 }
 
@@ -60,6 +61,9 @@ const FRAGMENT = graphql`
   fragment useCompleteDeliveryOptionData_order on Order {
     selectedFulfillmentOption {
       type
+      amount {
+        display
+      }
     }
   }
 `

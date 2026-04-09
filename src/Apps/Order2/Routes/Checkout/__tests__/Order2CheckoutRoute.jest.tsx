@@ -1209,9 +1209,6 @@ describe("Order2CheckoutRoute", () => {
           return mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
               orderMutationSuccess(initialOrder, {
-                selectedFulfillmentOption: {
-                  type: "DOMESTIC_FLAT",
-                },
                 fulfillmentDetails: {
                   phoneNumber: {
                     originalNumber: "1234567890",
@@ -1252,14 +1249,9 @@ describe("Order2CheckoutRoute", () => {
         await flushPromiseQueue()
       })
 
-      // Complete shipping option step
-      const submitPaymentButton = await screen.findByText("Continue to Payment")
-
+      // Single flat-rate option: auto-save fires on step activation, auto-advances to payment
       let setFulfillmentOptionOperation
-      userEvent.click(submitPaymentButton)
-
       await act(async () => {
-        // Shipping MUTATIONS
         const operation = await waitFor(() => {
           return mockResolveLastOperation({
             setOrderFulfillmentOptionPayload: () =>
@@ -1299,10 +1291,6 @@ describe("Order2CheckoutRoute", () => {
         },
         {
           action: "orderProgressionViewed",
-          context_module: "ordersShippingMethods",
-        },
-        {
-          action: "clickedOrderProgression",
           context_module: "ordersShippingMethods",
         },
         {

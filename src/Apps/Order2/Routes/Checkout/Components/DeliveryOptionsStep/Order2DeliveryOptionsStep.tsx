@@ -35,7 +35,16 @@ export const Order2DeliveryOptionsStep: React.FC<
   }
 
   if (stepState === CheckoutStepState.COMPLETED && completedViewProps) {
-    return <Order2DeliveryOptionsCompletedView {...completedViewProps} />
+    const selectableOptions = orderData.fulfillmentOptions.filter(
+      o => !["PICKUP", "SHIPPING_TBD"].includes(o.type),
+    )
+    const allowEdit = selectableOptions.length > 1
+    return (
+      <Order2DeliveryOptionsCompletedView
+        {...completedViewProps}
+        allowEdit={allowEdit}
+      />
+    )
   }
 
   return (
@@ -57,6 +66,9 @@ const FRAGMENT = graphql`
     ...useCompleteDeliveryOptionData_order
     ...Order2DeliveryOptionsForm_order
     internalID
+    fulfillmentOptions {
+      type
+    }
     selectedFulfillmentOption {
       type
       amount {

@@ -32,7 +32,9 @@ beforeEach(() => {
       clickedSelectShippingOption: jest.fn(),
     },
     setDeliveryOptionComplete: jest.fn(),
+    setSectionErrorMessage: jest.fn(),
     messages: {},
+    steps: [],
   }
 })
 

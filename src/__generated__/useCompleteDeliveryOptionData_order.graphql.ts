@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db9f3d79cbab420f970a59765a8f4c75>>
+ * @generated SignedSource<<5bd86a453fbca56d4ea70df8bfc27b3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,9 @@ export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "AR
 import { FragmentRefs } from "relay-runtime";
 export type useCompleteDeliveryOptionData_order$data = {
   readonly selectedFulfillmentOption: {
+    readonly amount: {
+      readonly display: string | null | undefined;
+    } | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly " $fragmentType": "useCompleteDeliveryOptionData_order";
@@ -42,6 +45,24 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "type",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -51,6 +72,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b929841764cbbcd1c90721c6cb410e2b";
+(node as any).hash = "8adf1cfa5600086b9634a39e200ef94e";
 
 export default node;
