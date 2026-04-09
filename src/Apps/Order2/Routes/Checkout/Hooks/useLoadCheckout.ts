@@ -20,7 +20,7 @@ import { graphql, useFragment } from "react-relay"
 const logger = createLogger("useLoadCheckout.tsx")
 
 export const MIN_LOADING_MS = 1000
-export const MAX_LOADING_MS = 6000
+export const MAX_LOADING_MS = 60
 
 export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)

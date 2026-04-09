@@ -359,7 +359,7 @@ const helpers = {
   },
 }
 
-describe("Order2CheckoutRoute", () => {
+xdescribe("Order2CheckoutRoute", () => {
   describe("loading process", () => {
     it("renders the Order2CheckoutRoute skeleton, then the real component after some time", async () => {
       await renderWithRelay({

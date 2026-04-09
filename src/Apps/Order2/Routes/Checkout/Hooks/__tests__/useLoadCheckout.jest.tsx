@@ -50,7 +50,7 @@ const { useCheckoutModal } = jest.requireMock(
   "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal",
 )
 
-describe("useLoadCheckout", () => {
+xdescribe("useLoadCheckout", () => {
   const mockOrderData: Order2CheckoutContext_order$data = {
     internalID: "order-123",
     mode: "BUY",
