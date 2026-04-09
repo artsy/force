@@ -46,6 +46,14 @@ sed -i.bak "s/host: staging.artsy.net/host: $NAME.artsy.net/g" "$review_app_file
 # Provision the review app
 hokusai review_app create "$NAME" --verbose
 
+# Clean up the namespace if any subsequent step fails, so that the next CI run
+# doesn't mistake a partially-created app for a fully running one.
+cleanup_on_failure() {
+  echo "[build_review_app.sh] Creation failed after namespace was created. Cleaning up namespace $NAME..."
+  kubectl --context staging delete namespace "$NAME" || true
+}
+trap cleanup_on_failure ERR
+
 # To enable authentication via Force's server, we need to allow XHR requests
 # from Force's client to server. As such, Force's server needs to have the
 # proper name of the domain that the requests are coming from. Otherwise,
