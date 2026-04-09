@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a7eb602a0ef7ffa6e28fc8eebfdabcc>>
+ * @generated SignedSource<<49109b7fbf58bce33c54528c9ec44e99>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,9 @@ export type Order2DeliveryOptionsForm_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly internalID: string;
+  readonly selectedFulfillmentOption: {
+    readonly type: FulfillmentOptionTypeEnum;
+  } | null | undefined;
   readonly shippingOrigin: string | null | undefined;
   readonly " $fragmentType": "Order2DeliveryOptionsForm_order";
 };
@@ -29,7 +32,15 @@ export type Order2DeliveryOptionsForm_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "type",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -75,13 +86,7 @@ const node: ReaderFragment = {
           ],
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -89,6 +94,18 @@ const node: ReaderFragment = {
           "name": "selected",
           "storageKey": null
         }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "selectedFulfillmentOption",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -103,7 +120,8 @@ const node: ReaderFragment = {
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "3fc4065a8da9b7471032e42d53523e7f";
+(node as any).hash = "49dcc3f71f75171b27bf34a7a8834c01";
 
 export default node;

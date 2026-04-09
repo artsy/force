@@ -49,11 +49,17 @@ export const useCompleteDeliveryOptionData = (
 
   const label = deliveryOptionLabel(fulfillmentType, cost)
   const timeEstimate = deliveryOptionTimeEstimate(fulfillmentType)
+  const isFlatRate = ["DOMESTIC_FLAT", "INTERNATIONAL_FLAT"].includes(
+    fulfillmentType,
+  )
 
   return {
     label: label || "",
     timeEstimatePrefix: timeEstimate?.[0] || null,
     timeEstimateRange: timeEstimate?.[1] || null,
+    price: isFlatRate
+      ? orderData.selectedFulfillmentOption?.amount?.display || null
+      : null,
   }
 }
 
@@ -63,6 +69,7 @@ const FRAGMENT = graphql`
       type
       amount {
         minor
+        display
       }
     }
   }

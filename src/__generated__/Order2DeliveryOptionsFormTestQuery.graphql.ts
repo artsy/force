@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<796d0a05c488e0e0d7de8386e2e6cad1>>
+ * @generated SignedSource<<eb3680c81dbb48d6d08a6f9f87473ad5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,20 +35,41 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "type",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v5 = {
+  "enumValues": [
+    "ARTSY_EXPRESS",
+    "ARTSY_STANDARD",
+    "ARTSY_WHITE_GLOVE",
+    "DOMESTIC_FLAT",
+    "INTERNATIONAL_FLAT",
+    "PICKUP",
+    "SHIPPING_TBD"
+  ],
+  "nullable": false,
+  "plural": false,
+  "type": "FulfillmentOptionTypeEnum"
 };
 return {
   "fragment": {
@@ -150,13 +171,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "type",
-                    "storageKey": null
-                  },
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -170,22 +185,34 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "FulfillmentOption",
+                "kind": "LinkedField",
+                "name": "selectedFulfillmentOption",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
                 "name": "shippingOrigin",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d65499374f5941523f28068d0a6d50cc",
+    "cacheID": "62717175718406eef15cad14a00ab22b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -195,7 +222,7 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v2/*: any*/),
+        "me.id": (v3/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
@@ -214,7 +241,7 @@ return {
           "plural": false,
           "type": "Money"
         },
-        "me.order.fulfillmentOptions.amount.display": (v3/*: any*/),
+        "me.order.fulfillmentOptions.amount.display": (v4/*: any*/),
         "me.order.fulfillmentOptions.amount.minor": {
           "enumValues": null,
           "nullable": false,
@@ -227,28 +254,22 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "me.order.fulfillmentOptions.type": {
-          "enumValues": [
-            "ARTSY_EXPRESS",
-            "ARTSY_STANDARD",
-            "ARTSY_WHITE_GLOVE",
-            "DOMESTIC_FLAT",
-            "INTERNATIONAL_FLAT",
-            "PICKUP",
-            "SHIPPING_TBD"
-          ],
-          "nullable": false,
+        "me.order.fulfillmentOptions.type": (v5/*: any*/),
+        "me.order.id": (v3/*: any*/),
+        "me.order.internalID": (v3/*: any*/),
+        "me.order.selectedFulfillmentOption": {
+          "enumValues": null,
+          "nullable": true,
           "plural": false,
-          "type": "FulfillmentOptionTypeEnum"
+          "type": "FulfillmentOption"
         },
-        "me.order.id": (v2/*: any*/),
-        "me.order.internalID": (v2/*: any*/),
-        "me.order.shippingOrigin": (v3/*: any*/)
+        "me.order.selectedFulfillmentOption.type": (v5/*: any*/),
+        "me.order.shippingOrigin": (v4/*: any*/)
       }
     },
     "name": "Order2DeliveryOptionsFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  shippingOrigin\n}\n"
+    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n"
   }
 };
 })();
