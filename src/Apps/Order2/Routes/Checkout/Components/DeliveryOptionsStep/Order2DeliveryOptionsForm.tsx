@@ -95,10 +95,7 @@ export const Order2DeliveryOptionsForm: React.FC<
    * Pass track=true for user-initiated selections to fire analytics.
    */
   const saveOption = useCallback(
-    async (option: DeliveryOption, { track = false } = {}) => {
-      if (track) {
-        checkoutTracking.clickedSelectShippingOption(option.type)
-      }
+    async (option: DeliveryOption): Promise<boolean> => {
       setIsSaving(true)
       try {
         const result = await setFulfillmentOptionMutation.submitMutation({
@@ -116,17 +113,18 @@ export const Order2DeliveryOptionsForm: React.FC<
           section: CheckoutStepName.DELIVERY_OPTION,
           error: null,
         })
+        return true
       } catch (error) {
         setSectionErrorMessage({
           section: CheckoutStepName.DELIVERY_OPTION,
           error: fallbackError("selecting your shipping method", error?.code),
         })
+        return false
       } finally {
         setIsSaving(false)
       }
     },
     [
-      checkoutTracking,
       orderData.internalID,
       setFulfillmentOptionMutation,
       setSectionErrorMessage,
@@ -138,9 +136,11 @@ export const Order2DeliveryOptionsForm: React.FC<
   // biome-ignore lint/correctness/useExhaustiveDependencies: saveOption is stable; only re-run when step activates
   useEffect(() => {
     if (stepState !== CheckoutStepState.ACTIVE) return
-    if (orderData.selectedFulfillmentOption || selectableOptions.length === 0) {
-      return
-    }
+    if (selectableOptions.length === 0) return
+    const selectedType = orderData.selectedFulfillmentOption?.type
+    const selectedIsValid =
+      selectedType && selectableOptions.some(o => o.type === selectedType)
+    if (selectedIsValid) return
     saveOption(selectableOptions[0]).then(() => {
       if (selectableOptions.length === 1) {
         setDeliveryOptionComplete()
@@ -229,7 +229,10 @@ export const Order2DeliveryOptionsForm: React.FC<
         ) : deliveryOptions.length > 1 ? (
           <MultipleShippingOptionsForm
             options={deliveryOptions}
-            onSelectOption={option => saveOption(option, { track: true })}
+            onSelectOption={option => {
+              checkoutTracking.clickedSelectShippingOption(option.type)
+              return saveOption(option)
+            }}
           />
         ) : (
           <Flex flexDirection="column">
@@ -305,7 +308,7 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
 
 interface MultipleShippingOptionsFormProps {
   options: DeliveryOption[]
-  onSelectOption: (option: DeliveryOption) => void
+  onSelectOption: (option: DeliveryOption) => Promise<boolean>
 }
 
 const MultipleShippingOptionsForm = ({
@@ -319,9 +322,13 @@ const MultipleShippingOptionsForm = ({
     <RadioGroup
       flexDirection="column"
       defaultValue={defaultOption}
-      onSelect={option => {
+      onSelect={async option => {
+        const previous = selectedOption
         setSelectedOption(option)
-        onSelectOption(option)
+        const success = await onSelectOption(option)
+        if (!success) {
+          setSelectedOption(previous)
+        }
       }}
     >
       {options.map(option => {
