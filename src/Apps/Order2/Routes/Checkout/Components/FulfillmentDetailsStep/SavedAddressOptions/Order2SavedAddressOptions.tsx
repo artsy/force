@@ -316,7 +316,7 @@ export const SavedAddressOptions = ({
           parentFormikContext.handleSubmit()
         }}
       >
-        See Shipping Methods
+        Save and Continue
       </Button>
     </Flex>
   )
