@@ -2745,6 +2745,7 @@ type Artwork implements Node & Searchable & Sellable {
 
   # This field is intended for use exclusively on the individual Artwork page for alt tags
   caption: String
+  catalogArtwork: CatalogArtwork
 
   # Represents the "**medium type**", such as _Painting_. (This field is also commonly referred to as just "medium", but should not be confused with the artwork attribute called `medium`.)
   category: String @deprecated(reason: "Prefer to use `mediumType`.")
@@ -5585,6 +5586,33 @@ type CareerHighlight implements Node {
   partner: Partner!
   solo: Boolean!
   venue: String!
+}
+
+type CatalogArtwork {
+  artworkId: String
+  availability: String
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  medium: String
+  priceCurrency: String
+  priceListed: Money
+  privateNotes: String
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
 }
 
 type CausalityLotState {
@@ -10374,9 +10402,6 @@ type CreateInstagramPostFailure {
 }
 
 input CreateInstagramPostInput {
-  # The ID of the artwork to post
-  artworkId: String!
-
   # Post caption (auto-generated from artwork data if omitted)
   caption: String
   clientMutationId: String
@@ -10386,6 +10411,9 @@ input CreateInstagramPostInput {
 
   # The internal ID of the Instagram account to post from
   instagramAccountId: String!
+
+  # Slides for the Instagram post. Each slide references an artwork and a custom image. The order determines the carousel position.
+  slides: [InstagramPostSlideInput!]!
 }
 
 type CreateInstagramPostPayload {
@@ -12605,19 +12633,6 @@ enum DisplayTextsMessageTypeEnum {
   SUBMITTED_OFFER
   SUBMITTED_ORDER
   UNKNOWN
-}
-
-type DoNotUseThisPartner {
-  displayName: String
-  display_name: String @deprecated(reason: "Use displayName")
-  givenName: String
-  given_name: String @deprecated(reason: "Use givenName")
-  id: ID!
-  relativeSize: Int
-  relative_size: Int @deprecated(reason: "Use relativeSize")
-  slug: String
-  subscriptionState: String
-  subscription_state: String @deprecated(reason: "Use subscriptionState")
 }
 
 # The type of domestic shipping option
@@ -15733,7 +15748,7 @@ enum InstagramAccountStatus {
 }
 
 type InstagramPost {
-  artworkId: String!
+  artworkIds: [String!]!
   caption: String
   createdAt(
     format: String
@@ -15784,6 +15799,15 @@ type InstagramPostEdge {
 
   # The item at the end of the edge
   node: InstagramPost
+}
+
+# A slide in an Instagram carousel post. The order of slides in the array determines their position in the carousel.
+input InstagramPostSlideInput {
+  # The ID of the artwork for this slide
+  artworkId: String!
+
+  # Custom image URL to use instead of the artwork's default image
+  imageUrl: String!
 }
 
 enum InstagramPostStatus {
@@ -17478,7 +17502,6 @@ type MetaphysicsService {
   stitching: Boolean!
   stitchingConvection: Boolean!
   stitchingExchange: Boolean!
-  stitchingGravity: Boolean!
 }
 
 # A recorded change to a trackable model.
@@ -17992,7 +18015,7 @@ type Mutation {
     input: CommerceCreateInquiryOrderWithArtworkInput!
   ): CommerceCreateInquiryOrderWithArtworkPayload
 
-  # Create and publish an Instagram post from an artwork
+  # Create and publish an Instagram post from one or more artworks or images.
   createInstagramPost(
     input: CreateInstagramPostInput!
   ): CreateInstagramPostPayload
@@ -21753,28 +21776,6 @@ type Query {
     last: Int
     userId: ID!
   ): AuctionsLotStandingConnection!
-
-  # Autocomplete resolvers.
-  _unused_gravity_matchPartners(
-    matchType: String
-    page: Int = 1
-    size: Int = 5
-    term: String!
-  ): [DoNotUseThisPartner!]
-
-  # Autocomplete resolvers.
-  _unused_gravity_match_partners(
-    match_type: String
-    page: Int = 1
-    size: Int = 5
-    term: String!
-  ): [DoNotUseThisPartner!] @deprecated(reason: "Use matchPartners")
-
-  # Find a partner by ID
-  _unused_gravity_partner(id: ID!): DoNotUseThisPartner
-
-  # Find partners by IDs
-  _unused_gravity_partners(ids: [ID!]!): [DoNotUseThisPartner!]
   admin: Admin
 
   # Find an agreement by ID
@@ -24103,16 +24104,6 @@ type Sale implements Node {
 
   # True if the current user needs to undergo identity verification for this sale, false otherwise
   userNeedsIdentityVerification: Boolean
-}
-
-type SaleAdministrationFields {
-  collectorVetting: String
-  id: ID!
-  marketingTier: String
-  marketingTierConfirmed: Boolean!
-  partnerTier: String
-  region: String
-  status: String
 }
 
 type SaleAgreement {

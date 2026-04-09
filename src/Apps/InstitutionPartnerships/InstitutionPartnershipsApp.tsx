@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Column,
@@ -13,7 +12,7 @@ import {
 } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
-import { cropped, resized } from "Utils/resized"
+import { resized } from "Utils/resized"
 import type { FC } from "react"
 import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnershipsHero"
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"
@@ -222,60 +221,7 @@ export const InstitutionPartnershipsApp: FC<
             </ResponsiveBox>
           </Column>
         </GridColumns>
-
-        <Separator />
-
-        <GridColumns>
-          <Column span={6}>
-            <Join separator={<Separator my={2} />}>
-              {PROFILES.map(profile => {
-                return (
-                  <Box key={profile.name} display="flex">
-                    <Avatar
-                      {...cropped(profile.src, { width: 100, height: 100 })}
-                      size="md"
-                    />
-
-                    <Box ml={2}>
-                      <Text variant="lg">{profile.name}</Text>
-                      <Text variant="md">{profile.title}</Text>
-                    </Box>
-                  </Box>
-                )
-              })}
-            </Join>
-          </Column>
-
-          <Column span={6}>
-            <Text variant="xs">Team</Text>
-
-            <Text variant="xl" mt={1}>
-              Passionate Museum Experts Dedicated to Fostering Access to Art
-            </Text>
-
-            <Text variant="sm" mt={1}>
-              The Artsy institutions team is dedicated to building an
-              encyclopedic database and fostering free online access to world
-              art. Every partner works with an Artsy team member to help you
-              promote your organization to Artsy's international audience of art
-              lovers, students, and patrons of the arts.
-            </Text>
-          </Column>
-        </GridColumns>
       </Join>
     </>
   )
 }
-
-const PROFILES = [
-  {
-    name: "Erica Lyon",
-    title: "Associate Director, Auction & Institutional Partnerships",
-    src: "https://files.artsy.net/images/institutions-avatar-erica-lyon.jpg",
-  },
-  {
-    name: "Perry Weber",
-    title: "Manager, Auction Partnerships",
-    src: "https://files.artsy.net/images/institutions-avatar-perry-weber.jpg",
-  },
-]
