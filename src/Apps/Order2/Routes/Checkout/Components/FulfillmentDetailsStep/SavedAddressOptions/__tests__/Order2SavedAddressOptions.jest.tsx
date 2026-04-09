@@ -426,7 +426,7 @@ describe("SavedAddressOptions", () => {
       )
 
       const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
+        name: /Save and Continue/i,
       })
       expect(submitButton).toBeDisabled()
     })
@@ -450,7 +450,7 @@ describe("SavedAddressOptions", () => {
       )
 
       const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
+        name: /Save and Continue/i,
       })
       expect(submitButton).toBeEnabled()
     })
@@ -474,7 +474,7 @@ describe("SavedAddressOptions", () => {
       )
 
       const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
+        name: /Save and Continue/i,
       })
       expect(submitButton).toBeDisabled()
     })
@@ -492,7 +492,7 @@ describe("SavedAddressOptions", () => {
       )
 
       expect(
-        screen.getByRole("button", { name: /See Shipping Methods/i }),
+        screen.getByRole("button", { name: /Save and Continue/i }),
       ).toBeDisabled()
     })
 
@@ -515,7 +515,7 @@ describe("SavedAddressOptions", () => {
       )
 
       const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
+        name: /Save and Continue/i,
       })
       expect(submitButton).toBeEnabled()
     })
