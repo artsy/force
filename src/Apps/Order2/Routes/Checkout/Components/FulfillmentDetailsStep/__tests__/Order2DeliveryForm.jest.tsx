@@ -83,7 +83,7 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
-      expect(screen.getByText("See Shipping Methods")).toBeInTheDocument()
+      expect(screen.getByText("Save and Continue")).toBeInTheDocument()
       expect(screen.getByPlaceholderText("Add full name")).toBeInTheDocument()
       expect(screen.getByLabelText("Street address")).toBeInTheDocument()
       expect(screen.getByLabelText("City")).toBeInTheDocument()
@@ -177,7 +177,7 @@ describe("Order2DeliveryForm", () => {
 
         // Click the button to submit the form
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         // Wait for the form submission to start and resolve the mutations
@@ -271,7 +271,7 @@ describe("Order2DeliveryForm", () => {
 
         // Click submit button
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         await waitFor(() => {
@@ -332,7 +332,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Try to submit without filling required fields
-        await userEvent.click(screen.getByText("See Shipping Methods"))
+        await userEvent.click(screen.getByText("Save and Continue"))
 
         // Should not trigger tracking because form validation should prevent submission
         expect(
@@ -391,7 +391,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         let shippingAddressMutation
@@ -536,7 +536,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         await waitFor(() => {
@@ -638,7 +638,7 @@ describe("Order2DeliveryForm", () => {
 
         // Submit the form
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         // First mutation: unset existing fulfillment option
@@ -771,7 +771,7 @@ describe("Order2DeliveryForm", () => {
 
         // Submit the form
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         let mutation
@@ -848,7 +848,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         let shippingAddressMutation
@@ -1002,7 +1002,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         await waitFor(() => {
@@ -1109,7 +1109,7 @@ describe("Order2DeliveryForm", () => {
         )
 
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         // First mutation: update shipping address
@@ -1198,7 +1198,7 @@ describe("Order2DeliveryForm", () => {
 
         // Try to submit without filling required fields
         act(() => {
-          userEvent.click(screen.getByText("See Shipping Methods"))
+          userEvent.click(screen.getByText("Save and Continue"))
         })
 
         // Advance timers to trigger validation
@@ -1301,7 +1301,7 @@ describe("Order2DeliveryForm", () => {
 
       // Click the button to submit the form
       act(() => {
-        userEvent.click(screen.getByText("See Shipping Methods"))
+        userEvent.click(screen.getByText("Save and Continue"))
       })
 
       let mutation
@@ -1374,7 +1374,7 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
       userEvent.click(screen.getByText("Berlin, Berlin 56789"))
-      userEvent.click(screen.getByText("See Shipping Methods"))
+      userEvent.click(screen.getByText("Save and Continue"))
 
       let mutation
       await waitFor(() => {
@@ -1639,7 +1639,7 @@ describe("Order2DeliveryForm", () => {
 
       // Submit the form directly since it's pre-filled
       act(() => {
-        userEvent.click(screen.getByText("See Shipping Methods"))
+        userEvent.click(screen.getByText("Save and Continue"))
       })
 
       // Only expect the shipping address update mutation

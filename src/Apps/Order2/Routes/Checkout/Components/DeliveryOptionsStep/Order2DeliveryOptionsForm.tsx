@@ -328,7 +328,7 @@ const MultipleShippingOptionsForm = ({
         const label = deliveryOptionLabel(option.type)
         const timeEstimate = deliveryOptionTimeEstimate(option.type)
         const [prefix, timeRange] = timeEstimate || []
-        const isSelected = selectedOption === option
+        const isSelected = selectedOption?.type === option.type
 
         return (
           <Radio
