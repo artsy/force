@@ -138,9 +138,9 @@ export const Order2DeliveryOptionsForm: React.FC<
     if (stepState !== CheckoutStepState.ACTIVE) return
     if (selectableOptions.length === 0) return
     const selectedType = orderData.selectedFulfillmentOption?.type
-    const selectedIsValid =
+    const existingSelectionIsStillValid =
       selectedType && selectableOptions.some(o => o.type === selectedType)
-    if (selectedIsValid) return
+    if (existingSelectionIsStillValid) return
     saveOption(selectableOptions[0]).then(() => {
       if (selectableOptions.length === 1) {
         setDeliveryOptionComplete()
