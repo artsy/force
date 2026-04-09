@@ -20,7 +20,10 @@ export const IGNORED_ERRORS = [
   "TypeError Qg.m(gpt/pubads_impl_2021052601)",
 ]
 
-export const ALLOWED_URLS = [/(.*).?artsy.net/i, /(.*).?cloudfront.com/i]
+export const ALLOWED_URLS = [
+  /https:\/\/([^\/]+\.)?artsy\.net/i,
+  /https:\/\/([^\/]+\.)?cloudfront\.net/i,
+]
 
 export const DENIED_URLS = [
   /(.*).?braze.com/i,
