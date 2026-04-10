@@ -16,12 +16,17 @@ jest.mock("System/Hooks/useRouter")
 
 const mockRouterReplace = jest.fn()
 const mockDismissCheckoutErrorModal = jest.fn()
+const mockErrorMessageViewed = jest.fn()
 
 describe("CriticalErrorModal", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     ;(useCheckoutContext as jest.Mock).mockReturnValue({
       artworkPath: "/artwork/test-artwork",
+      checkoutTracking: {
+        flow: "Buy now",
+        errorMessageViewed: mockErrorMessageViewed,
+      },
     })
     ;(useCheckoutModal as jest.Mock).mockReturnValue({
       dismissCheckoutErrorModal: mockDismissCheckoutErrorModal,
@@ -224,6 +229,25 @@ describe("CriticalErrorModal", () => {
 
       expect(mockDismissCheckoutErrorModal).toHaveBeenCalled()
       expect(mockRouterReplace).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("tracking", () => {
+    it("tracks errorMessageViewed when error is displayed", () => {
+      render(<CheckoutModal error={CheckoutModalError.LOADING_TIMEOUT} />)
+
+      expect(mockErrorMessageViewed).toHaveBeenCalledWith({
+        error_code: CheckoutModalError.LOADING_TIMEOUT,
+        title: "Checkout error",
+        message: "There was an error loading your checkout.",
+        flow: "Buy now",
+      })
+    })
+
+    it("does not track when error is null", () => {
+      render(<CheckoutModal error={null} />)
+
+      expect(mockErrorMessageViewed).not.toHaveBeenCalled()
     })
   })
 
