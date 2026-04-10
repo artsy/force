@@ -14,7 +14,8 @@ import type {
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
 import { graphql } from "react-relay"
 
-const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT = "onyx_search-autosuggest-variant"
+const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT =
+  "onyx_search-autosuggest-experiment"
 
 interface MobileSearchBarProps {
   viewer: NonNullable<MobileSearchBarSuggestQuery$data["viewer"]>
