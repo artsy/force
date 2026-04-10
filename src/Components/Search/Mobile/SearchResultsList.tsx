@@ -17,7 +17,7 @@ import {
 } from "Components/Search/utils/formatOptions"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
-import { type FC, useEffect } from "react"
+import { type FC, type MouseEvent, useEffect } from "react"
 import {
   type RelayPaginationProp,
   createPaginationContainer,
@@ -107,17 +107,24 @@ const SearchResultsList: FC<
     })
   }
 
-  const handleRedirect = (option: SuggestionItemOptionProps) => {
-    const event: SelectedItemFromSearch = {
-      action: ActionType.selectedItemFromSearch,
-      context_module: selectedPill.analyticsContextModule,
-      destination_path: option.href,
-      query: query,
-      item_id: option.item_id!,
-      item_number: option.item_number!,
-      item_type: option.item_type!,
+  const handleRedirect = (
+    option: SuggestionItemOptionProps,
+    _event?: MouseEvent<HTMLElement>,
+    destinationPath?: string,
+  ) => {
+    // QuickNavigationItem already tracks its own cohesion event, so skip here
+    if (!destinationPath) {
+      const event: SelectedItemFromSearch = {
+        action: ActionType.selectedItemFromSearch,
+        context_module: selectedPill.analyticsContextModule,
+        destination_path: option.href,
+        query: query,
+        item_id: option.item_id!,
+        item_number: option.item_number!,
+        item_type: option.item_type!,
+      }
+      tracking.trackEvent(event)
     }
-    tracking.trackEvent(event)
 
     onClose()
   }

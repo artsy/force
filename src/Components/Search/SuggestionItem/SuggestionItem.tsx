@@ -25,6 +25,7 @@ interface SuggestionItemProps {
   onClick: (
     option: SuggestionItemOptionProps,
     event?: MouseEvent<HTMLElement>,
+    destinationPath?: string,
   ) => void
 }
 
@@ -35,6 +36,10 @@ export const SuggestionItem: FC<
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     onClick(option, event)
+  }
+
+  const handleQuickNavClick = (event: MouseEvent<HTMLElement>) => {
+    onClick(option, event, `${option.href}/auction-results`)
   }
 
   const handleMouseDown = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -69,7 +74,7 @@ export const SuggestionItem: FC<
       {option.showAuctionResultsButton && (
         <Box py={1} px={2} position="absolute" bottom={0} left={0}>
           <QuickNavigationItem
-            onClick={handleClick}
+            onClick={handleQuickNavClick}
             label="Auction Results"
             to={`${option.href}/auction-results`}
           />

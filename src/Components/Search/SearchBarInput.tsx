@@ -257,8 +257,12 @@ export const SearchBarInput: FC<
   const handleSuggestionClick = (
     option: SuggestionItemOptionProps,
     event?: MouseEvent<HTMLElement>,
+    destinationPath?: string,
   ) => {
-    trackSelection(option)
+    // QuickNavigationItem already tracks its own cohesion event, so skip here
+    if (!destinationPath) {
+      trackSelection(option)
+    }
 
     const isModifiedClick =
       !!event &&
@@ -269,7 +273,7 @@ export const SearchBarInput: FC<
     }
 
     resetValue()
-    redirect(option.href)
+    redirect(destinationPath ?? option.href)
   }
 
   const handleFocus = () => {
