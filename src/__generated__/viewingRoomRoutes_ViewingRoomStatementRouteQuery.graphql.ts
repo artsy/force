@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea671dcb8b18f634bdb41214e9bc1965>>
+ * @generated SignedSource<<aaba027f692aec411c2a5248ab6f5fcc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -194,11 +194,6 @@ return {
                             "args": [
                               {
                                 "kind": "Literal",
-                                "name": "quality",
-                                "value": 85
-                              },
-                              {
-                                "kind": "Literal",
                                 "name": "version",
                                 "value": [
                                   "main",
@@ -235,7 +230,7 @@ return {
                               (v4/*: any*/),
                               (v5/*: any*/)
                             ],
-                            "storageKey": "resized(quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:445)"
+                            "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:445)"
                           }
                         ],
                         "storageKey": null
@@ -322,12 +317,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cdbb9a6aa9d6d260640d6cbc82446118",
+    "cacheID": "e5b647cb703e85990c537fbd020a1f76",
     "id": null,
     "metadata": {},
     "name": "viewingRoomRoutes_ViewingRoomStatementRouteQuery",
     "operationKind": "query",
-    "text": "query viewingRoomRoutes_ViewingRoomStatementRouteQuery(\n  $slug: ID!\n) @cacheable {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n  subsections {\n    internalID\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    image {\n      width\n      height\n      imageURLs {\n        normalized\n      }\n    }\n    caption\n  }\n}\n\nfragment ViewingRoomWorksArtwork_artwork on Artwork {\n  artistNames\n  date\n  saleMessage\n  title\n  image {\n    resized(quality: 85, width: 445, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ViewingRoomWorksArtwork_artwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query viewingRoomRoutes_ViewingRoomStatementRouteQuery(\n  $slug: ID!\n) @cacheable {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n  subsections {\n    internalID\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    image {\n      width\n      height\n      imageURLs {\n        normalized\n      }\n    }\n    caption\n  }\n}\n\nfragment ViewingRoomWorksArtwork_artwork on Artwork {\n  artistNames\n  date\n  saleMessage\n  title\n  image {\n    resized(width: 445, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ViewingRoomWorksArtwork_artwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

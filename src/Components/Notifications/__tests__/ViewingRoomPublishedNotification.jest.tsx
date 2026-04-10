@@ -47,7 +47,7 @@ describe("ViewingRoomPublishedNotification", () => {
     )
     expect(screen.getAllByRole("presentation")[0]).toHaveAttribute(
       "src",
-      `undefined?quality=80&resize_to=width&src=${viewingRooms[0].node.image.imageURLs.normalized}&width=600`,
+      `undefined?quality=85&resize_to=width&src=${viewingRooms[0].node.image.imageURLs.normalized}&width=600`,
     )
 
     // second viewing room
@@ -61,7 +61,7 @@ describe("ViewingRoomPublishedNotification", () => {
     )
     expect(screen.getAllByRole("presentation")[1]).toHaveAttribute(
       "src",
-      `undefined?quality=80&resize_to=width&src=${viewingRooms[1].node.image.imageURLs.normalized}&width=600`,
+      `undefined?quality=85&resize_to=width&src=${viewingRooms[1].node.image.imageURLs.normalized}&width=600`,
     )
   })
 })

@@ -59,11 +59,11 @@ describe("ViewingRoomCard", () => {
     const image = screen.getByRole("img")
     expect(image).toHaveAttribute(
       "src",
-      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263",
+      "?height=222&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263",
     )
     expect(image).toHaveAttribute(
       "srcSet",
-      "?height=222&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263 1x, ?height=444&quality=80&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=526 2x",
+      "?height=222&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=263 1x, ?height=444&quality=85&resize_to=fill&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FCTSbMK5RHzG9k8wJDp2jdw%2Fnormalized.jpg&width=526 2x",
     )
     expect(image).toHaveAttribute("alt", "Ceramic Girl(s)")
 
