@@ -18711,6 +18711,11 @@ type Mutation {
     input: UpdateCareerHighlightInput!
   ): UpdateCareerHighlightPayload
 
+  # Creates or updates a catalog artwork for a given artwork. Requires partner or partner support permissions.
+  updateCatalogArtwork(
+    input: UpdateCatalogArtworkInput!
+  ): UpdateCatalogArtworkPayload
+
   # Update a collection
   updateCollection(input: updateCollectionInput!): updateCollectionPayload
 
@@ -26482,6 +26487,44 @@ type UpdateCareerHighlightSuccess {
 union UpdateCareerHighlightsSuccessResponseOrError =
   | UpdateCareerHighlightFailure
   | UpdateCareerHighlightSuccess
+
+type UpdateCatalogArtworkFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCatalogArtworkInput {
+  # The ID (slug) of the artwork.
+  artworkID: String!
+
+  # Availability of the artwork.
+  availability: String
+  clientMutationId: String
+
+  # Medium of the artwork.
+  medium: String
+
+  # Price currency (ISO 4217).
+  priceCurrency: String
+
+  # Price in minor currency units (e.g., cents).
+  priceMinor: Int
+
+  # Private notes about the artwork.
+  privateNotes: String
+}
+
+type UpdateCatalogArtworkPayload {
+  catalogArtworkOrError: UpdateCatalogArtworkResponseOrError
+  clientMutationId: String
+}
+
+union UpdateCatalogArtworkResponseOrError =
+  | UpdateCatalogArtworkFailure
+  | UpdateCatalogArtworkSuccess
+
+type UpdateCatalogArtworkSuccess {
+  catalogArtwork: CatalogArtwork
+}
 
 type UpdateCollectionFailure {
   mutationError: GravityMutationError
