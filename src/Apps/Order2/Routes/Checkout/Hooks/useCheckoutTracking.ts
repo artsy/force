@@ -52,7 +52,6 @@ export const useCheckoutTracking = ({
 
   const checkoutTracking = useMemo(() => {
     return {
-      flow,
       clickedExpressCheckout: ({ walletType }: { walletType: string }) => {
         const payload: ClickedExpressCheckout = {
           action: ActionType.clickedExpressCheckout,

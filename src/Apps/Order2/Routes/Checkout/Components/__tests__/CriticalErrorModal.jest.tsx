@@ -240,7 +240,7 @@ describe("CriticalErrorModal", () => {
         error_code: CheckoutModalError.LOADING_TIMEOUT,
         title: "Checkout error",
         message: "There was an error loading your checkout.",
-        flow: "Buy now",
+        flow: "User submitting order",
       })
     })
 
