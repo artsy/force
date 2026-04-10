@@ -6,6 +6,23 @@ jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn(() => true),
 }))
 
+const allFlagsOn = () => {
+  const { useFlag } = require("@unleash/proxy-client-react")
+  ;(useFlag as jest.Mock).mockReturnValue(true)
+}
+
+const onlyHighlightingOn = () => {
+  const { useFlag } = require("@unleash/proxy-client-react")
+  ;(useFlag as jest.Mock).mockImplementation(
+    (flag: string) => flag === "onyx_search-highlighting",
+  )
+}
+
+const allFlagsOff = () => {
+  const { useFlag } = require("@unleash/proxy-client-react")
+  ;(useFlag as jest.Mock).mockReturnValue(false)
+}
+
 const baseOption: SuggestionItemOptionProps = {
   text: "Andy Warhol",
   value: "andy-warhol",
@@ -20,7 +37,7 @@ describe("DefaultSuggestion", () => {
   describe("display name highlighting", () => {
     it("uses client-side substring matching as primary strategy", () => {
       const { container } = render(
-        <DefaultSuggestion option={baseOption} query="warhol" />
+        <DefaultSuggestion option={baseOption} query="warhol" />,
       )
 
       const highlighted = container.querySelector("strong")
@@ -31,13 +48,11 @@ describe("DefaultSuggestion", () => {
     it("falls back to server-side highlights when client-side produces no match", () => {
       const option: SuggestionItemOptionProps = {
         ...baseOption,
-        highlights: [
-          { field: "name", fragments: ["<em>Andy Warhol</em>"] },
-        ],
+        highlights: [{ field: "name", fragments: ["<em>Andy Warhol</em>"] }],
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="warhlo" />
+        <DefaultSuggestion option={option} query="warhlo" />,
       )
 
       const highlighted = container.querySelector("strong")
@@ -53,7 +68,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="war" />
+        <DefaultSuggestion option={option} query="war" />,
       )
 
       const highlights = container.querySelectorAll("strong")
@@ -63,7 +78,7 @@ describe("DefaultSuggestion", () => {
 
     it("renders plain text when neither strategy produces highlights", () => {
       const { container } = render(
-        <DefaultSuggestion option={baseOption} query="xyz" />
+        <DefaultSuggestion option={baseOption} query="xyz" />,
       )
 
       expect(container.querySelector("strong")).toBeNull()
@@ -84,7 +99,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="安迪" />
+        <DefaultSuggestion option={option} query="安迪" />,
       )
 
       expect(container.textContent).toContain("(")
@@ -94,7 +109,7 @@ describe("DefaultSuggestion", () => {
 
     it("does not show parentheses when no alternate name highlight", () => {
       const { container } = render(
-        <DefaultSuggestion option={baseOption} query="warhol" />
+        <DefaultSuggestion option={baseOption} query="warhol" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -113,7 +128,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="chillida" />
+        <DefaultSuggestion option={option} query="chillida" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -133,7 +148,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="warhlo" />
+        <DefaultSuggestion option={option} query="warhlo" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -141,27 +156,18 @@ describe("DefaultSuggestion", () => {
     })
   })
 
-  describe("when feature flag is disabled", () => {
-    beforeEach(() => {
-      const { useFlag } = require("@unleash/proxy-client-react")
-      ;(useFlag as jest.Mock).mockReturnValue(false)
-    })
-
-    afterEach(() => {
-      const { useFlag } = require("@unleash/proxy-client-react")
-      ;(useFlag as jest.Mock).mockReturnValue(true)
-    })
+  describe("when onyx_search-highlighting flag is disabled", () => {
+    beforeEach(allFlagsOff)
+    afterEach(allFlagsOn)
 
     it("ignores server-side highlights and uses only client-side matching", () => {
       const option: SuggestionItemOptionProps = {
         ...baseOption,
-        highlights: [
-          { field: "name", fragments: ["<em>Andy Warhol</em>"] },
-        ],
+        highlights: [{ field: "name", fragments: ["<em>Andy Warhol</em>"] }],
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="warhlo" />
+        <DefaultSuggestion option={option} query="warhlo" />,
       )
 
       expect(container.querySelector("strong")).toBeNull()
@@ -180,11 +186,111 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="安迪" />
+        <DefaultSuggestion option={option} query="安迪" />,
       )
 
       expect(container.textContent).not.toContain("(")
       expect(container.textContent).not.toContain("安迪")
+    })
+  })
+
+  describe("when onyx_search-alternate-name-display flag is disabled", () => {
+    beforeEach(onlyHighlightingOn)
+    afterEach(allFlagsOn)
+
+    it("does not show alternate name in parentheses for Artist results", () => {
+      const option: SuggestionItemOptionProps = {
+        ...baseOption,
+        highlights: [
+          {
+            field: "alternate_names",
+            fragments: ["<em>安迪</em>·沃荷"],
+          },
+        ],
+      }
+
+      const { container } = render(
+        <DefaultSuggestion option={option} query="安迪" />,
+      )
+
+      expect(container.textContent).not.toContain("(")
+      expect(container.textContent).not.toContain("安迪")
+    })
+
+    it("still applies server-side name highlighting", () => {
+      const option: SuggestionItemOptionProps = {
+        ...baseOption,
+        highlights: [{ field: "name", fragments: ["<em>Andy Warhol</em>"] }],
+      }
+
+      const { container } = render(
+        <DefaultSuggestion option={option} query="warhlo" />,
+      )
+
+      const highlighted = container.querySelector("strong")
+      expect(highlighted).toHaveTextContent("Andy Warhol")
+    })
+  })
+
+  describe("alternate name display for non-Artist types", () => {
+    it("does not show alternate name in parentheses for Gene results", () => {
+      const geneOption: SuggestionItemOptionProps = {
+        ...baseOption,
+        typename: "Gene",
+        subtitle: "Gene",
+        highlights: [
+          {
+            field: "alternate_names",
+            fragments: ["<em>yawn</em>"],
+          },
+        ],
+      }
+
+      const { container } = render(
+        <DefaultSuggestion option={geneOption} query="yawn" />,
+      )
+
+      expect(container.textContent).not.toContain("(")
+      expect(container.textContent).not.toContain("yawn")
+    })
+
+    it("does not show alternate name in parentheses for SearchableItem results", () => {
+      const searchableOption: SuggestionItemOptionProps = {
+        ...baseOption,
+        typename: "SearchableItem",
+        subtitle: "Artist Series",
+        highlights: [
+          {
+            field: "alternate_names",
+            fragments: ["<em>some keyword</em>"],
+          },
+        ],
+      }
+
+      const { container } = render(
+        <DefaultSuggestion option={searchableOption} query="some keyword" />,
+      )
+
+      expect(container.textContent).not.toContain("(")
+    })
+
+    it("still shows alternate name in parentheses for Artist results", () => {
+      const option: SuggestionItemOptionProps = {
+        ...baseOption,
+        highlights: [
+          {
+            field: "alternate_names",
+            fragments: ["<em>安迪</em>·沃荷"],
+          },
+        ],
+      }
+
+      const { container } = render(
+        <DefaultSuggestion option={option} query="安迪" />,
+      )
+
+      expect(container.textContent).toContain("(")
+      expect(container.textContent).toContain("安迪·沃荷")
     })
   })
 })

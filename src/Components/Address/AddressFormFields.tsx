@@ -41,6 +41,8 @@ interface Props {
   shippableCountries?: CountryData[]
   /** Whether to show the "Set as default address" checkbox */
   withSetAsDefault?: boolean
+  /** Whether to sync phoneNumberCountryCode when the country changes */
+  syncPhoneCountryCode?: boolean
 }
 
 /**
@@ -180,6 +182,12 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           value={values.address.country}
           onChange={e => {
             setFieldValue("address.country", e.target.value)
+            if (props.syncPhoneCountryCode) {
+              setFieldValue(
+                "phoneNumberCountryCode",
+                e.target.value.toLowerCase(),
+              )
+            }
           }}
           onBlur={handleBlur}
           error={touchedAddress?.country && errorsAddress?.country}

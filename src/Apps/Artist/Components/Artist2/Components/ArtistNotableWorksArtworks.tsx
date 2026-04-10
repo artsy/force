@@ -7,7 +7,6 @@ import {
 import { Box, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { extractNodes } from "Utils/extractNodes"
 import type { ArtistNotableWorksArtworks_artist$key } from "__generated__/ArtistNotableWorksArtworks_artist.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -26,20 +25,9 @@ export const ArtistNotableWorksArtworks: React.FC<
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
 
-  const coverArtwork = artist.coverArtwork
-  const remaining = extractNodes(artist.artworksConnection).filter(
-    artwork => artwork.slug !== coverArtwork?.slug,
-  )
-
-  // Show the cover artwork first, then the remaining artworks
-  const artworks = [
-    ...(coverArtwork ? [coverArtwork] : []),
-    ...remaining,
-  ].slice(0, 3)
-
   return (
     <>
-      {artworks.map((artwork, index) => {
+      {artist.notableArtworks.map((artwork, index) => {
         const image = artwork.image?.resized
 
         if (!image) return null
@@ -111,7 +99,7 @@ export const ArtistNotableWorksArtworks: React.FC<
 
 const fragment = graphql`
   fragment ArtistNotableWorksArtworks_artist on Artist {
-    coverArtwork {
+    notableArtworks(size: 3) {
       internalID
       slug
       href
@@ -123,25 +111,6 @@ const fragment = graphql`
           height
           src
           srcSet
-        }
-      }
-    }
-    artworksConnection(first: 3, sort: ICONICITY_DESC) {
-      edges {
-        node {
-          internalID
-          slug
-          href
-          title
-          date
-          image {
-            resized(width: 420, height: 420) {
-              width
-              height
-              src
-              srcSet
-            }
-          }
         }
       }
     }

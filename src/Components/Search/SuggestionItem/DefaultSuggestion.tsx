@@ -17,10 +17,14 @@ export const DefaultSuggestion: FC<
   React.PropsWithChildren<DefaultSuggestionProps>
 > = ({ option, query }) => {
   const enableServerHighlights = useFlag("onyx_search-highlighting")
+  const enableAlternateNameDisplay = useFlag(
+    "onyx_search-alternate-name-display",
+  )
 
   const { nameParts, alternateParts } = resolveSuggestionParts(
     enableServerHighlights ? option : { ...option, highlights: null },
-    query
+    query,
+    enableAlternateNameDisplay,
   )
 
   return (
@@ -51,11 +55,12 @@ export const DefaultSuggestion: FC<
 
 function resolveSuggestionParts(
   option: SuggestionItemOptionProps,
-  query: string
+  query: string,
+  enableAlternateNameDisplay: boolean,
 ): { nameParts: ReactNode[]; alternateParts: ReactNode[] | null } {
-  const nameHighlight = option.highlights?.find((h) => h.field === "name")
+  const nameHighlight = option.highlights?.find(h => h.field === "name")
   const alternateHighlight = option.highlights?.find(
-    (h) => h.field === "alternate_names"
+    h => h.field === "alternate_names",
   )
 
   const firstNameFragment = nameHighlight?.fragments?.[0]
@@ -65,8 +70,14 @@ function resolveSuggestionParts(
   const hasClientHighlights = clientMatches.length > 0
   const hasNameHighlight = Boolean(firstNameFragment)
 
+  const canShowAlternateName =
+    enableAlternateNameDisplay && option.typename === "Artist"
+
   const alternateParts =
-    !hasClientHighlights && !hasNameHighlight && firstAlternateFragment
+    canShowAlternateName &&
+    !hasClientHighlights &&
+    !hasNameHighlight &&
+    firstAlternateFragment
       ? parseHighlightFragments(firstAlternateFragment)
       : null
 
@@ -74,7 +85,7 @@ function resolveSuggestionParts(
     return {
       nameParts: parse(option.text, clientMatches).map(
         ({ highlight, text }, index) =>
-          highlight ? <Highlight key={index}>{text}</Highlight> : text
+          highlight ? <Highlight key={index}>{text}</Highlight> : text,
       ),
       alternateParts,
     }

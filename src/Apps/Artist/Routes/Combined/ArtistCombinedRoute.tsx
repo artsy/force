@@ -25,7 +25,6 @@ interface ArtistCombinedRouteProps {
 }
 
 const EDITORIAL_SECTION_EXPERIMENT = "diamond_editorial-section"
-const TOOLTIP_REMOVAL_EXPERIMENT = "diamond_remove_tooltip_experiment"
 
 const ArtistCombinedRoute: React.FC<
   React.PropsWithChildren<ArtistCombinedRouteProps>
@@ -35,12 +34,6 @@ const ArtistCombinedRoute: React.FC<
   useTrackFeatureVariantOnMount({
     experimentName: EDITORIAL_SECTION_EXPERIMENT,
     variantName: variant?.name,
-  })
-
-  const diamondVariant = useVariant(TOOLTIP_REMOVAL_EXPERIMENT)
-  useTrackFeatureVariantOnMount({
-    experimentName: TOOLTIP_REMOVAL_EXPERIMENT,
-    variantName: diamondVariant?.name,
   })
 
   const isEditorialSectionExperiment =

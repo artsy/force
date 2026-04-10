@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9be5eb1ff96d279f76358c4cb17280d0>>
+ * @generated SignedSource<<f85bdd91bcfa04335654bf0e976e2004>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,6 +39,7 @@ const node: ReaderFragment = {
       "defaultValue": [
         "SUBMITTED",
         "OFFER_RECEIVED",
+        "COUNTEROFFER_SENT",
         "PAYMENT_FAILED",
         "PROCESSING_PAYMENT",
         "PROCESSING_OFFLINE_PAYMENT",
@@ -170,6 +171,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "41b80ea8a6c94e4e588c919122326866";
+(node as any).hash = "73fcc171875ab36a71945ba1ee2e8af8";
 
 export default node;

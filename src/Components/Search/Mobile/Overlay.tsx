@@ -36,12 +36,14 @@ interface OverlayProps {
   viewer: Overlay_viewer$data
   relay: RelayRefetchProp
   onClose: () => void
+  variant?: string
 }
 
 export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   viewer,
   relay,
   onClose,
+  variant,
 }) => {
   const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -51,15 +53,16 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   const [debouncedValue] = useDebounce(inputValue, SEARCH_DEBOUNCE_DELAY)
   const disablePills = !shouldStartSearching(inputValue)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    inputRef.current?.focus()
-
-    tracking.trackEvent({
-      action_type: ActionType.focusedOnSearchInput,
-      context_module: selectedPill.analyticsContextModule,
-    })
-    // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Should only focus and track once on mount, not re-run when pill changes
+  const inputCallbackRef = useCallback((node: HTMLInputElement | null) => {
+    inputRef.current = node
+    if (node) {
+      node.focus()
+      tracking.trackEvent({
+        action_type: ActionType.focusedOnSearchInput,
+        context_module: selectedPill.analyticsContextModule,
+      })
+    }
   }, [])
 
   useEffect(() => {
@@ -78,6 +81,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           hasTerm: true,
           term: value,
           entities: entities,
+          variant,
         },
         null,
         error => {
@@ -94,7 +98,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
         },
       )
     },
-    [relay],
+    [relay, variant],
   )
 
   const handlePillClick = (pill: PillType) => {
@@ -114,7 +118,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           <Box mt={-15}>
             <LabeledInput
               mx={2}
-              ref={inputRef}
+              ref={inputCallbackRef}
               value={inputValue}
               placeholder="Search Artsy"
               label={<SearchIcon fill="mono60" aria-hidden size={18} />}
@@ -155,10 +159,11 @@ export const OverlayRefetchContainer = createRefetchContainer(
         term: { type: "String!", defaultValue: "" }
         hasTerm: { type: "Boolean!", defaultValue: false }
         entities: { type: "[SearchEntity]" }
+        variant: { type: "String" }
       ) {
         ...SearchInputPills_viewer @arguments(term: $term)
         ...SearchResultsList_viewer
-          @arguments(term: $term, entities: $entities)
+          @arguments(term: $term, entities: $entities, variant: $variant)
           @include(if: $hasTerm)
       }
     `,
@@ -168,10 +173,16 @@ export const OverlayRefetchContainer = createRefetchContainer(
       $term: String!
       $hasTerm: Boolean!
       $entities: [SearchEntity]
+      $variant: String
     ) {
       viewer {
         ...Overlay_viewer
-          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
+          @arguments(
+            term: $term
+            hasTerm: $hasTerm
+            entities: $entities
+            variant: $variant
+          )
       }
     }
   `,

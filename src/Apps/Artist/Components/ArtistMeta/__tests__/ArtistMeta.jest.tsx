@@ -424,6 +424,66 @@ describe("AdminMeta", () => {
       })
     })
 
+    describe("notable works as VisualArtwork nodes", () => {
+      beforeEach(() => {
+        mockLocation.pathname = "/artist/andy-warhol"
+      })
+
+      it("renders notable works in the graph with creator reference", () => {
+        const artist = {
+          href: "/artist/andy-warhol",
+          notableArtworks: [
+            {
+              title: "Campbell's Soup Cans",
+              href: "/artwork/andy-warhol-campbells-soup-cans",
+              date: "1962",
+            },
+            {
+              title: "Marilyn Diptych",
+              href: "/artwork/andy-warhol-marilyn-diptych",
+              date: "1962",
+            },
+          ],
+        }
+        renderWithRelay({ Artist: () => artist })
+
+        const structuredData = getStructuredData()
+        const graph = structuredData?.["@graph"]
+        const artworks = graph?.filter(
+          (item: any) => item["@type"] === "VisualArtwork",
+        )
+
+        expect(artworks).toHaveLength(2)
+        expect(artworks[0]).toEqual({
+          "@type": "VisualArtwork",
+          "@id":
+            "https://www.artsy.net/artwork/andy-warhol-campbells-soup-cans#visual-artwork",
+          name: "Campbell's Soup Cans",
+          url: "https://www.artsy.net/artwork/andy-warhol-campbells-soup-cans",
+          dateCreated: "1962",
+          creator: {
+            "@id": "https://www.artsy.net/artist/andy-warhol",
+          },
+        })
+      })
+
+      it("omits notable works when none exist", () => {
+        const artist = {
+          href: "/artist/andy-warhol",
+          notableArtworks: [],
+        }
+        renderWithRelay({ Artist: () => artist })
+
+        const structuredData = getStructuredData()
+        const graph = structuredData?.["@graph"]
+        const artworks = graph?.filter(
+          (item: any) => item["@type"] === "VisualArtwork",
+        )
+
+        expect(artworks).toHaveLength(0)
+      })
+    })
+
     describe("BreadcrumbList", () => {
       it("renders breadcrumbs for the default artist page", () => {
         mockLocation.pathname = "/artist/andy-warhol"

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<142a0683b066d226eb3dfc82a2331448>>
+ * @generated SignedSource<<9cf499d3f3e692c4f00260ca3b5a40af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,26 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistNotableWorksArtworks_artist$data = {
-  readonly artworksConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly date: string | null | undefined;
-        readonly href: string | null | undefined;
-        readonly image: {
-          readonly resized: {
-            readonly height: number | null | undefined;
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null | undefined;
-          } | null | undefined;
-        } | null | undefined;
-        readonly internalID: string;
-        readonly slug: string;
-        readonly title: string | null | undefined;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
-  readonly coverArtwork: {
+  readonly notableArtworks: ReadonlyArray<{
     readonly date: string | null | undefined;
     readonly href: string | null | undefined;
     readonly image: {
@@ -44,7 +25,7 @@ export type ArtistNotableWorksArtworks_artist$data = {
     readonly internalID: string;
     readonly slug: string;
     readonly title: string | null | undefined;
-  } | null | undefined;
+  }>;
   readonly " $fragmentType": "ArtistNotableWorksArtworks_artist";
 };
 export type ArtistNotableWorksArtworks_artist$key = {
@@ -52,106 +33,7 @@ export type ArtistNotableWorksArtworks_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistNotableWorksArtworks_artist">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "slug",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "href",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "title",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "date",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "Image",
-    "kind": "LinkedField",
-    "name": "image",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": [
-          {
-            "kind": "Literal",
-            "name": "height",
-            "value": 420
-          },
-          {
-            "kind": "Literal",
-            "name": "width",
-            "value": 420
-          }
-        ],
-        "concreteType": "ResizedImageUrl",
-        "kind": "LinkedField",
-        "name": "resized",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "width",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "height",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "src",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "srcSet",
-            "storageKey": null
-          }
-        ],
-        "storageKey": "resized(height:420,width:420)"
-      }
-    ],
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -159,63 +41,122 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": null,
-      "concreteType": "Artwork",
-      "kind": "LinkedField",
-      "name": "coverArtwork",
-      "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": [
         {
           "kind": "Literal",
-          "name": "first",
+          "name": "size",
           "value": 3
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "ICONICITY_DESC"
         }
       ],
-      "concreteType": "ArtworkConnection",
+      "concreteType": "Artwork",
       "kind": "LinkedField",
-      "name": "artworksConnection",
-      "plural": false,
+      "name": "notableArtworks",
+      "plural": true,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArtworkEdge",
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "date",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
           "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
+          "name": "image",
+          "plural": false,
           "selections": [
             {
               "alias": null,
-              "args": null,
-              "concreteType": "Artwork",
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 420
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 420
+                }
+              ],
+              "concreteType": "ResizedImageUrl",
               "kind": "LinkedField",
-              "name": "node",
+              "name": "resized",
               "plural": false,
-              "selections": (v0/*: any*/),
-              "storageKey": null
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "width",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "height",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "resized(height:420,width:420)"
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:3,sort:\"ICONICITY_DESC\")"
+      "storageKey": "notableArtworks(size:3)"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "9d7b47147588d3ea64567669881d8ad7";
+(node as any).hash = "e3b1f19fe1448558c03d4460213ae8e3";
 
 export default node;

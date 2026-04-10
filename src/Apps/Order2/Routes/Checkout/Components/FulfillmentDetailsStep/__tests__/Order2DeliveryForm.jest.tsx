@@ -126,6 +126,29 @@ describe("Order2DeliveryForm", () => {
       expect(screen.getByDisplayValue("5551234567")).toBeInTheDocument()
     })
 
+    it("syncs phone country code when country is changed", async () => {
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: null,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByLabelText("Country")).toBeInTheDocument()
+      })
+
+      userEvent.selectOptions(screen.getByLabelText("Country"), "DE")
+
+      // After changing country to Germany, the phone country select should sync to "de" (+49)
+      await waitFor(() => {
+        expect(screen.getByText("🇩🇪 + 49")).toBeInTheDocument()
+      })
+    })
+
     describe("form submission", () => {
       it("calls setCheckoutMode during form submission", async () => {
         const { mockResolveLastOperation } = renderWithRelay({

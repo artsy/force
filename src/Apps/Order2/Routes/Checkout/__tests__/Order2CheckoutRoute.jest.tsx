@@ -1386,7 +1386,6 @@ describe("Order2CheckoutRoute", () => {
         addressLine2Input,
         cityInput,
         regionInput,
-        phoneNumberInput,
         countryPicker,
       ] = await Promise.all([
         screen.findByPlaceholderText("Add full name"),
@@ -1394,13 +1393,18 @@ describe("Order2CheckoutRoute", () => {
         screen.findByLabelText("Apt, floor, suite, etc. (optional)"),
         screen.findByLabelText("City"),
         screen.findByLabelText("State, region or province"),
-        screen.findByTestId("addressFormFields.phoneNumber"),
         screen.findByTestId(testIDs.phoneCountryPicker),
       ])
 
       helpers.selectCountryCode(
         countryPicker,
         addressInputValue.phoneNumberCountryCode,
+      )
+
+      // Get phoneNumberInput after selectCountryCode since syncing the country
+      // remounts the phone SelectInput, making earlier references stale
+      const phoneNumberInput = await screen.findByTestId(
+        "addressFormFields.phoneNumber",
       )
 
       act(() => {

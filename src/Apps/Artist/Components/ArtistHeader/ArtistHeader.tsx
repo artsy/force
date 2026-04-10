@@ -35,7 +35,6 @@ import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
-import { useVariant } from "@unleash/proxy-client-react"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
@@ -47,10 +46,6 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
-
-  const variant = useVariant("diamond_remove_tooltip_experiment")
-
-  const showTooltip = variant.name !== "experiment"
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
@@ -158,69 +153,32 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                   <Spacer y={2} />
 
                   <Flex alignItems="center" gap={1}>
-                    {showTooltip ? (
-                      <div data-testid="follow-button-with-tooltip">
-                        <ProgressiveOnboardingFollowArtist>
-                          <FollowArtistButtonQueryRenderer
-                            id={artist.internalID}
-                            contextModule={ContextModule.artistHeader}
-                            size={["large", "small"]}
-                            width={["100%", "fit-content"]}
+                    <ProgressiveOnboardingFollowArtist>
+                      <FollowArtistButtonQueryRenderer
+                        id={artist.internalID}
+                        contextModule={ContextModule.artistHeader}
+                        size={["large", "small"]}
+                        width={["100%", "fit-content"]}
+                      >
+                        {label => (
+                          <Stack
+                            gap={0.5}
+                            flexDirection="row"
+                            alignItems="center"
                           >
-                            {/*
-                          // FIXME: REACT_18_UPGRADE
-                          @ts-ignore */}
-                            {label => (
-                              <Stack
-                                gap={0.5}
-                                flexDirection="row"
-                                alignItems="center"
+                            <Box>{label}</Box>
+
+                            {!!artist.counts?.follows && (
+                              <FollowButtonInlineCount
+                                display={["block", "none"]}
                               >
-                                <Box>{label}</Box>
-
-                                {!!artist.counts?.follows && (
-                                  <FollowButtonInlineCount
-                                    display={["block", "none"]}
-                                  >
-                                    {formatFollowerCount(artist.counts.follows)}
-                                  </FollowButtonInlineCount>
-                                )}
-                              </Stack>
+                                {formatFollowerCount(artist.counts.follows)}
+                              </FollowButtonInlineCount>
                             )}
-                          </FollowArtistButtonQueryRenderer>
-                        </ProgressiveOnboardingFollowArtist>
-                      </div>
-                    ) : (
-                      <div data-testid="follow-button-without-tooltip">
-                        <FollowArtistButtonQueryRenderer
-                          id={artist.internalID}
-                          contextModule={ContextModule.artistHeader}
-                          size={["large", "small"]}
-                          width={["100%", "fit-content"]}
-                        >
-                          {/*
-                          // FIXME: REACT_18_UPGRADE
-                          @ts-ignore */}
-                          {label => (
-                            <Stack
-                              gap={0.5}
-                              flexDirection="row"
-                              alignItems="center"
-                            >
-                              <Box>{label}</Box>
-
-                              {!!artist.counts?.follows && (
-                                <FollowButtonInlineCount
-                                  display={["block", "none"]}
-                                >
-                                  {formatFollowerCount(artist.counts.follows)}
-                                </FollowButtonInlineCount>
-                              )}
-                            </Stack>
-                          )}
-                        </FollowArtistButtonQueryRenderer>
-                      </div>
-                    )}
+                          </Stack>
+                        )}
+                      </FollowArtistButtonQueryRenderer>
+                    </ProgressiveOnboardingFollowArtist>
 
                     {!!artist.counts?.follows && (
                       <Text
@@ -239,28 +197,16 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
               )}
             </Box>
 
-            {!hasSomething &&
-              (showTooltip ? (
-                <div data-testid="follow-button-with-tooltip">
-                  <ProgressiveOnboardingFollowArtist>
-                    <FollowArtistButtonQueryRenderer
-                      id={artist.internalID}
-                      contextModule={ContextModule.artistHeader}
-                      size="small"
-                      width="fit-content"
-                    />
-                  </ProgressiveOnboardingFollowArtist>
-                </div>
-              ) : (
-                <div data-testid="follow-button-without-tooltip">
-                  <FollowArtistButtonQueryRenderer
-                    id={artist.internalID}
-                    contextModule={ContextModule.artistHeader}
-                    size="small"
-                    width="fit-content"
-                  />
-                </div>
-              ))}
+            {!hasSomething && (
+              <ProgressiveOnboardingFollowArtist>
+                <FollowArtistButtonQueryRenderer
+                  id={artist.internalID}
+                  contextModule={ContextModule.artistHeader}
+                  size="small"
+                  width="fit-content"
+                />
+              </ProgressiveOnboardingFollowArtist>
+            )}
           </Flex>
         </Flex>
 
