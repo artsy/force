@@ -9,6 +9,10 @@ export const deliveryOptionLabel = (type?: string | null) => {
       return "Standard"
     case "ARTSY_EXPRESS":
       return "Express"
+    case "ARTSY_STANDARD_INTERNATIONAL":
+      return "Standard"
+    case "ARTSY_EXPRESS_INTERNATIONAL":
+      return "Express"
     case "ARTSY_WHITE_GLOVE":
       return "White Glove"
     case "SHIPPING_TBD":
@@ -26,13 +30,17 @@ export const deliveryOptionTimeEstimate = (
 ): [string, string] | null => {
   switch (type) {
     case "DOMESTIC_FLAT":
-      return ["Estimated delivery", "3-5 days after shipping"]
+      return ["Est. delivery", "3-5 days after shipping"]
     case "INTERNATIONAL_FLAT":
-      return ["Estimated delivery", "3-5 days after shipping"]
+      return ["Est. delivery", "5-10 days after shipping"]
     case "ARTSY_STANDARD":
-      return ["Estimated delivery", "3-5 days after shipping"]
+      return ["Est. delivery", "3-5 days after shipping"]
+    case "ARTSY_STANDARD_INTERNATIONAL":
+      return ["Est. delivery", "5-10 days after shipping"]
     case "ARTSY_EXPRESS":
-      return ["Estimated delivery", "2 days after shipping"]
+      return ["Est. delivery", "2 days after shipping"]
+    case "ARTSY_EXPRESS_INTERNATIONAL":
+      return ["Est. delivery", "5-10 days after shipping"]
     case "ARTSY_WHITE_GLOVE":
       return ["", "Delivery timing varies"]
     case "SHIPPING_TBD":

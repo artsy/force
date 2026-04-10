@@ -153,32 +153,13 @@ export const Order2DeliveryOptionsForm: React.FC<
 
                 <Spacer y={1} />
 
-                {shippingOrigin && (
-                  <Text variant="xs" color="mono60">
-                    Ships from {shippingOrigin}
-                  </Text>
-                )}
-
-                <Spacer y={0.5} />
-
-                <Text variant="xs" color="mono60">
-                  <RouterLink
-                    inline
-                    target="_blank"
-                    to={SHIPPING_AND_RETURNS_FAQS_URL}
-                  >
-                    All shipping options
-                  </RouterLink>{" "}
-                  are protected against damage and loss with The Artsy
-                  Guarantee.
-                </Text>
-
-                <Spacer y={2} />
-
                 {deliveryOptions.length === 1 ? (
                   <SingleShippingOption option={deliveryOptions[0]} />
                 ) : deliveryOptions.length > 1 ? (
-                  <MultipleShippingOptionsForm options={deliveryOptions} />
+                  <MultipleShippingOptionsForm
+                    options={deliveryOptions}
+                    shippingOrigin={shippingOrigin}
+                  />
                 ) : (
                   <Flex flexDirection="column">
                     <Text variant="sm-display" color="mono100">
@@ -251,10 +232,12 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
 
 interface MultipleShippingOptionsFormProps {
   options: DeliveryOption[]
+  shippingOrigin: string | null | undefined
 }
 
 const MultipleShippingOptionsForm = ({
   options,
+  shippingOrigin,
 }: MultipleShippingOptionsFormProps) => {
   const defaultOption = options.find(option => option.selected) || options[0]
   const [selectedOption, setSelectedOption] = useState(defaultOption)
@@ -262,54 +245,79 @@ const MultipleShippingOptionsForm = ({
   const { checkoutTracking } = useCheckoutContext()
 
   return (
-    <RadioGroup
-      flexDirection="column"
-      defaultValue={defaultOption}
-      onSelect={option => {
-        setSelectedOption(option)
-        setFieldValue("deliveryOption", option)
-        checkoutTracking.clickedSelectShippingOption(option.type)
-      }}
-    >
-      {options.map(option => {
-        const label = deliveryOptionLabel(option.type)
-        const timeEstimate = deliveryOptionTimeEstimate(option.type)
-        const [prefix, timeRange] = timeEstimate || []
-        const isSelected = selectedOption === option
+    <>
+      {shippingOrigin && (
+        <Text variant="xs" color="mono60">
+          Ships from {shippingOrigin}
+        </Text>
+      )}
 
-        return (
-          <Radio
-            key={option.type}
-            flex={1}
-            backgroundColor={isSelected ? "mono5" : "mono0"}
-            p={1}
-            label={
-              <Flex justifyContent="space-between" width="100%">
-                <Text variant="sm-display">{label}</Text>
-                <Text variant="sm">{option.amount?.display}</Text>
-              </Flex>
-            }
-            value={option}
-          >
-            <Flex width="100%">
-              <Flex flexDirection="column">
-                {timeEstimate && (
-                  <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
-                    {prefix} <strong>{timeRange}</strong>
-                  </Text>
-                )}
+      <Spacer y={0.5} />
 
-                {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
-                  <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
-                    Includes custom packing, transportation on a fine art
-                    shuttle, and in-home delivery.
-                  </Text>
-                )}
+      <Text variant="xs" color="mono60">
+        <RouterLink inline target="_blank" to={SHIPPING_AND_RETURNS_FAQS_URL}>
+          All shipping options
+        </RouterLink>{" "}
+        are protected against damage and loss with The Artsy Guarantee.
+      </Text>
+
+      <Spacer y={2} />
+
+      <RadioGroup
+        flexDirection="column"
+        defaultValue={defaultOption}
+        onSelect={option => {
+          setSelectedOption(option)
+          setFieldValue("deliveryOption", option)
+          checkoutTracking.clickedSelectShippingOption(option.type)
+        }}
+      >
+        {options.map(option => {
+          const label = deliveryOptionLabel(option.type)
+          const timeEstimate = deliveryOptionTimeEstimate(option.type)
+          const [prefix, timeRange] = timeEstimate || []
+          const isSelected = selectedOption === option
+
+          return (
+            <Radio
+              key={option.type}
+              flex={1}
+              backgroundColor={isSelected ? "mono5" : "mono0"}
+              p={1}
+              label={
+                <Flex justifyContent="space-between" width="100%">
+                  <Text variant="sm-display">{label}</Text>
+                  <Text variant="sm">{option.amount?.display}</Text>
+                </Flex>
+              }
+              value={option}
+            >
+              <Flex width="100%">
+                <Flex flexDirection="column">
+                  {timeEstimate && (
+                    <Text
+                      variant="sm"
+                      color={isSelected ? "mono100" : "mono60"}
+                    >
+                      {prefix} <strong>{timeRange}</strong>
+                    </Text>
+                  )}
+
+                  {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
+                    <Text
+                      variant="sm"
+                      color={isSelected ? "mono100" : "mono60"}
+                    >
+                      Includes custom packing, transportation on a fine art
+                      shuttle, and in-home delivery.
+                    </Text>
+                  )}
+                </Flex>
               </Flex>
-            </Flex>
-          </Radio>
-        )
-      })}
-    </RadioGroup>
+            </Radio>
+          )
+        })}
+      </RadioGroup>
+    </>
   )
 }

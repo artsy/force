@@ -40,6 +40,8 @@ export const useCompleteDeliveryOptionData = (
     "ARTSY_WHITE_GLOVE",
     "DOMESTIC_FLAT",
     "INTERNATIONAL_FLAT",
+    "ARTSY_STANDARD_INTERNATIONAL",
+    "ARTSY_EXPRESS_INTERNATIONAL",
   ].includes(fulfillmentType)
 
   if (!isSpecificMethod) {
