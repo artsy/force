@@ -43,10 +43,20 @@ jest.mock("Utils/Hooks/useClientQuery", () => ({ useClientQuery: jest.fn() }))
 jest.mock("react-tracking")
 
 jest.mock("../SuggestionItem/SuggestionItem", () => ({
-  SuggestionItem: ({ option, onClick }) => (
-    <a href={option.href} onClick={event => onClick(option, event)}>
-      {option.text}
-    </a>
+  SuggestionItem: ({ option, onClick, onQuickNavClick }) => (
+    <>
+      <a href={option.href} onClick={event => onClick(option, event)}>
+        {option.text}
+      </a>
+      {option.showAuctionResultsButton && (
+        <button
+          type="button"
+          onClick={(event: any) => onQuickNavClick(option, event)}
+        >
+          Auction Results
+        </button>
+      )}
+    </>
   ),
 }))
 
@@ -195,6 +205,68 @@ describe("SearchBarInput", () => {
       item_type: "Artist",
     })
     expect(mockPush).not.toHaveBeenCalled()
+  })
+
+  describe("quick nav click", () => {
+    beforeEach(() => {
+      ;(useClientQuery as jest.Mock).mockReturnValue({
+        data: {
+          viewer: {
+            searchConnection: {
+              edges: [
+                {
+                  highlights: null,
+                  node: {
+                    __typename: "Artist",
+                    coverArtwork: null,
+                    displayLabel: "Andy Warhol",
+                    displayType: "Artist",
+                    href: "/artist/andy-warhol",
+                    imageUrl: null,
+                    internalID: "andy-warhol",
+                    statuses: { auctionLots: true },
+                  },
+                },
+              ],
+            },
+          },
+        },
+        refetch: jest.fn(() => ({
+          promise: Promise.resolve({
+            viewer: { searchConnection: { edges: [] } },
+          }),
+        })),
+      })
+    })
+
+    it("redirects to auction results on click", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+      await userEvent.click(
+        screen.getByRole("button", { name: "Auction Results" }),
+      )
+      expect(mockPush).toHaveBeenCalledWith(
+        "/artist/andy-warhol/auction-results",
+      )
+    })
+
+    it("does not track selectedItemFromSearch on click", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+      await userEvent.click(
+        screen.getByRole("button", { name: "Auction Results" }),
+      )
+      expect(mockTrackEvent).not.toHaveBeenCalledWith(
+        expect.objectContaining({ action: ActionType.selectedItemFromSearch }),
+      )
+    })
+
+    it("does not redirect on cmd+click", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+      await userEvent.click(
+        screen.getByRole("button", { name: "Auction Results" }),
+        { metaKey: true },
+      )
+      expect(mockPush).not.toHaveBeenCalled()
+    })
   })
 
   it("tracks focusedOnSearchInput on focus", async () => {
