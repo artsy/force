@@ -154,7 +154,10 @@ export const Order2DeliveryOptionsForm: React.FC<
                 <Spacer y={1} />
 
                 {deliveryOptions.length === 1 ? (
-                  <SingleShippingOption option={deliveryOptions[0]} />
+                  <SingleShippingOption
+                    option={deliveryOptions[0]}
+                    shippingOrigin={shippingOrigin}
+                  />
                 ) : deliveryOptions.length > 1 ? (
                   <MultipleShippingOptionsForm
                     options={deliveryOptions}
@@ -204,12 +207,17 @@ const FRAGMENT = graphql`
 
 interface SingleShippingOptionProps {
   option: DeliveryOption
+  shippingOrigin: string | null | undefined
 }
 
-const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
+const SingleShippingOption = ({
+  option,
+  shippingOrigin,
+}: SingleShippingOptionProps) => {
   const label = deliveryOptionLabel(option.type)
   const timeEstimate = deliveryOptionTimeEstimate(option.type)
   const [prefix, timeRange] = timeEstimate || []
+  const isInternationalShipping = option.type?.includes("INTERNATIONAL")
 
   return (
     <Flex flexDirection="column">
@@ -217,13 +225,29 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
         <Text variant="sm-display" color="mono100">
           {label}
         </Text>
+
         <Text variant="sm" color="mono100">
           {option.amount?.display}
         </Text>
       </Flex>
+
       {timeEstimate && (
         <Text variant="sm" color="mono60">
           {prefix} <strong>{timeRange}</strong>
+        </Text>
+      )}
+
+      {shippingOrigin && (
+        <Text variant="sm" color="mono60">
+          Ships from {shippingOrigin}
+        </Text>
+      )}
+
+      <Spacer y={1} />
+
+      {isInternationalShipping && (
+        <Text variant="sm" color="mono60">
+          Customs processing times may vary
         </Text>
       )}
     </Flex>
@@ -243,6 +267,9 @@ const MultipleShippingOptionsForm = ({
   const [selectedOption, setSelectedOption] = useState(defaultOption)
   const { setFieldValue } = useFormikContext<FormValues>()
   const { checkoutTracking } = useCheckoutContext()
+  const isInternationalShipping = options.some(option =>
+    option.type?.includes("INTERNATIONAL"),
+  )
 
   return (
     <>
@@ -250,6 +277,16 @@ const MultipleShippingOptionsForm = ({
         <Text variant="xs" color="mono60">
           Ships from {shippingOrigin}
         </Text>
+      )}
+
+      {isInternationalShipping && (
+        <>
+          <Text variant="xs" color="mono60">
+            Customs processing times may vary
+          </Text>
+
+          <Spacer y={0.5} />
+        </>
       )}
 
       <Spacer y={0.5} />
