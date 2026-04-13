@@ -129,6 +129,74 @@ describe("SearchBarInput", () => {
     expect(mockPush).not.toHaveBeenCalled()
   })
 
+  it("tracks selection but does not redirect on ctrl+click", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }), {
+      ctrlKey: true,
+    })
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: ActionType.selectedItemFromSearch,
+      context_module: ContextModule.topTab,
+      destination_path: "/artist/andy-warhol",
+      query: "andy",
+      item_id: "andy-warhol",
+      item_number: 0,
+      item_type: "Artist",
+    })
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
+  it("tracks selection but does not redirect on shift+click", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }), {
+      shiftKey: true,
+    })
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: ActionType.selectedItemFromSearch,
+      context_module: ContextModule.topTab,
+      destination_path: "/artist/andy-warhol",
+      query: "andy",
+      item_id: "andy-warhol",
+      item_number: 0,
+      item_type: "Artist",
+    })
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
+  it("tracks selection but does not redirect on alt+click", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }), {
+      altKey: true,
+    })
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: ActionType.selectedItemFromSearch,
+      context_module: ContextModule.topTab,
+      destination_path: "/artist/andy-warhol",
+      query: "andy",
+      item_id: "andy-warhol",
+      item_number: 0,
+      item_type: "Artist",
+    })
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
+  it("tracks selection but does not redirect on middle click", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }), {
+      button: 1,
+    })
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: ActionType.selectedItemFromSearch,
+      context_module: ContextModule.topTab,
+      destination_path: "/artist/andy-warhol",
+      query: "andy",
+      item_id: "andy-warhol",
+      item_number: 0,
+      item_type: "Artist",
+    })
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
   it("tracks focusedOnSearchInput on focus", async () => {
     render(<SearchBarInput searchTerm="andy" />)
     await userEvent.click(screen.getByRole("textbox"))

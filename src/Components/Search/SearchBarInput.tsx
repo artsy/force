@@ -266,7 +266,11 @@ export const SearchBarInput: FC<
 
     const isModifiedClick =
       !!event &&
-      (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+      (event.button === 1 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey)
 
     if (isModifiedClick) {
       return
