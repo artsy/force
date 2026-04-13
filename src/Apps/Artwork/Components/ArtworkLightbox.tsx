@@ -85,7 +85,6 @@ const ArtworkLightbox: React.FC<
         <Link
           rel="preload"
           as="image"
-          href={image.src}
           imageSrcSet={image.srcSet}
           fetchPriority="high"
         />
