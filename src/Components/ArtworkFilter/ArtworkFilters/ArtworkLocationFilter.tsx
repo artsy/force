@@ -1,6 +1,5 @@
 import { SelectedFiltersCountsLabels } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ResultsFilter } from "./ResultsFilter"
-import { useFlag } from "@unleash/proxy-client-react"
 import { getArtworkLocationSearchableText } from "Components/ArtworkFilter/Utils/getArtworkLocationSearchableText"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -16,30 +15,6 @@ export interface ArtworkLocationFilterProps {
 }
 
 export const ArtworkLocationFilter: React.FC<
-  React.PropsWithChildren<ArtworkLocationFilterProps>
-> = props => {
-  const { expanded } = props
-  const enableEnhancedFilter = useFlag(
-    "onyx_enhanced-artwork-location-filtering",
-  )
-
-  if (enableEnhancedFilter) {
-    return <EnhancedArtworkLocationFilter expanded={expanded} />
-  }
-
-  return (
-    <ResultsFilter
-      expanded={expanded}
-      facetName="locationCities"
-      filtersCountKey={SelectedFiltersCountsLabels.locationCities}
-      label="Artwork Location"
-      placeholder="Enter a city"
-      slice="LOCATION_CITY"
-    />
-  )
-}
-
-export const EnhancedArtworkLocationFilter: React.FC<
   React.PropsWithChildren<ArtworkLocationFilterProps>
 > = props => {
   const { expanded } = props

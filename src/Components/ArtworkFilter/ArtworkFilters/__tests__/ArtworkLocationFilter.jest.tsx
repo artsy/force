@@ -7,7 +7,6 @@ import {
   currentArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilters/__tests__/Utils"
 import { useTracking } from "react-tracking"
-import { useFlag } from "@unleash/proxy-client-react"
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -85,87 +84,82 @@ describe(ArtworkLocationFilter, () => {
   describe("keyword filtering within facet", () => {
     it("lists only the matching options", () => {
       render(<ArtworkLocationFilter expanded />)
-      userEvent.type(screen.getByPlaceholderText("Enter a city"), "fenny")
+      userEvent.type(
+        screen.getByPlaceholderText("Enter a city, country, or region"),
+        "fenny",
+      )
       expect(screen.getByText("Fenny Drayton, UK")).toBeInTheDocument()
       expect(screen.queryByText("Potwin, KS, USA")).not.toBeInTheDocument()
     })
 
-    describe("when onyx_enhanced-artwork-location-filtering is enabled", () => {
-      beforeEach(() => {
-        ;(useFlag as jest.Mock).mockImplementation(
-          flag => flag === "onyx_enhanced-artwork-location-filtering",
-        )
-      })
+    it("lists options whose visible text matches", () => {
+      render(<ArtworkLocationFilter expanded />)
+      userEvent.type(
+        screen.getByPlaceholderText("Enter a city, country, or region"),
+        "usa",
+      )
+      expect(screen.getByText("Potwin, KS, USA")).toBeInTheDocument()
+      expect(screen.queryByText("Fenny Drayton, UK")).not.toBeInTheDocument()
+    })
 
-      it("lists options whose visible text matches", () => {
-        render(<ArtworkLocationFilter expanded />)
-        userEvent.type(
-          screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
-        )
-        expect(screen.getByText("Potwin, KS, USA")).toBeInTheDocument()
-        expect(screen.queryByText("Fenny Drayton, UK")).not.toBeInTheDocument()
-      })
+    it("lists options whose invisible text matches", () => {
+      render(<ArtworkLocationFilter expanded />)
+      userEvent.type(
+        screen.getByPlaceholderText("Enter a city, country, or region"),
+        "america", // matches a region or synonym defined in custom mapping
+      )
+      expect(screen.getByText("Potwin, KS, USA")).toBeInTheDocument()
+      expect(screen.queryByText("Fenny Drayton, UK")).not.toBeInTheDocument()
+    })
 
-      it("lists options whose invisible text matches", () => {
-        render(<ArtworkLocationFilter expanded />)
-        userEvent.type(
-          screen.getByPlaceholderText("Enter a city, country, or region"),
-          "america", // matches a region or synonym defined in custom mapping
-        )
-        expect(screen.getByText("Potwin, KS, USA")).toBeInTheDocument()
-        expect(screen.queryByText("Fenny Drayton, UK")).not.toBeInTheDocument()
-      })
+    it("enables select-all and clear actions", () => {
+      render(<ArtworkLocationFilter expanded />)
+      userEvent.type(
+        screen.getByPlaceholderText("Enter a city, country, or region"),
+        "usa",
+      )
+      expect(screen.getByText("Select all")).toBeInTheDocument()
+      expect(screen.getByText("Clear")).toBeInTheDocument()
+    })
 
-      it("enables select-all and clear actions", () => {
-        render(<ArtworkLocationFilter expanded />)
-        userEvent.type(
-          screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
-        )
-        expect(screen.getByText("Select all")).toBeInTheDocument()
-        expect(screen.getByText("Clear")).toBeInTheDocument()
-      })
+    it("updates filter state upon select-all and clear actions", () => {
+      render(<ArtworkLocationFilter expanded />)
+      userEvent.type(
+        screen.getByPlaceholderText("Enter a city, country, or region"),
+        "usa",
+      )
+      userEvent.click(screen.getByText("Select all"))
+      expect(currentArtworkFilterContext().filters?.locationCities).toEqual([
+        "Brooklyn, NY, USA",
+        "Potwin, KS, USA",
+      ])
+      userEvent.click(screen.getByText("Clear"))
+      expect(currentArtworkFilterContext().filters?.locationCities).toEqual(
+        [],
+      )
+    })
 
-      it("updates filter state upon select-all and clear actions", () => {
-        render(<ArtworkLocationFilter expanded />)
-        userEvent.type(
-          screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
-        )
-        userEvent.click(screen.getByText("Select all"))
-        expect(currentArtworkFilterContext().filters?.locationCities).toEqual([
-          "Brooklyn, NY, USA",
-          "Potwin, KS, USA",
-        ])
-        userEvent.click(screen.getByText("Clear"))
-        expect(currentArtworkFilterContext().filters?.locationCities).toEqual(
-          [],
-        )
-      })
+    it("fires a select-all tracking event", () => {
+      const mockTrackEvent = jest.fn()
+      ;(useTracking as jest.Mock).mockImplementation(() => ({
+        trackEvent: mockTrackEvent,
+      }))
 
-      it("fires a select-all tracking event", () => {
-        const mockTrackEvent = jest.fn()
-        ;(useTracking as jest.Mock).mockImplementation(() => ({
-          trackEvent: mockTrackEvent,
-        }))
+      render(<ArtworkLocationFilter expanded />)
+      userEvent.type(
+        screen.getByPlaceholderText("Enter a city, country, or region"),
+        "usa",
+      )
+      userEvent.click(screen.getByText("Select all"))
 
-        render(<ArtworkLocationFilter expanded />)
-        userEvent.type(
-          screen.getByPlaceholderText("Enter a city, country, or region"),
-          "usa",
-        )
-        userEvent.click(screen.getByText("Select all"))
-
-        expect(mockTrackEvent).toHaveBeenCalledWith({
-          action: "commercialFilterSelectedAll",
-          context_module: "artworkGrid",
-          context_owner_type: "type",
-          context_owner_id: "id",
-          context_owner_slug: "slug",
-          facet: "locationCities",
-          query: "usa",
-        })
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "commercialFilterSelectedAll",
+        context_module: "artworkGrid",
+        context_owner_type: "type",
+        context_owner_id: "id",
+        context_owner_slug: "slug",
+        facet: "locationCities",
+        query: "usa",
       })
     })
   })
