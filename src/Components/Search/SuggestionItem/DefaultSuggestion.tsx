@@ -81,19 +81,19 @@ function resolveSuggestionParts(
       ? parseHighlightFragments(firstAlternateFragment)
       : null
 
+  if (firstNameFragment) {
+    return {
+      nameParts: parseHighlightFragments(firstNameFragment),
+      alternateParts,
+    }
+  }
+
   if (hasClientHighlights) {
     return {
       nameParts: parse(option.text, clientMatches).map(
         ({ highlight, text }, index) =>
           highlight ? <Highlight key={index}>{text}</Highlight> : text
       ),
-      alternateParts,
-    }
-  }
-
-  if (firstNameFragment) {
-    return {
-      nameParts: parseHighlightFragments(firstNameFragment),
       alternateParts,
     }
   }

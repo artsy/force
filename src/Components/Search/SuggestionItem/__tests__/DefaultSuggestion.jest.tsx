@@ -35,7 +35,7 @@ const baseOption: SuggestionItemOptionProps = {
 
 describe("DefaultSuggestion", () => {
   describe("display name highlighting", () => {
-    it("uses client-side substring matching as primary strategy", () => {
+    it("falls back to client-side substring matching when no server highlights are present", () => {
       const { container } = render(
         <DefaultSuggestion option={baseOption} query="warhol" />
       )
@@ -61,7 +61,7 @@ describe("DefaultSuggestion", () => {
       expect(highlighted).toHaveTextContent("Andy Warhol")
     })
 
-    it("prefers client-side over server-side when both could match", () => {
+    it("prefers server-side over client-side when both could match", () => {
       const option: SuggestionItemOptionProps = {
         ...baseOption,
         highlights: [
@@ -74,8 +74,9 @@ describe("DefaultSuggestion", () => {
       )
 
       const highlights = container.querySelectorAll("strong")
-      expect(highlights).toHaveLength(1)
-      expect(highlights[0]).toHaveTextContent("War")
+      expect(highlights).toHaveLength(2)
+      expect(highlights[0]).toHaveTextContent("Andy")
+      expect(highlights[1]).toHaveTextContent("Warhol")
     })
 
     it("renders plain text when neither strategy produces highlights", () => {
