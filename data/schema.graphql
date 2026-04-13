@@ -15868,6 +15868,7 @@ type InstagramPost {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  errorMessage: String
 
   # A globally unique ID.
   id: ID!
@@ -15918,11 +15919,8 @@ input InstagramPostSlideInput {
   # The ID of the artwork for this slide
   artworkId: String!
 
-  # Custom image URL to use instead of the artwork's default image
-  imageUrl: String @deprecated(reason: "Use s3Key instead")
-
   # S3 object key for this slide's custom image
-  s3Key: String
+  s3Key: String!
 }
 
 enum InstagramPostStatus {
