@@ -1,5 +1,13 @@
 import { DateTime } from "luxon"
 
+export const SELECTABLE_FULFILLMENT_TYPES = [
+  "DOMESTIC_FLAT",
+  "INTERNATIONAL_FLAT",
+  "ARTSY_STANDARD",
+  "ARTSY_EXPRESS",
+  "ARTSY_WHITE_GLOVE",
+] as const
+
 // TODO: Get these from MP
 export const deliveryOptionLabel = (type?: string | null) => {
   switch (type) {

@@ -1,6 +1,5 @@
 import AddIcon from "@artsy/icons/AddIcon"
 import {
-  Button,
   Clickable,
   Flex,
   Radio,
@@ -25,7 +24,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
-import { useFormikContext } from "formik"
 import { useCallback, useEffect, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
@@ -60,9 +58,9 @@ export const SavedAddressOptions = ({
     checkoutTracking,
     steps,
     orderData,
+    isSavedAddressSelectionMutating,
   } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
-  const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
@@ -247,6 +245,7 @@ export const SavedAddressOptions = ({
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
+                disabled={isSavedAddressSelectionMutating}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }
@@ -302,22 +301,6 @@ export const SavedAddressOptions = ({
           </Text>
         </Flex>
       </Clickable>
-
-      <Spacer y={4} />
-
-      <Button
-        type="submit"
-        loading={parentFormikContext.isSubmitting}
-        disabled={
-          (!selectedAddress?.isShippable && !isOfferOrder) ||
-          !selectedAddress?.isValid
-        }
-        onClick={() => {
-          parentFormikContext.handleSubmit()
-        }}
-      >
-        Save and Continue
-      </Button>
     </Flex>
   )
 }

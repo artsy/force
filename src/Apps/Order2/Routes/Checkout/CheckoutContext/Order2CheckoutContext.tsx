@@ -70,6 +70,12 @@ export interface Order2CheckoutModel {
   userAddressMode: UserAddressMode | null
   messages: Messages
   artworkPath: string
+  /**
+   * True while the address mutation is in flight from a saved address radio selection.
+   * TODO: Consider broadening this to cover the subsequent option auto-save as well,
+   * keeping the entire delivery section in a loading state throughout the address→option sequence.
+   */
+  isSavedAddressSelectionMutating: boolean
 
   // External data - passed in as runtime props
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -107,6 +113,8 @@ export interface Order2CheckoutModel {
       error: CheckoutErrorBannerMessage | null | undefined
     }
   >
+  setSavedAddressSelectionMutating: Action<this, boolean>
+  setSavedAddressSelectedActive: Action<this>
 }
 
 export const Order2CheckoutContext: ReturnType<
@@ -124,6 +132,7 @@ export const Order2CheckoutContext: ReturnType<
   userAddressMode: null,
   messages: {},
   artworkPath: "/",
+  isSavedAddressSelectionMutating: false,
 
   // Required runtime props - will be provided by Provider
   // These will be overridden by the Provider with actual values
@@ -220,13 +229,13 @@ export const Order2CheckoutContext: ReturnType<
   }),
 
   setDeliveryOptionComplete: action(state => {
-    const currentStepName = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
-    )?.name
+    const deliveryOptionStep = state.steps.find(
+      step => step.name === CheckoutStepName.DELIVERY_OPTION,
+    )
 
-    if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
+    if (deliveryOptionStep?.state !== CheckoutStepState.ACTIVE) {
       logger.error(
-        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
+        `setDeliveryOptionComplete called when DELIVERY_OPTION step is not ACTIVE but ${deliveryOptionStep?.state}`,
       )
       return
     }
@@ -235,11 +244,11 @@ export const Order2CheckoutContext: ReturnType<
     let hasActivatedNext = false
 
     for (const step of state.steps) {
-      if (step.name === CheckoutStepName.DELIVERY_OPTION) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.COMPLETED,
-        })
+      if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+        // Mark FULFILLMENT_DETAILS completed (idempotent — handles simultaneous-state case)
+        newSteps.push({ ...step, state: CheckoutStepState.COMPLETED })
+      } else if (step.name === CheckoutStepName.DELIVERY_OPTION) {
+        newSteps.push({ ...step, state: CheckoutStepState.COMPLETED })
       } else {
         const isAfterDeliveryOptionsStep = newSteps
           .map(s => s.name)
@@ -251,15 +260,9 @@ export const Order2CheckoutContext: ReturnType<
         ) {
           if (!hasActivatedNext) {
             hasActivatedNext = true
-            newSteps.push({
-              ...step,
-              state: CheckoutStepState.ACTIVE,
-            })
+            newSteps.push({ ...step, state: CheckoutStepState.ACTIVE })
           } else {
-            newSteps.push({
-              ...step,
-              state: CheckoutStepState.UPCOMING,
-            })
+            newSteps.push({ ...step, state: CheckoutStepState.UPCOMING })
           }
         } else {
           newSteps.push(step)
@@ -472,6 +475,22 @@ export const Order2CheckoutContext: ReturnType<
       ...state.messages,
       [section]: { error },
     }
+  }),
+
+  setSavedAddressSelectionMutating: action((state, value) => {
+    state.isSavedAddressSelectionMutating = value
+  }),
+
+  setSavedAddressSelectedActive: action(state => {
+    state.steps = state.steps.map(step => {
+      if (
+        step.name === CheckoutStepName.DELIVERY_OPTION &&
+        step.state === CheckoutStepState.UPCOMING
+      ) {
+        return { ...step, state: CheckoutStepState.ACTIVE }
+      }
+      return step
+    })
   }),
 }))
 

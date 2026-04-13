@@ -78,6 +78,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     setFulfillmentDetailsComplete,
     setUserAddressMode,
     setSectionErrorMessage,
+    setSavedAddressSelectionMutating,
+    setSavedAddressSelectedActive,
     messages,
   } = checkoutContext
 
@@ -287,6 +289,68 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       setOrderDeliveryAddressMutation,
     ],
   )
+
+  // Fires address mutation immediately on saved address radio select.
+  // On success, activates the delivery options step alongside fulfillment details.
+  const onSelectAddress = useCallback(
+    async (values: FormikContextWithAddress) => {
+      setSavedAddressSelectionMutating(true)
+      try {
+        // Unset existing fulfillment option so delivery options reload
+        if (orderData?.selectedFulfillmentOption?.type) {
+          const unsetResult = await unsetOrderFulfillmentOption.submitMutation({
+            variables: { input: { id: orderData.internalID } },
+          })
+          validateAndExtractOrderResponse(
+            unsetResult.unsetOrderFulfillmentOption?.orderOrError,
+          )
+        }
+
+        const input = {
+          id: orderData.internalID,
+          buyerPhoneNumber: values.phoneNumber,
+          buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
+          shippingAddressLine1: values.address.addressLine1,
+          shippingAddressLine2: values.address.addressLine2,
+          shippingCity: values.address.city,
+          shippingRegion: values.address.region,
+          shippingPostalCode: values.address.postalCode,
+          shippingCountry: values.address.country,
+          shippingName: values.address.name,
+        }
+
+        const result = await setOrderDeliveryAddressMutation.submitMutation({
+          variables: { input },
+        })
+        validateAndExtractOrderResponse(
+          result.updateOrderShippingAddress?.orderOrError,
+        )
+
+        setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: null,
+        })
+        setSavedAddressSelectedActive()
+      } catch (error) {
+        setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: fallbackError("updating your delivery address", error?.code),
+        })
+      } finally {
+        setSavedAddressSelectionMutating(false)
+      }
+    },
+    [
+      orderData?.selectedFulfillmentOption?.type,
+      orderData.internalID,
+      setSavedAddressSelectionMutating,
+      setOrderDeliveryAddressMutation,
+      setSavedAddressSelectedActive,
+      setSectionErrorMessage,
+      unsetOrderFulfillmentOption,
+    ],
+  )
+
   return (
     <Formik
       initialValues={initialSelectedAddress || initialValues}
@@ -318,6 +382,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 }
                 onSelectAddress={async values => {
                   await setValues(values)
+                  await onSelectAddress(values)
                 }}
               />
             ) : (

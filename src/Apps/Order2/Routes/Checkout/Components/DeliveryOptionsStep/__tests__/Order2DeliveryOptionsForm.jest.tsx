@@ -35,6 +35,7 @@ beforeEach(() => {
     setSectionErrorMessage: jest.fn(),
     messages: {},
     steps: [],
+    isSavedAddressSelectionMutating: false,
   }
 })
 

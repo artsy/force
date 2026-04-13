@@ -23,6 +23,7 @@ import {
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
+  SELECTABLE_FULFILLMENT_TYPES,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
@@ -35,6 +36,7 @@ import type {
   Order2DeliveryOptionsForm_order$data,
   Order2DeliveryOptionsForm_order$key,
 } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
+import { usePrevious } from "@artsy/palette"
 import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -44,15 +46,6 @@ interface Order2DeliveryOptionsFormProps {
 
 type DeliveryOption =
   Order2DeliveryOptionsForm_order$data["fulfillmentOptions"][number]
-
-// Types submittable via setOrderFulfillmentOption. SHIPPING_TBD and PICKUP are excluded.
-const SELECTABLE_TYPES = [
-  "DOMESTIC_FLAT",
-  "INTERNATIONAL_FLAT",
-  "ARTSY_STANDARD",
-  "ARTSY_EXPRESS",
-  "ARTSY_WHITE_GLOVE",
-]
 
 export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
@@ -64,7 +57,12 @@ export const Order2DeliveryOptionsForm: React.FC<
     setSectionErrorMessage,
     messages,
     steps,
+    isSavedAddressSelectionMutating,
   } = useCheckoutContext()
+
+  const prevIsSavedAddressSelectionMutating = usePrevious(
+    isSavedAddressSelectionMutating,
+  )
 
   const setFulfillmentOptionMutation =
     useOrder2SetOrderFulfillmentOptionMutation()
@@ -84,7 +82,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     option => option.type !== "PICKUP",
   )
   const selectableOptions = deliveryOptions.filter(o =>
-    SELECTABLE_TYPES.includes(o.type),
+    (SELECTABLE_FULFILLMENT_TYPES as readonly string[]).includes(o.type),
   )
   // When all options are SHIPPING_TBD, no mutation is needed.
   const onlyShippingTBD =
@@ -147,6 +145,21 @@ export const Order2DeliveryOptionsForm: React.FC<
       }
     })
   }, [stepState])
+
+  // Re-save first option when address mutation completes (saved address flow:
+  // user switches address while DELIVERY_OPTION is already ACTIVE).
+  // biome-ignore lint/correctness/useExhaustiveDependencies: saveOption is stable
+  useEffect(() => {
+    if (stepState !== CheckoutStepState.ACTIVE) return
+    if (!prevIsSavedAddressSelectionMutating || isSavedAddressSelectionMutating)
+      return
+    if (selectableOptions.length === 0) return
+    saveOption(selectableOptions[0]).then(() => {
+      if (selectableOptions.length === 1) {
+        setDeliveryOptionComplete()
+      }
+    })
+  }, [isSavedAddressSelectionMutating])
 
   const handleContinue = useCallback(() => {
     checkoutTracking.clickedOrderProgression(
@@ -216,10 +229,13 @@ export const Order2DeliveryOptionsForm: React.FC<
 
         <Spacer y={2} />
 
-        {isSaving && !orderData.selectedFulfillmentOption ? (
+        {isSavedAddressSelectionMutating ||
+        (isSaving && !orderData.selectedFulfillmentOption) ? (
           <Skeleton>
             <Flex flexDirection="column" gap={1}>
-              {[0, 1, 2].map(i => (
+              {Array.from({
+                length: deliveryOptions.length || 3,
+              }).map((_, i) => (
                 <SkeletonBox key={i} height="52px" width="100%" />
               ))}
             </Flex>
@@ -246,8 +262,9 @@ export const Order2DeliveryOptionsForm: React.FC<
       <Spacer y={4} />
 
       <Button
-        loading={isSaving}
+        loading={isSaving || isSavedAddressSelectionMutating}
         disabled={
+          isSavedAddressSelectionMutating ||
           (!orderData.selectedFulfillmentOption && !onlyShippingTBD) ||
           deliveryOptions.length === 0
         }

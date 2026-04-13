@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9af25bde9942407e063a440db4a688d3>>
+ * @generated SignedSource<<350985bb6b5e7e2c5f233544f7fb0292>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type useLoadCheckout_order$data = {
+  readonly fulfillmentDetails: {
+    readonly addressLine1: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
@@ -42,6 +45,24 @@ return {
   "name": "useLoadCheckout_order",
   "selections": [
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentDetails",
+      "kind": "LinkedField",
+      "name": "fulfillmentDetails",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "addressLine1",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -89,6 +110,6 @@ return {
 };
 })();
 
-(node as any).hash = "3205d348999e4dae1e0eac2c12baeba9";
+(node as any).hash = "fb498b042ba94157ee27836aafbea7dc";
 
 export default node;

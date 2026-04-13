@@ -34,6 +34,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     expressCheckoutPaymentMethods,
     expressCheckoutState,
     steps,
+    setSavedAddressSelectedActive,
   } = useCheckoutContext()
 
   const { checkoutModalError, showCheckoutErrorModal } = useCheckoutModal()
@@ -100,6 +101,14 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
 
     try {
       validateOrder(orderData)
+
+      // If the order already has a delivery address, activate the delivery
+      // options step immediately so the user doesn't have to re-select their
+      // saved address on every page load.
+      if (orderData.fulfillmentDetails?.addressLine1) {
+        setSavedAddressSelectedActive()
+      }
+
       setOrderValidated(true)
     } catch (error) {
       logger.error("Error validating order: ", error.message)
@@ -107,7 +116,12 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         error: error.message,
       })
     }
-  }, [orderData, orderValidated, showCheckoutErrorModal])
+  }, [
+    orderData,
+    orderValidated,
+    showCheckoutErrorModal,
+    setSavedAddressSelectedActive,
+  ])
 
   // Set minimum loading duration to avoid flash of loading state
   useEffect(() => {
@@ -186,6 +200,9 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
 const ORDER_FRAGMENT = graphql`
   fragment useLoadCheckout_order on Order {
     internalID
+    fulfillmentDetails {
+      addressLine1
+    }
     lineItems {
       artwork {
         isAcquireable
