@@ -90,7 +90,11 @@ describe("ArtworkFilter", () => {
         }),
       )
 
-      const { current, changed } = trackEvent.mock.calls[0][0]
+      const filterChangeEvent = trackEvent.mock.calls
+        .map(([event]) => event)
+        .find(e => e.action === "commercialFilterParamsChanged")
+
+      const { current, changed } = filterChangeEvent
 
       expect(JSON.parse(current)).toMatchObject(
         omit(
