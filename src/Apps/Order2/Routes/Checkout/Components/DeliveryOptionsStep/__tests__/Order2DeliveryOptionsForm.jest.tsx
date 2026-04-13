@@ -76,31 +76,6 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(screen.queryByRole("radio")).not.toBeInTheDocument()
     })
-
-    it("displays shipping and returns link", () => {
-      renderWithRelay({
-        Me: () => ({
-          order: {
-            internalID: "order-123",
-            fulfillmentOptions: [
-              {
-                type: "ARTSY_STANDARD",
-                amount: { display: "$25.00" },
-                selected: true,
-              },
-            ],
-          },
-        }),
-      })
-
-      const guaranteeLink = screen.getByRole("link")
-      expect(guaranteeLink).toBeInTheDocument()
-      expect(guaranteeLink).toHaveAttribute("target", "_blank")
-      expect(guaranteeLink).toHaveAttribute(
-        "href",
-        "https://support.artsy.net/s/article/Shipping-and-Returns-FAQs",
-      )
-    })
   })
 
   describe("with multiple delivery options", () => {
@@ -129,6 +104,18 @@ describe("Order2DeliveryOptionsForm", () => {
       }),
     }
 
+    it("displays shipping and returns link", () => {
+      renderWithRelay(multipleOptionsData)
+
+      const guaranteeLink = screen.getByRole("link")
+      expect(guaranteeLink).toBeInTheDocument()
+      expect(guaranteeLink).toHaveAttribute("target", "_blank")
+      expect(guaranteeLink).toHaveAttribute(
+        "href",
+        "https://support.artsy.net/s/article/Shipping-and-Returns-FAQs",
+      )
+    })
+
     it("renders radio group with multiple shipping options", () => {
       renderWithRelay(multipleOptionsData)
 
@@ -147,7 +134,7 @@ describe("Order2DeliveryOptionsForm", () => {
     it("displays time estimates for delivery options", () => {
       renderWithRelay(multipleOptionsData)
 
-      const timeEstimates = screen.getAllByText(/Estimated delivery/)
+      const timeEstimates = screen.getAllByText(/Est. delivery/)
       expect(timeEstimates.length).toBeGreaterThan(0)
     })
 
