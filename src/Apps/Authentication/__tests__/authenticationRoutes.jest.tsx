@@ -205,6 +205,19 @@ describe("authenticationRoutes", () => {
     })
   })
 
+  describe("/signup-new", () => {
+    describe("client", () => {
+      it.skip("renders signup landing page", async () => {
+        renderClientRoute("/signup-new")
+
+        await waitFor(() => {
+          expect(screen.getByText("Log In")).toBeInTheDocument()
+          expect(screen.getByText(/Why Choose Artsy/i)).toBeInTheDocument()
+        })
+      })
+    })
+  })
+
   describe("/auth-redirect", () => {
     describe("server", () => {
       it("redirects to redirectTo", () => {

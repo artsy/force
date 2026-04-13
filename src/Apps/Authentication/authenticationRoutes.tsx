@@ -41,6 +41,14 @@ const SignupRoute = loadable(
   { resolveComponent: component => component.AuthenticationSignUpRoute },
 )
 
+const SignupNewRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationSignUpNewRoute"
+    ),
+  { resolveComponent: component => component.AuthenticationSignUpNewRoute },
+)
+
 const runAuthMiddleware = flow(checkForRedirect, setReferer)
 
 export const authenticationRoutes: RouteProps[] = [
@@ -124,6 +132,18 @@ export const authenticationRoutes: RouteProps[] = [
     },
     onPreloadJS: () => {
       SignupRoute.preload()
+    },
+  },
+  {
+    path: "/signup-new",
+    layout: "ContainerOnly",
+    getComponent: () => SignupNewRoute,
+    onServerSideRender: props => {
+      // Only run the essential middleware (referer tracking)
+      runAuthMiddleware(props)
+    },
+    onPreloadJS: () => {
+      SignupNewRoute.preload()
     },
   },
   {
