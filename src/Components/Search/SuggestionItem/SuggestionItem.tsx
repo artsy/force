@@ -33,13 +33,14 @@ export const SuggestionItem: FC<
   React.PropsWithChildren<SuggestionItemProps>
 > = props => {
   const { option, onClick } = props
+  const auctionResultsPath = `${option.href}/auction-results`
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     onClick(option, event)
   }
 
   const handleQuickNavClick = (event: MouseEvent<HTMLElement>) => {
-    onClick(option, event, `${option.href}/auction-results`)
+    onClick(option, event, auctionResultsPath)
   }
 
   const handleMouseDown = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -76,7 +77,7 @@ export const SuggestionItem: FC<
           <QuickNavigationItem
             onClick={handleQuickNavClick}
             label="Auction Results"
-            to={`${option.href}/auction-results`}
+            to={auctionResultsPath}
           />
         </Box>
       )}
