@@ -40,7 +40,7 @@ export const deliveryOptionTimeEstimate = (
     case "ARTSY_EXPRESS":
       return ["Est. delivery", "2 days after shipping"]
     case "ARTSY_EXPRESS_INTERNATIONAL":
-      return ["Est. delivery", "5-10 days after shipping"]
+      return ["Est. delivery", "3-7 days after shipping"]
     case "ARTSY_WHITE_GLOVE":
       return ["", "Delivery timing varies"]
     case "SHIPPING_TBD":
