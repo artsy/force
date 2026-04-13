@@ -14,10 +14,6 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(() => false),
-}))
-
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn(() => ({
     relayEnvironment: null,
@@ -126,10 +122,6 @@ describe("NavBarSubMenu", () => {
     const { useDidMount } = require("@artsy/palette")
     ;(useDidMount as jest.Mock).mockReturnValue(true)
 
-    // Mock feature flag to be enabled
-    const { useFlag } = require("@unleash/proxy-client-react")
-    ;(useFlag as jest.Mock).mockReturnValue(true)
-
     // Mock NavBarMenuItemFeaturedLinkWithColumn to call onDataLoaded and render content
     const {
       NavBarMenuItemFeaturedLinkWithColumn,
@@ -197,17 +189,5 @@ describe("NavBarSubMenu", () => {
     expect(container.textContent).not.toContain("Get Inspired")
     expect(container.textContent).not.toContain("What's Next")
     expect(container.textContent).not.toContain("Artists to Discover")
-  })
-
-  it("does not render featured link component when feature flag is disabled", () => {
-    // Mock feature flag to be disabled
-    const { useFlag } = require("@unleash/proxy-client-react")
-    ;(useFlag as jest.Mock).mockReturnValueOnce(false)
-
-    // ARTWORKS_SUBMENU_DATA includes a featured link visual component
-    const { container } = getWrapper()
-
-    // Featured link should not be rendered when flag is disabled
-    expect(container.textContent).not.toContain("Get Inspired")
   })
 })

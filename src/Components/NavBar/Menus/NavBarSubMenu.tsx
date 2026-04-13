@@ -1,6 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Column, GridColumns, Spacer, Text, useDidMount } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { MenuData } from "Components/NavBar/menuData"
@@ -27,14 +26,9 @@ export const NavBarSubMenu: React.FC<
 > = ({ menu, contextModule, parentNavigationItem, onClick, isVisible }) => {
   const tracking = useNavBarTracking()
   const isMounted = useDidMount()
-  const enableVisualComponents = useFlag("onyx_nav-submenu-visual-component")
   const [hasVisualComponentData, setHasVisualComponentData] = useState<
     boolean | null
   >(null)
-
-  // Only show visual components after client mount and when flag is enabled
-  // (useFlag is not isomorphic, so we need to wait for client-side mount)
-  const shouldEnableVisualComponents = isMounted && enableVisualComponents
 
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -78,9 +72,9 @@ export const NavBarSubMenu: React.FC<
     item => "type" in item && item.type === "FeaturedLink",
   )
 
-  // Only show featured link if feature flag is enabled, component is mounted, and data loaded successfully
+  // Only show featured link if component is mounted and data loaded successfully
   const shouldShowFeaturedLink =
-    shouldEnableVisualComponents &&
+    isMounted &&
     featuredLinkItem &&
     hasVisualComponentData === true
 
@@ -93,7 +87,7 @@ export const NavBarSubMenu: React.FC<
 
   // Decide whether to try loading visual component
   const shouldTryVisualComponent =
-    shouldEnableVisualComponents && featuredLinkItem
+    isMounted && featuredLinkItem
 
   return (
     <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
