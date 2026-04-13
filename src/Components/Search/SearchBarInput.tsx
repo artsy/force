@@ -254,30 +254,32 @@ export const SearchBarInput: FC<
     redirect(option.href)
   }
 
+  const isModifiedClick = (event?: MouseEvent<HTMLElement>) =>
+    !!event &&
+    (event.button === 1 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey)
+
   const handleSuggestionClick = (
     option: SuggestionItemOptionProps,
     event?: MouseEvent<HTMLElement>,
-    destinationPath?: string,
   ) => {
-    // QuickNavigationItem already tracks its own cohesion event, so skip here
-    if (!destinationPath) {
-      trackSelection(option)
-    }
-
-    const isModifiedClick =
-      !!event &&
-      (event.button === 1 ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey)
-
-    if (isModifiedClick) {
-      return
-    }
-
+    trackSelection(option)
+    if (isModifiedClick(event)) return
     resetValue()
-    redirect(destinationPath ?? option.href)
+    redirect(option.href)
+  }
+
+  const handleQuickNavClick = (
+    option: SuggestionItemOptionProps,
+    event: MouseEvent<HTMLElement>,
+  ) => {
+    // QuickNavigationItem tracks its own cohesion event
+    if (isModifiedClick(event)) return
+    resetValue()
+    redirect(`${option.href}/auction-results`)
   }
 
   const handleFocus = () => {
@@ -364,6 +366,7 @@ export const SearchBarInput: FC<
             query={value}
             option={option}
             onClick={handleSuggestionClick}
+            onQuickNavClick={handleQuickNavClick}
           />
         )
       }}

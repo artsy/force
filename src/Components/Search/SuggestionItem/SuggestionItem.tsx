@@ -25,14 +25,17 @@ interface SuggestionItemProps {
   onClick: (
     option: SuggestionItemOptionProps,
     event?: MouseEvent<HTMLElement>,
-    destinationPath?: string,
+  ) => void
+  onQuickNavClick: (
+    option: SuggestionItemOptionProps,
+    event: MouseEvent<HTMLElement>,
   ) => void
 }
 
 export const SuggestionItem: FC<
   React.PropsWithChildren<SuggestionItemProps>
 > = props => {
-  const { option, onClick } = props
+  const { option, onClick, onQuickNavClick } = props
   const auctionResultsPath = `${option.href}/auction-results`
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -40,7 +43,7 @@ export const SuggestionItem: FC<
   }
 
   const handleQuickNavClick = (event: MouseEvent<HTMLElement>) => {
-    onClick(option, event, auctionResultsPath)
+    onQuickNavClick(option, event)
   }
 
   const handleMouseDown = (event: MouseEvent<HTMLAnchorElement>) => {
