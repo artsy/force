@@ -19,7 +19,6 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
@@ -40,8 +39,6 @@ interface ArtworkFilterPlaceholderProps extends BoxProps {
 export const ArtworkFilterPlaceholder: React.FC<
   React.PropsWithChildren<ArtworkFilterPlaceholderProps>
 > = ({ showCreateAlert = false, layout = "MASONRY", ...rest }) => {
-  const enableImmersiveView = useFlag("onyx_enable-immersive-view")
-
   const padding = useArtistPageExperimentPadding()
 
   const backdrop = useStickyBackdrop()
@@ -165,16 +162,14 @@ export const ArtworkFilterPlaceholder: React.FC<
                         </HorizontalOverflow>
 
                         <Flex gap={1}>
-                          {enableImmersiveView && (
-                            <Button
-                              variant={"tertiary"}
-                              size={"small"}
-                              disabled
-                            >
-                              <ExpandIcon mr={0.5} />
-                              Immersive View
-                            </Button>
-                          )}
+                          <Button
+                            variant={"tertiary"}
+                            size={"small"}
+                            disabled
+                          >
+                            <ExpandIcon mr={0.5} />
+                            Immersive View
+                          </Button>
 
                           <Dropdown
                             dropdown={
