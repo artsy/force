@@ -8,8 +8,8 @@ import {
   GridColumns,
   HTML,
   Image,
-  Join,
   Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
 import { ArticleShare } from "Components/ArticleShare"
@@ -20,7 +20,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { getAuthorPath } from "Utils/getAuthorPath"
 import type { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
-import { type FC, Fragment } from "react"
+import { type FC, Fragment, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAd } from "./ArticleAd/ArticleAd"
 import { ArticleBylineFragmentContainer } from "./ArticleByline"
@@ -29,8 +29,10 @@ import { ArticleHeroFragmentContainer } from "./ArticleHero"
 import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
 import { ArticleSectionFragmentContainer } from "./ArticleSection"
 import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
+import { ArticleTableOfContents } from "./ArticleTableOfContents"
 import { ArticleTimestamp } from "./ArticleTimestamp"
 import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
+import { injectHeadingIDsIntoBodies } from "./Utils/extractHeadings"
 
 interface ArticleBodyProps {
   article: ArticleBody_article$data
@@ -40,6 +42,13 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
   article,
 }) => {
   const centered = article.layout === "FEATURE" || article.layout === "NEWS"
+
+  const sectionBodies = useMemo(() => {
+    return injectHeadingIDsIntoBodies(
+      article.sections.map(section => section.body ?? null),
+      article.outline,
+    )
+  }, [article.sections, article.outline])
 
   return (
     <Analytics contextPageOwnerId={article.internalID}>
@@ -128,16 +137,17 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
 
             {/* Begin article contents */}
 
-            {article.leadParagraph && (
-              <HTML
-                variant="md"
-                html={article.leadParagraph}
-                maxWidth={OPTIMAL_READING_WIDTH}
-                mb={4}
-              />
-            )}
+            <Stack gap={4}>
+              <ArticleTableOfContents outline={article.outline} />
 
-            <Join separator={<Spacer y={4} />}>
+              {article.leadParagraph && (
+                <HTML
+                  variant="md"
+                  html={article.leadParagraph}
+                  maxWidth={OPTIMAL_READING_WIDTH}
+                />
+              )}
+
               {article.sections.map((section, i) => {
                 const isFirst =
                   (article.layout === "FEATURE" && i === 0) ||
@@ -147,6 +157,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                 return (
                   <Fragment key={i}>
                     <ArticleSectionFragmentContainer
+                      body={sectionBodies[i]}
                       isFirst={isFirst}
                       isLast={isLast}
                       section={section}
@@ -160,7 +171,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                 )
               })}
               <ArticleBylineFragmentContainer article={article} />
-            </Join>
+            </Stack>
 
             {article.postscript && (
               <HTML
@@ -194,7 +205,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
 
                       <Spacer y={2} />
 
-                      <Join separator={<Spacer y={1} />}>
+                      <Stack gap={1}>
                         {article.relatedArticles.map(relatedArticle => {
                           const img = relatedArticle.thumbnailImage?.cropped
 
@@ -234,7 +245,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
                             </RouterLink>
                           )
                         })}
-                      </Join>
+                      </Stack>
                     </>
                   )}
 
@@ -294,8 +305,15 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         leadParagraph
         title
         href
+        outline {
+          heading
+          slug
+        }
         sections {
           ...ArticleSection_section
+          ... on ArticleSectionText {
+            body
+          }
         }
         postscript
         relatedArticles {

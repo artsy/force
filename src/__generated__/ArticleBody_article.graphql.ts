@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1800663497839d986cf5cc6fd58a54c9>>
+ * @generated SignedSource<<25ea60aa09e3f0fbc118a23e257b2f88>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,10 @@ export type ArticleBody_article$data = {
   readonly internalID: string;
   readonly layout: ArticleLayout;
   readonly leadParagraph: string | null | undefined;
+  readonly outline: ReadonlyArray<{
+    readonly heading: string;
+    readonly slug: string;
+  }>;
   readonly postscript: string | null | undefined;
   readonly relatedArticles: ReadonlyArray<{
     readonly byline: string | null | undefined;
@@ -39,6 +43,7 @@ export type ArticleBody_article$data = {
     readonly title: string | null | undefined;
   }>;
   readonly sections: ReadonlyArray<{
+    readonly body?: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArticleSection_section">;
   }>;
   readonly seriesArticle: {
@@ -209,6 +214,25 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArticleOutlineEntry",
+      "kind": "LinkedField",
+      "name": "outline",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "heading",
+          "storageKey": null
+        },
+        (v2/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "sections",
@@ -218,6 +242,20 @@ return {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArticleSection_section"
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "body",
+              "storageKey": null
+            }
+          ],
+          "type": "ArticleSectionText",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -297,6 +335,6 @@ return {
 };
 })();
 
-(node as any).hash = "1e7047080ec7d946d8d89ec0f04f49b3";
+(node as any).hash = "f904fd8f5f7288f5abd187a0a03d2cfe";
 
 export default node;
