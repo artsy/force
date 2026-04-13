@@ -12,17 +12,20 @@ interface ArticleSectionProps {
   section: ArticleSection_section$data
   isFirst: boolean
   isLast: boolean
+  body?: string | null
 }
 
 const ArticleSection: FC<React.PropsWithChildren<ArticleSectionProps>> = ({
   section,
   isFirst,
   isLast,
+  body,
 }) => {
   switch (section.__typename) {
     case "ArticleSectionText": {
       return (
         <ArticleSectionTextFragmentContainer
+          body={body}
           section={section}
           isFirst={isFirst}
           isLast={isLast}
