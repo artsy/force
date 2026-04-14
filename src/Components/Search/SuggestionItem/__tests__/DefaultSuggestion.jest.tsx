@@ -14,7 +14,7 @@ const allFlagsOn = () => {
 const onlyHighlightingOn = () => {
   const { useFlag } = require("@unleash/proxy-client-react")
   ;(useFlag as jest.Mock).mockImplementation(
-    (flag: string) => flag === "onyx_search-highlighting"
+    (flag: string) => flag === "onyx_search-highlighting",
   )
 }
 
@@ -37,7 +37,7 @@ describe("DefaultSuggestion", () => {
   describe("display name highlighting", () => {
     it("falls back to client-side substring matching when no server highlights are present", () => {
       const { container } = render(
-        <DefaultSuggestion option={baseOption} query="warhol" />
+        <DefaultSuggestion option={baseOption} query="warhol" />,
       )
 
       const highlighted = container.querySelector("strong")
@@ -48,13 +48,11 @@ describe("DefaultSuggestion", () => {
     it("falls back to server-side highlights when client-side produces no match", () => {
       const option: SuggestionItemOptionProps = {
         ...baseOption,
-        highlights: [
-          { field: "name", fragments: ["<em>Andy Warhol</em>"] },
-        ],
+        highlights: [{ field: "name", fragments: ["<em>Andy Warhol</em>"] }],
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="warhlo" />
+        <DefaultSuggestion option={option} query="warhlo" />,
       )
 
       const highlighted = container.querySelector("strong")
@@ -70,7 +68,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="war" />
+        <DefaultSuggestion option={option} query="war" />,
       )
 
       const highlights = container.querySelectorAll("strong")
@@ -81,7 +79,7 @@ describe("DefaultSuggestion", () => {
 
     it("renders plain text when neither strategy produces highlights", () => {
       const { container } = render(
-        <DefaultSuggestion option={baseOption} query="xyz" />
+        <DefaultSuggestion option={baseOption} query="xyz" />,
       )
 
       expect(container.querySelector("strong")).toBeNull()
@@ -102,7 +100,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="安迪" />
+        <DefaultSuggestion option={option} query="安迪" />,
       )
 
       expect(container.textContent).toContain("(")
@@ -112,7 +110,7 @@ describe("DefaultSuggestion", () => {
 
     it("does not show parentheses when no alternate name highlight", () => {
       const { container } = render(
-        <DefaultSuggestion option={baseOption} query="warhol" />
+        <DefaultSuggestion option={baseOption} query="warhol" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -131,7 +129,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="chillida" />
+        <DefaultSuggestion option={option} query="chillida" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -151,7 +149,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="warhlo" />
+        <DefaultSuggestion option={option} query="warhlo" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -166,13 +164,11 @@ describe("DefaultSuggestion", () => {
     it("ignores server-side highlights and uses only client-side matching", () => {
       const option: SuggestionItemOptionProps = {
         ...baseOption,
-        highlights: [
-          { field: "name", fragments: ["<em>Andy Warhol</em>"] },
-        ],
+        highlights: [{ field: "name", fragments: ["<em>Andy Warhol</em>"] }],
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="warhlo" />
+        <DefaultSuggestion option={option} query="warhlo" />,
       )
 
       expect(container.querySelector("strong")).toBeNull()
@@ -191,7 +187,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="安迪" />
+        <DefaultSuggestion option={option} query="安迪" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -215,7 +211,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="安迪" />
+        <DefaultSuggestion option={option} query="安迪" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -225,13 +221,11 @@ describe("DefaultSuggestion", () => {
     it("still applies server-side name highlighting", () => {
       const option: SuggestionItemOptionProps = {
         ...baseOption,
-        highlights: [
-          { field: "name", fragments: ["<em>Andy Warhol</em>"] },
-        ],
+        highlights: [{ field: "name", fragments: ["<em>Andy Warhol</em>"] }],
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="warhlo" />
+        <DefaultSuggestion option={option} query="warhlo" />,
       )
 
       const highlighted = container.querySelector("strong")
@@ -254,7 +248,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={geneOption} query="yawn" />
+        <DefaultSuggestion option={geneOption} query="yawn" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -275,7 +269,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={searchableOption} query="some keyword" />
+        <DefaultSuggestion option={searchableOption} query="some keyword" />,
       )
 
       expect(container.textContent).not.toContain("(")
@@ -293,7 +287,7 @@ describe("DefaultSuggestion", () => {
       }
 
       const { container } = render(
-        <DefaultSuggestion option={option} query="安迪" />
+        <DefaultSuggestion option={option} query="安迪" />,
       )
 
       expect(container.textContent).toContain("(")

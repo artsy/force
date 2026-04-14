@@ -1,5 +1,12 @@
 import { AutocompleteInput, useDidMount } from "@artsy/palette"
-import { type ChangeEvent, type FC, useEffect, useRef, useState } from "react"
+import {
+  type ChangeEvent,
+  type FC,
+  type MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 
 import {
   ActionType,
@@ -224,10 +231,10 @@ export const SearchBarInput: FC<
     }
   }
 
-  const handleSelect = (option: SuggestionItemOptionProps) => {
+  const trackSelection = (option: SuggestionItemOptionProps) => {
     // Only track if this is an actual search result, not the footer
     if (option.typename !== "Footer") {
-      const event: SelectedItemFromSearch = {
+      const analyticsEvent: SelectedItemFromSearch = {
         action: ActionType.selectedItemFromSearch,
         context_module: selectedPill.analyticsContextModule,
         destination_path: option.href,
@@ -236,11 +243,43 @@ export const SearchBarInput: FC<
         item_number: option.item_number!,
         item_type: option.item_type!,
       }
-      tracking.trackEvent(event)
+      tracking.trackEvent(analyticsEvent)
     }
+  }
+
+  const handleSelect = (option: SuggestionItemOptionProps) => {
+    trackSelection(option)
 
     resetValue()
     redirect(option.href)
+  }
+
+  const isModifiedClick = (event?: MouseEvent<HTMLElement>) =>
+    !!event &&
+    (event.button === 1 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey)
+
+  const handleSuggestionClick = (
+    option: SuggestionItemOptionProps,
+    event?: MouseEvent<HTMLElement>,
+  ) => {
+    trackSelection(option)
+    if (isModifiedClick(event)) return
+    resetValue()
+    redirect(option.href)
+  }
+
+  const handleQuickNavClick = (
+    option: SuggestionItemOptionProps,
+    event: MouseEvent<HTMLElement>,
+  ) => {
+    // QuickNavigationItem tracks its own cohesion event
+    if (isModifiedClick(event)) return
+    resetValue()
+    redirect(`${option.href}/auction-results`)
   }
 
   const handleFocus = () => {
@@ -326,7 +365,8 @@ export const SearchBarInput: FC<
           <SuggestionItem
             query={value}
             option={option}
-            onClick={handleSelect}
+            onClick={handleSuggestionClick}
+            onQuickNavClick={handleQuickNavClick}
           />
         )
       }}

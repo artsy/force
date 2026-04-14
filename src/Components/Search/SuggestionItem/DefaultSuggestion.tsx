@@ -18,13 +18,13 @@ export const DefaultSuggestion: FC<
 > = ({ option, query }) => {
   const enableServerHighlights = useFlag("onyx_search-highlighting")
   const enableAlternateNameDisplay = useFlag(
-    "onyx_search-alternate-name-display"
+    "onyx_search-alternate-name-display",
   )
 
   const { nameParts, alternateParts } = resolveSuggestionParts(
     enableServerHighlights ? option : { ...option, highlights: null },
     query,
-    enableAlternateNameDisplay
+    enableAlternateNameDisplay,
   )
 
   return (
@@ -56,11 +56,11 @@ export const DefaultSuggestion: FC<
 function resolveSuggestionParts(
   option: SuggestionItemOptionProps,
   query: string,
-  enableAlternateNameDisplay: boolean
+  enableAlternateNameDisplay: boolean,
 ): { nameParts: ReactNode[]; alternateParts: ReactNode[] | null } {
-  const nameHighlight = option.highlights?.find((h) => h.field === "name")
+  const nameHighlight = option.highlights?.find(h => h.field === "name")
   const alternateHighlight = option.highlights?.find(
-    (h) => h.field === "alternate_names"
+    h => h.field === "alternate_names",
   )
 
   const firstNameFragment = nameHighlight?.fragments?.[0]
@@ -92,7 +92,7 @@ function resolveSuggestionParts(
     return {
       nameParts: parse(option.text, clientMatches).map(
         ({ highlight, text }, index) =>
-          highlight ? <Highlight key={index}>{text}</Highlight> : text
+          highlight ? <Highlight key={index}>{text}</Highlight> : text,
       ),
       alternateParts,
     }
