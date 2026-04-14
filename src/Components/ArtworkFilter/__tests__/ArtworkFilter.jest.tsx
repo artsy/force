@@ -1,5 +1,4 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { useFlag } from "@unleash/proxy-client-react"
 import { ArtworkFilter, getTotalCountLabel } from "Components/ArtworkFilter"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
@@ -91,7 +90,11 @@ describe("ArtworkFilter", () => {
         }),
       )
 
-      const { current, changed } = trackEvent.mock.calls[0][0]
+      const filterChangeEvent = trackEvent.mock.calls
+        .map(([event]) => event)
+        .find(e => e.action === "commercialFilterParamsChanged")
+
+      const { current, changed } = filterChangeEvent
 
       expect(JSON.parse(current)).toMatchObject(
         omit(
@@ -165,10 +168,6 @@ describe("ArtworkFilter", () => {
     })
 
     it("on immersive view option viewed", () => {
-      ;(useFlag as jest.Mock).mockImplementation(
-        flag => flag === "onyx_enable-immersive-view",
-      )
-
       renderWithRelay({
         Viewer: () => ({
           ...ArtworkFilterFixture.viewer,
@@ -186,10 +185,6 @@ describe("ArtworkFilter", () => {
     })
 
     it("on immersive view button click", () => {
-      ;(useFlag as jest.Mock).mockImplementation(
-        flag => flag === "onyx_enable-immersive-view",
-      )
-
       renderWithRelay({
         Viewer: () => ({
           ...ArtworkFilterFixture.viewer,
@@ -210,12 +205,6 @@ describe("ArtworkFilter", () => {
   })
 
   describe("desktop", () => {
-    beforeEach(() => {
-      ;(useFlag as jest.Mock).mockImplementation(
-        flag => flag === "onyx_enable-immersive-view",
-      )
-    })
-
     it("renders default UI items", () => {
       renderWithRelay({
         Viewer: () => ({
