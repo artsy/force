@@ -104,6 +104,7 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
                             key={itemIndex}
                             to={item.href}
                             onClick={e => handleClick(e, section.title)}
+                            data-testid="navbar-dropdown-item"
                           >
                             {item.title}
                           </NavBarMenuItemLink>

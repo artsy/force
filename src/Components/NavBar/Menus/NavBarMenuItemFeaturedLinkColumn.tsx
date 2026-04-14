@@ -70,6 +70,7 @@ export const NavBarMenuItemFeaturedLinkColumn: React.FC<
           flexDirection="column"
           textDecoration="none"
           onClick={handleClick}
+          data-testid="navbar-dropdown-featured-link-with-image"
         >
           <ResponsiveBox
             aspectWidth={item.image.cropped.width ?? 1}
