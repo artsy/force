@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0525b18e6b776299337d95b5f06763bd>>
+ * @generated SignedSource<<a6698801e60f45324ac0d334271e6429>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarSubMenuServer_navigationVersion$data = {
-  readonly featuredLinksSet: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMenuItemFeaturedLinkColumn_featuredLinkData">;
-  } | null | undefined> | null | undefined;
+export type NavBarMobileSubMenu_navigationVersion$data = {
   readonly items: ReadonlyArray<{
     readonly children: ReadonlyArray<{
       readonly href: string | null | undefined;
@@ -23,11 +20,11 @@ export type NavBarSubMenuServer_navigationVersion$data = {
     readonly position: number;
     readonly title: string;
   }>;
-  readonly " $fragmentType": "NavBarSubMenuServer_navigationVersion";
+  readonly " $fragmentType": "NavBarMobileSubMenu_navigationVersion";
 };
-export type NavBarSubMenuServer_navigationVersion$key = {
-  readonly " $data"?: NavBarSubMenuServer_navigationVersion$data;
-  readonly " $fragmentSpreads": FragmentRefs<"NavBarSubMenuServer_navigationVersion">;
+export type NavBarMobileSubMenu_navigationVersion$key = {
+  readonly " $data"?: NavBarMobileSubMenu_navigationVersion$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileSubMenu_navigationVersion">;
 };
 
 const node: ReaderFragment = (function(){
@@ -49,24 +46,8 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "NavBarSubMenuServer_navigationVersion",
+  "name": "NavBarMobileSubMenu_navigationVersion",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FeaturedLink",
-      "kind": "LinkedField",
-      "name": "featuredLinksSet",
-      "plural": true,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "NavBarMenuItemFeaturedLinkColumn_featuredLinkData"
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -106,6 +87,6 @@ return {
 };
 })();
 
-(node as any).hash = "2fcd647a283b3ac4b3aa8425fb257b5f";
+(node as any).hash = "08b75b866184b7d1cb93f298ca82469a";
 
 export default node;

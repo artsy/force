@@ -9,9 +9,6 @@ jest.mock("Components/NavBar/NavBar", () => ({
 
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
-  ReactRelayContext: {
-    Provider: ({ children }) => children,
-  },
 }))
 
 jest.mock("Utils/Hooks/useOnboardingModal", () => ({

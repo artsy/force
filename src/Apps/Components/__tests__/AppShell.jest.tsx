@@ -17,6 +17,10 @@ jest.mock("react-tracking", () => ({
   }),
 }))
 
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+}))
+
 jest.mock("Utils/Hooks/useAuthValidation")
 
 jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
@@ -24,6 +28,24 @@ jest.mock("Components/Footer/FooterDownloadAppBanner", () => ({
 }))
 
 describe("AppShell", () => {
+  const fetchMock = jest.fn().mockResolvedValue({
+    json: async () => ({
+      data: {
+        whatsNewNavigation: null,
+        artistsNavigation: null,
+        artworksNavigation: null,
+      },
+    }),
+  })
+
+  beforeAll(() => {
+    ;(global as any).fetch = fetchMock
+  })
+
+  beforeEach(() => {
+    fetchMock.mockClear()
+  })
+
   it("renders a Footer", async () => {
     const { ClientRouter } = await setupClientRouter({
       history: {

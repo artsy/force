@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { NavBarDropdownPanelServer } from "Components/NavBar/NavBarDropdownPanelServer"
+import { NavBarDropdownPanel } from "Components/NavBar/NavBarDropdownPanel"
 import { NavBarDropdownProvider } from "Components/NavBar/NavBarDropdownContext"
 import { act, render, screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
@@ -18,11 +18,11 @@ jest.mock("System/Hooks/usePrefetchRoute", () => ({
   usePrefetchRoute: jest.fn(() => ({ prefetch: jest.fn() })),
 }))
 
-jest.mock("Components/NavBar/Menus/NavBarSubMenuServer", () => ({
-  NavBarSubMenuServer: () => null,
+jest.mock("Components/NavBar/Menus/NavBarSubMenu", () => ({
+  NavBarSubMenu: () => null,
 }))
 
-describe("NavBarDropdownPanelServer", () => {
+describe("NavBarDropdownPanel", () => {
   const trackEvent = jest.fn()
 
   const defaultProps = {
@@ -37,7 +37,7 @@ describe("NavBarDropdownPanelServer", () => {
   const getWrapper = (passedProps = {}) => {
     return render(
       <NavBarDropdownProvider>
-        <NavBarDropdownPanelServer {...defaultProps} {...passedProps} />
+        <NavBarDropdownPanel {...defaultProps} {...passedProps} />
       </NavBarDropdownProvider>,
     )
   }
@@ -56,7 +56,7 @@ describe("NavBarDropdownPanelServer", () => {
     it("renders anchor with correct label and href", () => {
       getWrapper()
 
-      const anchor = screen.getByTestId("server-dropdown")
+      const anchor = screen.getByTestId("navbar-dropdown-button")
       expect(anchor).toHaveTextContent("Artists")
 
       const link = anchor.querySelector("a")
@@ -70,7 +70,9 @@ describe("NavBarDropdownPanelServer", () => {
       const handleClick = jest.fn()
       getWrapper({ handleClick })
 
-      const link = screen.getByTestId("server-dropdown").querySelector("a")
+      const link = screen
+        .getByTestId("navbar-dropdown-button")
+        .querySelector("a")
       fireEvent.click(link!)
 
       expect(handleClick).toHaveBeenCalled()
@@ -84,7 +86,7 @@ describe("NavBarDropdownPanelServer", () => {
       getWrapper()
 
       act(() => {
-        fireEvent.mouseEnter(screen.getByTestId("server-dropdown"))
+        fireEvent.mouseEnter(screen.getByTestId("navbar-dropdown-button"))
       })
 
       expect(trackEvent).not.toHaveBeenCalled()

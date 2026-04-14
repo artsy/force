@@ -1,32 +1,32 @@
 import type * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Dropdown } from "@artsy/palette"
-import type { MenuData } from "Components/NavBar/menuData"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
+import type { NavBarSubMenu_navigationVersion$key } from "__generated__/NavBarSubMenu_navigationVersion.graphql"
 import { useEffect, useRef } from "react"
-import { NavBarSubMenu } from "./Menus"
+import { NavBarSubMenu } from "./Menus/NavBarSubMenu"
 import { useNavBarDropdown } from "./NavBarDropdownContext"
 import { NavBarItemButton, NavBarItemUnfocusableAnchor } from "./NavBarItem"
 import { useNavBarTracking } from "./useNavBarTracking"
 
 interface NavBarDropdownPanelProps {
-  href: string
+  navigationData: NavBarSubMenu_navigationVersion$key
   label: string
-  menu: MenuData
+  href: string
   contextModule: string
-  handleClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  menuType: "whatsNew" | "artists" | "artworks"
+  handleClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
 }
 
 export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
-  href,
+  navigationData,
   label,
-  menu,
+  href,
   contextModule,
+  menuType,
   handleClick,
 }) => {
   const { prefetch } = usePrefetchRoute()
-
   const tracking = useNavBarTracking()
-
   const { shouldTransition, handleMenuEnter, getZIndex } = useNavBarDropdown()
 
   return (
@@ -35,22 +35,24 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
       keepInDOM
       placement="bottom"
       offset={0}
-      delay={{ open: 100, close: 200 }}
+      delay={shouldTransition ? 100 : 0}
       transition={shouldTransition}
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdown={({ setVisible, visible }) => {
         return (
           <NavBarSubMenu
-            menu={menu}
+            navigationVersion={navigationData}
+            label={label}
+            menuType={menuType}
             contextModule={
               contextModule as DeprecatedAnalyticsSchema.ContextModule
             }
             onClick={() => setVisible(false)}
-            parentNavigationItem={label}
             isVisible={visible}
           />
         )
       }}
+      data-testid="navbar-dropdown-panel"
     >
       {({ anchorRef, anchorProps, visible, setVisible }) => {
         const { onMouseEnter, ...restAnchorProps } = anchorProps
@@ -70,7 +72,9 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
               })
               hasTrackedRef.current = true
             }, 500)
-          } else if (!visible && timeoutRef.current) {
+          }
+
+          if (!visible && timeoutRef.current) {
             // Cancel tracking if dropdown closes before delay
             clearTimeout(timeoutRef.current)
             timeoutRef.current = null
@@ -87,7 +91,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           <NavBarItemButton
             ref={anchorRef as any}
             active={visible}
-            data-testid="static-dropdown"
+            data-testid="navbar-dropdown-button"
             onMouseEnter={e => {
               onMouseEnter?.(e)
               handleMenuEnter(label)
@@ -98,7 +102,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
               href={href}
               onMouseOver={() => prefetch(href)}
               onClick={event => {
-                handleClick(event)
+                handleClick?.(event)
                 setTimeout(() => setVisible(false), 100)
               }}
               data-label={label}

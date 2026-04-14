@@ -1,11 +1,6 @@
 import CloseIcon from "@artsy/icons/CloseIcon"
 import MenuIcon from "@artsy/icons/MenuIcon"
 import { ModalBase, Separator, Text } from "@artsy/palette"
-import {
-  ARTISTS_SUBMENU_DATA,
-  ARTWORKS_SUBMENU_DATA,
-  WHATS_NEW_SUBMENU_DATA,
-} from "Components/NavBar/menuData"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
@@ -17,28 +12,20 @@ import {
   NavBarMobileMenuItemLink,
 } from "./NavBarMobileMenuItem"
 import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation"
+import { NavBarMobileSubMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
-import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
-import { NavBarMobileSubMenuServer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenuServer"
 
 interface NavBarMobileMenuProps {
   navigationData?: buildAppRoutesQuery["response"] | null
   isOpen: boolean
   onClose: () => void
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
-  shouldUseServerNav?: boolean
 }
 
 export const NavBarMobileMenu: React.FC<
   React.PropsWithChildren<NavBarMobileMenuProps>
-> = ({
-  navigationData,
-  isOpen,
-  onNavButtonClick,
-  onClose,
-  shouldUseServerNav,
-}) => {
+> = ({ navigationData, isOpen, onNavButtonClick, onClose }) => {
   const { isLoggedIn } = useSystemContext()
 
   const { downloadAppUrl } = useDeviceDetection()
@@ -64,10 +51,7 @@ export const NavBarMobileMenu: React.FC<
 
   return (
     <NavBarMobileMenuNavigationProvider>
-      <div
-        data-testid="NavBarMobileMenu"
-        data-should-use-server-nav={String(!!shouldUseServerNav)} // for testing
-      >
+      <div data-testid="NavBarMobileMenu">
         <ModalBase dialogProps={{ width: "100%", height: "100%", bg: "mono0" }}>
           <Text variant="sm-display" onClick={onNavButtonClick}>
             <NavBarMobileMenuItemButton
@@ -98,50 +82,31 @@ export const NavBarMobileMenu: React.FC<
                 Buy
               </NavBarMobileMenuItemLink>
 
-              {/* Feature flag: Server-driven vs Static sub-menus */}
-              {shouldUseServerNav ? (
-                <>
-                  {navigationData?.whatsNewNavigation && (
-                    <NavBarMobileSubMenuServer
-                      navigationVersion={navigationData.whatsNewNavigation}
-                      menuType="whatsNew"
-                    >
-                      What’s New
-                    </NavBarMobileSubMenuServer>
-                  )}
+              {navigationData?.whatsNewNavigation && (
+                <NavBarMobileSubMenu
+                  navigationVersion={navigationData.whatsNewNavigation}
+                  menuType="whatsNew"
+                >
+                  What’s New
+                </NavBarMobileSubMenu>
+              )}
 
-                  {navigationData?.artistsNavigation && (
-                    <NavBarMobileSubMenuServer
-                      navigationVersion={navigationData.artistsNavigation}
-                      menuType="artists"
-                    >
-                      Artists
-                    </NavBarMobileSubMenuServer>
-                  )}
+              {navigationData?.artistsNavigation && (
+                <NavBarMobileSubMenu
+                  navigationVersion={navigationData.artistsNavigation}
+                  menuType="artists"
+                >
+                  Artists
+                </NavBarMobileSubMenu>
+              )}
 
-                  {navigationData?.artworksNavigation && (
-                    <NavBarMobileSubMenuServer
-                      navigationVersion={navigationData.artworksNavigation}
-                      menuType="artworks"
-                    >
-                      Artworks
-                    </NavBarMobileSubMenuServer>
-                  )}
-                </>
-              ) : (
-                <>
-                  <NavBarMobileSubMenu menu={WHATS_NEW_SUBMENU_DATA.menu}>
-                    {WHATS_NEW_SUBMENU_DATA.text}
-                  </NavBarMobileSubMenu>
-
-                  <NavBarMobileSubMenu menu={ARTISTS_SUBMENU_DATA.menu}>
-                    {ARTISTS_SUBMENU_DATA.menu.title}
-                  </NavBarMobileSubMenu>
-
-                  <NavBarMobileSubMenu menu={ARTWORKS_SUBMENU_DATA.menu}>
-                    {ARTWORKS_SUBMENU_DATA.menu.title}
-                  </NavBarMobileSubMenu>
-                </>
+              {navigationData?.artworksNavigation && (
+                <NavBarMobileSubMenu
+                  navigationVersion={navigationData.artworksNavigation}
+                  menuType="artworks"
+                >
+                  Artworks
+                </NavBarMobileSubMenu>
               )}
 
               <NavBarMobileMenuItemLink to="/auctions" onClick={handleClick}>

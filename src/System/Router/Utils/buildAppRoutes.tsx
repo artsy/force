@@ -8,7 +8,6 @@ import { type Match, Redirect, type Router, withRouter } from "found"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
 import { NavigationDataProvider } from "System/Contexts/NavigationDataContext"
-import { getENV } from "Utils/getENV"
 
 /**
  * Recursively walks routes and injects `defaultErrorRender` on any route that
@@ -39,7 +38,6 @@ function injectDefaultErrorRender(routes: RouteProps[]): RouteProps[] {
 
 export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
   const children = injectDefaultErrorRender(routes.flat())
-  const enableServerDrivenNavigation = getENV("ENABLE_SERVER_DRIVEN_NAVIGATION")
 
   const Component: React.FC<
     React.PropsWithChildren<
@@ -64,28 +62,19 @@ export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
       })
     }, [props.router, router, setRouter])
 
-    // Extract navigation data from props (only when server-driven nav is enabled)
-    const navigationData =
-      enableServerDrivenNavigation && props.whatsNewNavigation
-        ? {
-            whatsNewNavigation: props.whatsNewNavigation,
-            artistsNavigation: props.artistsNavigation,
-            artworksNavigation: props.artworksNavigation,
-          }
-        : null
+    const navigationData = {
+      whatsNewNavigation: props.whatsNewNavigation ?? null,
+      artistsNavigation: props.artistsNavigation ?? null,
+      artworksNavigation: props.artworksNavigation ?? null,
+    }
 
     const appShell = <AppShell {...props} />
 
-    // Wrap in NavigationDataProvider only when server-driven nav is enabled
-    if (enableServerDrivenNavigation) {
-      return (
-        <NavigationDataProvider navigationData={navigationData}>
-          {appShell}
-        </NavigationDataProvider>
-      )
-    }
-
-    return appShell
+    return (
+      <NavigationDataProvider navigationData={navigationData}>
+        {appShell}
+      </NavigationDataProvider>
+    )
   }
 
   // Return a top-level "meta" route containing all global sub-routes, which is
@@ -96,42 +85,38 @@ export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
     path: "",
   }
 
-  // Include query and prepareVariables only when server-driven nav is enabled
-  if (enableServerDrivenNavigation) {
-    route.query = graphql`
-      query buildAppRoutesQuery($requestedVersionState: NavigationVersionState!)
-      @cacheable {
-        whatsNewNavigation: navigationVersion(
-          groupID: "whats-new"
-          state: $requestedVersionState
-        ) {
-          ...NavBarSubMenuServer_navigationVersion
-          ...NavBarMobileSubMenuServer_navigationVersion
-        }
-
-        artistsNavigation: navigationVersion(
-          groupID: "artists"
-          state: $requestedVersionState
-        ) {
-          ...NavBarSubMenuServer_navigationVersion
-          ...NavBarMobileSubMenuServer_navigationVersion
-        }
-
-        artworksNavigation: navigationVersion(
-          groupID: "artworks"
-          state: $requestedVersionState
-        ) {
-          ...NavBarSubMenuServer_navigationVersion
-          ...NavBarMobileSubMenuServer_navigationVersion
-        }
+  route.query = graphql`
+    query buildAppRoutesQuery($requestedVersionState: NavigationVersionState!)
+    @cacheable {
+      whatsNewNavigation: navigationVersion(
+        groupID: "whats-new"
+        state: $requestedVersionState
+      ) {
+        ...NavBarSubMenu_navigationVersion
+        ...NavBarMobileSubMenu_navigationVersion
       }
-    `
-    route.prepareVariables = (_params, props) => {
-      // Detect DRAFT mode from query parameter
-      const isDraftMode = props.location?.query?.navigationVersion === "draft"
-      return {
-        requestedVersionState: isDraftMode ? "DRAFT" : "LIVE",
+
+      artistsNavigation: navigationVersion(
+        groupID: "artists"
+        state: $requestedVersionState
+      ) {
+        ...NavBarSubMenu_navigationVersion
+        ...NavBarMobileSubMenu_navigationVersion
       }
+
+      artworksNavigation: navigationVersion(
+        groupID: "artworks"
+        state: $requestedVersionState
+      ) {
+        ...NavBarSubMenu_navigationVersion
+        ...NavBarMobileSubMenu_navigationVersion
+      }
+    }
+  `
+  route.prepareVariables = (_params, props) => {
+    const isDraftMode = props.location?.query?.navigationVersion === "draft"
+    return {
+      requestedVersionState: isDraftMode ? "DRAFT" : "LIVE",
     }
   }
 
