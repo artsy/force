@@ -19,9 +19,6 @@ jest.mock("react-tracking", () => ({
 
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
-  ReactRelayContext: {
-    Provider: ({ children }) => children,
-  },
 }))
 
 jest.mock("Utils/Hooks/useAuthValidation")
