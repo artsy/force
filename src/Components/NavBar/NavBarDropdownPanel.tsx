@@ -52,6 +52,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           />
         )
       }}
+      data-testid="navbar-dropdown-panel"
     >
       {({ anchorRef, anchorProps, visible, setVisible }) => {
         const { onMouseEnter, ...restAnchorProps } = anchorProps
@@ -90,7 +91,7 @@ export const NavBarDropdownPanel: React.FC<NavBarDropdownPanelProps> = ({
           <NavBarItemButton
             ref={anchorRef as any}
             active={visible}
-            data-testid="dropdown"
+            data-testid="navbar-dropdown-button"
             onMouseEnter={e => {
               onMouseEnter?.(e)
               handleMenuEnter(label)

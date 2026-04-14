@@ -56,7 +56,7 @@ describe("NavBarDropdownPanel", () => {
     it("renders anchor with correct label and href", () => {
       getWrapper()
 
-      const anchor = screen.getByTestId("dropdown")
+      const anchor = screen.getByTestId("navbar-dropdown-button")
       expect(anchor).toHaveTextContent("Artists")
 
       const link = anchor.querySelector("a")
@@ -70,7 +70,9 @@ describe("NavBarDropdownPanel", () => {
       const handleClick = jest.fn()
       getWrapper({ handleClick })
 
-      const link = screen.getByTestId("dropdown").querySelector("a")
+      const link = screen
+        .getByTestId("navbar-dropdown-button")
+        .querySelector("a")
       fireEvent.click(link!)
 
       expect(handleClick).toHaveBeenCalled()
@@ -84,7 +86,7 @@ describe("NavBarDropdownPanel", () => {
       getWrapper()
 
       act(() => {
-        fireEvent.mouseEnter(screen.getByTestId("dropdown"))
+        fireEvent.mouseEnter(screen.getByTestId("navbar-dropdown-button"))
       })
 
       expect(trackEvent).not.toHaveBeenCalled()

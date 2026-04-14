@@ -106,6 +106,7 @@ const NavBarMobileSubMenuDrilldown: React.FC<
           })
         }}
         aria-expanded={false}
+        data-testid="navbar-mobile-sub-menu-item"
       >
         {title}
 
@@ -300,7 +301,11 @@ const NavBarMobileSubMenuItem: React.FC<NavBarMobileSubMenuItemProps> = ({
   }
 
   return (
-    <NavBarMobileMenuItemLink to={item.href} onClick={handleClick}>
+    <NavBarMobileMenuItemLink
+      to={item.href}
+      onClick={handleClick}
+      data-testid="navbar-mobile-sub-menu-item-link"
+    >
       {item.title}
     </NavBarMobileMenuItemLink>
   )

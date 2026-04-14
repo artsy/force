@@ -143,7 +143,7 @@ describe("NavBar", () => {
     it("renders server-driven dropdowns when navigation data is available", () => {
       getWrapper()
 
-      expect(screen.getAllByTestId("dropdown")).toHaveLength(3)
+      expect(screen.getAllByTestId("navbar-dropdown-button")).toHaveLength(3)
       expect(screen.getByText("What’s New")).toBeInTheDocument()
       expect(screen.getByText("Artists")).toBeInTheDocument()
       expect(screen.getByText("Artworks")).toBeInTheDocument()
