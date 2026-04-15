@@ -263,12 +263,12 @@ export const useCheckoutTracking = ({
         error_code,
         title,
         message,
-        flow,
+        flow: overrideFlow,
       }: {
         error_code: string | null
         title: string
         message: string
-        flow: string
+        flow?: string
       }) => {
         const payload: ErrorMessageViewed = {
           action: ActionType.errorMessageViewed,
@@ -277,7 +277,7 @@ export const useCheckoutTracking = ({
           title,
           message,
           error_code: error_code || undefined,
-          flow,
+          flow: overrideFlow ?? flow,
         }
 
         trackEvent(payload)
