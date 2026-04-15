@@ -71,7 +71,6 @@ export const CheckoutModal: React.FC<{
       error_code: error,
       title,
       message: description,
-      flow: "User submitting order",
     })
   }, [error, title, description, checkoutTracking])
 
