@@ -144,14 +144,22 @@ export const ArticleScrollHistoryProvider: FC<
 
   // Handle initial hash on mount (e.g. direct link to #JUMP--article--heading)
   useEffect(() => {
-    const { hash } = window.location
+    const { hash, pathname, search } = window.location
     if (!hash) return
 
     const targetId = extractJumpTargetIDFromHash(hash)
     if (!targetId) return
 
+    const hashlessPath = `${pathname}${search}`
+    const pathWithHash = `${hashlessPath}${hash}`
+
+    // Temporarily remove the hash so native anchor scrolling does not compete
+    // with useJump's offset-aware scroll logic.
+    window.history.replaceState(window.history.state, "", hashlessPath)
+
     const frame = requestAnimationFrame(() => {
       jumpToRef.current(targetId, { behavior: "instant" })
+      window.history.replaceState(window.history.state, "", pathWithHash)
     })
 
     return () => cancelAnimationFrame(frame)

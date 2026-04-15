@@ -1,4 +1,5 @@
 const JUMP_NAMESPACE = "JUMP"
+const JUMP_TARGET_PREFIX = `${JUMP_NAMESPACE}--`
 
 interface OutlineEntry {
   readonly heading: string
@@ -16,7 +17,7 @@ export const createJumpTargetID = ({
   articleSlug: string
   slug: string
 }): string => {
-  return `${JUMP_NAMESPACE}--${articleSlug}--${slug}`
+  return `${JUMP_TARGET_PREFIX}${articleSlug}--${slug}`
 }
 
 export const createJumpHash = ({
@@ -30,11 +31,11 @@ export const createJumpHash = ({
 }
 
 export const extractJumpTargetIDFromHash = (hash: string): string | null => {
-  const prefix = `#${JUMP_NAMESPACE}--`
+  const prefix = `#${JUMP_TARGET_PREFIX}`
 
   if (!hash.startsWith(prefix)) return null
 
-  const targetID = hash.slice(1)
+  const targetID = hash.slice(prefix.length)
 
   return targetID || null
 }

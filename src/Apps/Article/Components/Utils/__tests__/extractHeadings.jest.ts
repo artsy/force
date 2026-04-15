@@ -1,4 +1,6 @@
 import {
+  createJumpHash,
+  extractJumpTargetIDFromHash,
   injectHeadingIDs,
   injectHeadingIDsIntoBodies,
 } from "../extractHeadings"
@@ -125,5 +127,22 @@ describe("injectHeadingIDsIntoBodies", () => {
       '<h2 id="JUMP--article-slug--overview">Overview</h2>',
       '<h2 id="JUMP--article-slug--overview-1">Overview</h2>',
     ])
+  })
+})
+
+describe("extractJumpTargetIDFromHash", () => {
+  it("extracts the target id without the JUMP namespace", () => {
+    expect(
+      extractJumpTargetIDFromHash(
+        createJumpHash({
+          articleSlug: "article-slug",
+          slug: "first-section",
+        }),
+      ),
+    ).toBe("article-slug--first-section")
+  })
+
+  it("returns null for non-jump hashes", () => {
+    expect(extractJumpTargetIDFromHash("#not-a-jump-target")).toBeNull()
   })
 })
