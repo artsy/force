@@ -5,7 +5,6 @@ import {
   Checkbox,
   Input,
   PasswordInput,
-  Spacer,
   Stack,
   Text,
 } from "@artsy/palette"
@@ -114,6 +113,7 @@ export const SignupForm = () => {
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  // @ts-expect-error
                   error={touched.name && errors.name}
                   title="Your full name"
                   required
@@ -131,6 +131,7 @@ export const SignupForm = () => {
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  // @ts-expect-error
                   error={touched.email && errors.email}
                   title="your@email"
                   required
@@ -148,6 +149,7 @@ export const SignupForm = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   title="Create a password"
+                  // @ts-expect-error
                   error={touched.password && errors.password}
                   required
                 />

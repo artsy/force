@@ -1,4 +1,4 @@
-import { GridColumns, Column, Text, Box } from "@artsy/palette"
+import { GridColumns, Column, Box } from "@artsy/palette"
 import { SignupForm } from "Apps/Authentication/Routes/SignupLanding/Components/SignupForm"
 import { SignupHeroContent } from "Apps/Authentication/Routes/SignupLanding/Components/SignupHeroContent"
 
