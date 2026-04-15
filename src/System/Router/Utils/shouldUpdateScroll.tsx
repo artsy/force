@@ -1,5 +1,12 @@
+import type { RouteProps } from "System/Router/Route"
 import { cleanObject } from "Utils/cleanObject"
 import { isEqual } from "lodash"
+
+interface ScrollRenderArgs {
+  routes?: RouteProps[]
+  routeIndices?: number[]
+  params?: Record<string, string>
+}
 
 /**
  * Handler for `found-scroll` used for determining if scroll management should
@@ -8,9 +15,11 @@ import { isEqual } from "lodash"
  * @see https://github.com/4Catalyzer/found-scroll#custom-scroll-behavior
  */
 
-const getRouteIndiceByScrollChildrenFlag = renderArgs => {
+const getRouteIndiceByScrollChildrenFlag = (
+  renderArgs: ScrollRenderArgs | null,
+): number => {
   const { routes, routeIndices } = renderArgs ?? {}
-  let routeIndice
+  let routeIndice: number | undefined
 
   if (Array.isArray(routes) && Array.isArray(routeIndices)) {
     const routeIndex = routes.findIndex(
@@ -25,10 +34,25 @@ const getRouteIndiceByScrollChildrenFlag = renderArgs => {
   return routeIndice ?? -1
 }
 
-export function shouldUpdateScroll(prevRenderArgs, currentRenderArgs) {
+export function shouldUpdateScroll(
+  prevRenderArgs: ScrollRenderArgs | null,
+  currentRenderArgs: ScrollRenderArgs,
+): boolean | [number, number] {
   const { routes } = currentRenderArgs
 
   try {
+    // Allow individual routes to override scroll behavior via a callback.
+    // Return a value to take control, or `undefined` to fall through.
+    for (const route of routes ?? []) {
+      if (typeof route.getScrollBehavior === "function") {
+        const result = route.getScrollBehavior(
+          prevRenderArgs,
+          currentRenderArgs,
+        )
+        if (result !== undefined) return result
+      }
+    }
+
     // If true, don't reset scroll position on route change, no matter what
     if (routes?.some(route => route.ignoreScrollBehavior)) {
       return false
@@ -43,7 +67,7 @@ export function shouldUpdateScroll(prevRenderArgs, currentRenderArgs) {
       return true
     }
 
-    if (routes.some(route => route.scrollToTop)) {
+    if (routes?.some(route => route.scrollToTop)) {
       return [0, 0]
     }
 

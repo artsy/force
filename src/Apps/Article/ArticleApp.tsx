@@ -6,6 +6,7 @@ import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAdProvider } from "./Components/ArticleAd/ArticleAd"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
+import { ArticleScrollHistoryProvider } from "./Components/ArticleScrollHistoryProvider"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfiniteScroll"
 import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
@@ -25,66 +26,68 @@ const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({
 
   return (
     <>
-      <ArticleAdProvider>
-        <ArticleMetaTagsFragmentContainer article={article} />
+      <ArticleScrollHistoryProvider>
+        <ArticleAdProvider>
+          <ArticleMetaTagsFragmentContainer article={article} />
 
-        <Join separator={<Spacer y={4} />}>
-          {(() => {
-            switch (article.layout) {
-              case "SERIES":
-                return <ArticleSeriesFragmentContainer article={article} />
+          <Join separator={<Spacer y={4} />}>
+            {(() => {
+              switch (article.layout) {
+                case "SERIES":
+                  return <ArticleSeriesFragmentContainer article={article} />
 
-              case "VIDEO":
-                return <ArticleVideoFragmentContainer article={article} />
+                case "VIDEO":
+                  return <ArticleVideoFragmentContainer article={article} />
 
-              case "NEWS":
-                return <ArticleBodyFragmentContainer article={article} />
+                case "NEWS":
+                  return <ArticleBodyFragmentContainer article={article} />
 
-              case "CLASSIC":
-                return (
-                  <>
-                    <ArticleBodyFragmentContainer article={article} />
-
-                    <FullBleed>
-                      <Separator />
-                    </FullBleed>
-
-                    <ArticleChannelRelatedArticlesQueryRenderer
-                      id={article.internalID}
-                    />
-                  </>
-                )
-
-              case "FEATURE":
-              case "STANDARD":
-                return (
-                  <>
-                    <ArticleVisibilityMetadataFragmentContainer
-                      article={article}
-                    >
+                case "CLASSIC":
+                  return (
+                    <>
                       <ArticleBodyFragmentContainer article={article} />
-                    </ArticleVisibilityMetadataFragmentContainer>
 
-                    <FullBleed>
-                      <Separator />
-                    </FullBleed>
+                      <FullBleed>
+                        <Separator />
+                      </FullBleed>
 
-                    <ArticleVerticalRelatedArticlesQueryRenderer
-                      id={article.internalID}
-                    />
-
-                    {article.channelID && (
-                      <ArticleInfiniteScrollQueryRenderer
-                        articleID={article.internalID}
-                        channelID={article.channelID}
+                      <ArticleChannelRelatedArticlesQueryRenderer
+                        id={article.internalID}
                       />
-                    )}
-                  </>
-                )
-            }
-          })()}
-        </Join>
-      </ArticleAdProvider>
+                    </>
+                  )
+
+                case "FEATURE":
+                case "STANDARD":
+                  return (
+                    <>
+                      <ArticleVisibilityMetadataFragmentContainer
+                        article={article}
+                      >
+                        <ArticleBodyFragmentContainer article={article} />
+                      </ArticleVisibilityMetadataFragmentContainer>
+
+                      <FullBleed>
+                        <Separator />
+                      </FullBleed>
+
+                      <ArticleVerticalRelatedArticlesQueryRenderer
+                        id={article.internalID}
+                      />
+
+                      {article.channelID && (
+                        <ArticleInfiniteScrollQueryRenderer
+                          articleID={article.internalID}
+                          channelID={article.channelID}
+                        />
+                      )}
+                    </>
+                  )
+              }
+            })()}
+          </Join>
+        </ArticleAdProvider>
+      </ArticleScrollHistoryProvider>
 
       <ArticleStructuredData article={article} />
     </>

@@ -20,11 +20,11 @@ export function useRouter(): {
   const route = findCurrentRoute(match)
 
   const silentPush = (path: string) => {
-    history.pushState({}, "", path)
+    history.pushState(history.state, "", path)
   }
 
   const silentReplace = (path: string) => {
-    history.replaceState({}, "", path)
+    history.replaceState(history.state, "", path)
   }
 
   return { match, router, route, silentPush, silentReplace }

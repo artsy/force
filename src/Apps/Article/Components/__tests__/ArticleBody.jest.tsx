@@ -9,6 +9,13 @@ jest.mock("../../useArticleTracking", () => ({
   useArticleTracking: () => ({}),
 }))
 
+jest.mock("Apps/Article/Components/ArticleScrollHistoryProvider", () => ({
+  useArticleScrollHistory: () => ({
+    onArticleVisible: jest.fn(),
+    pushJump: jest.fn(),
+  }),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArticleBodyFragmentContainer,
   query: graphql`

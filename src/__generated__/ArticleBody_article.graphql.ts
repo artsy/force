@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<25ea60aa09e3f0fbc118a23e257b2f88>>
+ * @generated SignedSource<<b4ef37e8c3a9ab9597357e1614106597>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,7 +53,7 @@ export type ArticleBody_article$data = {
   readonly slug: string | null | undefined;
   readonly title: string | null | undefined;
   readonly vertical: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article" | "ArticleTimestamp_article">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article" | "ArticleTableOfContents_article" | "ArticleTimestamp_article">;
   readonly " $fragmentType": "ArticleBody_article";
 };
 export type ArticleBody_article$key = {
@@ -127,6 +127,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleTimestamp_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleTableOfContents_article"
     },
     {
       "alias": null,
@@ -335,6 +340,6 @@ return {
 };
 })();
 
-(node as any).hash = "f904fd8f5f7288f5abd187a0a03d2cfe";
+(node as any).hash = "e2e288f1a7e824982d667822942fe1b5";
 
 export default node;

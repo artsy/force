@@ -4,6 +4,8 @@ import {
 } from "../extractHeadings"
 
 describe("injectHeadingIDs", () => {
+  const articleSlug = "article-slug"
+
   it("injects JUMP namespace IDs into H2 elements", () => {
     const body = "<h2>First Section</h2><p>Content</p><h2>Second Section</h2>"
     const outline = [
@@ -11,12 +13,12 @@ describe("injectHeadingIDs", () => {
       { heading: "Second Section", slug: "second-section" },
     ]
 
-    const result = injectHeadingIDs(body, outline)
+    const result = injectHeadingIDs(body, outline, articleSlug)
 
     expect(result).toBe(
-      '<h2 id="JUMP--first-section">First Section</h2>' +
+      '<h2 id="JUMP--article-slug--first-section">First Section</h2>' +
         "<p>Content</p>" +
-        '<h2 id="JUMP--second-section">Second Section</h2>',
+        '<h2 id="JUMP--article-slug--second-section">Second Section</h2>',
     )
   })
 
@@ -27,11 +29,11 @@ describe("injectHeadingIDs", () => {
       { heading: "Other", slug: "other" },
     ]
 
-    const result = injectHeadingIDs(body, outline)
+    const result = injectHeadingIDs(body, outline, articleSlug)
 
     expect(result).toBe(
-      '<h2 class="title" id="JUMP--heading">Heading</h2>' +
-        '<h2 id="JUMP--other">Other</h2>',
+      '<h2 class="title" id="JUMP--article-slug--heading">Heading</h2>' +
+        '<h2 id="JUMP--article-slug--other">Other</h2>',
     )
   })
 
@@ -43,11 +45,11 @@ describe("injectHeadingIDs", () => {
       { heading: "Third", slug: "third" },
     ]
 
-    const result = injectHeadingIDs(body, outline)
+    const result = injectHeadingIDs(body, outline, articleSlug)
 
     expect(result).toContain('id="existing"')
     expect(result).not.toContain('id="JUMP--heading"')
-    expect(result).toContain('id="JUMP--other"')
+    expect(result).toContain('id="JUMP--article-slug--other"')
   })
 
   it("does not inject ID if the existing id attribute uses different case or spacing", () => {
@@ -57,16 +59,16 @@ describe("injectHeadingIDs", () => {
       { heading: "Other", slug: "other" },
     ]
 
-    const result = injectHeadingIDs(body, outline)
+    const result = injectHeadingIDs(body, outline, articleSlug)
 
     expect(result).toContain('ID = "existing"')
     expect(result).not.toContain('id="JUMP--heading"')
-    expect(result).toContain('id="JUMP--other"')
+    expect(result).toContain('id="JUMP--article-slug--other"')
   })
 
   it("returns body unchanged when outline is empty", () => {
     const body = "<h2>Heading</h2><p>Content</p>"
-    const result = injectHeadingIDs(body, [])
+    const result = injectHeadingIDs(body, [], articleSlug)
 
     expect(result).toBe(body)
   })
@@ -78,16 +80,18 @@ describe("injectHeadingIDs", () => {
       { heading: "Plain", slug: "plain" },
     ]
 
-    const result = injectHeadingIDs(body, outline)
+    const result = injectHeadingIDs(body, outline, articleSlug)
 
     expect(result).toBe(
-      '<h2 id="JUMP--artist-name"><a href="/artist/foo">Artist Name</a></h2>' +
-        '<h2 id="JUMP--plain">Plain</h2>',
+      '<h2 id="JUMP--article-slug--artist-name"><a href="/artist/foo">Artist Name</a></h2>' +
+        '<h2 id="JUMP--article-slug--plain">Plain</h2>',
     )
   })
 })
 
 describe("injectHeadingIDsIntoBodies", () => {
+  const articleSlug = "article-slug"
+
   it("injects IDs across multiple bodies using shared slug queues", () => {
     const bodies = [
       "<h2>First</h2><p>Content</p>",
@@ -99,12 +103,12 @@ describe("injectHeadingIDsIntoBodies", () => {
       { heading: "Second", slug: "second" },
     ]
 
-    const result = injectHeadingIDsIntoBodies(bodies, outline)
+    const result = injectHeadingIDsIntoBodies(bodies, outline, articleSlug)
 
     expect(result).toEqual([
-      '<h2 id="JUMP--first">First</h2><p>Content</p>',
+      '<h2 id="JUMP--article-slug--first">First</h2><p>Content</p>',
       null,
-      '<h2 id="JUMP--second">Second</h2><p>More</p>',
+      '<h2 id="JUMP--article-slug--second">Second</h2><p>More</p>',
     ])
   })
 
@@ -115,11 +119,11 @@ describe("injectHeadingIDsIntoBodies", () => {
       { heading: "Overview", slug: "overview-1" },
     ]
 
-    const result = injectHeadingIDsIntoBodies(bodies, outline)
+    const result = injectHeadingIDsIntoBodies(bodies, outline, articleSlug)
 
     expect(result).toEqual([
-      '<h2 id="JUMP--overview">Overview</h2>',
-      '<h2 id="JUMP--overview-1">Overview</h2>',
+      '<h2 id="JUMP--article-slug--overview">Overview</h2>',
+      '<h2 id="JUMP--article-slug--overview-1">Overview</h2>',
     ])
   })
 })

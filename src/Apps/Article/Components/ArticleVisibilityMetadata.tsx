@@ -1,3 +1,4 @@
+import { useArticleScrollHistory } from "Apps/Article/Components/ArticleScrollHistoryProvider"
 import { useRouter } from "System/Hooks/useRouter"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { ArticleVisibilityMetadata_article$data } from "__generated__/ArticleVisibilityMetadata_article.graphql"
@@ -9,21 +10,28 @@ interface ArticleVisibilityMetadataProps {
 }
 
 /**
- * Updates article URL and title when the article is in view
+ * Updates article URL and title when the article is in view.
+ * Pushes a history entry when the visible article changes so that
+ * back/forward navigation walks article boundaries.
  */
 const ArticleVisibilityMetadata: FC<
   React.PropsWithChildren<ArticleVisibilityMetadataProps>
 > = ({ article, children }) => {
   const { silentReplace, match } = useRouter()
+  const { isRestoring, onArticleVisible } = useArticleScrollHistory()
 
   const { ref } = useIntersectionObserver({
     once: false,
     onIntersection: () => {
-      if (!article.href) return
+      if (!article.href || !article.slug) return
 
+      onArticleVisible(article.href, article.slug)
+
+      if (isRestoring()) return
+
+      const search = match?.location.search ?? ""
       document.title = `${article.searchTitle || article.title} | Artsy`
-
-      silentReplace(`${article.href}${match?.location.search}`)
+      silentReplace(`${article.href}${search}`)
     },
   })
 
@@ -36,6 +44,7 @@ export const ArticleVisibilityMetadataFragmentContainer =
       fragment ArticleVisibilityMetadata_article on Article {
         title
         searchTitle
+        slug
         href
       }
     `,

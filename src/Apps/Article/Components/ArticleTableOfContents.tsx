@@ -1,20 +1,34 @@
 import { Stack, Text } from "@artsy/palette"
-import { useJump } from "Utils/Hooks/useJump"
+import { useArticleScrollHistory } from "Apps/Article/Components/ArticleScrollHistoryProvider"
+import type { ArticleTableOfContents_article$key } from "__generated__/ArticleTableOfContents_article.graphql"
 import type { FC } from "react"
+import { useCallback } from "react"
+import { graphql, useFragment } from "react-relay"
+import { createJumpHash } from "./Utils/extractHeadings"
 
 interface ArticleTableOfContentsProps {
-  outline: ReadonlyArray<{
-    readonly heading: string
-    readonly slug: string
-  }>
+  article: ArticleTableOfContents_article$key
 }
 
 export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
-  outline,
+  article: articleRef,
 }) => {
-  const { jumpTo } = useJump({ offset: 20 })
+  const article = useFragment(FRAGMENT, articleRef)
+  const { pushJump } = useArticleScrollHistory()
 
-  if (outline.length < 5) return null
+  const handleClick = useCallback(
+    (event: React.MouseEvent, headingSlug: string) => {
+      event.preventDefault()
+      pushJump({
+        articleHref: article.href ?? "",
+        articleSlug: article.slug ?? "",
+        headingSlug,
+      })
+    },
+    [article.href, article.slug, pushJump],
+  )
+
+  if (article.outline.length < 5) return null
 
   return (
     <Stack gap={1} maxWidth="fit-content" bg="mono5" p={2}>
@@ -23,20 +37,20 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
       </Text>
 
       <Stack as="nav" gap={1}>
-        {outline.map(entry => {
+        {article.outline.map(entry => {
           return (
             <Text
               key={entry.slug}
               variant="sm-display"
               as="a"
-              href={`#JUMP--${entry.slug}`}
+              href={createJumpHash({
+                articleSlug: article.slug ?? "",
+                slug: entry.slug,
+              })}
               style={{
                 textDecoration: "none",
               }}
-              onClick={event => {
-                event.preventDefault()
-                jumpTo(entry.slug)
-              }}
+              onClick={event => handleClick(event, entry.slug)}
             >
               {entry.heading}
             </Text>
@@ -46,3 +60,14 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
     </Stack>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment ArticleTableOfContents_article on Article {
+    href
+    slug
+    outline {
+      heading
+      slug
+    }
+  }
+`

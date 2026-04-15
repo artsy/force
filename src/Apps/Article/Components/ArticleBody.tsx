@@ -43,15 +43,19 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
 }) => {
   const centered = article.layout === "FEATURE" || article.layout === "NEWS"
 
+  const articleSlug = article.slug ?? ""
+
   const sectionBodies = useMemo(() => {
     return injectHeadingIDsIntoBodies(
       article.sections.map(section => section.body ?? null),
       article.outline,
+      articleSlug,
     )
-  }, [article.sections, article.outline])
+  }, [article.outline, article.sections, articleSlug])
 
   return (
     <Analytics contextPageOwnerId={article.internalID}>
+      <div id={`ARTICLE--${articleSlug}`} />
       <ArticleContextProvider articleId={article.internalID}>
         {article.layout === "STANDARD" && (
           <FullBleed bg="mono5" p={1}>
@@ -138,7 +142,7 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
             {/* Begin article contents */}
 
             <Stack gap={4}>
-              <ArticleTableOfContents outline={article.outline} />
+              <ArticleTableOfContents article={article} />
 
               {article.leadParagraph && (
                 <HTML
@@ -285,6 +289,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         ...ArticleSectionAd_article
         ...ArticleNewsSource_article
         ...ArticleTimestamp_article
+        ...ArticleTableOfContents_article
         hero {
           __typename
         }

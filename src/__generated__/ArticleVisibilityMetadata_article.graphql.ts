@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a180c3691876b86694232103322ab7e8>>
+ * @generated SignedSource<<92e1b86e735073a658297dc6347e3cb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleVisibilityMetadata_article$data = {
   readonly href: string | null | undefined;
   readonly searchTitle: string | null | undefined;
+  readonly slug: string | null | undefined;
   readonly title: string | null | undefined;
   readonly " $fragmentType": "ArticleVisibilityMetadata_article";
 };
@@ -45,6 +46,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "href",
       "storageKey": null
     }
@@ -53,6 +61,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "0540aa3c8586f0eb1bcf34d79f2fe8df";
+(node as any).hash = "f727edc2a5b4a2b65eb482c0d0d3c0fc";
 
 export default node;
