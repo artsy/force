@@ -100,6 +100,7 @@ export const SignupForm = () => {
           touched,
           handleChange,
           handleBlur,
+          setFieldValue,
         }) => (
           <Form>
             <Stack gap={1}>
@@ -158,9 +159,13 @@ export const SignupForm = () => {
               {/* Show email subscription checkbox only for non-GDPR countries */}
               {!isGDPRCountry() && (
                 <Checkbox
-                  name="agreedToReceiveEmails"
-                  checked={values.agreedToReceiveEmails}
-                  onChange={handleChange}
+                  selected={values.agreedToReceiveEmails}
+                  onSelect={selected => {
+                    setFieldValue("agreedToReceiveEmails", selected)
+                  }}
+                  // name="agreedToReceiveEmails"
+                  // checked={values.agreedToReceiveEmails}
+                  // onChange={handleChange}
                 >
                   <Text variant="xs">
                     Subscribe to email updates about products and services
