@@ -55,7 +55,9 @@ const useDefaultRedirect = () => {
 
   // If we're on the login or sign up path; we should redirect to the default (index).
   // Otherwise stay on the same page.
-  const defaultRedirect = ["/login", "/signup"].includes(location.pathname)
+  const defaultRedirect = ["/login", "/signup", "/signup-new"].includes(
+    location.pathname,
+  )
     ? DEFAULT_AFTER_AUTH_REDIRECT_PATH
     : location.pathname + (location.search || "")
 
