@@ -7,7 +7,7 @@ import {
   Radio,
   RadioGroup,
   Skeleton,
-  SkeletonBox,
+  SkeletonText,
   Spacer,
   Text,
   Tooltip,
@@ -23,6 +23,7 @@ import {
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
+  SELECTABLE_FULFILLMENT_TYPES,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
@@ -45,25 +46,18 @@ interface Order2DeliveryOptionsFormProps {
 type DeliveryOption =
   Order2DeliveryOptionsForm_order$data["fulfillmentOptions"][number]
 
-// Types submittable via setOrderFulfillmentOption. SHIPPING_TBD and PICKUP are excluded.
-const SELECTABLE_TYPES = [
-  "DOMESTIC_FLAT",
-  "INTERNATIONAL_FLAT",
-  "ARTSY_STANDARD",
-  "ARTSY_EXPRESS",
-  "ARTSY_WHITE_GLOVE",
-]
-
 export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
 > = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
   const {
     checkoutTracking,
-    setDeliveryOptionComplete,
+    completeStep,
     setSectionErrorMessage,
     messages,
     steps,
+    isSavedAddressSelectionMutating,
+    hasSavedAddresses,
   } = useCheckoutContext()
 
   const setFulfillmentOptionMutation =
@@ -84,7 +78,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     option => option.type !== "PICKUP",
   )
   const selectableOptions = deliveryOptions.filter(o =>
-    SELECTABLE_TYPES.includes(o.type),
+    (SELECTABLE_FULFILLMENT_TYPES as readonly string[]).includes(o.type),
   )
   // When all options are SHIPPING_TBD, no mutation is needed.
   const onlyShippingTBD =
@@ -138,12 +132,16 @@ export const Order2DeliveryOptionsForm: React.FC<
     if (stepState !== CheckoutStepState.ACTIVE) return
     if (selectableOptions.length === 0) return
     const selectedType = orderData.selectedFulfillmentOption?.type
+    // When saved addresses exist and no option is selected yet, defer to the
+    // address auto-fire in SavedAddressOptions, which inline-saves the first
+    // option after the address mutation resolves. Auto-saving here would race.
+    if (hasSavedAddresses && !selectedType) return
     const existingSelectionIsStillValid =
       selectedType && selectableOptions.some(o => o.type === selectedType)
     if (existingSelectionIsStillValid) return
     saveOption(selectableOptions[0]).then(() => {
-      if (selectableOptions.length === 1) {
-        setDeliveryOptionComplete()
+      if (selectableOptions.length === 1 && !hasSavedAddresses) {
+        completeStep(CheckoutStepName.DELIVERY_OPTION)
       }
     })
   }, [stepState])
@@ -152,8 +150,8 @@ export const Order2DeliveryOptionsForm: React.FC<
     checkoutTracking.clickedOrderProgression(
       ContextModule.ordersShippingMethods,
     )
-    setDeliveryOptionComplete()
-  }, [checkoutTracking, setDeliveryOptionComplete])
+    completeStep(CheckoutStepName.DELIVERY_OPTION)
+  }, [checkoutTracking, completeStep])
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
@@ -216,13 +214,12 @@ export const Order2DeliveryOptionsForm: React.FC<
 
         <Spacer y={2} />
 
-        {isSaving && !orderData.selectedFulfillmentOption ? (
+        {isSavedAddressSelectionMutating ||
+        (isSaving && !orderData.selectedFulfillmentOption) ? (
           <Skeleton>
-            <Flex flexDirection="column" gap={1}>
-              {[0, 1, 2].map(i => (
-                <SkeletonBox key={i} height="52px" width="100%" />
-              ))}
-            </Flex>
+            <SkeletonText variant="sm">
+              Methods vary based on location and artwork size
+            </SkeletonText>
           </Skeleton>
         ) : deliveryOptions.length === 1 ? (
           <SingleShippingOption option={deliveryOptions[0]} />
@@ -246,8 +243,9 @@ export const Order2DeliveryOptionsForm: React.FC<
       <Spacer y={4} />
 
       <Button
-        loading={isSaving}
+        loading={isSaving || isSavedAddressSelectionMutating}
         disabled={
+          isSavedAddressSelectionMutating ||
           (!orderData.selectedFulfillmentOption && !onlyShippingTBD) ||
           deliveryOptions.length === 0
         }

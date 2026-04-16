@@ -2,6 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { Button, SelectInput, Spacer, Text } from "@artsy/palette"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
@@ -40,7 +41,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
-  const { setFulfillmentDetailsComplete, checkoutTracking, setCheckoutMode } =
+  const { completeStep, checkoutTracking, setCheckoutMode } =
     useCheckoutContext()
 
   const { fulfillmentOptions, shippingOrigin, mode } = orderData
@@ -100,7 +101,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
           setOrderPickupDetailsResult.updateOrderShippingAddress?.orderOrError,
         )
 
-        setFulfillmentDetailsComplete({ isPickup: true })
+        completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
       } catch (error) {
         logger.error("Error while setting pickup details", error)
       }
@@ -110,7 +111,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       setOrderPickupDetails,
       orderData.internalID,
       pickupFulfillmentOption,
-      setFulfillmentDetailsComplete,
+      completeStep,
       checkoutTracking.clickedOrderProgression,
     ],
   )
@@ -118,10 +119,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   const locationBasedInitialValues = useInitialLocationValues()
 
   const initialValues = useMemo(() => {
-    const existingPhone =
-      orderData?.selectedFulfillmentOption?.type === "PICKUP"
-        ? orderData.fulfillmentDetails?.phoneNumber
-        : null
+    const existingPhone = orderData?.fulfillmentDetails?.phoneNumber
 
     if (existingPhone?.originalNumber && existingPhone.regionCode) {
       return {
@@ -136,7 +134,6 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
         locationBasedInitialValues.phoneNumberCountryCode || "us",
     }
   }, [
-    orderData?.selectedFulfillmentOption?.type,
     orderData?.fulfillmentDetails?.phoneNumber,
     locationBasedInitialValues.phoneNumberCountryCode,
   ])
@@ -234,9 +231,6 @@ const FRAGMENT = graphql`
     internalID
     mode
     fulfillmentOptions {
-      type
-    }
-    selectedFulfillmentOption {
       type
     }
     fulfillmentDetails {

@@ -35,18 +35,12 @@ export const useCheckoutAutoScroll = () => {
 
   const initialScrollComplete = useRef(false)
 
-  // Scroll to active step when loading completes
+  // Mark initial scroll complete when loading finishes (no scroll on load)
   useEffect(() => {
-    if (initialScrollComplete.current) {
-      return
-    }
-    if (justLoaded) {
-      if (activeStep && activeStepIndex > 0) {
-        scrollToStep(activeStep.name)
-      }
+    if (!initialScrollComplete.current && justLoaded) {
       initialScrollComplete.current = true
     }
-  }, [justLoaded, activeStep, scrollToStep, activeStepIndex])
+  }, [justLoaded])
 
   // Auto-scroll as user advances through steps
   useEffect(() => {

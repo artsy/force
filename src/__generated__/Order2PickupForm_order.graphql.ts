@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a025da621fbf311278b30eb7a7311f5b>>
+ * @generated SignedSource<<a7547ef2f22bdd62a1263763dad94f86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,9 +25,6 @@ export type Order2PickupForm_order$data = {
   }>;
   readonly internalID: string;
   readonly mode: OrderModeEnum;
-  readonly selectedFulfillmentOption: {
-    readonly type: FulfillmentOptionTypeEnum;
-  } | null | undefined;
   readonly shippingOrigin: string | null | undefined;
   readonly " $fragmentType": "Order2PickupForm_order";
 };
@@ -36,17 +33,7 @@ export type Order2PickupForm_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2PickupForm_order">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "type",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -73,17 +60,15 @@ return {
       "kind": "LinkedField",
       "name": "fulfillmentOptions",
       "plural": true,
-      "selections": (v0/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FulfillmentOption",
-      "kind": "LinkedField",
-      "name": "selectedFulfillmentOption",
-      "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -140,8 +125,7 @@ return {
   "type": "Order",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "dee58e6ea11cdc1eebc10c0128ae888c";
+(node as any).hash = "ae437e0c5ce0e1c4dce99508fe16a7e8";
 
 export default node;
