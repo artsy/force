@@ -6,7 +6,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 export { STEP_JUMP_MAP } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 
 const stepWithIndex = (
@@ -30,21 +30,13 @@ export const useCheckoutAutoScroll = () => {
   const previousStep = usePrevious(activeStep)
   const previousStepIndex = stepWithIndex(previousStep, steps)
 
-  const wasLoading = usePrevious(isLoading)
-  const justLoaded = wasLoading && !isLoading
-
-  const initialScrollComplete = useRef(false)
-
-  // Mark initial scroll complete when loading finishes (no scroll on load)
+  // Auto-scroll as the user advances or edits steps
   useEffect(() => {
-    if (!initialScrollComplete.current && justLoaded) {
-      initialScrollComplete.current = true
+    if (!activeStep || isLoading || !previousStep) {
+      return
     }
-  }, [justLoaded])
 
-  // Auto-scroll as user advances through steps
-  useEffect(() => {
-    if (!activeStep || isLoading) {
+    if (activeStepIndex === previousStepIndex) {
       return
     }
 
@@ -54,27 +46,11 @@ export const useCheckoutAutoScroll = () => {
       return
     }
 
-    if (!previousStep) {
-      // Only scroll if we're past the first step AND initial load is complete
-      if (activeStepIndex > 0 && initialScrollComplete.current) {
-        scrollToStep(activeStep.name)
-      }
-      return
-    }
-
-    // Determine if user is going backwards (editing a previous step)
-    const isGoingBackwards = activeStepIndex < previousStepIndex
-
-    // If the step hasn't actually changed, don't scroll
-    if (activeStepIndex === previousStepIndex) {
-      return
-    }
-
-    if (isGoingBackwards) {
-      // When going backwards, scroll to the step being edited
+    if (activeStepIndex < previousStepIndex) {
+      // Going backwards (editing): scroll to the step being edited
       scrollToStep(activeStep.name)
     } else {
-      // When going forwards, scroll to the step that was just completed
+      // Going forwards: scroll to the step that was just completed
       scrollToStep(previousStep.name)
     }
   }, [

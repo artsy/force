@@ -293,6 +293,13 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     ],
   )
 
+  // TODO: onSelectAddress and onSubmit share most of their logic (unset + set
+  // address + error handling). They could be unified: route both through onSubmit
+  // and gate completeStep/tracking/saveAddressToUser on !hasSavedAddresses.
+  // The blocker is isSavedAddressSelectionMutating (drives the skeleton) —
+  // it would need to be replaced by Formik's isSubmitting, and the delivery
+  // options form would need to watch isSubmitting instead.
+  //
   // Fires address mutation immediately on saved address radio select.
   const onSelectAddress = useCallback(
     async (values: FormikContextWithAddress) => {
