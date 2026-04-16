@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b6b415a6bc2e71609b06246c5561e28>>
+ * @generated SignedSource<<0a7eb602a0ef7ffa6e28fc8eebfdabcc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type Order2DeliveryOptionsForm_order$data = {
   readonly fulfillmentOptions: ReadonlyArray<{
     readonly amount: {
       readonly display: string | null | undefined;
+      readonly minor: any;
     } | null | undefined;
     readonly selected: boolean | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
@@ -63,6 +64,13 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "display",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "minor",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -96,6 +104,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "11ed8be2230538da38dee420e0d08001";
+(node as any).hash = "3fc4065a8da9b7471032e42d53523e7f";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4934e386c8d732e7734a0f2303cc16b5>>
+ * @generated SignedSource<<55d8e83072a1f6d045dd6316600a5dc5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,31 +37,50 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "minor",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = [
-  (v2/*: any*/),
-  (v1/*: any*/)
+v4 = [
+  (v3/*: any*/),
+  (v2/*: any*/)
 ],
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Long"
 };
 return {
   "fragment": {
@@ -172,13 +191,7 @@ return {
                         "name": "amount",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "minor",
-                            "storageKey": null
-                          },
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -189,7 +202,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -291,6 +304,18 @@ return {
                         "kind": "ScalarField",
                         "name": "type",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Money",
+                        "kind": "LinkedField",
+                        "name": "amount",
+                        "plural": false,
+                        "selections": [
+                          (v1/*: any*/)
+                        ],
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -319,13 +344,13 @@ return {
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v3/*: any*/),
+                        "selections": (v4/*: any*/),
                         "type": "CreditCard",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v3/*: any*/),
+                        "selections": (v4/*: any*/),
                         "type": "BankAccount",
                         "abstractKey": null
                       },
@@ -346,7 +371,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -384,19 +409,19 @@ return {
                             "name": "slug",
                             "storageKey": null
                           },
-                          (v1/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": "order(id:\"order-id\")"
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
@@ -406,7 +431,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "46e9e9e344a0cad33a0e6c181821ccda",
+    "cacheID": "444c183444a3b6b7391ef9c35150b137",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -422,7 +447,7 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "viewer.me.id": (v4/*: any*/),
+        "viewer.me.id": (v5/*: any*/),
         "viewer.me.order": {
           "enumValues": null,
           "nullable": true,
@@ -435,22 +460,22 @@ return {
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "viewer.me.order.fulfillmentDetails.addressLine1": (v5/*: any*/),
-        "viewer.me.order.fulfillmentDetails.addressLine2": (v5/*: any*/),
-        "viewer.me.order.fulfillmentDetails.city": (v5/*: any*/),
-        "viewer.me.order.fulfillmentDetails.country": (v5/*: any*/),
-        "viewer.me.order.fulfillmentDetails.name": (v5/*: any*/),
+        "viewer.me.order.fulfillmentDetails.addressLine1": (v6/*: any*/),
+        "viewer.me.order.fulfillmentDetails.addressLine2": (v6/*: any*/),
+        "viewer.me.order.fulfillmentDetails.city": (v6/*: any*/),
+        "viewer.me.order.fulfillmentDetails.country": (v6/*: any*/),
+        "viewer.me.order.fulfillmentDetails.name": (v6/*: any*/),
         "viewer.me.order.fulfillmentDetails.phoneNumber": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "viewer.me.order.fulfillmentDetails.phoneNumber.display": (v5/*: any*/),
-        "viewer.me.order.fulfillmentDetails.postalCode": (v5/*: any*/),
-        "viewer.me.order.fulfillmentDetails.region": (v5/*: any*/),
-        "viewer.me.order.id": (v4/*: any*/),
-        "viewer.me.order.internalID": (v4/*: any*/),
+        "viewer.me.order.fulfillmentDetails.phoneNumber.display": (v6/*: any*/),
+        "viewer.me.order.fulfillmentDetails.postalCode": (v6/*: any*/),
+        "viewer.me.order.fulfillmentDetails.region": (v6/*: any*/),
+        "viewer.me.order.id": (v5/*: any*/),
+        "viewer.me.order.internalID": (v5/*: any*/),
         "viewer.me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -463,9 +488,9 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "viewer.me.order.lineItems.artwork.id": (v4/*: any*/),
-        "viewer.me.order.lineItems.artwork.slug": (v4/*: any*/),
-        "viewer.me.order.lineItems.id": (v4/*: any*/),
+        "viewer.me.order.lineItems.artwork.id": (v5/*: any*/),
+        "viewer.me.order.lineItems.artwork.slug": (v5/*: any*/),
+        "viewer.me.order.lineItems.id": (v5/*: any*/),
         "viewer.me.order.mode": {
           "enumValues": [
             "BUY",
@@ -498,8 +523,8 @@ return {
           "plural": false,
           "type": "String"
         },
-        "viewer.me.order.paymentMethodDetails.id": (v4/*: any*/),
-        "viewer.me.order.paymentMethodDetails.internalID": (v4/*: any*/),
+        "viewer.me.order.paymentMethodDetails.id": (v5/*: any*/),
+        "viewer.me.order.paymentMethodDetails.internalID": (v5/*: any*/),
         "viewer.me.order.paymentMethodDetails.isManualPayment": {
           "enumValues": null,
           "nullable": false,
@@ -512,27 +537,19 @@ return {
           "plural": false,
           "type": "Offer"
         },
-        "viewer.me.order.pendingOffer.amount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "viewer.me.order.pendingOffer.amount.display": (v5/*: any*/),
-        "viewer.me.order.pendingOffer.amount.minor": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Long"
-        },
-        "viewer.me.order.pendingOffer.id": (v4/*: any*/),
-        "viewer.me.order.pendingOffer.note": (v5/*: any*/),
+        "viewer.me.order.pendingOffer.amount": (v7/*: any*/),
+        "viewer.me.order.pendingOffer.amount.display": (v6/*: any*/),
+        "viewer.me.order.pendingOffer.amount.minor": (v8/*: any*/),
+        "viewer.me.order.pendingOffer.id": (v5/*: any*/),
+        "viewer.me.order.pendingOffer.note": (v6/*: any*/),
         "viewer.me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FulfillmentOption"
         },
+        "viewer.me.order.selectedFulfillmentOption.amount": (v7/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.minor": (v8/*: any*/),
         "viewer.me.order.selectedFulfillmentOption.type": {
           "enumValues": [
             "ARTSY_EXPRESS",
@@ -558,12 +575,12 @@ return {
           "plural": false,
           "type": "OrderSourceEnum"
         },
-        "viewer.me.order.stripeConfirmationToken": (v5/*: any*/)
+        "viewer.me.order.stripeConfirmationToken": (v6/*: any*/)
       }
     },
     "name": "Order2CheckoutContextTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
