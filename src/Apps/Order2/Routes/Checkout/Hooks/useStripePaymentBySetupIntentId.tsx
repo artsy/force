@@ -29,7 +29,7 @@ export function useStripePaymentBySetupIntentId(
     useSetPaymentByStripeIntent()
   const { router } = useRouter()
   const environment = useRelayEnvironment()
-  const { setConfirmationToken, setPaymentComplete, setSectionErrorMessage } =
+  const { setConfirmationToken, completeStep, setSectionErrorMessage } =
     useCheckoutContext()
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export function useStripePaymentBySetupIntentId(
         // Mark payment as complete after successful Stripe redirect
         // Note: Prior steps (offer, fulfillment, delivery) are already marked complete
         // by initialStateForOrder based on order data
-        setPaymentComplete()
+        completeStep(CheckoutStepName.PAYMENT)
 
         // Clean up URL parameters
         const newUrl = new URL(window.location.href)
@@ -83,13 +83,7 @@ export function useStripePaymentBySetupIntentId(
     }
 
     handleRedirect()
-  }, [
-    router,
-    setConfirmationToken,
-    setPaymentComplete,
-    environment,
-    onComplete,
-  ])
+  }, [router, setConfirmationToken, completeStep, environment, onComplete])
 
   const setPaymentBySetupIntentId = async (
     setupIntentId: string,

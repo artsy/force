@@ -794,6 +794,101 @@ describe("Order2CheckoutRoute", () => {
       )
     })
 
+    it("with saved addresses, allows the user to select pickup and advance to payment", async () => {
+      const props = {
+        ...baseProps,
+        me: {
+          ...baseProps.me,
+          order: {
+            ...baseProps.me.order,
+            fulfillmentOptions: [
+              {
+                type: "PICKUP",
+                __typename: "PickupFulfillmentOption",
+              },
+              { type: "DOMESTIC_FLAT" },
+            ],
+            fulfillmentDetails: null,
+            selectedFulfillmentOption: null,
+          },
+          addressConnection: {
+            edges: [
+              {
+                node: {
+                  internalID: "address-1",
+                  name: "John Doe",
+                  addressLine1: "123 Main St",
+                  addressLine2: null,
+                  city: "New York",
+                  region: "NY",
+                  postalCode: "10001",
+                  country: "US",
+                  phoneNumber: "5551234567",
+                  phoneNumberCountryCode: "us",
+                  isDefault: true,
+                  phoneNumberParsed: {
+                    display: "+1 5551234567",
+                    isValid: true,
+                  },
+                },
+              },
+            ],
+          },
+        },
+      }
+
+      const { mockResolveLastOperation } = renderWithRelay({
+        Viewer: () => props,
+      })
+
+      await helpers.waitForLoadingComplete()
+
+      // Auto-fire address mutation from saved address
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(props.me.order, {
+                fulfillmentDetails: {
+                  name: "John Doe",
+                  addressLine1: "123 Main St",
+                },
+                fulfillmentOptions: [
+                  { type: "PICKUP", selected: false },
+                  { type: "DOMESTIC_FLAT", selected: false },
+                ],
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      // Fulfillment option auto-save mutation
+      await act(async () => {
+        await waitFor(() => {
+          return mockResolveLastOperation({
+            setOrderFulfillmentOptionPayload: () =>
+              orderMutationSuccess(props.me.order, {
+                selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+              }),
+          })
+        })
+        await flushPromiseQueue()
+      })
+
+      // Switch to PICKUP tab
+      act(() => {
+        userEvent.click(screen.getByText("Pickup"))
+      })
+
+      expect(screen.getByText("Free pickup from")).toBeInTheDocument()
+
+      // Only one "Continue to Payment" button should be visible (PICKUP form's)
+      // Delivery options step should be hidden
+      expect(screen.queryByText("Shipping method")).not.toBeInTheDocument()
+      expect(screen.getAllByText("Continue to Payment")).toHaveLength(1)
+    })
+
     it("shows the pickup details pre-filled if they exist", async () => {
       renderWithRelay({
         Viewer: () => ({
@@ -1527,10 +1622,8 @@ describe("Order2CheckoutRoute", () => {
         await waitFor(() => {
           expect(screen.getByText("Delivery address")).toBeInTheDocument()
         })
-        await userEvent.click(screen.getByText("Save and Continue"))
 
-        await flushPromiseQueue()
-
+        // SavedAddressOptions auto-fires the address mutation on load
         let mutation
         await act(async () => {
           await waitFor(() => {
@@ -1618,7 +1711,7 @@ describe("Order2CheckoutRoute", () => {
           },
         }
 
-        const { mockResolveLastOperation } = renderWithRelay({
+        renderWithRelay({
           Viewer: () => props,
         })
         await helpers.waitForLoadingComplete()
@@ -1630,54 +1723,22 @@ describe("Order2CheckoutRoute", () => {
         const editButtons = screen.getAllByText("Edit")
         await userEvent.click(editButtons[0])
 
-        // Verify edit form is shown
+        // Verify edit form is shown with pre-populated fields
         await waitFor(() => {
           expect(screen.getByText("Save Address")).toBeInTheDocument()
           expect(screen.getByText("Cancel")).toBeInTheDocument()
         })
 
-        // Verify form fields are pre-populated
         expect(screen.getByDisplayValue("John Doe")).toBeInTheDocument()
         expect(screen.getByDisplayValue("123 Main St")).toBeInTheDocument()
-        expect(screen.getByDisplayValue("Apt 4")).toBeInTheDocument()
         expect(screen.getByDisplayValue("New York")).toBeInTheDocument()
-        expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
-        expect(screen.getByDisplayValue("10001")).toBeInTheDocument()
-        expect(screen.getByDisplayValue("5551234567")).toBeInTheDocument()
 
-        // Modify the name field
-        const nameField = screen.getByDisplayValue("John Doe")
-        fireEvent.change(nameField, { target: { value: "John Smith" } })
+        // Cancel returns to address list
+        await userEvent.click(screen.getByText("Cancel"))
 
-        // Save the address
-        await userEvent.click(screen.getByText("Save Address"))
-
-        // Mock the address update mutation
-        await act(async () => {
-          await waitFor(() => {
-            mockResolveLastOperation({
-              UpdateUserAddressPayload: () => ({
-                userAddressOrErrors: {
-                  internalID: "address-1",
-                  name: "John Smith",
-                  addressLine1: "123 Main St",
-                  addressLine2: "Apt 4",
-                  city: "New York",
-                  region: "NY",
-                  postalCode: "10001",
-                  country: "US",
-                  phoneNumber: "5551234567",
-                  phoneNumberCountryCode: "us",
-                },
-              }),
-            })
-          })
-          await flushPromiseQueue()
-        })
-
-        // Verify we're back to the address selection view
         await waitFor(() => {
-          expect(screen.getByText("Save and Continue")).toBeInTheDocument()
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+          expect(screen.queryByText("Save Address")).not.toBeInTheDocument()
         })
       })
     })

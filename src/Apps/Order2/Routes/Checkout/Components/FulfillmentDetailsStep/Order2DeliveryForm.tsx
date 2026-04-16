@@ -20,7 +20,9 @@ import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
 
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
+import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
+import { SELECTABLE_FULFILLMENT_TYPES } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import {
@@ -75,9 +77,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const {
     setCheckoutMode,
     checkoutTracking,
-    setFulfillmentDetailsComplete,
+    completeStep,
     setUserAddressMode,
     setSectionErrorMessage,
+    setSavedAddressSelectionMutating,
     messages,
   } = checkoutContext
 
@@ -86,6 +89,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
   const setOrderDeliveryAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
+  const setFulfillmentOptionMutation =
+    useOrder2SetOrderFulfillmentOptionMutation()
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
 
@@ -257,7 +262,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           error: null,
         })
 
-        setFulfillmentDetailsComplete({})
+        completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
         setUserAddressMode(null)
       } catch (error) {
         handleError(
@@ -280,13 +285,93 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       orderData?.mode,
       saveAddressToUser,
       setCheckoutMode,
-      setFulfillmentDetailsComplete,
+      completeStep,
       setSectionErrorMessage,
       setUserAddressMode,
       unsetOrderFulfillmentOption,
       setOrderDeliveryAddressMutation,
     ],
   )
+
+  // Fires address mutation immediately on saved address radio select.
+  const onSelectAddress = useCallback(
+    async (values: FormikContextWithAddress) => {
+      setSavedAddressSelectionMutating(true)
+      try {
+        // Unset existing fulfillment option so delivery options reload
+        if (orderData?.selectedFulfillmentOption?.type) {
+          const unsetResult = await unsetOrderFulfillmentOption.submitMutation({
+            variables: { input: { id: orderData.internalID } },
+          })
+          validateAndExtractOrderResponse(
+            unsetResult.unsetOrderFulfillmentOption?.orderOrError,
+          )
+        }
+
+        const input = {
+          id: orderData.internalID,
+          buyerPhoneNumber: values.phoneNumber,
+          buyerPhoneNumberCountryCode: values.phoneNumberCountryCode,
+          shippingAddressLine1: values.address.addressLine1,
+          shippingAddressLine2: values.address.addressLine2,
+          shippingCity: values.address.city,
+          shippingRegion: values.address.region,
+          shippingPostalCode: values.address.postalCode,
+          shippingCountry: values.address.country,
+          shippingName: values.address.name,
+        }
+
+        const result = await setOrderDeliveryAddressMutation.submitMutation({
+          variables: { input },
+        })
+        const newOrder = validateAndExtractOrderResponse(
+          result.updateOrderShippingAddress?.orderOrError,
+        ).order
+
+        // Inline-save the first selectable option using the mutation response data
+        // (guaranteed fresh). This must happen before setSavedAddressSelectedActive
+        // so that when DELIVERY_OPTION activates, the auto-save effect's
+        // existingSelectionIsStillValid guard skips cleanly — no race condition.
+        const firstSelectable = newOrder.fulfillmentOptions.find(o =>
+          (SELECTABLE_FULFILLMENT_TYPES as readonly string[]).includes(o.type),
+        )
+        if (firstSelectable) {
+          await setFulfillmentOptionMutation
+            .submitMutation({
+              variables: {
+                input: {
+                  id: orderData.internalID,
+                  fulfillmentOption: { type: firstSelectable.type as never },
+                },
+              },
+            })
+            .catch(() => undefined)
+        }
+
+        setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: null,
+        })
+      } catch (error) {
+        setSectionErrorMessage({
+          section: CheckoutStepName.FULFILLMENT_DETAILS,
+          error: fallbackError("updating your delivery address", error?.code),
+        })
+      } finally {
+        setSavedAddressSelectionMutating(false)
+      }
+    },
+    [
+      orderData?.selectedFulfillmentOption?.type,
+      orderData.internalID,
+      setSavedAddressSelectionMutating,
+      setOrderDeliveryAddressMutation,
+      setFulfillmentOptionMutation,
+      setSectionErrorMessage,
+      unsetOrderFulfillmentOption,
+    ],
+  )
+
   return (
     <Formik
       initialValues={initialSelectedAddress || initialValues}
@@ -310,6 +395,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
             {hasSavedAddresses ? (
               <SavedAddressOptions
+                order={orderData}
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
                 newAddressInitialValues={blankAddressValuesForUser}
@@ -318,6 +404,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 }
                 onSelectAddress={async values => {
                   await setValues(values)
+                  await onSelectAddress(values)
                 }}
               />
             ) : (
@@ -417,5 +504,6 @@ const ORDER_FRAGMENT = graphql`
         countryCode
       }
     }
+    ...useCompleteFulfillmentDetailsData_order
   }
 `

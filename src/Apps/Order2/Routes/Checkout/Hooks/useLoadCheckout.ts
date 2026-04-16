@@ -100,6 +100,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
 
     try {
       validateOrder(orderData)
+
       setOrderValidated(true)
     } catch (error) {
       logger.error("Error validating order: ", error.message)

@@ -26,11 +26,16 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
     return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
 
+  const hasSavedAddresses = (me.addressConnection?.edges?.length ?? 0) > 0
+
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Elements stripe={stripePromise}>
         <CheckoutModalProvider>
-          <Order2CheckoutContextProvider order={order}>
+          <Order2CheckoutContextProvider
+            order={order}
+            hasSavedAddresses={hasSavedAddresses}
+          >
             <Order2CheckoutApp order={order} me={me} />
           </Order2CheckoutContextProvider>
         </CheckoutModalProvider>
@@ -44,6 +49,11 @@ const FRAGMENT = graphql`
   @argumentDefinitions(orderID: { type: "ID!" }) {
     me {
       ...Order2CheckoutApp_me
+      addressConnection(first: 20) {
+        edges {
+          __typename
+        }
+      }
       order(id: $orderID) {
         internalID
         ...Order2CheckoutContext_order

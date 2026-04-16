@@ -6,6 +6,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2DeliveryOptionsCompletedView } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsCompletedView"
 import { Order2DeliveryOptionsForm } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsForm"
+import { SELECTABLE_FULFILLMENT_TYPES } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
@@ -35,8 +36,8 @@ export const Order2DeliveryOptionsStep: React.FC<
   }
 
   if (stepState === CheckoutStepState.COMPLETED && completedViewProps) {
-    const selectableOptions = orderData.fulfillmentOptions.filter(
-      o => !["PICKUP", "SHIPPING_TBD"].includes(o.type),
+    const selectableOptions = orderData.fulfillmentOptions.filter(o =>
+      (SELECTABLE_FULFILLMENT_TYPES as readonly string[]).includes(o.type),
     )
     const allowEdit = selectableOptions.length > 1
     return (

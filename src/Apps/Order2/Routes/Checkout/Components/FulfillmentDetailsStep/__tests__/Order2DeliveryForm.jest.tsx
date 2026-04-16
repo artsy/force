@@ -30,11 +30,15 @@ beforeEach(() => {
       clickedShippingAddress: jest.fn(),
       clickedAddNewShippingAddress: jest.fn(),
     },
-    setFulfillmentDetailsComplete: jest.fn(),
+    completeStep: jest.fn(),
     setUserAddressMode: jest.fn(),
     setSectionErrorMessage: jest.fn(),
+    setSavedAddressSelectionMutating: jest.fn(),
+    editStep: jest.fn(),
+    activeFulfillmentDetailsTab: null,
     userAddressMode: null,
     messages: {},
+    isSavedAddressSelectionMutating: false,
   }
 })
 
@@ -361,9 +365,7 @@ describe("Order2DeliveryForm", () => {
         expect(
           mockCheckoutContext.checkoutTracking.clickedOrderProgression,
         ).not.toHaveBeenCalled()
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
       it("successfully submits form with valid data and triggers correct mutations", async () => {
@@ -507,9 +509,9 @@ describe("Order2DeliveryForm", () => {
           },
         )
 
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          "FULFILLMENT_DETAILS",
+        )
       })
 
       it("continues checkout even if saving address to user profile fails", async () => {
@@ -604,9 +606,9 @@ describe("Order2DeliveryForm", () => {
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
           "standard",
         )
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          "FULFILLMENT_DETAILS",
+        )
       })
 
       it("unsets existing fulfillment option before setting address when fulfillment exists", async () => {
@@ -740,9 +742,9 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Should trigger context updates after all mutations complete
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          "FULFILLMENT_DETAILS",
+        )
       })
 
       it("handles mutation errors gracefully", async () => {
@@ -818,9 +820,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Should not trigger context updates when mutation fails
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
       it("handles a mutation result with no shipping option by setting an error banner", async () => {
@@ -971,9 +971,7 @@ describe("Order2DeliveryForm", () => {
           },
         )
 
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
       it("allows OFFER mode orders to proceed with SHIPPING_TBD fulfillment option", async () => {
@@ -1079,9 +1077,9 @@ describe("Order2DeliveryForm", () => {
         )
 
         // Should proceed with checkout
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          "FULFILLMENT_DETAILS",
+        )
       })
 
       it("saves address to user profile when user has no saved addresses", async () => {
@@ -1197,9 +1195,9 @@ describe("Order2DeliveryForm", () => {
           },
         })
 
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          "FULFILLMENT_DETAILS",
+        )
       })
     })
 
@@ -1296,7 +1294,7 @@ describe("Order2DeliveryForm", () => {
     })
 
     it("pre-selects a matching saved address", async () => {
-      const { mockResolveLastOperation } = renderWithRelay({
+      renderWithRelay({
         Me: () => ({
           ...baseMeProps,
           order: {
@@ -1322,53 +1320,9 @@ describe("Order2DeliveryForm", () => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
 
-      // Click the button to submit the form
-      act(() => {
-        userEvent.click(screen.getByText("Save and Continue"))
-      })
-
-      let mutation
-      await waitFor(() => {
-        mutation = mockResolveLastOperation({
-          updateOrderShippingAddressPayload: () =>
-            orderMutationSuccess(baseOrderProps, {
-              fulfillmentDetails: {
-                name: "John Doe",
-                addressLine1: "123 Main St",
-                addressLine2: "Apt 4",
-                city: "New York",
-                region: "NY",
-                postalCode: "10001",
-                country: "US",
-                phoneNumber: {
-                  regionCode: "us",
-                  originalNumber: "5551234567",
-                },
-              },
-            }),
-        })
-      })
-      await flushPromiseQueue()
-
-      expect(mutation.operationName).toBe(
-        "useOrder2SetOrderDeliveryAddressMutation",
-      )
-      expect(mutation.operationVariables.input).toEqual({
-        id: "order-id",
-        buyerPhoneNumber: "5551234567",
-        buyerPhoneNumberCountryCode: "us",
-        shippingAddressLine1: "123 Main St",
-        shippingAddressLine2: "Apt 4",
-        shippingCity: "New York",
-        shippingRegion: "NY",
-        shippingPostalCode: "10001",
-        shippingCountry: "US",
-        shippingName: "John Doe",
-      })
-
-      expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete,
-      ).toHaveBeenCalledWith({})
+      // The radio matching the existing fulfillment details should be pre-selected
+      const nyRadio = screen.getByRole("radio", { name: /New York, NY 10001/i })
+      expect(nyRadio).toBeChecked()
     })
 
     it("handles address selection from saved addresses", async () => {
@@ -1377,28 +1331,17 @@ describe("Order2DeliveryForm", () => {
           ...baseMeProps,
           order: {
             ...baseOrderProps,
-            fulfillmentDetails: {
-              name: "John Doe",
-              addressLine1: "123 Main St",
-              addressLine2: "Apt 4",
-              city: "New York",
-              region: "NY",
-              postalCode: "10001",
-              country: "US",
-              phoneNumber: {
-                regionCode: "us",
-                originalNumber: "5551234567",
-              },
-            },
           },
         }),
       })
       await waitFor(() => {
         expect(screen.getByText("Delivery address")).toBeInTheDocument()
       })
-      userEvent.click(screen.getByText("Berlin, Berlin 56789"))
-      userEvent.click(screen.getByText("Save and Continue"))
 
+      // Clicking a saved address radio immediately fires the address mutation
+      userEvent.click(screen.getByText("Berlin, Berlin 56789"))
+
+      // Resolve address mutation
       let mutation
       await waitFor(() => {
         mutation = mockResolveLastOperation({
@@ -1417,10 +1360,10 @@ describe("Order2DeliveryForm", () => {
                   originalNumber: "5559876543",
                 },
               },
+              fulfillmentOptions: [{ type: "DOMESTIC_FLAT", selected: false }],
             }),
         })
       })
-      await flushPromiseQueue()
 
       expect(mutation.operationName).toBe(
         "useOrder2SetOrderDeliveryAddressMutation",
@@ -1438,9 +1381,18 @@ describe("Order2DeliveryForm", () => {
         shippingName: "John Doe",
       })
 
+      // Resolve the inline fulfillment option save
+      await waitFor(() => {
+        mockResolveLastOperation({
+          setOrderFulfillmentOptionPayload: () =>
+            orderMutationSuccess(baseOrderProps, {}),
+        })
+      })
+      await flushPromiseQueue()
+
       expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete,
-      ).toHaveBeenCalledWith({})
+        mockCheckoutContext.setSavedAddressSelectionMutating,
+      ).toHaveBeenCalledWith(false)
     })
 
     it("shows edit buttons for saved addresses", async () => {
@@ -1631,71 +1583,6 @@ describe("Order2DeliveryForm", () => {
       })
 
       expect(screen.getByText("Add new address")).toBeInTheDocument()
-    })
-
-    it("does not save address to user profile when user has existing saved addresses", async () => {
-      const { mockResolveLastOperation } = renderWithRelay({
-        Me: () => ({
-          ...baseMeProps,
-          order: {
-            ...baseOrderProps,
-            fulfillmentDetails: {
-              name: "New User",
-              addressLine1: "789 Pine St",
-              addressLine2: "",
-              city: "San Francisco",
-              region: "CA",
-              postalCode: "94102",
-              country: "US",
-              phoneNumber: {
-                regionCode: "us",
-                originalNumber: "5551112222",
-              },
-            },
-          },
-        }),
-      })
-
-      await waitFor(() => {
-        expect(screen.getByText("Delivery address")).toBeInTheDocument()
-      })
-
-      // Submit the form directly since it's pre-filled
-      act(() => {
-        userEvent.click(screen.getByText("Save and Continue"))
-      })
-
-      // Only expect the shipping address update mutation
-      let shippingMutation
-      await waitFor(() => {
-        shippingMutation = mockResolveLastOperation({
-          updateOrderShippingAddressPayload: () =>
-            orderMutationSuccess(baseOrderProps, {
-              fulfillmentDetails: {
-                name: "New User",
-                addressLine1: "789 Pine St",
-                addressLine2: "",
-                city: "San Francisco",
-                region: "CA",
-                postalCode: "94102",
-                country: "US",
-                phoneNumber: {
-                  regionCode: "us",
-                  originalNumber: "5551112222",
-                },
-              },
-            }),
-        })
-      })
-      await flushPromiseQueue()
-
-      expect(shippingMutation.operationName).toBe(
-        "useOrder2SetOrderDeliveryAddressMutation",
-      )
-
-      expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete,
-      ).toHaveBeenCalledWith({})
     })
 
     it("switches to add mode and calls tracking when add new address button is clicked", async () => {

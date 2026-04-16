@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7c6cc9aca771fe7cef58b92a765fe67>>
+ * @generated SignedSource<<f3527d6168abd838ec05f3aec4fdf6ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,11 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutRoute_viewer$data = {
   readonly me: {
+    readonly addressConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly __typename: "UserAddressEdge";
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly order: {
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_order" | "Order2CheckoutContext_order">;
@@ -49,6 +54,41 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "FragmentSpread",
           "name": "Order2CheckoutApp_me"
+        },
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 20
+            }
+          ],
+          "concreteType": "UserAddressConnection",
+          "kind": "LinkedField",
+          "name": "addressConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "UserAddressEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": "addressConnection(first:20)"
         },
         {
           "alias": null,
@@ -92,6 +132,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "78b22fd92562bb4ee75880369d75f0b4";
+(node as any).hash = "5691ab413ef4b6c747c1e83ab99f8e03";
 
 export default node;

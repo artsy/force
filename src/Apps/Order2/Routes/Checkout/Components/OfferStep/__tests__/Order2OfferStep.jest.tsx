@@ -202,7 +202,7 @@ const MOCK_OVER_PRICE_ORDER = {
 }
 
 describe("Order2OfferStep", () => {
-  let mockSetOfferAmountComplete: jest.Mock
+  let mockAdvanceStep: jest.Mock
   let mockSubmitMutation: jest.Mock
   let mockUnsetFulfillmentOptionMutation: jest.Mock
   let mockCheckoutTracking: {
@@ -211,7 +211,7 @@ describe("Order2OfferStep", () => {
   }
 
   beforeEach(() => {
-    mockSetOfferAmountComplete = jest.fn()
+    mockAdvanceStep = jest.fn()
     mockSubmitMutation = jest.fn(async () => ({
       createBuyerOffer: {
         offerOrError: { offer: { internalID: "offer-id" } },
@@ -232,7 +232,7 @@ describe("Order2OfferStep", () => {
 
     mockUseCheckoutContext.mockReturnValue({
       steps: [{ name: "OFFER_AMOUNT", state: "ACTIVE" }],
-      setOfferAmountComplete: mockSetOfferAmountComplete,
+      completeStep: mockAdvanceStep,
       checkoutTracking: mockCheckoutTracking,
       messages: {},
       setSectionErrorMessage: jest.fn(),
@@ -320,7 +320,7 @@ describe("Order2OfferStep", () => {
     })
 
     // Check that the context was updated
-    expect(mockSetOfferAmountComplete).toHaveBeenCalled()
+    expect(mockAdvanceStep).toHaveBeenCalled()
   })
 
   it("renders the expected form for exact price artworks", async () => {
@@ -491,7 +491,7 @@ describe("Order2OfferStep", () => {
       })
 
       // Check that the context was updated
-      expect(mockSetOfferAmountComplete).toHaveBeenCalled()
+      expect(mockAdvanceStep).toHaveBeenCalled()
     })
 
     it("allows custom note input for hidden price offers", async () => {
@@ -553,7 +553,7 @@ describe("Order2OfferStep", () => {
       })
 
       // Form should mark as dirty to show validation
-      expect(mockSetOfferAmountComplete).not.toHaveBeenCalled()
+      expect(mockAdvanceStep).not.toHaveBeenCalled()
     })
 
     it("disables submit button while submitting", async () => {
@@ -856,7 +856,7 @@ describe("Order2OfferStep", () => {
       })
 
       // Check that the context was updated
-      expect(mockSetOfferAmountComplete).toHaveBeenCalled()
+      expect(mockAdvanceStep).toHaveBeenCalled()
     })
   })
 

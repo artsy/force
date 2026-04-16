@@ -1,6 +1,5 @@
 import AddIcon from "@artsy/icons/AddIcon"
 import {
-  Button,
   Clickable,
   Flex,
   Radio,
@@ -17,6 +16,7 @@ import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Com
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
+import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import {
   type ProcessedUserAddress,
   validateAddressFields,
@@ -25,7 +25,7 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
-import { useFormikContext } from "formik"
+import type { useCompleteFulfillmentDetailsData_order$key } from "__generated__/useCompleteFulfillmentDetailsData_order.graphql"
 import { useCallback, useEffect, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
@@ -40,6 +40,7 @@ const ADDRESS_ERROR_MESSAGES = {
 } satisfies Record<string, CheckoutErrorBannerMessage>
 
 interface SavedAddressOptionsProps {
+  order: useCompleteFulfillmentDetailsData_order$key
   savedAddresses: ProcessedUserAddress[]
   initialSelectedAddress?: ProcessedUserAddress
   onSelectAddress: (address: FormikContextWithAddress) => Promise<void>
@@ -47,12 +48,15 @@ interface SavedAddressOptionsProps {
   availableShippingCountries?: readonly string[]
 }
 export const SavedAddressOptions = ({
+  order,
   savedAddresses,
   initialSelectedAddress,
   onSelectAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
 }: SavedAddressOptionsProps) => {
+  const completeFulfillmentData = useCompleteFulfillmentDetailsData(order)
+  const hasExistingShippingAddress = completeFulfillmentData !== null
   const {
     setUserAddressMode,
     userAddressMode,
@@ -60,9 +64,10 @@ export const SavedAddressOptions = ({
     checkoutTracking,
     steps,
     orderData,
+    isSavedAddressSelectionMutating,
+    activeFulfillmentDetailsTab,
   } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
-  const parentFormikContext = useFormikContext<FormikContextWithAddress>()
 
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
@@ -114,6 +119,25 @@ export const SavedAddressOptions = ({
       setUserAddressMode({ mode: "edit", address: initialSelectedAddress })
     }
   }, [])
+
+  // When the fulfillment details step becomes ACTIVE, auto-fire the address
+  // mutation for the initially selected address if the order doesn't already
+  // have a shipping address saved. Skip if the address is invalid or
+  // unshippable — the error banner effect handles those cases.
+  // Also fires when the user switches from PICKUP to DELIVERY tab (the order
+  // has fulfillment details but they are for PICKUP, not a shipping address).
+  // biome-ignore lint/correctness/useExhaustiveDependencies: onSelectAddress and initialSelectedAddress are stable; only re-run when step or tab changes
+  useEffect(() => {
+    if (fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE) return
+    if (!initialSelectedAddress) return
+    const isExistingPickup = completeFulfillmentData?.isPickup
+    const switchingFromPickupToDelivery =
+      isExistingPickup && activeFulfillmentDetailsTab === "DELIVERY"
+    if (hasExistingShippingAddress && !switchingFromPickupToDelivery) return
+    if (!initialSelectedAddress.isValid) return
+    if (!initialSelectedAddress.isShippable && !isOfferOrder) return
+    onSelectAddress(initialSelectedAddress)
+  }, [fulfillmentDetailsStep?.state, activeFulfillmentDetailsTab])
 
   // Reactively set/clear error banner based on selected address validity and shippability
   useEffect(() => {
@@ -247,6 +271,7 @@ export const SavedAddressOptions = ({
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
+                disabled={isSavedAddressSelectionMutating}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }
@@ -302,22 +327,6 @@ export const SavedAddressOptions = ({
           </Text>
         </Flex>
       </Clickable>
-
-      <Spacer y={4} />
-
-      <Button
-        type="submit"
-        loading={parentFormikContext.isSubmitting}
-        disabled={
-          (!selectedAddress?.isShippable && !isOfferOrder) ||
-          !selectedAddress?.isValid
-        }
-        onClick={() => {
-          parentFormikContext.handleSubmit()
-        }}
-      >
-        Save and Continue
-      </Button>
     </Flex>
   )
 }

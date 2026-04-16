@@ -95,7 +95,7 @@ jest.mock("react-relay", () => {
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   setSavePaymentMethod: jest.fn(),
-  setPaymentComplete: jest.fn(),
+  completeStep: jest.fn(),
   savePaymentMethod: false,
   messages: {
     PAYMENT: {
@@ -1107,7 +1107,7 @@ describe("Order2PaymentForm", () => {
 
       // Wait for balance check to complete and trigger setPaymentComplete
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1178,7 +1178,7 @@ describe("Order2PaymentForm", () => {
         })
       })
 
-      expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
     })
 
     it("handles wire transfer submission error", async () => {
@@ -1550,7 +1550,7 @@ describe("Order2PaymentForm", () => {
 
       // Verify setPaymentComplete is called after balance check completes
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1631,7 +1631,7 @@ describe("Order2PaymentForm", () => {
 
       // Verify setPaymentComplete is called after balance check completes
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1700,7 +1700,7 @@ describe("Order2PaymentForm", () => {
 
       // Verify payment completes immediately without balance check
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
   })
