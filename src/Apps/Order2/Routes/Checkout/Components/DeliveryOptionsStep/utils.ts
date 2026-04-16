@@ -36,7 +36,7 @@ const dateRangeString = (args: {
 
   const endDateFormat = startDate.month !== endDate.month ? "MMM d" : "d"
 
-  return `${startDate.toFormat("MMM d")} - ${endDate.toFormat(endDateFormat)}`
+  return `${startDate.toFormat("MMM d")}–${endDate.toFormat(endDateFormat)}`
 }
 
 export const deliveryOptionTimeEstimate = (
