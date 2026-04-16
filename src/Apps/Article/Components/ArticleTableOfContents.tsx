@@ -31,7 +31,7 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
   if (article.outline.length < 5) return null
 
   return (
-    <Stack gap={1} maxWidth="fit-content" bg="mono5" p={2}>
+    <Stack gap={1} bg="mono5" p={2}>
       <Text variant="xs" fontWeight="bold">
         In this article
       </Text>
