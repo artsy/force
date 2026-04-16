@@ -2,6 +2,7 @@ import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useRouter } from "System/Hooks/useRouter"
+import { useEffect } from "react"
 
 export enum CheckoutModalError {
   LOADING_TIMEOUT = "loading_timeout",
@@ -17,17 +18,9 @@ export const CheckoutModal: React.FC<{
   overrideTitle?: string
   overrideDescription?: string
 }> = ({ error, overrideTitle, overrideDescription }) => {
-  const { artworkPath } = useCheckoutContext()
+  const { artworkPath, checkoutTracking } = useCheckoutContext()
   const { dismissCheckoutErrorModal } = useCheckoutModal()
   const { router } = useRouter()
-
-  if (!error) {
-    return null
-  }
-
-  const handleReload = () => {
-    window.location.reload()
-  }
 
   // Determine modal behavior based on error type
   let canReload = false
@@ -70,6 +63,24 @@ export const CheckoutModal: React.FC<{
   // Use override values if provided, otherwise fall back to defaults
   const title = overrideTitle ?? defaultTitle
   const description = overrideDescription ?? defaultDescription
+
+  useEffect(() => {
+    if (!error) return
+
+    checkoutTracking.errorMessageViewed({
+      error_code: error,
+      title,
+      message: description,
+    })
+  }, [error, title, description, checkoutTracking])
+
+  if (!error) {
+    return null
+  }
+
+  const handleReload = () => {
+    window.location.reload()
+  }
 
   const handleClose = () => {
     if (canDismiss) {
