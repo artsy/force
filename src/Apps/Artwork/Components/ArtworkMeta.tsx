@@ -1,8 +1,11 @@
+import { useUnleashContext, useVariant } from "@unleash/proxy-client-react"
 import { ArtworkStructuredData } from "Apps/Artwork/Components/ArtworkStructuredData"
 import { ClientSuspense } from "Components/ClientSuspense"
 import { useRouter } from "System/Hooks/useRouter"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { getENV } from "Utils/getENV"
 import type { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.graphql"
+import { useEffect } from "react"
 import { Link, Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
@@ -21,6 +24,26 @@ export const ArtworkMeta: React.FC<
   const imageURL = data.metaImage?.resized?.url
 
   const addNoIndex = data.isUnlisted || pathname.includes(data?.internalID) // a previously private artwork URL
+
+  const updateContext = useUnleashContext()
+
+  useEffect(() => {
+    /**
+     * Since the experiment is sticky per-artwork (rather than per-user
+     * or per-session) we need to add the artwork id to the Unleash context
+     * _before_ checking or tracking the experiment flag's values.
+     */
+    async function setArtworkIdContextAndTrack() {
+      await updateContext({ properties: { artworkId: data.internalID } })
+    }
+    setArtworkIdContextAndTrack()
+  }, [data.internalID, updateContext])
+
+  const variant = useVariant("roop_test-artwork-stickiness")
+  useTrackFeatureVariantOnMount({
+    experimentName: "roop_test-artwork-stickiness",
+    variantName: variant.name,
+  })
 
   return (
     <>
