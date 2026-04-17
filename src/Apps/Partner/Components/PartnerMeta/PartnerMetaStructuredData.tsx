@@ -104,6 +104,18 @@ export const PartnerMetaStructuredData: React.FC<
     [partner.allArtistsConnection],
   )
 
+  const makesOffer = useMemo(() => {
+    const artworks = extractNodes(partner.filterArtworksConnection)
+    if (artworks.length === 0) return undefined
+
+    return artworks.map(artwork => ({
+      "@type": "Offer" as const,
+      itemOffered: {
+        "@id": `${getENV("APP_URL")}${artwork.href}#visual-artwork`,
+      },
+    }))
+  }, [partner.filterArtworksConnection])
+
   return (
     <StructuredData
       schemaData={{
@@ -122,6 +134,7 @@ export const PartnerMetaStructuredData: React.FC<
         address,
         openingHours,
         member,
+        makesOffer,
       }}
     />
   )
@@ -179,6 +192,13 @@ const fragment = graphql`
       edges {
         node {
           name
+          href
+        }
+      }
+    }
+    filterArtworksConnection(first: 30, sort: "-decayed_merch") {
+      edges {
+        node {
           href
         }
       }

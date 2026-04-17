@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<efbc187b1c58415f0cb4ffe68b4d41c4>>
+ * @generated SignedSource<<743c84a984747556ee465b3c033d5941>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,13 @@ export type PartnerMetaStructuredData_partner$data = {
       readonly node: {
         readonly href: string | null | undefined;
         readonly name: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly filterArtworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly href: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -379,6 +386,51 @@ return {
         }
       ],
       "storageKey": "allArtistsConnection(representedBy:true)"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 30
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "-decayed_merch"
+        }
+      ],
+      "concreteType": "FilterArtworksConnection",
+      "kind": "LinkedField",
+      "name": "filterArtworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/)
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "filterArtworksConnection(first:30,sort:\"-decayed_merch\")"
     }
   ],
   "type": "Partner",
@@ -386,6 +438,6 @@ return {
 };
 })();
 
-(node as any).hash = "4f3b2455314e15667ce289696a9aeda0";
+(node as any).hash = "cfe95fed99302e96b82316784165cd2d";
 
 export default node;
