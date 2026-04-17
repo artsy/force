@@ -60,7 +60,7 @@ export const Order2DeliveryOptionsForm: React.FC<
   const orderData = useFragment(FRAGMENT, order)
   const {
     checkoutTracking,
-    setDeliveryOptionComplete,
+    completeStep,
     setSectionErrorMessage,
     messages,
     steps,
@@ -143,7 +143,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     if (existingSelectionIsStillValid) return
     saveOption(selectableOptions[0]).then(() => {
       if (selectableOptions.length === 1) {
-        setDeliveryOptionComplete()
+        completeStep(CheckoutStepName.DELIVERY_OPTION)
       }
     })
   }, [stepState])
@@ -152,8 +152,8 @@ export const Order2DeliveryOptionsForm: React.FC<
     checkoutTracking.clickedOrderProgression(
       ContextModule.ordersShippingMethods,
     )
-    setDeliveryOptionComplete()
-  }, [checkoutTracking, setDeliveryOptionComplete])
+    completeStep(CheckoutStepName.DELIVERY_OPTION)
+  }, [checkoutTracking, completeStep])
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>

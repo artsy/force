@@ -148,14 +148,10 @@ describe("Order2CheckoutContext", () => {
         expect.arrayContaining([
           "setExpressCheckoutLoaded",
           "setExpressCheckoutState",
-          "setFulfillmentDetailsComplete",
+          "completeStep",
+          "editStep",
           "setActiveFulfillmentDetailsTab",
-          "editFulfillmentDetails",
-          "setDeliveryOptionComplete",
-          "editDeliveryOption",
-          "editPayment",
           "setLoadingComplete",
-          "setPaymentComplete",
           "setConfirmationToken",
           "setSavePaymentMethod",
           "redirectToOrderDetails",
@@ -340,41 +336,80 @@ describe("Order2CheckoutContext", () => {
       })
     })
 
-    describe("setFulfillmentDetailsComplete", () => {
-      it("completes fulfillment details step and activates next step", async () => {
+    describe("completeStep", () => {
+      it("marks the named step COMPLETED and activates the next step", async () => {
         const { getState, actions } = await setup()
 
         act(() => {
-          actions.setFulfillmentDetailsComplete({})
+          actions.completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
         })
 
-        const fulfillmentStep = getState().steps.find(
-          step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
-        )
-        expect(fulfillmentStep?.state).toBe(CheckoutStepState.COMPLETED)
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+          )?.state,
+        ).toBe(CheckoutStepState.COMPLETED)
 
-        const deliveryStep = getState().steps.find(
-          step => step.name === CheckoutStepName.DELIVERY_OPTION,
-        )
-        expect(deliveryStep?.state).toBe(CheckoutStepState.ACTIVE)
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.DELIVERY_OPTION,
+          )?.state,
+        ).toBe(CheckoutStepState.ACTIVE)
       })
 
-      it("hides delivery option step for pickup", async () => {
+      it("skips HIDDEN steps when activating the next step (pickup flow)", async () => {
         const { getState, actions } = await setup()
 
         act(() => {
-          actions.setFulfillmentDetailsComplete({ isPickup: true })
+          actions.setActiveFulfillmentDetailsTab("PICKUP")
         })
 
-        const deliveryStep = getState().steps.find(
-          step => step.name === CheckoutStepName.DELIVERY_OPTION,
-        )
-        expect(deliveryStep?.state).toBe(CheckoutStepState.HIDDEN)
+        act(() => {
+          actions.completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
+        })
 
-        const paymentStep = getState().steps.find(
-          step => step.name === CheckoutStepName.PAYMENT,
-        )
-        expect(paymentStep?.state).toBe(CheckoutStepState.ACTIVE)
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.DELIVERY_OPTION,
+          )?.state,
+        ).toBe(CheckoutStepState.HIDDEN)
+
+        expect(
+          getState().steps.find(step => step.name === CheckoutStepName.PAYMENT)
+            ?.state,
+        ).toBe(CheckoutStepState.ACTIVE)
+      })
+    })
+
+    describe("editStep", () => {
+      it("re-activates the target step and resets following steps to UPCOMING", async () => {
+        const { getState, actions } = await setup()
+
+        act(() => {
+          actions.completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
+          actions.completeStep(CheckoutStepName.DELIVERY_OPTION)
+        })
+
+        act(() => {
+          actions.editStep(CheckoutStepName.FULFILLMENT_DETAILS)
+        })
+
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+          )?.state,
+        ).toBe(CheckoutStepState.ACTIVE)
+
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.DELIVERY_OPTION,
+          )?.state,
+        ).toBe(CheckoutStepState.UPCOMING)
+
+        expect(
+          getState().steps.find(step => step.name === CheckoutStepName.PAYMENT)
+            ?.state,
+        ).toBe(CheckoutStepState.UPCOMING)
       })
     })
 

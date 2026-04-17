@@ -228,7 +228,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const {
     setConfirmationToken,
     checkoutTracking,
-    setPaymentComplete,
+    completeStep,
     setSavePaymentMethod,
     savePaymentMethod,
     activeFulfillmentDetailsTab,
@@ -390,13 +390,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           handleError(PAYMENT_ERROR_MESSAGES.insufficientFunds)
           break
         default:
-          setPaymentComplete()
+          completeStep(CheckoutStepName.PAYMENT)
           setIsSubmittingToStripe(false)
           resetElementsToInitialParams()
           break
       }
     },
-    [handleError, setPaymentComplete, resetElementsToInitialParams],
+    [handleError, completeStep, resetElementsToInitialParams],
   )
 
   const handleBalanceCheckError = useCallback(
@@ -404,11 +404,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       logger.error("Error during balance check:", error)
       setIsCheckingBankBalance(false)
       // On error, proceed with checkout anyway
-      setPaymentComplete()
+      completeStep(CheckoutStepName.PAYMENT)
       setIsSubmittingToStripe(false)
       resetElementsToInitialParams()
     },
-    [setPaymentComplete, resetElementsToInitialParams],
+    [completeStep, resetElementsToInitialParams],
   )
 
   if (!(stripe && elements)) {
@@ -655,12 +655,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         if (paymentMethod === "US_BANK_ACCOUNT") {
           setIsCheckingBankBalance(true)
           // Keep submitting state active during balance check
-          // The balance check handlers will call setPaymentComplete() and setIsSubmittingToStripe(false)
+          // The balance check handlers will call completeStep(CheckoutStepName.PAYMENT) and setIsSubmittingToStripe(false)
           return
         }
 
         // For other payment methods, complete immediately
-        setPaymentComplete()
+        completeStep(CheckoutStepName.PAYMENT)
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
       } catch (error) {
@@ -698,7 +698,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
         setConfirmationToken({ confirmationToken: null })
-        setPaymentComplete()
+        completeStep(CheckoutStepName.PAYMENT)
       }
     }
 
@@ -732,14 +732,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         if (paymentMethod === "US_BANK_ACCOUNT") {
           setIsCheckingBankBalance(true)
           // Keep submitting state active during balance check
-          // The balance check handlers will call setPaymentComplete() and setIsSubmittingToStripe(false)
+          // The balance check handlers will call completeStep(CheckoutStepName.PAYMENT) and setIsSubmittingToStripe(false)
           return
         }
 
         // For other saved payment methods, complete immediately
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
-        setPaymentComplete()
+        completeStep(CheckoutStepName.PAYMENT)
       } catch (error) {
         handleError(fallbackError("selecting your payment method", error.code))
         logger.error(

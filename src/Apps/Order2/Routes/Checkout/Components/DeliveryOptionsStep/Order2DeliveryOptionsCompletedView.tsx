@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCallback } from "react"
 
@@ -21,13 +22,13 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   price,
   allowEdit = true,
 }) => {
-  const { editDeliveryOption, checkoutTracking } = useCheckoutContext()
+  const { editStep, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = useCallback(() => {
     checkoutTracking.clickedChangeDeliveryOptions()
 
-    editDeliveryOption()
-  }, [checkoutTracking, editDeliveryOption])
+    editStep(CheckoutStepName.DELIVERY_OPTION)
+  }, [checkoutTracking, editStep])
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
