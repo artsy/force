@@ -1,7 +1,8 @@
 import { Text } from "@artsy/palette"
 
 export const SignupFormDisclaimer = () => {
-  const isTouchDevice = "ontouchstart" in window
+  const isTouchDevice =
+    typeof window !== "undefined" && "ontouchstart" in window
 
   return (
     <Text variant="xs" color="mono60" textAlign="center">
