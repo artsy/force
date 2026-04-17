@@ -30,7 +30,7 @@ export const Order2CheckoutRoute: React.FC<Order2CheckoutRouteProps> = ({
     <Analytics contextPageOwnerId={order.internalID}>
       <Elements stripe={stripePromise}>
         <CheckoutModalProvider>
-          <Order2CheckoutContextProvider order={order}>
+          <Order2CheckoutContextProvider order={order} me={me}>
             <Order2CheckoutApp order={order} me={me} />
           </Order2CheckoutContextProvider>
         </CheckoutModalProvider>
@@ -44,6 +44,7 @@ const FRAGMENT = graphql`
   @argumentDefinitions(orderID: { type: "ID!" }) {
     me {
       ...Order2CheckoutApp_me
+      ...Order2CheckoutContext_me
       order(id: $orderID) {
         internalID
         ...Order2CheckoutContext_order

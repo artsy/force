@@ -52,7 +52,7 @@ afterEach(() => {
 const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutContextTestQuery>({
   Component: ({ viewer }: any) => {
     return (
-      <Order2CheckoutContextProvider order={viewer.me.order}>
+      <Order2CheckoutContextProvider order={viewer.me.order} me={viewer.me}>
         <TestComponent />
       </Order2CheckoutContextProvider>
     )
@@ -61,6 +61,7 @@ const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutContextTestQuery>({
     query Order2CheckoutContextTestQuery @relay_test_operation {
       viewer {
         me {
+          ...Order2CheckoutContext_me
           order(id: "order-id") {
             ...Order2CheckoutContext_order
           }
@@ -110,6 +111,7 @@ describe("Order2CheckoutContext", () => {
     await renderWithRelay({
       Viewer: () => ({
         me: {
+          addressConnection: { edges: [] },
           order: {
             ...baseOrderProps,
             ...orderProps,
