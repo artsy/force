@@ -3,6 +3,7 @@ import {
   extractJumpTargetIDFromHash,
   injectHeadingIDs,
   injectHeadingIDsIntoBodies,
+  stripEmptyParagraphs,
 } from "../extractHeadings"
 
 describe("injectHeadingIDs", () => {
@@ -114,6 +115,21 @@ describe("injectHeadingIDsIntoBodies", () => {
     ])
   })
 
+  it("strips empty paragraphs from each body", () => {
+    const bodies = [
+      "<p>Intro</p><p><br></p>",
+      "<p>&nbsp;</p><h2>Section</h2><p>Body</p><p> </p>",
+    ]
+    const outline = [{ heading: "Section", slug: "section" }]
+
+    const result = injectHeadingIDsIntoBodies(bodies, outline, articleSlug)
+
+    expect(result).toEqual([
+      "<p>Intro</p>",
+      '<h2 id="JUMP--article-slug--section">Section</h2><p>Body</p>',
+    ])
+  })
+
   it("handles duplicate heading text across bodies", () => {
     const bodies = ["<h2>Overview</h2>", "<h2>Overview</h2>"]
     const outline = [
@@ -127,6 +143,38 @@ describe("injectHeadingIDsIntoBodies", () => {
       '<h2 id="JUMP--article-slug--overview">Overview</h2>',
       '<h2 id="JUMP--article-slug--overview-1">Overview</h2>',
     ])
+  })
+})
+
+describe("stripEmptyParagraphs", () => {
+  it.each([
+    ["<p></p>", ""],
+    ["<p> </p>", ""],
+    ["<p>\n\t</p>", ""],
+    ["<p><br></p>", ""],
+    ["<p><br/></p>", ""],
+    ["<p><br /></p>", ""],
+    ["<p>&nbsp;</p>", ""],
+    ["<p>&#160;</p>", ""],
+    ['<p class="foo"><br></p>', ""],
+  ])("removes empty paragraph %p", (input, expected) => {
+    expect(stripEmptyParagraphs(input)).toBe(expected)
+  })
+
+  it("preserves paragraphs with text content", () => {
+    expect(stripEmptyParagraphs("<p>Hello</p>")).toBe("<p>Hello</p>")
+  })
+
+  it("preserves paragraphs containing inline elements with text", () => {
+    expect(stripEmptyParagraphs("<p>Hi<br>there</p>")).toBe(
+      "<p>Hi<br>there</p>",
+    )
+  })
+
+  it("only removes empty paragraphs, leaving surrounding markup intact", () => {
+    expect(
+      stripEmptyParagraphs("<p>One</p><p><br></p><p>Two</p><p>&nbsp;</p>"),
+    ).toBe("<p>One</p><p>Two</p>")
   })
 })
 

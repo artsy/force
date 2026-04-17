@@ -53,6 +53,14 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
     )
   }, [article.outline, article.sections, articleSlug])
 
+  // Insert the TOC just before the first section that contains a heading,
+  // so it sits right above the article's first H2 in reading order.
+  const firstHeadingSectionIndex = useMemo(() => {
+    return sectionBodies.findIndex(
+      body => body != null && /<h2[\s>]/i.test(body),
+    )
+  }, [sectionBodies])
+
   return (
     <Analytics contextPageOwnerId={article.internalID}>
       <div id={`ARTICLE--${articleSlug}`} />
@@ -142,8 +150,6 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
             {/* Begin article contents */}
 
             <Stack gap={4}>
-              <ArticleTableOfContents article={article} />
-
               {article.leadParagraph && (
                 <HTML
                   variant="md"
@@ -160,6 +166,10 @@ const ArticleBody: FC<React.PropsWithChildren<ArticleBodyProps>> = ({
 
                 return (
                   <Fragment key={i}>
+                    {i === firstHeadingSectionIndex && (
+                      <ArticleTableOfContents article={article} />
+                    )}
+
                     <ArticleSectionFragmentContainer
                       body={sectionBodies[i]}
                       isFirst={isFirst}

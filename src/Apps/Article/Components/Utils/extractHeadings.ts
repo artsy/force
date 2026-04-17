@@ -11,6 +11,22 @@ const stripTags = (html: string): string => html.replace(/<[^>]*>/g, "")
 
 const hasIDAttribute = (attrs: string): boolean => /(?:^|\s)id\s*=/i.test(attrs)
 
+/**
+ * Removes paragraphs whose only content is whitespace, `<br>`s, or `&nbsp;`s.
+ * These are common authoring artifacts (e.g. trailing carriage returns) that
+ * render as visually empty space between sections.
+ */
+export const stripEmptyParagraphs = (html: string): string =>
+  html.replace(/<p\b[^>]*>([\s\S]*?)<\/p>/gi, (full, inner) => {
+    const visible = inner
+      .replace(/<br\s*\/?>/gi, "")
+      .replace(/&nbsp;|&#160;/gi, "")
+      .replace(/<[^>]*>/g, "")
+      .trim()
+
+    return visible.length === 0 ? "" : full
+  })
+
 export const createJumpTargetID = ({
   articleSlug,
   slug,
@@ -98,6 +114,12 @@ export const injectHeadingIDsIntoBodies = (
   const slugQueues = createSlugQueues(outline)
 
   return bodies.map(body =>
-    body ? injectHeadingIDsWithSlugQueues(body, slugQueues, articleSlug) : null,
+    body
+      ? injectHeadingIDsWithSlugQueues(
+          stripEmptyParagraphs(body),
+          slugQueues,
+          articleSlug,
+        )
+      : null,
   )
 }
