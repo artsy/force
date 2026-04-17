@@ -11,7 +11,7 @@ export const SignupHeroContent = () => {
         fontWeight="bold"
         textAlign="left"
       >
-        Discover and Buy Art That Moves You
+        Discover and Buy Art That Moves You.
       </Text>
       <Spacer y={2} />
       <Text
@@ -22,9 +22,9 @@ export const SignupHeroContent = () => {
         textAlign="left"
         fontSize="22px" // dont hard code this
       >
-        Join over 3.4 million art collectors and enthusiasts. Explore 1.6
-        million original artworks for sale from leading galleries, museums, and
-        artists worldwide—and find the work that speaks to you.
+        Welcome to Artsy, the world's largest online art marketplace. We give
+        you the tools to make art part of your daily routine, whether you’re a
+        seasoned art collector or looking for your first artwork.
       </Text>
       <Spacer y={4} />
       <Stack gap={2}>

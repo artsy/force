@@ -15,7 +15,7 @@ import { signUp } from "Utils/auth"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { SignupFormSocial } from "./SignupFormSocial"
-// import { SignupFormDisclaimer } from "./SignupFormDisclaimer"
+import { SignupFormDisclaimer } from "./SignupFormDisclaimer"
 
 const signupSchema = Yup.object().shape({
   name: Yup.string().required("Name is required."),
@@ -194,7 +194,7 @@ export const SignupForm = () => {
 
               <SignupFormSocial />
 
-              {/* <SignupFormDisclaimer /> */}
+              <SignupFormDisclaimer />
             </Stack>
           </Form>
         )}
