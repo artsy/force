@@ -1,135 +1,103 @@
-import {
-  getArticleNavState,
-  hasArticleNavState,
-  pushArticleState,
-  replaceScrollY,
-} from "../articleHistoryState"
+import { getTocJumpState, pushTocJumpEntry } from "../articleHistoryState"
 
 describe("articleHistoryState", () => {
   const originalState = window.history.state
 
-  afterEach(() => {
+  beforeEach(() => {
+    window.history.replaceState({}, "")
+  })
+
+  afterAll(() => {
     window.history.replaceState(originalState, "")
   })
 
-  describe("getArticleNavState", () => {
+  describe("getTocJumpState", () => {
     it("returns null for null state", () => {
-      expect(getArticleNavState(null)).toBeNull()
+      expect(getTocJumpState(null)).toBeNull()
     })
 
     it("returns null for empty object", () => {
-      expect(getArticleNavState({})).toBeNull()
+      expect(getTocJumpState({})).toBeNull()
     })
 
-    it("returns null when articleNav has no scrollY", () => {
-      expect(
-        getArticleNavState({ articleNav: { kind: "article-boundary" } }),
-      ).toBeNull()
+    it("returns null when articleTocJump has no session", () => {
+      expect(getTocJumpState({ articleTocJump: { scrollY: 100 } })).toBeNull()
     })
 
-    it("extracts boundary state", () => {
-      const nav = {
-        kind: "article-boundary",
-        articleHref: "/article/a",
-        articleSlug: "a",
-        scrollY: 100,
-      }
-      const result = getArticleNavState({ articleNav: nav })
+    it("extracts a back-restore marker (session + scrollY)", () => {
+      const marker = { session: 0, scrollY: 250 }
 
-      expect(result).toEqual(nav)
+      expect(getTocJumpState({ articleTocJump: marker })).toEqual(marker)
     })
 
-    it("extracts jump state", () => {
-      const nav = {
-        kind: "toc-jump",
-        articleHref: "/article/a",
-        articleSlug: "a",
-        scrollY: 200,
-        targetId: "a--heading",
-      }
-      const result = getArticleNavState({ articleNav: nav })
+    it("extracts a forward-jump marker (session + targetId)", () => {
+      const marker = { session: 1, targetId: "a--heading" }
 
-      expect(result).toEqual(nav)
-    })
-
-    it("extracts scroll-only state (no kind)", () => {
-      const result = getArticleNavState({ articleNav: { scrollY: 400 } })
-
-      expect(result).toEqual({ scrollY: 400 })
+      expect(getTocJumpState({ articleTocJump: marker })).toEqual(marker)
     })
   })
 
-  describe("pushArticleState", () => {
-    it("pushes state namespaced under articleNav", () => {
-      const state = {
-        kind: "article-boundary" as const,
-        articleHref: "/article/b",
-        articleSlug: "b",
-        scrollY: 600,
-      }
+  describe("pushTocJumpEntry", () => {
+    it("stamps the current entry with scrollY and pushes a new entry with targetId", () => {
+      const replaceSpy = jest.spyOn(window.history, "replaceState")
+      const pushSpy = jest.spyOn(window.history, "pushState")
 
-      pushArticleState(state)
+      pushTocJumpEntry({
+        scrollY: 500,
+        targetId: "a--intro",
+        session: 3,
+        hash: "#JUMP--a--intro",
+      })
 
-      expect(window.history.state.articleNav).toEqual(state)
+      expect(replaceSpy).toHaveBeenCalledTimes(1)
+      const replacedState = replaceSpy.mock.calls[0][0] as Record<string, any>
+      expect(replacedState.articleTocJump).toEqual({
+        session: 3,
+        scrollY: 500,
+      })
+
+      expect(pushSpy).toHaveBeenCalledTimes(1)
+      const [pushedState, , pushedUrl] = pushSpy.mock.calls[0]
+      expect((pushedState as Record<string, any>).articleTocJump).toEqual({
+        session: 3,
+        targetId: "a--intro",
+      })
+      expect(pushedUrl).toBe("#JUMP--a--intro")
+
+      replaceSpy.mockRestore()
+      pushSpy.mockRestore()
     })
 
-    it("preserves existing history state", () => {
+    it("preserves unrelated existing history state", () => {
       window.history.replaceState({ existing: true }, "")
 
-      const state = {
-        kind: "article-boundary" as const,
-        articleHref: "/article/b",
-        articleSlug: "b",
-        scrollY: 600,
-      }
-
-      pushArticleState(state)
+      pushTocJumpEntry({
+        scrollY: 0,
+        targetId: "b--foo",
+        session: 0,
+        hash: "#JUMP--b--foo",
+      })
 
       expect(window.history.state.existing).toBe(true)
-      expect(window.history.state.articleNav).toEqual(state)
-    })
-  })
-
-  describe("replaceScrollY", () => {
-    it("creates articleNav with scrollY when none exists", () => {
-      window.history.replaceState({}, "")
-
-      replaceScrollY(750)
-
-      expect(window.history.state.articleNav).toEqual({ scrollY: 750 })
+      expect(window.history.state.articleTocJump).toEqual({
+        session: 0,
+        targetId: "b--foo",
+      })
     })
 
-    it("updates scrollY on existing articleNav state", () => {
-      window.history.replaceState(
-        {
-          articleNav: {
-            kind: "article-boundary",
-            articleHref: "/article/a",
-            articleSlug: "a",
-            scrollY: 100,
-          },
-        },
-        "",
-      )
+    it("does not leak scrollY from the stamped entry into the pushed entry", () => {
+      pushTocJumpEntry({
+        scrollY: 999,
+        targetId: "c--bar",
+        session: 7,
+        hash: "#JUMP--c--bar",
+      })
 
-      replaceScrollY(999)
-
-      expect(window.history.state.articleNav.scrollY).toBe(999)
-      expect(window.history.state.articleNav.kind).toBe("article-boundary")
-    })
-  })
-
-  describe("hasArticleNavState", () => {
-    it("returns false when no articleNav exists", () => {
-      window.history.replaceState({}, "")
-
-      expect(hasArticleNavState()).toBe(false)
-    })
-
-    it("returns true when articleNav exists", () => {
-      window.history.replaceState({ articleNav: { scrollY: 0 } }, "")
-
-      expect(hasArticleNavState()).toBe(true)
+      expect(window.history.state.articleTocJump).toEqual({
+        session: 7,
+        targetId: "c--bar",
+      })
+      expect(window.history.state.articleTocJump.scrollY).toBeUndefined()
     })
   })
 })

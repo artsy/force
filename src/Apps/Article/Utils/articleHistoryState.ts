@@ -1,69 +1,66 @@
-const STATE_KEY = "articleNav"
-
-interface ArticleBoundaryState {
-  kind: "article-boundary"
-  articleHref: string
-  articleSlug: string
-  scrollY: number
-}
-
-interface ArticleJumpState {
-  kind: "toc-jump"
-  articleHref: string
-  articleSlug: string
-  scrollY: number
-  targetId: string
-}
-
-export type ArticleHistoryState = ArticleBoundaryState | ArticleJumpState
+const STATE_KEY = "articleTocJump"
 
 /**
- * Reads and validates the article navigation state from a history entry.
- * Returns null if the entry has no article state or is malformed.
+ * History-state marker we attach to entries created by an in-page TOC click.
+ *
+ * - The "before" entry (the one the user is on when they click) is stamped
+ *   via `replaceState` with a `scrollY` so we can restore their position on
+ *   back.
+ * - The "after" entry (the one we push at the heading hash) carries a
+ *   `targetId` so we can re-jump to the heading on forward.
+ *
+ * `session` is the value returned by
+ * `FilterableBrowserProtocol#getSession()` at the time the marker was
+ * stamped. It lets us invalidate stale markers whenever a real Farce
+ * navigation happens, so back/forward across path boundaries falls through
+ * to the router as expected.
  */
-export const getArticleNavState = (
-  historyState: unknown,
-): (ArticleHistoryState | { kind?: undefined; scrollY: number }) | null => {
+export interface TocJumpState {
+  session: number
+  scrollY?: number
+  targetId?: string
+}
+
+export const getTocJumpState = (historyState: unknown): TocJumpState | null => {
   if (!historyState || typeof historyState !== "object") return null
 
   const state = (historyState as Record<string, unknown>)[STATE_KEY]
   if (!state || typeof state !== "object") return null
-  if (typeof (state as Record<string, unknown>).scrollY !== "number") {
+  if (typeof (state as Record<string, unknown>).session !== "number") {
     return null
   }
 
-  return state as ArticleHistoryState | { kind?: undefined; scrollY: number }
+  return state as TocJumpState
 }
 
-export const pushArticleState = (
-  state: ArticleHistoryState,
-  url?: string,
-): void => {
-  window.history.pushState(
-    { ...window.history.state, [STATE_KEY]: state },
-    "",
-    url,
-  )
-}
-
-export const hasArticleNavState = (): boolean => {
-  return !!window.history.state?.[STATE_KEY]
+interface PushTocJumpEntryParams {
+  scrollY: number
+  targetId: string
+  session: number
+  hash: string
 }
 
 /**
- * Saves the current scroll position on the current history entry so it can
- * be restored when the user navigates back. Merges into any existing
- * articleNav state, or creates a minimal one if none exists.
+ * Stamps the current entry with `scrollY` (so back can restore position),
+ * then pushes a new entry at `hash` with `targetId` (so forward can re-jump
+ * to the heading).
  */
-export const replaceScrollY = (scrollY: number): void => {
-  const existing =
-    (window.history.state?.[STATE_KEY] as Record<string, unknown>) ?? {}
+export const pushTocJumpEntry = ({
+  scrollY,
+  targetId,
+  session,
+  hash,
+}: PushTocJumpEntryParams): void => {
+  const baseState = window.history.state ?? {}
 
   window.history.replaceState(
-    {
-      ...window.history.state,
-      [STATE_KEY]: { ...existing, scrollY },
-    },
+    { ...baseState, [STATE_KEY]: { session, scrollY } satisfies TocJumpState },
     "",
+  )
+
+  window.history.pushState(
+    { ...baseState, [STATE_KEY]: { session, targetId } satisfies TocJumpState },
+    "",
+    hash,
   )
 }

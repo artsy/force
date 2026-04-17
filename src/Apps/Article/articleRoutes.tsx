@@ -1,5 +1,4 @@
 import loadable from "@loadable/component"
-import { hasArticleNavState } from "Apps/Article/Utils/articleHistoryState"
 import { serverCacheTTLs } from "Apps/serverCacheTTLs"
 import type { RouteProps } from "System/Router/Route"
 import { RedirectException, type RouteRenderArgs } from "found"
@@ -23,10 +22,6 @@ const redirectToArticle = ({
 export const articleRoutes: RouteProps[] = [
   {
     path: "/article/:id",
-    getScrollBehavior: () => {
-      if (hasArticleNavState()) return false
-      return undefined
-    },
     Component: ArticleApp,
     onPreloadJS: () => {
       ArticleApp.preload()

@@ -1,12 +1,12 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import { ArticleStructuredData } from "Apps/Article/Components/ArticleStructuredData"
+import { useArticleTocHistory } from "Apps/Article/Hooks/useArticleTocHistory"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleAdProvider } from "./Components/ArticleAd/ArticleAd"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
-import { ArticleScrollHistoryProvider } from "./Components/ArticleScrollHistoryProvider"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfiniteScroll"
 import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
@@ -23,71 +23,70 @@ const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({
   article,
 }) => {
   useScrollToOpenEditorialAuthModal()
+  useArticleTocHistory()
 
   return (
     <>
-      <ArticleScrollHistoryProvider>
-        <ArticleAdProvider>
-          <ArticleMetaTagsFragmentContainer article={article} />
+      <ArticleAdProvider>
+        <ArticleMetaTagsFragmentContainer article={article} />
 
-          <Join separator={<Spacer y={4} />}>
-            {(() => {
-              switch (article.layout) {
-                case "SERIES":
-                  return <ArticleSeriesFragmentContainer article={article} />
+        <Join separator={<Spacer y={4} />}>
+          {(() => {
+            switch (article.layout) {
+              case "SERIES":
+                return <ArticleSeriesFragmentContainer article={article} />
 
-                case "VIDEO":
-                  return <ArticleVideoFragmentContainer article={article} />
+              case "VIDEO":
+                return <ArticleVideoFragmentContainer article={article} />
 
-                case "NEWS":
-                  return <ArticleBodyFragmentContainer article={article} />
+              case "NEWS":
+                return <ArticleBodyFragmentContainer article={article} />
 
-                case "CLASSIC":
-                  return (
-                    <>
+              case "CLASSIC":
+                return (
+                  <>
+                    <ArticleBodyFragmentContainer article={article} />
+
+                    <FullBleed>
+                      <Separator />
+                    </FullBleed>
+
+                    <ArticleChannelRelatedArticlesQueryRenderer
+                      id={article.internalID}
+                    />
+                  </>
+                )
+
+              case "FEATURE":
+              case "STANDARD":
+                return (
+                  <>
+                    <ArticleVisibilityMetadataFragmentContainer
+                      article={article}
+                    >
                       <ArticleBodyFragmentContainer article={article} />
+                    </ArticleVisibilityMetadataFragmentContainer>
 
-                      <FullBleed>
-                        <Separator />
-                      </FullBleed>
+                    <FullBleed>
+                      <Separator />
+                    </FullBleed>
 
-                      <ArticleChannelRelatedArticlesQueryRenderer
-                        id={article.internalID}
+                    <ArticleVerticalRelatedArticlesQueryRenderer
+                      id={article.internalID}
+                    />
+
+                    {article.channelID && (
+                      <ArticleInfiniteScrollQueryRenderer
+                        articleID={article.internalID}
+                        channelID={article.channelID}
                       />
-                    </>
-                  )
-
-                case "FEATURE":
-                case "STANDARD":
-                  return (
-                    <>
-                      <ArticleVisibilityMetadataFragmentContainer
-                        article={article}
-                      >
-                        <ArticleBodyFragmentContainer article={article} />
-                      </ArticleVisibilityMetadataFragmentContainer>
-
-                      <FullBleed>
-                        <Separator />
-                      </FullBleed>
-
-                      <ArticleVerticalRelatedArticlesQueryRenderer
-                        id={article.internalID}
-                      />
-
-                      {article.channelID && (
-                        <ArticleInfiniteScrollQueryRenderer
-                          articleID={article.internalID}
-                          channelID={article.channelID}
-                        />
-                      )}
-                    </>
-                  )
-              }
-            })()}
-          </Join>
-        </ArticleAdProvider>
-      </ArticleScrollHistoryProvider>
+                    )}
+                  </>
+                )
+            }
+          })()}
+        </Join>
+      </ArticleAdProvider>
 
       <ArticleStructuredData article={article} />
     </>

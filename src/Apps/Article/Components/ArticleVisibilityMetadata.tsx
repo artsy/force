@@ -1,4 +1,3 @@
-import { useArticleScrollHistory } from "Apps/Article/Components/ArticleScrollHistoryProvider"
 import { useRouter } from "System/Hooks/useRouter"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { ArticleVisibilityMetadata_article$data } from "__generated__/ArticleVisibilityMetadata_article.graphql"
@@ -10,28 +9,27 @@ interface ArticleVisibilityMetadataProps {
 }
 
 /**
- * Updates article URL and title when the article is in view.
- * Pushes a history entry when the visible article changes so that
- * back/forward navigation walks article boundaries.
+ * Updates the URL and document title when an article scrolls into view.
+ * Uses `silentReplace` so this does not push a history entry — back/forward
+ * across articles falls through to whatever the user explicitly navigated
+ * from.
  */
 const ArticleVisibilityMetadata: FC<
   React.PropsWithChildren<ArticleVisibilityMetadataProps>
 > = ({ article, children }) => {
   const { silentReplace, match } = useRouter()
-  const { isRestoring, onArticleVisible } = useArticleScrollHistory()
 
   const { ref } = useIntersectionObserver({
     once: false,
     onIntersection: () => {
       if (!article.href || !article.slug) return
 
-      onArticleVisible(article.href, article.slug)
-
-      if (isRestoring()) return
-
-      const search = match?.location.search ?? ""
       document.title = `${article.searchTitle || article.title} | Artsy`
-      silentReplace(`${article.href}${search}`)
+
+      if (window.location.pathname !== article.href) {
+        const search = match?.location.search ?? ""
+        silentReplace(`${article.href}${search}`)
+      }
     },
   })
 

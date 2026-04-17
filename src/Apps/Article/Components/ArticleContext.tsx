@@ -15,7 +15,11 @@ interface ArticleContextProviderProps {
 export const ArticleContextProvider: FC<
   React.PropsWithChildren<ArticleContextProviderProps>
 > = ({ articleId, children }) => {
-  return <ArticleContext.Provider value={{ articleId }}>{children}</ArticleContext.Provider>
+  return (
+    <ArticleContext.Provider value={{ articleId }}>
+      {children}
+    </ArticleContext.Provider>
+  )
 }
 
 export const useArticleContext = () => {

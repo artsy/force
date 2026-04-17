@@ -1,10 +1,9 @@
 import { Stack, Text } from "@artsy/palette"
-import { useArticleScrollHistory } from "Apps/Article/Components/ArticleScrollHistoryProvider"
+import { useTocJump } from "Apps/Article/Hooks/useTocJump"
 import type { ArticleTableOfContents_article$key } from "__generated__/ArticleTableOfContents_article.graphql"
 import type { FC } from "react"
 import { useCallback } from "react"
 import { graphql, useFragment } from "react-relay"
-import { createJumpHash } from "./Utils/extractHeadings"
 
 interface ArticleTableOfContentsProps {
   article: ArticleTableOfContents_article$key
@@ -14,18 +13,14 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
   article: articleRef,
 }) => {
   const article = useFragment(FRAGMENT, articleRef)
-  const { pushJump } = useArticleScrollHistory()
+  const { jump, getHref } = useTocJump(article.slug ?? "")
 
   const handleClick = useCallback(
     (event: React.MouseEvent, headingSlug: string) => {
       event.preventDefault()
-      pushJump({
-        articleHref: article.href ?? "",
-        articleSlug: article.slug ?? "",
-        headingSlug,
-      })
+      jump(headingSlug)
     },
-    [article.href, article.slug, pushJump],
+    [jump],
   )
 
   if (article.outline.length < 5) return null
@@ -43,10 +38,7 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
               key={entry.slug}
               variant="sm-display"
               as="a"
-              href={createJumpHash({
-                articleSlug: article.slug ?? "",
-                slug: entry.slug,
-              })}
+              href={getHref(entry.slug)}
               style={{
                 textDecoration: "none",
               }}
@@ -63,7 +55,6 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
 
 const FRAGMENT = graphql`
   fragment ArticleTableOfContents_article on Article {
-    href
     slug
     outline {
       heading

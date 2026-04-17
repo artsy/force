@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b0b2a437530eb67eeb1ec348d695ea4>>
+ * @generated SignedSource<<04c2a4e0ef3870f50e7e85d0946eba2a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleTableOfContents_article$data = {
-  readonly href: string | null | undefined;
   readonly outline: ReadonlyArray<{
     readonly heading: string;
     readonly slug: string;
@@ -38,13 +37,6 @@ return {
   "metadata": null,
   "name": "ArticleTableOfContents_article",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -71,6 +63,6 @@ return {
 };
 })();
 
-(node as any).hash = "ac2ae55e80391b53ad41d58f67014b83";
+(node as any).hash = "b8fde61c2d33096a7b5268afd705a336";
 
 export default node;

@@ -1,4 +1,5 @@
-const JUMP_NAMESPACE = "JUMP"
+import { JUMP_NAMESPACE } from "Utils/Hooks/useJump"
+
 const JUMP_TARGET_PREFIX = `${JUMP_NAMESPACE}--`
 
 interface OutlineEntry {
