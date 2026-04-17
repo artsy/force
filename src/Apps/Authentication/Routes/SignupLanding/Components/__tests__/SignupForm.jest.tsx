@@ -1,5 +1,4 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-// import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SignupForm } from "../SignupForm"
 import { signUp } from "Utils/auth"
 
