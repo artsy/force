@@ -140,20 +140,7 @@ describe("Order2DeliveryOptionsStep", () => {
       expect(screen.queryByRole("button")).not.toBeInTheDocument()
     })
 
-    it("renders the placeholder when fulfillment details step is not yet completed", () => {
-      mockCheckoutContext.steps = [
-        makeStep(
-          CheckoutStepName.FULFILLMENT_DETAILS,
-          CheckoutStepState.ACTIVE,
-        ),
-        makeStep(CheckoutStepName.DELIVERY_OPTION, CheckoutStepState.ACTIVE),
-      ]
-      renderWithRelay({ Me: () => ({ order: orderWithFulfillmentDetails }) })
-      expect(screen.getByText("Shipping method")).toBeInTheDocument()
-      expect(screen.queryByRole("button")).not.toBeInTheDocument()
-    })
-
-    it("renders the form with button when fulfillment details are complete and FD step is completed", () => {
+    it("renders the form with button when fulfillment details are saved (dual-active: FD and DO both ACTIVE)", () => {
       renderWithRelay({ Me: () => ({ order: orderWithFulfillmentDetails }) })
       expect(
         screen.getByRole("button", { name: "Continue to Payment" }),

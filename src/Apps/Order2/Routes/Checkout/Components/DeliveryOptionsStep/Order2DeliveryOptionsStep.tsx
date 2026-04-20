@@ -44,10 +44,6 @@ export const Order2DeliveryOptionsStep: React.FC<
     step => step.name === CheckoutStepName.DELIVERY_OPTION,
   )?.state
 
-  const fulfillmentDetailsStepState = steps?.find(
-    step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
-  )?.state
-
   if (stepState === CheckoutStepState.HIDDEN) {
     return null
   }
@@ -57,11 +53,7 @@ export const Order2DeliveryOptionsStep: React.FC<
   }
 
   if (stepState === CheckoutStepState.ACTIVE) {
-    if (
-      !hasFulfillmentDetails ||
-      isFulfillmentDetailsSaving ||
-      fulfillmentDetailsStepState !== CheckoutStepState.COMPLETED
-    ) {
+    if (!hasFulfillmentDetails || isFulfillmentDetailsSaving) {
       return <Placeholder />
     }
     return <Order2DeliveryOptionsForm order={orderData} />
