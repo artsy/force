@@ -173,6 +173,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -194,6 +195,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -214,6 +216,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -236,6 +239,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -260,6 +264,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockInvalidAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -296,6 +301,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -333,6 +339,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -362,6 +369,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -405,6 +413,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockInvalidAddressWithMissingCity]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -480,6 +489,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -571,6 +581,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockSingleInvalidAddress]}
             initialSelectedAddress={mockSingleInvalidAddress}
             onSelectAddress={onSelectAddress}
@@ -593,6 +604,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -606,6 +618,73 @@ describe("SavedAddressOptions", () => {
           expect.objectContaining({ mode: "edit" }),
         )
       })
+    })
+  })
+
+  describe("Auto-save on mount when no fulfillment details", () => {
+    it("calls onSelectAddress with the first valid address on mount", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasFulfillmentDetails={false}
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress1)
+      })
+      expect(onSelectAddress).toHaveBeenCalledTimes(1)
+    })
+
+    it("skips unshippable addresses and selects the first valid shippable one", async () => {
+      const onSelectAddress = jest.fn()
+      const unshippable = {
+        ...mockUSAddress1,
+        internalID: "unshippable",
+        isShippable: false,
+      }
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasFulfillmentDetails={false}
+            savedAddresses={[unshippable, mockUSAddress2]}
+            initialSelectedAddress={unshippable}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress2)
+      })
+    })
+
+    it("does not auto-save when fulfillment details already exist", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasFulfillmentDetails={true}
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      expect(onSelectAddress).not.toHaveBeenCalled()
     })
   })
 
@@ -643,6 +722,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2, mockUSAddress3]}
             initialSelectedAddress={mockUSAddress2}
             onSelectAddress={onSelectAddress}
@@ -669,6 +749,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -711,6 +792,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -751,6 +833,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasFulfillmentDetails={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}

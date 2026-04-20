@@ -51,7 +51,11 @@ beforeEach(() => {
 
 const { renderWithRelay } = setupTestWrapperTL<Order2DeliveryFormTestQuery>({
   Component: (props: any) => (
-    <Order2DeliveryForm order={props.me.order} me={props.me} />
+    <Order2DeliveryForm
+      order={props.me.order}
+      me={props.me}
+      hasFulfillmentDetails={false}
+    />
   ),
   query: graphql`
     query Order2DeliveryFormTestQuery @relay_test_operation {

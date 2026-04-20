@@ -40,6 +40,7 @@ const ADDRESS_ERROR_MESSAGES = {
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
   initialSelectedAddress?: ProcessedUserAddress
+  hasFulfillmentDetails: boolean
   onSelectAddress: (address: FormikContextWithAddress) => Promise<void>
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
@@ -47,6 +48,7 @@ interface SavedAddressOptionsProps {
 export const SavedAddressOptions = ({
   savedAddresses,
   initialSelectedAddress,
+  hasFulfillmentDetails,
   onSelectAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
@@ -101,6 +103,16 @@ export const SavedAddressOptions = ({
       scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
+
+  // Auto-submit the first valid address on mount if no fulfillment details are saved yet
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
+  useEffect(() => {
+    if (hasFulfillmentDetails) return
+    const firstValid = savedAddresses.find(a => a.isShippable && a.isValid)
+    if (firstValid) {
+      onSelectAddress(firstValid)
+    }
+  }, [])
 
   // Auto-open edit form for the single saved address if it has missing fields
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount

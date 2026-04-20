@@ -41,11 +41,13 @@ import { graphql, useFragment } from "react-relay"
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
   me: Order2DeliveryForm_me$key
+  hasFulfillmentDetails: boolean
 }
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
   me,
+  hasFulfillmentDetails,
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
@@ -339,6 +341,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
+                hasFulfillmentDetails={hasFulfillmentDetails}
                 newAddressInitialValues={blankAddressValuesForUser}
                 availableShippingCountries={
                   orderData.availableShippingCountries
