@@ -11,7 +11,7 @@ import {
  *    to UPCOMING when switching back to delivery.
  * 2. Enforces the dual-active invariant: when hasSavedAddresses is true and
  *    FULFILLMENT_DETAILS is ACTIVE, DELIVERY_OPTION must also be ACTIVE
- *    (unless HIDDEN or already COMPLETED).
+ *    (unless HIDDEN).
  *
  * Call this at the end of any action that may affect step states.
  */
@@ -20,7 +20,6 @@ export const applyDeliveryOptionLogic = (
   tab?: FulfillmentDetailsTab | null,
 ): CheckoutStep[] => {
   let updated = steps
-  console.log("** Applying delivery option logic with tab:", tab)
   if (tab !== undefined) {
     updated = steps.map(step => {
       if (step.name === CheckoutStepName.DELIVERY_OPTION) {
@@ -38,6 +37,7 @@ export const applyDeliveryOptionLogic = (
     updated.find(s => s.name === CheckoutStepName.FULFILLMENT_DETAILS)
       ?.state === CheckoutStepState.ACTIVE
   if (!fdIsActive) return updated
+  // TODO: Should we always activate DELIVERY_OPTION when FULFILLMENT_DETAILS is active?
   return updated.map(step =>
     step.name === CheckoutStepName.DELIVERY_OPTION &&
     step.state === CheckoutStepState.UPCOMING

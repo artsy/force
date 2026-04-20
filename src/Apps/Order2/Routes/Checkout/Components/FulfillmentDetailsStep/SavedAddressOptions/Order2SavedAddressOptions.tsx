@@ -183,11 +183,14 @@ export const SavedAddressOptions = ({
         setSelectedAddress(addressToSelect)
         await onSelectAddress(addressToSelect)
       } else {
+        // No remaining valid address — let the Relay store update naturally switch
+        // the UI to the new-address form. Calling onSelectAddress with blank values
+        // would trigger a form submission with empty fields, causing a validation
+        // error flash and potentially clearing the fulfillment option on the order.
         setSelectedAddress(undefined)
-        await onSelectAddress(newAddressInitialValues)
       }
     },
-    [selectedAddress, savedAddresses, onSelectAddress, newAddressInitialValues],
+    [selectedAddress, savedAddresses, onSelectAddress],
   )
 
   const handleAddressClick = useCallback(
