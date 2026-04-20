@@ -95,7 +95,7 @@ jest.mock("react-relay", () => {
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   setSavePaymentMethod: jest.fn(),
-  setPaymentComplete: jest.fn(),
+  completeStep: jest.fn(),
   savePaymentMethod: false,
   messages: {
     PAYMENT: {
@@ -983,7 +983,7 @@ describe("Order2PaymentForm", () => {
      * 2. Fetch confirmation token details from Exchange
      * 3. setOrderPaymentMutation with corresponding payment method (CREDIT_CARD, US_BANK_ACCOUNT, or SEPA_DEBIT)
      * 4. setConfirmationToken with payment method preview
-     * 5. setPaymentComplete
+     * 5. completeStep
      *
      * Saved Credit Card / Bank Account:
      * 1. No Stripe interaction needed
@@ -1105,9 +1105,9 @@ describe("Order2PaymentForm", () => {
       expect(mockOnBalanceCheckComplete).not.toBeNull()
       mockOnBalanceCheckComplete?.("SUFFICIENT")
 
-      // Wait for balance check to complete and trigger setPaymentComplete
+      // Wait for balance check to complete and trigger completeStep
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1178,7 +1178,7 @@ describe("Order2PaymentForm", () => {
         })
       })
 
-      expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
     })
 
     it("handles wire transfer submission error", async () => {
@@ -1548,9 +1548,9 @@ describe("Order2PaymentForm", () => {
       expect(mockOnBalanceCheckComplete).not.toBeNull()
       mockOnBalanceCheckComplete?.("SUFFICIENT")
 
-      // Verify setPaymentComplete is called after balance check completes
+      // Verify completeStep is called after balance check completes
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1629,9 +1629,9 @@ describe("Order2PaymentForm", () => {
       expect(mockOnBalanceCheckComplete).not.toBeNull()
       mockOnBalanceCheckComplete?.("SUFFICIENT")
 
-      // Verify setPaymentComplete is called after balance check completes
+      // Verify completeStep is called after balance check completes
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1700,7 +1700,7 @@ describe("Order2PaymentForm", () => {
 
       // Verify payment completes immediately without balance check
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
   })

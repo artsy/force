@@ -79,19 +79,20 @@ export interface Order2CheckoutModel {
   // Actions
   setExpressCheckoutLoaded: Action<this, ExpressCheckoutPaymentMethod[]>
   setExpressCheckoutState: Action<this, "submit" | "active" | null>
-  setFulfillmentDetailsComplete: Action<
-    this,
-    { isPickup?: boolean; isFlatShipping?: boolean }
-  >
+  /**
+   * Marks the given step COMPLETED and activates the next non-HIDDEN step.
+   * Logs an error if the named step is not currently ACTIVE.
+   * Use this when a component finishes its work and is ready to move forward.
+   */
+  completeStep: Action<this, CheckoutStepName>
+  /**
+   * Marks the given step ACTIVE and resets all following visible steps to UPCOMING.
+   * Steps before it are unchanged. HIDDEN steps are skipped.
+   * Use this when a user clicks Edit on a completed step.
+   */
+  editStep: Action<this, CheckoutStepName>
   setActiveFulfillmentDetailsTab: Action<this, FulfillmentDetailsTab | null>
-  editFulfillmentDetails: Action<this>
-  setDeliveryOptionComplete: Action<this>
-  editDeliveryOption: Action<this>
-  editPayment: Action<this>
-  setOfferAmountComplete: Action<this>
-  editOfferAmount: Action<this>
   setLoadingComplete: Action<this>
-  setPaymentComplete: Action<this>
   setConfirmationToken: Action<
     this,
     { confirmationToken: ConfirmationTokenState }
@@ -183,135 +184,32 @@ export const Order2CheckoutContext: ReturnType<
     state.userAddressMode = userAddressMode
   }),
 
-  setFulfillmentDetailsComplete: action((state, args) => {
-    const isPickup = args?.isPickup ?? false
-
-    const currentStepName = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
-    )?.name
-
-    if (currentStepName !== CheckoutStepName.FULFILLMENT_DETAILS) {
-      logger.error(
-        `setFulfillmentDetailsComplete called when current step is not FULFILLMENT_DETAILS but ${currentStepName}`,
-      )
+  completeStep: action((state, targetName) => {
+    const targetIndex = state.steps.findIndex(s => s.name === targetName)
+    if (targetIndex === -1) {
+      logger.error(`completeStep: step "${targetName}" not found`)
       return
     }
-
-    let hasActivatedNext = false
-    state.steps = state.steps.map(step => {
-      // Mark fulfillment details as completed
-      if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
+    if (state.steps[targetIndex].state !== CheckoutStepState.ACTIVE) {
+      logger.error(
+        `completeStep: step "${targetName}" is not ACTIVE (state: ${state.steps[targetIndex].state})`,
+      )
+    }
+    let activatedNext = false
+    state.steps = state.steps.map((step, i) => {
+      if (step.state === CheckoutStepState.HIDDEN) return step
+      if (i === targetIndex)
         return { ...step, state: CheckoutStepState.COMPLETED }
-      }
-
-      // Hide delivery option if pickup is selected
-      if (step.name === CheckoutStepName.DELIVERY_OPTION && isPickup) {
-        return { ...step, state: CheckoutStepState.HIDDEN }
-      }
-
-      // Activate the first upcoming step
-      if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
-        hasActivatedNext = true
+      if (
+        !activatedNext &&
+        i > targetIndex &&
+        step.state === CheckoutStepState.UPCOMING
+      ) {
+        activatedNext = true
         return { ...step, state: CheckoutStepState.ACTIVE }
       }
-
       return step
     })
-  }),
-
-  setDeliveryOptionComplete: action(state => {
-    const currentStepName = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
-    )?.name
-
-    if (currentStepName !== CheckoutStepName.DELIVERY_OPTION) {
-      logger.error(
-        `setDeliveryOptionComplete called when current step is not DELIVERY_OPTION but ${currentStepName}`,
-      )
-      return
-    }
-
-    const newSteps: CheckoutStep[] = []
-    let hasActivatedNext = false
-
-    for (const step of state.steps) {
-      if (step.name === CheckoutStepName.DELIVERY_OPTION) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.COMPLETED,
-        })
-      } else {
-        const isAfterDeliveryOptionsStep = newSteps
-          .map(s => s.name)
-          .includes(CheckoutStepName.DELIVERY_OPTION)
-
-        if (
-          isAfterDeliveryOptionsStep &&
-          step.state !== CheckoutStepState.HIDDEN
-        ) {
-          if (!hasActivatedNext) {
-            hasActivatedNext = true
-            newSteps.push({
-              ...step,
-              state: CheckoutStepState.ACTIVE,
-            })
-          } else {
-            newSteps.push({
-              ...step,
-              state: CheckoutStepState.UPCOMING,
-            })
-          }
-        } else {
-          newSteps.push(step)
-        }
-      }
-    }
-
-    state.steps = newSteps
-  }),
-
-  setPaymentComplete: action((state: Order2CheckoutModel) => {
-    const newSteps: CheckoutStep[] = []
-    let hasActivatedNext = false
-
-    for (const step of state.steps) {
-      if (step.name === CheckoutStepName.PAYMENT) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.COMPLETED,
-        })
-      } else {
-        const shouldBeHidden = step.state === CheckoutStepState.HIDDEN
-        if (shouldBeHidden) {
-          newSteps.push(step)
-          continue
-        }
-
-        if (step.state === CheckoutStepState.COMPLETED) {
-          newSteps.push(step)
-          continue
-        }
-
-        const hasCompletedStep = newSteps.find(
-          s => s.state === CheckoutStepState.COMPLETED,
-        )
-        const hasUpcomingStep = newSteps.find(
-          s => s.state === CheckoutStepState.UPCOMING,
-        )
-
-        if (hasCompletedStep && !hasUpcomingStep && !hasActivatedNext) {
-          hasActivatedNext = true
-          newSteps.push({
-            ...step,
-            state: CheckoutStepState.ACTIVE,
-          })
-        } else {
-          newSteps.push(step)
-        }
-      }
-    }
-
-    state.steps = newSteps
   }),
 
   setConfirmationToken: action((state, { confirmationToken }) => {
@@ -322,143 +220,18 @@ export const Order2CheckoutContext: ReturnType<
     state.savePaymentMethod = savePaymentMethod
   }),
 
-  editFulfillmentDetails: action(state => {
-    const newSteps: CheckoutStep[] = []
-
-    for (const step of state.steps) {
-      const isAfterFulfillmentDetailsStep = newSteps
-        .map(s => s.name)
-        .includes(CheckoutStepName.FULFILLMENT_DETAILS)
-
-      if (
-        isAfterFulfillmentDetailsStep &&
-        step.state !== CheckoutStepState.HIDDEN
-      ) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.UPCOMING,
-        })
-      } else if (step.name === CheckoutStepName.FULFILLMENT_DETAILS) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.ACTIVE,
-        })
-      } else {
-        newSteps.push(step)
-      }
-    }
-
-    state.steps = newSteps
-  }),
-
-  editDeliveryOption: action(state => {
-    const newSteps: CheckoutStep[] = []
-
-    for (const step of state.steps) {
-      const isAfterDeliveryOptionsStep = newSteps
-        .map(s => s.name)
-        .includes(CheckoutStepName.DELIVERY_OPTION)
-
-      if (
-        isAfterDeliveryOptionsStep &&
-        step.state !== CheckoutStepState.HIDDEN
-      ) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.UPCOMING,
-        })
-      } else if (step.name === CheckoutStepName.DELIVERY_OPTION) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.ACTIVE,
-        })
-      } else {
-        newSteps.push(step)
-      }
-    }
-
-    state.steps = newSteps
-  }),
-
-  editPayment: action(state => {
-    const newSteps: CheckoutStep[] = []
-
-    for (const step of state.steps) {
-      const isAfterPaymentStep = newSteps
-        .map(s => s.name)
-        .includes(CheckoutStepName.PAYMENT)
-
-      if (isAfterPaymentStep && step.state !== CheckoutStepState.HIDDEN) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.UPCOMING,
-        })
-      } else if (step.name === CheckoutStepName.PAYMENT) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.ACTIVE,
-        })
-      } else {
-        newSteps.push(step)
-      }
-    }
-
-    state.steps = newSteps
-  }),
-
-  setOfferAmountComplete: action(state => {
-    const currentStepName = state.steps.find(
-      step => step.state === CheckoutStepState.ACTIVE,
-    )?.name
-
-    if (currentStepName !== CheckoutStepName.OFFER_AMOUNT) {
-      logger.error(
-        `setOfferAmountComplete called when current step is not OFFER_AMOUNT but ${currentStepName}`,
-      )
+  editStep: action((state, targetName) => {
+    const targetIndex = state.steps.findIndex(s => s.name === targetName)
+    if (targetIndex === -1) {
+      logger.error(`editStep: step "${targetName}" not found`)
       return
     }
-
-    let hasActivatedNext = false
-    state.steps = state.steps.map(step => {
-      // Mark offer amount as completed
-      if (step.name === CheckoutStepName.OFFER_AMOUNT) {
-        return { ...step, state: CheckoutStepState.COMPLETED }
-      }
-
-      // Activate the first upcoming step
-      if (!hasActivatedNext && step.state === CheckoutStepState.UPCOMING) {
-        hasActivatedNext = true
-        return { ...step, state: CheckoutStepState.ACTIVE }
-      }
-
+    state.steps = state.steps.map((step, i) => {
+      if (step.state === CheckoutStepState.HIDDEN) return step
+      if (i === targetIndex) return { ...step, state: CheckoutStepState.ACTIVE }
+      if (i > targetIndex) return { ...step, state: CheckoutStepState.UPCOMING }
       return step
     })
-  }),
-
-  editOfferAmount: action(state => {
-    const newSteps: CheckoutStep[] = []
-
-    for (const step of state.steps) {
-      const isAfterOfferAmountStep = newSteps
-        .map(s => s.name)
-        .includes(CheckoutStepName.OFFER_AMOUNT)
-
-      if (isAfterOfferAmountStep && step.state !== CheckoutStepState.HIDDEN) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.UPCOMING,
-        })
-      } else if (step.name === CheckoutStepName.OFFER_AMOUNT) {
-        newSteps.push({
-          ...step,
-          state: CheckoutStepState.ACTIVE,
-        })
-      } else {
-        newSteps.push(step)
-      }
-    }
-
-    state.steps = newSteps
   }),
 
   redirectToOrderDetails: action(state => {

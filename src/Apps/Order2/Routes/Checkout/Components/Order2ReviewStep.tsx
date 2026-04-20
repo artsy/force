@@ -75,7 +75,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     redirectToOrderDetails,
     checkoutTracking,
     artworkPath,
-    editPayment,
+    editStep,
     setSectionErrorMessage,
   } = useCheckoutContext()
 
@@ -95,7 +95,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const [loading, setLoading] = useState(false)
 
   const showPaymentError = () => {
-    editPayment()
+    editStep(CheckoutStepName.PAYMENT)
     setSectionErrorMessage({
       section: CheckoutStepName.PAYMENT,
       error: PAYMENT_METHOD_UPDATE_REQUIRED,

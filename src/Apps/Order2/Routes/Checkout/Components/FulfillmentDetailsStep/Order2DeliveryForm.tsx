@@ -75,7 +75,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const {
     setCheckoutMode,
     checkoutTracking,
-    setFulfillmentDetailsComplete,
+    completeStep,
     setUserAddressMode,
     setSectionErrorMessage,
     messages,
@@ -257,7 +257,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           error: null,
         })
 
-        setFulfillmentDetailsComplete({})
+        completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
         setUserAddressMode(null)
       } catch (error) {
         handleError(
@@ -280,7 +280,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       orderData?.mode,
       saveAddressToUser,
       setCheckoutMode,
-      setFulfillmentDetailsComplete,
+      completeStep,
       setSectionErrorMessage,
       setUserAddressMode,
       unsetOrderFulfillmentOption,
