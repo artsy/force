@@ -8,6 +8,7 @@ import {
   orderMutationError,
   orderMutationSuccess,
 } from "../../../__tests__/utils"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2DeliveryForm } from "../Order2DeliveryForm"
 
 jest.unmock("react-relay")
@@ -30,7 +31,7 @@ beforeEach(() => {
       clickedShippingAddress: jest.fn(),
       clickedAddNewShippingAddress: jest.fn(),
     },
-    setFulfillmentDetailsComplete: jest.fn(),
+    completeStep: jest.fn(),
     setUserAddressMode: jest.fn(),
     setSectionErrorMessage: jest.fn(),
     userAddressMode: null,
@@ -361,9 +362,7 @@ describe("Order2DeliveryForm", () => {
         expect(
           mockCheckoutContext.checkoutTracking.clickedOrderProgression,
         ).not.toHaveBeenCalled()
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
       it("successfully submits form with valid data and triggers correct mutations", async () => {
@@ -507,9 +506,9 @@ describe("Order2DeliveryForm", () => {
           },
         )
 
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          CheckoutStepName.FULFILLMENT_DETAILS,
+        )
       })
 
       it("continues checkout even if saving address to user profile fails", async () => {
@@ -604,9 +603,9 @@ describe("Order2DeliveryForm", () => {
         expect(mockCheckoutContext.setCheckoutMode).toHaveBeenCalledWith(
           "standard",
         )
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          CheckoutStepName.FULFILLMENT_DETAILS,
+        )
       })
 
       it("unsets existing fulfillment option before setting address when fulfillment exists", async () => {
@@ -740,9 +739,9 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Should trigger context updates after all mutations complete
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          CheckoutStepName.FULFILLMENT_DETAILS,
+        )
       })
 
       it("handles mutation errors gracefully", async () => {
@@ -818,9 +817,7 @@ describe("Order2DeliveryForm", () => {
         })
 
         // Should not trigger context updates when mutation fails
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
       it("handles a mutation result with no shipping option by setting an error banner", async () => {
@@ -971,9 +968,7 @@ describe("Order2DeliveryForm", () => {
           },
         )
 
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
       it("allows OFFER mode orders to proceed with SHIPPING_TBD fulfillment option", async () => {
@@ -1079,9 +1074,9 @@ describe("Order2DeliveryForm", () => {
         )
 
         // Should proceed with checkout
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          CheckoutStepName.FULFILLMENT_DETAILS,
+        )
       })
 
       it("saves address to user profile when user has no saved addresses", async () => {
@@ -1197,9 +1192,9 @@ describe("Order2DeliveryForm", () => {
           },
         })
 
-        expect(
-          mockCheckoutContext.setFulfillmentDetailsComplete,
-        ).toHaveBeenCalledWith({})
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+          CheckoutStepName.FULFILLMENT_DETAILS,
+        )
       })
     })
 
@@ -1366,9 +1361,9 @@ describe("Order2DeliveryForm", () => {
         shippingName: "John Doe",
       })
 
-      expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete,
-      ).toHaveBeenCalledWith({})
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+        CheckoutStepName.FULFILLMENT_DETAILS,
+      )
     })
 
     it("handles address selection from saved addresses", async () => {
@@ -1438,9 +1433,9 @@ describe("Order2DeliveryForm", () => {
         shippingName: "John Doe",
       })
 
-      expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete,
-      ).toHaveBeenCalledWith({})
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+        CheckoutStepName.FULFILLMENT_DETAILS,
+      )
     })
 
     it("shows edit buttons for saved addresses", async () => {
@@ -1693,9 +1688,9 @@ describe("Order2DeliveryForm", () => {
         "useOrder2SetOrderDeliveryAddressMutation",
       )
 
-      expect(
-        mockCheckoutContext.setFulfillmentDetailsComplete,
-      ).toHaveBeenCalledWith({})
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+        CheckoutStepName.FULFILLMENT_DETAILS,
+      )
     })
 
     it("switches to add mode and calls tracking when add new address button is clicked", async () => {
