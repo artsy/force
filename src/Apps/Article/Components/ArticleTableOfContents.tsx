@@ -35,7 +35,7 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
   return (
     <Stack as="nav" aria-label="Table of contents" gap={1} bg="mono5" p={2}>
       <Text variant="xs" fontWeight="bold">
-        In this article
+        Featured in this Article
       </Text>
 
       <Stack as="ol" gap={1} m={0} pl={0} style={{ listStyle: "none" }}>
