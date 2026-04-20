@@ -77,7 +77,7 @@ export const SignupForm = () => {
 
   return (
     <Box bg="mono5" p={4}>
-      <Text variant="lg" mb={4} fontFamily="adobe-garamond-pro">
+      <Text variant="lg" mb={2}>
         Join Artsy today
       </Text>
 
@@ -104,54 +104,42 @@ export const SignupForm = () => {
         }) => (
           <Form>
             <Stack gap={1}>
-              <Box>
-                <Text variant="xs" mb={0.5}>
-                  Name
-                </Text>
-                <Input
-                  name="name"
-                  placeholder="Your full name"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // @ts-expect-error
-                  error={touched.name && errors.name}
-                  required
-                />
-              </Box>
+              <Input
+                title="Name"
+                name="name"
+                placeholder="Your full name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                // @ts-expect-error
+                error={touched.name && errors.name}
+                required
+              />
 
-              <Box>
-                <Text variant="xs" mb={0.5}>
-                  Email
-                </Text>
-                <Input
-                  name="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // @ts-expect-error
-                  error={touched.email && errors.email}
-                  required
-                />
-              </Box>
+              <Input
+                title="Email"
+                name="email"
+                type="email"
+                placeholder="your@email.com"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                // @ts-expect-error
+                error={touched.email && errors.email}
+                required
+              />
 
-              <Box>
-                <Text variant="xs" mb={0.5}>
-                  Password
-                </Text>
-                <PasswordInput
-                  name="password"
-                  placeholder="Create a password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // @ts-expect-error
-                  error={touched.password && errors.password}
-                  required
-                />
-              </Box>
+              <PasswordInput
+                title="Password"
+                name="password"
+                placeholder="Create a password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                // @ts-expect-error
+                error={touched.password && errors.password}
+                required
+              />
 
               {/* Show email subscription checkbox only for non-GDPR countries */}
               {!isGDPRCountry() && (

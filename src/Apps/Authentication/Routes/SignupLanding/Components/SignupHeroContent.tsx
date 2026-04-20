@@ -4,26 +4,13 @@ import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 export const SignupHeroContent = () => {
   return (
     <Box>
-      <Text
-        variant={["xl", "xxl"]}
-        as="h1"
-        fontFamily="adobe-garamond-pro"
-        fontWeight="bold"
-        textAlign="left"
-      >
+      <Text variant={["xl", "xxl"]} as="h1">
         Discover and Buy Art That Moves You.
       </Text>
       <Spacer y={2} />
-      <Text
-        variant="lg-display"
-        color="mono60"
-        fontFamily="adobe-garamond-pro"
-        fontStyle="italic"
-        textAlign="left"
-        fontSize="22px" // dont hard code this
-      >
+      <Text variant="lg-display" color="mono60">
         Welcome to Artsy, the world's largest online art marketplace. We give
-        you the tools to make art part of your daily routine, whether you’re a
+        you the tools to make art part of your daily routine, whether you're a
         seasoned art collector or looking for your first artwork.
       </Text>
       <Spacer y={4} />
@@ -41,9 +28,7 @@ const ValuePropItem = ({ text }: { text: string }) => {
   return (
     <Flex alignItems="flex-start" gap={1}>
       <CheckmarkFillIcon width={24} height={24} fill="black100" />
-      <Text variant="md" fontFamily="adobe-garamond-pro" fontWeight="bold">
-        {text}
-      </Text>
+      <Text variant="md">{text}</Text>
     </Flex>
   )
 }
