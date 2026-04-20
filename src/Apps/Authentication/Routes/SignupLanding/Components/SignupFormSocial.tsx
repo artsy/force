@@ -1,0 +1,65 @@
+import { Button, Stack } from "@artsy/palette"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
+import AppleIcon from "@artsy/icons/AppleIcon"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import { getENV } from "Utils/getENV"
+import { stringify } from "qs"
+
+export const SignupFormSocial = () => {
+  const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
+    applePath: "/users/auth/apple",
+    facebookPath: "/users/auth/facebook",
+    googlePath: "/users/auth/google",
+  }
+
+  const query = stringify(
+    {
+      "redirect-to": "/", // Always redirect to homepage after social auth
+      "signup-intent": "signup",
+      "signup-referer": getENV("AUTHENTICATION_REFERER"), // Use same ENV var
+      accepted_terms_of_service: true,
+      agreed_to_receive_emails: true,
+    },
+    { skipNulls: true },
+  )
+
+  return (
+    <Stack gap={1}>
+      <Button
+        variant="secondaryBlack"
+        width="100%"
+        // @ts-ignore
+        as="a"
+        href={`${googlePath}?${query}`}
+        rel="nofollow"
+        Icon={GoogleIcon}
+      >
+        Google
+      </Button>
+
+      <Button
+        variant="secondaryBlack"
+        width="100%"
+        // @ts-ignore
+        as="a"
+        href={`${facebookPath}?${query}`}
+        rel="nofollow"
+        Icon={FacebookIcon}
+      >
+        Facebook
+      </Button>
+
+      <Button
+        variant="secondaryBlack"
+        width="100%"
+        // @ts-ignore
+        as="a"
+        href={`${applePath}?${query}`}
+        rel="nofollow"
+        Icon={AppleIcon}
+      >
+        Apple
+      </Button>
+    </Stack>
+  )
+}

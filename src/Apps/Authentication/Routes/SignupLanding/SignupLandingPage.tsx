@@ -19,13 +19,9 @@ export const SignupLandingPage: FC<React.PropsWithChildren<unknown>> = () => {
 
       <SignupHeader />
       <Join separator={<Spacer y={[6, 12]} />}>
-        {/* Hero Section DI-90 */}
         <SignupHero />
-        {/* Value Props Section DI-91 */}
         <SignupValueProps />
-        {/* Stats Section DI-91 */}
         <SignupStats />
-        {/* Bottom CTA Section DI-92 */}
         <SignupCTA />
       </Join>
     </>
