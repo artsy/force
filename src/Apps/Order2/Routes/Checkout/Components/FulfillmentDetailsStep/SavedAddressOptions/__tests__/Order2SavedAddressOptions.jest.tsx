@@ -117,28 +117,6 @@ const mockUnshippableAddress: ProcessedUserAddress = {
   },
 }
 
-const mockAddressWithInvalidPhone: ProcessedUserAddress = {
-  internalID: "address-id-999",
-  phoneNumber: "10-10-321",
-  phoneNumberCountryCode: "+1",
-  isValid: false,
-  isShippable: true,
-  isDefault: false,
-  address: {
-    name: "Bad Phone",
-    addressLine1: "999 Phone St",
-    addressLine2: "",
-    city: "New York",
-    region: "NY",
-    postalCode: "10001",
-    country: "US",
-  },
-  phoneNumberParsed: {
-    display: "+1 10-10-321",
-    isValid: false,
-  },
-}
-
 const mockNewAddressInitialValues: FormikContextWithAddress = {
   phoneNumber: "",
   phoneNumberCountryCode: "+1",
