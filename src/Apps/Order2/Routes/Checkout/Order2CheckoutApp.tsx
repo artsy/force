@@ -35,7 +35,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump } from "Utils/Hooks/useJump"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
-import { useEffect, useMemo } from "react"
+import { useEffect } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 
@@ -87,22 +87,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   }, [isExpressCheckoutEligible])
 
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
-
-  // DEBUGGING
-  const stepStates = useMemo(
-    () =>
-      steps.reduce(
-        (acc, step) => {
-          acc.push({ name: step.name, state: step.state })
-          return acc
-        },
-        [] as { name: CheckoutStepName; state: CheckoutStepState }[],
-      ),
-    [steps],
-  )
-  useEffect(() => {
-    console.log("** Checkout Steps State:", stepStates)
-  }, [stepStates])
 
   useEffect(() => {
     switch (activeStep?.name) {
