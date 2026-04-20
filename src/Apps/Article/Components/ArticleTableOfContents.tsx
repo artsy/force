@@ -46,7 +46,6 @@ export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
                 variant="sm-display"
                 as="a"
                 href={getHref(entry.slug)}
-                style={{ textDecoration: "none" }}
                 onClick={event => handleClick(event, entry.slug)}
               >
                 {entry.heading}
