@@ -27,7 +27,7 @@ export const SignupHeroContent = () => {
 const ValuePropItem = ({ text }: { text: string }) => {
   return (
     <Flex alignItems="flex-start" gap={1}>
-      <CheckmarkFillIcon width={24} height={24} fill="black100" />
+      <CheckmarkFillIcon fill="black100" />
       <Text variant="md">{text}</Text>
     </Flex>
   )
