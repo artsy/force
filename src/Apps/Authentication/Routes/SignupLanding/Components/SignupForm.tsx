@@ -44,7 +44,6 @@ export const SignupForm = () => {
   const { runAfterAuthentication } = useAfterAuthentication()
 
   const handleSubmit = async (values, actions) => {
-    console.log("Form submitted with values:", values)
     try {
       const response = await signUp({
         name: values.name,
@@ -52,15 +51,9 @@ export const SignupForm = () => {
         password: values.password,
         agreedToReceiveEmails: values.agreedToReceiveEmails,
       })
-
-      console.log("Signup response:", response)
-
       // Match existing /signup behavior - onboarding modal will appear
-      // The signUp() function handles redirect and onboarding display
-      // window.location.reload()
       await runAfterAuthentication({ accessToken: response.user.accessToken })
     } catch (err) {
-      console.error("Signup error:", err)
       setError(err.message || "Something went wrong. Please try again.")
       actions.setSubmitting(false)
     }

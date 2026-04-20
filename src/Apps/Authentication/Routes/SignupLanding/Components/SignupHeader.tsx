@@ -2,7 +2,6 @@ import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-// import { RouterLink } from "System/Components/RouterLink"
 
 export const SignupHeader = () => {
   return (
