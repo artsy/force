@@ -357,4 +357,66 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(screen.queryByText(/Ships from/)).not.toBeInTheDocument()
     })
   })
+
+  describe("free shipping", () => {
+    it("displays 'Free' instead of 'Flat rate' when DOMESTIC_FLAT shipping cost is 0", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "DOMESTIC_FLAT",
+                amount: { display: "$0", minor: 0 },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Free")).toBeInTheDocument()
+      expect(screen.queryByText("Flat rate")).not.toBeInTheDocument()
+    })
+
+    it("displays 'Free' instead of 'Flat rate' when INTERNATIONAL_FLAT shipping cost is 0", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "INTERNATIONAL_FLAT",
+                amount: { display: "$0", minor: 0 },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Free")).toBeInTheDocument()
+      expect(screen.queryByText("Flat rate")).not.toBeInTheDocument()
+    })
+
+    it("displays 'Flat rate' when DOMESTIC_FLAT shipping has a cost", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "DOMESTIC_FLAT",
+                amount: { display: "$25.00", minor: 2500 },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Flat rate")).toBeInTheDocument()
+      expect(screen.queryByText("Free")).not.toBeInTheDocument()
+    })
+  })
 })

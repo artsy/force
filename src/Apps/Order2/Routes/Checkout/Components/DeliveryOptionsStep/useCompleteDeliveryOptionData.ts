@@ -16,6 +16,7 @@ export const useCompleteDeliveryOptionData = (
   const orderData = useFragment(FRAGMENT, order)
 
   const fulfillmentType = orderData.selectedFulfillmentOption?.type
+  const cost = orderData.selectedFulfillmentOption?.amount?.minor
 
   if (!fulfillmentType) {
     return null
@@ -46,7 +47,7 @@ export const useCompleteDeliveryOptionData = (
     return null
   }
 
-  const label = deliveryOptionLabel(fulfillmentType)
+  const label = deliveryOptionLabel(fulfillmentType, cost)
   const timeEstimate = deliveryOptionTimeEstimate(fulfillmentType)
 
   return {
@@ -60,6 +61,9 @@ const FRAGMENT = graphql`
   fragment useCompleteDeliveryOptionData_order on Order {
     selectedFulfillmentOption {
       type
+      amount {
+        minor
+      }
     }
   }
 `
