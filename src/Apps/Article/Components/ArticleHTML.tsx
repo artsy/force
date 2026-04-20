@@ -4,7 +4,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { toStyle } from "Utils/toStyle"
-import { type FC, useEffect, useState } from "react"
+import { type FC, type ReactNode, useEffect, useState } from "react"
 import styled from "styled-components"
 import { ArticleTooltip, isSupportedArticleTooltip } from "./ArticleTooltip"
 
@@ -12,86 +12,22 @@ interface ArticleHTMLProps extends BoxProps {
   children: string
 }
 
-export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
-  children,
-  ...rest
-}) => {
-  // Looks for links and if they are internal and a supported entity type,
-  // inserts the relevant tooltip.
-  const transform = (node: Element, i: number) => {
-    if (node.tagName !== "A") return
-
-    const { href } = node as HTMLAnchorElement
-
-    try {
-      const uri = new URL(href)
-
-      if (!uri.hostname.includes("artsy.net")) return
-
-      const [_, entity, id] = uri.pathname.split("/")
-
-      if (!isSupportedArticleTooltip(entity)) return
-
-      const heading = node.closest("h2")
-
-      const isArtistHeading =
-        entity === "artist" && isEligibleFollowHeading(heading, entity)
-
-      const isPartnerHeading =
-        entity === "partner" && isEligibleFollowHeading(heading, entity)
-
-      if (isArtistHeading) {
-        return (
-          <Flex alignItems="center" gap={1} key={[i, id].join("-")}>
-            <ArticleTooltip entity={entity} id={id} href={href}>
-              {node.textContent}
-            </ArticleTooltip>
-            <FollowArtistButtonQueryRenderer
-              id={id}
-              size={["large", "small"]}
-              contextModule={ContextModule.artistHeader}
-            />
-          </Flex>
-        )
-      }
-
-      if (isPartnerHeading) {
-        return (
-          <Flex alignItems="center" gap={1} key={[i, id].join("-")}>
-            <ArticleTooltip entity={entity} id={id} href={href}>
-              {node.textContent}
-            </ArticleTooltip>
-            <FollowProfileButtonQueryRenderer
-              id={id}
-              size={["large", "small"]}
-              contextModule={ContextModule.partnerHeader}
-            />
-          </Flex>
-        )
-      }
-
-      return (
-        <ArticleTooltip
-          key={[i, id].join("-")}
-          entity={entity}
-          id={id}
-          href={href}
-        >
-          {node.textContent}
-        </ArticleTooltip>
-      )
-    } catch {
-      return
-    }
-  }
-
-  const [transformed, setTransformed] = useState<string | null>(null)
+export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
+  const [transformed, setTransformed] = useState<ReactNode>(null)
 
   useEffect(() => {
+    let cancelled = false
+
     // Relies on the DOMParser global being available in the browser.
     import("@artsy/react-html-parser").then(({ default: reactHtmlParser }) => {
-      setTransformed(reactHtmlParser(children, { transform }))
+      if (cancelled) return
+
+      setTransformed(reactHtmlParser(children, { transform: transformNode }))
     })
+
+    return () => {
+      cancelled = true
+    }
   }, [children])
 
   if (transformed) {
@@ -99,6 +35,79 @@ export const ArticleHTML: FC<React.PropsWithChildren<ArticleHTMLProps>> = ({
   }
 
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
+}
+
+/**
+ * Looks for links and if they are internal and a supported entity type,
+ * inserts the relevant tooltip.
+ */
+const transformNode = (node: Element, i: number) => {
+  if (node.tagName !== "A") return
+
+  const { href } = node as HTMLAnchorElement
+
+  try {
+    const uri = new URL(href)
+
+    if (!uri.hostname.includes("artsy.net")) return
+
+    const [_, entity, id] = uri.pathname.split("/")
+
+    if (!isSupportedArticleTooltip(entity)) return
+
+    const heading = node.closest("h2")
+
+    const isArtistHeading =
+      entity === "artist" && isEligibleFollowHeading(heading, entity)
+
+    const isPartnerHeading =
+      entity === "partner" && isEligibleFollowHeading(heading, entity)
+
+    if (isArtistHeading) {
+      return (
+        <Flex alignItems="center" gap={1} key={[i, id].join("-")}>
+          <ArticleTooltip entity={entity} id={id} href={href}>
+            {node.textContent}
+          </ArticleTooltip>
+
+          <FollowArtistButtonQueryRenderer
+            id={id}
+            size={["large", "small"]}
+            contextModule={ContextModule.artistHeader}
+          />
+        </Flex>
+      )
+    }
+
+    if (isPartnerHeading) {
+      return (
+        <Flex alignItems="center" gap={1} key={[i, id].join("-")}>
+          <ArticleTooltip entity={entity} id={id} href={href}>
+            {node.textContent}
+          </ArticleTooltip>
+
+          <FollowProfileButtonQueryRenderer
+            id={id}
+            size={["large", "small"]}
+            contextModule={ContextModule.partnerHeader}
+          />
+        </Flex>
+      )
+    }
+
+    return (
+      <ArticleTooltip
+        key={[i, id].join("-")}
+        entity={entity}
+        id={id}
+        href={href}
+      >
+        {node.textContent}
+      </ArticleTooltip>
+    )
+  } catch {
+    return
+  }
 }
 
 export const hasConflictingAdjacentEntityLinks = (

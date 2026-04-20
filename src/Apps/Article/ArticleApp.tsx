@@ -1,5 +1,6 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import { ArticleStructuredData } from "Apps/Article/Components/ArticleStructuredData"
+import { useArticleTocHistory } from "Apps/Article/Hooks/useArticleTocHistory"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 import type { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
 import type { FC } from "react"
@@ -22,6 +23,7 @@ const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({
   article,
 }) => {
   useScrollToOpenEditorialAuthModal()
+  useArticleTocHistory()
 
   return (
     <>

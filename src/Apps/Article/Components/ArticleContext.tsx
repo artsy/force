@@ -1,6 +1,10 @@
 import { type FC, createContext, useContext } from "react"
 
-const ArticleContext = createContext({
+interface ArticleContextValue {
+  articleId: string
+}
+
+const ArticleContext = createContext<ArticleContextValue>({
   articleId: "",
 })
 

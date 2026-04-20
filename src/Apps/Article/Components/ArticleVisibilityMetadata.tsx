@@ -9,7 +9,10 @@ interface ArticleVisibilityMetadataProps {
 }
 
 /**
- * Updates article URL and title when the article is in view
+ * Updates the URL and document title when an article scrolls into view.
+ * Uses `silentReplace` so this does not push a history entry — back/forward
+ * across articles falls through to whatever the user explicitly navigated
+ * from.
  */
 const ArticleVisibilityMetadata: FC<
   React.PropsWithChildren<ArticleVisibilityMetadataProps>
@@ -19,11 +22,14 @@ const ArticleVisibilityMetadata: FC<
   const { ref } = useIntersectionObserver({
     once: false,
     onIntersection: () => {
-      if (!article.href) return
+      if (!article.href || !article.slug) return
 
       document.title = `${article.searchTitle || article.title} | Artsy`
 
-      silentReplace(`${article.href}${match?.location.search}`)
+      if (window.location.pathname !== article.href) {
+        const search = match?.location.search ?? ""
+        silentReplace(`${article.href}${search}`)
+      }
     },
   })
 
@@ -36,6 +42,7 @@ export const ArticleVisibilityMetadataFragmentContainer =
       fragment ArticleVisibilityMetadata_article on Article {
         title
         searchTitle
+        slug
         href
       }
     `,

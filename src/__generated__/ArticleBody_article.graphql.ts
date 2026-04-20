@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1800663497839d986cf5cc6fd58a54c9>>
+ * @generated SignedSource<<b4ef37e8c3a9ab9597357e1614106597>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,10 @@ export type ArticleBody_article$data = {
   readonly internalID: string;
   readonly layout: ArticleLayout;
   readonly leadParagraph: string | null | undefined;
+  readonly outline: ReadonlyArray<{
+    readonly heading: string;
+    readonly slug: string;
+  }>;
   readonly postscript: string | null | undefined;
   readonly relatedArticles: ReadonlyArray<{
     readonly byline: string | null | undefined;
@@ -39,6 +43,7 @@ export type ArticleBody_article$data = {
     readonly title: string | null | undefined;
   }>;
   readonly sections: ReadonlyArray<{
+    readonly body?: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArticleSection_section">;
   }>;
   readonly seriesArticle: {
@@ -48,7 +53,7 @@ export type ArticleBody_article$data = {
   readonly slug: string | null | undefined;
   readonly title: string | null | undefined;
   readonly vertical: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article" | "ArticleTimestamp_article">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article" | "ArticleTableOfContents_article" | "ArticleTimestamp_article">;
   readonly " $fragmentType": "ArticleBody_article";
 };
 export type ArticleBody_article$key = {
@@ -122,6 +127,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleTimestamp_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleTableOfContents_article"
     },
     {
       "alias": null,
@@ -209,6 +219,25 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArticleOutlineEntry",
+      "kind": "LinkedField",
+      "name": "outline",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "heading",
+          "storageKey": null
+        },
+        (v2/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "sections",
@@ -218,6 +247,20 @@ return {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArticleSection_section"
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "body",
+              "storageKey": null
+            }
+          ],
+          "type": "ArticleSectionText",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -297,6 +340,6 @@ return {
 };
 })();
 
-(node as any).hash = "1e7047080ec7d946d8d89ec0f04f49b3";
+(node as any).hash = "e2e288f1a7e824982d667822942fe1b5";
 
 export default node;

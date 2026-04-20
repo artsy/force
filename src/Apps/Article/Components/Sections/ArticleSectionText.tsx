@@ -10,11 +10,12 @@ interface ArticleSectionTextProps {
   section: ArticleSectionText_section$data
   isFirst: boolean
   isLast: boolean
+  body?: string | null
 }
 
 const ArticleSectionText: FC<
   React.PropsWithChildren<ArticleSectionTextProps>
-> = ({ section, isFirst, isLast }) => {
+> = ({ section, isFirst, isLast, body }) => {
   const HTML = useMemo(() => {
     switch (true) {
       case isFirst:
@@ -26,9 +27,11 @@ const ArticleSectionText: FC<
     }
   }, [isFirst, isLast])
 
-  if (!section.body) return null
+  const html = body ?? section.body
 
-  return <HTML maxWidth={OPTIMAL_READING_WIDTH}>{section.body}</HTML>
+  if (!html) return null
+
+  return <HTML maxWidth={OPTIMAL_READING_WIDTH}>{html}</HTML>
 }
 
 export const ArticleSectionTextFragmentContainer = createFragmentContainer(
