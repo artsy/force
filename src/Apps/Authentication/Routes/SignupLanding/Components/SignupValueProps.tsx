@@ -11,22 +11,29 @@ import {
   Flex,
   Image,
   Box,
+  useTheme,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
 export const SignupValueProps = () => {
+  const { theme } = useTheme()
+
   return (
     <FullBleed bg="mono5" py={[6, 12]}>
       <AppContainer>
         <HorizontalPadding>
-          <Text variant={["xl", "xxl"]} textAlign="center">
+          <Text variant={"xl"} textAlign="center">
             Why Choose Artsy
           </Text>
           <Spacer y={4} />
           <GridColumns gridRowGap={4}>
             {/* Card 1  */}
-            <Column span={[12, 4]} bg="mono0">
+            <Column
+              span={[12, 4]}
+              bg="mono0"
+              boxShadow={theme.effects.dropShadow}
+            >
               <ResponsiveBox
                 aspectWidth={4}
                 aspectHeight={3}
@@ -61,7 +68,11 @@ export const SignupValueProps = () => {
             </Column>
 
             {/* Card 2  */}
-            <Column span={[12, 4]} bg="mono0">
+            <Column
+              span={[12, 4]}
+              bg="mono0"
+              boxShadow={theme.effects.dropShadow}
+            >
               <ResponsiveBox
                 aspectWidth={4}
                 aspectHeight={3}
@@ -95,7 +106,11 @@ export const SignupValueProps = () => {
             </Column>
 
             {/* Card 3  */}
-            <Column span={[12, 4]} bg="mono0">
+            <Column
+              span={[12, 4]}
+              bg="mono0"
+              boxShadow={theme.effects.dropShadow}
+            >
               <ResponsiveBox
                 aspectWidth={4}
                 aspectHeight={3}
