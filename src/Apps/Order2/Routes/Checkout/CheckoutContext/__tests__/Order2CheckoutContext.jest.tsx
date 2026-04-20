@@ -191,7 +191,7 @@ describe("Order2CheckoutContext", () => {
         },
         {
           name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.UPCOMING,
+          state: CheckoutStepState.ACTIVE,
         },
         { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.UPCOMING },
         {
@@ -271,7 +271,7 @@ describe("Order2CheckoutContext", () => {
         },
         {
           name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.UPCOMING,
+          state: CheckoutStepState.ACTIVE,
         },
         { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.UPCOMING },
         {
@@ -406,7 +406,7 @@ describe("Order2CheckoutContext", () => {
           getState().steps.find(
             step => step.name === CheckoutStepName.DELIVERY_OPTION,
           )?.state,
-        ).toBe(CheckoutStepState.UPCOMING)
+        ).toBe(CheckoutStepState.ACTIVE)
 
         expect(
           getState().steps.find(step => step.name === CheckoutStepName.PAYMENT)
