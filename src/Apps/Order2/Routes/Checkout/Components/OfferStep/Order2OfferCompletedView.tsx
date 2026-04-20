@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import createLogger from "Utils/logger"
 
@@ -16,7 +17,7 @@ export interface Order2OfferCompletedViewProps {
 export const Order2OfferCompletedView: React.FC<
   Order2OfferCompletedViewProps
 > = ({ lastOfferAmount, lastOfferNote }) => {
-  const { editOfferAmount, checkoutTracking } = useCheckoutContext()
+  const { editStep, checkoutTracking } = useCheckoutContext()
 
   if (!lastOfferAmount) {
     logger.warn("No offer amount provided for Order2OfferCompletedView")
@@ -25,7 +26,7 @@ export const Order2OfferCompletedView: React.FC<
 
   const onClickEdit = () => {
     checkoutTracking.clickedChangeOfferOption()
-    editOfferAmount()
+    editStep(CheckoutStepName.OFFER_AMOUNT)
   }
 
   return (
