@@ -31,7 +31,7 @@ beforeEach(() => {
       clickedBuyerProtection: jest.fn(),
       clickedSelectShippingOption: jest.fn(),
     },
-    setDeliveryOptionComplete: jest.fn(),
+    completeStep: jest.fn(),
     setSectionErrorMessage: jest.fn(),
     messages: {},
     steps: [],

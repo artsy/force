@@ -71,7 +71,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
   const {
     steps,
-    setOfferAmountComplete,
+    completeStep,
     checkoutTracking,
     messages,
     setSectionErrorMessage,
@@ -159,7 +159,7 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
       }
 
       if (offerOrError && "offer" in offerOrError) {
-        setOfferAmountComplete()
+        completeStep(CheckoutStepName.OFFER_AMOUNT)
 
         return
       }
