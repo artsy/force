@@ -10,6 +10,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { applyDeliveryOptionLogic } from "Apps/Order2/Routes/Checkout/CheckoutContext/stepUtils"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
@@ -18,12 +19,14 @@ import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
+import type { Order2CheckoutContext_me$key } from "__generated__/Order2CheckoutContext_me.graphql"
 import { type Action, action, createContextStore } from "easy-peasy"
 import type React from "react"
 import { useMemo } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
+
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 type CheckoutMode = "standard" | "express"
@@ -58,7 +61,9 @@ type Messages = Partial<
 
 export interface Order2CheckoutModel {
   // State
+  hasSavedAddresses: boolean
   isLoading: boolean
+  isFulfillmentDetailsSaving: boolean
   /** Express checkout loading state: 'submit' when submitting payment, 'active' when waiting for user to complete payment, null when idle */
   expressCheckoutState: "submit" | "active" | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
@@ -108,13 +113,16 @@ export interface Order2CheckoutModel {
       error: CheckoutErrorBannerMessage | null | undefined
     }
   >
+  setIsFulfillmentDetailsSaving: Action<this, boolean>
 }
 
 export const Order2CheckoutContext: ReturnType<
   typeof createContextStore<Order2CheckoutModel>
 > = createContextStore<Order2CheckoutModel>(initialState => ({
   // Initial state with defaults
+  hasSavedAddresses: false,
   isLoading: true,
+  isFulfillmentDetailsSaving: false,
   expressCheckoutState: null,
   expressCheckoutPaymentMethods: null,
   activeFulfillmentDetailsTab: null,
@@ -151,23 +159,10 @@ export const Order2CheckoutContext: ReturnType<
       state.activeFulfillmentDetailsTab = activeFulfillmentDetailsTab
 
       // Update delivery option step visibility based on pickup selection
-      state.steps = state.steps.map(step => {
-        if (step.name === CheckoutStepName.DELIVERY_OPTION) {
-          const shouldHide = activeFulfillmentDetailsTab === "PICKUP"
-          if (shouldHide) {
-            return {
-              ...step,
-              state: CheckoutStepState.HIDDEN,
-            }
-          } else if (step.state === CheckoutStepState.HIDDEN) {
-            return {
-              ...step,
-              state: CheckoutStepState.UPCOMING,
-            }
-          }
-        }
-        return step
-      })
+      state.steps = applyDeliveryOptionLogic(
+        state.steps as CheckoutStep[],
+        activeFulfillmentDetailsTab,
+      )
     },
   ),
 
@@ -198,6 +193,9 @@ export const Order2CheckoutContext: ReturnType<
     let activatedNext = false
     state.steps = state.steps.map((step, i) => {
       if (step.state === CheckoutStepState.HIDDEN) return step
+      // In dual-active scenarios, also complete any preceding ACTIVE steps
+      if (i < targetIndex && step.state === CheckoutStepState.ACTIVE)
+        return { ...step, state: CheckoutStepState.COMPLETED }
       if (i === targetIndex)
         return { ...step, state: CheckoutStepState.COMPLETED }
       if (
@@ -210,6 +208,7 @@ export const Order2CheckoutContext: ReturnType<
       }
       return step
     })
+    state.steps = applyDeliveryOptionLogic(state.steps as CheckoutStep[])
   }),
 
   setConfirmationToken: action((state, { confirmationToken }) => {
@@ -232,6 +231,7 @@ export const Order2CheckoutContext: ReturnType<
       if (i > targetIndex) return { ...step, state: CheckoutStepState.UPCOMING }
       return step
     })
+    state.steps = applyDeliveryOptionLogic(state.steps as CheckoutStep[])
   }),
 
   redirectToOrderDetails: action(state => {
@@ -246,21 +246,28 @@ export const Order2CheckoutContext: ReturnType<
       [section]: { error },
     }
   }),
+
+  setIsFulfillmentDetailsSaving: action((state, isFulfillmentDetailsSaving) => {
+    state.isFulfillmentDetailsSaving = isFulfillmentDetailsSaving
+  }),
 }))
 
 interface Order2CheckoutContextProviderProps {
   order: Order2CheckoutContext_order$key
+  me: Order2CheckoutContext_me$key
   children: React.ReactNode
 }
 
 export const Order2CheckoutContextProvider: React.FC<
   Order2CheckoutContextProviderProps
-> = ({ order, children }) => {
+> = ({ order, me, children }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
   const checkoutTracking = useCheckoutTracking(orderData)
   const { router } = useRouter()
 
-  // Build initial steps using the hook
+  const hasSavedAddresses = (meData.addressConnection?.edges?.length ?? 0) > 0
+
   const initialSteps = useBuildInitialSteps(orderData)
 
   // Initialize the store with the initial state
@@ -296,6 +303,7 @@ export const Order2CheckoutContextProvider: React.FC<
     router,
     orderData,
     artworkPath,
+    hasSavedAddresses,
   } as Order2CheckoutModel
 
   return (
@@ -304,6 +312,18 @@ export const Order2CheckoutContextProvider: React.FC<
     </Order2CheckoutContext.Provider>
   )
 }
+
+const ME_FRAGMENT = graphql`
+  fragment Order2CheckoutContext_me on Me {
+    addressConnection(first: 20) {
+      edges {
+        node {
+          internalID
+        }
+      }
+    }
+  }
+`
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutContext_order on Order {

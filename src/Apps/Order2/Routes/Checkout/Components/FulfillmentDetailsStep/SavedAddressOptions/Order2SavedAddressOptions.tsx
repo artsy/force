@@ -1,6 +1,5 @@
 import AddIcon from "@artsy/icons/AddIcon"
 import {
-  Button,
   Clickable,
   Flex,
   Radio,
@@ -25,7 +24,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
-import { useFormikContext } from "formik"
 import { useCallback, useEffect, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
@@ -42,6 +40,7 @@ const ADDRESS_ERROR_MESSAGES = {
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
   initialSelectedAddress?: ProcessedUserAddress
+  hasFulfillmentDetails: boolean
   onSelectAddress: (address: FormikContextWithAddress) => Promise<void>
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
@@ -49,6 +48,7 @@ interface SavedAddressOptionsProps {
 export const SavedAddressOptions = ({
   savedAddresses,
   initialSelectedAddress,
+  hasFulfillmentDetails,
   onSelectAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
@@ -62,8 +62,6 @@ export const SavedAddressOptions = ({
     orderData,
   } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
-  const parentFormikContext = useFormikContext<FormikContextWithAddress>()
-
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
   >(initialSelectedAddress)
@@ -105,6 +103,22 @@ export const SavedAddressOptions = ({
       scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
+
+  const isStepActive =
+    fulfillmentDetailsStep?.state === CheckoutStepState.ACTIVE
+
+  // Auto-submit the first valid address the first time the step becomes active,
+  // if no fulfillment details are saved yet.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: when step first becomes active
+  useEffect(() => {
+    if (!isStepActive || hasFulfillmentDetails) return
+    const firstValid =
+      savedAddresses.find(a => a.isShippable && a.isValid) || savedAddresses[0]
+    if (firstValid) {
+      setSelectedAddress(firstValid)
+      onSelectAddress(firstValid)
+    }
+  }, [isStepActive])
 
   // Auto-open edit form for the single saved address if it has missing fields
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
@@ -187,11 +201,14 @@ export const SavedAddressOptions = ({
         setSelectedAddress(addressToSelect)
         await onSelectAddress(addressToSelect)
       } else {
+        // No remaining valid address — let the Relay store update naturally switch
+        // the UI to the new-address form. Calling onSelectAddress with blank values
+        // would trigger a form submission with empty fields, causing a validation
+        // error flash and potentially clearing the fulfillment option on the order.
         setSelectedAddress(undefined)
-        await onSelectAddress(newAddressInitialValues)
       }
     },
-    [selectedAddress, savedAddresses, onSelectAddress, newAddressInitialValues],
+    [selectedAddress, savedAddresses, onSelectAddress],
   )
 
   const handleAddressClick = useCallback(
@@ -302,22 +319,6 @@ export const SavedAddressOptions = ({
           </Text>
         </Flex>
       </Clickable>
-
-      <Spacer y={4} />
-
-      <Button
-        type="submit"
-        loading={parentFormikContext.isSubmitting}
-        disabled={
-          (!selectedAddress?.isShippable && !isOfferOrder) ||
-          !selectedAddress?.isValid
-        }
-        onClick={() => {
-          parentFormikContext.handleSubmit()
-        }}
-      >
-        Save and Continue
-      </Button>
     </Flex>
   )
 }
