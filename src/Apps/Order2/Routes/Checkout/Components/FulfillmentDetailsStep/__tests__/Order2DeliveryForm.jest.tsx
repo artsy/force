@@ -46,6 +46,9 @@ beforeEach(() => {
     setIsFulfillmentDetailsSaving: jest.fn(),
     userAddressMode: null,
     messages: {},
+    isInitialAutoSaveComplete: true,
+    setInitialAutoSaveComplete: jest.fn(),
+    steps: [],
   }
 })
 

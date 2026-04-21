@@ -34,6 +34,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     expressCheckoutPaymentMethods,
     expressCheckoutState,
     steps,
+    isInitialAutoSaveComplete,
   } = useCheckoutContext()
 
   const { checkoutModalError, showCheckoutErrorModal } = useCheckoutModal()
@@ -166,6 +167,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         orderValidated,
         isExpressCheckoutLoaded,
         isStripeRedirectHandled,
+        isInitialAutoSaveComplete,
         isLoading,
         setLoadingComplete,
       ].every(Boolean)
@@ -177,6 +179,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     orderValidated,
     isExpressCheckoutLoaded,
     isStripeRedirectHandled,
+    isInitialAutoSaveComplete,
     isLoading,
     setLoadingComplete,
     checkoutModalError,

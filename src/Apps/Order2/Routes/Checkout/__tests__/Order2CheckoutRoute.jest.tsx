@@ -1519,21 +1519,14 @@ describe("Order2CheckoutRoute", () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Viewer: () => props,
         })
-        await helpers.waitForLoadingComplete()
-        await waitFor(() => {
-          expect(screen.getByText("Delivery address")).toBeInTheDocument()
-        })
 
-        act(() => {
-          userEvent.click(screen.getByRole("radio", { name: /Alice Smith/i }))
-        })
-
+        // Flush async Promise chain started by the auto-save effect
         await flushPromiseQueue()
 
-        let mutation
+        // Resolve initial auto-save mutations (fires automatically before skeleton clears)
         await act(async () => {
           await waitFor(() => {
-            mutation = mockResolveLastOperation({
+            mockResolveLastOperation({
               updateOrderShippingAddressPayload: () =>
                 orderMutationSuccess(props.me.order, {
                   fulfillmentDetails: {
@@ -1556,20 +1549,83 @@ describe("Order2CheckoutRoute", () => {
           await flushPromiseQueue()
         })
 
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        await helpers.waitForLoadingComplete()
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        // Alice is already auto-selected; switch to Bob to verify explicit address selection
+        act(() => {
+          userEvent.click(screen.getByRole("radio", { name: /Bob/i }))
+        })
+
+        await flushPromiseQueue()
+
+        // Selecting a different address when one is already set: unset → set address → set fulfillment
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              unsetOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: null,
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        let mutation
+        await act(async () => {
+          await waitFor(() => {
+            mutation = mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  fulfillmentDetails: {
+                    name: "Bob Müller",
+                    addressLine1: "345 Marx Str",
+                    addressLine2: "Apt 4",
+                    city: "Berlin",
+                    region: "Berlin",
+                    postalCode: "56789",
+                    country: "DE",
+                    phoneNumber: {
+                      regionCode: "de",
+                      originalNumber: "5559876543",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "DOMESTIC_FLAT" }],
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
         expect(mutation.operationName).toBe(
           "useOrder2SetOrderDeliveryAddressMutation",
         )
         expect(mutation.operationVariables.input).toEqual({
           id: "order-id",
-          buyerPhoneNumber: "5551234567",
-          buyerPhoneNumberCountryCode: "us",
-          shippingAddressLine1: "123 Main St",
+          buyerPhoneNumber: "5559876543",
+          buyerPhoneNumberCountryCode: "de",
+          shippingAddressLine1: "345 Marx Str",
           shippingAddressLine2: "Apt 4",
-          shippingCity: "New York",
-          shippingRegion: "NY",
-          shippingPostalCode: "10001",
-          shippingCountry: "US",
-          shippingName: "Alice Smith",
+          shippingCity: "Berlin",
+          shippingRegion: "Berlin",
+          shippingPostalCode: "56789",
+          shippingCountry: "DE",
+          shippingName: "Bob Müller",
         })
 
         await act(async () => {
@@ -1633,6 +1689,48 @@ describe("Order2CheckoutRoute", () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Viewer: () => props,
         })
+
+        // Flush async Promise chain started by the auto-save effect
+        await flushPromiseQueue()
+
+        // Resolve initial auto-save mutations (fires automatically before skeleton clears)
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  fulfillmentDetails: {
+                    name: "John Doe",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
+                    phoneNumber: {
+                      regionCode: "us",
+                      originalNumber: "5551234567",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "DOMESTIC_FLAT" }],
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
         await helpers.waitForLoadingComplete()
         await waitFor(() => {
           expect(screen.getByText("Delivery address")).toBeInTheDocument()
