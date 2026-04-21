@@ -216,6 +216,7 @@ const FRAGMENT = graphql`
     fulfillmentOptions {
       amount {
         display
+        minor
       }
       type
       selected
@@ -229,7 +230,7 @@ interface SingleShippingOptionProps {
 }
 
 const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
-  const label = deliveryOptionLabel(option.type)
+  const label = deliveryOptionLabel(option.type, option.amount?.minor)
   const timeEstimate = deliveryOptionTimeEstimate(option.type)
   const [prefix, timeRange] = timeEstimate || []
 
@@ -275,7 +276,7 @@ const MultipleShippingOptionsForm = ({
       }}
     >
       {options.map(option => {
-        const label = deliveryOptionLabel(option.type)
+        const label = deliveryOptionLabel(option.type, option.amount?.minor)
         const timeEstimate = deliveryOptionTimeEstimate(option.type)
         const [prefix, timeRange] = timeEstimate || []
         const isSelected = selectedOption === option

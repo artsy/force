@@ -12,6 +12,9 @@ import type { CacheConfig } from "relay-runtime"
 
 interface Route extends RouteObjectBase {
   children?: RouteProps[]
+  getScrollBehavior?: (
+    ...args: unknown[]
+  ) => boolean | [number, number] | undefined
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean
   layout?: LayoutVariant

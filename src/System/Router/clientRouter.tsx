@@ -9,8 +9,9 @@ import { getClientAppContext } from "System/Router/Utils/clientAppContext"
 import { queryStringParsing } from "System/Router/Utils/queryStringParsing"
 import { shouldUpdateScroll } from "System/Router/Utils/shouldUpdateScroll"
 import { getUser } from "Utils/user"
+import { FilterableBrowserProtocol } from "System/Router/Utils/FilterableBrowserProtocol"
+import { PopStateHandlerProvider } from "System/Router/Utils/PopStateHandlerContext"
 import {
-  BrowserProtocol,
   HashProtocol,
   type HistoryEnhancerOptions,
   MemoryProtocol,
@@ -74,13 +75,13 @@ export const setupClientRouter = async (
   const historyProtocol = (() => {
     switch (config.history?.protocol) {
       case "browser":
-        return new BrowserProtocol()
+        return new FilterableBrowserProtocol()
       case "hash":
         return new HashProtocol()
       case "memory":
         return new MemoryProtocol(config.initialRoute ?? "")
       default:
-        return new BrowserProtocol()
+        return new FilterableBrowserProtocol()
     }
   })()
 
@@ -106,7 +107,7 @@ export const setupClientRouter = async (
 
   const ClientRouter: React.FC<React.PropsWithChildren<unknown>> = React.memo(
     () => {
-      return (
+      const inner = (
         <Boot
           context={matchContext}
           user={user}
@@ -116,6 +117,16 @@ export const setupClientRouter = async (
           <BrowserRouter resolver={resolver} />
         </Boot>
       )
+
+      if (historyProtocol instanceof FilterableBrowserProtocol) {
+        return (
+          <PopStateHandlerProvider protocol={historyProtocol}>
+            {inner}
+          </PopStateHandlerProvider>
+        )
+      }
+
+      return inner
     },
   )
 

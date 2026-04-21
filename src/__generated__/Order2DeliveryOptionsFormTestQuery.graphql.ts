@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2dc89fdbb217fa0a0a9d545c34f4294>>
+ * @generated SignedSource<<796d0a05c488e0e0d7de8386e2e6cad1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -139,6 +139,13 @@ return {
                         "kind": "ScalarField",
                         "name": "display",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "minor",
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -178,7 +185,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2d106ea9eb18553c994cc10071c16184",
+    "cacheID": "d65499374f5941523f28068d0a6d50cc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -208,6 +215,12 @@ return {
           "type": "Money"
         },
         "me.order.fulfillmentOptions.amount.display": (v3/*: any*/),
+        "me.order.fulfillmentOptions.amount.minor": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Long"
+        },
         "me.order.fulfillmentOptions.selected": {
           "enumValues": null,
           "nullable": true,
@@ -235,7 +248,7 @@ return {
     },
     "name": "Order2DeliveryOptionsFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n    }\n    type\n    selected\n  }\n  shippingOrigin\n}\n"
+    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  shippingOrigin\n}\n"
   }
 };
 })();

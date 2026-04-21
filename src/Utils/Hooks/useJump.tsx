@@ -8,7 +8,15 @@ interface UseJump {
   offset?: number
 }
 
-const NAMESPACE = "JUMP"
+export const JUMP_NAMESPACE = "JUMP"
+
+/**
+ * Returns the DOM `id` that a `<Jump>` element registers for the given key.
+ * Use this when constructing element IDs or hash anchors that should be
+ * resolvable by `useJump`'s `jumpTo`.
+ */
+export const createJumpDOMId = (key: string): string =>
+  `${JUMP_NAMESPACE}--${key}`
 
 /**
  * Returns a `jumpTo` function that scrolls with an automatically calculated offset
@@ -28,7 +36,7 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
         onComplete?: () => void
       } = {},
     ) => {
-      const el = document.querySelector(`#${NAMESPACE}--${id}`)
+      const el = document.querySelector(`#${createJumpDOMId(id)}`)
 
       if (!el) {
         console.warn(`No element found for jumpTo: "${id}"`)
@@ -92,5 +100,5 @@ export const Jump: FC<React.PropsWithChildren<JumpProps>> = ({
     return deregisterSticky
   }, [registerSticky, deregisterSticky])
 
-  return <div id={`${NAMESPACE}--${id}`} {...rest} />
+  return <div id={createJumpDOMId(id)} {...rest} />
 }

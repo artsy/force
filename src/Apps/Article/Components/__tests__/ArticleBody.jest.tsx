@@ -9,6 +9,13 @@ jest.mock("../../useArticleTracking", () => ({
   useArticleTracking: () => ({}),
 }))
 
+jest.mock("Apps/Article/Hooks/useTocJump", () => ({
+  useTocJump: () => ({
+    jump: jest.fn(),
+    getHref: () => "#",
+  }),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArticleBodyFragmentContainer,
   query: graphql`

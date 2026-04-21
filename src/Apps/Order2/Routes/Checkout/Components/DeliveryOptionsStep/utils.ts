@@ -1,12 +1,17 @@
 import { DateTime } from "luxon"
 
 // TODO: Get these from MP
-export const deliveryOptionLabel = (type?: string | null) => {
+export const deliveryOptionLabel = (
+  type?: string | null,
+  cost?: number | null,
+) => {
+  const isFree = cost === 0
+
   switch (type) {
     case "DOMESTIC_FLAT":
-      return "Flat rate"
+      return isFree ? "Free" : "Flat rate"
     case "INTERNATIONAL_FLAT":
-      return "Flat rate"
+      return isFree ? "Free" : "Flat rate"
     case "ARTSY_STANDARD":
       return "Standard"
     case "ARTSY_EXPRESS":
