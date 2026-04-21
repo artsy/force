@@ -94,6 +94,7 @@ describe("useLoadCheckout", () => {
       expressCheckoutPaymentMethods: null,
       steps: [{ state: CheckoutStepState.ACTIVE, name: "PAYMENT" }],
       setLoadingComplete: mockSetLoadingComplete,
+      isInitialAutoSaveComplete: true,
     })
 
     // Mock useCheckoutModal
@@ -237,6 +238,7 @@ describe("useLoadCheckout", () => {
         expressCheckoutPaymentMethods: [],
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
+        isInitialAutoSaveComplete: true,
       }))
 
       const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
@@ -277,6 +279,7 @@ describe("useLoadCheckout", () => {
         expressCheckoutPaymentMethods: expressCheckoutLoaded ? [] : null,
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
+        isInitialAutoSaveComplete: true,
       }))
 
       const { rerender } = renderHook(() => useLoadCheckout(mockOrder))

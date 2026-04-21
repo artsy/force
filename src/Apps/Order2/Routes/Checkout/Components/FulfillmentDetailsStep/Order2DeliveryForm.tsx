@@ -83,6 +83,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     setSectionErrorMessage,
     setIsFulfillmentDetailsSaving,
     messages,
+    setInitialAutoSaveComplete,
+    isInitialAutoSaveComplete,
   } = checkoutContext
 
   const fulfillmentDetailsError =
@@ -297,6 +299,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         )
       } finally {
         setIsFulfillmentDetailsSaving(false)
+        if (!isInitialAutoSaveComplete) {
+          setInitialAutoSaveComplete()
+        }
       }
     },
     [
@@ -314,6 +319,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       setUserAddressMode,
       unsetOrderFulfillmentOption,
       setOrderDeliveryAddressMutation,
+      isInitialAutoSaveComplete,
+      setInitialAutoSaveComplete,
     ],
   )
   return (
