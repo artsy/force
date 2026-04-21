@@ -11,9 +11,9 @@ import { useCallback } from "react"
  * Returns true on success, false on failure.
  *
  * Used by:
- * - FD onSubmit: select the first available option after saving the address;
+ * - Fulfillment Details onSubmit: select the first available option after saving the address;
  *   the caller decides whether to auto-advance based on hasSavedAddresses.
- * - DO radio: save the user's explicit choice.
+ * - Delivery Options radio: save the user's explicit choice.
  */
 export const useSelectDeliveryOption = () => {
   const { setSectionErrorMessage } = useCheckoutContext()

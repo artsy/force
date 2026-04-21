@@ -157,6 +157,8 @@ export const Order2DeliveryOptionsForm: React.FC<
           <MultipleShippingOptionsForm
             options={deliveryOptions}
             onSelectOption={async option => {
+              // TODO: extract this into a named handler with proper error handling
+              // TODO: skip mutation if option.type === currently selected type (avoid duplicate saves)
               checkoutTracking.clickedSelectShippingOption(option.type)
               setIsSaving(true)
               const success = await selectDeliveryOption(
@@ -178,6 +180,9 @@ export const Order2DeliveryOptionsForm: React.FC<
 
       <Spacer y={4} />
 
+      {/* TODO: this button advances through both the Fulfillment Details and
+          Delivery Option steps. Consider whether the copy/disabled logic should
+          reflect both steps more explicitly. */}
       <Button
         loading={isSaving || isFulfillmentDetailsSaving}
         disabled={

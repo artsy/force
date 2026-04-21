@@ -27,16 +27,6 @@ import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2CheckoutContext.tsx")
 
-/**
- * Applies all delivery option step logic in one place:
- * 1. If `tab` is provided, hides DELIVERY_OPTION for pickup or restores it
- *    to UPCOMING when switching back to delivery.
- * 2. Enforces the dual-active invariant: when hasSavedAddresses is true and
- *    FULFILLMENT_DETAILS is ACTIVE, DELIVERY_OPTION must also be ACTIVE
- *    (unless HIDDEN or already COMPLETED).
- *
- * Call this at the end of any action that may affect step states.
- */
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
 
 type CheckoutMode = "standard" | "express"

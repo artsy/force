@@ -23,8 +23,7 @@ export const applyDeliveryOptionLogic = (
   if (tab !== undefined) {
     updated = steps.map(step => {
       if (step.name === CheckoutStepName.DELIVERY_OPTION) {
-        const shouldHide = tab === "PICKUP"
-        if (shouldHide) {
+        if (tab === "PICKUP") {
           return { ...step, state: CheckoutStepState.HIDDEN }
         } else if (step.state === CheckoutStepState.HIDDEN) {
           return { ...step, state: CheckoutStepState.UPCOMING }

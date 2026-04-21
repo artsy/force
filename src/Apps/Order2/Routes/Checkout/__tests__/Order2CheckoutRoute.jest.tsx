@@ -1476,7 +1476,7 @@ describe("Order2CheckoutRoute", () => {
                 {
                   node: {
                     internalID: "address-1",
-                    name: "John Doe",
+                    name: "Alice Smith",
                     addressLine1: "123 Main St",
                     addressLine2: "Apt 4",
                     city: "New York",
@@ -1495,7 +1495,7 @@ describe("Order2CheckoutRoute", () => {
                 {
                   node: {
                     internalID: "address-2",
-                    name: "John Doe",
+                    name: "Bob Müller",
                     addressLine1: "345 Marx Str",
                     addressLine2: "Apt 4",
                     city: "Berlin",
@@ -1525,9 +1525,7 @@ describe("Order2CheckoutRoute", () => {
         })
 
         act(() => {
-          userEvent.click(
-            screen.getAllByRole("radio", { name: /John Doe/i })[0],
-          )
+          userEvent.click(screen.getByRole("radio", { name: /Alice Smith/i }))
         })
 
         await flushPromiseQueue()
@@ -1539,7 +1537,7 @@ describe("Order2CheckoutRoute", () => {
               updateOrderShippingAddressPayload: () =>
                 orderMutationSuccess(props.me.order, {
                   fulfillmentDetails: {
-                    name: "John Doe",
+                    name: "Alice Smith",
                     addressLine1: "123 Main St",
                     addressLine2: "Apt 4",
                     city: "New York",
@@ -1571,7 +1569,7 @@ describe("Order2CheckoutRoute", () => {
           shippingRegion: "NY",
           shippingPostalCode: "10001",
           shippingCountry: "US",
-          shippingName: "John Doe",
+          shippingName: "Alice Smith",
         })
 
         await act(async () => {
