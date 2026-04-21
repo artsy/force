@@ -27,7 +27,7 @@ export const SignupValueProps = () => {
             Why Choose Artsy
           </Text>
           <Spacer y={4} />
-          <GridColumns gridRowGap={4}>
+          <GridColumns gridRowGap={4} gridColumnGap={[0, 4]}>
             {/* Card 1  */}
             <Column
               span={[12, 4]}
