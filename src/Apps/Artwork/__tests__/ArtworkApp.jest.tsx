@@ -4,6 +4,8 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mockLocation } from "DevTools/mockLocation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
+import { useUnleashContext, useVariant } from "@unleash/proxy-client-react"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import type { ArtworkAppTestQuery } from "__generated__/ArtworkAppTestQuery.graphql"
 import { graphql } from "react-relay"
 import {
@@ -29,6 +31,13 @@ jest.mock("Components/AuthDialog", () => {
     },
   }
 })
+jest.mock("@unleash/proxy-client-react", () => ({
+  useUnleashContext: jest.fn(),
+  useVariant: jest.fn(),
+}))
+jest.mock("System/Hooks/useTrackFeatureVariant", () => ({
+  useTrackFeatureVariantOnMount: jest.fn(),
+}))
 
 const { renderWithRelay } = setupTestWrapperTL<ArtworkAppTestQuery>({
   Component: props => {
@@ -73,6 +82,10 @@ const defaultMockResolvers = {
 }
 
 const useRouterMock = useRouter as jest.Mock
+const mockUseUnleashContext = useUnleashContext as jest.Mock
+const mockUseVariant = useVariant as jest.Mock
+const mockUseTrackFeatureVariantOnMount =
+  useTrackFeatureVariantOnMount as jest.Mock
 let routerMock: any
 
 beforeEach(() => {
@@ -91,6 +104,9 @@ beforeEach(() => {
     },
   }
   useRouterMock.mockReturnValue(routerMock)
+  mockUseUnleashContext.mockReturnValue(jest.fn(() => Promise.resolve()))
+  mockUseVariant.mockReturnValue({ name: "disabled", enabled: false })
+  mockUseTrackFeatureVariantOnMount.mockReturnValue(undefined)
 })
 
 describe("ArtworkApp", () => {
