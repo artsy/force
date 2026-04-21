@@ -1,6 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { Formik } from "formik"
@@ -160,7 +163,15 @@ describe("SavedAddressOptions", () => {
       setSectionErrorMessage: jest.fn(),
       checkoutTracking: {
         clickedShippingAddress: jest.fn(),
+        savedAddressViewed: jest.fn(),
+        clickedAddNewShippingAddress: jest.fn(),
       },
+      steps: [
+        {
+          name: CheckoutStepName.FULFILLMENT_DETAILS,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ],
     } as any
 
     mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
@@ -675,6 +686,35 @@ describe("SavedAddressOptions", () => {
         <TestWrapper>
           <SavedAddressOptions
             hasFulfillmentDetails={true}
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
+    it("does not auto-save when the step is not yet ACTIVE (e.g. UPCOMING in offer flow)", async () => {
+      const onSelectAddress = jest.fn()
+
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: CheckoutStepState.UPCOMING,
+          },
+        ],
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasFulfillmentDetails={false}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}

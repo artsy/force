@@ -133,11 +133,14 @@ describe("Order2DeliveryOptionsStep", () => {
       expect(screen.queryByRole("button")).not.toBeInTheDocument()
     })
 
-    it("renders the placeholder while fulfillment details are saving", () => {
+    it("renders the form with skeleton options while fulfillment details are saving", () => {
       mockCheckoutContext.isFulfillmentDetailsSaving = true
       renderWithRelay({ Me: () => ({ order: orderWithFulfillmentDetails }) })
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
-      expect(screen.queryByRole("button")).not.toBeInTheDocument()
+      // The form renders (with skeleton options) — the Continue button is still present
+      expect(
+        screen.getByRole("button", { name: "Continue to Payment" }),
+      ).toBeInTheDocument()
     })
 
     it("renders the form with button when fulfillment details are saved (dual-active: FD and DO both ACTIVE)", () => {

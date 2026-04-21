@@ -104,15 +104,21 @@ export const SavedAddressOptions = ({
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
 
-  // Auto-submit the first valid address on mount if no fulfillment details are saved yet
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
+  const isStepActive =
+    fulfillmentDetailsStep?.state === CheckoutStepState.ACTIVE
+
+  // Auto-submit the first valid address the first time the step becomes active,
+  // if no fulfillment details are saved yet.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: when step first becomes active
   useEffect(() => {
-    if (hasFulfillmentDetails) return
-    const firstValid = savedAddresses.find(a => a.isShippable && a.isValid)
+    if (!isStepActive || hasFulfillmentDetails) return
+    const firstValid =
+      savedAddresses.find(a => a.isShippable && a.isValid) || savedAddresses[0]
     if (firstValid) {
+      setSelectedAddress(firstValid)
       onSelectAddress(firstValid)
     }
-  }, [])
+  }, [isStepActive])
 
   // Auto-open edit form for the single saved address if it has missing fields
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
