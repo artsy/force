@@ -16,7 +16,7 @@ type Order2DeliveryOptionsStepProps = {
   order: Order2DeliveryOptionsStep_order$key
 }
 
-const Placeholder = () => {
+const DeliveryOptionsPlaceholder = () => {
   return (
     <Flex flexDirection="column" backgroundColor="mono0">
       <Box py={2} px={[2, 2, 4]} data-testid="DeliveryOptionsStep">
@@ -49,14 +49,20 @@ export const Order2DeliveryOptionsStep: React.FC<
   }
 
   if (stepState === CheckoutStepState.UPCOMING) {
-    return <Placeholder />
+    return <DeliveryOptionsPlaceholder />
   }
 
   if (stepState === CheckoutStepState.ACTIVE) {
-    if (!hasFulfillmentDetails || isFulfillmentDetailsSaving) {
-      return <Placeholder />
+    if (!hasFulfillmentDetails) {
+      return <DeliveryOptionsPlaceholder />
     }
-    return <Order2DeliveryOptionsForm order={orderData} />
+
+    return (
+      <Order2DeliveryOptionsForm
+        order={orderData}
+        refreshingOptions={isFulfillmentDetailsSaving}
+      />
+    )
   }
 
   if (stepState === CheckoutStepState.COMPLETED && completedViewProps) {

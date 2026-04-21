@@ -15,12 +15,12 @@ import {
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import {
   SELECTABLE_TYPES,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
@@ -35,6 +35,7 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
   order: Order2DeliveryOptionsForm_order$key
+  refreshingOptions?: boolean
 }
 
 type DeliveryOption =
@@ -42,7 +43,7 @@ type DeliveryOption =
 
 export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
-> = ({ order }) => {
+> = ({ order, refreshingOptions = false }) => {
   const orderData = useFragment(FRAGMENT, order)
   const {
     checkoutTracking,
@@ -51,7 +52,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     isFulfillmentDetailsSaving,
   } = useCheckoutContext()
   const { selectDeliveryOption } = useSelectDeliveryOption()
-  const [isSaving, setIsSaving] = useState(false)
+  const [isDeliveryOptionSaving, setIsDeliveryOptionSaving] = useState(false)
 
   const deliveryOptionError = messages[CheckoutStepName.DELIVERY_OPTION]?.error
   const errorBannerRef = useScrollToErrorBanner(
@@ -143,7 +144,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 
         <Spacer y={2} />
 
-        {isSaving && !orderData.selectedFulfillmentOption ? (
+        {refreshingOptions ? (
           <Skeleton>
             <Flex flexDirection="column" gap={1}>
               {[0, 1, 2].map(i => (
@@ -160,12 +161,12 @@ export const Order2DeliveryOptionsForm: React.FC<
               // TODO: extract this into a named handler with proper error handling
               // TODO: skip mutation if option.type === currently selected type (avoid duplicate saves)
               checkoutTracking.clickedSelectShippingOption(option.type)
-              setIsSaving(true)
+              setIsDeliveryOptionSaving(true)
               const success = await selectDeliveryOption(
                 orderData.internalID,
                 option.type,
               )
-              setIsSaving(false)
+              setIsDeliveryOptionSaving(false)
               return success
             }}
           />
@@ -184,10 +185,11 @@ export const Order2DeliveryOptionsForm: React.FC<
           Delivery Option steps. Consider whether the copy/disabled logic should
           reflect both steps more explicitly. */}
       <Button
-        loading={isSaving || isFulfillmentDetailsSaving}
+        loading={isDeliveryOptionSaving || isFulfillmentDetailsSaving}
         disabled={
-          !isFulfillmentDetailsSaving &&
-          (!hasFulfillmentDetails || !hasDeliveryOption)
+          isFulfillmentDetailsSaving ||
+          !hasFulfillmentDetails ||
+          !hasDeliveryOption
         }
         variant="primaryBlack"
         width="100%"
