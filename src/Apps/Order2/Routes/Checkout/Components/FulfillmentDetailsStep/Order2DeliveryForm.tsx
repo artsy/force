@@ -7,6 +7,7 @@ import {
   CheckoutErrorBanner,
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { SELECTABLE_TYPES } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import {
@@ -17,8 +18,8 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
+import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
-
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
@@ -40,11 +41,13 @@ import { graphql, useFragment } from "react-relay"
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
   me: Order2DeliveryForm_me$key
+  hasFulfillmentDetails: boolean
 }
 
 export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   order,
   me,
+  hasFulfillmentDetails,
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
@@ -78,6 +81,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     completeStep,
     setUserAddressMode,
     setSectionErrorMessage,
+    setIsFulfillmentDetailsSaving,
     messages,
   } = checkoutContext
 
@@ -88,6 +92,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     useOrder2SetOrderDeliveryAddressMutation()
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
+  const { selectDeliveryOption } = useSelectDeliveryOption()
 
   const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({
@@ -189,6 +194,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       formikHelpers: FormikHelpers<FormikContextWithAddress>,
     ) => {
       try {
+        setIsFulfillmentDetailsSaving(true)
         setCheckoutMode("standard")
         checkoutTracking.clickedOrderProgression(
           ContextModule.ordersFulfillment,
@@ -239,10 +245,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           option => ["PICKUP", "SHIPPING_TBD"].includes(option.type),
         )
 
-        if (!hasSavedAddresses) {
-          await saveAddressToUser(values)
-        }
-
         if (isMissingShippingOption && orderData?.mode !== "OFFER") {
           throw new LocalCheckoutError("no_shipping_options")
         }
@@ -257,7 +259,30 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           error: null,
         })
 
-        completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
+        if (!hasSavedAddresses) {
+          await saveAddressToUser(values)
+        }
+
+        // Always select a delivery option after saving the address — re-using the
+        // previously selected type if still available, otherwise the first option.
+        // For new-address users with a single option, also auto-advance.
+        const selectable = newOrder.fulfillmentOptions.filter(o =>
+          SELECTABLE_TYPES.includes(o.type),
+        )
+        if (selectable.length > 0) {
+          const previousType = orderData.selectedFulfillmentOption?.type
+          const typeToSelect =
+            (previousType &&
+              selectable.find(o => o.type === previousType)?.type) ??
+            selectable[0].type
+          const success = await selectDeliveryOption(
+            orderData.internalID,
+            typeToSelect,
+          )
+          if (success && selectable.length === 1 && !hasSavedAddresses) {
+            completeStep(CheckoutStepName.DELIVERY_OPTION)
+          }
+        }
         setUserAddressMode(null)
       } catch (error) {
         handleError(
@@ -270,6 +295,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               error,
             }),
         )
+      } finally {
+        setIsFulfillmentDetailsSaving(false)
       }
     },
     [
@@ -280,6 +307,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       orderData?.mode,
       saveAddressToUser,
       setCheckoutMode,
+      setIsFulfillmentDetailsSaving,
+      selectDeliveryOption,
       completeStep,
       setSectionErrorMessage,
       setUserAddressMode,
@@ -294,7 +323,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, setValues, status }) => {
+      {({ isSubmitting, setValues, status, submitForm }) => {
         return (
           <Flex flexDirection={"column"} mb={2}>
             {fulfillmentDetailsError && (
@@ -312,12 +341,14 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
+                hasFulfillmentDetails={hasFulfillmentDetails}
                 newAddressInitialValues={blankAddressValuesForUser}
                 availableShippingCountries={
                   orderData.availableShippingCountries
                 }
                 onSelectAddress={async values => {
                   await setValues(values)
+                  await submitForm()
                 }}
               />
             ) : (

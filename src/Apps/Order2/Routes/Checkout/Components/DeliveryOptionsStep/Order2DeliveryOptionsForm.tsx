@@ -12,72 +12,52 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
-  CheckoutStepName,
-  CheckoutStepState,
-} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import {
-  CheckoutErrorBanner,
-  fallbackError,
-} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import {
+  SELECTABLE_TYPES,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
-import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
+import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
   Order2DeliveryOptionsForm_order$data,
   Order2DeliveryOptionsForm_order$key,
 } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
   order: Order2DeliveryOptionsForm_order$key
+  refreshingOptions?: boolean
 }
 
 type DeliveryOption =
   Order2DeliveryOptionsForm_order$data["fulfillmentOptions"][number]
 
-// Types submittable via setOrderFulfillmentOption. SHIPPING_TBD and PICKUP are excluded.
-const SELECTABLE_TYPES = [
-  "DOMESTIC_FLAT",
-  "INTERNATIONAL_FLAT",
-  "ARTSY_STANDARD",
-  "ARTSY_EXPRESS",
-  "ARTSY_WHITE_GLOVE",
-]
-
 export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
-> = ({ order }) => {
+> = ({ order, refreshingOptions = false }) => {
   const orderData = useFragment(FRAGMENT, order)
   const {
     checkoutTracking,
     completeStep,
-    setSectionErrorMessage,
     messages,
-    steps,
+    isFulfillmentDetailsSaving,
   } = useCheckoutContext()
-
-  const setFulfillmentOptionMutation =
-    useOrder2SetOrderFulfillmentOptionMutation()
-  const [isSaving, setIsSaving] = useState(false)
+  const { selectDeliveryOption } = useSelectDeliveryOption()
+  const [isDeliveryOptionSaving, setIsDeliveryOptionSaving] = useState(false)
 
   const deliveryOptionError = messages[CheckoutStepName.DELIVERY_OPTION]?.error
   const errorBannerRef = useScrollToErrorBanner(
     CheckoutStepName.DELIVERY_OPTION,
   )
-
-  const stepState = steps?.find(
-    step => step.name === CheckoutStepName.DELIVERY_OPTION,
-  )?.state
 
   const { fulfillmentOptions, shippingOrigin } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
@@ -90,63 +70,11 @@ export const Order2DeliveryOptionsForm: React.FC<
   const onlyShippingTBD =
     deliveryOptions.length > 0 && selectableOptions.length === 0
 
-  /**
-   * Saves a fulfillment option to the order. Used for both auto-save and user selection.
-   * Pass track=true for user-initiated selections to fire analytics.
-   */
-  const saveOption = useCallback(
-    async (option: DeliveryOption): Promise<boolean> => {
-      setIsSaving(true)
-      try {
-        const result = await setFulfillmentOptionMutation.submitMutation({
-          variables: {
-            input: {
-              id: orderData.internalID,
-              fulfillmentOption: { type: option.type as never },
-            },
-          },
-        })
-        validateAndExtractOrderResponse(
-          result.setOrderFulfillmentOption?.orderOrError,
-        ).order
-        setSectionErrorMessage({
-          section: CheckoutStepName.DELIVERY_OPTION,
-          error: null,
-        })
-        return true
-      } catch (error) {
-        setSectionErrorMessage({
-          section: CheckoutStepName.DELIVERY_OPTION,
-          error: fallbackError("selecting your shipping method", error?.code),
-        })
-        return false
-      } finally {
-        setIsSaving(false)
-      }
-    },
-    [
-      orderData.internalID,
-      setFulfillmentOptionMutation,
-      setSectionErrorMessage,
-    ],
-  )
-
-  // Auto-save the first selectable option when the step becomes ACTIVE.
-  // For single options, auto-advance to payment after saving.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: saveOption is stable; only re-run when step activates
-  useEffect(() => {
-    if (stepState !== CheckoutStepState.ACTIVE) return
-    if (selectableOptions.length === 0) return
-    const selectedType = orderData.selectedFulfillmentOption?.type
-    const existingSelectionIsStillValid =
-      selectedType && selectableOptions.some(o => o.type === selectedType)
-    if (existingSelectionIsStillValid) return
-    saveOption(selectableOptions[0]).then(() => {
-      if (selectableOptions.length === 1) {
-        completeStep(CheckoutStepName.DELIVERY_OPTION)
-      }
-    })
-  }, [stepState])
+  const hasFulfillmentDetails =
+    useCompleteFulfillmentDetailsData(orderData) !== null
+  const hasDeliveryOption =
+    deliveryOptions.length > 0 &&
+    (!!orderData.selectedFulfillmentOption || onlyShippingTBD)
 
   const handleContinue = useCallback(() => {
     checkoutTracking.clickedOrderProgression(
@@ -216,7 +144,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 
         <Spacer y={2} />
 
-        {isSaving && !orderData.selectedFulfillmentOption ? (
+        {refreshingOptions ? (
           <Skeleton>
             <Flex flexDirection="column" gap={1}>
               {[0, 1, 2].map(i => (
@@ -229,9 +157,17 @@ export const Order2DeliveryOptionsForm: React.FC<
         ) : deliveryOptions.length > 1 ? (
           <MultipleShippingOptionsForm
             options={deliveryOptions}
-            onSelectOption={option => {
+            onSelectOption={async option => {
+              // TODO: extract this into a named handler with proper error handling
+              // TODO: skip mutation if option.type === currently selected type (avoid duplicate saves)
               checkoutTracking.clickedSelectShippingOption(option.type)
-              return saveOption(option)
+              setIsDeliveryOptionSaving(true)
+              const success = await selectDeliveryOption(
+                orderData.internalID,
+                option.type,
+              )
+              setIsDeliveryOptionSaving(false)
+              return success
             }}
           />
         ) : (
@@ -245,11 +181,15 @@ export const Order2DeliveryOptionsForm: React.FC<
 
       <Spacer y={4} />
 
+      {/* TODO: this button advances through both the Fulfillment Details and
+          Delivery Option steps. Consider whether the copy/disabled logic should
+          reflect both steps more explicitly. */}
       <Button
-        loading={isSaving}
+        loading={isDeliveryOptionSaving || isFulfillmentDetailsSaving}
         disabled={
-          (!orderData.selectedFulfillmentOption && !onlyShippingTBD) ||
-          deliveryOptions.length === 0
+          isFulfillmentDetailsSaving ||
+          !hasFulfillmentDetails ||
+          !hasDeliveryOption
         }
         variant="primaryBlack"
         width="100%"
@@ -263,6 +203,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 
 const FRAGMENT = graphql`
   fragment Order2DeliveryOptionsForm_order on Order {
+    ...useCompleteFulfillmentDetailsData_order
     internalID
     fulfillmentOptions {
       amount {

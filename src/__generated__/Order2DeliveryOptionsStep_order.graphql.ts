@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b7b4aa6637508b8f0018949fa05c783>>
+ * @generated SignedSource<<e0952ab96f5e902ccbd81c859540076c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,7 @@ export type Order2DeliveryOptionsStep_order$data = {
     } | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order" | "useCompleteDeliveryOptionData_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order" | "useCompleteDeliveryOptionData_order" | "useCompleteFulfillmentDetailsData_order">;
   readonly " $fragmentType": "Order2DeliveryOptionsStep_order";
 };
 export type Order2DeliveryOptionsStep_order$key = {
@@ -48,6 +48,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "useCompleteDeliveryOptionData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteFulfillmentDetailsData_order"
     },
     {
       "args": null,
@@ -109,6 +114,6 @@ return {
 };
 })();
 
-(node as any).hash = "4b693c427c8594240ed64aaf344646b5";
+(node as any).hash = "a71ff901e92216a9602799660d734838";
 
 export default node;

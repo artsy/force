@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9922f82b4db1087d51a766af1e13f8c4>>
+ * @generated SignedSource<<9f4fef2ae1cafe3b942d524af03a0a1c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type Order2CheckoutContextTestQuery$data = {
       readonly order: {
         readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
       } | null | undefined;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_me">;
     } | null | undefined;
   } | null | undefined;
 };
@@ -34,6 +35,24 @@ var v0 = [
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = [
+  (v1/*: any*/),
+  (v2/*: any*/)
+],
+v4 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
@@ -58,24 +77,6 @@ v1 = {
   ],
   "storageKey": null
 },
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = [
-  (v3/*: any*/),
-  (v2/*: any*/)
-],
 v5 = {
   "enumValues": null,
   "nullable": false,
@@ -123,6 +124,11 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2CheckoutContext_me"
+              },
               {
                 "alias": null,
                 "args": (v0/*: any*/),
@@ -173,6 +179,44 @@ return {
             "selections": [
               {
                 "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 20
+                  }
+                ],
+                "concreteType": "UserAddressConnection",
+                "kind": "LinkedField",
+                "name": "addressConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddressEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "UserAddress",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": (v3/*: any*/),
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "addressConnection(first:20)"
+              },
+              {
+                "alias": null,
                 "args": (v0/*: any*/),
                 "concreteType": "Order",
                 "kind": "LinkedField",
@@ -201,7 +245,7 @@ return {
                         "name": "note",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
+                      (v4/*: any*/),
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -305,7 +349,7 @@ return {
                         "name": "type",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -333,13 +377,13 @@ return {
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v3/*: any*/),
                         "type": "CreditCard",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v3/*: any*/),
                         "type": "BankAccount",
                         "abstractKey": null
                       },
@@ -360,7 +404,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -420,7 +464,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7eabeb7d9b482d2bf2b3abc1c29bbd06",
+    "cacheID": "1fdac998d5e76e9ab6fbab84429c64a5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -436,6 +480,26 @@ return {
           "plural": false,
           "type": "Me"
         },
+        "viewer.me.addressConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddressConnection"
+        },
+        "viewer.me.addressConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "UserAddressEdge"
+        },
+        "viewer.me.addressConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddress"
+        },
+        "viewer.me.addressConnection.edges.node.id": (v5/*: any*/),
+        "viewer.me.addressConnection.edges.node.internalID": (v5/*: any*/),
         "viewer.me.id": (v5/*: any*/),
         "viewer.me.order": {
           "enumValues": null,
@@ -570,11 +634,11 @@ return {
     },
     "name": "Order2CheckoutContextTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      ...Order2CheckoutContext_me\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0d2bbf974c47774a0e65f0f65adcf893";
+(node as any).hash = "0495032c5174354813cc3a11f58e73cb";
 
 export default node;

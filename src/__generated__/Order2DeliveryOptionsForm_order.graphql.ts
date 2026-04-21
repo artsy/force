@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49109b7fbf58bce33c54528c9ec44e99>>
+ * @generated SignedSource<<9e9b4a3ef762206645e07075b9dbe82d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type Order2DeliveryOptionsForm_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
   readonly shippingOrigin: string | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"useCompleteFulfillmentDetailsData_order">;
   readonly " $fragmentType": "Order2DeliveryOptionsForm_order";
 };
 export type Order2DeliveryOptionsForm_order$key = {
@@ -46,6 +47,11 @@ return {
   "metadata": null,
   "name": "Order2DeliveryOptionsForm_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteFulfillmentDetailsData_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -122,6 +128,6 @@ return {
 };
 })();
 
-(node as any).hash = "49dcc3f71f75171b27bf34a7a8834c01";
+(node as any).hash = "68ecd78482bddda89caf73a8590404a6";
 
 export default node;

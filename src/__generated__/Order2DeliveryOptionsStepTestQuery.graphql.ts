@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b93e4f901f7c53020bcf0174c2da10bd>>
+ * @generated SignedSource<<fd46ae20185e0a257c98b5d8653e7104>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Order2DeliveryOptionsFormTestQuery$variables = Record<PropertyKey, never>;
-export type Order2DeliveryOptionsFormTestQuery$data = {
+export type Order2DeliveryOptionsStepTestQuery$variables = Record<PropertyKey, never>;
+export type Order2DeliveryOptionsStepTestQuery$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsStep_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type Order2DeliveryOptionsFormTestQuery = {
-  response: Order2DeliveryOptionsFormTestQuery$data;
-  variables: Order2DeliveryOptionsFormTestQuery$variables;
+export type Order2DeliveryOptionsStepTestQuery = {
+  response: Order2DeliveryOptionsStepTestQuery$data;
+  variables: Order2DeliveryOptionsStepTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -42,22 +42,48 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "minor",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Long"
+},
+v9 = {
   "enumValues": [
     "ARTSY_EXPRESS",
     "ARTSY_STANDARD",
@@ -76,7 +102,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "Order2DeliveryOptionsFormTestQuery",
+    "name": "Order2DeliveryOptionsStepTestQuery",
     "selections": [
       {
         "alias": null,
@@ -97,7 +123,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Order2DeliveryOptionsForm_order"
+                "name": "Order2DeliveryOptionsStep_order"
               }
             ],
             "storageKey": "order(id:\"order-id\")"
@@ -113,7 +139,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "Order2DeliveryOptionsFormTestQuery",
+    "name": "Order2DeliveryOptionsStepTestQuery",
     "selections": [
       {
         "alias": null,
@@ -131,6 +157,31 @@ return {
             "name": "order",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FulfillmentOption",
+                "kind": "LinkedField",
+                "name": "selectedFulfillmentOption",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Money",
+                    "kind": "LinkedField",
+                    "name": "amount",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -225,18 +276,6 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "FulfillmentOption",
-                "kind": "LinkedField",
-                "name": "selectedFulfillmentOption",
-                "plural": false,
-                "selections": [
-                  (v1/*: any*/)
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
                 "name": "internalID",
                 "storageKey": null
@@ -257,20 +296,8 @@ return {
                     "name": "amount",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "display",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "minor",
-                        "storageKey": null
-                      }
+                      (v3/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -292,18 +319,18 @@ return {
                 "name": "shippingOrigin",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
           },
-          (v2/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3fabb1ddb793cc844da097645f91a501",
+    "cacheID": "d77183abcc3d91e243aa3c4a714831f6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -313,7 +340,7 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v3/*: any*/),
+        "me.id": (v5/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
@@ -326,48 +353,38 @@ return {
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "me.order.fulfillmentDetails.addressLine1": (v4/*: any*/),
-        "me.order.fulfillmentDetails.addressLine2": (v4/*: any*/),
-        "me.order.fulfillmentDetails.city": (v4/*: any*/),
-        "me.order.fulfillmentDetails.country": (v4/*: any*/),
-        "me.order.fulfillmentDetails.name": (v4/*: any*/),
+        "me.order.fulfillmentDetails.addressLine1": (v6/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v6/*: any*/),
+        "me.order.fulfillmentDetails.city": (v6/*: any*/),
+        "me.order.fulfillmentDetails.country": (v6/*: any*/),
+        "me.order.fulfillmentDetails.name": (v6/*: any*/),
         "me.order.fulfillmentDetails.phoneNumber": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "me.order.fulfillmentDetails.phoneNumber.display": (v4/*: any*/),
-        "me.order.fulfillmentDetails.postalCode": (v4/*: any*/),
-        "me.order.fulfillmentDetails.region": (v4/*: any*/),
+        "me.order.fulfillmentDetails.phoneNumber.display": (v6/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v6/*: any*/),
+        "me.order.fulfillmentDetails.region": (v6/*: any*/),
         "me.order.fulfillmentOptions": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "FulfillmentOption"
         },
-        "me.order.fulfillmentOptions.amount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "me.order.fulfillmentOptions.amount.display": (v4/*: any*/),
-        "me.order.fulfillmentOptions.amount.minor": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Long"
-        },
+        "me.order.fulfillmentOptions.amount": (v7/*: any*/),
+        "me.order.fulfillmentOptions.amount.display": (v6/*: any*/),
+        "me.order.fulfillmentOptions.amount.minor": (v8/*: any*/),
         "me.order.fulfillmentOptions.selected": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "me.order.fulfillmentOptions.type": (v5/*: any*/),
-        "me.order.id": (v3/*: any*/),
-        "me.order.internalID": (v3/*: any*/),
+        "me.order.fulfillmentOptions.type": (v9/*: any*/),
+        "me.order.id": (v5/*: any*/),
+        "me.order.internalID": (v5/*: any*/),
         "me.order.mode": {
           "enumValues": [
             "BUY",
@@ -383,17 +400,20 @@ return {
           "plural": false,
           "type": "FulfillmentOption"
         },
-        "me.order.selectedFulfillmentOption.type": (v5/*: any*/),
-        "me.order.shippingOrigin": (v4/*: any*/)
+        "me.order.selectedFulfillmentOption.amount": (v7/*: any*/),
+        "me.order.selectedFulfillmentOption.amount.display": (v6/*: any*/),
+        "me.order.selectedFulfillmentOption.amount.minor": (v8/*: any*/),
+        "me.order.selectedFulfillmentOption.type": (v9/*: any*/),
+        "me.order.shippingOrigin": (v6/*: any*/)
       }
     },
-    "name": "Order2DeliveryOptionsFormTestQuery",
+    "name": "Order2DeliveryOptionsStepTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
+    "text": "query Order2DeliveryOptionsStepTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment Order2DeliveryOptionsStep_order on Order {\n  ...useCompleteDeliveryOptionData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...Order2DeliveryOptionsForm_order\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n    amount {\n      display\n    }\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "964511bda3c1a1d85798f76043ef1190";
+(node as any).hash = "d67a126aa0e4ff59914fff7915094ca8";
 
 export default node;
