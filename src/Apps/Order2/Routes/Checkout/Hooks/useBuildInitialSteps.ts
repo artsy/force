@@ -3,6 +3,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { applyDeliveryOptionLogic } from "Apps/Order2/Routes/Checkout/CheckoutContext/stepUtils"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useCompleteOfferData"
@@ -75,7 +76,7 @@ export const useBuildInitialSteps = (
     firstUpcomingStep.state = CheckoutStepState.ACTIVE
   }
 
-  return steps
+  return applyDeliveryOptionLogic(steps)
 }
 
 const FRAGMENT = graphql`

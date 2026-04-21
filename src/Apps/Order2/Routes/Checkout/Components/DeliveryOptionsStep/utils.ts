@@ -1,3 +1,12 @@
+// Types submittable via setOrderFulfillmentOption. SHIPPING_TBD and PICKUP are excluded.
+export const SELECTABLE_TYPES = [
+  "DOMESTIC_FLAT",
+  "INTERNATIONAL_FLAT",
+  "ARTSY_STANDARD",
+  "ARTSY_EXPRESS",
+  "ARTSY_WHITE_GLOVE",
+]
+
 // TODO: Get these from MP
 export const deliveryOptionLabel = (
   type?: string | null,
