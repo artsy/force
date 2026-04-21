@@ -10,6 +10,7 @@ export interface Order2DeliveryOptionsCompletedViewProps {
   timeEstimatePrefix: string | null
   timeEstimateRange: string | null
   price?: string | null
+  simplePriceDisplay?: string | null
   allowEdit?: boolean
 }
 
@@ -20,6 +21,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   timeEstimatePrefix,
   timeEstimateRange,
   price,
+  simplePriceDisplay,
   allowEdit = true,
 }) => {
   const { editStep, checkoutTracking } = useCheckoutContext()
@@ -53,15 +55,11 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
         )}
       </Flex>
       <Box ml="30px" mt={1}>
-        <Flex justifyContent="space-between">
+        <Flex>
           <Text variant="sm-display" color="mono100">
-            {label}
+            {[label, simplePriceDisplay].filter(Boolean).join(" ")}
           </Text>
-          {price && (
-            <Text variant="sm" color="mono100">
-              {price}
-            </Text>
-          )}
+          <Spacer x={2} />
         </Flex>
         {timeEstimatePrefix && timeEstimateRange && (
           <Text variant="sm" color="mono60">

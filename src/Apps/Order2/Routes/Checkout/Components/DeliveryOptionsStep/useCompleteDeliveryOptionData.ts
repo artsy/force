@@ -53,13 +53,18 @@ export const useCompleteDeliveryOptionData = (
     fulfillmentType,
   )
 
+  const amount = orderData.selectedFulfillmentOption?.amount
+  const simplePriceDisplay =
+    isFlatRate && amount && amount.minor > 0
+      ? `${amount.currencySymbol}${amount.major}`
+      : null
+
   return {
     label: label || "",
     timeEstimatePrefix: timeEstimate?.[0] || null,
     timeEstimateRange: timeEstimate?.[1] || null,
-    price: isFlatRate
-      ? orderData.selectedFulfillmentOption?.amount?.display || null
-      : null,
+    price: isFlatRate ? amount?.display || null : null,
+    simplePriceDisplay,
   }
 }
 
@@ -70,6 +75,8 @@ const FRAGMENT = graphql`
       amount {
         minor
         display
+        major
+        currencySymbol
       }
     }
   }
