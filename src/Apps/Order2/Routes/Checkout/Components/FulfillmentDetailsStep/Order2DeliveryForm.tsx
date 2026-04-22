@@ -35,7 +35,7 @@ import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Form, Formik, type FormikHelpers } from "formik"
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo, useRef } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryFormProps {
@@ -158,6 +158,13 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   }, [addressConnection, orderData.availableShippingCountries])
 
   const hasSavedAddresses = processedAddresses.length > 0
+
+  // Track whether we previously had saved addresses so that when the last one
+  // is deleted we can show a blank form instead of pre-filling from the stale
+  // fulfillmentDetails still on the order.
+  const hadSavedAddressesRef = useRef(hasSavedAddresses)
+  const deletedLastAddress = hadSavedAddressesRef.current && !hasSavedAddresses
+  hadSavedAddressesRef.current = hasSavedAddresses
 
   const initialSelectedAddress = useMemo(() => {
     return findInitialSelectedAddress(processedAddresses, initialValues)
@@ -325,7 +332,11 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   )
   return (
     <Formik
-      initialValues={initialSelectedAddress || initialValues}
+      initialValues={
+        deletedLastAddress
+          ? blankAddressValuesForUser
+          : initialSelectedAddress || initialValues
+      }
       enableReinitialize={true}
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={onSubmit}
