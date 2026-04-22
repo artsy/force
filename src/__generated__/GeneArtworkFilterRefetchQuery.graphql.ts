@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ebb9157910da3d26589c5dfe58a78f0>>
+ * @generated SignedSource<<fa092eaf6d8e848fb9cacd96c0d02b31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,6 +63,7 @@ export type FilterArtworksInput = {
   partnerCities?: ReadonlyArray<string | null | undefined> | null | undefined;
   partnerID?: string | null | undefined;
   partnerIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  partnerListID?: string | null | undefined;
   period?: string | null | undefined;
   periods?: ReadonlyArray<string | null | undefined> | null | undefined;
   priceRange?: string | null | undefined;
