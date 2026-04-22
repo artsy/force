@@ -124,7 +124,7 @@
     "http-shutdown": "1.2.1",
     "ip": "^1.1.9",
     "localforage": "^1.10.0",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "luxon": "^3.2.1",
     "map-cursor-to-max": "^1.0.0",
     "memoize-one": "^5.2.1",
