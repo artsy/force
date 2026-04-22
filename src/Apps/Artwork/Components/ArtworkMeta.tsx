@@ -6,9 +6,6 @@ import type { ArtworkMeta_artwork$key } from "__generated__/ArtworkMeta_artwork.
 import { Link, Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
-import { useUnleashContext, useVariant } from "@unleash/proxy-client-react"
-import { useEffect, useState } from "react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$key
@@ -19,26 +16,6 @@ export const ArtworkMeta: React.FC<
 > = ({ artwork }) => {
   const { match } = useRouter()
   const data = useFragment(artworkMetaFragment, artwork)
-
-  const updateContext = useUnleashContext()
-  const variant = useVariant("diamond_artwork-title-experiment")
-  const [contextReady, setContextReady] = useState(false)
-
-  useEffect(() => {
-    /**
-     * Since the experiment is sticky per-artwork (rather than per-user or
-     * per-session) we need to add the artwork id to the Unleash context before
-     * checking or tracking the experiment flag's values.
-     */
-    updateContext({ properties: { artworkId: data.internalID } }).then(() => {
-      setContextReady(true)
-    })
-  }, [data.internalID, updateContext])
-
-  useTrackFeatureVariantOnMount({
-    experimentName: "diamond_artwork-title-experiment",
-    variantName: contextReady ? variant.name : "disabled",
-  })
 
   const pathname = match.location.pathname
   const imageURL = data.metaImage?.resized?.url
