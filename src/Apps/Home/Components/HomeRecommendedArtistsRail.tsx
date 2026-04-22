@@ -4,11 +4,13 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import { Skeleton } from "@artsy/palette"
 import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
 } from "Components/Cells/CellArtist"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -18,14 +20,18 @@ import type { HomeRecommendedArtistsRail_me$key } from "__generated__/HomeRecomm
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeRecommendedArtistsRailProps {
+interface HomeRecommendedArtistsRailProps extends HomeRailTrackingProps {
   me: HomeRecommendedArtistsRail_me$key
 }
 
 export const HomeRecommendedArtistsRail: React.FC<
   React.PropsWithChildren<HomeRecommendedArtistsRailProps>
-> = ({ me }) => {
+> = ({ me, railPositionY }) => {
   const { trackEvent } = useTracking()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.recommendedArtistsRail,
+    positionY: railPositionY,
+  })
   const data = useFragment(FRAGMENT, me)
   const artists = extractNodes(data.artistRecommendations)
 
@@ -35,6 +41,7 @@ export const HomeRecommendedArtistsRail: React.FC<
 
   return (
     <Rail
+      ref={railImpressionRef}
       alignItems="flex-start"
       title="Recommended Artists"
       viewAllLabel="View Artists"
@@ -90,8 +97,8 @@ const FRAGMENT = graphql`
 `
 
 export const HomeRecommendedArtistsRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment, user } = useSystemContext()
 
   if (!user) {
@@ -120,7 +127,12 @@ export const HomeRecommendedArtistsRailQueryRenderer: React.FC<
           return PLACEHOLDER
         }
 
-        return <HomeRecommendedArtistsRail me={props.me} />
+        return (
+          <HomeRecommendedArtistsRail
+            me={props.me}
+            railPositionY={railPositionY}
+          />
+        )
       }}
     />
   )

@@ -5,11 +5,12 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Shelf, Skeleton } from "@artsy/palette"
+import { Box, Shelf, Skeleton } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type * as React from "react"
@@ -22,13 +23,18 @@ import type { HomeAuctionLotsForYouRail_artworksForUser$data } from "__generated
 
 interface HomeAuctionLotsForYouRailProps {
   artworksForUser: HomeAuctionLotsForYouRail_artworksForUser$data
+  railPositionY?: number
 }
 
 const HomeAuctionLotsForYouRail: React.FC<
   React.PropsWithChildren<HomeAuctionLotsForYouRailProps>
-> = ({ artworksForUser }) => {
+> = ({ artworksForUser, railPositionY }) => {
   const { trackEvent } = useTracking()
   const contextModule = ContextModule.lotsForYouRail as AuthContextModule
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.lotsForYouRail,
+    positionY: railPositionY,
+  })
 
   const artworks = extractNodes(artworksForUser)
 
@@ -37,37 +43,39 @@ const HomeAuctionLotsForYouRail: React.FC<
   }
 
   return (
-    <Shelf>
-      {artworks.map((artwork, index) => {
-        if (!artwork) {
-          return <></>
-        }
+    <Box ref={railImpressionRef} width="100%">
+      <Shelf>
+        {artworks.map((artwork, index) => {
+          if (!artwork) {
+            return <></>
+          }
 
-        return (
-          <ShelfArtworkFragmentContainer
-            artwork={artwork}
-            key={index}
-            lazyLoad
-            contextModule={contextModule}
-            onClick={() => {
-              const trackingEvent: ClickedArtworkGroup = {
-                action: ActionType.clickedArtworkGroup,
-                context_module: ContextModule.lotsForYouRail,
-                context_page_owner_type: OwnerType.home,
-                destination_page_owner_id: artwork.internalID,
-                destination_page_owner_slug: artwork.slug,
-                destination_page_owner_type: OwnerType.artwork,
-                type: "thumbnail",
-                signal_bid_count: artwork.collectorSignals?.auction?.bidCount,
-                signal_lot_watcher_count:
-                  artwork.collectorSignals?.auction?.lotWatcherCount,
-              }
-              trackEvent(trackingEvent)
-            }}
-          />
-        )
-      })}
-    </Shelf>
+          return (
+            <ShelfArtworkFragmentContainer
+              artwork={artwork}
+              key={index}
+              lazyLoad
+              contextModule={contextModule}
+              onClick={() => {
+                const trackingEvent: ClickedArtworkGroup = {
+                  action: ActionType.clickedArtworkGroup,
+                  context_module: ContextModule.lotsForYouRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: artwork.internalID,
+                  destination_page_owner_slug: artwork.slug,
+                  destination_page_owner_type: OwnerType.artwork,
+                  type: "thumbnail",
+                  signal_bid_count: artwork.collectorSignals?.auction?.bidCount,
+                  signal_lot_watcher_count:
+                    artwork.collectorSignals?.auction?.lotWatcherCount,
+                }
+                trackEvent(trackingEvent)
+              }}
+            />
+          )
+        })}
+      </Shelf>
+    </Box>
   )
 }
 
@@ -103,8 +111,8 @@ export const HomeAuctionLotsForYouRailFragmentContainer =
   })
 
 export const HomeAuctionLotsForYouRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<{ railPositionY?: number }>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -137,6 +145,7 @@ export const HomeAuctionLotsForYouRailQueryRenderer: React.FC<
           return (
             <HomeAuctionLotsForYouRailFragmentContainer
               artworksForUser={props.artworksForUser}
+              railPositionY={railPositionY}
             />
           )
         }

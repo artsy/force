@@ -5,12 +5,14 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import { Skeleton } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -21,15 +23,19 @@ import type { HomeArtworkRecommendationsRail_me$key } from "__generated__/HomeAr
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeArtworkRecommendationsRailProps {
+interface HomeArtworkRecommendationsRailProps extends HomeRailTrackingProps {
   me: HomeArtworkRecommendationsRail_me$key
 }
 
 export const HomeArtworkRecommendationsRail: React.FC<
   React.PropsWithChildren<HomeArtworkRecommendationsRailProps>
-> = ({ me }) => {
+> = ({ me, railPositionY }) => {
   const { trackEvent } = useTracking()
   const { signals } = useArtworkGridContext()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.artworkRecommendationsRail,
+    positionY: railPositionY,
+  })
   const data = useFragment(FRAGMENT, me)
 
   const artworks = extractNodes(data?.artworkRecommendations)
@@ -40,6 +46,7 @@ export const HomeArtworkRecommendationsRail: React.FC<
 
   return (
     <Rail
+      ref={railImpressionRef}
       title="We Think You’ll Love"
       viewAllLabel="View All Works"
       viewAllHref="/recommendations/artworks"
@@ -115,8 +122,8 @@ const FRAGMENT = graphql`
 `
 
 export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment, user } = useSystemContext()
 
   if (!user) {
@@ -145,7 +152,12 @@ export const HomeArtworkRecommendationsRailQueryRenderer: React.FC<
           return PLACEHOLDER
         }
 
-        return <HomeArtworkRecommendationsRail me={props.me} />
+        return (
+          <HomeArtworkRecommendationsRail
+            me={props.me}
+            railPositionY={railPositionY}
+          />
+        )
       }}
     />
   )
