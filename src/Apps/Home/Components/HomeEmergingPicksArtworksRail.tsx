@@ -4,12 +4,14 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import { Skeleton } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
@@ -19,15 +21,19 @@ import type { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/Ho
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeEmergingPicksArtworksRailProps {
+interface HomeEmergingPicksArtworksRailProps extends HomeRailTrackingProps {
   viewer: HomeEmergingPicksArtworksRail_viewer$data
 }
 
 export const HomeEmergingPicksArtworksRail: React.FC<
   React.PropsWithChildren<HomeEmergingPicksArtworksRailProps>
-> = ({ viewer }) => {
+> = ({ viewer, railPositionY }) => {
   const { trackEvent } = useTracking()
   const { signals } = useArtworkGridContext()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.troveArtworksRail,
+    positionY: railPositionY,
+  })
   const artworks = extractNodes(viewer.artworksConnection)
 
   if (artworks.length === 0) {
@@ -36,6 +42,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
 
   return (
     <Rail
+      ref={railImpressionRef}
       title="Curators’ Picks"
       subTitle="Fresh standout works handpicked by our chief curator."
       viewAllLabel="View All Works"
@@ -120,8 +127,8 @@ export const HomeEmergingPicksArtworksRailFragmentContainer =
   })
 
 export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   return (
     <SystemQueryRenderer<HomeEmergingPicksArtworksRailQuery>
       placeholder={PLACEHOLDER}
@@ -146,6 +153,7 @@ export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<
         return (
           <HomeEmergingPicksArtworksRailFragmentContainer
             viewer={props.viewer}
+            railPositionY={railPositionY}
           />
         )
       }}

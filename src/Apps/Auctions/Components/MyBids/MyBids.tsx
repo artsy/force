@@ -10,6 +10,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -24,11 +25,17 @@ import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 
 interface MyBidsProps {
   me: MyBids_me$data
+  railPositionY?: number
 }
 
 const MyBids: React.FC<React.PropsWithChildren<MyBidsProps>> = props => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.yourActiveBids,
+    disabled: props.railPositionY === undefined,
+    positionY: props.railPositionY,
+  })
 
   const { me } = props
   const active = me?.myBids?.active ?? []
@@ -38,7 +45,7 @@ const MyBids: React.FC<React.PropsWithChildren<MyBidsProps>> = props => {
   }
 
   return (
-    <>
+    <Box ref={railImpressionRef} width="100%">
       <Text variant="lg-display">Your Auctions and Bids</Text>
       <Spacer y={4} />
       <Shelf alignItems="flex-start">
@@ -105,7 +112,7 @@ const MyBids: React.FC<React.PropsWithChildren<MyBidsProps>> = props => {
           )
         })}
       </Shelf>
-    </>
+    </Box>
   )
 }
 
@@ -127,10 +134,12 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   `,
 })
 
-interface MyBidsQueryRendererProps extends BoxProps {}
+interface MyBidsQueryRendererProps extends BoxProps {
+  railPositionY?: number
+}
 export const MyBidsQueryRenderer: React.FC<
   React.PropsWithChildren<MyBidsQueryRendererProps>
-> = ({ mb = 0, ...boxProps }) => {
+> = ({ mb = 0, railPositionY, ...boxProps }) => {
   const { relayEnvironment, user } = useSystemContext()
 
   if (!user) {
@@ -160,7 +169,12 @@ export const MyBidsQueryRenderer: React.FC<
           }
 
           if (props.me) {
-            return <MyBidsFragmentContainer me={props.me} />
+            return (
+              <MyBidsFragmentContainer
+                me={props.me}
+                railPositionY={railPositionY}
+              />
+            )
           }
         }}
       />
