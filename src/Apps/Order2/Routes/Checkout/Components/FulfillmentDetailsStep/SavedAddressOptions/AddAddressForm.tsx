@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Button, Spacer } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
@@ -28,7 +29,7 @@ export const AddAddressForm = ({
 }: AddAddressFormProps) => {
   const createUserAddress = useOrder2CreateUserAddressMutation()
   const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
-  const { setUserAddressMode } = useCheckoutContext()
+  const { setUserAddressMode, checkoutTracking } = useCheckoutContext()
 
   const handleSetAsDefault = async (addressID: string) => {
     await updateUserDefaultAddress.submitMutation({
@@ -102,7 +103,17 @@ export const AddAddressForm = ({
 
             <Spacer y={4} />
 
-            <Button width="100%" type="submit" loading={isSubmitting}>
+            <Button
+              width="100%"
+              type="submit"
+              onClick={() => {
+                // submission handled by Formik `onSubmit` handler
+                checkoutTracking.clickedOrderProgression(
+                  ContextModule.ordersFulfillment,
+                )
+              }}
+              loading={isSubmitting}
+            >
               Save Address
             </Button>
 

@@ -211,9 +211,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       try {
         setIsFulfillmentDetailsSaving(true)
         setCheckoutMode("standard")
-        checkoutTracking.clickedOrderProgression(
-          ContextModule.ordersFulfillment,
-        )
 
         // Unset the current fulfillment option if it exists
         if (orderData.selectedFulfillmentOption?.type) {
@@ -318,7 +315,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       }
     },
     [
-      checkoutTracking,
       hasSavedAddresses,
       orderData.internalID,
       orderData.selectedFulfillmentOption?.type,
@@ -391,6 +387,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                   type="submit"
                   loading={isSubmitting}
                   disabled={!!status?.errorBanner}
+                  onClick={() => {
+                    // submission handled by Formik `onSubmit` handler
+                    checkoutTracking.clickedOrderProgression(
+                      ContextModule.ordersFulfillment,
+                    )
+                  }}
                   width="100%"
                 >
                   Save and Continue

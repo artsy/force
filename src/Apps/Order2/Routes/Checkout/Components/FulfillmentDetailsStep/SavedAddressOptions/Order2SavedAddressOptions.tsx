@@ -75,6 +75,7 @@ export const SavedAddressOptions = ({
   )
 
   // Track when saved addresses are viewed (only once when step is active)
+  // TODO: fires too many times
   useEffect(() => {
     if (
       !checkoutTracking ||
