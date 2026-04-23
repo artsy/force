@@ -136,6 +136,7 @@
     "passport-apple": "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
+    "passport-google-one-tap": "^1.0.1",
     "passport-strategy": "1.x.x",
     "path-to-regexp": "6.3.0",
     "proportional-scale": "^4.0.0",
