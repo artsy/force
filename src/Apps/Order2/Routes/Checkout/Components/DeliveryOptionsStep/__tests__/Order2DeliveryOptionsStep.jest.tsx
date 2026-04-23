@@ -149,5 +149,31 @@ describe("Order2DeliveryOptionsStep", () => {
         screen.getByRole("button", { name: "Continue to Payment" }),
       ).toBeInTheDocument()
     })
+
+    it("renders the placeholder when returning from pickup to delivery tab (no delivery address saved)", () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            ...orderWithFulfillmentDetails,
+            selectedFulfillmentOption: { type: "PICKUP", amount: null },
+            fulfillmentDetails: {
+              name: "John Doe",
+              addressLine1: null,
+              addressLine2: null,
+              city: null,
+              region: null,
+              postalCode: null,
+              country: null,
+              phoneNumber: { display: "+1 555-123-4567" },
+            },
+          },
+        }),
+      })
+      expect(screen.getByText("Shipping method")).toBeInTheDocument()
+      expect(
+        screen.getByText("Methods vary based on location and artwork size"),
+      ).toBeInTheDocument()
+      expect(screen.queryByRole("button")).not.toBeInTheDocument()
+    })
   })
 })
