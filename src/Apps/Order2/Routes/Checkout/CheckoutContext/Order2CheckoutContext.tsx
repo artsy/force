@@ -1,3 +1,4 @@
+import { applyDeliveryOptionLogic } from "Apps/Order2/Routes/Checkout/CheckoutContext/stepUtils"
 import type {
   CheckoutSection,
   CheckoutStep,
@@ -10,16 +11,15 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { applyDeliveryOptionLogic } from "Apps/Order2/Routes/Checkout/CheckoutContext/stepUtils"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
+import type { Order2CheckoutContext_me$key } from "__generated__/Order2CheckoutContext_me.graphql"
 import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
-import type { Order2CheckoutContext_me$key } from "__generated__/Order2CheckoutContext_me.graphql"
 import { type Action, action, createContextStore } from "easy-peasy"
 import type React from "react"
 import { useMemo } from "react"
@@ -283,6 +283,9 @@ export const Order2CheckoutContextProvider: React.FC<
   const fulfillmentDetailsStep = initialSteps.find(
     s => s.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )
+
+  // Autosave of shipping address only applies when it is the first step,
+  // i.e. there is no offer step preceding it.
   const isOffer = orderData.mode === "OFFER"
   const needsInitialAutoSave =
     !isOffer &&
