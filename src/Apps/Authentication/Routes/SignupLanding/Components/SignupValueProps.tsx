@@ -15,6 +15,7 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { cropped } from "Utils/resized"
 
 export const SignupValueProps = () => {
   const { theme } = useTheme()
@@ -34,13 +35,20 @@ export const SignupValueProps = () => {
               bg="mono0"
               boxShadow={theme.effects.dropShadow}
             >
-              <ResponsiveBox
-                aspectWidth={4}
-                aspectHeight={3}
-                maxWidth="100%"
-                bg="mono10"
-              >
-                <Image />
+              <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
+                <Image
+                  {...cropped(
+                    "https://files.artsy.net/images/rectangle-1.png",
+                    {
+                      width: 800,
+                      height: 600,
+                    },
+                  )}
+                  width="100%"
+                  height="100%"
+                  alt="Gallery interior with artwork"
+                  lazyLoad
+                />
               </ResponsiveBox>
               <Box px={2} pb={2}>
                 <Flex
@@ -73,13 +81,20 @@ export const SignupValueProps = () => {
               bg="mono0"
               boxShadow={theme.effects.dropShadow}
             >
-              <ResponsiveBox
-                aspectWidth={4}
-                aspectHeight={3}
-                maxWidth="100%"
-                bg="mono10"
-              >
-                <Image />
+              <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
+                <Image
+                  {...cropped(
+                    "https://files.artsy.net/images/rectangle-2.png",
+                    {
+                      width: 800,
+                      height: 600,
+                    },
+                  )}
+                  width="100%"
+                  height="100%"
+                  alt="People viewing art at auction"
+                  lazyLoad
+                />
               </ResponsiveBox>
               <Box px={2} pb={2}>
                 <Flex
@@ -111,13 +126,20 @@ export const SignupValueProps = () => {
               bg="mono0"
               boxShadow={theme.effects.dropShadow}
             >
-              <ResponsiveBox
-                aspectWidth={4}
-                aspectHeight={3}
-                maxWidth="100%"
-                bg="mono10"
-              >
-                <Image />
+              <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
+                <Image
+                  {...cropped(
+                    "https://files.artsy.net/images/rectangle-3.png",
+                    {
+                      width: 800,
+                      height: 600,
+                    },
+                  )}
+                  width="100%"
+                  height="100%"
+                  alt="KAWS sculpture"
+                  lazyLoad
+                />
               </ResponsiveBox>
               <Box px={2} pb={2}>
                 <Flex
