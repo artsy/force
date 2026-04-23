@@ -186,7 +186,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -208,7 +208,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -229,7 +229,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -252,7 +252,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -277,7 +277,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockInvalidAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -314,7 +314,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -352,7 +352,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -382,7 +382,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -426,7 +426,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockInvalidAddressWithMissingCity]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -502,7 +502,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -594,7 +594,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockSingleInvalidAddress]}
             initialSelectedAddress={mockSingleInvalidAddress}
             onSelectAddress={onSelectAddress}
@@ -617,7 +617,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -641,7 +641,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={false}
+            hasDeliveryAddress={false}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -667,7 +667,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={false}
+            hasDeliveryAddress={false}
             savedAddresses={[unshippable, mockUSAddress2]}
             initialSelectedAddress={unshippable}
             onSelectAddress={onSelectAddress}
@@ -687,7 +687,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -716,7 +716,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={false}
+            hasDeliveryAddress={false}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -764,7 +764,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2, mockUSAddress3]}
             initialSelectedAddress={mockUSAddress2}
             onSelectAddress={onSelectAddress}
@@ -791,7 +791,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -834,7 +834,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -875,7 +875,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
-            hasFulfillmentDetails={true}
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}

@@ -9,7 +9,6 @@ export interface Order2DeliveryOptionsCompletedViewProps {
   label: string
   timeEstimatePrefix: string | null
   timeEstimateRange: string | null
-  price?: string | null
   simplePriceDisplay?: string | null
   allowEdit?: boolean
 }
@@ -20,7 +19,6 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   label,
   timeEstimatePrefix,
   timeEstimateRange,
-  price,
   simplePriceDisplay,
   allowEdit = true,
 }) => {

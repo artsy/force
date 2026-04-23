@@ -161,7 +161,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
   // Treat pickup fulfillment as "no delivery address saved" so the initial
   // auto-submit effect re-fires when switching back to the delivery tab.
-  const hasDeliveryFulfillmentDetails =
+  const hasDeliveryAddress =
     hasFulfillmentDetails &&
     orderData.selectedFulfillmentOption?.type !== "PICKUP"
 
@@ -365,7 +365,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
               <SavedAddressOptions
                 savedAddresses={processedAddresses}
                 initialSelectedAddress={initialSelectedAddress}
-                hasFulfillmentDetails={hasDeliveryFulfillmentDetails}
+                hasDeliveryAddress={hasDeliveryAddress}
                 newAddressInitialValues={blankAddressValuesForUser}
                 availableShippingCountries={
                   orderData.availableShippingCountries
