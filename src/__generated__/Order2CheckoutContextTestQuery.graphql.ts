@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf638e4b56be71894a522be10047ccb1>>
+ * @generated SignedSource<<668f7190d550d53b68eea89bc246109e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -364,14 +364,14 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "major",
+                            "name": "currencySymbol",
                             "storageKey": null
                           },
                           {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "currencySymbol",
+                            "name": "major",
                             "storageKey": null
                           }
                         ],
@@ -491,7 +491,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aebef3a434340d3d5880c24c5c8bc9f3",
+    "cacheID": "dcdbbcd81dc4aa5e14a69a9138d9fae2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -668,7 +668,7 @@ return {
     },
     "name": "Order2CheckoutContextTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      ...Order2CheckoutContext_me\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      major\n      currencySymbol\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      ...Order2CheckoutContext_me\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
