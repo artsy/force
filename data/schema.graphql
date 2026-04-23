@@ -492,6 +492,7 @@ type Alert {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -1924,6 +1925,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -2394,6 +2396,7 @@ type ArtistPartnerEdge {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -2565,6 +2568,7 @@ type ArtistSeries implements Node {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -3489,6 +3493,7 @@ type ArtworkFilterNode {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -3544,6 +3549,7 @@ type ArtworkImport implements Node {
   # A type-specific ID likely used as a database ID.
   internalID: ID!
   locationID: String
+  partnerListID: String
   rawDataMapping: JSON!
   rowsConnection(
     after: String
@@ -5354,6 +5360,35 @@ type BidderPositionSuggestedNextBid {
 # exceed the size of a 32-bit integer, it's encoded as a string.
 scalar BigInt
 
+type BrandKit {
+  backgroundColor: String
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  ctaColor: String
+  fontFamily: String
+  fontStyle: String
+  fontWeight: String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  logo: Image
+  partnerID: String
+  textColor: String
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+}
+
 type BulkAddArtworksToPartnerListFailure {
   mutationError: GravityMutationError
 }
@@ -5442,6 +5477,34 @@ input BulkArtworkFilterInput {
 
   # Filter artworks by published status
   published: Boolean
+}
+
+type BulkDeleteArtworksFromPartnerListFailure {
+  mutationError: GravityMutationError
+}
+
+input BulkDeleteArtworksFromPartnerListMutationInput {
+  # The IDs of the artworks to remove.
+  artworkIds: [String!]!
+  clientMutationId: String
+
+  # The ID of the partner list.
+  listId: String!
+}
+
+type BulkDeleteArtworksFromPartnerListMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated partner list. On error: the error that occurred.
+  partnerListOrError: BulkDeleteArtworksFromPartnerListResponseOrError
+}
+
+union BulkDeleteArtworksFromPartnerListResponseOrError =
+  | BulkDeleteArtworksFromPartnerListFailure
+  | BulkDeleteArtworksFromPartnerListSuccess
+
+type BulkDeleteArtworksFromPartnerListSuccess {
+  partnerList: PartnerList
 }
 
 input BulkUpdateArtworksMetadataInput {
@@ -5566,6 +5629,9 @@ input BulkUpdateArtworksMetadataMutationInput {
 
   # Source of the mutation being triggered, E.g. admin, artworks_list
   source: BulkUpdateSourceEnum
+
+  # When true, catalog-eligible fields are routed to CatalogArtwork records instead of Artwork
+  updateCatalog: Boolean
 }
 
 type BulkUpdateArtworksMetadataMutationPayload {
@@ -10128,6 +10194,7 @@ input CreateArtworkImportInput {
   parseWithAI: Boolean
   parseWithAIModel: String
   partnerID: String!
+  partnerListID: String
   s3Bucket: String!
   s3Key: String!
 
@@ -10230,6 +10297,48 @@ input CreateBidderInput {
 type CreateBidderPayload {
   bidder: Bidder
   clientMutationId: String
+}
+
+type CreateBrandKitFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateBrandKitInput {
+  # Background color hex code (e.g. #FF0000)
+  backgroundColor: String
+  clientMutationId: String
+
+  # CTA color hex code (e.g. #FF0000)
+  ctaColor: String
+
+  # Font family name
+  fontFamily: String
+
+  # Font style
+  fontStyle: String
+
+  # Font weight
+  fontWeight: String
+
+  # The partner ID to create the brand kit for
+  partnerId: String!
+
+  # Text color hex code (e.g. #FF0000)
+  textColor: String
+}
+
+type CreateBrandKitPayload {
+  # On success: the created brand kit
+  brandKitOrError: CreateBrandKitResponseOrError
+  clientMutationId: String
+}
+
+union CreateBrandKitResponseOrError =
+  | CreateBrandKitFailure
+  | CreateBrandKitSuccess
+
+type CreateBrandKitSuccess {
+  brandKit: BrandKit
 }
 
 type CreateCanonicalArtistFailure {
@@ -10913,6 +11022,9 @@ input CreatePartnerListMutationInput {
   # End date for the list.
   endAt: String
 
+  # The ID of the fair to associate with this list.
+  fairID: String
+
   # The type of list (show, fair, or other).
   listType: PartnerListTypeEnum
 
@@ -10985,6 +11097,7 @@ input CreatePartnerLocationInput {
 
   # Primary email of given location
   email: String
+  name: String
 
   # ID of the partner
   partnerId: String!
@@ -11845,6 +11958,56 @@ type DeleteBankAccountPayload {
   bankAccountOrError: BankAccountMutationType
   clientMutationId: String
   me: Me
+}
+
+type DeleteBrandKitFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteBrandKitInput {
+  clientMutationId: String
+
+  # The internal ID of the brand kit to delete
+  id: String!
+}
+
+type DeleteBrandKitLogoFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteBrandKitLogoInput {
+  clientMutationId: String
+
+  # The internal ID of the brand kit
+  id: String!
+}
+
+type DeleteBrandKitLogoPayload {
+  # On success: the brand kit with the logo removed
+  brandKitOrError: DeleteBrandKitLogoResponseOrError
+  clientMutationId: String
+}
+
+union DeleteBrandKitLogoResponseOrError =
+  | DeleteBrandKitLogoFailure
+  | DeleteBrandKitLogoSuccess
+
+type DeleteBrandKitLogoSuccess {
+  brandKit: BrandKit
+}
+
+type DeleteBrandKitPayload {
+  # On success: a boolean indicating the brand kit was deleted
+  brandKitOrError: DeleteBrandKitResponseOrError
+  clientMutationId: String
+}
+
+union DeleteBrandKitResponseOrError =
+  | DeleteBrandKitFailure
+  | DeleteBrandKitSuccess
+
+type DeleteBrandKitSuccess {
+  success: Boolean
 }
 
 type DeleteCareerHighlightFailure {
@@ -13118,6 +13281,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -13451,6 +13615,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -13998,6 +14163,7 @@ input FilterArtworksInput {
   partnerCities: [String]
   partnerID: ID
   partnerIDs: [String]
+  partnerListID: String
   period: String
   periods: [String]
   priceRange: String
@@ -14569,6 +14735,7 @@ type Gene implements Node & Searchable {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -16329,6 +16496,7 @@ type Location {
 
   # A type-specific ID.
   internalID: ID!
+  name: String
 
   # Union returning opening hours in formatted structure or a string
   openingHours: OpeningHoursUnion
@@ -16775,6 +16943,7 @@ type MarketingCollection implements Node {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -17854,6 +18023,38 @@ type Money {
   minor: Long!
 }
 
+type MoveArtworksBetweenPartnerListsFailure {
+  mutationError: GravityMutationError
+}
+
+input MoveArtworksBetweenPartnerListsMutationInput {
+  # The IDs of the artworks to move.
+  artworkIds: [String!]!
+  clientMutationId: String
+
+  # The ID of the destination partner list.
+  destinationListId: String!
+
+  # The ID of the source partner list.
+  sourceListId: String!
+}
+
+type MoveArtworksBetweenPartnerListsMutationPayload {
+  clientMutationId: String
+
+  # On success: the destination partner list. On error: the error that occurred.
+  partnerListOrError: MoveArtworksBetweenPartnerListsResponseOrError
+}
+
+union MoveArtworksBetweenPartnerListsResponseOrError =
+  | MoveArtworksBetweenPartnerListsFailure
+  | MoveArtworksBetweenPartnerListsSuccess
+
+type MoveArtworksBetweenPartnerListsSuccess {
+  # The destination partner list after the move.
+  partnerList: PartnerList
+}
+
 type Mutation {
   # Accept a partner agreement
   acceptPartnerAgreement(
@@ -17955,6 +18156,11 @@ type Mutation {
   bulkAddArtworksToShow(
     input: BulkAddArtworksToShowMutationInput!
   ): BulkAddArtworksToShowMutationPayload
+
+  # Bulk removes artworks from a partner list.
+  bulkDeleteArtworksFromPartnerList(
+    input: BulkDeleteArtworksFromPartnerListMutationInput!
+  ): BulkDeleteArtworksFromPartnerListMutationPayload
 
   # Update all artworks that belong to the partner
   bulkUpdateArtworksMetadata(
@@ -18211,6 +18417,9 @@ type Mutation {
   # Creates a bidder position
   createBidderPosition(input: BidderPositionInput!): BidderPositionPayload
 
+  # Create a brand kit for a partner
+  createBrandKit(input: CreateBrandKitInput!): CreateBrandKitPayload
+
   # Create a buyer offer on an order
   createBuyerOffer(input: createBuyerOfferInput!): createBuyerOfferPayload
 
@@ -18453,6 +18662,12 @@ type Mutation {
   # Remove a bank account
   deleteBankAccount(input: DeleteBankAccountInput!): DeleteBankAccountPayload
 
+  # Delete a partner's brand kit
+  deleteBrandKit(input: DeleteBrandKitInput!): DeleteBrandKitPayload
+
+  # Remove the logo from a brand kit
+  deleteBrandKitLogo(input: DeleteBrandKitLogoInput!): DeleteBrandKitLogoPayload
+
   # Delete an artist career highlight
   deleteCareerHighlight(
     input: DeleteCareerHighlightInput!
@@ -18678,6 +18893,11 @@ type Mutation {
   # Merge multiple artist records in order to deduplicate artists
   mergeArtists(input: MergeArtistsMutationInput!): MergeArtistsMutationPayload
 
+  # Moves artworks from one partner list to another.
+  moveArtworksBetweenPartnerLists(
+    input: MoveArtworksBetweenPartnerListsMutationInput!
+  ): MoveArtworksBetweenPartnerListsMutationPayload
+
   # Create an artwork in my collection
   myCollectionCreateArtwork(
     input: MyCollectionCreateArtworkInput!
@@ -18880,6 +19100,12 @@ type Mutation {
   updateArtworkImportRowImages(
     input: UpdateArtworkImportRowImagesInput!
   ): UpdateArtworkImportRowImagesPayload
+
+  # Update a partner's brand kit
+  updateBrandKit(input: UpdateBrandKitInput!): UpdateBrandKitPayload
+
+  # Upload or replace the logo for a brand kit
+  updateBrandKitLogo(input: UpdateBrandKitLogoInput!): UpdateBrandKitLogoPayload
 
   # Update a buyer offer
   updateBuyerOffer(input: updateBuyerOfferInput!): updateBuyerOfferPayload
@@ -19761,6 +19987,9 @@ type Order {
   # Display short version of order's artwork location
   shippingOrigin: String
 
+  # Whether the order ships domestically or internationally
+  shippingRadius: String
+
   # The total amount for shipping
   shippingTotal: Money
 
@@ -20279,6 +20508,9 @@ type Partner implements Node {
     query: String!
     size: Int
   ): ArtworkConnection
+
+  # The partner's brand kit — colors, fonts, and logo used for branded surfaces
+  brandKit: BrandKit
   cached: Int
   categories: [PartnerCategory]
 
@@ -20410,6 +20642,7 @@ type Partner implements Node {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -20807,6 +21040,7 @@ type PartnerArtist {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -21011,6 +21245,7 @@ type PartnerArtistEdge {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -21390,6 +21625,7 @@ type PartnerList {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  fair: Fair
 
   # A globally unique ID.
   id: ID!
@@ -22483,6 +22719,7 @@ type Query {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -22891,6 +23128,7 @@ type Query {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -25627,6 +25865,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -26205,6 +26444,7 @@ type Tag implements Node {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -26814,6 +27054,79 @@ type UpdateArtworkMutationPayload {
   # On success: the artwork updated.
   artworkOrError: updateArtworkResponseOrError
   clientMutationId: String
+}
+
+type UpdateBrandKitFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateBrandKitInput {
+  # Background color hex code (e.g. #FF0000)
+  backgroundColor: String
+  clientMutationId: String
+
+  # CTA color hex code (e.g. #FF0000)
+  ctaColor: String
+
+  # Font family name
+  fontFamily: String
+
+  # Font style
+  fontStyle: String
+
+  # Font weight
+  fontWeight: String
+
+  # The internal ID of the brand kit to update
+  id: String!
+
+  # Text color hex code (e.g. #FF0000)
+  textColor: String
+}
+
+type UpdateBrandKitLogoFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateBrandKitLogoInput {
+  clientMutationId: String
+
+  # The internal ID of the brand kit
+  id: String!
+
+  # S3 bucket containing the logo image to upload
+  remoteImageS3Bucket: String!
+
+  # S3 key of the logo image to upload
+  remoteImageS3Key: String!
+}
+
+type UpdateBrandKitLogoPayload {
+  # On success: the brand kit with the updated logo
+  brandKitOrError: UpdateBrandKitLogoResponseOrError
+  clientMutationId: String
+}
+
+union UpdateBrandKitLogoResponseOrError =
+  | UpdateBrandKitLogoFailure
+  | UpdateBrandKitLogoSuccess
+
+type UpdateBrandKitLogoSuccess {
+  brandKit: BrandKit
+}
+
+type UpdateBrandKitPayload {
+  # On success: the updated brand kit
+  brandKitOrError: UpdateBrandKitResponseOrError
+  clientMutationId: String
+}
+
+union UpdateBrandKitResponseOrError =
+  | UpdateBrandKitFailure
+  | UpdateBrandKitSuccess
+
+type UpdateBrandKitSuccess {
+  brandKit: BrandKit
 }
 
 type UpdateCMSLastAccessTimestampFailure {
@@ -27696,6 +28009,9 @@ input UpdatePartnerListMutationInput {
 
   # End date for the list.
   endAt: String
+
+  # The ID of the fair to associate with this list.
+  fairID: String
 
   # The ID of the partner list.
   id: String!
@@ -29430,6 +29746,7 @@ type Viewer {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
@@ -29712,6 +30029,7 @@ type Viewer {
     partnerCities: [String]
     partnerID: ID
     partnerIDs: [String]
+    partnerListID: String
     period: String
     periods: [String]
     priceRange: String
