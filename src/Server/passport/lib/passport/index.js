@@ -63,9 +63,11 @@ module.exports = () => {
           clientID: opts.GOOGLE_CLIENT_ID,
           clientSecret: opts.GOOGLE_SECRET,
           verifyCsrfToken: false, // TODO: whether to validate the csrf token or not
+          passReqToCallback: true,
         },
-        (profile, done) => {
-          console.log("[OneTap]: Google One Tap profile:", profile)
+        (req, profile, done) => {
+          console.log("[OneTap] profile:", profile)
+          console.log("[OneTap] id_token:", req.body.credential)
         },
       ),
     )
