@@ -68,7 +68,7 @@ export const useCompleteDeliveryOptionData = (
     label: label || "",
     timeEstimatePrefix: timeEstimate?.[0] || null,
     timeEstimateRange: timeEstimate?.[1] || null,
-    simplePriceDisplay,
+    price: simplePriceDisplay,
   }
 }
 
