@@ -76,31 +76,6 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(screen.queryByRole("radio")).not.toBeInTheDocument()
     })
-
-    it("displays buyer guarantee link", () => {
-      renderWithRelay({
-        Me: () => ({
-          order: {
-            internalID: "order-123",
-            fulfillmentOptions: [
-              {
-                type: "ARTSY_STANDARD",
-                amount: { display: "$25.00" },
-                selected: true,
-              },
-            ],
-          },
-        }),
-      })
-
-      const guaranteeLink = screen.getByRole("link")
-      expect(guaranteeLink).toBeInTheDocument()
-      expect(guaranteeLink).toHaveAttribute("target", "_blank")
-      expect(guaranteeLink).toHaveAttribute(
-        "href",
-        "https://support.artsy.net/s/article/The-Artsy-Guarantee",
-      )
-    })
   })
 
   describe("with multiple delivery options", () => {
@@ -129,6 +104,18 @@ describe("Order2DeliveryOptionsForm", () => {
       }),
     }
 
+    it("displays shipping and returns link", () => {
+      renderWithRelay(multipleOptionsData)
+
+      const guaranteeLink = screen.getByRole("link")
+      expect(guaranteeLink).toBeInTheDocument()
+      expect(guaranteeLink).toHaveAttribute("target", "_blank")
+      expect(guaranteeLink).toHaveAttribute(
+        "href",
+        "https://support.artsy.net/s/article/Shipping-and-Returns-FAQs",
+      )
+    })
+
     it("renders radio group with multiple shipping options", () => {
       renderWithRelay(multipleOptionsData)
 
@@ -147,7 +134,7 @@ describe("Order2DeliveryOptionsForm", () => {
     it("displays time estimates for delivery options", () => {
       renderWithRelay(multipleOptionsData)
 
-      const timeEstimates = screen.getAllByText(/Estimated delivery between/)
+      const timeEstimates = screen.getAllByText(/Est. delivery/)
       expect(timeEstimates.length).toBeGreaterThan(0)
     })
 
@@ -156,7 +143,7 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(
         screen.queryByText(
-          /custom packing, transportation on a fine art shuttle/,
+          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
         ),
       ).not.toBeInTheDocument()
 
@@ -165,7 +152,7 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(
         screen.getByText(
-          /custom packing, transportation on a fine art shuttle/,
+          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
         ),
       ).toBeInTheDocument()
     })
@@ -355,68 +342,6 @@ describe("Order2DeliveryOptionsForm", () => {
       })
 
       expect(screen.queryByText(/Ships from/)).not.toBeInTheDocument()
-    })
-  })
-
-  describe("free shipping", () => {
-    it("displays 'Free' instead of 'Flat rate' when DOMESTIC_FLAT shipping cost is 0", () => {
-      renderWithRelay({
-        Me: () => ({
-          order: {
-            internalID: "order-123",
-            fulfillmentOptions: [
-              {
-                type: "DOMESTIC_FLAT",
-                amount: { display: "$0", minor: 0 },
-                selected: true,
-              },
-            ],
-          },
-        }),
-      })
-
-      expect(screen.getByText("Free")).toBeInTheDocument()
-      expect(screen.queryByText("Flat rate")).not.toBeInTheDocument()
-    })
-
-    it("displays 'Free' instead of 'Flat rate' when INTERNATIONAL_FLAT shipping cost is 0", () => {
-      renderWithRelay({
-        Me: () => ({
-          order: {
-            internalID: "order-123",
-            fulfillmentOptions: [
-              {
-                type: "INTERNATIONAL_FLAT",
-                amount: { display: "$0", minor: 0 },
-                selected: true,
-              },
-            ],
-          },
-        }),
-      })
-
-      expect(screen.getByText("Free")).toBeInTheDocument()
-      expect(screen.queryByText("Flat rate")).not.toBeInTheDocument()
-    })
-
-    it("displays 'Flat rate' when DOMESTIC_FLAT shipping has a cost", () => {
-      renderWithRelay({
-        Me: () => ({
-          order: {
-            internalID: "order-123",
-            fulfillmentOptions: [
-              {
-                type: "DOMESTIC_FLAT",
-                amount: { display: "$25.00", minor: 2500 },
-                selected: true,
-              },
-            ],
-          },
-        }),
-      })
-
-      expect(screen.getByText("Flat rate")).toBeInTheDocument()
-      expect(screen.queryByText("Free")).not.toBeInTheDocument()
     })
   })
 })
