@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a7eb602a0ef7ffa6e28fc8eebfdabcc>>
+ * @generated SignedSource<<becac3af66890962dd0bfecb504e078f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type Order2DeliveryOptionsForm_order$data = {
   }>;
   readonly internalID: string;
   readonly shippingOrigin: string | null | undefined;
+  readonly shippingRadius: string | null | undefined;
   readonly " $fragmentType": "Order2DeliveryOptionsForm_order";
 };
 export type Order2DeliveryOptionsForm_order$key = {
@@ -98,12 +99,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "shippingOrigin",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingRadius",
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "3fc4065a8da9b7471032e42d53523e7f";
+(node as any).hash = "21c22e8ab498b7af84c294c6271536ab";
 
 export default node;

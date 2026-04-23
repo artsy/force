@@ -63,7 +63,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     CheckoutStepName.DELIVERY_OPTION,
   )
 
-  const { fulfillmentOptions, shippingOrigin } = orderData
+  const { fulfillmentOptions, shippingOrigin, shippingRadius } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
     option => option.type !== "PICKUP",
   )
@@ -157,6 +157,12 @@ export const Order2DeliveryOptionsForm: React.FC<
                   <Text variant="xs">Ships from {shippingOrigin}</Text>
                 )}
 
+                {shippingRadius === "international" && (
+                  <Text variant="xs">
+                    Additional processing times may vary by destination
+                  </Text>
+                )}
+
                 <Spacer y={2} />
 
                 {deliveryOptions.length === 1 ? (
@@ -221,6 +227,7 @@ const FRAGMENT = graphql`
       selected
     }
     shippingOrigin
+    shippingRadius
   }
 `
 
@@ -236,7 +243,7 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
   return (
     <Flex flexDirection="column">
       <Flex justifyContent="space-between">
-        <Text variant="sm-display" color="mono100">
+        <Text variant="sm" color="mono100">
           {label}
         </Text>
         <Text variant="sm" color="mono100">
