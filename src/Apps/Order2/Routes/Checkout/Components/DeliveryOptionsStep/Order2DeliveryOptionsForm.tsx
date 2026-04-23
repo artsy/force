@@ -24,7 +24,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
+import { SHIPPING_AND_RETURNS_FAQS_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type {
   Order2DeliveryOptionsForm_order$data,
@@ -154,27 +154,8 @@ export const Order2DeliveryOptionsForm: React.FC<
                 <Spacer y={1} />
 
                 {shippingOrigin && (
-                  <Text variant="xs" color="mono60">
-                    Ships from {shippingOrigin}
-                  </Text>
+                  <Text variant="xs">Ships from {shippingOrigin}</Text>
                 )}
-
-                <Text variant="xs" color="mono60">
-                  All options are protected against damage and loss with{" "}
-                  <RouterLink
-                    onClick={() =>
-                      checkoutTracking.clickedBuyerProtection(
-                        ContextModule.ordersShippingMethods,
-                      )
-                    }
-                    inline
-                    target="_blank"
-                    to={BUYER_GUARANTEE_URL}
-                  >
-                    Artsy&rsquo;s Buyer Guarantee
-                  </RouterLink>
-                  .
-                </Text>
 
                 <Spacer y={2} />
 
@@ -202,6 +183,24 @@ export const Order2DeliveryOptionsForm: React.FC<
               >
                 Continue to Payment
               </Button>
+
+              <Spacer y={2} />
+
+              <Text variant="xs" color="mono60">
+                <RouterLink
+                  onClick={() =>
+                    checkoutTracking.clickedBuyerProtection(
+                      ContextModule.ordersShippingMethods,
+                    )
+                  }
+                  inline
+                  target="_blank"
+                  to={SHIPPING_AND_RETURNS_FAQS_URL}
+                >
+                  All shipping options
+                </RouterLink>{" "}
+                are protected against damage and loss with The Artsy Guarantee.
+              </Text>
             </Flex>
           </Form>
         )
@@ -230,7 +229,7 @@ interface SingleShippingOptionProps {
 }
 
 const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
-  const label = deliveryOptionLabel(option.type, option.amount?.minor)
+  const label = deliveryOptionLabel(option.type)
   const timeEstimate = deliveryOptionTimeEstimate(option.type)
   const [prefix, timeRange] = timeEstimate || []
 
@@ -276,7 +275,7 @@ const MultipleShippingOptionsForm = ({
       }}
     >
       {options.map(option => {
-        const label = deliveryOptionLabel(option.type, option.amount?.minor)
+        const label = deliveryOptionLabel(option.type)
         const timeEstimate = deliveryOptionTimeEstimate(option.type)
         const [prefix, timeRange] = timeEstimate || []
         const isSelected = selectedOption === option
@@ -305,8 +304,8 @@ const MultipleShippingOptionsForm = ({
 
                 {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
                   <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
-                    This service includes custom packing, transportation on a
-                    fine art shuttle, and in-home delivery.
+                    Includes custom packing, transportation on a fine art
+                    shuttle, and in-home delivery
                   </Text>
                 )}
               </Flex>
