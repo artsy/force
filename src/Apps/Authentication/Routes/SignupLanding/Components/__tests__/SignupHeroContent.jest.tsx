@@ -19,16 +19,16 @@ describe("SignupHeroContent", () => {
     render(<SignupHeroContent />)
 
     expect(
-      screen.getByText(
-        "Find the art you love with 1.6M+ original artworks for sale",
-      ),
+      screen.getByText("Discover and buy from 1.6M+ original artworks"),
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Get art recommendations that match your taste"),
+      screen.getByText("Get personalized recommendations"),
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Build and manage your collection"),
+      screen.getByText("Save artworks, create collections, and set alerts"),
     ).toBeInTheDocument()
-    expect(screen.getByText("Collect with confidence")).toBeInTheDocument()
+    expect(
+      screen.getByText("Collect original art with confidence"),
+    ).toBeInTheDocument()
   })
 })
