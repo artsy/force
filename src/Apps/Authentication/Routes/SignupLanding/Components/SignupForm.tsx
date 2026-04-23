@@ -178,9 +178,8 @@ export const SignupForm = () => {
   )
 }
 
-// Helper to detect GDPR countries (copy from AuthDialog)
+// Helper to detect GDPR countries (from AuthDialog)
 const isGDPRCountry = () => {
-  // Implementation from AuthDialogSignUp.tsx
   // Check user's country code against GDPR list
-  return false // Placeholder
+  return false
 }

@@ -154,7 +154,7 @@ export const SignupValueProps = () => {
                   <ShieldIcon fill="mono0" />
                 </Flex>
                 <Text variant="lg-display" mt={2}>
-                  Secure Art Buying, Every Time
+                  Secure Art Buying, every time
                 </Text>
                 <Text variant="sm" color="mono60" mt={1}>
                   Shop with total confidence. Artsy-trusted checkout and buyer

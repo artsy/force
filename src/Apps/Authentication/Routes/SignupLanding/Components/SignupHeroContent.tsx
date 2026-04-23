@@ -15,20 +15,34 @@ export const SignupHeroContent = () => {
       </Text>
       <Spacer y={4} />
       <Stack gap={1}>
-        <ValuePropItem text="Find the art you love with 1.6M+ original artworks for sale" />
-        <ValuePropItem text="Get art recommendations that match your taste" />
-        <ValuePropItem text="Build and manage your collection" />
-        <ValuePropItem text="Collect with confidence" />
+        <ValuePropItem>
+          <strong>Discover and buy from 1.6M+ original artworks</strong> across
+          paintings, sculptures, prints, and photography from artists at leading
+          global galleries.
+        </ValuePropItem>
+        <ValuePropItem>
+          <strong> Get personalized recommendations</strong> by following
+          artists and saving works to create a custom art experience that
+          evolves with your taste.
+        </ValuePropItem>
+        <ValuePropItem>
+          <strong> Save artworks, create collections, and set alerts</strong> to
+          easily manage and grow your collection in one place.
+        </ValuePropItem>
+        <ValuePropItem>
+          <strong>Collect original art with confidence </strong> by inquiring,
+          negotiating, and purchasing through Artsy's trusted platform.{" "}
+        </ValuePropItem>
       </Stack>
     </Box>
   )
 }
 
-const ValuePropItem = ({ text }: { text: string }) => {
+const ValuePropItem = ({ children }: { children: React.ReactNode }) => {
   return (
     <Flex alignItems="flex-start" gap={1}>
       <CheckmarkFillIcon fill="black100" flexShrink={0} />
-      <Text variant="sm">{text}</Text>
+      <Text variant="sm">{children}</Text>
     </Flex>
   )
 }
