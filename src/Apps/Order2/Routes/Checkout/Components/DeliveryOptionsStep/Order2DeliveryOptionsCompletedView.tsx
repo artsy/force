@@ -9,7 +9,7 @@ export interface Order2DeliveryOptionsCompletedViewProps {
   label: string
   timeEstimatePrefix: string | null
   timeEstimateRange: string | null
-  price?: string | null
+  simplePriceDisplay?: string | null
   allowEdit?: boolean
 }
 
@@ -19,7 +19,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   label,
   timeEstimatePrefix,
   timeEstimateRange,
-  price,
+  simplePriceDisplay,
   allowEdit = true,
 }) => {
   const { editStep, checkoutTracking } = useCheckoutContext()
@@ -57,9 +57,9 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           <Text variant="sm-display" color="mono100">
             {label}
           </Text>
-          {price && (
+          {simplePriceDisplay && (
             <Text variant="sm" color="mono100">
-              {price}
+              {simplePriceDisplay}
             </Text>
           )}
         </Flex>
