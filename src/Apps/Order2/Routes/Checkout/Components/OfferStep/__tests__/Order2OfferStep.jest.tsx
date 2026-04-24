@@ -232,7 +232,7 @@ describe("Order2OfferStep", () => {
 
     mockUseCheckoutContext.mockReturnValue({
       steps: [{ name: "OFFER_AMOUNT", state: "ACTIVE" }],
-      setOfferAmountComplete: mockSetOfferAmountComplete,
+      completeStep: mockSetOfferAmountComplete,
       checkoutTracking: mockCheckoutTracking,
       messages: {},
       setSectionErrorMessage: jest.fn(),

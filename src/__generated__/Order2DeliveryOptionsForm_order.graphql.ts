@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<becac3af66890962dd0bfecb504e078f>>
+ * @generated SignedSource<<79202d19c0ac815410dcd7e7182a43e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,12 @@ export type Order2DeliveryOptionsForm_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly internalID: string;
+  readonly selectedFulfillmentOption: {
+    readonly type: FulfillmentOptionTypeEnum;
+  } | null | undefined;
   readonly shippingOrigin: string | null | undefined;
   readonly shippingRadius: string | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"useCompleteFulfillmentDetailsData_order">;
   readonly " $fragmentType": "Order2DeliveryOptionsForm_order";
 };
 export type Order2DeliveryOptionsForm_order$key = {
@@ -30,12 +34,25 @@ export type Order2DeliveryOptionsForm_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "type",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Order2DeliveryOptionsForm_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteFulfillmentDetailsData_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -76,13 +93,7 @@ const node: ReaderFragment = {
           ],
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -90,6 +101,18 @@ const node: ReaderFragment = {
           "name": "selected",
           "storageKey": null
         }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
+      "name": "selectedFulfillmentOption",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -111,7 +134,8 @@ const node: ReaderFragment = {
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "21c22e8ab498b7af84c294c6271536ab";
+(node as any).hash = "1af5ba5214fee545abe5eadbc603a4bb";
 
 export default node;

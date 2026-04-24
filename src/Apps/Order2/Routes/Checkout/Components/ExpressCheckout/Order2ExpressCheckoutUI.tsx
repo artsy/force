@@ -26,6 +26,7 @@ import {
   CheckoutErrorBanner,
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
@@ -95,7 +96,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     setCheckoutMode,
     checkoutTracking,
     setConfirmationToken,
-    editFulfillmentDetails,
+    editStep,
     setSectionErrorMessage,
     messages,
   } = useCheckoutContext()
@@ -250,7 +251,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     } finally {
       // Reset local state
       setExpressCheckoutType(null)
-      editFulfillmentDetails()
+      editStep(CheckoutStepName.FULFILLMENT_DETAILS)
       setCheckoutMode("standard")
       setExpressCheckoutState(null)
     }

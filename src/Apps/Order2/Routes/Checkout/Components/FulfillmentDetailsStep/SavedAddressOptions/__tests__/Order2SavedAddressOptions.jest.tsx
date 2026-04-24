@@ -1,6 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { Formik } from "formik"
@@ -117,28 +120,6 @@ const mockUnshippableAddress: ProcessedUserAddress = {
   },
 }
 
-const mockAddressWithInvalidPhone: ProcessedUserAddress = {
-  internalID: "address-id-999",
-  phoneNumber: "10-10-321",
-  phoneNumberCountryCode: "+1",
-  isValid: false,
-  isShippable: true,
-  isDefault: false,
-  address: {
-    name: "Bad Phone",
-    addressLine1: "999 Phone St",
-    addressLine2: "",
-    city: "New York",
-    region: "NY",
-    postalCode: "10001",
-    country: "US",
-  },
-  phoneNumberParsed: {
-    display: "+1 10-10-321",
-    isValid: false,
-  },
-}
-
 const mockNewAddressInitialValues: FormikContextWithAddress = {
   phoneNumber: "",
   phoneNumberCountryCode: "+1",
@@ -182,7 +163,17 @@ describe("SavedAddressOptions", () => {
       setSectionErrorMessage: jest.fn(),
       checkoutTracking: {
         clickedShippingAddress: jest.fn(),
+        savedAddressViewed: jest.fn(),
+        clickedAddNewShippingAddress: jest.fn(),
       },
+      steps: [
+        {
+          name: CheckoutStepName.FULFILLMENT_DETAILS,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ],
+      isInitialAutoSaveComplete: true,
+      setInitialAutoSaveComplete: jest.fn(),
     } as any
 
     mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
@@ -195,6 +186,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -216,6 +208,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -236,6 +229,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -258,6 +252,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -282,6 +277,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockInvalidAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -318,6 +314,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -355,6 +352,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -384,6 +382,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -403,121 +402,6 @@ describe("SavedAddressOptions", () => {
           },
         )
       })
-    })
-  })
-
-  describe("Submit button state", () => {
-    it("disables submit button for unshippable address in non-OFFER mode", async () => {
-      const onSelectAddress = jest.fn()
-      mockUseCheckoutContext.mockReturnValue({
-        ...mockCheckoutContext,
-        orderData: { mode: "BUY" },
-      })
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            savedAddresses={[mockUnshippableAddress]}
-            initialSelectedAddress={mockUnshippableAddress}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
-
-      const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
-      })
-      expect(submitButton).toBeDisabled()
-    })
-
-    it("enables submit button for unshippable address in OFFER mode", async () => {
-      const onSelectAddress = jest.fn()
-      mockUseCheckoutContext.mockReturnValue({
-        ...mockCheckoutContext,
-        orderData: { mode: "OFFER" },
-      })
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            savedAddresses={[mockUnshippableAddress]}
-            initialSelectedAddress={mockUnshippableAddress}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
-
-      const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
-      })
-      expect(submitButton).toBeEnabled()
-    })
-
-    it("disables submit button for invalid address regardless of order mode", async () => {
-      const onSelectAddress = jest.fn()
-      mockUseCheckoutContext.mockReturnValue({
-        ...mockCheckoutContext,
-        orderData: { mode: "OFFER" },
-      })
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            savedAddresses={[mockInvalidAddress]}
-            initialSelectedAddress={mockInvalidAddress}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
-
-      const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
-      })
-      expect(submitButton).toBeDisabled()
-    })
-
-    it("disables submit button when selected address has a known-invalid phone", () => {
-      render(
-        <TestWrapper initialValues={mockAddressWithInvalidPhone}>
-          <SavedAddressOptions
-            savedAddresses={[mockAddressWithInvalidPhone]}
-            initialSelectedAddress={mockAddressWithInvalidPhone}
-            onSelectAddress={jest.fn()}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
-
-      expect(
-        screen.getByRole("button", { name: /See Shipping Methods/i }),
-      ).toBeDisabled()
-    })
-
-    it("enables submit button for valid and shippable address", async () => {
-      const onSelectAddress = jest.fn()
-      mockUseCheckoutContext.mockReturnValue({
-        ...mockCheckoutContext,
-        orderData: { mode: "BUY" },
-      })
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            savedAddresses={[mockUSAddress1]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
-
-      const submitButton = screen.getByRole("button", {
-        name: /See Shipping Methods/i,
-      })
-      expect(submitButton).toBeEnabled()
     })
   })
 
@@ -542,6 +426,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockInvalidAddressWithMissingCity]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -617,6 +502,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -708,6 +594,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockSingleInvalidAddress]}
             initialSelectedAddress={mockSingleInvalidAddress}
             onSelectAddress={onSelectAddress}
@@ -730,6 +617,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -743,6 +631,102 @@ describe("SavedAddressOptions", () => {
           expect.objectContaining({ mode: "edit" }),
         )
       })
+    })
+  })
+
+  describe("Auto-save on mount when no fulfillment details", () => {
+    it("calls onSelectAddress with the first valid address on mount", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasDeliveryAddress={false}
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress1)
+      })
+      expect(onSelectAddress).toHaveBeenCalledTimes(1)
+    })
+
+    it("skips unshippable addresses and selects the first valid shippable one", async () => {
+      const onSelectAddress = jest.fn()
+      const unshippable = {
+        ...mockUSAddress1,
+        internalID: "unshippable",
+        isShippable: false,
+      }
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasDeliveryAddress={false}
+            savedAddresses={[unshippable, mockUSAddress2]}
+            initialSelectedAddress={unshippable}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress2)
+      })
+    })
+
+    it("does not auto-save when fulfillment details already exist", async () => {
+      const onSelectAddress = jest.fn()
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasDeliveryAddress={true}
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
+    it("does not auto-save when the step is not yet ACTIVE (e.g. UPCOMING in offer flow)", async () => {
+      const onSelectAddress = jest.fn()
+
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: CheckoutStepState.UPCOMING,
+          },
+        ],
+      })
+
+      render(
+        <TestWrapper>
+          <SavedAddressOptions
+            hasDeliveryAddress={false}
+            savedAddresses={[mockUSAddress1, mockUSAddress2]}
+            initialSelectedAddress={mockUSAddress1}
+            onSelectAddress={onSelectAddress}
+            newAddressInitialValues={mockNewAddressInitialValues}
+          />
+        </TestWrapper>,
+      )
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      expect(onSelectAddress).not.toHaveBeenCalled()
     })
   })
 
@@ -780,6 +764,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2, mockUSAddress3]}
             initialSelectedAddress={mockUSAddress2}
             onSelectAddress={onSelectAddress}
@@ -806,6 +791,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -848,6 +834,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
@@ -888,6 +875,7 @@ describe("SavedAddressOptions", () => {
       render(
         <TestWrapper>
           <SavedAddressOptions
+            hasDeliveryAddress={true}
             savedAddresses={[mockUSAddress1, mockUSAddress2]}
             initialSelectedAddress={mockUSAddress1}
             onSelectAddress={onSelectAddress}
