@@ -19,7 +19,7 @@ describe("SignupHeroContent", () => {
     render(<SignupHeroContent />)
 
     expect(
-      screen.getByText("Discover and buy from 1.6M+ original artworks"),
+      screen.getByText("Discover and buy from 1M+ original artworks"),
     ).toBeInTheDocument()
     expect(
       screen.getByText("Get personalized recommendations"),
