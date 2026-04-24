@@ -40,8 +40,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
     ? artworkVersion?.thumbnail?.resizedSquare?.url
     : fallbackImageUrl
 
-  console.log("LOGD APP")
-
   return (
     <Box backgroundColor="mono0">
       <Clickable
