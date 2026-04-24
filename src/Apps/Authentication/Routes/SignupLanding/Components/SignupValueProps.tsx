@@ -45,7 +45,7 @@ export const SignupValueProps = () => {
                   )}
                   width="100%"
                   height="100%"
-                  alt="Gallery interior with artwork"
+                  alt=""
                   lazyLoad
                 />
               </ResponsiveBox>
@@ -79,7 +79,7 @@ export const SignupValueProps = () => {
                   )}
                   width="100%"
                   height="100%"
-                  alt="People viewing art at auction"
+                  alt=""
                   lazyLoad
                 />
               </ResponsiveBox>
@@ -112,7 +112,7 @@ export const SignupValueProps = () => {
                   )}
                   width="100%"
                   height="100%"
-                  alt="KAWS sculpture"
+                  alt=""
                   lazyLoad
                 />
               </ResponsiveBox>
