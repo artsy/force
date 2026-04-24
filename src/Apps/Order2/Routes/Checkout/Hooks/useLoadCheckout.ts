@@ -20,7 +20,7 @@ import { graphql, useFragment } from "react-relay"
 const logger = createLogger("useLoadCheckout.tsx")
 
 export const MIN_LOADING_MS = 1000
-export const MAX_LOADING_MS = 6000
+export const MAX_LOADING_MS = 8000
 
 export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
@@ -34,6 +34,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     expressCheckoutPaymentMethods,
     expressCheckoutState,
     steps,
+    isInitialAutoSaveComplete,
   } = useCheckoutContext()
 
   const { checkoutModalError, showCheckoutErrorModal } = useCheckoutModal()
@@ -166,6 +167,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         orderValidated,
         isExpressCheckoutLoaded,
         isStripeRedirectHandled,
+        isInitialAutoSaveComplete,
         isLoading,
         setLoadingComplete,
       ].every(Boolean)
@@ -177,6 +179,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     orderValidated,
     isExpressCheckoutLoaded,
     isStripeRedirectHandled,
+    isInitialAutoSaveComplete,
     isLoading,
     setLoadingComplete,
     checkoutModalError,

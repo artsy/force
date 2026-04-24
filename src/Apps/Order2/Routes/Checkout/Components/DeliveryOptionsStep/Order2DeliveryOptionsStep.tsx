@@ -53,7 +53,15 @@ export const Order2DeliveryOptionsStep: React.FC<
   }
 
   if (stepState === CheckoutStepState.ACTIVE) {
-    if (!hasFulfillmentDetails) {
+    // Show the placeholder when no delivery address is confirmed.
+    // Pickup fulfillment details don't count — if the user is on the delivery
+    // tab after having previously selected pickup, we haven't submitted a
+    // delivery address yet.
+    const hasDeliveryAddress =
+      hasFulfillmentDetails &&
+      orderData.selectedFulfillmentOption?.type !== "PICKUP"
+
+    if (!hasDeliveryAddress && !isFulfillmentDetailsSaving) {
       return <DeliveryOptionsPlaceholder />
     }
 

@@ -1,3 +1,4 @@
+import { applyDeliveryOptionLogic } from "Apps/Order2/Routes/Checkout/CheckoutContext/stepUtils"
 import type {
   CheckoutSection,
   CheckoutStep,
@@ -10,16 +11,15 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { applyDeliveryOptionLogic } from "Apps/Order2/Routes/Checkout/CheckoutContext/stepUtils"
 import { useBuildInitialSteps } from "Apps/Order2/Routes/Checkout/Hooks/useBuildInitialSteps"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
+import type { Order2CheckoutContext_me$key } from "__generated__/Order2CheckoutContext_me.graphql"
 import type {
   Order2CheckoutContext_order$data,
   Order2CheckoutContext_order$key,
 } from "__generated__/Order2CheckoutContext_order.graphql"
-import type { Order2CheckoutContext_me$key } from "__generated__/Order2CheckoutContext_me.graphql"
 import { type Action, action, createContextStore } from "easy-peasy"
 import type React from "react"
 import { useMemo } from "react"
@@ -114,6 +114,9 @@ export interface Order2CheckoutModel {
     }
   >
   setIsFulfillmentDetailsSaving: Action<this, boolean>
+  /** True once any eager pre-load address auto-save has completed (or is not needed). */
+  isInitialAutoSaveComplete: boolean
+  setInitialAutoSaveComplete: Action<this>
 }
 
 export const Order2CheckoutContext: ReturnType<
@@ -133,6 +136,7 @@ export const Order2CheckoutContext: ReturnType<
   userAddressMode: null,
   messages: {},
   artworkPath: "/",
+  isInitialAutoSaveComplete: true,
 
   // Required runtime props - will be provided by Provider
   // These will be overridden by the Provider with actual values
@@ -250,6 +254,10 @@ export const Order2CheckoutContext: ReturnType<
   setIsFulfillmentDetailsSaving: action((state, isFulfillmentDetailsSaving) => {
     state.isFulfillmentDetailsSaving = isFulfillmentDetailsSaving
   }),
+
+  setInitialAutoSaveComplete: action(state => {
+    state.isInitialAutoSaveComplete = true
+  }),
 }))
 
 interface Order2CheckoutContextProviderProps {
@@ -269,6 +277,20 @@ export const Order2CheckoutContextProvider: React.FC<
   const hasSavedAddresses = (meData.addressConnection?.edges?.length ?? 0) > 0
 
   const initialSteps = useBuildInitialSteps(orderData)
+
+  // Auto-save is needed when: non-offer, has saved addresses, FD not yet complete,
+  // and FD is the first active step (no offer step before it).
+  const fulfillmentDetailsStep = initialSteps.find(
+    s => s.name === CheckoutStepName.FULFILLMENT_DETAILS,
+  )
+
+  // Autosave of shipping address only applies when it is the first step,
+  // i.e. there is no offer step preceding it.
+  const isOffer = orderData.mode === "OFFER"
+  const needsInitialAutoSave =
+    !isOffer &&
+    hasSavedAddresses &&
+    fulfillmentDetailsStep?.state === CheckoutStepState.ACTIVE
 
   // Initialize the store with the initial state
   const initialState = useMemo(
@@ -304,6 +326,7 @@ export const Order2CheckoutContextProvider: React.FC<
     orderData,
     artworkPath,
     hasSavedAddresses,
+    isInitialAutoSaveComplete: !needsInitialAutoSave,
   } as Order2CheckoutModel
 
   return (

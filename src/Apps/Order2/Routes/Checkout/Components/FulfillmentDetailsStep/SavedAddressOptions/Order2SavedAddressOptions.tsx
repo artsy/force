@@ -40,7 +40,7 @@ const ADDRESS_ERROR_MESSAGES = {
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
   initialSelectedAddress?: ProcessedUserAddress
-  hasFulfillmentDetails: boolean
+  hasDeliveryAddress: boolean
   onSelectAddress: (address: FormikContextWithAddress) => Promise<void>
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
@@ -48,7 +48,7 @@ interface SavedAddressOptionsProps {
 export const SavedAddressOptions = ({
   savedAddresses,
   initialSelectedAddress,
-  hasFulfillmentDetails,
+  hasDeliveryAddress,
   onSelectAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
@@ -107,11 +107,16 @@ export const SavedAddressOptions = ({
   const isStepActive =
     fulfillmentDetailsStep?.state === CheckoutStepState.ACTIVE
 
-  // Auto-submit the first valid address the first time the step becomes active,
-  // if no fulfillment details are saved yet.
+  // Auto-submit the first valid address when no delivery address is confirmed.
+  // This covers two cases:
+  // 1. Initial load: no fulfillment details saved yet.
+  // 2. Switching back from the Pickup tab: Palette's Tabs unmounts inactive tab
+  //    content, so this component is mounted fresh when the user clicks Delivery.
+  //    The parent passes hasDeliveryAddress=false when the saved fulfillment type
+  //    is PICKUP, so the effect fires on mount as if no address were set.
   // biome-ignore lint/correctness/useExhaustiveDependencies: when step first becomes active
   useEffect(() => {
-    if (!isStepActive || hasFulfillmentDetails) return
+    if (!isStepActive || hasDeliveryAddress) return
     const firstValid =
       savedAddresses.find(a => a.isShippable && a.isValid) || savedAddresses[0]
     if (firstValid) {
