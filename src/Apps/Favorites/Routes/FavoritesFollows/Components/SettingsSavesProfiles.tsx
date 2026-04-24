@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
@@ -71,6 +72,7 @@ const SettingsSavesProfiles: FC<
                           <EntityHeaderPartnerFragmentContainer
                             key={internalID}
                             partner={profile.owner}
+                            contextModule={ContextModule.collectorProfile}
                           />
                         )
 
@@ -79,6 +81,7 @@ const SettingsSavesProfiles: FC<
                           <EntityHeaderFairFragmentContainer
                             key={internalID}
                             fair={profile.owner}
+                            contextModule={ContextModule.collectorProfile}
                           />
                         )
 
@@ -87,6 +90,7 @@ const SettingsSavesProfiles: FC<
                           <EntityHeaderFairOrganizerFragmentContainer
                             key={internalID}
                             fairOrganizer={profile.owner}
+                            contextModule={ContextModule.collectorProfile}
                           />
                         )
                     }

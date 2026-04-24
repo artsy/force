@@ -1,3 +1,4 @@
+import type { AuthContextModule } from "@artsy/cohesion"
 import {
   Box,
   Flex,
@@ -19,10 +20,12 @@ import { EntityHeaderArtistFragmentContainer } from "./EntityHeaders/EntityHeade
 
 interface ArtistRailProps {
   artist: ArtistRail_artist$data
+  contextModule?: AuthContextModule
 }
 
 const ArtistRail: FC<React.PropsWithChildren<ArtistRailProps>> = ({
   artist,
+  contextModule,
 }) => {
   if (!artist || !artist.name) return null
 
@@ -30,7 +33,11 @@ const ArtistRail: FC<React.PropsWithChildren<ArtistRailProps>> = ({
 
   return (
     <>
-      <EntityHeaderArtistFragmentContainer artist={artist} mb={2} />
+      <EntityHeaderArtistFragmentContainer
+        artist={artist}
+        contextModule={contextModule}
+        mb={2}
+      />
       {artworks.length > 0 ? (
         <Shelf>
           {artworks.map(artwork => {

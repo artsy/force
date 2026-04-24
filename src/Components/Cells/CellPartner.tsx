@@ -1,3 +1,4 @@
+import type { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
@@ -9,12 +10,14 @@ import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
   partner: CellPartner_partner$data
+  contextModule?: AuthContextModule
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }
 
 const CellPartner: React.FC<React.PropsWithChildren<CellPartnerProps>> = ({
   partner,
+  contextModule,
   mode = "RAIL",
   ...rest
 }) => {
@@ -35,6 +38,7 @@ const CellPartner: React.FC<React.PropsWithChildren<CellPartnerProps>> = ({
     >
       <EntityHeaderPartnerFragmentContainer
         partner={partner}
+        contextModule={contextModule}
         displayAvatar={false}
         displayLink={false}
         alignItems="flex-end"

@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
@@ -62,7 +63,11 @@ const SettingsSavesArtists: FC<
               if (!artist) return null
 
               return (
-                <ArtistRailFragmentContainer key={internalID} artist={artist} />
+                <ArtistRailFragmentContainer
+                  key={internalID}
+                  artist={artist}
+                  contextModule={ContextModule.collectorProfile}
+                />
               )
             })}
           </Join>

@@ -48,6 +48,7 @@ export const FairExhibitorCard: React.FC<
   return (
     <EntityHeaderPartnerFragmentContainer
       partner={exhibitor.partner}
+      contextModule={ContextModule.presentingPartner}
       displayAvatar={false}
       alignItems="flex-start"
       href={`/show/${exhibitor.profileID}?back_to_fair_href=${encodedBackToFairHref}`}
