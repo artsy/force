@@ -10,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
-import { useSystemContext } from "System/Hooks/useSystemContext"
 import { signUp } from "Utils/auth"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
@@ -37,7 +36,6 @@ const signupSchema = Yup.object().shape({
 })
 
 export const SignupForm = () => {
-  const { user } = useSystemContext()
   const [error, setError] = useState<string>()
 
   useRecaptcha()
