@@ -24,7 +24,7 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
   unableToShipToAddress: {
@@ -75,19 +75,22 @@ export const SavedAddressOptions = ({
   )
 
   // Track when saved addresses are viewed (only once when step is active)
-  // TODO: fires too many times
+  const hasTrackedAddressViewRef = useRef(false)
+
   useEffect(() => {
-    if (
-      !checkoutTracking ||
-      fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE ||
-      !!userAddressMode
-    ) {
+    if (fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE) {
+      hasTrackedAddressViewRef.current = false
+      return
+    }
+
+    if (!checkoutTracking || !!userAddressMode || hasTrackedAddressViewRef.current) {
       return
     }
 
     if (savedAddresses.length > 0) {
       const addressIds = savedAddresses.map(address => address.internalID)
       checkoutTracking.savedAddressViewed(addressIds)
+      hasTrackedAddressViewRef.current = true
     }
   }, [
     savedAddresses,

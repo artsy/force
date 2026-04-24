@@ -86,14 +86,18 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     }
   }, [isExpressCheckoutEligible])
 
-  const activeSteps = useMemo(
-    () => steps.filter(step => step.state === CheckoutStepState.ACTIVE),
+  const activeStepNames = useMemo(
+    () =>
+      steps
+        .filter(step => step.state === CheckoutStepState.ACTIVE)
+        .map(step => step.name)
+        .join(","),
     [steps],
   )
 
   useEffect(() => {
-    activeSteps.forEach(step => {
-      switch (step.name) {
+    activeStepNames.split(",").forEach(name => {
+      switch (name) {
         case CheckoutStepName.CONFIRMATION:
           checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
           break
@@ -115,7 +119,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           break
       }
     })
-  }, [activeSteps, checkoutTracking])
+  }, [activeStepNames, checkoutTracking])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
   useEffect(() => {

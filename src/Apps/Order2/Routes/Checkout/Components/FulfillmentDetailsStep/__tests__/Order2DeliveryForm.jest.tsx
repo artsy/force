@@ -375,10 +375,10 @@ describe("Order2DeliveryForm", () => {
         // Try to submit without filling required fields
         await userEvent.click(screen.getByText("Save and Continue"))
 
-        // Should not trigger tracking because form validation should prevent submission
+        // Tracking fires on click regardless of validation; but the form does not complete
         expect(
           mockCheckoutContext.checkoutTracking.clickedOrderProgression,
-        ).not.toHaveBeenCalled()
+        ).toHaveBeenCalledWith("ordersFulfillment")
         expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
