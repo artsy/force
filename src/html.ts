@@ -1,3 +1,5 @@
+import { getFontTags } from "fonts"
+
 export interface HTMLProps {
   cdnUrl: string
   content: {
@@ -51,12 +53,9 @@ export function buildHtmlTemplate({
       <link rel="preconnect" href="${cdnUrl}" crossorigin />
       <link rel="preconnect" href="${imageCdnUrl}" />
 
-      <!-- Create preload tags for most common fonts -->
+      <!-- Webfonts: preload hints + inlined @font-face declarations -->
       <link rel="preconnect" href="${fontUrl}" crossorigin />
-      <link rel="preload" href="${fontUrl}/all-webfonts.css" as="style" />
-      <link rel="preload" href="${fontUrl}/ll-unica77_regular.woff2" as="font" type="font/woff2" crossorigin />
-      <link rel="preload" href="${fontUrl}/ll-unica77_medium.woff2" as="font" type="font/woff2" crossorigin />
-      <link rel="preload" href="${fontUrl}/ll-unica77_italic.woff2" as="font" type="font/woff2" crossorigin />
+      ${getFontTags(fontUrl)}
       <link rel="icon" type="image/png" href="${icons.favicon}" sizes="any" />
       <link rel="icon" type="image/svg+xml" href="${icons.faviconSVG}" />
       <link rel="apple-touch-icon" href="${icons.appleTouchIcon}">
@@ -72,8 +71,6 @@ export function buildHtmlTemplate({
       <meta property="fb:admins" content="7961740" />
       <meta property="fb:app_id" content="308278682573501" />
       <meta property="fb:pages" content="342443413406" />
-
-      <link type="text/css" rel="stylesheet" href="${fontUrl}/all-webfonts.css" />
 
       <script>window.__artsyInitialReferrer = document.referrer</script>
 

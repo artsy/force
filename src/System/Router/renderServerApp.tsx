@@ -9,6 +9,7 @@ import type { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 import type { ServerAppResults } from "System/Router/serverRouter"
 import { getENV } from "Utils/getENV"
 import { getServerParam } from "Utils/getServerParam"
+import { getFontLinkHeaders } from "fonts"
 import { type HTMLProps, buildHtmlTemplate } from "html"
 import { renderToString } from "react-dom/server"
 
@@ -119,10 +120,7 @@ const setLinkHeaders = (linkHeaders: string[], res: ArtsyResponse) => {
       `<${CDN_URL}>; rel=preconnect; crossorigin`,
       `<${GEMINI_CLOUDFRONT_URL}>; rel=preconnect;`,
       `<${WEBFONT_URL}>; rel=preconnect; crossorigin`,
-      `<${WEBFONT_URL}/all-webfonts.css>; rel=preload; as=style`,
-      `<${WEBFONT_URL}/ll-unica77_regular.woff2>; rel=preload; as=font; crossorigin`,
-      `<${WEBFONT_URL}/ll-unica77_medium.woff2>; rel=preload; as=font; crossorigin`,
-      `<${WEBFONT_URL}/ll-unica77_italic.woff2>; rel=preload; as=font; crossorigin`,
+      ...getFontLinkHeaders(WEBFONT_URL as string),
       ...linkHeaders,
     ])
   }
