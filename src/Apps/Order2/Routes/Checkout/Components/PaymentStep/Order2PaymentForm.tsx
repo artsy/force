@@ -552,8 +552,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       return
     }
 
-    checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
-
     if (isSelectedPaymentMethodStripe) {
       setIsSubmittingToStripe(true)
 
@@ -823,6 +821,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         variant="primaryBlack"
         width="100%"
         type="submit"
+        onClick={() => {
+          // tracked separately from onSubmit — fires on click regardless of validation
+          checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
+        }}
       >
         Continue to Review
       </Button>
