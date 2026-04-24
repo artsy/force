@@ -8,7 +8,6 @@ import {
   Text,
   FullBleed,
   ResponsiveBox,
-  Flex,
   Image,
   Box,
   useTheme,
