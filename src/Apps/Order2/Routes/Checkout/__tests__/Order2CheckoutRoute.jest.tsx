@@ -731,10 +731,22 @@ describe("Order2CheckoutRoute", () => {
           flow: "Buy now",
         },
         {
+          action: "orderProgressionViewed",
+          context_module: "ordersShippingMethods",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
           action: "clickedFulfillmentTab",
           context_page_owner_id: "order-id",
           flow: "Buy now",
           method: "Pickup",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
         },
         {
           action: "clickedOrderProgression",
@@ -1283,6 +1295,14 @@ describe("Order2CheckoutRoute", () => {
       expectTrackedEvents({ mockTrackEvent, exact: false }, [
         {
           action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersShippingMethods",
+        },
+        {
+          action: "clickedOrderProgression",
           context_module: "ordersFulfillment",
         },
         {
@@ -1937,6 +1957,18 @@ describe("Order2CheckoutRoute", () => {
         {
           action: "clickedOrderProgression",
           context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersPayment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersReview",
           context_page_owner_id: "order-id",
           flow: "Buy now",
         },

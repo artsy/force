@@ -107,7 +107,7 @@ export const AddAddressForm = ({
               width="100%"
               type="submit"
               onClick={() => {
-                // submission handled by Formik `onSubmit` handler
+                // tracked separately from onSubmit — fires on click regardless of validation
                 checkoutTracking.clickedOrderProgression(
                   ContextModule.ordersFulfillment,
                 )

@@ -66,6 +66,9 @@ describe("AddAddressForm", () => {
 
     mockUseCheckoutContext.mockReturnValue({
       setUserAddressMode: mockSetUserAddressMode,
+      checkoutTracking: {
+        clickedOrderProgression: jest.fn(),
+      },
     } as any)
   })
 

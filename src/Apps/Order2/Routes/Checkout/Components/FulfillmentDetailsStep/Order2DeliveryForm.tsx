@@ -388,7 +388,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                   loading={isSubmitting}
                   disabled={!!status?.errorBanner}
                   onClick={() => {
-                    // submission handled by Formik `onSubmit` handler
+                    // tracked separately from onSubmit — fires on click regardless of validation
                     checkoutTracking.clickedOrderProgression(
                       ContextModule.ordersFulfillment,
                     )
