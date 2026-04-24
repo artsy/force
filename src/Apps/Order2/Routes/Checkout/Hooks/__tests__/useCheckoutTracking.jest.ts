@@ -1,4 +1,5 @@
 import { act, renderHook } from "@testing-library/react-hooks"
+import type { ProcessedUserAddress } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useTracking } from "react-tracking"
 import { useCheckoutTracking } from "../useCheckoutTracking"
 jest.mock("react-tracking")
@@ -145,6 +146,73 @@ describe("useCheckoutTracking", () => {
       })
     })
   })
+  describe("savedAddressViewed", () => {
+    const makeAddress = (
+      id: string,
+      country: string,
+      isDefault: boolean,
+    ): ProcessedUserAddress => ({
+      internalID: id,
+      isDefault,
+      isShippable: true,
+      isValid: true,
+      address: {
+        name: "Test User",
+        addressLine1: "123 Main St",
+        addressLine2: "",
+        city: "New York",
+        region: "NY",
+        postalCode: "10001",
+        country,
+      },
+      phoneNumber: "",
+    })
+
+    it("extracts address IDs and default address info from ProcessedUserAddress[]", () => {
+      const { result } = renderHook(() =>
+        useCheckoutTracking({ source: "artwork", mode: "BUY" }),
+      )
+
+      const addresses = [
+        makeAddress("addr-1", "US", false),
+        makeAddress("addr-2", "DE", true),
+      ]
+
+      act(() => {
+        result.current.savedAddressViewed(addresses)
+      })
+
+      assertTracked({
+        action: "savedAddressViewed",
+        address_ids: ["addr-1", "addr-2"],
+        default_address_id: "addr-2",
+        default_address_country: "DE",
+      })
+    })
+
+    it("falls back to the first address when none is marked as default", () => {
+      const { result } = renderHook(() =>
+        useCheckoutTracking({ source: "artwork", mode: "BUY" }),
+      )
+
+      const addresses = [
+        makeAddress("addr-1", "US", false),
+        makeAddress("addr-2", "DE", false),
+      ]
+
+      act(() => {
+        result.current.savedAddressViewed(addresses)
+      })
+
+      assertTracked({
+        action: "savedAddressViewed",
+        address_ids: ["addr-1", "addr-2"],
+        default_address_id: "addr-1",
+        default_address_country: "US",
+      })
+    })
+  })
+
   describe("submittedOrder", () => {
     it("tracks submitted order event with optional wallet type", () => {
       const { result } = renderHook(() =>

@@ -134,8 +134,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   }
 
   const handleSubmit = async (confirmedSetupIntentId?: any) => {
-    checkoutTracking.clickedOrderProgression(ContextModule.ordersReview)
-
     if (!stripe) return
 
     setLoading(true)
@@ -299,7 +297,13 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Button
             variant="primaryBlack"
             width="100%"
-            onClick={() => handleSubmit()}
+            onClick={() => {
+              // tracked separately from handleSubmit — fires on click regardless of outcome
+              checkoutTracking.clickedOrderProgression(
+                ContextModule.ordersReview,
+              )
+              handleSubmit()
+            }}
             loading={loading}
           >
             Submit
