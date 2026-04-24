@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
@@ -32,7 +32,9 @@ beforeEach(() => {
       clickedSelectShippingOption: jest.fn(),
     },
     setDeliveryOptionComplete: jest.fn(),
+    setSectionErrorMessage: jest.fn(),
     messages: {},
+    steps: [],
   }
 })
 
@@ -169,6 +171,57 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(expressRadio).toBeChecked()
       expect(standardRadio).not.toBeChecked()
+    })
+
+    it("reverts selection visually when the save mutation fails", async () => {
+      mockSetOrderFulfillmentOption.mockRejectedValueOnce(
+        new Error("Network error"),
+      )
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
+            fulfillmentOptions: [
+              {
+                type: "ARTSY_STANDARD",
+                amount: { display: "$25.00" },
+                selected: true,
+              },
+              {
+                type: "ARTSY_EXPRESS",
+                amount: { display: "$50.00" },
+                selected: false,
+              },
+              {
+                type: "ARTSY_WHITE_GLOVE",
+                amount: { display: "$200.00" },
+                selected: false,
+              },
+            ],
+          },
+        }),
+      })
+
+      const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
+      await userEvent.click(whiteGloveRadio)
+
+      // Description appears optimistically
+      expect(
+        screen.getByText(
+          /custom packing, transportation on a fine art shuttle/,
+        ),
+      ).toBeInTheDocument()
+
+      // After mutation failure, description reverts (white glove is no longer "selected")
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            /custom packing, transportation on a fine art shuttle/,
+          ),
+        ).not.toBeInTheDocument()
+      })
     })
 
     it("calls clickedSelectShippingOption tracking when selecting a shipping option", async () => {

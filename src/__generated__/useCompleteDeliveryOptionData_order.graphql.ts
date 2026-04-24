@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c79f2af678f90d012b858f84aef53a33>>
+ * @generated SignedSource<<89d04a70a520145c74d388c77e6b1a71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ import { FragmentRefs } from "relay-runtime";
 export type useCompleteDeliveryOptionData_order$data = {
   readonly selectedFulfillmentOption: {
     readonly amount: {
+      readonly display: string | null | undefined;
       readonly minor: any;
     } | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
@@ -60,6 +61,13 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "minor",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "display",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -72,6 +80,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3c999c9f49992c960e82807866362371";
+(node as any).hash = "c5dc01b6407690ba0260e2655acc7507";
 
 export default node;
