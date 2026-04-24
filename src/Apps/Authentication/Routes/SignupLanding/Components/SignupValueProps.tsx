@@ -1,6 +1,6 @@
-import SearchIcon from "@artsy/icons/SearchIcon"
-import ShieldIcon from "@artsy/icons/ShieldIcon"
-import TrendingIcon from "@artsy/icons/TrendingIcon"
+// import SearchIcon from "@artsy/icons/SearchIcon"
+// import ShieldIcon from "@artsy/icons/ShieldIcon"
+// import TrendingIcon from "@artsy/icons/TrendingIcon"
 import {
   Spacer,
   GridColumns,
@@ -51,7 +51,7 @@ export const SignupValueProps = () => {
                 />
               </ResponsiveBox>
               <Box px={2} pb={2}>
-                <Flex
+                {/* <Flex
                   width={48}
                   height={48}
                   borderRadius="50%"
@@ -61,7 +61,7 @@ export const SignupValueProps = () => {
                   mt={2}
                 >
                   <SearchIcon fill="mono0" />
-                </Flex>
+                </Flex> */}
 
                 <Text variant="lg-display" mt={2}>
                   The World's Largest Online Art Marketplace
@@ -97,7 +97,7 @@ export const SignupValueProps = () => {
                 />
               </ResponsiveBox>
               <Box px={2} pb={2}>
-                <Flex
+                {/* <Flex
                   width={48}
                   height={48}
                   borderRadius="50%"
@@ -107,7 +107,7 @@ export const SignupValueProps = () => {
                   mt={2}
                 >
                   <TrendingIcon fill="mono0" />
-                </Flex>
+                </Flex> */}
 
                 <Text variant="lg-display" mt={2}>
                   Transparent Art Pricing and Market Data
@@ -142,7 +142,7 @@ export const SignupValueProps = () => {
                 />
               </ResponsiveBox>
               <Box px={2} pb={2}>
-                <Flex
+                {/* <Flex
                   width={48}
                   height={48}
                   borderRadius="50%"
@@ -152,7 +152,7 @@ export const SignupValueProps = () => {
                   mt={2}
                 >
                   <ShieldIcon fill="mono0" />
-                </Flex>
+                </Flex> */}
                 <Text variant="lg-display" mt={2}>
                   Secure Art Buying, Every Time
                 </Text>
