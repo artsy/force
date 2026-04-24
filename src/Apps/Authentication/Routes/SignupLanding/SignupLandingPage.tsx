@@ -4,7 +4,6 @@ import { SignupHero } from "Apps/Authentication/Routes/SignupLanding/Components/
 import { SignupHeader } from "Apps/Authentication/Routes/SignupLanding/Components/SignupHeader"
 import { SignupStats } from "Apps/Authentication/Routes/SignupLanding/Components/SignupStats"
 import { SignupValueProps } from "Apps/Authentication/Routes/SignupLanding/Components/SignupValueProps"
-
 import { MetaTags } from "Components/MetaTags"
 import type { FC } from "react"
 

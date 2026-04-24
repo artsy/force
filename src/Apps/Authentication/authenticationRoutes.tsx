@@ -139,7 +139,10 @@ export const authenticationRoutes: RouteProps[] = [
     layout: "ContainerOnly",
     getComponent: () => SignupNewRoute,
     onServerSideRender: props => {
-      // Only run the essential middleware (referer tracking)
+      if (!props.req.query.oauthLogin) {
+        redirectIfLoggedIn(props)
+      }
+
       runAuthMiddleware(props)
     },
     onPreloadJS: () => {
