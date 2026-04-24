@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55d8e83072a1f6d045dd6316600a5dc5>>
+ * @generated SignedSource<<9922f82b4db1087d51a766af1e13f8c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,8 +36,26 @@ var v0 = [
 v1 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "minor",
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "amount",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "minor",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "display",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 },
 v2 = {
@@ -183,25 +201,7 @@ return {
                         "name": "note",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Money",
-                        "kind": "LinkedField",
-                        "name": "amount",
-                        "plural": false,
-                        "selections": [
-                          (v1/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "display",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
+                      (v1/*: any*/),
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -305,18 +305,7 @@ return {
                         "name": "type",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Money",
-                        "kind": "LinkedField",
-                        "name": "amount",
-                        "plural": false,
-                        "selections": [
-                          (v1/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -431,7 +420,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "444c183444a3b6b7391ef9c35150b137",
+    "cacheID": "7eabeb7d9b482d2bf2b3abc1c29bbd06",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -549,6 +538,7 @@ return {
           "type": "FulfillmentOption"
         },
         "viewer.me.order.selectedFulfillmentOption.amount": (v7/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.display": (v6/*: any*/),
         "viewer.me.order.selectedFulfillmentOption.amount.minor": (v8/*: any*/),
         "viewer.me.order.selectedFulfillmentOption.type": {
           "enumValues": [
@@ -580,7 +570,7 @@ return {
     },
     "name": "Order2CheckoutContextTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();

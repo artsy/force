@@ -8,11 +8,19 @@ export interface Order2DeliveryOptionsCompletedViewProps {
   label: string
   timeEstimatePrefix: string | null
   timeEstimateRange: string | null
+  price?: string | null
+  allowEdit?: boolean
 }
 
 export const Order2DeliveryOptionsCompletedView: React.FC<
   Order2DeliveryOptionsCompletedViewProps
-> = ({ label, timeEstimatePrefix, timeEstimateRange }) => {
+> = ({
+  label,
+  timeEstimatePrefix,
+  timeEstimateRange,
+  price,
+  allowEdit = true,
+}) => {
   const { editDeliveryOption, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = useCallback(() => {
@@ -29,22 +37,31 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           <Spacer x={1} />
           <SectionHeading>Shipping method</SectionHeading>
         </Flex>
-        <Clickable
-          textDecoration="underline"
-          cursor="pointer"
-          type="button"
-          aria-label="Edit shipping method"
-          onClick={onClickEdit}
-        >
-          <Text variant="sm" fontWeight="normal" color="mono100">
-            Edit
-          </Text>
-        </Clickable>
+        {allowEdit && (
+          <Clickable
+            textDecoration="underline"
+            cursor="pointer"
+            type="button"
+            aria-label="Edit shipping method"
+            onClick={onClickEdit}
+          >
+            <Text variant="sm" fontWeight="normal" color="mono100">
+              Edit
+            </Text>
+          </Clickable>
+        )}
       </Flex>
       <Box ml="30px" mt={1}>
-        <Text variant="sm-display" color="mono100">
-          {label}
-        </Text>
+        <Flex justifyContent="space-between">
+          <Text variant="sm-display" color="mono100">
+            {label}
+          </Text>
+          {price && (
+            <Text variant="sm" color="mono100">
+              {price}
+            </Text>
+          )}
+        </Flex>
         {timeEstimatePrefix && timeEstimateRange && (
           <Text variant="sm" color="mono60">
             {timeEstimatePrefix} <strong>{timeEstimateRange}</strong>
