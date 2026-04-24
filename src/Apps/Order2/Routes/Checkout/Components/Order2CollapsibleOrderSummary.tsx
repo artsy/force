@@ -4,6 +4,7 @@ import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
 import type * as React from "react"
 import { useState } from "react"
@@ -17,6 +18,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
   const { checkoutTracking, artworkPath } = useCheckoutContext()
+  const { isEigen } = useSystemContext()
   const orderData = useFragment(FRAGMENT, order)
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -38,6 +40,8 @@ export const Order2CollapsibleOrderSummary: React.FC<
     ? artworkVersion?.thumbnail?.resizedSquare?.url
     : fallbackImageUrl
 
+  console.log("LOGD APP")
+
   return (
     <Box backgroundColor="mono0">
       <Clickable
@@ -55,7 +59,14 @@ export const Order2CollapsibleOrderSummary: React.FC<
             flex={0}
             to={artworkPath}
             target="_blank"
-            onClick={() => {
+            rel="noopener noreferrer"
+            onClick={event => {
+              if (isEigen) {
+                event.preventDefault()
+                event.stopPropagation()
+                return
+              }
+
               const artworkInternalID =
                 orderData.lineItems[0]?.artwork?.internalID
               if (artworkInternalID) {
