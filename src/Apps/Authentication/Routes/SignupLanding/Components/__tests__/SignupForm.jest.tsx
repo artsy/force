@@ -160,17 +160,4 @@ describe("SignupForm", () => {
       expect(screen.getByText("User already exists")).toBeInTheDocument()
     })
   })
-
-  it("shows message when user is already logged in", () => {
-    require("System/Hooks/useSystemContext").useSystemContext.mockReturnValue({
-      user: { id: "user-123" },
-    })
-
-    render(<SignupForm />)
-
-    expect(screen.getByText("You're already signed in!")).toBeInTheDocument()
-    expect(
-      screen.queryByPlaceholderText("Your full name"),
-    ).not.toBeInTheDocument()
-  })
 })

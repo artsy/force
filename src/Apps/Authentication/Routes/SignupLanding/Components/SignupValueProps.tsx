@@ -1,6 +1,3 @@
-// import SearchIcon from "@artsy/icons/SearchIcon"
-// import ShieldIcon from "@artsy/icons/ShieldIcon"
-// import TrendingIcon from "@artsy/icons/TrendingIcon"
 import {
   Spacer,
   GridColumns,
@@ -15,6 +12,7 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { cropped } from "Utils/resized"
+import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
 
 export const SignupValueProps = () => {
   const { theme } = useTheme()
@@ -55,9 +53,9 @@ export const SignupValueProps = () => {
                 </Text>
                 <Text variant="sm" color="mono60" mt={1}>
                   Artsy is where collectors come to discover and buy original
-                  art online. With works from 3,100+ gallery and auction
-                  partners — from New York to Seoul — the entire global art
-                  market is at your fingertips.
+                  art online. With works from {FACTS_AND_FIGURES.galleriesCount}
+                  + gallery and auction partners — from New York to Seoul — the
+                  entire global art market is at your fingertips.
                 </Text>
               </Box>
             </Column>
