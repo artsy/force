@@ -6,6 +6,7 @@ module.exports = {
   facebookCallbackPath: "/users/auth/facebook/callback",
   googlePath: "/users/auth/google",
   googleCallbackPath: "/users/auth/google/callback",
+  googleOneTapCallbackPath: "/users/auth/google/one_tap/callback",
 
   // Landing pages
   loginPagePath: "/log_in",

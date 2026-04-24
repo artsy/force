@@ -59,6 +59,7 @@ export const bootstrapSharify = () => {
       "GEODATA_URL",
       "GOOGLE_ADWORDS_ID",
       "GOOGLE_ANALYTICS_ID",
+      "GOOGLE_CLIENT_ID",
       "GRAPHQL_CACHE_SIZE",
       "GRAPHQL_CACHE_TTL",
       "GRAVITY_WEBSOCKET_URL",

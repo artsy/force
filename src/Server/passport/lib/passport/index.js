@@ -6,6 +6,8 @@ const passport = require("passport")
 const FacebookStrategy = require("passport-facebook").Strategy
 const AppleStrategy = require("passport-apple")
 const GoogleStrategy = require("passport-google-oauth20").Strategy
+const GoogleOneTapStrategy =
+  require("passport-google-one-tap").GoogleOneTapStrategy
 const LocalWithOtpStrategy =
   require("Server/passport-local-with-otp/lib").Strategy
 const callbacks = require("./callbacks")
@@ -53,6 +55,20 @@ module.exports = () => {
           scope: ["profile", "email"],
         },
         callbacks.google,
+      ),
+    )
+    passport.use(
+      new GoogleOneTapStrategy(
+        {
+          clientID: opts.GOOGLE_CLIENT_ID,
+          clientSecret: opts.GOOGLE_SECRET,
+          verifyCsrfToken: false, // TODO: whether to validate the csrf token or not
+          passReqToCallback: true,
+        },
+        (req, profile, done) => {
+          console.log("[OneTap] profile:", profile)
+          console.log("[OneTap] id_token:", req.body.credential)
+        },
       ),
     )
   }

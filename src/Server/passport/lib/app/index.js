@@ -71,6 +71,14 @@ module.exports = () => {
     ssoAndRedirectBack,
   )
 
+  // Google One Tap
+  app.post(
+    opts.googleOneTapCallbackPath,
+    passport.authenticate("google-one-tap"),
+    trackSignup("google"),
+    ssoAndRedirectBack,
+  )
+
   // Logout middleware
   app.get(opts.logoutPath, denyBadLogoutLinks, logout)
   app.delete(opts.logoutPath, logout)
