@@ -176,14 +176,22 @@ describe("NavBar", () => {
       })
     })
 
-    it("links to signup page on signup button click", () => {
+    it("calls signup auth action on signup button click", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       getWrapper()
 
       const signupButton = screen.getByText("Sign Up")
       expect(signupButton).toBeDefined()
+      fireEvent.click(signupButton)
 
-      const link = signupButton.closest("a")
-      expect(link).toHaveAttribute("href", "/signup-new")
+      expect(showAuthDialog).toBeCalledWith({
+        analytics: {
+          contextModule: "header",
+          intent: "signup",
+        },
+      })
     })
   })
 

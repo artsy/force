@@ -26,10 +26,15 @@ export const NavBarLoggedOutActions = () => {
       <Spacer x={1} />
 
       <Button
-        // @ts-expect-error
-        as={RouterLink}
-        to="/signup-new"
         size="small"
+        onClick={() => {
+          showAuthDialog({
+            analytics: {
+              contextModule: ContextModule.header,
+              intent: Intent.signup,
+            },
+          })
+        }}
       >
         Sign Up
       </Button>

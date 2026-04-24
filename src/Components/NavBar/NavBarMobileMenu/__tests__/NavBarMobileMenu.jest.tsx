@@ -129,7 +129,7 @@ describe("NavBarMobileMenu", () => {
         ["/institutions", "Museums"],
         ["/price-database", "Price Database"],
         ["/articles", "Editorial"],
-        ["/signup-new?intent=signup&contextModule=header", "Sign Up"],
+        ["/signup?intent=signup&contextModule=header", "Sign Up"],
         ["/login?intent=login&contextModule=header", "Log In"],
       ].map(link => link.join(""))
 
