@@ -1,4 +1,4 @@
-import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
+import { ActionType, type ClickedTooltip, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   HorizontalOverflow,
@@ -75,6 +75,7 @@ const EntityTooltipArtist: FC<
 
       <EntityHeaderArtistFragmentContainer
         artist={artist}
+        contextModule={ContextModule.intextTooltip}
         displayAvatar={false}
         alignItems="flex-start"
       />
