@@ -16,6 +16,7 @@ import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { SignupFormSocial } from "./SignupFormSocial"
 import { SignupFormDisclaimer } from "./SignupFormDisclaimer"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 
 const signupSchema = Yup.object().shape({
   name: Yup.string().required("Name is required."),
@@ -42,6 +43,7 @@ export const SignupForm = () => {
   useRecaptcha()
 
   const { runAfterAuthentication } = useAfterAuthentication()
+  const { isAutomaticallySubscribed } = useCountryCode()
 
   const handleSubmit = async (values, actions) => {
     try {
@@ -57,15 +59,6 @@ export const SignupForm = () => {
       setError(err.message || "Something went wrong. Please try again.")
       actions.setSubmitting(false)
     }
-  }
-
-  // If already logged in, show message
-  if (user) {
-    return (
-      <Box bg="mono5" p={4} textAlign="center">
-        <Text variant="md">You're already signed in!</Text>
-      </Box>
-    )
   }
 
   return (
@@ -135,7 +128,7 @@ export const SignupForm = () => {
               />
 
               {/* Show email subscription checkbox only for non-GDPR countries */}
-              {!isGDPRCountry() && (
+              {!isAutomaticallySubscribed && (
                 <Checkbox
                   selected={values.agreedToReceiveEmails}
                   onSelect={selected => {
@@ -176,10 +169,4 @@ export const SignupForm = () => {
       </Formik>
     </Box>
   )
-}
-
-// Helper to detect GDPR countries (from AuthDialog)
-const isGDPRCountry = () => {
-  // Check user's country code against GDPR list
-  return false
 }
