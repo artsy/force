@@ -1,6 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Button, Flex, Spacer } from "@artsy/palette"
-
 import { useAuthDialog } from "Components/AuthDialog"
 
 export const NavBarLoggedOutActions = () => {
