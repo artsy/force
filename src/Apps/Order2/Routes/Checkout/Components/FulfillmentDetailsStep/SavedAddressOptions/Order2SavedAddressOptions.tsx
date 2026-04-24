@@ -83,13 +83,16 @@ export const SavedAddressOptions = ({
       return
     }
 
-    if (!checkoutTracking || !!userAddressMode || hasTrackedAddressViewRef.current) {
+    if (
+      !checkoutTracking ||
+      !!userAddressMode ||
+      hasTrackedAddressViewRef.current
+    ) {
       return
     }
 
     if (savedAddresses.length > 0) {
-      const addressIds = savedAddresses.map(address => address.internalID)
-      checkoutTracking.savedAddressViewed(addressIds)
+      checkoutTracking.savedAddressViewed(savedAddresses)
       hasTrackedAddressViewRef.current = true
     }
   }, [

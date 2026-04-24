@@ -846,8 +846,8 @@ describe("SavedAddressOptions", () => {
       await waitFor(() => {
         expect(mockSavedAddressViewed).toHaveBeenCalledTimes(1)
         expect(mockSavedAddressViewed).toHaveBeenCalledWith([
-          "address-id-123",
-          "address-id-456",
+          mockUSAddress1,
+          mockUSAddress2,
         ])
       })
     })

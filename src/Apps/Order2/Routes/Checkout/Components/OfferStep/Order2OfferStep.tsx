@@ -69,13 +69,8 @@ interface Order2OfferStepFormContentProps {
 
 export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const {
-    steps,
-    completeStep,
-    checkoutTracking,
-    messages,
-    setSectionErrorMessage,
-  } = useCheckoutContext()
+  const { steps, completeStep, messages, setSectionErrorMessage } =
+    useCheckoutContext()
 
   const offerAmountError = messages[CheckoutStepName.OFFER_AMOUNT]?.error
 
@@ -119,8 +114,6 @@ export const Order2OfferStep: React.FC<Order2OfferStepProps> = ({ order }) => {
 
     try {
       setIsSubmittingOffer(true)
-
-      checkoutTracking.clickedOrderProgression(ContextModule.ordersOffer)
 
       // Unset the current fulfillment option if it exists
       if (orderData.selectedFulfillmentOption?.type) {
@@ -246,6 +239,9 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
   }
 
   const onContinueButtonPressed = async () => {
+    // tracked separately from onSubmit — fires on click regardless of validation
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersOffer)
+
     if (values.offerValue === undefined || values.offerValue === 0) {
       setFieldValue("offerValue", values.offerValue, true)
       setSectionErrorMessage({
