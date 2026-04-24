@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<796d0a05c488e0e0d7de8386e2e6cad1>>
+ * @generated SignedSource<<2741108dd740def66ec0e2e9bb4d6e29>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -174,6 +174,13 @@ return {
                 "name": "shippingOrigin",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "shippingRadius",
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
@@ -185,7 +192,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d65499374f5941523f28068d0a6d50cc",
+    "cacheID": "3a7fcf5538cde3be8ecc733620477d52",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -243,12 +250,13 @@ return {
         },
         "me.order.id": (v2/*: any*/),
         "me.order.internalID": (v2/*: any*/),
-        "me.order.shippingOrigin": (v3/*: any*/)
+        "me.order.shippingOrigin": (v3/*: any*/),
+        "me.order.shippingRadius": (v3/*: any*/)
       }
     },
     "name": "Order2DeliveryOptionsFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  shippingOrigin\n}\n"
+    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  shippingOrigin\n  shippingRadius\n}\n"
   }
 };
 })();

@@ -443,6 +443,9 @@ type Alert {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -1876,6 +1879,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -2347,6 +2353,9 @@ type ArtistPartnerEdge {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -2519,6 +2528,9 @@ type ArtistSeries implements Node {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -3444,6 +3456,9 @@ type ArtworkFilterNode {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -5595,6 +5610,9 @@ input BulkUpdateArtworksMetadataInput {
   # The price for the artworks
   priceListed: Float
 
+  # The price in minor units, targeting the catalog artwork field
+  priceMinor: Int
+
   # The provenance to be assigned
   provenance: String
 
@@ -5651,6 +5669,18 @@ union BulkUpdateArtworksMetadataMutationType =
 type BulkUpdateArtworksMetadataResponse {
   count: Int
   ids: [String]
+}
+
+type BulkUpdateMetadataPreview {
+  counts: BulkUpdateMetadataPreviewCounts!
+}
+
+type BulkUpdateMetadataPreviewCounts {
+  editable: Int!
+
+  # Number of artworks that cannot be edited (total - editable).
+  nonEditable: Int!
+  total: Int!
 }
 
 # Possible sources of the bulk operation
@@ -13233,6 +13263,9 @@ interface EntityWithFilterArtworksConnectionInterface {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -13566,6 +13599,9 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -14115,6 +14151,9 @@ input FilterArtworksInput {
   availability: String
   before: String
   categories: [String]
+
+  # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+  certificateOfAuthenticity: String
   color: String
   colors: [String]
 
@@ -14686,6 +14725,9 @@ type Gene implements Node & Searchable {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -16894,6 +16936,9 @@ type MarketingCollection implements Node {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -20511,6 +20556,18 @@ type Partner implements Node {
 
   # The partner's brand kit — colors, fonts, and logo used for branded surfaces
   brandKit: BrandKit
+
+  # Preview counts of artworks affected by a bulk metadata update.
+  bulkUpdateMetadataPreview(
+    # IDs of artworks to include in the preview.
+    artworkIds: [String!]
+
+    # ID of a partner list to filter artworks.
+    partnerListId: String
+
+    # When true, excludes live artworks from the editable count.
+    updateCatalog: Boolean
+  ): BulkUpdateMetadataPreview
   cached: Int
   categories: [PartnerCategory]
 
@@ -20593,6 +20650,9 @@ type Partner implements Node {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -20991,6 +21051,9 @@ type PartnerArtist {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -21196,6 +21259,9 @@ type PartnerArtistEdge {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -22670,6 +22736,9 @@ type Query {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -23076,6 +23145,9 @@ type Query {
 
     # The slug of the discovery category to filter artworks by
     categorySlug: String!
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -25816,6 +25888,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -26395,6 +26470,9 @@ type Tag implements Node {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -29697,6 +29775,9 @@ type Viewer {
     availability: String
     before: String
     categories: [String]
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
@@ -29977,6 +30058,9 @@ type Viewer {
 
     # The slug of the discovery category to filter artworks by
     categorySlug: String!
+
+    # Filter by certificate of authenticity. Accepted values: gallery, authenticating_body, no.
+    certificateOfAuthenticity: String
     color: String
     colors: [String]
 
