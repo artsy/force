@@ -51,18 +51,6 @@ export const SignupValueProps = () => {
                 />
               </ResponsiveBox>
               <Box px={2} pb={2}>
-                {/* <Flex
-                  width={48}
-                  height={48}
-                  borderRadius="50%"
-                  bg="mono100"
-                  alignItems="center"
-                  justifyContent="center"
-                  mt={2}
-                >
-                  <SearchIcon fill="mono0" />
-                </Flex> */}
-
                 <Text variant="lg-display" mt={2}>
                   The World's Largest Online Art Marketplace
                 </Text>
@@ -97,18 +85,6 @@ export const SignupValueProps = () => {
                 />
               </ResponsiveBox>
               <Box px={2} pb={2}>
-                {/* <Flex
-                  width={48}
-                  height={48}
-                  borderRadius="50%"
-                  bg="mono100"
-                  alignItems="center"
-                  justifyContent="center"
-                  mt={2}
-                >
-                  <TrendingIcon fill="mono0" />
-                </Flex> */}
-
                 <Text variant="lg-display" mt={2}>
                   Transparent Art Pricing and Market Data
                 </Text>
@@ -142,17 +118,6 @@ export const SignupValueProps = () => {
                 />
               </ResponsiveBox>
               <Box px={2} pb={2}>
-                {/* <Flex
-                  width={48}
-                  height={48}
-                  borderRadius="50%"
-                  bg="mono100"
-                  alignItems="center"
-                  justifyContent="center"
-                  mt={2}
-                >
-                  <ShieldIcon fill="mono0" />
-                </Flex> */}
                 <Text variant="lg-display" mt={2}>
                   Secure Art Buying, Every Time
                 </Text>

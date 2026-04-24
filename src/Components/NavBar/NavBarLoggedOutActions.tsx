@@ -1,6 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Button, Flex, Spacer } from "@artsy/palette"
-
+import { RouterLink } from "System/Components/RouterLink"
 import { useAuthDialog } from "Components/AuthDialog"
 
 export const NavBarLoggedOutActions = () => {
@@ -26,15 +26,10 @@ export const NavBarLoggedOutActions = () => {
       <Spacer x={1} />
 
       <Button
+        // @ts-expect-error
+        as={RouterLink}
+        to="/signup-new"
         size="small"
-        onClick={() => {
-          showAuthDialog({
-            analytics: {
-              contextModule: ContextModule.header,
-              intent: Intent.signup,
-            },
-          })
-        }}
       >
         Sign Up
       </Button>
