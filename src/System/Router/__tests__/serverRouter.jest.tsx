@@ -62,7 +62,7 @@ describe("serverRouter", () => {
   const mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request
-  let next: NextFunction
+  const next: NextFunction = jest.fn()
   // @ts-ignore
   let options: any = { req, res, next }
 
@@ -289,7 +289,6 @@ describe("serverRouter", () => {
       expect(texts).toEqual(["xs", "notHover"])
     })
   })
-
 
   it("invokes onServerSideRender hook", async () => {
     const spy = jest.fn()
