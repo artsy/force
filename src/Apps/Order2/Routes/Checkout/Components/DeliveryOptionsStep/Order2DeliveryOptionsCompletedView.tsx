@@ -53,15 +53,11 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
         )}
       </Flex>
       <Box ml="30px" mt={1}>
-        <Flex justifyContent="space-between">
+        <Flex>
           <Text variant="sm-display" color="mono100">
-            {label}
+            {[label, price].filter(Boolean).join(" ")}
           </Text>
-          {price && (
-            <Text variant="sm" color="mono100">
-              {price}
-            </Text>
-          )}
+          <Spacer x={2} />
         </Flex>
         {timeEstimatePrefix && timeEstimateRange && (
           <Text variant="sm" color="mono60">

@@ -53,13 +53,22 @@ export const useCompleteDeliveryOptionData = (
     fulfillmentType,
   )
 
+  // We don't use the disambiguated currency symbol in this case because
+  // the full pricing breakdown includes it - it is more like a label for the
+  // delivery option, eg "Domestic Flat Rate $42".
+  // TODO: Possible improvement: allow the Money.display graphQL field to
+  // accept a formatting argument.
+  const amount = orderData.selectedFulfillmentOption?.amount
+  const simplePriceDisplay =
+    isFlatRate && amount && amount.minor > 0
+      ? `${amount.currencySymbol}${amount.major}`
+      : null
+
   return {
     label: label || "",
     timeEstimatePrefix: timeEstimate?.[0] || null,
     timeEstimateRange: timeEstimate?.[1] || null,
-    price: isFlatRate
-      ? orderData.selectedFulfillmentOption?.amount?.display || null
-      : null,
+    price: simplePriceDisplay,
   }
 }
 
@@ -70,6 +79,8 @@ const FRAGMENT = graphql`
       amount {
         minor
         display
+        currencySymbol
+        major
       }
     }
   }
