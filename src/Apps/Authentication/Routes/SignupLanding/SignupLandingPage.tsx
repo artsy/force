@@ -4,26 +4,28 @@ import { SignupHero } from "Apps/Authentication/Routes/SignupLanding/Components/
 import { SignupHeader } from "Apps/Authentication/Routes/SignupLanding/Components/SignupHeader"
 import { SignupStats } from "Apps/Authentication/Routes/SignupLanding/Components/SignupStats"
 import { SignupValueProps } from "Apps/Authentication/Routes/SignupLanding/Components/SignupValueProps"
-
 import { MetaTags } from "Components/MetaTags"
 import type { FC } from "react"
+import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
 
 export const SignupLandingPage: FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
-      <MetaTags
-        title="Join Artsy - Discover and Buy Art That Moves You"
-        description="Join over 3.4 million art collectors and enthusiasts. Explore 1.6 million original artworks for sale from galleries, museums, and artists worldwide."
-        pathname="/signup-new"
-      />
+      <AuthenticationInlineDialogProvider mode="SignUp">
+        <MetaTags
+          title="Join Artsy - Discover and Buy Art That Moves You"
+          description="Join over 3.4 million art collectors and enthusiasts. Explore 1.6 million original artworks for sale from galleries, museums, and artists worldwide."
+          pathname="/signup-new"
+        />
 
-      <SignupHeader />
-      <Join separator={<Spacer y={[6, 12]} />}>
-        <SignupHero />
-        <SignupValueProps />
-        <SignupStats />
-        <SignupCTA />
-      </Join>
+        <SignupHeader />
+        <Join separator={<Spacer y={[6, 12]} />}>
+          <SignupHero />
+          <SignupValueProps />
+          <SignupStats />
+          <SignupCTA />
+        </Join>
+      </AuthenticationInlineDialogProvider>
     </>
   )
 }

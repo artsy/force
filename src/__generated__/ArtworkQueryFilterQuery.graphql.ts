@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<343e74352de83d64d0e34c66fa67ccfd>>
+ * @generated SignedSource<<534b6611ab53519ab99fcb25bb6e53b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type FilterArtworksInput = {
   artistNationalities?: ReadonlyArray<string | null | undefined> | null | undefined;
   artistSeriesID?: string | null | undefined;
   artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artsyListing?: boolean | null | undefined;
   artworkIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   atAuction?: boolean | null | undefined;
   attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
@@ -55,6 +56,7 @@ export type FilterArtworksInput = {
   keywordMatchExact?: boolean | null | undefined;
   last?: number | null | undefined;
   locationCities?: ReadonlyArray<string | null | undefined> | null | undefined;
+  locationId?: string | null | undefined;
   majorPeriods?: ReadonlyArray<string | null | undefined> | null | undefined;
   marketable?: boolean | null | undefined;
   marketingCollectionID?: string | null | undefined;

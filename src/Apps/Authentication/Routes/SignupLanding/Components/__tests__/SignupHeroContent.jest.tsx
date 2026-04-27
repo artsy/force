@@ -6,12 +6,7 @@ describe("SignupHeroContent", () => {
     render(<SignupHeroContent />)
 
     expect(
-      screen.getByText(/Discover and Buy Art That Moves You/i),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(
-        /Welcome to Artsy, the world's largest online art marketplace/i,
-      ),
+      screen.getByText(/Join Artsy to Discover and Buy Art That Moves You/i),
     ).toBeInTheDocument()
   })
 
@@ -19,16 +14,16 @@ describe("SignupHeroContent", () => {
     render(<SignupHeroContent />)
 
     expect(
-      screen.getByText(
-        "Find the art you love with 1.6M+ original artworks for sale",
-      ),
+      screen.getByText("Explore 1M+ original artworks"),
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Get art recommendations that match your taste"),
+      screen.getByText("Get personalized recommendations"),
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Build and manage your collection"),
+      screen.getByText("Save artworks, create collections, and set alerts"),
     ).toBeInTheDocument()
-    expect(screen.getByText("Collect with confidence")).toBeInTheDocument()
+    expect(
+      screen.getByText("Collect original art with confidence"),
+    ).toBeInTheDocument()
   })
 })

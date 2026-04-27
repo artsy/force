@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "System/Components/RouterLink"
@@ -8,6 +8,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 export interface EntityHeaderFairOrganizerProps extends BoxProps {
   fairOrganizer: EntityHeaderFairOrganizer_fairOrganizer$data
+  contextModule?: AuthContextModule
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
@@ -17,6 +18,7 @@ const EntityHeaderFairOrganizer: FC<
   React.PropsWithChildren<EntityHeaderFairOrganizerProps>
 > = ({
   fairOrganizer,
+  contextModule = ContextModule.fairsHeader,
   displayAvatar = true,
   displayLink = true,
   FollowButton,
@@ -69,7 +71,7 @@ const EntityHeaderFairOrganizer: FC<
         (fairOrganizer.profile && (
           <FollowProfileButtonQueryRenderer
             id={fairOrganizer.profile.internalID}
-            contextModule={ContextModule.fairsHeader}
+            contextModule={contextModule}
             size="small"
           />
         ))}

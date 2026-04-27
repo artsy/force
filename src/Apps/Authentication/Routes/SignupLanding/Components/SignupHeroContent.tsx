@@ -1,34 +1,53 @@
 import { Box, Flex, Spacer, Stack, Text } from "@artsy/palette"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
+
+const formatCompact = (value: string) => {
+  return new Intl.NumberFormat("en", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(Number(value.replace(/,/g, "")))
+}
 
 export const SignupHeroContent = () => {
   return (
     <Box>
       <Text variant={["lg", "xl", "xxl"]} as="h1">
-        Discover and Buy Art That Moves You.
+        Join Artsy to Discover and Buy Art That Moves You
       </Text>
       <Spacer y={2} />
-      <Text variant={["md", "lg-display"]} color="mono60">
-        Welcome to Artsy, the world's largest online art marketplace. We give
-        you the tools to make art part of your daily routine, whether you're a
-        seasoned art collector or looking for your first artwork.
-      </Text>
-      <Spacer y={4} />
       <Stack gap={1}>
-        <ValuePropItem text="Find the art you love with 1.6M+ original artworks for sale" />
-        <ValuePropItem text="Get art recommendations that match your taste" />
-        <ValuePropItem text="Build and manage your collection" />
-        <ValuePropItem text="Collect with confidence" />
+        <ValuePropItem>
+          <strong>
+            Explore {formatCompact(FACTS_AND_FIGURES.artworksCount)}+ original
+            artworks
+          </strong>{" "}
+          across paintings, sculptures, prints, and photography from artists at
+          leading global galleries.
+        </ValuePropItem>
+        <ValuePropItem>
+          <strong> Get personalized recommendations</strong> by following
+          artists and saving works to create a custom art experience that
+          evolves with your taste.
+        </ValuePropItem>
+        <ValuePropItem>
+          <strong> Save artworks, create collections, and set alerts</strong> to
+          easily manage and grow your collection in one place.
+        </ValuePropItem>
+        <ValuePropItem>
+          <strong>Collect original art with confidence </strong> by inquiring,
+          negotiating, and purchasing through Artsy's trusted platform.{" "}
+        </ValuePropItem>
       </Stack>
     </Box>
   )
 }
 
-const ValuePropItem = ({ text }: { text: string }) => {
+const ValuePropItem = ({ children }: { children: React.ReactNode }) => {
   return (
     <Flex alignItems="flex-start" gap={1}>
       <CheckmarkFillIcon fill="black100" flexShrink={0} />
-      <Text variant="sm">{text}</Text>
+      <Text variant="sm">{children}</Text>
     </Flex>
   )
 }

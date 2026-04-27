@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Avatar, type BoxProps, Flex, Label, Text } from "@artsy/palette"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "System/Components/RouterLink"
@@ -12,6 +12,7 @@ const DISPLAYABLE_BADGES = ["black-owned", "women-owned"]
 
 export interface EntityHeaderPartnerProps extends BoxProps {
   partner: EntityHeaderPartner_partner$data
+  contextModule?: AuthContextModule
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
@@ -24,6 +25,7 @@ const EntityHeaderPartner: FC<
   React.PropsWithChildren<EntityHeaderPartnerProps>
 > = ({
   partner,
+  contextModule = ContextModule.partnerHeader,
   displayAvatar = true,
   displayLink = true,
   FollowButton,
@@ -91,7 +93,7 @@ const EntityHeaderPartner: FC<
         (FollowButton || (
           <FollowProfileButtonQueryRenderer
             id={partner.profile.internalID}
-            contextModule={ContextModule.partnerHeader}
+            contextModule={contextModule}
             size="small"
             onFollow={onFollow}
           />

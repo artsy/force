@@ -241,7 +241,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
             {[artworkData.title, artworkData.date].join(", ")}
           </Text>
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            List price: {artworkData.price}
+            List price: {artworkData.price || "Not publicly listed"}
           </Text>
           {displayLimitedOfferLine && (
             <Text variant="sm" color="blue100" textAlign="left">

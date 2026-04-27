@@ -1,4 +1,4 @@
-import { ActionType, type ClickedTooltip } from "@artsy/cohesion"
+import { ActionType, type ClickedTooltip, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Image,
@@ -64,6 +64,7 @@ const EntityTooltipPartner: FC<
 
       <EntityHeaderPartnerFragmentContainer
         partner={partner}
+        contextModule={ContextModule.intextTooltip}
         displayAvatar={false}
         alignItems="flex-start"
       />
