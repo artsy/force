@@ -1,21 +1,35 @@
 import {
-  Box,
-  Column,
-  FullBleed,
-  GridColumns,
-  Image,
-  ResponsiveBox,
   Spacer,
+  GridColumns,
+  Column,
   Text,
+  FullBleed,
+  ResponsiveBox,
+  Image,
+  Box,
   useTheme,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { getFactsAndFigures } from "Utils/factsAndFigures"
 import { cropped } from "Utils/resized"
+import { getFactsAndFigures } from "Utils/factsAndFigures"
+import { ActionType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
 
 export const SignupValueProps = () => {
   const { theme } = useTheme()
+  const { trackEvent } = useTracking()
+
+  const handleBuyerGuaranteeClick = () => {
+    trackEvent({
+      action: ActionType.clickedBuyerProtection,
+      context_module: "about",
+      context_page_owner_type: "signup",
+      context_page_owner_id: null,
+      destination_page_owner_type: "articles",
+      destination_page_owner_slug: "360048946973-How-does-Artsy-protect-me",
+    })
+  }
 
   return (
     <FullBleed bg="mono5" py={[6, 12]}>
@@ -122,7 +136,12 @@ export const SignupValueProps = () => {
                   Shop with total confidence. Artsy’s trusted checkout and buyer
                   protections mean there’s no guesswork—just art you love,
                   delivered to your door. Learn more about the{" "}
-                  <a href="/buyer-guarantee">Artsy Guarantee.</a>
+                  <a
+                    href="/buyer-guarantee"
+                    onClick={handleBuyerGuaranteeClick}
+                  >
+                    Artsy Guarantee.
+                  </a>
                 </Text>
               </Box>
             </Column>

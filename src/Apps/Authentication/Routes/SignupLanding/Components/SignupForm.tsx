@@ -13,6 +13,7 @@ import * as Yup from "yup"
 import { signUp } from "Utils/auth"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { SignupFormSocial } from "./SignupFormSocial"
 import { SignupFormDisclaimer } from "./SignupFormDisclaimer"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
@@ -43,6 +44,8 @@ export const SignupForm = () => {
   const { runAfterAuthentication } = useAfterAuthentication()
   const { isAutomaticallySubscribed } = useCountryCode()
 
+  const track = useAuthDialogTracking()
+
   const handleSubmit = async (values, actions) => {
     try {
       const response = await signUp({
@@ -51,7 +54,9 @@ export const SignupForm = () => {
         password: values.password,
         agreedToReceiveEmails: values.agreedToReceiveEmails,
       })
-      // Match existing /signup behavior - onboarding modal will appear
+
+      track.signedUp({ service: "email", userId: response.user.id })
+
       await runAfterAuthentication({ accessToken: response.user.accessToken })
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.")
