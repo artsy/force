@@ -12,7 +12,7 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { cropped } from "Utils/resized"
-import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
+import { getFactsAndFigures } from "Utils/factsAndFigures"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
@@ -67,9 +67,9 @@ export const SignupValueProps = () => {
                 </Text>
                 <Text variant="sm" color="mono60" mt={1}>
                   Artsy is where collectors come to discover and buy original
-                  art online. With works from {FACTS_AND_FIGURES.galleriesCount}
-                  + gallery and auction partners, the entire art world is
-                  waiting for you.
+                  art online. With works from{" "}
+                  {getFactsAndFigures("galleriesCount")}+ gallery and auction
+                  partners, the entire art world is waiting for you.
                 </Text>
               </Box>
             </Column>
