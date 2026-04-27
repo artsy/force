@@ -1,30 +1,22 @@
 import { Box, GridColumns, Column, Text } from "@artsy/palette"
-import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
+import { getFactsAndFigures } from "Utils/factsAndFigures"
 
-const formatCompact = (value: string) => {
-  return new Intl.NumberFormat("en", {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(Number(value.replace(/,/g, "")))
-}
+const artworkCount = getFactsAndFigures("artworksCount", { format: "compact" })
+const galleryCount = getFactsAndFigures("galleriesCount", { format: "compact" })
 
 export const SignupStats = () => {
   return (
     <Box mx="auto">
       <GridColumns textAlign="center" gridRowGap={[4, 2]}>
         <Column span={[12, 4]}>
-          <Text variant={["xl", "xxl"]}>
-            {formatCompact(FACTS_AND_FIGURES.artworksCount)}+
-          </Text>
+          <Text variant={["xl", "xxl"]}>{artworkCount}+</Text>
           <Text variant="sm-display" color="mono60">
             {" "}
             Artworks available
           </Text>
         </Column>
         <Column span={[12, 4]}>
-          <Text variant={["xl", "xxl"]}>
-            {formatCompact(FACTS_AND_FIGURES.galleriesCount)}+
-          </Text>
+          <Text variant={["xl", "xxl"]}>{galleryCount}+</Text>
           <Text variant="sm-display" color="mono60">
             {" "}
             Gallery partners
