@@ -6,7 +6,6 @@ import { SignupStats } from "Apps/Authentication/Routes/SignupLanding/Components
 import { SignupValueProps } from "Apps/Authentication/Routes/SignupLanding/Components/SignupValueProps"
 import { MetaTags } from "Components/MetaTags"
 import type { FC } from "react"
-import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
 
 export const SignupLandingPage: FC<React.PropsWithChildren<unknown>> = () => {

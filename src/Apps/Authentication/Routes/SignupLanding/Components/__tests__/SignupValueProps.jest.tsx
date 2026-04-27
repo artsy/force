@@ -11,13 +11,13 @@ describe("SignupValueProps", () => {
     render(<SignupValueProps />)
 
     expect(
-      screen.getByText("The World's Largest Online Art Marketplace"),
+      screen.getByText("The world’s largest online art marketplace"),
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Transparent Art Pricing and Market Data"),
+      screen.getByText("Transparent art pricing and market data"),
     ).toBeInTheDocument()
     expect(
-      screen.getByText("Secure Art Buying, Every Time"),
+      screen.getByText("Secure art buying, every time"),
     ).toBeInTheDocument()
   })
 })
