@@ -61,6 +61,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     steps,
     checkoutTracking,
     checkoutMode,
+    artworkPath,
+    isFulfillmentDetailsSaving,
   } = useCheckoutContext()
 
   const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
@@ -164,7 +166,12 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           >
             <Stack gap={1}>
               <Box display={["block", "block", "none"]}>
-                <Order2CollapsibleOrderSummary order={orderData} />
+                <Order2CollapsibleOrderSummary
+                  order={orderData}
+                  checkoutTracking={checkoutTracking}
+                  artworkPath={artworkPath}
+                  isFulfillmentDetailsSaving={isFulfillmentDetailsSaving}
+                />
               </Box>
               {isExpressCheckoutEligible && (
                 <Order2ExpressCheckout order={orderData} />

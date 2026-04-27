@@ -1,5 +1,8 @@
 import loadable from "@loadable/component"
-import { newCheckoutEnabled } from "Apps/Order/redirects"
+import {
+  counterofferRedesignEnabled,
+  newCheckoutEnabled,
+} from "Apps/Order/redirects"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
@@ -25,6 +28,16 @@ const CheckoutRoute = loadable(
     ),
   {
     resolveComponent: component => component.Order2CheckoutRoute,
+  },
+)
+
+const RespondRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "respondBundle" */ "./Routes/Respond/Order2RespondRoute"
+    ),
+  {
+    resolveComponent: component => component.Order2RespondRoute,
   },
 )
 
@@ -154,6 +167,75 @@ export const order2Routes: RouteProps[] = [
               if (process.env.NODE_ENV === "development") {
                 console.error(
                   `Redirecting from to ${redirectUrl} because Order2 checkout is not enabled for this order`,
+                )
+              }
+              throw new RedirectException(redirectUrl)
+            }
+          }
+
+          return <Component viewer={viewer} />
+        },
+      },
+      {
+        path: "respond",
+        layout: "Checkout",
+        Component: RespondRoute,
+        shouldWarnBeforeLeaving: true,
+        prepareVariables: params => ({ orderID: params.orderID }),
+        query: graphql`
+          query order2Routes_RespondQuery($orderID: ID!) {
+            viewer {
+              me {
+                order(id: $orderID) {
+                  internalID
+                  mode
+                  buyerState
+                }
+              }
+              ...Order2RespondRoute_viewer @arguments(orderID: $orderID)
+            }
+          }
+        `,
+        render: args => {
+          const { props, Component, resolving } = args
+          if (!(Component && props)) {
+            return
+          }
+          const typedProps = props as unknown as {
+            viewer: order2Routes_CheckoutQuery$data["viewer"]
+            match: Match<SystemContextProps>
+          }
+          const { viewer, match } = typedProps
+          const order = viewer?.me?.order
+          const featureFlags = match.context.featureFlags
+
+          if (!order) {
+            logger.warn("No order found - respond page")
+            return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
+          }
+
+          if (resolving) {
+            if (order.mode !== "OFFER") {
+              logger.warn(
+                "Order is not an offer order - redirecting to details",
+              )
+              const redirectUrl = `/orders/${order.internalID}/details`
+              throw new RedirectException(redirectUrl)
+            }
+
+            if (order.buyerState !== "OFFER_RECEIVED") {
+              logger.warn(
+                "Not awaiting buyer response - redirecting to details",
+              )
+              const redirectUrl = `/orders/${order.internalID}/details`
+              throw new RedirectException(redirectUrl)
+            }
+
+            if (!counterofferRedesignEnabled({ order, featureFlags })) {
+              const redirectUrl = `/orders/${order.internalID}/respond`
+              if (process.env.NODE_ENV === "development") {
+                console.error(
+                  `Redirecting to ${redirectUrl} because Order2 counteroffer is not enabled for this order`,
                 )
               }
               throw new RedirectException(redirectUrl)
