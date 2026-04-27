@@ -46,6 +46,23 @@ export const FACTS_AND_FIGURES = {
 
 export type FactsAndFiguresFormat = "comma" | "compact"
 
+type FactsAndFigures = typeof FACTS_AND_FIGURES
+
+type JoinPath<
+  Parent extends string,
+  Child extends string,
+> = `${Parent}.${Child}`
+
+type NumericPath<T> = {
+  [Key in Extract<keyof T, string>]: T[Key] extends number
+    ? Key
+    : T[Key] extends object
+      ? JoinPath<Key, NumericPath<T[Key]>>
+      : never
+}[Extract<keyof T, string>]
+
+export type FactsAndFiguresPath = NumericPath<FactsAndFigures>
+
 const FORMATTERS: Record<FactsAndFiguresFormat, Intl.NumberFormat> = {
   comma: new Intl.NumberFormat("en"),
   compact: new Intl.NumberFormat("en", {
@@ -54,13 +71,13 @@ const FORMATTERS: Record<FactsAndFiguresFormat, Intl.NumberFormat> = {
   }),
 }
 
+interface GetFactsAndFiguresOptions {
+  format?: FactsAndFiguresFormat
+}
+
 export const getFactsAndFigures = (
-  path: string,
-  {
-    format: formatName = "comma",
-  }: {
-    format?: FactsAndFiguresFormat
-  } = {},
+  path: FactsAndFiguresPath,
+  { format = "comma" }: GetFactsAndFiguresOptions = {},
 ) => {
-  return FORMATTERS[formatName].format(get(FACTS_AND_FIGURES, path))
+  return FORMATTERS[format].format(get(FACTS_AND_FIGURES, path))
 }
