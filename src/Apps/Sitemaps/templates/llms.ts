@@ -1,18 +1,24 @@
 import { DOWNLOAD_APP_URLS } from "Utils/Hooks/useDeviceDetection"
 import { Device } from "Utils/Hooks/useDeviceDetection"
-import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
+import { getFactsAndFigures } from "Utils/factsAndFigures"
+
+const artworkCount = getFactsAndFigures("artworksCount")
+const artistCount = getFactsAndFigures("artistsCount")
+const fairCount = getFactsAndFigures("fairsCount")
+const galleryCount = getFactsAndFigures("galleriesCount")
+const institutionCount = getFactsAndFigures("institutionsCount")
 
 export const LLMS_TXT = `# Artsy
 
-> Artsy is the world’s largest online art marketplace. Browse over ${FACTS_AND_FIGURES.artworksCount} artworks by iconic and emerging artists from ${FACTS_AND_FIGURES.galleriesCount}+ galleries and top auction houses.
+> Artsy is the world’s largest online art marketplace. Browse over ${artworkCount} artworks by iconic and emerging artists from ${galleryCount}+ galleries and top auction houses.
 
 ## Browse & Buy Art
-- [Artists](https://www.artsy.net/artists): Profiles for over ${FACTS_AND_FIGURES.artistsCount}+ artists: bios, works, auction results.
-- [Artworks](https://www.artsy.net/collect): Global inventory of over ${FACTS_AND_FIGURES.artworksCount}+ artworks searchable by medium, price, size, and more.
-- [Galleries](https://www.artsy.net/galleries): A global index of Artsy’s ${FACTS_AND_FIGURES.galleriesCount}+ partner galleries, organized by city and specialty. Listings surface the gallery’s current, upcoming, and past shows, along with artworks that are available to buy immediately.
-- [Museums](https://www.artsy.net/institutions): A directory of more than ${FACTS_AND_FIGURES.institutionsCount} museum and nonprofit institution partners worldwide. Each profile showcases current and past exhibitions, highlights from the collection, and a “Follow” button so collectors get notified when new shows go live.
+- [Artists](https://www.artsy.net/artists): Profiles for over ${artistCount}+ artists: bios, works, auction results.
+- [Artworks](https://www.artsy.net/collect): Global inventory of over ${artworkCount}+ artworks searchable by medium, price, size, and more.
+- [Galleries](https://www.artsy.net/galleries): A global index of Artsy’s ${galleryCount}+ partner galleries, organized by city and specialty. Listings surface the gallery’s current, upcoming, and past shows, along with artworks that are available to buy immediately.
+- [Museums](https://www.artsy.net/institutions): A directory of more than ${institutionCount} museum and nonprofit institution partners worldwide. Each profile showcases current and past exhibitions, highlights from the collection, and a “Follow” button so collectors get notified when new shows go live.
 - [Shows](https://www.artsy.net/shows): Artsy’s calendar of gallery and museum exhibitions worldwide. Filter by city or “Online Exclusive,” browse featured shows, and track live countdowns until opening or closing.
-- [Fairs & Events](https://www.artsy.net/fairs): A hub for ${FACTS_AND_FIGURES.fairsCount}+ international art fairs—from Art Basel and Frieze to regional pop-ups. Users can preview booths, filter by “Current / Upcoming / Past,” and buy works before, during, or after the physical fair dates.
+- [Fairs & Events](https://www.artsy.net/fairs): A hub for ${fairCount}+ international art fairs—from Art Basel and Frieze to regional pop-ups. Users can preview booths, filter by “Current / Upcoming / Past,” and buy works before, during, or after the physical fair dates.
 - [Viewing Rooms](https://www.artsy.net/viewing-rooms): Time-limited online exhibitions where leading galleries and institutions present tightly curated selections of work. Pages blend high-resolution images, curatorial storytelling, and instant purchase or inquiry options.
 - [Collections](https://www.artsy.net/collections): Curated thematic groups (e.g., Surrealism, Women Sculptors).
 - [Categories](https://www.artsy.net/categories): *The Art Genome Project* taxonomy of 1,000+ art-historical “genes.”

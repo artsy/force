@@ -2,7 +2,7 @@ import type { EntityModuleType, OwnerType } from "@artsy/cohesion"
 import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 import { EmptyState } from "Components/EmptyState"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
+import { getFactsAndFigures } from "Utils/factsAndFigures"
 
 export const ArtistAuctionResultsEmptyState: React.FC<
   React.PropsWithChildren<unknown>
@@ -18,7 +18,7 @@ export const ArtistAuctionResultsEmptyState: React.FC<
           We’ll update this area when results become available.
           <br />
           Meanwhile, you can check out free auction results and art market data
-          for over {FACTS_AND_FIGURES.auctionRecordsCount} artists.
+          for over {getFactsAndFigures("auctionRecordsCount")} artists.
         </>
       }
       action={{
