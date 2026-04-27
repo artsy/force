@@ -1,8 +1,6 @@
-import { Box, Flex, Spacer, Stack, Text } from "@artsy/palette"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import { Box, Flex, Spacer, Stack, Text } from "@artsy/palette"
 import { getFactsAndFigures } from "Utils/factsAndFigures"
-
-const artworkCount = getFactsAndFigures("artworksCount", { format: "compact" })
 
 export const SignupHeroContent = () => {
   return (
@@ -13,9 +11,12 @@ export const SignupHeroContent = () => {
       <Spacer y={2} />
       <Stack gap={1}>
         <ValuePropItem>
-          <strong>Explore {artworkCount}+ original artworks</strong> across
-          paintings, sculptures, prints, and photography from artists at leading
-          global galleries.
+          <strong>
+            Explore {getFactsAndFigures("artworksCount", { format: "compact" })}
+            + original artworks
+          </strong>{" "}
+          across paintings, sculptures, prints, and photography from artists at
+          leading global galleries.
         </ValuePropItem>
         <ValuePropItem>
           <strong> Get personalized recommendations</strong> by following

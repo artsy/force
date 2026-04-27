@@ -19,6 +19,7 @@ export const FACTS_AND_FIGURES = {
   artistsCount: 100000,
   fairsCount: 80,
   auctionHouseCount: 25,
+  membersCount: 3400000,
   categoriesCounts: {
     architecture: 55000,
     "books-and-portfolios": 7500,

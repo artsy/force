@@ -1,29 +1,32 @@
-import { Box, GridColumns, Column, Text } from "@artsy/palette"
+import { Box, Column, GridColumns, Text } from "@artsy/palette"
 import { getFactsAndFigures } from "Utils/factsAndFigures"
-
-const artworkCount = getFactsAndFigures("artworksCount", { format: "compact" })
-const galleryCount = getFactsAndFigures("galleriesCount", { format: "compact" })
 
 export const SignupStats = () => {
   return (
     <Box mx="auto">
       <GridColumns textAlign="center" gridRowGap={[4, 2]}>
         <Column span={[12, 4]}>
-          <Text variant={["xl", "xxl"]}>{artworkCount}+</Text>
+          <Text variant={["xl", "xxl"]}>
+            {getFactsAndFigures("artworksCount", { format: "compact" })}+
+          </Text>
           <Text variant="sm-display" color="mono60">
             {" "}
             Artworks available
           </Text>
         </Column>
         <Column span={[12, 4]}>
-          <Text variant={["xl", "xxl"]}>{galleryCount}+</Text>
+          <Text variant={["xl", "xxl"]}>
+            {getFactsAndFigures("galleriesCount", { format: "compact" })}+
+          </Text>
           <Text variant="sm-display" color="mono60">
             {" "}
             Gallery partners
           </Text>
         </Column>
         <Column span={[12, 4]}>
-          <Text variant={["xl", "xxl"]}>3.4M</Text>
+          <Text variant={["xl", "xxl"]}>
+            {getFactsAndFigures("membersCount", { format: "compact" })}+
+          </Text>
           <Text variant="sm-display" color="mono60">
             {" "}
             Artsy members

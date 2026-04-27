@@ -1,20 +1,18 @@
 import {
-  Spacer,
-  GridColumns,
-  Column,
-  Text,
-  FullBleed,
-  ResponsiveBox,
-  Image,
   Box,
+  Column,
+  FullBleed,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  Spacer,
+  Text,
   useTheme,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { cropped } from "Utils/resized"
 import { getFactsAndFigures } from "Utils/factsAndFigures"
-
-const galleryCount = getFactsAndFigures("galleriesCount")
+import { cropped } from "Utils/resized"
 
 export const SignupValueProps = () => {
   const { theme } = useTheme()
@@ -55,8 +53,9 @@ export const SignupValueProps = () => {
                 </Text>
                 <Text variant="sm" color="mono60" mt={1}>
                   Artsy is where collectors come to discover and buy original
-                  art online. With works from {galleryCount}+ gallery and
-                  auction partners, the entire art world is waiting for you.
+                  art online. With works from{" "}
+                  {getFactsAndFigures("galleriesCount")}+ gallery and auction
+                  partners, the entire art world is waiting for you.
                 </Text>
               </Box>
             </Column>

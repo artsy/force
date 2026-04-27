@@ -14,8 +14,6 @@ import { getFactsAndFigures } from "Utils/factsAndFigures"
 import type { ReactElement } from "react"
 import type * as React from "react"
 
-const auctionRecordsCount = getFactsAndFigures("auctionRecordsCount")
-
 export const PriceDatabaseBenefits: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
@@ -24,7 +22,7 @@ export const PriceDatabaseBenefits: React.FC<
       <GridColumns gridRowGap={[2, 0]}>
         <Column span={12}>
           <Text as="h1" variant={["xl", "xxl"]}>
-            Auction records from {auctionRecordsCount}
+            Auction records from {getFactsAndFigures("auctionRecordsCount")}
             <br />
             artists—and counting
           </Text>
