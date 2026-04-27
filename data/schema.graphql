@@ -435,6 +435,7 @@ type Alert {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -1872,6 +1873,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -2347,6 +2349,7 @@ type ArtistPartnerEdge {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -2523,6 +2526,7 @@ type ArtistSeries implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -3452,6 +3456,7 @@ type ArtworkFilterNode {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -13278,6 +13283,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -13615,6 +13621,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -14168,6 +14175,7 @@ input FilterArtworksInput {
   artistNationalities: [String]
   artistSeriesID: String
   artistSeriesIDs: [String]
+  artsyListing: Boolean
 
   # When provided, will only return artworks with these IDs.
   artworkIDs: [String]
@@ -14743,6 +14751,7 @@ type Gene implements Node & Searchable {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -16955,6 +16964,7 @@ type MarketingCollection implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -20670,6 +20680,7 @@ type Partner implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -21072,6 +21083,7 @@ type PartnerArtist {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -21281,6 +21293,7 @@ type PartnerArtistEdge {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -22759,6 +22772,7 @@ type Query {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -23166,6 +23180,7 @@ type Query {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -25913,6 +25928,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -26496,6 +26512,7 @@ type Tag implements Node {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -29802,6 +29819,7 @@ type Viewer {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
@@ -30083,6 +30101,7 @@ type Viewer {
     artistNationalities: [String]
     artistSeriesID: String
     artistSeriesIDs: [String]
+    artsyListing: Boolean
 
     # When provided, will only return artworks with these IDs.
     artworkIDs: [String]
