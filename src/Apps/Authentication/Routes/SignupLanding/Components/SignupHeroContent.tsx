@@ -13,20 +13,14 @@ export const SignupHeroContent = () => {
   return (
     <Box>
       <Text variant={["lg", "xl", "xxl"]} as="h1">
-        Discover and Buy Art That Moves You.
+        Join Artsy to Discover and Buy Art That Moves You
       </Text>
       <Spacer y={2} />
-      <Text variant={["md", "lg-display"]} color="mono60">
-        Welcome to Artsy, the world's largest online art marketplace. We give
-        you the tools to make art part of your daily routine, whether you're a
-        seasoned art collector or looking for your first artwork.
-      </Text>
-      <Spacer y={4} />
       <Stack gap={1}>
         <ValuePropItem>
           <strong>
-            Discover and buy from{" "}
-            {formatCompact(FACTS_AND_FIGURES.artworksCount)}+ original artworks
+            Explore {formatCompact(FACTS_AND_FIGURES.artworksCount)}+ original
+            artworks
           </strong>{" "}
           across paintings, sculptures, prints, and photography from artists at
           leading global galleries.

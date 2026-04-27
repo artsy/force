@@ -49,13 +49,13 @@ export const SignupValueProps = () => {
               </ResponsiveBox>
               <Box px={2} pb={2}>
                 <Text variant="lg-display" mt={2}>
-                  The World's Largest Online Art Marketplace
+                  The world’s largest online art marketplace
                 </Text>
                 <Text variant="sm" color="mono60" mt={1}>
                   Artsy is where collectors come to discover and buy original
                   art online. With works from {FACTS_AND_FIGURES.galleriesCount}
-                  + gallery and auction partners — from New York to Seoul — the
-                  entire global art market is at your fingertips.
+                  + gallery and auction partners, the entire art world is
+                  waiting for you.
                 </Text>
               </Box>
             </Column>
@@ -83,12 +83,12 @@ export const SignupValueProps = () => {
               </ResponsiveBox>
               <Box px={2} pb={2}>
                 <Text variant="lg-display" mt={2}>
-                  Transparent Art Pricing and Market Data
+                  Transparent art pricing and market data
                 </Text>
                 <Text variant="sm" color="mono60" mt={1}>
                   Make smarter collecting decisions with access to price
                   history, past auction results, and real-time market insights.
-                  Know the value before you buy.
+                  Know the value of a work before you buy it.
                 </Text>
               </Box>
             </Column>
@@ -116,15 +116,13 @@ export const SignupValueProps = () => {
               </ResponsiveBox>
               <Box px={2} pb={2}>
                 <Text variant="lg-display" mt={2}>
-                  Secure Art Buying, Every Time
+                  Secure art buying, every time
                 </Text>
                 <Text variant="sm" color="mono60" mt={1}>
-                  Shop with total confidence. Artsy-trusted checkout and buyer
-                  protections mean no guesswork - just art you love, delivered
-                  to your door.{" "}
-                  <a href="/buyer-guarantee">
-                    Learn more about the Artsy Guarantee.
-                  </a>
+                  Shop with total confidence. Artsy’s trusted checkout and buyer
+                  protections mean there’s no guesswork—just art you love,
+                  delivered to your door. Learn more about the{" "}
+                  <a href="/buyer-guarantee">Artsy Guarantee.</a>
                 </Text>
               </Box>
             </Column>
