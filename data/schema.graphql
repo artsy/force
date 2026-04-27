@@ -481,6 +481,7 @@ type Alert {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -1917,6 +1918,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -2391,6 +2393,7 @@ type ArtistPartnerEdge {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -2566,6 +2569,7 @@ type ArtistSeries implements Node {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -3494,6 +3498,7 @@ type ArtworkFilterNode {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -13318,6 +13323,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -13655,6 +13661,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -14206,6 +14213,7 @@ input FilterArtworksInput {
   keywordMatchExact: Boolean
   last: Int
   locationCities: [String]
+  locationId: String
   majorPeriods: [String]
 
   # When true, will only return `marketable` works (not nude or provocative).
@@ -14781,6 +14789,7 @@ type Gene implements Node & Searchable {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -16992,6 +17001,7 @@ type MarketingCollection implements Node {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -20706,6 +20716,7 @@ type Partner implements Node {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -21107,6 +21118,7 @@ type PartnerArtist {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -21315,6 +21327,7 @@ type PartnerArtistEdge {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -22792,6 +22805,7 @@ type Query {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -23204,6 +23218,7 @@ type Query {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -25944,6 +25959,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -26526,6 +26542,7 @@ type Tag implements Node {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -29831,6 +29848,7 @@ type Viewer {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
@@ -30117,6 +30135,7 @@ type Viewer {
     keywordMatchExact: Boolean
     last: Int
     locationCities: [String]
+    locationId: String
     majorPeriods: [String]
 
     # When true, will only return `marketable` works (not nude or provocative).
