@@ -82,6 +82,7 @@ export const ArtworkRelatedArtists: React.FC<
             <Column key={index} span={[12, 6, 4, 4]}>
               <EntityHeaderArtistFragmentContainer
                 artist={node}
+                contextModule={ContextModule.relatedArtistsRail}
                 onClick={() => {
                   trackEvent({
                     context_module:

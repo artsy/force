@@ -1,3 +1,4 @@
+import type { AuthContextModule } from "@artsy/cohesion"
 import {
   Box,
   Image,
@@ -16,6 +17,7 @@ import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellArtistProps extends Partial<RouterLinkProps> {
   artist: CellArtist_artist$data
+  contextModule?: AuthContextModule
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
   displayCounts?: boolean
@@ -25,6 +27,7 @@ export interface CellArtistProps extends Partial<RouterLinkProps> {
 
 const CellArtist: FC<React.PropsWithChildren<CellArtistProps>> = ({
   artist,
+  contextModule,
   mode = "RAIL",
   displayCounts,
   lazyLoad = true,
@@ -72,6 +75,7 @@ const CellArtist: FC<React.PropsWithChildren<CellArtistProps>> = ({
 
       <EntityHeaderArtistFragmentContainer
         artist={artist}
+        contextModule={contextModule}
         displayAvatar={false}
         displayLink={false}
         displayCounts={displayCounts}

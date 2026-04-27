@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import { type AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Avatar, type BoxProps, Flex, Text } from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { RouterLink } from "System/Components/RouterLink"
@@ -9,6 +9,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 export interface EntityHeaderArtistProps extends BoxProps {
   artist: EntityHeaderArtist_artist$data
   children?: ReactNode
+  contextModule?: AuthContextModule
   displayAvatar?: boolean
   displayCounts?: boolean
   displayFollowButton?: boolean
@@ -22,6 +23,7 @@ const EntityHeaderArtist: FC<
   React.PropsWithChildren<EntityHeaderArtistProps>
 > = ({
   artist,
+  contextModule = ContextModule.artistHeader,
   displayAvatar = true,
   displayCounts = false,
   displayFollowButton = true,
@@ -82,7 +84,7 @@ const EntityHeaderArtist: FC<
         (FollowButton || (
           <FollowArtistButtonQueryRenderer
             id={artist.internalID}
-            contextModule={ContextModule.artistHeader}
+            contextModule={contextModule}
             size="small"
             onFollow={onFollow}
           />

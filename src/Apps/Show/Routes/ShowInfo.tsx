@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Column,
@@ -75,7 +76,10 @@ export const ShowInfo: React.FC<React.PropsWithChildren<ShowInfoProps>> = ({
                     {partner.type}
                   </Text>
 
-                  <EntityHeaderPartnerFragmentContainer partner={partner} />
+                  <EntityHeaderPartnerFragmentContainer
+                    partner={partner}
+                    contextModule={ContextModule.showInfo}
+                  />
                 </Box>
               )}
 

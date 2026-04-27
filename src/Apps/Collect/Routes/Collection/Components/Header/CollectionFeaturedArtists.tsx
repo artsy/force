@@ -52,6 +52,7 @@ export const CollectionFeaturedArtists: React.FC<
             >
               <EntityHeaderArtistFragmentContainer
                 artist={artist}
+                contextModule={ContextModule.featuredArtistsRail}
                 width="100%"
                 alignItems="flex-start"
               />

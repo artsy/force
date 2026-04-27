@@ -1,3 +1,4 @@
+import type { AuthContextModule } from "@artsy/cohesion"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { RouterLink, type RouterLinkProps } from "System/Components/RouterLink"
@@ -9,6 +10,7 @@ import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellPartnerArtistProps extends Partial<RouterLinkProps> {
   artistPartnerEdge: CellPartnerArtist_partnerArtist$data
+  contextModule?: AuthContextModule
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
   displayCounts?: boolean
@@ -19,6 +21,7 @@ const CellPartnerArtist: FC<
   React.PropsWithChildren<CellPartnerArtistProps>
 > = ({
   artistPartnerEdge,
+  contextModule,
   mode = "RAIL",
   displayCounts,
   FollowButton,
@@ -68,6 +71,7 @@ const CellPartnerArtist: FC<
 
       <EntityHeaderArtistFragmentContainer
         artist={artistPartnerEdge.artist}
+        contextModule={contextModule}
         displayAvatar={false}
         displayLink={false}
         displayCounts={displayCounts}
