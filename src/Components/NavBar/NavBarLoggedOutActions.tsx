@@ -1,7 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Button, Flex, Spacer } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
-import { RouterLink } from "System/Components/RouterLink"
 
 export const NavBarLoggedOutActions = () => {
   const { showAuthDialog } = useAuthDialog()
@@ -26,10 +25,15 @@ export const NavBarLoggedOutActions = () => {
       <Spacer x={1} />
 
       <Button
-        // @ts-ignore
-        as={RouterLink}
-        to={`/signup?intent=${Intent.signup}&contextModule=${ContextModule.header}`}
         size="small"
+        onClick={() => {
+          showAuthDialog({
+            analytics: {
+              contextModule: ContextModule.header,
+              intent: Intent.signup,
+            },
+          })
+        }}
       >
         Sign Up
       </Button>
