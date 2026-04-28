@@ -1,12 +1,5 @@
-import { Box, GridColumns, Column, Text } from "@artsy/palette"
-import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
-
-const formatCompact = (value: string) => {
-  return new Intl.NumberFormat("en", {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(Number(value.replace(/,/g, "")))
-}
+import { Box, Column, GridColumns, Text } from "@artsy/palette"
+import { getFactsAndFigures } from "Utils/factsAndFigures"
 
 export const SignupStats = () => {
   return (
@@ -14,7 +7,7 @@ export const SignupStats = () => {
       <GridColumns textAlign="center" gridRowGap={[4, 2]}>
         <Column span={[12, 4]}>
           <Text variant={["xl", "xxl"]}>
-            {formatCompact(FACTS_AND_FIGURES.artworksCount)}+
+            {getFactsAndFigures("artworksCount", { format: "compact" })}+
           </Text>
           <Text variant="sm-display" color="mono60">
             {" "}
@@ -23,7 +16,7 @@ export const SignupStats = () => {
         </Column>
         <Column span={[12, 4]}>
           <Text variant={["xl", "xxl"]}>
-            {formatCompact(FACTS_AND_FIGURES.galleriesCount)}+
+            {getFactsAndFigures("galleriesCount", { format: "compact" })}+
           </Text>
           <Text variant="sm-display" color="mono60">
             {" "}
@@ -31,7 +24,9 @@ export const SignupStats = () => {
           </Text>
         </Column>
         <Column span={[12, 4]}>
-          <Text variant={["xl", "xxl"]}>3.4M</Text>
+          <Text variant={["xl", "xxl"]}>
+            {getFactsAndFigures("membersCount", { format: "compact" })}+
+          </Text>
           <Text variant="sm-display" color="mono60">
             {" "}
             Artsy members

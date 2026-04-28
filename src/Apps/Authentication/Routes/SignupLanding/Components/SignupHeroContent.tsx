@@ -1,13 +1,6 @@
-import { Box, Flex, Spacer, Stack, Text } from "@artsy/palette"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
-import { FACTS_AND_FIGURES } from "Utils/factsAndFigures"
-
-const formatCompact = (value: string) => {
-  return new Intl.NumberFormat("en", {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(Number(value.replace(/,/g, "")))
-}
+import { Box, Flex, Spacer, Stack, Text } from "@artsy/palette"
+import { getFactsAndFigures } from "Utils/factsAndFigures"
 
 export const SignupHeroContent = () => {
   return (
@@ -19,8 +12,8 @@ export const SignupHeroContent = () => {
       <Stack gap={1}>
         <ValuePropItem>
           <strong>
-            Explore {formatCompact(FACTS_AND_FIGURES.artworksCount)}+ original
-            artworks
+            Explore {getFactsAndFigures("artworksCount", { format: "compact" })}
+            + original artworks
           </strong>{" "}
           across paintings, sculptures, prints, and photography from artists at
           leading global galleries.
