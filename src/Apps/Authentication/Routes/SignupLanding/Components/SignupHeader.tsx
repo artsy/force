@@ -2,6 +2,7 @@ import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 import { Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { RouterLink } from "System/Components/RouterLink"
 
 export const SignupHeader = () => {
   return (
@@ -9,7 +10,9 @@ export const SignupHeader = () => {
       <AppContainer>
         <HorizontalPadding>
           <Flex height={60} alignItems="center" justifyContent="space-between">
-            <ArtsyLogoIcon />
+            <RouterLink to="/" aria-label="Artsy">
+              <ArtsyLogoIcon />
+            </RouterLink>
           </Flex>
         </HorizontalPadding>
       </AppContainer>

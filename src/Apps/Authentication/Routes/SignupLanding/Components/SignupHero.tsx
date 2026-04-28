@@ -5,7 +5,7 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
 export const SignupHero = () => {
   return (
-    <HorizontalPadding py={[4, 6, 12]}>
+    <HorizontalPadding pt={[4, 6, 12]} pb={[4, 4, 4]}>
       <GridColumns gridRowGap={[4, 4]}>
         <Column span={[12, 12, 7]} pr={[0, 0, 4]}>
           <SignupHeroContent />

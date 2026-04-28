@@ -19,7 +19,7 @@ export const SignupLandingPage: FC<React.PropsWithChildren<unknown>> = () => {
         />
 
         <SignupHeader />
-        <Join separator={<Spacer y={[6, 12]} />}>
+        <Join separator={<Spacer y={[6, 6]} />}>
           <SignupHero />
           <SignupValueProps />
           <SignupStats />

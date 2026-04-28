@@ -8,8 +8,8 @@ export const SignupHeroContent = () => {
       <Text variant={["lg", "xl", "xxl"]} as="h1">
         Join Artsy to Discover and Buy Art That Moves You
       </Text>
-      <Spacer y={2} />
-      <Stack gap={1}>
+      <Spacer y={4} />
+      <Stack gap={2}>
         <ValuePropItem>
           <strong>
             Explore {getFactsAndFigures("artworksCount", { format: "compact" })}
