@@ -15,11 +15,11 @@ export const SignupLandingPage: FC<React.PropsWithChildren<unknown>> = () => {
         <MetaTags
           title="Join Artsy - Discover and Buy Art That Moves You"
           description="Join over 3.4 million art collectors and enthusiasts. Explore 1.6 million original artworks for sale from galleries, museums, and artists worldwide."
-          pathname="/signup-new"
+          pathname="/signup"
         />
 
         <SignupHeader />
-        <Join separator={<Spacer y={[6, 12]} />}>
+        <Join separator={<Spacer y={[6, 6]} />}>
           <SignupHero />
           <SignupValueProps />
           <SignupStats />
