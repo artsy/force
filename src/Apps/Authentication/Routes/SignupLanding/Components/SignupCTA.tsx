@@ -15,14 +15,16 @@ export const SignupCTA = () => {
       <AppContainer>
         <HorizontalPadding>
           <Stack gap={4} alignItems="center" textAlign="center">
-            <Text variant={["xl", "xxl"]} color="mono0">
-              Start your art journey today
-            </Text>
+            <Stack gap={1}>
+              <Text variant={["xl", "xxl"]} color="mono0">
+                Start your art journey today
+              </Text>
 
-            <Text variant={["md", "lg"]} color="mono0">
-              Join millions of art lovers discovering, collecting, and
-              connecting on Artsy.
-            </Text>
+              <Text variant={["md", "lg"]} color="mono0">
+                Join millions of art lovers discovering, collecting, and
+                connecting on Artsy.
+              </Text>
+            </Stack>
 
             <Button
               variant="primaryWhite"

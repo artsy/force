@@ -5,11 +5,17 @@ import { getFactsAndFigures } from "Utils/factsAndFigures"
 export const SignupHeroContent = () => {
   return (
     <Box>
-      <Text variant={["lg", "xl", "xxl"]} as="h1">
+      <Text
+        variant={["lg", "xl", "xxl"]}
+        as="h1"
+        style={{ textWrap: "balance" }}
+      >
         Join Artsy to Discover and Buy Art That Moves You
       </Text>
+
       <Spacer y={4} />
-      <Stack gap={2}>
+
+      <Stack gap={1}>
         <ValuePropItem>
           <strong>
             Explore {getFactsAndFigures("artworksCount", { format: "compact" })}
@@ -18,17 +24,20 @@ export const SignupHeroContent = () => {
           across paintings, sculptures, prints, and photography from artists at
           leading global galleries.
         </ValuePropItem>
+
         <ValuePropItem>
-          <strong> Get personalized recommendations</strong> by following
-          artists and saving works to create a custom art experience that
-          evolves with your taste.
+          <strong>Get personalized recommendations</strong> by following artists
+          and saving works to create a custom art experience that evolves with
+          your taste.
         </ValuePropItem>
+
         <ValuePropItem>
-          <strong> Save artworks, create collections, and set alerts</strong> to
+          <strong>Save artworks, create collections, and set alerts</strong> to
           easily manage and grow your collection in one place.
         </ValuePropItem>
+
         <ValuePropItem>
-          <strong>Collect original art with confidence </strong> by inquiring,
+          <strong>Collect original art with confidence</strong> by inquiring,
           negotiating, and purchasing through Artsy's trusted platform.{" "}
         </ValuePropItem>
       </Stack>
@@ -39,7 +48,13 @@ export const SignupHeroContent = () => {
 const ValuePropItem = ({ children }: { children: React.ReactNode }) => {
   return (
     <Flex alignItems="flex-start" gap={1}>
-      <CheckmarkFillIcon fill="black100" flexShrink={0} />
+      <CheckmarkFillIcon
+        fill="black100"
+        flexShrink={0}
+        // Visually center with first line of text
+        mt="4px"
+      />
+
       <Text variant="sm">{children}</Text>
     </Flex>
   )
