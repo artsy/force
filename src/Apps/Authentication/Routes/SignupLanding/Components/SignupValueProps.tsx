@@ -1,19 +1,20 @@
+import { ActionType } from "@artsy/cohesion"
 import {
-  Spacer,
-  GridColumns,
-  Column,
-  Text,
-  FullBleed,
-  ResponsiveBox,
-  Image,
   Box,
+  Column,
+  FullBleed,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  Spacer,
+  Text,
   useTheme,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { cropped } from "Utils/resized"
+import { RouterLink } from "System/Components/RouterLink"
 import { getFactsAndFigures } from "Utils/factsAndFigures"
-import { ActionType } from "@artsy/cohesion"
+import { cropped } from "Utils/resized"
 import { useTracking } from "react-tracking"
 
 export const SignupValueProps = () => {
@@ -32,14 +33,16 @@ export const SignupValueProps = () => {
   }
 
   return (
-    <FullBleed bg="mono5" py={[6, 12]}>
+    <FullBleed bg="mono5" py={[4, 6]}>
       <AppContainer>
         <HorizontalPadding>
-          <Text variant={"xl"} textAlign="center">
+          <Text variant={["lg-display", "xl"]} textAlign="center">
             Why Choose Artsy
           </Text>
+
           <Spacer y={4} />
-          <GridColumns gridRowGap={4} gridColumnGap={[0, 4]}>
+
+          <GridColumns gridRowGap={4} gridColumnGap={[0, 1, 4]}>
             {/* Card 1  */}
             <Column
               span={[12, 4]}
@@ -61,6 +64,7 @@ export const SignupValueProps = () => {
                   lazyLoad
                 />
               </ResponsiveBox>
+
               <Box px={2} pb={2}>
                 <Text variant="lg-display" mt={2}>
                   The world’s largest online art marketplace
@@ -95,10 +99,12 @@ export const SignupValueProps = () => {
                   lazyLoad
                 />
               </ResponsiveBox>
+
               <Box px={2} pb={2}>
                 <Text variant="lg-display" mt={2}>
                   Transparent art pricing and market data
                 </Text>
+
                 <Text variant="sm" color="mono60" mt={1}>
                   Make smarter collecting decisions with access to price
                   history, past auction results, and real-time market insights.
@@ -128,20 +134,22 @@ export const SignupValueProps = () => {
                   lazyLoad
                 />
               </ResponsiveBox>
+
               <Box px={2} pb={2}>
                 <Text variant="lg-display" mt={2}>
                   Secure art buying, every time
                 </Text>
+
                 <Text variant="sm" color="mono60" mt={1}>
                   Shop with total confidence. Artsy’s trusted checkout and buyer
                   protections mean there’s no guesswork—just art you love,
                   delivered to your door. Learn more about the{" "}
-                  <a
-                    href="/buyer-guarantee"
+                  <RouterLink
+                    to="/buyer-guarantee"
                     onClick={handleBuyerGuaranteeClick}
                   >
                     Artsy Guarantee.
-                  </a>
+                  </RouterLink>
                 </Text>
               </Box>
             </Column>
