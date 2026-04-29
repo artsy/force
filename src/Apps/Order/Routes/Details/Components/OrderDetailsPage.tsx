@@ -35,7 +35,7 @@ export const OrderDetailsPage = ({ order, me }: OrderDetailsPageProps) => {
   const artworkSlug = orderData.lineItems[0]?.artwork?.slug
 
   return (
-    <GridColumns pt={[0, 4]} px={[0, 4]}>
+    <GridColumns>
       <Column span={[12, 7, 6, 5]} start={[1, 1, 2, 3]}>
         <OrderDetailsHeader order={orderData} />
 

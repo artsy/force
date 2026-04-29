@@ -1,6 +1,7 @@
-import { Box } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import type { BaseLayoutProps } from "Apps/Components/Layouts"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
 import type { FC } from "react"
@@ -21,7 +22,10 @@ export const LayoutOrderDetails: FC<
         <LayoutNav />
 
         <AppContainer as="main" id="main" flex={1}>
-          {children}
+          <HorizontalPadding>
+            <Spacer y={[2, 4]} />
+            {children}
+          </HorizontalPadding>
         </AppContainer>
       </Box>
     </>
