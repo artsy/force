@@ -1,12 +1,12 @@
-import { Join, Spacer } from "@artsy/palette"
+import { Spacer, Stack } from "@artsy/palette"
+import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
 import { SignupCTA } from "Apps/Authentication/Routes/SignupLanding/Components/SignupCTA"
-import { SignupHero } from "Apps/Authentication/Routes/SignupLanding/Components/SignupHero"
 import { SignupHeader } from "Apps/Authentication/Routes/SignupLanding/Components/SignupHeader"
+import { SignupHero } from "Apps/Authentication/Routes/SignupLanding/Components/SignupHero"
 import { SignupStats } from "Apps/Authentication/Routes/SignupLanding/Components/SignupStats"
 import { SignupValueProps } from "Apps/Authentication/Routes/SignupLanding/Components/SignupValueProps"
 import { MetaTags } from "Components/MetaTags"
 import type { FC } from "react"
-import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Components/AuthenticationInlineDialogProvider"
 
 export const SignupLandingPage: FC<React.PropsWithChildren<unknown>> = () => {
   return (
@@ -19,12 +19,18 @@ export const SignupLandingPage: FC<React.PropsWithChildren<unknown>> = () => {
         />
 
         <SignupHeader />
-        <Join separator={<Spacer y={[6, 12]} />}>
+
+        <Spacer y={[4, 6, 12]} />
+
+        <Stack gap={6}>
           <SignupHero />
+
           <SignupValueProps />
+
           <SignupStats />
+
           <SignupCTA />
-        </Join>
+        </Stack>
       </AuthenticationInlineDialogProvider>
     </>
   )

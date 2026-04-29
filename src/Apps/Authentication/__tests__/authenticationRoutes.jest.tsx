@@ -12,6 +12,7 @@ import type {
 import { getENV } from "Utils/getENV"
 import type { NextFunction } from "express"
 import qs from "qs"
+import { useTracking } from "react-tracking"
 
 jest.mock("Apps/Authentication/Middleware/checkForRedirect", () => ({
   checkForRedirect: jest.fn(),
@@ -39,11 +40,19 @@ jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
 }))
 
+jest.mock("react-tracking")
+
 describe("authenticationRoutes", () => {
   const mockCheckForRedirect = checkForRedirect as jest.Mock
   const mockSetReferer = setReferer as jest.Mock
   const mockGetENV = getENV as jest.Mock
   const mockRedirectIfLoggedIn = redirectIfLoggedIn as jest.Mock
+
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
 
   const renderClientRoute = (route: string) => {
     render(
@@ -175,28 +184,18 @@ describe("authenticationRoutes", () => {
     })
   })
 
-  describe("/signup", () => {
-    describe("client", () => {
-      it("renders signup", async () => {
-        renderClientRoute("/signup")
-
-        await waitFor(() => {
-          expect(screen.getByText("Sign up or log in")).toBeInTheDocument()
-        })
-      })
-    })
-
+  describe("/signup-new", () => {
     describe("server", () => {
       describe("onServerSideRender", () => {
         it("runs middleware", () => {
-          renderServerRoute("/signup").onServerSideRender()
+          renderServerRoute("/signup-new").onServerSideRender()
           expect(mockRedirectIfLoggedIn).toHaveBeenCalled()
           expect(mockCheckForRedirect).toHaveBeenCalled()
           expect(mockSetReferer).toHaveBeenCalled()
         })
 
         it("skips the check for login if you are auth-ing with the API", () => {
-          renderServerRoute("/signup?oauthLogin=true").onServerSideRender()
+          renderServerRoute("/signup-new?oauthLogin=true").onServerSideRender()
           expect(mockRedirectIfLoggedIn).not.toHaveBeenCalled()
           expect(mockCheckForRedirect).toHaveBeenCalled()
           expect(mockSetReferer).toHaveBeenCalled()
@@ -211,8 +210,12 @@ describe("authenticationRoutes", () => {
         renderClientRoute("/signup-new")
 
         await waitFor(() => {
-          expect(screen.getByText("Log In")).toBeInTheDocument()
-          expect(screen.getByText(/Why Choose Artsy/i)).toBeInTheDocument()
+          expect(screen.getByText(/Join Artsy today/i)).toBeInTheDocument()
+          expect(
+            screen.getByText(
+              /Join Artsy to Discover and Buy Art That Moves You/i,
+            ),
+          ).toBeInTheDocument()
         })
       })
     })

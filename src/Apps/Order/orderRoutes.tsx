@@ -1,7 +1,7 @@
 import loadable from "@loadable/component"
+import { OrderErrorApp } from "Apps/Order/Components/OrderErrorApp"
 import { getRedirect } from "Apps/Order/getRedirect"
 import { redirects } from "Apps/Order/redirects"
-import { OrderErrorApp } from "Apps/Order/Components/OrderErrorApp"
 import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
 import { HttpError, Redirect, RedirectException } from "found"
@@ -375,9 +375,10 @@ export const orderRoutes: RouteProps[] = [
         render: renderWithErrorHandling,
       },
       {
+        // http://localhost:4000/orders/374b164b-9744-4904-98fe-3dde0dba2244/details
         path: "details",
         Component: DetailsRoute,
-        layout: "OrderDetails",
+        layout: "LogoOnly",
         query: graphql`
           query orderRoutes_DetailsQuery($orderID: ID!) {
             viewer {

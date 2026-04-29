@@ -1,22 +1,23 @@
-import { useState } from "react"
 import {
   Box,
   Button,
   Checkbox,
   Input,
   PasswordInput,
+  Separator,
   Stack,
   Text,
 } from "@artsy/palette"
-import { Formik, Form } from "formik"
-import * as Yup from "yup"
-import { signUp } from "Utils/auth"
-import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
-import { SignupFormSocial } from "./SignupFormSocial"
-import { SignupFormDisclaimer } from "./SignupFormDisclaimer"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { useRecaptcha } from "Utils/EnableRecaptcha"
+import { signUp } from "Utils/auth"
+import { Form, Formik } from "formik"
+import { useState } from "react"
+import * as Yup from "yup"
+import { SignupFormDisclaimer } from "./SignupFormDisclaimer"
+import { SignupFormSocial } from "./SignupFormSocial"
 
 const signupSchema = Yup.object().shape({
   name: Yup.string().required("Name is required."),
@@ -46,6 +47,7 @@ export const SignupForm = () => {
 
   const track = useAuthDialogTracking()
 
+  // FIXME: Needs typing
   const handleSubmit = async (values, actions) => {
     try {
       const response = await signUp({
@@ -65,8 +67,12 @@ export const SignupForm = () => {
   }
 
   return (
-    <Box bg="mono5" p={4}>
-      <Text variant="lg" mb={2}>
+    <Stack gap={1} bg={["transparent", "mono5"]} p={[0, 4]}>
+      <Text
+        variant="lg-display"
+        // Visually normalize top padding
+        mt={[0, -1]}
+      >
         Join Artsy today
       </Text>
 
@@ -92,84 +98,90 @@ export const SignupForm = () => {
           setFieldValue,
         }) => (
           <Form>
-            <Stack gap={1}>
-              <Input
-                title="Name"
-                name="name"
-                placeholder="Your full name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // @ts-expect-error
-                error={touched.name && errors.name}
-                required
-              />
+            <Stack gap={2}>
+              <Box>
+                <Input
+                  title="Name"
+                  name="name"
+                  placeholder="Your full name"
+                  value={values.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  // @ts-expect-error
+                  error={touched.name && errors.name}
+                  required
+                />
 
-              <Input
-                title="Email"
-                name="email"
-                type="email"
-                placeholder="your@email.com"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // @ts-expect-error
-                error={touched.email && errors.email}
-                required
-              />
+                <Input
+                  title="Email"
+                  name="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  // @ts-expect-error
+                  error={touched.email && errors.email}
+                  required
+                />
 
-              <PasswordInput
-                title="Password"
-                name="password"
-                placeholder="Create a password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // @ts-expect-error
-                error={touched.password && errors.password}
-                required
-              />
+                <PasswordInput
+                  title="Password"
+                  name="password"
+                  placeholder="Create a password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  // @ts-expect-error
+                  error={touched.password && errors.password}
+                  required
+                />
+              </Box>
 
-              {/* Show email subscription checkbox only for non-GDPR countries */}
-              {!isAutomaticallySubscribed && (
-                <Checkbox
-                  selected={values.agreedToReceiveEmails}
-                  onSelect={selected => {
-                    setFieldValue("agreedToReceiveEmails", selected)
-                  }}
-                >
-                  <Text variant="xs">
-                    Subscribe to email updates about products and services
+              <Stack gap={2}>
+                {/* Show email subscription checkbox only for non-GDPR countries */}
+                {!isAutomaticallySubscribed && (
+                  <Checkbox
+                    selected={values.agreedToReceiveEmails}
+                    onSelect={selected => {
+                      setFieldValue("agreedToReceiveEmails", selected)
+                    }}
+                  >
+                    <Text variant="xs">
+                      Subscribe to email updates about products and services
+                    </Text>
+                  </Checkbox>
+                )}
+
+                {error && (
+                  <Text variant="sm" color="red100">
+                    {error}
                   </Text>
-                </Checkbox>
-              )}
+                )}
 
-              {error && (
-                <Text variant="sm" color="red100">
-                  {error}
+                <Button
+                  type="submit"
+                  loading={isSubmitting}
+                  disabled={!isValid || !dirty || isSubmitting}
+                  width="100%"
+                >
+                  Create Account
+                </Button>
+
+                <Separator />
+
+                <Text variant="xs" textAlign="center" color="mono60" my={-1}>
+                  Or continue with
                 </Text>
-              )}
 
-              <Button
-                type="submit"
-                loading={isSubmitting}
-                disabled={!isValid || !dirty || isSubmitting}
-                width="100%"
-              >
-                Create Account
-              </Button>
+                <SignupFormSocial />
 
-              <Text variant="xs" textAlign="center" color="mono60" my={-1}>
-                Or continue with
-              </Text>
-
-              <SignupFormSocial />
-
-              <SignupFormDisclaimer />
+                <SignupFormDisclaimer />
+              </Stack>
             </Stack>
           </Form>
         )}
       </Formik>
-    </Box>
+    </Stack>
   )
 }
