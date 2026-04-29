@@ -1,8 +1,15 @@
-const pick = require("lodash/pick")
-const { escapeHTML } = require("underscore.string")
-const opts = require("../options")
+import type { NextFunction } from "express"
+import type { PassportRequest, PassportResponse } from "../types"
 
-module.exports = (req, res, next) => {
+import pick from "lodash/pick"
+import { escapeHTML } from "underscore.string"
+import opts from "../options"
+
+const addLocals = (
+  req: PassportRequest,
+  res: PassportResponse,
+  next: NextFunction,
+) => {
   if (req.user) {
     res.locals.user = req.user
     if (res.locals.sd != null) {
@@ -15,7 +22,7 @@ module.exports = (req, res, next) => {
     res.locals.sd.CSRF_TOKEN = res.locals.csrfToken
   }
   if (res.locals.sd != null) {
-    res.locals.error = escapeHTML(req.query.error)
+    res.locals.error = escapeHTML(req.query.error as string)
     res.locals.sd.ERROR = res.locals.error
   }
   if (res.locals.sd != null) {
@@ -37,3 +44,7 @@ module.exports = (req, res, next) => {
   }
   next()
 }
+
+export default addLocals
+
+module.exports = addLocals

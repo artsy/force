@@ -1,8 +1,7 @@
 import * as lifecycle from "Server/passport/lib/app/lifecycle"
 import options from "Server/passport/lib/options"
 import passport from "passport"
-// eslint-disable-next-line no-restricted-imports
-import request, { type SuperAgentRequest } from "superagent"
+import { requestGravity } from "../../http"
 
 jest.mock("Server/passport/lib/options", () => ({
   loginPagePath: "/login",
@@ -12,12 +11,14 @@ jest.mock("Server/passport/lib/options", () => ({
   ARTSY_URL: "https://api.artsy.net",
 }))
 
-jest.mock("superagent")
+jest.mock("../../http")
 jest.mock("passport", () => {
   return {
     authenticate: jest.fn().mockReturnValue((req, res, next) => next()),
   }
 })
+
+const mockRequestGravity = requestGravity as jest.Mock
 
 describe("lifecycle", () => {
   let req
@@ -45,11 +46,7 @@ describe("lifecycle", () => {
       status: jest.fn().mockReturnValue({ send }),
     }
 
-    for (const method of ["get", "end", "set", "post", "send", "status"]) {
-      ;(request as unknown as SuperAgentRequest)[method] = jest
-        .fn()
-        .mockReturnValue(request as unknown as SuperAgentRequest)
-    }
+    mockRequestGravity.mockResolvedValue({ body: {}, ok: true })
   })
 
   afterEach(() => {
@@ -160,7 +157,7 @@ describe("lifecycle", () => {
   })
 
   describe("#onLocalSignup", () => {
-    it("sends 500s as json for xhr requests", () => {
+    it("sends 500s as json for xhr requests", async () => {
       req.xhr = true
       err = {
         response: {
@@ -170,8 +167,8 @@ describe("lifecycle", () => {
           },
         },
       }
-      lifecycle.onLocalSignup(req, res, next)
-      ;(request as unknown as any).end.mock.calls[0][0](err)
+      mockRequestGravity.mockRejectedValue(err)
+      await lifecycle.onLocalSignup(req, res, next)
       expect(send).toHaveBeenCalledWith({
         error:
           "Password must include at least one lowercase letter, one uppercase letter, and one digit.",
@@ -179,23 +176,23 @@ describe("lifecycle", () => {
       })
     })
 
-    it("passes the recaptcha_token through signup", () => {
+    it("passes the recaptcha_token through signup", async () => {
       req.body.recaptcha_token = "recaptcha_token"
-      lifecycle.onLocalSignup(req, res, next)
-      expect(
-        (request as unknown as SuperAgentRequest).send,
-      ).toHaveBeenCalledWith(
-        expect.objectContaining({ recaptcha_token: "recaptcha_token" }),
+      await lifecycle.onLocalSignup(req, res, next)
+      expect(mockRequestGravity).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: expect.objectContaining({ recaptcha_token: "recaptcha_token" }),
+        }),
       )
     })
 
-    it("passes the user agent through signup", () => {
+    it("passes the user agent through signup", async () => {
       req.get.mockReturnValue("foo-agent")
-      lifecycle.onLocalSignup(req, res, next)
-      expect(
-        (request as unknown as SuperAgentRequest).set,
-      ).toHaveBeenCalledWith(
-        expect.objectContaining({ "User-Agent": "foo-agent" }),
+      await lifecycle.onLocalSignup(req, res, next)
+      expect(mockRequestGravity).toHaveBeenCalledWith(
+        expect.objectContaining({
+          headers: expect.objectContaining({ "User-Agent": "foo-agent" }),
+        }),
       )
     })
   })
@@ -300,14 +297,14 @@ describe("lifecycle", () => {
       req.user = { accessToken: "token" }
       req.query["redirect-to"] = "/artwork/andy-warhol-skull"
       lifecycle.ssoAndRedirectBack(req, res, next)
-      expect(request.post).toHaveBeenCalledWith(
-        expect.stringContaining("me/trust_token"),
+      expect(mockRequestGravity).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("me/trust_token"),
+        }),
       )
-      const endCallback = (request as unknown as jest.Mocked<SuperAgentRequest>)
-        .end.mock.calls[0][0] as unknown as (err: any, res: any) => void
-      if (endCallback) {
-        endCallback(null, { body: { trust_token: "foo-trust-token" } })
-      }
+      mockRequestGravity.mockResolvedValue({
+        body: { trust_token: "foo-trust-token" },
+      })
       expect(res.redirect).toHaveBeenCalledWith(
         "https://api.artsy.net/users/sign_in" +
           "?trust_token=foo-trust-token" +

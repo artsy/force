@@ -1,4 +1,6 @@
-module.exports = {
+import type { PassportOptions } from "./types"
+
+const options: PassportOptions = {
   // Social auth
   applePath: "/users/auth/apple",
   appleCallbackPath: "/users/auth/apple/callback",
@@ -30,3 +32,7 @@ module.exports = {
     "type",
   ],
 }
+
+export default options
+
+module.exports = options
