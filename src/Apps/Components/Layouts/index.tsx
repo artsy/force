@@ -5,8 +5,6 @@ import { LayoutDefault } from "Apps/Components/Layouts/LayoutDefault"
 import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
-import { LayoutCheckout } from "Apps/Order2/Layouts/LayoutCheckout"
-import { LayoutOrderDetails } from "Apps/Order/Layouts/LayoutOrderDetails"
 import { useRouter } from "System/Hooks/useRouter"
 import type { FC, PropsWithChildren, ReactNode } from "react"
 
@@ -25,8 +23,6 @@ export const LAYOUTS = {
   FullBleed: LayoutFullBleed,
   LogoOnly: LayoutLogoOnly,
   NavOnly: LayoutNavOnly,
-  Checkout: LayoutCheckout, // TODO: Should just be a custom layout in the routes
-  OrderDetails: LayoutOrderDetails, // TODO: Should just be a custom layout in the routes
 } as const
 
 export type LayoutVariant =
