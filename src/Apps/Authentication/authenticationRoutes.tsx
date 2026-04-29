@@ -117,7 +117,7 @@ export const authenticationRoutes: RouteProps[] = [
     },
   },
   {
-    path: "/signup-old",
+    path: "/signup",
     layout: "ContainerOnly",
     getComponent: () => SignupRoute,
     onServerSideRender: props => {
