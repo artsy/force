@@ -117,7 +117,7 @@ export const authenticationRoutes: RouteProps[] = [
     },
   },
   {
-    path: "/signup-old",
+    path: "/signup",
     layout: "ContainerOnly",
     getComponent: () => SignupRoute,
     onServerSideRender: props => {
@@ -132,15 +132,6 @@ export const authenticationRoutes: RouteProps[] = [
     },
     onPreloadJS: () => {
       SignupRoute.preload()
-    },
-  },
-  {
-    path: "/signup",
-    onServerSideRender: ({ res, req }) => {
-      // Temporary redirect to old signup while new page is in QA
-      const queryString =
-        Object.keys(req.query).length > 0 ? `?${stringify(req.query)}` : ""
-      res.redirect(301, `/signup-old${queryString}`)
     },
   },
   {
