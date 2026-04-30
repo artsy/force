@@ -10,12 +10,18 @@ import redirectBack from "./redirectBack"
 //
 // Logout helpers.
 //
+const isArtsyReferrer = (referrer?: string) => {
+  const hostname = parse(referrer || "").hostname
+
+  return hostname === "artsy.net" || hostname?.endsWith(".artsy.net")
+}
+
 export const denyBadLogoutLinks = (
   req: PassportRequest,
   _res: PassportResponse,
   next: NextFunction,
 ) => {
-  if (parse(req.get("Referrer") as string).hostname!.match("artsy.net")) {
+  if (isArtsyReferrer(req.get("Referrer"))) {
     return next()
   }
   next(new Error("Malicious logout link."))
