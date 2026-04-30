@@ -276,10 +276,20 @@ describe("lifecycle", () => {
   })
 
   describe("#ssoAndRedirectBack", () => {
-    it("redirects signups to /", () => {
+    beforeEach(() => {
+      options.APP_URL = "https://www.artsy.net"
+      options.ARTSY_URL = "https://api.artsy.net"
+    })
+
+    it("redirects signups to /", async () => {
       req.user = { accessToken: "token" }
       req.artsyPassportSignedUp = true
-      lifecycle.ssoAndRedirectBack(req, res, next)
+      mockRequestGravity.mockResolvedValue({
+        body: { trust_token: "foo-trust-token" },
+      })
+
+      await lifecycle.ssoAndRedirectBack(req, res, next)
+
       expect(res.redirect).toHaveBeenCalledWith(expect.stringContaining("/"))
     })
 
@@ -292,23 +302,40 @@ describe("lifecycle", () => {
       )
     })
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("single signs on to gravity", () => {
+    it("single signs on to gravity", async () => {
       req.user = { accessToken: "token" }
       req.query["redirect-to"] = "/artwork/andy-warhol-skull"
-      lifecycle.ssoAndRedirectBack(req, res, next)
+      mockRequestGravity.mockResolvedValue({
+        body: { trust_token: "foo-trust-token" },
+      })
+
+      await lifecycle.ssoAndRedirectBack(req, res, next)
+
       expect(mockRequestGravity).toHaveBeenCalledWith(
         expect.objectContaining({
           url: expect.stringContaining("me/trust_token"),
         }),
       )
+      expect(res.redirect).toHaveBeenCalledWith(
+        "https://api.artsy.net/users/sign_in" +
+          "?redirect_uri=https%3A%2F%2Fwww.artsy.net%2Fartwork%2Fandy-warhol-skull" +
+          "&trust_token=foo-trust-token",
+      )
+    })
+
+    it("encodes the redirect uri when single signing on to gravity", async () => {
+      req.user = { accessToken: "token" }
+      req.query["redirect-to"] = "/artwork/andy-warhol-skull?foo=bar&baz=qux"
       mockRequestGravity.mockResolvedValue({
         body: { trust_token: "foo-trust-token" },
       })
+
+      await lifecycle.ssoAndRedirectBack(req, res, next)
+
       expect(res.redirect).toHaveBeenCalledWith(
         "https://api.artsy.net/users/sign_in" +
-          "?trust_token=foo-trust-token" +
-          "&redirect_uri=https://www.artsy.net/artwork/andy-warhol-skull",
+          "?redirect_uri=https%3A%2F%2Fwww.artsy.net%2Fartwork%2Fandy-warhol-skull%3Ffoo%3Dbar%26baz%3Dqux" +
+          "&trust_token=foo-trust-token",
       )
     })
   })

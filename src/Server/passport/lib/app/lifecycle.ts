@@ -295,11 +295,12 @@ export const ssoAndRedirectBack = async (
       url: `${opts.ARTSY_URL}/api/v1/me/trust_token`,
     })
 
-    res.redirect(
-      `${opts.ARTSY_URL}/users/sign_in` +
-        `?trust_token=${sres.body.trust_token}` +
-        `&redirect_uri=${parsed.href}`,
-    )
+    const params = new URLSearchParams({
+      redirect_uri: parsed.href,
+      trust_token: sres.body.trust_token,
+    })
+
+    res.redirect(`${opts.ARTSY_URL}/users/sign_in?${params.toString()}`)
   } catch {
     return res.redirect(parsed.href)
   }
