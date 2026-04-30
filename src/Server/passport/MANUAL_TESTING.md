@@ -284,14 +284,14 @@ Expected result: normal logout clears the Force session and asks Gravity to dele
 
 ## Scenario 15: Gravity HTML Error Body
 
-This verifies the known existing bug remains documented until intentionally fixed.
+This verifies Gravity HTML error pages are converted into a safe user-facing auth error.
 
 1. Point `API_URL` at a local mock server that returns `500` and `<!DOCTYPE html><html>Error</html>` for `/oauth2/access_token`.
 2. Start Force.
 3. Attempt XHR login.
 4. Observe the JSON error body and server logs.
 
-Expected result today: the full HTML body may appear as the auth error message. This is a known bug captured by a failing Jest test and should be fixed in a separate behavior-change PR.
+Expected result: the JSON error body should contain `We couldn’t log you in. Please try again. (Error 500)` or the matching status from the mock server. It should not contain `Gravity returned...`, `<!DOCTYPE html>`, or the raw HTML response body.
 
 ## Scenario 16: Gravity Network Failure Or Timeout
 

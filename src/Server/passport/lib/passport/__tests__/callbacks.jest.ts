@@ -163,43 +163,24 @@ describe("passport callbacks", () => {
     )
   })
 
-  it("preserves the current behavior of surfacing Gravity HTML response text", done => {
+  it("returns a generic error instead of surfacing Gravity HTML response text", done => {
     jest.spyOn(console, "warn").mockImplementation(() => {})
     req.body = { otpRequired: false }
     mockRequestGravity.mockRejectedValue(
       gravityError(
-        gravityResponse({}, 500, "<!DOCTYPE html><html>Error</html>"),
+        gravityResponse({}, 403, "<!DOCTYPE html><html>Error</html>"),
       ),
     )
 
     cbs.local(req, "craig", "foo", null, err => {
-      expect(err.message).toEqual("<!DOCTYPE html><html>Error</html>")
+      expect(err.message).toEqual(
+        "We couldn’t log you in. Please try again. (Error 403)",
+      )
+      expect(err.message).not.toContain("Gravity")
+      expect(err.message).not.toContain("<!DOCTYPE html>")
       done()
     })
   })
-  ;(it as any).failing(
-    "does not expose a full Gravity HTML document as the auth error message",
-    async () => {
-      jest.spyOn(console, "warn").mockImplementation(() => {})
-      req.body = { otpRequired: false }
-      mockRequestGravity.mockRejectedValue(
-        gravityError(
-          gravityResponse({}, 500, "<!DOCTYPE html><html>Error</html>"),
-        ),
-      )
-
-      await new Promise<void>((resolve, reject) => {
-        cbs.local(req, "craig", "foo", null, (err: Error) => {
-          try {
-            expect(err.message).not.toContain("<!DOCTYPE html>")
-            resolve()
-          } catch (assertionError) {
-            reject(assertionError)
-          }
-        })
-      })
-    },
-  )
 })
 
 /* eslint-enable jest/expect-expect, jest/no-done-callback */
