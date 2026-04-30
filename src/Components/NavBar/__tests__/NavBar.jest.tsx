@@ -182,7 +182,10 @@ describe("NavBar", () => {
       const signupButton = screen.getByText("Sign Up")
       expect(signupButton).toBeDefined()
 
-      expect(signupButton.closest("a")).toHaveAttribute("href", "/signup")
+      expect(signupButton.closest("a")).toHaveAttribute("href")
+      expect(signupButton.closest("a")?.getAttribute("href")).toMatch(
+        /^\/signup\?redirectTo=/,
+      )
     })
   })
 
