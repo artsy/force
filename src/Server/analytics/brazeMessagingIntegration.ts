@@ -5,7 +5,7 @@ const allowedPatterns = [
   "/art-fairs",
   "/article/:slug",
   "/articles",
-  "/artist/:slug,",
+  "/artist/:slug",
   "/artists",
   "/auctions",
   "/collect",

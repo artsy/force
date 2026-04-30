@@ -21,13 +21,11 @@ describe("isMatchingRoute", () => {
     "/viewing-rooms",
   ]
 
-  it("returns true for valid routes", () => {
-    const validResults = validRoutes.map(route => isMatchingRoute(route))
-    expect(validResults.length).toEqual(validResults.length)
+  it.each(validRoutes)("returns true for %s", route => {
+    expect(isMatchingRoute(route)).toBe(true)
   })
 
   const invalidRoutes = [
-    "/artist/andy-warhol",
     "/auction/fancy-prints-2022",
     "/categories",
     "/collections",
@@ -35,8 +33,7 @@ describe("isMatchingRoute", () => {
     "/sell",
   ]
 
-  it("returns false for invalid routes", () => {
-    const invalidResults = invalidRoutes.map(route => !isMatchingRoute(route))
-    expect(invalidResults.length).toEqual(invalidResults.length)
+  it.each(invalidRoutes)("returns false for %s", route => {
+    expect(isMatchingRoute(route)).toBe(false)
   })
 })
