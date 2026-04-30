@@ -5,6 +5,8 @@ import { RouterLink } from "System/Components/RouterLink"
 
 export const NavBarLoggedOutActions = () => {
   const { showAuthDialog } = useAuthDialog()
+  const currentPath =
+    typeof window !== "undefined" ? window.location.pathname : "/"
 
   return (
     <Flex alignItems="center">
@@ -28,8 +30,8 @@ export const NavBarLoggedOutActions = () => {
       <Button
         // @ts-expect-error
         as={RouterLink}
-        to="/signup"
         size="small"
+        to={`/signup?redirectTo=${encodeURIComponent(currentPath)}`}
       >
         Sign Up
       </Button>

@@ -47,17 +47,26 @@ export const useAfterAuthenticationRedirectUrl = () => {
 
 const useDefaultRedirect = () => {
   const router = useRouter()
-
-  // In a client-side context we have the window.location object, but we won't have
-  // the router context. In a server-side context we have the router context,
-  // but we won't have the window.location object.
   const location = router.match ? router.match.location : window.location
 
-  // If we're on the login or sign up path; we should redirect to the default (index).
-  // Otherwise stay on the same page.
-  const defaultRedirect = ["/login", "/signup"].includes(location.pathname)
-    ? DEFAULT_AFTER_AUTH_REDIRECT_PATH
-    : location.pathname + (location.search || "")
+  // Read redirectTo from URL query params (for client-side navigation)
+  let redirectTo: string | null = null
+  if (typeof window !== "undefined") {
+    const params = new URLSearchParams(window.location.search)
+    redirectTo = params.get("redirectTo")
+  }
+
+  const defaultRedirect = (() => {
+    // Use redirectTo from URL if available
+    if (redirectTo) {
+      return redirectTo
+    }
+
+    // Otherwise use default logic
+    return ["/login", "/signup"].includes(location.pathname)
+      ? DEFAULT_AFTER_AUTH_REDIRECT_PATH
+      : location.pathname + (location.search || "")
+  })()
 
   return { defaultRedirect }
 }
