@@ -29,6 +29,12 @@ describe("requestGravity", () => {
 
     expect(response.ok).toBe(true)
     expect(response.body).toEqual({ access_token: "yes" })
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://api.artsy.net/oauth2/access_token",
+      expect.objectContaining({
+        headers: expect.objectContaining({ Accept: "application/json" }),
+      }),
+    )
   })
 
   it("rejects with err.response for non-2xx HTML responses", async () => {
