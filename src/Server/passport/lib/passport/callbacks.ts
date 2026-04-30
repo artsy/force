@@ -45,6 +45,16 @@ const resolveProxies = (req: PassportRequest) => {
   return ipAddress
 }
 
+const isHtmlResponse = (res?: GravityResponse) => {
+  return /^\s*(<!doctype html|<html)\b/i.test(res?.text ?? "")
+}
+
+const genericAuthErrorMessage = (res?: GravityResponse) => {
+  const status = res?.status != null ? ` (Error ${res.status})` : ""
+
+  return `We couldn’t log you in. Please try again.${status}`
+}
+
 export const local = (
   req: PassportRequest,
   username: string,
@@ -284,9 +294,7 @@ const onAccessToken =
       (accessTokenError && !(res != null ? res.body : undefined)) ||
       (!accessTokenError && Number(res != null ? res.status : undefined) > 400)
     ) {
-      accessTokenError = new Error(
-        `Gravity returned a generic ${res != null ? res.status : "unknown"} html page`,
-      )
+      accessTokenError = new Error(genericAuthErrorMessage(res))
     }
     if (
       !accessTokenError &&
@@ -301,6 +309,8 @@ const onAccessToken =
         msg = res.body.error_description
       } else if (res && res.body && res.body.error) {
         msg = res.body.error
+      } else if (isHtmlResponse(res)) {
+        msg = genericAuthErrorMessage(res)
       } else if (res && res.text) {
         msg = res.text
       } else if (accessTokenError && accessTokenError.stack) {
