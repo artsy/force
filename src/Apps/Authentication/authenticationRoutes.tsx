@@ -33,7 +33,7 @@ const LoginRoute = loadable(
   { resolveComponent: component => component.AuthenticationLoginRoute },
 )
 
-const SignupNewRoute = loadable(
+const SignupRoute = loadable(
   () =>
     import(
       /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationSignUpNewRoute"
@@ -111,7 +111,7 @@ export const authenticationRoutes: RouteProps[] = [
   {
     path: "/signup",
     layout: "ContainerOnly",
-    getComponent: () => SignupNewRoute,
+    getComponent: () => SignupRoute,
     onServerSideRender: props => {
       // We need this check so we allow someone to log into the API even if they
       // have already logged into force. Otherwise, we short-circuit and risk
@@ -123,7 +123,7 @@ export const authenticationRoutes: RouteProps[] = [
       runAuthMiddleware(props)
     },
     onPreloadJS: () => {
-      SignupNewRoute.preload()
+      SignupRoute.preload()
     },
   },
   {
