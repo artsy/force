@@ -145,6 +145,22 @@ export const onLocalSignup = async (
 }
 
 type Provider = "facebook" | "apple" | "google"
+const UNKNOWN_AUTH_ERROR = "An unknown error occurred. Please try again."
+
+const redirectWithQuery = (
+  path: string,
+  params: Record<string, string | undefined>,
+) => {
+  const query = new URLSearchParams()
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value != null) {
+      query.set(key, value)
+    }
+  })
+
+  return `${path}?${query.toString()}`
+}
 
 export const beforeSocialAuth =
   (provider: Provider) =>
@@ -191,7 +207,11 @@ export const afterSocialAuth =
         // Log in to Artsy via email and password and link ${providerName} in your settings instead.
         // Redirect back to login page.
         return res.redirect(
-          `${redirectPath}?error_code=ALREADY_EXISTS&email=${req.socialProfileEmail}&provider=${provider}`,
+          redirectWithQuery(redirectPath, {
+            email: req.socialProfileEmail,
+            error_code: "ALREADY_EXISTS",
+            provider,
+          }),
         )
       }
 
@@ -200,21 +220,30 @@ export const afterSocialAuth =
         // Log in to your Artsy account via email and password and link the provider in your settings instead.
         // Redirect back to login page.
         return res.redirect(
-          `${redirectPath}?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=${provider}`,
+          redirectWithQuery(redirectPath, {
+            error_code: "PREVIOUSLY_LINKED_SETTINGS",
+            provider,
+          }),
         )
       }
 
       if (err?.response?.body?.error === "Another Account Already Linked") {
         // Provider account previously linked to Artsy. Redirect back to settings page.
         return res.redirect(
-          `${redirectPath}?error_code=PREVIOUSLY_LINKED&provider=${provider}`,
+          redirectWithQuery(redirectPath, {
+            error_code: "PREVIOUSLY_LINKED",
+            provider,
+          }),
         )
       }
 
       if (err?.message?.match("Unauthorized source IP address")) {
         // Your IP address was blocked by the provider. Redirect back to login page.
         return res.redirect(
-          `${redirectPath}?error_code=IP_BLOCKED&provider=${provider}`,
+          redirectWithQuery(redirectPath, {
+            error_code: "IP_BLOCKED",
+            provider,
+          }),
         )
       }
 
@@ -222,8 +251,12 @@ export const afterSocialAuth =
         const message = extractError(err)
 
         // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
+        console.warn(`Error authenticating with ${provider}: ${message}`)
         return res.redirect(
-          `${redirectPath}?error_code=UNKNOWN&error=${message}`,
+          redirectWithQuery(redirectPath, {
+            error: UNKNOWN_AUTH_ERROR,
+            error_code: "UNKNOWN",
+          }),
         )
       }
 
