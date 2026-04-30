@@ -184,30 +184,10 @@ describe("authenticationRoutes", () => {
     })
   })
 
-  describe("/signup-new", () => {
-    describe("server", () => {
-      describe("onServerSideRender", () => {
-        it("runs middleware", () => {
-          renderServerRoute("/signup-new").onServerSideRender()
-          expect(mockRedirectIfLoggedIn).toHaveBeenCalled()
-          expect(mockCheckForRedirect).toHaveBeenCalled()
-          expect(mockSetReferer).toHaveBeenCalled()
-        })
-
-        it("skips the check for login if you are auth-ing with the API", () => {
-          renderServerRoute("/signup-new?oauthLogin=true").onServerSideRender()
-          expect(mockRedirectIfLoggedIn).not.toHaveBeenCalled()
-          expect(mockCheckForRedirect).toHaveBeenCalled()
-          expect(mockSetReferer).toHaveBeenCalled()
-        })
-      })
-    })
-  })
-
-  describe("/signup-new", () => {
+  describe("/signup", () => {
     describe("client", () => {
       it.skip("renders signup landing page", async () => {
-        renderClientRoute("/signup-new")
+        renderClientRoute("/signup")
 
         await waitFor(() => {
           expect(screen.getByText(/Join Artsy today/i)).toBeInTheDocument()

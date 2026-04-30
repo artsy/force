@@ -33,14 +33,6 @@ const LoginRoute = loadable(
   { resolveComponent: component => component.AuthenticationLoginRoute },
 )
 
-const SignupRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationSignUpRoute"
-    ),
-  { resolveComponent: component => component.AuthenticationSignUpRoute },
-)
-
 const SignupNewRoute = loadable(
   () =>
     import(
@@ -119,26 +111,11 @@ export const authenticationRoutes: RouteProps[] = [
   {
     path: "/signup",
     layout: "ContainerOnly",
-    getComponent: () => SignupRoute,
+    getComponent: () => SignupNewRoute,
     onServerSideRender: props => {
       // We need this check so we allow someone to log into the API even if they
       // have already logged into force. Otherwise, we short-circuit and risk
       // taking the user into an infinite redirect loop.
-      if (!props.req.query.oauthLogin) {
-        redirectIfLoggedIn(props)
-      }
-
-      runAuthMiddleware(props)
-    },
-    onPreloadJS: () => {
-      SignupRoute.preload()
-    },
-  },
-  {
-    path: "/signup-new",
-    layout: "ContainerOnly",
-    getComponent: () => SignupNewRoute,
-    onServerSideRender: props => {
       if (!props.req.query.oauthLogin) {
         redirectIfLoggedIn(props)
       }
