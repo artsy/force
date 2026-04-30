@@ -41,6 +41,7 @@ const setupApp = () => {
   )
   app.post(
     opts.signupPagePath,
+    csrf({ cookie: true }),
     middleware(setCampaign),
     middleware(onLocalSignup),
     middleware(onLocalLogin),
