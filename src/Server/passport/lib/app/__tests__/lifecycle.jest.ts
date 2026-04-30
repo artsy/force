@@ -236,16 +236,22 @@ describe("lifecycle", () => {
     })
 
     it("passes random errors to be rendered on the login screen", () => {
+      const warn = jest.spyOn(console, "warn").mockImplementation(() => {})
       passport.authenticate.mockReturnValueOnce((req, res, next) =>
         next(new Error("Facebook authorization failed")),
       )
       lifecycle.afterSocialAuth("facebook")(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?error_code=UNKNOWN&error=Facebook authorization failed",
+        "/login?error=An+unknown+error+occurred.+Please+try+again.&error_code=UNKNOWN",
       )
+      expect(warn).toHaveBeenCalledWith(
+        "Error authenticating with facebook: Facebook authorization failed",
+      )
+      warn.mockRestore()
     })
 
     it("passes errors that may be buried in the error response", () => {
+      const warn = jest.spyOn(console, "warn").mockImplementation(() => {})
       req.user = { accessToken: "token" }
       passport.authenticate.mockReturnValueOnce((req, res, next) => {
         const err = {
@@ -263,7 +269,31 @@ describe("lifecycle", () => {
       lifecycle.afterSocialAuth("facebook")(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(
-        "/settings?error_code=UNKNOWN&error=Unable to link third-party authentication if account has Artsy two-factor authentication enabled",
+        "/settings?error=An+unknown+error+occurred.+Please+try+again.&error_code=UNKNOWN",
+      )
+      expect(warn).toHaveBeenCalledWith(
+        "Error authenticating with facebook: Unable to link third-party authentication if account has Artsy two-factor authentication enabled",
+      )
+      warn.mockRestore()
+    })
+
+    it("encodes provider error redirect params", () => {
+      req.socialProfileEmail = "user+social@example.com"
+      passport.authenticate.mockReturnValueOnce((req, res, next) => {
+        const err = {
+          response: {
+            body: {
+              error: "User Already Exists",
+            },
+          },
+        }
+        next(err)
+      })
+
+      lifecycle.afterSocialAuth("facebook")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&provider=facebook",
       )
     })
   })
