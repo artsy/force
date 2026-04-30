@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79202d19c0ac815410dcd7e7182a43e0>>
+ * @generated SignedSource<<e4f6f83d4cab69b06c93375647a1acca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2DeliveryOptionsForm_order$data = {
   readonly fulfillmentOptions: ReadonlyArray<{
     readonly amount: {
+      readonly currencyCode: string;
       readonly display: string | null | undefined;
       readonly minor: any;
     } | null | undefined;
@@ -89,6 +90,13 @@ return {
               "kind": "ScalarField",
               "name": "minor",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "currencyCode",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -136,6 +144,6 @@ return {
 };
 })();
 
-(node as any).hash = "1af5ba5214fee545abe5eadbc603a4bb";
+(node as any).hash = "7f8e50d8b648af6d42b7fbeef8b8f0a0";
 
 export default node;

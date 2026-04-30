@@ -22,6 +22,7 @@ import {
   type PageOwnerType,
   type SavedAddressViewed,
   type SavedPaymentMethodViewed,
+  type ShippingQuoteViewed,
   type SubmittedOffer,
   type SubmittedOrder,
   type ToggledCollapsibleOrderSummary,
@@ -310,6 +311,17 @@ export const useCheckoutTracking = ({
           address_ids: addressIds,
           default_address_id: defaultAddress.internalID,
           default_address_country: defaultAddress.address.country,
+        }
+        trackEvent(payload)
+      },
+
+      shippingQuoteViewed: (quotes: ShippingQuoteViewed["shipping_quotes"]) => {
+        const payload: ShippingQuoteViewed = {
+          action: ActionType.shippingQuoteViewed,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow,
+          shipping_quotes: quotes,
         }
         trackEvent(payload)
       },

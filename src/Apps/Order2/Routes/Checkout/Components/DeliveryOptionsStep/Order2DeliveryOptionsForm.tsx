@@ -13,7 +13,10 @@ import {
   Tooltip,
 } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
   SELECTABLE_TYPES,
@@ -30,7 +33,7 @@ import type {
   Order2DeliveryOptionsForm_order$data,
   Order2DeliveryOptionsForm_order$key,
 } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
@@ -50,6 +53,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     completeStep,
     messages,
     isFulfillmentDetailsSaving,
+    steps,
   } = useCheckoutContext()
   const { selectDeliveryOption } = useSelectDeliveryOption()
   const [isDeliveryOptionSaving, setIsDeliveryOptionSaving] = useState(false)
@@ -75,6 +79,44 @@ export const Order2DeliveryOptionsForm: React.FC<
   const hasDeliveryOption =
     deliveryOptions.length > 0 &&
     (!!orderData.selectedFulfillmentOption || onlyShippingTBD)
+
+  const deliveryOptionsStep = steps?.find(
+    step => step.name === CheckoutStepName.DELIVERY_OPTION,
+  )
+
+  useEffect(() => {
+    if (deliveryOptionsStep?.state !== CheckoutStepState.ACTIVE) {
+      return
+    }
+
+    const artaOptions = deliveryOptions.filter(option =>
+      ["ARTSY_STANDARD", "ARTSY_EXPRESS", "ARTSY_WHITE_GLOVE"].includes(
+        option.type,
+      ),
+    )
+
+    if (artaOptions.length === 0) {
+      return
+    }
+
+    checkoutTracking.shippingQuoteViewed(
+      artaOptions.map(option => {
+        const timeEstimate = deliveryOptionTimeEstimate(option.type)
+        const timeline = timeEstimate
+          ? [timeEstimate[0], timeEstimate[1]].filter(Boolean).join(" ")
+          : ""
+
+        return {
+          id: option.type,
+          type: "arta",
+          subtype: option.type.replace("ARTSY_", "").toLowerCase(),
+          price_minor: option.amount?.minor ?? 0,
+          price_currency: option.amount?.currencyCode ?? "USD",
+          timeline,
+        }
+      }),
+    )
+  }, [deliveryOptions, checkoutTracking, deliveryOptionsStep?.state])
 
   const handleContinue = useCallback(() => {
     checkoutTracking.clickedOrderProgression(
@@ -214,6 +256,7 @@ const FRAGMENT = graphql`
       amount {
         display
         minor
+        currencyCode
       }
       type
       selected
