@@ -29,8 +29,39 @@ describe("logout", () => {
       expect(next).toHaveBeenCalledWith()
     })
 
+    it("allows the bare artsy.net referrer", () => {
+      const req = { get: jest.fn(() => "https://artsy.net/artworks") }
+      const next = jest.fn()
+
+      denyBadLogoutLinks(req as any, {} as any, next)
+
+      expect(next).toHaveBeenCalledWith()
+    })
+
     it("rejects non-Artsy referrers", () => {
       const req = { get: jest.fn(() => "https://malicious.example") }
+      const next = jest.fn()
+
+      denyBadLogoutLinks(req as any, {} as any, next)
+
+      expect(next).toHaveBeenCalledWith(
+        expect.objectContaining({ message: "Malicious logout link." }),
+      )
+    })
+
+    it("rejects lookalike Artsy referrers", () => {
+      const req = { get: jest.fn(() => "https://notartsy.net") }
+      const next = jest.fn()
+
+      denyBadLogoutLinks(req as any, {} as any, next)
+
+      expect(next).toHaveBeenCalledWith(
+        expect.objectContaining({ message: "Malicious logout link." }),
+      )
+    })
+
+    it("rejects missing referrers", () => {
+      const req = { get: jest.fn(() => undefined) }
       const next = jest.fn()
 
       denyBadLogoutLinks(req as any, {} as any, next)
