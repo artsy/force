@@ -41,6 +41,7 @@ export const requestGravity = async ({
     response = await fetch(url, {
       body: body == null ? undefined : JSON.stringify(body),
       headers: {
+        Accept: "application/json",
         ...(body == null ? {} : { "Content-Type": "application/json" }),
         ...Object.fromEntries(
           Object.entries(headers ?? {}).filter(
