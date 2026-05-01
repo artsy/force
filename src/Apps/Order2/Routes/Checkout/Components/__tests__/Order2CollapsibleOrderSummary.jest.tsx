@@ -9,6 +9,8 @@ import { Order2CollapsibleOrderSummary } from "../Order2CollapsibleOrderSummary"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
+let mockIsEigen = false
+
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => {
     const checkoutTracking = useCheckoutTracking({
@@ -17,8 +19,15 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
     })
     return {
       checkoutTracking,
+      artworkPath: "/artwork/test-artwork",
     }
   },
+}))
+
+jest.mock("System/Hooks/useSystemContext", () => ({
+  useSystemContext: () => ({
+    isEigen: mockIsEigen,
+  }),
 }))
 
 jest.mock("System/Hooks/useAnalyticsContext", () => {
@@ -32,6 +41,7 @@ jest.mock("System/Hooks/useAnalyticsContext", () => {
 
 const mockTrackEvent = jest.fn()
 beforeEach(() => {
+  mockIsEigen = false
   mockTrackEvent.mockClear()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
@@ -49,6 +59,7 @@ const mockOrder = {
     {
       artwork: {
         slug: "test-artwork",
+        internalID: "artwork-id",
       },
       artworkVersion: {
         title: "Test Artwork",
@@ -253,6 +264,109 @@ describe("Order2CollapsibleOrderSummary", () => {
     expect(image).toHaveAttribute(
       "src",
       "https://example.com/fallback-image.jpg",
+    )
+  })
+
+  it("opens artwork link in a new tab for non-Eigen", async () => {
+    await renderWithRelay({
+      Order: () => ({
+        ...mockOrder,
+        lineItems: [
+          {
+            artwork: {
+              slug: "test-artwork",
+              internalID: "artwork-id",
+              figures: [
+                {
+                  __typename: "Image",
+                  resizedSquare: {
+                    url: "https://example.com/fallback-image.jpg",
+                  },
+                },
+              ],
+            },
+            artworkVersion: {
+              title: "Test Artwork",
+              date: "2023",
+              artistNames: "Test Artist",
+              thumbnail: {
+                url: "https://example.com/thumbnail.jpg",
+                resizedSquare: {
+                  url: "https://example.com/thumbnail-resized.jpg",
+                },
+              },
+            },
+          },
+        ],
+      }),
+    })
+
+    const artworkLink = screen.getByRole("link", { name: "Test Artwork" })
+
+    expect(artworkLink).toHaveAttribute("target", "_blank")
+    expect(artworkLink).toHaveAttribute("rel", "noopener noreferrer")
+
+    mockTrackEvent.mockClear()
+    fireEvent.click(artworkLink)
+
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: "clickedOrderArtworkImage",
+        context_module: "ordersCheckout",
+        destination_page_owner_id: "artwork-id",
+        destination_page_owner_type: "artwork",
+      }),
+    )
+  })
+
+  it("prevents tap navigation for Eigen", async () => {
+    mockIsEigen = true
+
+    await renderWithRelay({
+      Order: () => ({
+        ...mockOrder,
+        lineItems: [
+          {
+            artwork: {
+              slug: "test-artwork",
+              internalID: "artwork-id",
+              figures: [
+                {
+                  __typename: "Image",
+                  resizedSquare: {
+                    url: "https://example.com/fallback-image.jpg",
+                  },
+                },
+              ],
+            },
+            artworkVersion: {
+              title: "Test Artwork",
+              date: "2023",
+              artistNames: "Test Artist",
+              thumbnail: {
+                url: "https://example.com/thumbnail.jpg",
+                resizedSquare: {
+                  url: "https://example.com/thumbnail-resized.jpg",
+                },
+              },
+            },
+          },
+        ],
+      }),
+    })
+
+    const artworkLink = screen.getByRole("link", { name: "Test Artwork" })
+    const clickEvent = new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+    })
+
+    mockTrackEvent.mockClear()
+    const shouldContinueDefaultBehavior = artworkLink.dispatchEvent(clickEvent)
+
+    expect(shouldContinueDefaultBehavior).toBe(false)
+    expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect.objectContaining({ action: "clickedOrderArtworkImage" }),
     )
   })
 })
