@@ -4,11 +4,10 @@ import AppleIcon from "@artsy/icons/AppleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
+import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 
 export const SignupFormSocial = () => {
-  // Read redirectTo from URL query params
-  const params = new URLSearchParams(window.location.search)
-  const redirectUrl = params.get("redirectTo") || "/"
+  const { redirectUrl } = useAfterAuthenticationRedirectUrl()
 
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
     applePath: "/users/auth/apple",
