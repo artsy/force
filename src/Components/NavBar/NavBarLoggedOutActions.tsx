@@ -7,8 +7,6 @@ import { useState, useEffect } from "react"
 export const NavBarLoggedOutActions = () => {
   const { showAuthDialog } = useAuthDialog()
   const [currentPath, setCurrentPath] = useState("/")
-  // const currentPath =
-  //   typeof window !== "undefined" ? window.location.pathname : "/"
 
   useEffect(() => {
     setCurrentPath(window.location.pathname)
