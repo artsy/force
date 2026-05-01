@@ -6,6 +6,10 @@ import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
 
 export const SignupFormSocial = () => {
+  // Read redirectTo from URL query params
+  const params = new URLSearchParams(window.location.search)
+  const redirectUrl = params.get("redirectTo") || "/"
+
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
     applePath: "/users/auth/apple",
     facebookPath: "/users/auth/facebook",
@@ -14,7 +18,7 @@ export const SignupFormSocial = () => {
 
   const query = stringify(
     {
-      "redirect-to": "/", // Always redirect to homepage after social auth
+      "redirect-to": redirectUrl,
       "signup-intent": "signup",
       "signup-referer": getENV("AUTHENTICATION_REFERER"), // Use same ENV var
       accepted_terms_of_service: true,
