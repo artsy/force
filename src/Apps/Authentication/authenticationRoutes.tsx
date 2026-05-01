@@ -36,14 +36,6 @@ const LoginRoute = loadable(
 const SignupRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationSignUpRoute"
-    ),
-  { resolveComponent: component => component.AuthenticationSignUpRoute },
-)
-
-const SignupNewRoute = loadable(
-  () =>
-    import(
       /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationSignUpNewRoute"
     ),
   { resolveComponent: component => component.AuthenticationSignUpNewRoute },
@@ -132,21 +124,6 @@ export const authenticationRoutes: RouteProps[] = [
     },
     onPreloadJS: () => {
       SignupRoute.preload()
-    },
-  },
-  {
-    path: "/signup-new",
-    layout: "ContainerOnly",
-    getComponent: () => SignupNewRoute,
-    onServerSideRender: props => {
-      if (!props.req.query.oauthLogin) {
-        redirectIfLoggedIn(props)
-      }
-
-      runAuthMiddleware(props)
-    },
-    onPreloadJS: () => {
-      SignupNewRoute.preload()
     },
   },
   {
