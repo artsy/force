@@ -1,14 +1,14 @@
-import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
+import { redirectCollectionToGene } from "Apps/Collect/Server/redirectCollectionToGene"
 import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 
-describe("redirectCollectionToArtistSeries", () => {
-  it("does not redirect for a non-migrated artist series", () => {
+describe("redirectCollectionToGene", () => {
+  it("does not redirect for a non-migrated collection", () => {
     const req = {
       params: {
-        slug: "not-artist-series",
+        slug: "contemporary",
       },
     }
     const res = {
@@ -17,20 +17,21 @@ describe("redirectCollectionToArtistSeries", () => {
     }
     const next = jest.fn()
 
-    redirectCollectionToArtistSeries(
+    redirectCollectionToGene(
       req as unknown as ArtsyRequest,
       res as unknown as ArtsyResponse,
       next,
     )
+
     expect(res.redirect).not.toHaveBeenCalled()
     expect(next).toHaveBeenCalled()
   })
 
-  it("redirects for a migrated series", () => {
+  it("redirects for a migrated collection", () => {
     const spy = jest.fn()
     const req = {
       params: {
-        slug: "kaws-four-foot-companion",
+        slug: "chinese-artists",
       },
     }
     const res = {
@@ -41,16 +42,13 @@ describe("redirectCollectionToArtistSeries", () => {
     }
     const next = jest.fn()
 
-    redirectCollectionToArtistSeries(
+    redirectCollectionToGene(
       req as unknown as ArtsyRequest,
       res as unknown as ArtsyResponse,
       next,
     )
 
-    expect(spy).toHaveBeenCalledWith(
-      301,
-      "/artist-series/kaws-4-foot-companion",
-    )
+    expect(spy).toHaveBeenCalledWith(301, "/gene/china")
     expect(next).not.toHaveBeenCalled()
   })
 })

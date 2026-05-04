@@ -2,6 +2,7 @@ import "instrument"
 
 import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
+import { redirectCollectionToGene } from "Apps/Collect/Server/redirectCollectionToGene"
 import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
 import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
@@ -34,7 +35,11 @@ const { routes, routePaths } = getRoutes()
 //
 // These selectively match routes that would otherwise be handled by
 // the route matchers below
-app.get("/collection/:slug", redirectCollectionToArtistSeries)
+app.get(
+  "/collection/:slug",
+  redirectCollectionToArtistSeries,
+  redirectCollectionToGene,
+)
 
 // React app routes
 app.get(
