@@ -1,5 +1,9 @@
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { Order2DeliveryOptionsForm } from "../Order2DeliveryOptionsForm"
@@ -23,6 +27,8 @@ jest.mock(
   }),
 )
 
+const mockShippingQuoteViewed = jest.fn()
+
 beforeEach(() => {
   jest.clearAllMocks()
   mockCheckoutContext = {
@@ -30,6 +36,7 @@ beforeEach(() => {
       clickedOrderProgression: jest.fn(),
       clickedBuyerProtection: jest.fn(),
       clickedSelectShippingOption: jest.fn(),
+      shippingQuoteViewed: mockShippingQuoteViewed,
     },
     completeStep: jest.fn(),
     setSectionErrorMessage: jest.fn(),
@@ -395,6 +402,107 @@ describe("Order2DeliveryOptionsForm", () => {
       })
 
       expect(screen.queryByText(/Ships from/)).not.toBeInTheDocument()
+    })
+  })
+
+  describe("shippingQuoteViewed tracking", () => {
+    const artaOptionsData = {
+      Me: () => ({
+        order: {
+          internalID: "order-123",
+          fulfillmentOptions: [
+            {
+              type: "ARTSY_STANDARD",
+              shippingQuoteId: "quote-standard-id",
+              amount: { display: "$25.00", minor: 2500, currencyCode: "USD" },
+              selected: true,
+            },
+            {
+              type: "ARTSY_EXPRESS",
+              shippingQuoteId: "quote-express-id",
+              amount: { display: "$50.00", minor: 5000, currencyCode: "USD" },
+              selected: false,
+            },
+          ],
+        },
+      }),
+    }
+
+    it("tracks shippingQuoteViewed when step is active and Arta options are present", async () => {
+      mockCheckoutContext.steps = [
+        {
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ]
+
+      renderWithRelay(artaOptionsData)
+
+      await waitFor(() => {
+        expect(mockShippingQuoteViewed).toHaveBeenCalledTimes(1)
+        expect(mockShippingQuoteViewed).toHaveBeenCalledWith([
+          {
+            id: "quote-standard-id",
+            type: "arta",
+            subtype: "standard",
+            price_minor: 2500,
+            price_currency: "USD",
+            timeline: "Est. delivery 3-5 days after shipping",
+          },
+          {
+            id: "quote-express-id",
+            type: "arta",
+            subtype: "express",
+            price_minor: 5000,
+            price_currency: "USD",
+            timeline: "Est. delivery 2 days after shipping",
+          },
+        ])
+      })
+    })
+
+    it("does not track shippingQuoteViewed when step is not active", async () => {
+      mockCheckoutContext.steps = [
+        {
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.UPCOMING,
+        },
+      ]
+
+      renderWithRelay(artaOptionsData)
+
+      await waitFor(() => {
+        expect(mockShippingQuoteViewed).not.toHaveBeenCalled()
+      })
+    })
+
+    it("does not track shippingQuoteViewed when there are no Arta options", async () => {
+      mockCheckoutContext.steps = [
+        {
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "DOMESTIC_FLAT",
+                shippingQuoteId: null,
+                amount: { display: "$10.00", minor: 1000, currencyCode: "USD" },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(mockShippingQuoteViewed).not.toHaveBeenCalled()
+      })
     })
   })
 })
