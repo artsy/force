@@ -84,39 +84,40 @@ export const Order2DeliveryOptionsForm: React.FC<
     step => step.name === CheckoutStepName.DELIVERY_OPTION,
   )
 
+  const artaOptions = fulfillmentOptions.filter(option =>
+    ["ARTSY_STANDARD", "ARTSY_EXPRESS", "ARTSY_WHITE_GLOVE"].includes(
+      option.type,
+    ),
+  )
+  const artaQuotesJson =
+    artaOptions.length === 0
+      ? null
+      : JSON.stringify(
+          artaOptions.map(option => {
+            const timeEstimate = deliveryOptionTimeEstimate(option.type)
+            const timeline = timeEstimate
+              ? [timeEstimate[0], timeEstimate[1]].filter(Boolean).join(" ")
+              : ""
+            return {
+              id: option.shippingQuoteId!,
+              type: "arta",
+              subtype: option.type.replace("ARTSY_", "").toLowerCase(),
+              price_minor: option.amount?.minor ?? 0,
+              price_currency: option.amount?.currencyCode ?? "USD",
+              timeline,
+            }
+          }),
+        )
+
   useEffect(() => {
-    if (deliveryOptionsStep?.state !== CheckoutStepState.ACTIVE) {
+    if (
+      deliveryOptionsStep?.state !== CheckoutStepState.ACTIVE ||
+      !artaQuotesJson
+    ) {
       return
     }
-
-    const artaOptions = deliveryOptions.filter(option =>
-      ["ARTSY_STANDARD", "ARTSY_EXPRESS", "ARTSY_WHITE_GLOVE"].includes(
-        option.type,
-      ),
-    )
-
-    if (artaOptions.length === 0) {
-      return
-    }
-
-    checkoutTracking.shippingQuoteViewed(
-      artaOptions.map(option => {
-        const timeEstimate = deliveryOptionTimeEstimate(option.type)
-        const timeline = timeEstimate
-          ? [timeEstimate[0], timeEstimate[1]].filter(Boolean).join(" ")
-          : ""
-
-        return {
-          id: option.shippingQuoteId!,
-          type: "arta",
-          subtype: option.type.replace("ARTSY_", "").toLowerCase(),
-          price_minor: option.amount?.minor ?? 0,
-          price_currency: option.amount?.currencyCode ?? "USD",
-          timeline,
-        }
-      }),
-    )
-  }, [deliveryOptions, checkoutTracking, deliveryOptionsStep?.state])
+    checkoutTracking.shippingQuoteViewed(JSON.parse(artaQuotesJson))
+  }, [artaQuotesJson, checkoutTracking, deliveryOptionsStep?.state])
 
   const handleContinue = useCallback(() => {
     checkoutTracking.clickedOrderProgression(
