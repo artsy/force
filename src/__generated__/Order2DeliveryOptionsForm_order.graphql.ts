@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4f6f83d4cab69b06c93375647a1acca>>
+ * @generated SignedSource<<90353e21ef309562de395dabcb504b38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type Order2DeliveryOptionsForm_order$data = {
       readonly minor: any;
     } | null | undefined;
     readonly selected: boolean | null | undefined;
+    readonly shippingQuoteId: string | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly internalID: string;
@@ -108,6 +109,13 @@ return {
           "kind": "ScalarField",
           "name": "selected",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "shippingQuoteId",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -144,6 +152,6 @@ return {
 };
 })();
 
-(node as any).hash = "7f8e50d8b648af6d42b7fbeef8b8f0a0";
+(node as any).hash = "b0fc0d71c2e60b9e517148ea539ef1d2";
 
 export default node;

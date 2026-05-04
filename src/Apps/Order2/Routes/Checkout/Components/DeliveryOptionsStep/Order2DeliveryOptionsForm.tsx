@@ -107,7 +107,7 @@ export const Order2DeliveryOptionsForm: React.FC<
           : ""
 
         return {
-          id: option.type,
+          id: option.shippingQuoteId!,
           type: "arta",
           subtype: option.type.replace("ARTSY_", "").toLowerCase(),
           price_minor: option.amount?.minor ?? 0,
@@ -260,6 +260,7 @@ const FRAGMENT = graphql`
       }
       type
       selected
+      shippingQuoteId
     }
     selectedFulfillmentOption {
       type
