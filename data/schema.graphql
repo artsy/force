@@ -17544,7 +17544,7 @@ type Me implements Node {
     )
 
   # Frequency of marketing emails.
-  emailFrequency: String
+  emailFrequency: String @deprecated(reason: "This field is no longer used.")
   followsAndSaves: FollowsAndSaves
   hasCreditCards: Boolean
   hasPassword: Boolean!
@@ -27969,7 +27969,7 @@ input UpdateMyProfileInput {
   email: String
 
   # Frequency of marketing emails.
-  emailFrequency: String
+  emailFrequency: String @deprecated(reason: "This field is no longer used.")
 
   # Gender.
   gender: String
