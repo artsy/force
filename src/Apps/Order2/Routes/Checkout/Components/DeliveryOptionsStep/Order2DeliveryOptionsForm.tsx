@@ -19,6 +19,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
+  ARTA_FULFILLMENT_TYPES,
   SELECTABLE_TYPES,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
@@ -85,9 +86,7 @@ export const Order2DeliveryOptionsForm: React.FC<
   )
 
   const artaOptions = fulfillmentOptions.filter(option =>
-    ["ARTSY_STANDARD", "ARTSY_EXPRESS", "ARTSY_WHITE_GLOVE"].includes(
-      option.type,
-    ),
+    ARTA_FULFILLMENT_TYPES.includes(option.type),
   )
   const artaQuotesJson =
     artaOptions.length === 0

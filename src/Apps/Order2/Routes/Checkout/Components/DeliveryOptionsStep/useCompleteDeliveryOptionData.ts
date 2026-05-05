@@ -1,5 +1,6 @@
 import type { Order2DeliveryOptionsCompletedViewProps } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsCompletedView"
 import {
+  SELECTABLE_TYPES,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
@@ -35,13 +36,7 @@ export const useCompleteDeliveryOptionData = (
     }
   }
 
-  const isSpecificMethod = [
-    "ARTSY_STANDARD",
-    "ARTSY_EXPRESS",
-    "ARTSY_WHITE_GLOVE",
-    "DOMESTIC_FLAT",
-    "INTERNATIONAL_FLAT",
-  ].includes(fulfillmentType)
+  const isSpecificMethod = SELECTABLE_TYPES.includes(fulfillmentType)
 
   if (!isSpecificMethod) {
     return null
