@@ -88,6 +88,7 @@ export const Order2DeliveryOptionsForm: React.FC<
   const artaOptions = fulfillmentOptions.filter(option =>
     ARTA_FULFILLMENT_TYPES.includes(option.type),
   )
+  // Serialize to a string so useEffect compares by stable value, not array reference
   const artaQuotesJson =
     artaOptions.length === 0
       ? null
