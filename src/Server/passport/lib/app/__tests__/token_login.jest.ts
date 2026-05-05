@@ -37,6 +37,26 @@ describe("token login middleware", () => {
       expect(req.login.mock.calls[0][0].accessToken).toEqual("access-foo-token")
     })
 
+    it("logs in a user if they pass their access token as a query param", () => {
+      req.get.mockReturnValue(undefined)
+      req.query.access_token = "query-access-token"
+
+      headerLogin(req, res, next)
+
+      expect(req.login.mock.calls[0][0].accessToken).toEqual(
+        "query-access-token",
+      )
+    })
+
+    it("passes on if there is no access token", () => {
+      req.get.mockReturnValue(undefined)
+
+      headerLogin(req, res, next)
+
+      expect(req.login).not.toHaveBeenCalled()
+      expect(next).toHaveBeenCalled()
+    })
+
     it("does not log in a user on sign out", () => {
       req.path = "/users/sign_out"
       headerLogin(req, res, next)
@@ -112,6 +132,47 @@ a url sans trust_token param`, async () => {
       const next = jest.fn()
       mockRequestGravity.mockRejectedValue(new Error("err"))
       await trustTokenLogin(req as any, res as any, next)
+      expect(next).toHaveBeenCalled()
+      expect(res.redirect).not.toHaveBeenCalled()
+    })
+
+    it("nexts on non-ok code responses", async () => {
+      const req = {
+        connection: { remoteAddress: "99.99.99.99" },
+        headers: {},
+        query: { trust_token: "xxxx" },
+        url: "/target-path?trust_token=xxxx",
+      }
+      const res = { redirect: jest.fn() }
+      const next = jest.fn()
+      mockRequestGravity.mockResolvedValue({
+        body: { error: "invalid trust token" },
+        ok: false,
+      })
+
+      await trustTokenLogin(req as any, res as any, next)
+
+      expect(next).toHaveBeenCalled()
+      expect(res.redirect).not.toHaveBeenCalled()
+    })
+
+    it("nexts if the session login fails", async () => {
+      const req = {
+        connection: { remoteAddress: "99.99.99.99" },
+        headers: {},
+        login: jest.fn((user, cb) => cb(new Error("login failed"))),
+        query: { trust_token: "xxxx" },
+        url: "/target-path?trust_token=xxxx",
+      }
+      const res = { redirect: jest.fn() }
+      const next = jest.fn()
+      mockRequestGravity.mockResolvedValue({
+        body: { access_token: "yyy" },
+        ok: true,
+      })
+
+      await trustTokenLogin(req as any, res as any, next)
+
       expect(next).toHaveBeenCalled()
       expect(res.redirect).not.toHaveBeenCalled()
     })

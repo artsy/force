@@ -116,6 +116,27 @@ describe("logout", () => {
     expect(redirectBack).not.toHaveBeenCalled()
   })
 
+  it("still sends success when Gravity token deletion fails", async () => {
+    mockRequestGravity.mockRejectedValue(new Error("Gravity unavailable"))
+    const req = {
+      connection: { remoteAddress: "99.99.99.99" },
+      headers: {},
+      logout: jest.fn(),
+      session: {},
+      user: { accessToken: "access-token" },
+      xhr: true,
+    }
+    const send = jest.fn()
+    const res = { status: jest.fn(() => ({ send })) }
+
+    await logout(req as any, res as any, jest.fn())
+
+    expect(req.logout).toHaveBeenCalled()
+    expect(req.session).toBeNull()
+    expect(res.status).toHaveBeenCalledWith(200)
+    expect(send).toHaveBeenCalledWith({ msg: "success" })
+  })
+
   it("redirects back for non-XHR logout requests", async () => {
     const req = {
       connection: { remoteAddress: "99.99.99.99" },

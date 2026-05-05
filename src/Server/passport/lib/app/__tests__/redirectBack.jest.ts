@@ -44,6 +44,86 @@ describe("redirectBack", () => {
     expect(redirect).toEqual("/")
   })
 
+  it("uses body redirect before query and params redirect values", () => {
+    const req = {
+      body: { "redirect-to": "/from-body" },
+      params: { redirect_uri: "/from-params" },
+      query: { "redirect-to": "/from-query" },
+      session: {},
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/from-body")
+  })
+
+  it("uses query redirect before params redirect values", () => {
+    const req = {
+      body: {},
+      params: { redirect_uri: "/from-params" },
+      query: { "redirect-to": "/from-query" },
+      session: {},
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/from-query")
+  })
+
+  it("uses params redirect values when no earlier redirect source exists", () => {
+    const req = {
+      body: {},
+      params: { redirect_uri: "/from-params" },
+      query: {},
+      session: {},
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/from-params")
+  })
+
+  it("uses the after-signup destination before request redirect values", () => {
+    const req = {
+      artsyPassportSignedUp: true,
+      body: { "redirect-to": "/from-body" },
+      params: {},
+      query: {},
+      session: {},
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/")
+  })
+
+  it("does not use the after-signup destination when onboarding is skipped", () => {
+    const req = {
+      artsyPassportSignedUp: true,
+      body: { "redirect-to": "/from-body" },
+      params: {},
+      query: {},
+      session: { skipOnboarding: true },
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/from-body")
+  })
+
+  it("sanitizes unsafe request redirect values", () => {
+    const req = {
+      body: { "redirect-to": "https://example.com/phishing" },
+      params: {},
+      query: {},
+      session: {},
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/")
+  })
+
   it("does not clear the session if a res.redirect is not passed", () => {
     const req = {
       session: {
@@ -84,5 +164,27 @@ describe("redirectBack", () => {
     )
 
     expect(req.session.redirectTo).toBeUndefined()
+  })
+
+  it("clears skipOnboarding when redirecting", () => {
+    const req = {
+      body: {},
+      params: {},
+      query: {},
+      session: {
+        redirectTo: "/artworks",
+        skipOnboarding: true,
+      },
+    } as any
+
+    const res = {
+      redirect: jest.fn(),
+    } as any
+
+    redirectBack(req, res)
+
+    expect(res.redirect).toHaveBeenCalledWith("/artworks")
+    expect(req.session.redirectTo).toBeUndefined()
+    expect(req.session.skipOnboarding).toBeUndefined()
   })
 })

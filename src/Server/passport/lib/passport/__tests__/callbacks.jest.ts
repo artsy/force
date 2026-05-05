@@ -34,6 +34,10 @@ describe("passport callbacks", () => {
     mockRequestGravity.mockReset()
   })
 
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
   it("gets a user with an access token email/password/otp", done => {
     req.body = { otpRequired: true }
     mockRequestGravity.mockResolvedValue(
@@ -119,6 +123,101 @@ describe("passport callbacks", () => {
     expect(sendArgs.id_token).toEqual("id-token")
   })
 
+  it("links a facebook account to the current user", async () => {
+    req.get.mockReturnValue("chrome-foo")
+    req.user = { accessToken: "current-user-token", id: "user-id" }
+    const done = jest.fn()
+    mockRequestGravity.mockResolvedValue({})
+
+    await cbs.facebook(req, "facebook-token", "refresh-token", {}, done)
+
+    expect(mockRequestGravity).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: {
+          access_token: "current-user-token",
+          oauth_token: "facebook-token",
+        },
+        headers: { "User-Agent": "chrome-foo" },
+        method: "POST",
+        url: "http://apiz.artsy.net/api/v1/me/authentications/facebook",
+      }),
+    )
+    expect(done).toHaveBeenCalledWith(null, req.user)
+  })
+
+  it("links a google account to the current user", async () => {
+    req.get.mockReturnValue("chrome-foo")
+    req.user = { accessToken: "current-user-token", id: "user-id" }
+    const done = jest.fn()
+    mockRequestGravity.mockResolvedValue({})
+
+    await cbs.google(req, "google-token", "refresh-token", {}, done)
+
+    expect(mockRequestGravity).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: {
+          access_token: "current-user-token",
+          oauth_token: "google-token",
+        },
+        headers: { "User-Agent": "chrome-foo" },
+        method: "POST",
+        url: "http://apiz.artsy.net/api/v1/me/authentications/google",
+      }),
+    )
+    expect(done).toHaveBeenCalledWith(null, req.user)
+  })
+
+  it("links an apple account to the current user", async () => {
+    req.appleProfile = {
+      name: { firstName: "Some", lastName: "User" },
+    }
+    req.get.mockReturnValue("chrome-foo")
+    req.user = { accessToken: "current-user-token", id: "user-id" }
+    const done = jest.fn()
+    const decodedIdToken = {
+      email: "some-email@some.com",
+      sub: "some-apple-uid",
+    }
+    mockRequestGravity.mockResolvedValue({})
+
+    await cbs.apple(
+      req,
+      "id-token",
+      decodedIdToken,
+      "apple-token",
+      "refresh-token",
+      done,
+    )
+
+    expect(mockRequestGravity).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: {
+          access_token: "current-user-token",
+          apple_uid: "some-apple-uid",
+          email: "some-email@some.com",
+          id_token: "id-token",
+          name: "Some User",
+          oauth_token: "apple-token",
+        },
+        headers: { "User-Agent": "chrome-foo" },
+        method: "POST",
+        url: "http://apiz.artsy.net/api/v1/me/authentications/apple",
+      }),
+    )
+    expect(done).toHaveBeenCalledWith(null, req.user)
+  })
+
+  it("passes linking errors through with the current user", async () => {
+    const err = new Error("link failed")
+    req.user = { accessToken: "current-user-token", id: "user-id" }
+    const done = jest.fn()
+    mockRequestGravity.mockRejectedValue(err)
+
+    await cbs.google(req, "google-token", "refresh-token", {}, done)
+
+    expect(done).toHaveBeenCalledWith(err, req.user)
+  })
+
   it("passes the user agent through login", () => {
     req.body = { otpRequired: false }
     req.get.mockReturnValue("chrome-foo")
@@ -163,8 +262,79 @@ describe("passport callbacks", () => {
     )
   })
 
+  it("creates a user and retries facebook login when no account is linked", done => {
+    req.connection = { remoteAddress: "99.99.99.99" }
+    req.headers = {}
+    req.session = {
+      accepted_terms_of_service: true,
+      agreed_to_receive_emails: false,
+      sign_up_intent: "buy art",
+      sign_up_referer: "auction",
+    }
+    req.get.mockImplementation(header => {
+      if (header === "referer") {
+        return "https://www.artsy.net/sign_up"
+      }
+
+      return "chrome-foo"
+    })
+    mockRequestGravity
+      .mockRejectedValueOnce(
+        gravityError({
+          body: { error_description: "no account linked" },
+          status: 403,
+        }),
+      )
+      .mockResolvedValueOnce({})
+      .mockResolvedValueOnce(gravityResponse({ access_token: "access-token" }))
+
+    cbs.facebook(
+      req,
+      "facebook-token",
+      "refresh-token",
+      { displayName: "Some User" },
+      (err, user) => {
+        expect(err).toBeNull()
+        expect(user.accessToken).toEqual("access-token")
+        expect(req.artsyPassportSignedUp).toBe(true)
+        expect(mockRequestGravity.mock.calls[1][0]).toEqual(
+          expect.objectContaining({
+            body: expect.objectContaining({
+              accepted_terms_of_service: true,
+              agreed_to_receive_emails: false,
+              name: "Some User",
+              oauth_token: "facebook-token",
+              provider: "facebook",
+              sign_up_intent: "buy art",
+              sign_up_referer: "auction",
+            }),
+            headers: expect.objectContaining({
+              Referer: "https://www.artsy.net/sign_up",
+              "User-Agent": "chrome-foo",
+            }),
+            method: "POST",
+            url: "http://apiz.artsy.net/api/v1/user",
+          }),
+        )
+        expect(mockRequestGravity.mock.calls[2][0]).toEqual(
+          expect.objectContaining({
+            body: expect.objectContaining({
+              client_id: "artsy-id",
+              client_secret: "artsy-secret",
+              grant_type: "oauth_token",
+              oauth_provider: "facebook",
+              oauth_token: "facebook-token",
+            }),
+            url: "http://apiz.artsy.net/oauth2/access_token",
+          }),
+        )
+        done()
+      },
+    )
+  })
+
   it("returns a generic error instead of surfacing Gravity HTML response text", done => {
-    jest.spyOn(console, "warn").mockImplementation(() => {})
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => {})
     req.body = { otpRequired: false }
     mockRequestGravity.mockRejectedValue(
       gravityError(
@@ -178,6 +348,26 @@ describe("passport callbacks", () => {
       )
       expect(err.message).not.toContain("Gravity")
       expect(err.message).not.toContain("<!DOCTYPE html>")
+      warn.mockRestore()
+      done()
+    })
+  })
+
+  it("returns a generic error instead of surfacing Gravity HTML response text during social login", done => {
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => {})
+    mockRequestGravity.mockRejectedValue(
+      gravityError(
+        gravityResponse({}, 500, "<html><body>Server Error</body></html>"),
+      ),
+    )
+
+    cbs.google(req, "google-token", "refresh-token", {}, err => {
+      expect(err.message).toEqual(
+        "We couldn’t log you in. Please try again. (Error 500)",
+      )
+      expect(err.message).not.toContain("Gravity")
+      expect(err.message).not.toContain("<html>")
+      warn.mockRestore()
       done()
     })
   })

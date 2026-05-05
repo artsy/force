@@ -5,6 +5,7 @@ import { requestGravity } from "../../http"
 
 jest.mock("Server/passport/lib/options", () => ({
   loginPagePath: "/login",
+  signupPagePath: "/sign_up",
   settingsPagePath: "/settings",
   afterSignupPagePath: "/",
   APP_URL: "https://www.artsy.net",
@@ -157,6 +158,13 @@ describe("lifecycle", () => {
   })
 
   describe("#onLocalSignup", () => {
+    it("passes on after creating a user", async () => {
+      await lifecycle.onLocalSignup(req, res, next)
+
+      expect(req.artsyPassportSignedUp).toBe(true)
+      expect(next).toHaveBeenCalled()
+    })
+
     it("sends 500s as json for xhr requests", async () => {
       req.xhr = true
       err = {
@@ -195,6 +203,29 @@ describe("lifecycle", () => {
         }),
       )
     })
+
+    it("sends invalid email errors as json for xhr requests", async () => {
+      req.xhr = true
+      mockRequestGravity.mockRejectedValue(new Error("Email is invalid."))
+
+      await lifecycle.onLocalSignup(req, res, next)
+
+      expect(res.status).toHaveBeenCalledWith(403)
+      expect(send).toHaveBeenCalledWith({
+        error: "Email is invalid.",
+        success: false,
+      })
+    })
+
+    it("redirects invalid email errors for full-page signup requests", async () => {
+      mockRequestGravity.mockRejectedValue(new Error("Email is invalid."))
+
+      await lifecycle.onLocalSignup(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/sign_up?error=Email is invalid.",
+      )
+    })
   })
 
   describe("#beforeSocialAuth", () => {
@@ -214,9 +245,50 @@ describe("lifecycle", () => {
       lifecycle.beforeSocialAuth("facebook")(req, res, next)
       expect(req.session.skipOnboarding).toBe(true)
     })
+
+    it("sets social signup metadata on the session", () => {
+      req.query["signup-intent"] = "buy art"
+      req.query["signup-referer"] = "auction"
+      req.query.accepted_terms_of_service = true
+      req.query.agreed_to_receive_emails = false
+
+      lifecycle.beforeSocialAuth("facebook")(req, res, next)
+
+      expect(req.session).toMatchObject({
+        accepted_terms_of_service: true,
+        agreed_to_receive_emails: false,
+        sign_up_intent: "buy art",
+        sign_up_referer: "auction",
+      })
+    })
+
+    it("sets google auth scopes", () => {
+      lifecycle.beforeSocialAuth("google")(req, res, next)
+
+      expect(passport.authenticate).toHaveBeenCalledWith("google", {
+        scope: ["email", "profile"],
+      })
+    })
+
+    it("sets apple auth options", () => {
+      lifecycle.beforeSocialAuth("apple")(req, res, next)
+
+      expect(passport.authenticate).toHaveBeenCalledWith("apple", {})
+    })
   })
 
   describe("#afterSocialAuth", () => {
+    it("passes provider denials to the error handler", () => {
+      req.query.denied = true
+
+      lifecycle.afterSocialAuth("facebook")(req, res, next)
+
+      expect(next).toHaveBeenCalledWith(
+        expect.objectContaining({ message: "facebook denied" }),
+      )
+      expect(passport.authenticate).not.toHaveBeenCalledWith("facebook")
+    })
+
     it("doesn't redirect to / if skip-onboarding is set", () => {
       req.artsyPassportSignedUp = true
       req.session.skipOnboarding = true
@@ -303,6 +375,55 @@ describe("lifecycle", () => {
         "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&provider=facebook",
       )
     })
+
+    it("redirects previously linked provider errors to login settings guidance", () => {
+      passport.authenticate.mockReturnValueOnce((req, res, next) => {
+        const err = {
+          response: {
+            body: {
+              error: "User Already Exists",
+            },
+          },
+        }
+        next(err)
+      })
+
+      lifecycle.afterSocialAuth("google")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/login?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=google",
+      )
+    })
+
+    it("redirects provider accounts linked to another Artsy account", () => {
+      req.user = { accessToken: "token" }
+      passport.authenticate.mockReturnValueOnce((req, res, next) => {
+        const err = {
+          response: {
+            body: {
+              error: "Another Account Already Linked",
+            },
+          },
+        }
+        next(err)
+      })
+
+      lifecycle.afterSocialAuth("facebook")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/settings?error_code=PREVIOUSLY_LINKED&provider=facebook",
+      )
+    })
+
+    it("redirects back to settings after successful account linking", () => {
+      req.user = { accessToken: "token" }
+      passport.authenticate.mockReturnValueOnce((req, res, next) => next())
+
+      lifecycle.afterSocialAuth("facebook")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith("/settings")
+      expect(next).not.toHaveBeenCalled()
+    })
   })
 
   describe("#ensureLoggedInOnAfterSignupPage", () => {
@@ -374,6 +495,31 @@ describe("lifecycle", () => {
           "?redirect_uri=https%3A%2F%2Fwww.artsy.net%2Fartwork%2Fandy-warhol-skull%3Ffoo%3Dbar%26baz%3Dqux" +
           "&trust_token=foo-trust-token",
       )
+    })
+
+    it("redirects directly when the SSO trust token request fails", async () => {
+      req.user = { accessToken: "token" }
+      req.query["redirect-to"] = "/artwork/andy-warhol-skull"
+      mockRequestGravity.mockRejectedValue(new Error("fail"))
+
+      await lifecycle.ssoAndRedirectBack(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "https://www.artsy.net/artwork/andy-warhol-skull",
+      )
+      expect(req.session.redirectTo).toBeUndefined()
+      expect(req.session.skipOnboarding).toBeUndefined()
+    })
+
+    it("skips SSO for non-Artsy redirect domains", async () => {
+      options.APP_URL = "https://force.example"
+      req.user = { accessToken: "token" }
+      req.query["redirect-to"] = "/about"
+
+      await lifecycle.ssoAndRedirectBack(req, res, next)
+
+      expect(mockRequestGravity).not.toHaveBeenCalled()
+      expect(res.redirect).toHaveBeenCalledWith("/about")
     })
   })
 })
