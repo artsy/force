@@ -4255,6 +4255,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/isomorphic-fetch@npm:^0.0.39":
+  version: 0.0.39
+  resolution: "@types/isomorphic-fetch@npm:0.0.39"
+  checksum: 10c0/7adc0880a4a575ccd2c2066c00942a03d69eff02acd371da764e9258f18ca96367075fc87656993ed24a66f9de1ffe2fea4900cae7c4ee04e84b2358637d3f80
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.3
   resolution: "@types/istanbul-lib-coverage@npm:2.0.3"
@@ -8784,6 +8791,7 @@ __metadata:
     "@types/autosuggest-highlight": "npm:3.1.0"
     "@types/express": "npm:4.17.21"
     "@types/google-maps": "npm:^3.2.3"
+    "@types/isomorphic-fetch": "npm:^0.0.39"
     "@types/jest": "npm:27.0.2"
     "@types/loadable__component": "npm:5.13.1"
     "@types/lodash": "npm:4.14.111"
@@ -8845,6 +8853,7 @@ __metadata:
     http-shutdown: "npm:1.2.1"
     husky: "npm:3.0.5"
     ip: "npm:^1.1.9"
+    isomorphic-fetch: "npm:^3.0.0"
     jest: "npm:^29.5.0"
     jest-environment-jsdom: "npm:^29.5.0"
     jest-junit: "npm:^15.0.0"
