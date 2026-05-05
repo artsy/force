@@ -23,7 +23,7 @@ export function matchingMediaQueriesForUserAgent(
     return undefined
   } else {
     const supportsHover = device.touch ? "notHover" : "hover"
-    const onlyMatch: MatchingMediaQueries = device.resizable
+    const onlyMatch = device.resizable
       ? [
           supportsHover,
           // @ts-ignore
@@ -34,6 +34,6 @@ export function matchingMediaQueriesForUserAgent(
           findBreakpointAtWidth(device.minWidth),
           findBreakpointAtWidth(device.maxWidth),
         ]
-    return onlyMatch
+    return onlyMatch as MatchingMediaQueries
   }
 }

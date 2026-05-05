@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "moduleResolution": "bundler",
+    "noUnusedLocals": true,
+    "outDir": ".cache/tsgo",
+    "pretty": true,
+    "noErrorTruncation": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es2019",
+    "typeRoots": ["./src/Typings", "./node_modules/@types"],
+    "types": ["node", "jest", "express", "google-maps"],
+    "paths": {
+      "package.json": ["./package.json"],
+      "*": ["./src/*"]
+    },
+    "strict": false,
+    "strictNullChecks": true
+  },
+  "files": ["./src/Utils/Hooks/useAuthIntent/index.tsx"],
+  "include": ["./jest.envSetup.ts", "./src"],
+  "exclude": [
+    "tsconfig.json",
+    "tsconfig.native.json",
+    "src/**/__generated__/*.ts",
+    "src/Server/passport-local-with-otp",
+    "**/node_modules",
+    "**/.*/"
+  ]
+}
