@@ -13,7 +13,7 @@ import opts from "Server/passport/lib/options"
 import type { NextFunction } from "express"
 import { get, isFunction, isString } from "lodash"
 import passport from "passport"
-import { requestGravity, type GravityError } from "../http"
+import { type GravityError, requestGravity } from "../http"
 import forwardedFor from "./forwarded_for"
 import redirectBack from "./redirectBack"
 
@@ -146,6 +146,10 @@ export const onLocalSignup = async (
 
 type Provider = "facebook" | "apple" | "google"
 const UNKNOWN_AUTH_ERROR = "An unknown error occurred. Please try again."
+const SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR =
+  "Please log in with email and password to use two-factor authentication."
+const SOCIAL_LINKING_TWO_FACTOR_AUTH_ERROR =
+  "Social account linking is not available while two-factor authentication is enabled on your Artsy account."
 
 const redirectWithQuery = (
   path: string,
@@ -249,6 +253,30 @@ export const afterSocialAuth =
 
       if (err != null) {
         const message = extractError(err)
+
+        if (message.includes("missing two-factor authentication code")) {
+          return res.redirect(
+            redirectWithQuery(redirectPath, {
+              error: SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR,
+              error_code: "TWO_FACTOR_AUTHENTICATION_REQUIRED",
+              provider,
+            }),
+          )
+        }
+
+        if (
+          message.includes(
+            "Unable to link third-party authentication if account has Artsy two-factor authentication enabled",
+          )
+        ) {
+          return res.redirect(
+            redirectWithQuery(redirectPath, {
+              error: SOCIAL_LINKING_TWO_FACTOR_AUTH_ERROR,
+              error_code: "TWO_FACTOR_AUTHENTICATION_ENABLED",
+              provider,
+            }),
+          )
+        }
 
         // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
         console.warn(`Error authenticating with ${provider}: ${message}`)

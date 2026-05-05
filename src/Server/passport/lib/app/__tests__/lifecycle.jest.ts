@@ -250,8 +250,19 @@ describe("lifecycle", () => {
       warn.mockRestore()
     })
 
-    it("passes errors that may be buried in the error response", () => {
-      const warn = jest.spyOn(console, "warn").mockImplementation(() => {})
+    it("surfaces two-factor errors during social login", () => {
+      passport.authenticate.mockReturnValueOnce((req, res, next) => {
+        next(new Error("missing two-factor authentication code"))
+      })
+
+      lifecycle.afterSocialAuth("facebook")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/login?error=Please+log+in+with+email+and+password+to+use+two-factor+authentication.&error_code=TWO_FACTOR_AUTHENTICATION_REQUIRED&provider=facebook",
+      )
+    })
+
+    it("surfaces two-factor errors that may be buried in the error response", () => {
       req.user = { accessToken: "token" }
       passport.authenticate.mockReturnValueOnce((req, res, next) => {
         const err = {
@@ -269,12 +280,8 @@ describe("lifecycle", () => {
       lifecycle.afterSocialAuth("facebook")(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(
-        "/settings?error=An+unknown+error+occurred.+Please+try+again.&error_code=UNKNOWN",
+        "/settings?error=Social+account+linking+is+not+available+while+two-factor+authentication+is+enabled+on+your+Artsy+account.&error_code=TWO_FACTOR_AUTHENTICATION_ENABLED&provider=facebook",
       )
-      expect(warn).toHaveBeenCalledWith(
-        "Error authenticating with facebook: Unable to link third-party authentication if account has Artsy two-factor authentication enabled",
-      )
-      warn.mockRestore()
     })
 
     it("encodes provider error redirect params", () => {
