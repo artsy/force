@@ -8,11 +8,19 @@ export interface Order2DeliveryOptionsCompletedViewProps {
   label: string
   timeEstimatePrefix: string | null
   timeEstimateRange: string | null
+  shippingOrigin?: string | null
+  shippingRadius?: string | null
 }
 
 export const Order2DeliveryOptionsCompletedView: React.FC<
   Order2DeliveryOptionsCompletedViewProps
-> = ({ label, timeEstimatePrefix, timeEstimateRange }) => {
+> = ({
+  label,
+  timeEstimatePrefix,
+  timeEstimateRange,
+  shippingOrigin,
+  shippingRadius,
+}) => {
   const { editDeliveryOption, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = useCallback(() => {
@@ -29,6 +37,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           <Spacer x={1} />
           <SectionHeading>Shipping method</SectionHeading>
         </Flex>
+
         <Clickable
           textDecoration="underline"
           cursor="pointer"
@@ -41,10 +50,24 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           </Text>
         </Clickable>
       </Flex>
+
       <Box ml="30px" mt={1}>
+        {shippingOrigin && (
+          <Text variant="xs">Ships from {shippingOrigin}</Text>
+        )}
+
+        {shippingRadius === "international" && (
+          <Text variant="xs">
+            Additional processing times may vary by destination
+          </Text>
+        )}
+
+        <Spacer y={2} />
+
         <Text variant="sm-display" color="mono100">
           {label}
         </Text>
+
         {timeEstimatePrefix && timeEstimateRange && (
           <Text variant="sm" color="mono60">
             {timeEstimatePrefix} <strong>{timeEstimateRange}</strong>

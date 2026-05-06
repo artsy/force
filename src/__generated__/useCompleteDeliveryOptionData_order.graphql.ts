@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c79f2af678f90d012b858f84aef53a33>>
+ * @generated SignedSource<<dd7cc233231a5ffe1852bad5ae7f7c87>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,8 @@ export type useCompleteDeliveryOptionData_order$data = {
     } | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
+  readonly shippingOrigin: string | null | undefined;
+  readonly shippingRadius: string | null | undefined;
   readonly " $fragmentType": "useCompleteDeliveryOptionData_order";
 };
 export type useCompleteDeliveryOptionData_order$key = {
@@ -31,6 +33,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "useCompleteDeliveryOptionData_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingRadius",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -72,6 +88,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3c999c9f49992c960e82807866362371";
+(node as any).hash = "0614770d6cabe86efd23ea14e289b4aa";
 
 export default node;
