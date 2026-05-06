@@ -20,6 +20,8 @@ if (process.env.NODE_ENV !== "test") {
 
 export const PORT: any = 4000
 
+export const ACCESS_TOKEN_REFRESH_ENABLED: any = false
+export const ACCESS_TOKEN_REFRESH_THRESHOLD_SECONDS: any = 604800
 export const ACTIVE_BIDS_POLL_INTERVAL: any = 5000
 export const ADMIN_URL: any = "https://tools.artsy.net"
 export const ALLOWED_VANITY_ASSETS: any = "videos/*|vrview/*|hls-videos/*"

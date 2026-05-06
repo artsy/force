@@ -43,6 +43,7 @@ import { hstsMiddleware } from "./Server/middleware/hsts"
 import { ipFilter } from "./Server/middleware/ipFilter"
 import { localsMiddleware } from "./Server/middleware/locals"
 import { morganMiddleware } from "./Server/middleware/morgan"
+import { refreshAccessTokenMiddleware } from "./Server/middleware/refreshAccessTokenMiddleware"
 import { sameOriginMiddleware } from "./Server/middleware/sameOrigin"
 import { serverTimingHeaders } from "./Server/middleware/serverTimingHeaders"
 import { sessionMiddleware } from "./Server/middleware/session"
@@ -137,6 +138,9 @@ export function initializeMiddleware(app) {
       ],
     }),
   )
+
+  // Refresh near-expiry access tokens before downstream code uses them
+  app.use(refreshAccessTokenMiddleware)
 
   // Require a user for these routes
   app.use(userRequiredMiddleware)
