@@ -255,6 +255,12 @@ const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
           {prefix} <strong>{timeRange}</strong>
         </Text>
       )}
+      {option.type === "ARTSY_WHITE_GLOVE" && (
+        <Text variant="sm" color="mono60">
+          Includes custom packing, transportation on a fine art shuttle, and
+          in-home delivery
+        </Text>
+      )}
     </Flex>
   )
 }
