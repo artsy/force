@@ -1,4 +1,4 @@
-import { Elements } from "@stripe/react-stripe-js"
+import { Elements, PaymentElement } from "@stripe/react-stripe-js"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -1702,6 +1702,64 @@ describe("Order2PaymentForm", () => {
       await waitFor(() => {
         expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
+    })
+  })
+
+  describe("default payment selection", () => {
+    it("auto-selects the first saved payment method without user interaction", async () => {
+      const savedCards = [
+        {
+          __typename: "CreditCard",
+          id: "card-1",
+          internalID: "card-1",
+          brand: "Visa",
+          last4: "1234",
+          lastDigits: "1234",
+          expirationMonth: 12,
+          expirationYear: 2025,
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+        }),
+      })
+
+      await waitForPaymentElement()
+
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
+        setOrderPayment: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: { paymentMethod: "CREDIT_CARD" },
+          },
+        },
+      })
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+              paymentMethod: "CREDIT_CARD",
+              paymentMethodId: "card-1",
+            },
+          },
+        })
+      })
+    })
+
+    it("opens the Stripe payment element when there are no saved payments", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      const calls = (PaymentElement as jest.Mock).mock.calls
+      const lastCallOptions = calls[calls.length - 1][0].options
+      expect(lastCallOptions.layout.defaultCollapsed).toBe(false)
     })
   })
 

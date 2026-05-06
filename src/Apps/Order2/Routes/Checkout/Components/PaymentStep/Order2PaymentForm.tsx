@@ -302,6 +302,9 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       (hasSavedCreditCards || hasSavedBankAccounts)
     ) {
       setSelectedPaymentMethod("saved")
+      setSelectedSavedPaymentMethod(
+        [...savedCreditCards, ...allowedSavedBankAccounts][0] ?? null,
+      )
 
       const savedPaymentTypes = [
         hasSavedCreditCards && "CREDIT_CARD",
@@ -419,7 +422,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     layout: {
       type: "accordion",
       spacedAccordionItems: true,
-      defaultCollapsed: true,
+      defaultCollapsed: hasSavedCreditCards || hasSavedBankAccounts,
       radios: false,
     },
     wallets: {
