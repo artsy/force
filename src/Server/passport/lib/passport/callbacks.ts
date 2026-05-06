@@ -2,9 +2,9 @@ import artsyXapp from "@artsy/xapp"
 import ip from "ip"
 import extend from "lodash/extend"
 import {
-  requestGravity,
   type GravityError,
   type GravityResponse,
+  requestGravity,
 } from "../http"
 import type { OAuthProfile, PassportDone, PassportRequest } from "../types"
 
@@ -150,6 +150,52 @@ export const facebook = (
   }
 }
 
+export const googleOneTap = (
+  req: PassportRequest,
+  profile: OAuthProfile,
+  done?: PassportDone,
+) => {
+  console.log("[Google One Tap] data:", {
+    req,
+    profile,
+    credential: req.body.credential,
+  })
+
+  requestGravity({
+    body: {
+      client_id: opts.ARTSY_ID,
+      client_secret: opts.ARTSY_SECRET,
+      grant_type: "jwt",
+      jwt: req.body.credential,
+      oauth_provider: "google",
+    },
+    headers: {
+      "User-Agent": req.get("user-agent"),
+      ...(req && req.connection && req.connection.remoteAddress
+        ? { "X-Forwarded-For": resolveProxies(req) }
+        : {}),
+    },
+    method: "POST",
+    url: `${opts.ARTSY_URL}/oauth2/access_token`,
+  })
+    .then(response => {
+      console.log("[OneTap] - [googleOneTap] response:", response)
+      onAccessToken(req, done, {
+        jwt: req.body.credential,
+        provider: "google",
+        name: profile != null ? profile.displayName : undefined,
+      })(null, response)
+    })
+    .catch((err: GravityError) => {
+      console.log("[OneTap] - [googleOneTap] err:", err)
+      onAccessToken(req, done, {
+        jwt: req.body.credential,
+        provider: "google",
+        name: profile != null ? profile.displayName : undefined,
+      })(err, err.response)
+    })
+}
+
 export const google = (
   req: PassportRequest,
   accessToken: string,
@@ -290,6 +336,7 @@ const onAccessToken =
     // error message.
     let accessTokenError = err
     let msg: string | undefined
+
     if (
       (accessTokenError && !(res != null ? res.body : undefined)) ||
       (!accessTokenError && Number(res != null ? res.status : undefined) > 400)
@@ -328,6 +375,10 @@ const onAccessToken =
       // /user API. Then attempt to fetch the access token again from Gravity and
       // recur back into this onAcccessToken callback.
     } else if (msg!.match("no account linked") != null) {
+      console.log(
+        "[OneTap] - No account linked, creating user in Gravity with params:",
+        params,
+      )
       if ((req != null ? req.session : undefined) != null && params != null) {
         const {
           sign_up_intent,
@@ -367,6 +418,8 @@ const onAccessToken =
             })
           }
 
+          console.log("[OneTap] - [requestGravity] auth_params:", auth_params)
+
           requestGravity({
             body: extend(auth_params, {
               client_id: opts.ARTSY_ID,
@@ -381,10 +434,14 @@ const onAccessToken =
             method: "POST",
             url: `${opts.ARTSY_URL}/oauth2/access_token`,
           })
-            .then(response => onAccessToken(req, done, params!)(null, response))
-            .catch((err: GravityError) =>
-              onAccessToken(req, done, params!)(err, err.response),
-            )
+            .then(response => {
+              console.log("[OneTap] - [requestGravity] response:", response)
+              onAccessToken(req, done, params!)(null, response)
+            })
+            .catch((err: GravityError) => {
+              console.log("[OneTap] - [requestGravity] err:", err)
+              onAccessToken(req, done, params!)(err, err.response)
+            })
         })
         .catch((err: Error) => done!(err))
       // Uncaught Exception.

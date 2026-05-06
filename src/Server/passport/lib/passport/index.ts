@@ -4,7 +4,7 @@ import { Strategy as FacebookStrategy } from "passport-facebook"
 import { Strategy as GoogleStrategy } from "passport-google-oauth20"
 import { GoogleOneTapStrategy } from "passport-google-one-tap"
 import opts from "../options"
-import { apple, facebook, google, local } from "./callbacks"
+import { apple, facebook, google, googleOneTap, local } from "./callbacks"
 import { deserialize, serialize } from "./serializers"
 
 const LocalWithOtpStrategy =
@@ -64,10 +64,7 @@ const setupPassport = () => {
           verifyCsrfToken: false,
           passReqToCallback: true,
         },
-        (req, profile, done) => {
-          console.log("[OneTap] profile:", profile)
-          console.log("[OneTap] id_token:", req.body.credential)
-        },
+        googleOneTap,
       ),
     )
   }
