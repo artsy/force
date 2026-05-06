@@ -116,32 +116,42 @@ export const onLocalSignup = async (
     return next()
   } catch (error) {
     const err = error as GravityError
-    let msg = ""
-    if (err && err.message === "Email is invalid.") {
-      msg = "Email is invalid."
+    const msg = signupErrorMessage(err)
+
+    if (msg === "Email is invalid.") {
       if (req.xhr) {
         return res.status(403).send({ success: false, error: msg })
       } else {
         return res.redirect(`${opts.signupPagePath}?error=${msg}`)
       }
     } else if (err && req.xhr) {
-      if (err && err.response && err.response.body && err.response.body.error) {
-        msg = err.response.body.error
-      } else if (
-        err &&
-        err.response &&
-        err.response.body &&
-        err.response.body.message
-      ) {
-        msg = err.response.body.message
-      } else if (err.message) {
-        msg = err.message
-      }
       return res.status(500).send({ success: false, error: msg })
     } else if (err) {
       return next(new Error(err as any))
     }
   }
+}
+
+const signupErrorMessage = (err: GravityError) => {
+  const { body } = err.response ?? {}
+
+  if (isString(body?.error)) {
+    return body.error
+  }
+
+  if (isString(body?.message)) {
+    return body.message
+  }
+
+  if (isString(body?.error_description)) {
+    return body.error_description
+  }
+
+  if (isString(err.message)) {
+    return err.message
+  }
+
+  return ""
 }
 
 type Provider = "facebook" | "apple" | "google"

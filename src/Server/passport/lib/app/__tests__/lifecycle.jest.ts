@@ -206,7 +206,13 @@ describe("lifecycle", () => {
 
     it("sends invalid email errors as json for xhr requests", async () => {
       req.xhr = true
-      mockRequestGravity.mockRejectedValue(new Error("Email is invalid."))
+      mockRequestGravity.mockRejectedValue({
+        message: "Bad Request",
+        response: {
+          body: { error: "Email is invalid." },
+          status: 400,
+        },
+      })
 
       await lifecycle.onLocalSignup(req, res, next)
 
@@ -218,7 +224,13 @@ describe("lifecycle", () => {
     })
 
     it("redirects invalid email errors for full-page signup requests", async () => {
-      mockRequestGravity.mockRejectedValue(new Error("Email is invalid."))
+      mockRequestGravity.mockRejectedValue({
+        message: "Bad Request",
+        response: {
+          body: { error: "Email is invalid." },
+          status: 400,
+        },
+      })
 
       await lifecycle.onLocalSignup(req, res, next)
 
