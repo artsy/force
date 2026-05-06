@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18f745fd9d96d52519707dba55133033>>
+ * @generated SignedSource<<1e953a96ee898840a5297868c5a9687a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -311,7 +311,14 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v2/*: any*/)
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "currencyCode",
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   },
@@ -321,6 +328,13 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "selected",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "shippingQuoteId",
                     "storageKey": null
                   }
                 ],
@@ -351,7 +365,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3de76d96ee215e5bddd099816d75b113",
+    "cacheID": "9f3d05caf2c71557493790d11a8b86c5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -395,6 +409,12 @@ return {
           "type": "FulfillmentOption"
         },
         "me.order.fulfillmentOptions.amount": (v7/*: any*/),
+        "me.order.fulfillmentOptions.amount.currencyCode": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
         "me.order.fulfillmentOptions.amount.display": (v6/*: any*/),
         "me.order.fulfillmentOptions.amount.minor": (v8/*: any*/),
         "me.order.fulfillmentOptions.selected": {
@@ -403,6 +423,7 @@ return {
           "plural": false,
           "type": "Boolean"
         },
+        "me.order.fulfillmentOptions.shippingQuoteId": (v6/*: any*/),
         "me.order.fulfillmentOptions.type": (v9/*: any*/),
         "me.order.id": (v5/*: any*/),
         "me.order.internalID": (v5/*: any*/),
@@ -438,7 +459,7 @@ return {
     },
     "name": "Order2DeliveryOptionsStepTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsStepTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n  shippingRadius\n}\n\nfragment Order2DeliveryOptionsStep_order on Order {\n  ...useCompleteDeliveryOptionData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...Order2DeliveryOptionsForm_order\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n    amount {\n      display\n    }\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
+    "text": "query Order2DeliveryOptionsStepTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n  shippingRadius\n}\n\nfragment Order2DeliveryOptionsStep_order on Order {\n  ...useCompleteDeliveryOptionData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...Order2DeliveryOptionsForm_order\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n    amount {\n      display\n    }\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
   }
 };
 })();

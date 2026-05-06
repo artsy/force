@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79202d19c0ac815410dcd7e7182a43e0>>
+ * @generated SignedSource<<90353e21ef309562de395dabcb504b38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,12 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2DeliveryOptionsForm_order$data = {
   readonly fulfillmentOptions: ReadonlyArray<{
     readonly amount: {
+      readonly currencyCode: string;
       readonly display: string | null | undefined;
       readonly minor: any;
     } | null | undefined;
     readonly selected: boolean | null | undefined;
+    readonly shippingQuoteId: string | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly internalID: string;
@@ -89,6 +91,13 @@ return {
               "kind": "ScalarField",
               "name": "minor",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "currencyCode",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -99,6 +108,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "selected",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "shippingQuoteId",
           "storageKey": null
         }
       ],
@@ -136,6 +152,6 @@ return {
 };
 })();
 
-(node as any).hash = "1af5ba5214fee545abe5eadbc603a4bb";
+(node as any).hash = "b0fc0d71c2e60b9e517148ea539ef1d2";
 
 export default node;

@@ -4,8 +4,6 @@ import {
   Button,
   Clickable,
   Flex,
-  Radio,
-  RadioGroup,
   Skeleton,
   SkeletonBox,
   Spacer,
@@ -13,33 +11,32 @@ import {
   Tooltip,
 } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
+  ARTA_FULFILLMENT_TYPES,
   SELECTABLE_TYPES,
-  deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { MultipleShippingOptionsForm } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/MultipleShippingOptionsForm"
+import { SingleShippingOption } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/SingleShippingOption"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
 import { SHIPPING_AND_RETURNS_FAQS_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
-import type {
-  Order2DeliveryOptionsForm_order$data,
-  Order2DeliveryOptionsForm_order$key,
-} from "__generated__/Order2DeliveryOptionsForm_order.graphql"
-import { useCallback, useState } from "react"
+import type { Order2DeliveryOptionsForm_order$key } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
+import { useCallback, useEffect, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
   order: Order2DeliveryOptionsForm_order$key
   refreshingOptions?: boolean
 }
-
-type DeliveryOption =
-  Order2DeliveryOptionsForm_order$data["fulfillmentOptions"][number]
 
 export const Order2DeliveryOptionsForm: React.FC<
   Order2DeliveryOptionsFormProps
@@ -50,6 +47,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     completeStep,
     messages,
     isFulfillmentDetailsSaving,
+    steps,
   } = useCheckoutContext()
   const { selectDeliveryOption } = useSelectDeliveryOption()
   const [isDeliveryOptionSaving, setIsDeliveryOptionSaving] = useState(false)
@@ -75,6 +73,44 @@ export const Order2DeliveryOptionsForm: React.FC<
   const hasDeliveryOption =
     deliveryOptions.length > 0 &&
     (!!orderData.selectedFulfillmentOption || onlyShippingTBD)
+
+  const deliveryOptionsStep = steps?.find(
+    step => step.name === CheckoutStepName.DELIVERY_OPTION,
+  )
+
+  const artaOptions = fulfillmentOptions.filter(option =>
+    ARTA_FULFILLMENT_TYPES.includes(option.type),
+  )
+  // Serialize to a string so useEffect compares by stable value, not array reference
+  const artaQuotesJson =
+    artaOptions.length === 0
+      ? null
+      : JSON.stringify(
+          artaOptions.map(option => {
+            const timeEstimate = deliveryOptionTimeEstimate(option.type)
+            const timeline = timeEstimate
+              ? [timeEstimate[0], timeEstimate[1]].filter(Boolean).join(" ")
+              : ""
+            return {
+              id: option.shippingQuoteId!,
+              type: "arta",
+              subtype: option.type.replace("ARTSY_", "").toLowerCase(),
+              price_minor: option.amount?.minor ?? 0,
+              price_currency: option.amount?.currencyCode ?? "USD",
+              timeline,
+            }
+          }),
+        )
+
+  useEffect(() => {
+    if (
+      deliveryOptionsStep?.state !== CheckoutStepState.ACTIVE ||
+      !artaQuotesJson
+    ) {
+      return
+    }
+    checkoutTracking.shippingQuoteViewed(JSON.parse(artaQuotesJson))
+  }, [artaQuotesJson, checkoutTracking, deliveryOptionsStep?.state])
 
   const handleContinue = useCallback(() => {
     checkoutTracking.clickedOrderProgression(
@@ -214,9 +250,11 @@ const FRAGMENT = graphql`
       amount {
         display
         minor
+        currencyCode
       }
       type
       selected
+      shippingQuoteId
     }
     selectedFulfillmentOption {
       type
@@ -225,99 +263,3 @@ const FRAGMENT = graphql`
     shippingRadius
   }
 `
-
-interface SingleShippingOptionProps {
-  option: DeliveryOption
-}
-
-const SingleShippingOption = ({ option }: SingleShippingOptionProps) => {
-  const label = deliveryOptionLabel(option.type, option.amount?.minor)
-  const timeEstimate = deliveryOptionTimeEstimate(option.type)
-  const [prefix, timeRange] = timeEstimate || []
-
-  return (
-    <Flex flexDirection="column">
-      <Flex justifyContent="space-between">
-        <Text variant="sm" color="mono100">
-          {label}
-        </Text>
-        <Text variant="sm" color="mono100">
-          {option.amount?.display}
-        </Text>
-      </Flex>
-      {timeEstimate && (
-        <Text variant="sm" color="mono60">
-          {prefix} <strong>{timeRange}</strong>
-        </Text>
-      )}
-    </Flex>
-  )
-}
-
-interface MultipleShippingOptionsFormProps {
-  options: DeliveryOption[]
-  onSelectOption: (option: DeliveryOption) => Promise<boolean>
-}
-
-const MultipleShippingOptionsForm = ({
-  options,
-  onSelectOption,
-}: MultipleShippingOptionsFormProps) => {
-  const defaultOption = options.find(option => option.selected) || options[0]
-  const [selectedOption, setSelectedOption] = useState(defaultOption)
-
-  return (
-    <RadioGroup
-      flexDirection="column"
-      defaultValue={defaultOption}
-      onSelect={async option => {
-        const previous = selectedOption
-        setSelectedOption(option)
-        const success = await onSelectOption(option)
-        if (!success) {
-          setSelectedOption(previous)
-        }
-      }}
-    >
-      {options.map(option => {
-        const label = deliveryOptionLabel(option.type, option.amount?.minor)
-        const timeEstimate = deliveryOptionTimeEstimate(option.type)
-        const [prefix, timeRange] = timeEstimate || []
-        const isSelected = selectedOption?.type === option.type
-
-        return (
-          <Radio
-            key={option.type}
-            flex={1}
-            backgroundColor={isSelected ? "mono5" : "mono0"}
-            p={1}
-            label={
-              <Flex justifyContent="space-between" width="100%">
-                <Text variant="sm-display">{label}</Text>
-                <Text variant="sm">{option.amount?.display}</Text>
-              </Flex>
-            }
-            value={option}
-          >
-            <Flex width="100%">
-              <Flex flexDirection="column">
-                {timeEstimate && (
-                  <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
-                    {prefix} <strong>{timeRange}</strong>
-                  </Text>
-                )}
-
-                {option.type === "ARTSY_WHITE_GLOVE" && isSelected && (
-                  <Text variant="sm" color={isSelected ? "mono100" : "mono60"}>
-                    Includes custom packing, transportation on a fine art
-                    shuttle, and in-home delivery
-                  </Text>
-                )}
-              </Flex>
-            </Flex>
-          </Radio>
-        )
-      })}
-    </RadioGroup>
-  )
-}
