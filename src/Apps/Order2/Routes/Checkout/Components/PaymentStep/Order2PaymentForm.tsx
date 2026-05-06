@@ -17,6 +17,7 @@ import {
   BankAccountBalanceCheckResult,
   Order2PollBankAccountBalanceQueryRenderer,
 } from "Apps/Order2/Components/Order2PollBankAccountBalance"
+import { getLastUsedSavedPaymentMethodId } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -235,6 +236,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     messages,
     setSectionErrorMessage,
     steps,
+    setLastUsedPaymentMethodId,
   } = useCheckoutContext()
 
   const paymentError = messages[CheckoutStepName.PAYMENT]?.error
@@ -302,9 +304,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       (hasSavedCreditCards || hasSavedBankAccounts)
     ) {
       setSelectedPaymentMethod("saved")
-      setSelectedSavedPaymentMethod(
-        [...savedCreditCards, ...allowedSavedBankAccounts][0] ?? null,
-      )
+      const allSavedMethods = [...savedCreditCards, ...allowedSavedBankAccounts]
+      const lastUsedId = getLastUsedSavedPaymentMethodId()
+      const lastUsed = lastUsedId
+        ? (allSavedMethods.find(m => m.internalID === lastUsedId) ?? null)
+        : null
+      setSelectedSavedPaymentMethod(lastUsed ?? allSavedMethods[0] ?? null)
 
       const savedPaymentTypes = [
         hasSavedCreditCards && "CREDIT_CARD",
@@ -727,6 +732,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
 
+        setLastUsedPaymentMethodId(selectedSavedPaymentMethod.internalID)
         setConfirmationToken({ confirmationToken: null })
 
         // For saved ACH bank accounts, start balance check

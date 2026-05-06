@@ -28,6 +28,7 @@ import { graphql, useFragment } from "react-relay"
 const logger = createLogger("Order2CheckoutContext.tsx")
 
 const CHECKOUT_MODE_STORAGE_KEY = "checkout_mode"
+const LAST_USED_PAYMENT_ID_KEY = "order2_last_used_payment_id"
 
 type CheckoutMode = "standard" | "express"
 
@@ -117,6 +118,8 @@ export interface Order2CheckoutModel {
   /** True once any eager pre-load address auto-save has completed (or is not needed). */
   isInitialAutoSaveComplete: boolean
   setInitialAutoSaveComplete: Action<this>
+  /** Persists the last-used saved credit card ID. Only relevant for saved card payments. */
+  setLastUsedPaymentMethodId: Action<this, string>
 }
 
 export const Order2CheckoutContext: ReturnType<
@@ -258,6 +261,10 @@ export const Order2CheckoutContext: ReturnType<
   setInitialAutoSaveComplete: action(state => {
     state.isInitialAutoSaveComplete = true
   }),
+
+  setLastUsedPaymentMethodId: action((_state, id) => {
+    setStorageValue(LAST_USED_PAYMENT_ID_KEY, id)
+  }),
 }))
 
 interface Order2CheckoutContextProviderProps {
@@ -374,7 +381,6 @@ const initialStateForOrder = (
     CHECKOUT_MODE_STORAGE_KEY,
     "standard",
   )
-
   // Check if fulfillment details step is complete
   const fulfillmentDetailsStep = steps.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
@@ -416,4 +422,10 @@ const setStorageValue = (key: string, value: string): void => {
   if (typeof window !== "undefined") {
     localStorage.setItem(key, value)
   }
+}
+
+/** Returns the ID of the last-used saved credit card, or null if none. */
+export const getLastUsedSavedPaymentMethodId = (): string | null => {
+  if (typeof window === "undefined") return null
+  return localStorage.getItem(LAST_USED_PAYMENT_ID_KEY)
 }
