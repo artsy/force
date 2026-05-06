@@ -2,15 +2,12 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { Button, Flex, Spacer } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
-import { useState, useEffect } from "react"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const NavBarLoggedOutActions = () => {
   const { showAuthDialog } = useAuthDialog()
-  const [currentPath, setCurrentPath] = useState("/")
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname)
-  }, [])
+  const { match } = useRouter()
+  const currentPath = match.location.pathname
 
   return (
     <Flex alignItems="center">
