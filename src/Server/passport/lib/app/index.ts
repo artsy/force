@@ -2,6 +2,7 @@ import express from "express"
 import type { ErrorRequestHandler, RequestHandler } from "express"
 import passport from "passport"
 import opts from "../options"
+import { setCampaign, trackLogin, trackSignup } from "./analytics"
 import {
   afterSocialAuth,
   beforeSocialAuth,
@@ -11,7 +12,6 @@ import {
   ssoAndRedirectBack,
 } from "./lifecycle"
 import addLocals from "./locals"
-import { setCampaign, trackLogin, trackSignup } from "./analytics"
 import { denyBadLogoutLinks, logout } from "./logout"
 import { headerLogin, trustTokenLogin } from "./token_login"
 
@@ -85,6 +85,14 @@ const setupApp = () => {
     opts.googleCallbackPath,
     middleware(afterSocialAuth("google")),
     middleware(trackSignup("google")),
+    middleware(ssoAndRedirectBack),
+  )
+
+  // Google One Tap
+  app.post(
+    opts.googleOneTapCallbackPath,
+    middleware(afterSocialAuth("google_one_tap")),
+    middleware(trackSignup("google_one_tap")),
     middleware(ssoAndRedirectBack),
   )
 
