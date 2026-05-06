@@ -2,21 +2,23 @@
 const serializers = require("../serializers")
 const { serialize, deserialize } = serializers
 
-import options from "Server/passport/lib/options"
-import passport from "passport"
-import request from "superagent"
+import { requestGravity } from "../../http"
 
-jest.mock("superagent")
+jest.mock("../../http")
+
+const mockRequestGravity = requestGravity as jest.Mock
 
 /* eslint-disable jest/no-done-callback */
 
 describe("#serialize", () => {
+  beforeEach(() => {
+    mockRequestGravity.mockReset()
+  })
+
   it("only stores select data in the session", done => {
-    const setMock = jest.fn()
-    setMock
+    mockRequestGravity
       .mockResolvedValueOnce({ body: { id: "craig", foo: "baz" } })
       .mockResolvedValueOnce({ body: [{ provider: "facebook" }] })
-    request.get = jest.fn().mockReturnValue({ set: setMock })
 
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, (_err, data) => {
@@ -27,11 +29,9 @@ describe("#serialize", () => {
   })
 
   it("add authentications", done => {
-    const setMock = jest.fn()
-    setMock
+    mockRequestGravity
       .mockResolvedValueOnce({ body: { id: "craig", foo: "baz" } })
       .mockResolvedValueOnce({ body: [{ provider: "facebook" }] })
-    request.get = jest.fn().mockReturnValue({ set: setMock })
 
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, (_err, data) => {
@@ -41,11 +41,9 @@ describe("#serialize", () => {
   })
 
   it("works when there's an error from Gravity", done => {
-    const setMock = jest.fn()
-    setMock
+    mockRequestGravity
       .mockResolvedValueOnce({ body: { id: "craig", foo: "baz" } })
       .mockRejectedValueOnce(new Error("fail"))
-    request.get = jest.fn().mockReturnValue({ set: setMock })
 
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, err => {
@@ -55,16 +53,14 @@ describe("#serialize", () => {
   })
 
   it("glues the user onto the request", done => {
-    const setMock = jest.fn()
-    setMock
+    mockRequestGravity
       .mockResolvedValueOnce({ body: { id: "craig", foo: "baz" } })
       .mockResolvedValueOnce({ body: [{ provider: "facebook" }] })
-    request.get = jest.fn().mockReturnValue({ set: setMock })
 
     const user = { id: "craig", foo: "baz", bam: "bop" }
     const req = { user: null }
     serialize(req, user, (_err, _data) => {
-      expect(req.user.id).toEqual(user.id)
+      expect((req.user as any).id).toEqual(user.id)
       done()
     })
   })

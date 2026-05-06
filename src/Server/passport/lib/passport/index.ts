@@ -1,18 +1,18 @@
+import passport from "passport"
+import AppleStrategy from "passport-apple"
+import { Strategy as FacebookStrategy } from "passport-facebook"
+import { Strategy as GoogleStrategy } from "passport-google-oauth20"
+import opts from "../options"
+import { apple, facebook, google, local } from "./callbacks"
+import { deserialize, serialize } from "./serializers"
+
+const LocalWithOtpStrategy =
+  require("Server/passport-local-with-otp/lib").Strategy
+
 //
 // Runs Passport.js setup code including mounting strategies, serializers, etc.
 //
-
-const passport = require("passport")
-const FacebookStrategy = require("passport-facebook").Strategy
-const AppleStrategy = require("passport-apple")
-const GoogleStrategy = require("passport-google-oauth20").Strategy
-const LocalWithOtpStrategy =
-  require("Server/passport-local-with-otp/lib").Strategy
-const callbacks = require("./callbacks")
-const { serialize, deserialize } = require("./serializers")
-const opts = require("../options")
-
-module.exports = () => {
+const setupPassport = () => {
   passport.serializeUser(serialize)
   passport.deserializeUser(deserialize)
   passport.use(
@@ -22,7 +22,7 @@ module.exports = () => {
         otpField: "otp_attempt",
         passReqToCallback: true,
       },
-      callbacks.local,
+      local,
     ),
   )
 
@@ -36,7 +36,7 @@ module.exports = () => {
           passReqToCallback: true,
           callbackURL: `${opts.APP_URL}${opts.facebookCallbackPath}`,
         },
-        callbacks.facebook,
+        facebook,
       ),
     )
   }
@@ -52,7 +52,7 @@ module.exports = () => {
           callbackURL: `${opts.APP_URL}${opts.googleCallbackPath}`,
           scope: ["profile", "email"],
         },
-        callbacks.google,
+        google,
       ),
     )
   }
@@ -74,8 +74,12 @@ module.exports = () => {
           callbackURL: `${opts.APP_URL}${opts.appleCallbackPath}`,
           scope: ["name", "email"],
         },
-        callbacks.apple,
+        apple,
       ),
     )
   }
 }
+
+export default setupPassport
+
+module.exports = setupPassport
