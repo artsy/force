@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { INTERNATIONAL_SHIPPING_WARNING } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCallback } from "react"
 
@@ -57,9 +58,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
         )}
 
         {shippingRadius === "international" && (
-          <Text variant="xs">
-            Additional processing times may vary by destination
-          </Text>
+          <Text variant="xs">{INTERNATIONAL_SHIPPING_WARNING}</Text>
         )}
 
         <Spacer y={2} />

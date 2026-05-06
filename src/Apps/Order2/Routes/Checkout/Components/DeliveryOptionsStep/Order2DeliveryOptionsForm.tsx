@@ -18,6 +18,7 @@ import {
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import {
+  INTERNATIONAL_SHIPPING_WARNING,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
@@ -158,9 +159,7 @@ export const Order2DeliveryOptionsForm: React.FC<
                 )}
 
                 {shippingRadius === "international" && (
-                  <Text variant="xs">
-                    Additional processing times may vary by destination
-                  </Text>
+                  <Text variant="xs">{INTERNATIONAL_SHIPPING_WARNING}</Text>
                 )}
 
                 <Spacer y={2} />

@@ -49,3 +49,6 @@ export const deliveryOptionTimeEstimate = (
       return ["Something went wrong.", "Please contact orders@artsy.net"]
   }
 }
+
+export const INTERNATIONAL_SHIPPING_WARNING =
+  "Additional processing times may vary by destination"
