@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6d6421776db902339111c6a1d4860100>>
+ * @generated SignedSource<<c48dc8d9c763500799c477e5f454fa24>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -267,6 +267,45 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PhoneNumberType",
+                "kind": "LinkedField",
+                "name": "phoneNumber",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "format",
+                        "value": "NATIONAL"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "display",
+                    "storageKey": "display(format:\"NATIONAL\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "originalNumber",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "regionCode",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": [
@@ -397,12 +436,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0bf638d2e6a06ebb1d639cf8307b104b",
+    "cacheID": "a4a3fde18d677393d67a33db5d434012",
     "id": null,
     "metadata": {},
     "name": "useOrder2UpdateUserDefaultAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2UpdateUserDefaultAddressMutation(\n  $input: UpdateUserDefaultAddressInput!\n) {\n  updateUserDefaultAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2UpdateUserDefaultAddressMutation(\n  $input: UpdateUserDefaultAddressInput!\n) {\n  updateUserDefaultAddress(input: $input) {\n    me {\n      ...Order2DeliveryForm_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        internalID\n        name\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        phoneNumber\n        phoneNumberCountryCode\n        isDefault\n        id\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  name\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

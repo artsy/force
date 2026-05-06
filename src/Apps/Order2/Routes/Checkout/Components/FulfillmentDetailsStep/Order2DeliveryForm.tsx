@@ -18,7 +18,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
-
 import { useOrder2SetOrderDeliveryAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderDeliveryAddressMutation"
 import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
 import { getShippableCountries as getShippableCountryData } from "Apps/Order2/Utils/addressUtils"
@@ -51,7 +50,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const createUserAddress = useOrder2CreateUserAddressMutation()
   const logger = createLogger("Order2DeliveryForm")
 
-  const { addressConnection } = meData
+  const { addressConnection, name: meName, phoneNumber: mePhoneNumber } = meData
 
   const shippableCountries = getShippableCountryData(
     orderData.availableShippingCountries,
@@ -89,10 +88,17 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
 
+  const phoneCountryCode =
+    mePhoneNumber?.regionCode ||
+    locationBasedInitialValues.phoneNumberCountryCode ||
+    ""
+  const userPhone =
+    mePhoneNumber?.display ?? mePhoneNumber?.originalNumber ?? ""
+
   const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({
       address: {
-        name: "",
+        name: meName || "",
         country: locationBasedInitialValues.selectedCountry || "",
         postalCode: "",
         addressLine1: "",
@@ -100,12 +106,11 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         city: "",
         region: "",
       },
-      phoneNumber: "",
-      phoneNumberCountryCode:
-        locationBasedInitialValues.phoneNumberCountryCode || "",
+      phoneNumber: userPhone,
+      phoneNumberCountryCode: phoneCountryCode,
       setAsDefault: false,
     }),
-    [locationBasedInitialValues],
+    [locationBasedInitialValues, meName, userPhone, phoneCountryCode],
   )
 
   const initialValues: FormikContextWithAddress = useMemo(
@@ -372,6 +377,12 @@ const DeliveryFormFields: React.FC<DeliveryFormFieldsProps> = ({
 
 const ME_FRAGMENT = graphql`
   fragment Order2DeliveryForm_me on Me {
+    name
+    phoneNumber {
+      display(format: NATIONAL)
+      originalNumber
+      regionCode
+    }
     addressConnection(first: 20) {
       edges {
         node {

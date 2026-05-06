@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8b2d9ac1a050aa2972034f336802c13>>
+ * @generated SignedSource<<5c3e1edc46d1fffc1f62fee33fae1ec7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,12 @@ export type Order2DeliveryForm_me$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly name: string | null | undefined;
+  readonly phoneNumber: {
+    readonly display: string | null | undefined;
+    readonly originalNumber: string | null | undefined;
+    readonly regionCode: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "Order2DeliveryForm_me";
 };
 export type Order2DeliveryForm_me$key = {
@@ -39,12 +45,59 @@ export type Order2DeliveryForm_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryForm_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Order2DeliveryForm_me",
   "selections": [
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "PhoneNumberType",
+      "kind": "LinkedField",
+      "name": "phoneNumber",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "format",
+              "value": "NATIONAL"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": "display(format:\"NATIONAL\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "originalNumber",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "regionCode",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": [
@@ -124,13 +177,7 @@ const node: ReaderFragment = {
                   "name": "country",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -196,7 +243,8 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "77578b6728542cf7bdb8611c0130e8cd";
+(node as any).hash = "46c696b1252b9557600df47543ddb58d";
 
 export default node;
