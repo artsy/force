@@ -77,6 +77,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     artworkPath,
     editStep,
     setSectionErrorMessage,
+    isFulfillmentDetailsSaving,
   } = useCheckoutContext()
 
   const { showCheckoutErrorModal } = useCheckoutModal()
@@ -265,6 +266,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         <Order2CheckoutPricingBreakdown
           order={orderData}
           contextModule={ContextModule.ordersReview}
+          isLoading={isFulfillmentDetailsSaving}
         />
       </Box>
       <Spacer y={2} />
