@@ -36,6 +36,7 @@ import {
 } from "./ArtworkSidebarEditionSets"
 
 import { useSelectedEditionSetContext } from "Apps/Artwork/Components/SelectedEditionSetContext"
+import { newCheckoutEnabled } from "Apps/Order/redirects"
 import { usePartnerOfferCheckoutMutation } from "Apps/PartnerOffer/Routes/Mutations/UsePartnerOfferCheckoutMutation"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -80,7 +81,8 @@ export const ArtworkSidebarCommercialButtons: React.FC<
   const activePartnerOffer =
     (!partnerOfferTimer.hasEnded && partnerOffer) || null
 
-  const { router, user } = useSystemContext()
+  const { router, user, featureFlags } = useSystemContext()
+  const isOrder2Enabled = newCheckoutEnabled({ order: {}, featureFlags })
   const { match } = useRouter()
 
   const { trackEvent } = useTracking()
@@ -177,7 +179,10 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             throw new ErrorWithMetadata(errorCode, orderOrError.error)
         }
       } else {
-        redirectUrl = `/orders/${orderOrError?.order?.internalID}`
+        const orderId = orderOrError?.order?.internalID
+        redirectUrl = isOrder2Enabled
+          ? `/orders2/${orderId}/checkout`
+          : `/orders/${orderId}`
       }
       setIsCommitingCreateOrderMutation(false)
       router?.push(redirectUrl)
@@ -220,8 +225,10 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             orderOrError.error,
           )
         } else {
-          const url = `/orders/${orderOrError.order.internalID}`
-
+          const orderId = orderOrError.order.internalID
+          const url = isOrder2Enabled
+            ? `/orders2/${orderId}/checkout`
+            : `/orders/${orderId}`
           router?.push(url)
         }
       } catch (e) {
@@ -285,7 +292,10 @@ export const ArtworkSidebarCommercialButtons: React.FC<
             orderOrError.error,
           )
         } else {
-          const url = `/orders/${orderOrError.order.internalID}/offer`
+          const orderId = orderOrError.order.internalID
+          const url = isOrder2Enabled
+            ? `/orders2/${orderId}/checkout`
+            : `/orders/${orderId}/offer`
           router?.push(url)
         }
       } catch (error) {
