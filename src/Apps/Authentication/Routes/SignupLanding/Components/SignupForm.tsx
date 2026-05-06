@@ -7,6 +7,7 @@ import {
   Separator,
   Stack,
   Text,
+  Toast,
 } from "@artsy/palette"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
@@ -153,11 +154,7 @@ export const SignupForm = () => {
                   </Checkbox>
                 )}
 
-                {error && (
-                  <Text variant="sm" color="red100">
-                    {error}
-                  </Text>
-                )}
+                {error && <Toast id="error" variant="error" message={error} />}
 
                 <Button
                   type="submit"
