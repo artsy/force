@@ -4158,13 +4158,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cookiejar@npm:*":
-  version: 2.1.5
-  resolution: "@types/cookiejar@npm:2.1.5"
-  checksum: 10c0/af38c3d84aebb3ccc6e46fb6afeeaac80fb26e63a487dd4db5a8b87e6ad3d4b845ba1116b2ae90d6f886290a36200fa433d8b1f6fe19c47da6b81872ce9a2764
-  languageName: node
-  linkType: hard
-
 "@types/doctrine@npm:^0.0.9":
   version: 0.0.9
   resolution: "@types/doctrine@npm:0.0.9"
@@ -4686,16 +4679,6 @@ __metadata:
   version: 4.2.5
   resolution: "@types/stylis@npm:4.2.5"
   checksum: 10c0/23f5b35a3a04f6bb31a29d404fa1bc8e0035fcaff2356b4047743a057e0c37b2eba7efe14d57dd2b95b398cea3bac294d9c6cd93ed307d8c0b7f5d282224b469
-  languageName: node
-  linkType: hard
-
-"@types/superagent@npm:^4.1.24":
-  version: 4.1.24
-  resolution: "@types/superagent@npm:4.1.24"
-  dependencies:
-    "@types/cookiejar": "npm:*"
-    "@types/node": "npm:*"
-  checksum: 10c0/98109e94d4c0b2f9360ae31a411f8a830109704a080b6a7b5f12da2bb549e596fc6a4072f45fb2c3ddfcf23974c41ac68e3cbcbf9fd6f32fca64f81cc867d5e6
   languageName: node
   linkType: hard
 
@@ -8812,7 +8795,6 @@ __metadata:
     "@types/relay-test-utils": "npm:^18.0.0"
     "@types/styled-system": "npm:5.1.10"
     "@types/styled-system__theme-get": "npm:5.0.0"
-    "@types/superagent": "npm:^4.1.24"
     "@types/underscore.string": "npm:0.0.32"
     "@types/yup": "npm:^0.29.13"
     "@unleash/proxy-client-react": "npm:^4.5.2"
@@ -8911,7 +8893,6 @@ __metadata:
     storybook-states: "npm:1.2.0"
     styled-components: "npm:^6.1.13"
     styled-system: "npm:5.1.5"
-    superagent: "npm:3.8.3"
     tti-polyfill: "npm:0.2.2"
     typescript: "npm:^5.6.3"
     typescript-styled-plugin: "npm:0.15.0"
@@ -16341,7 +16322,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:3.8.3, superagent@npm:^3.5.0":
+"superagent@npm:^3.5.0":
   version: 3.8.3
   resolution: "superagent@npm:3.8.3"
   dependencies:
