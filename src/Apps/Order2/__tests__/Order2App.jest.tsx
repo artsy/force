@@ -5,6 +5,7 @@ import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVaria
 import { Order2App } from "../Order2App"
 
 jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(() => false),
   useVariant: jest.fn(),
 }))
 
