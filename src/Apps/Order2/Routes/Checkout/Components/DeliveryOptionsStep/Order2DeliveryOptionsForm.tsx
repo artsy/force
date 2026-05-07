@@ -16,13 +16,13 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { MultipleShippingOptionsForm } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/MultipleShippingOptionsForm"
+import { SingleShippingOption } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/SingleShippingOption"
 import {
   ARTA_FULFILLMENT_TYPES,
   SELECTABLE_TYPES,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
-import { MultipleShippingOptionsForm } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/MultipleShippingOptionsForm"
-import { SingleShippingOption } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/SingleShippingOption"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
@@ -204,9 +204,6 @@ export const Order2DeliveryOptionsForm: React.FC<
 
       <Spacer y={4} />
 
-      {/* TODO: this button advances through both the Fulfillment Details and
-          Delivery Option steps. Consider whether the copy/disabled logic should
-          reflect both steps more explicitly. */}
       <Button
         loading={isDeliveryOptionSaving || isFulfillmentDetailsSaving}
         disabled={

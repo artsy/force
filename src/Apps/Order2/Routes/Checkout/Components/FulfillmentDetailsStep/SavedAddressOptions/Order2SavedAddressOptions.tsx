@@ -42,6 +42,7 @@ interface SavedAddressOptionsProps {
   initialSelectedAddress?: ProcessedUserAddress
   hasDeliveryAddress: boolean
   onSelectAddress: (address: FormikContextWithAddress) => Promise<void>
+  onSelectInvalidAddress: () => Promise<void> | void
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
 }
@@ -50,6 +51,7 @@ export const SavedAddressOptions = ({
   initialSelectedAddress,
   hasDeliveryAddress,
   onSelectAddress,
+  onSelectInvalidAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
 }: SavedAddressOptionsProps) => {
@@ -128,7 +130,14 @@ export const SavedAddressOptions = ({
       savedAddresses.find(a => a.isShippable && a.isValid) || savedAddresses[0]
     if (firstValid) {
       setSelectedAddress(firstValid)
-      onSelectAddress(firstValid)
+      if (
+        !firstValid.isValid ||
+        (!firstValid.isShippable && !isOfferOrder)
+      ) {
+        onSelectInvalidAddress()
+      } else {
+        onSelectAddress(firstValid)
+      }
     }
   }, [isStepActive])
 
@@ -227,9 +236,18 @@ export const SavedAddressOptions = ({
     async (processedAddress: ProcessedUserAddress) => {
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
+
+      if (
+        !processedAddress.isValid ||
+        (!processedAddress.isShippable && !isOfferOrder)
+      ) {
+        await onSelectInvalidAddress()
+        return
+      }
+
       await onSelectAddress(processedAddress)
     },
-    [checkoutTracking, onSelectAddress],
+    [checkoutTracking, isOfferOrder, onSelectAddress, onSelectInvalidAddress],
   )
 
   if (userAddressMode?.mode === "add") {

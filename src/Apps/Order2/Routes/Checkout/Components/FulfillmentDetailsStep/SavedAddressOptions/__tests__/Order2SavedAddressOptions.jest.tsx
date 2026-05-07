@@ -27,6 +27,8 @@ jest.mock("../UpdateAddressForm", () => ({
 }))
 
 let mockCheckoutContext: ReturnType<typeof useCheckoutContext>
+let onSelectAddress: jest.Mock
+let onSelectInvalidAddress: jest.Mock
 
 const mockUseCheckoutContext = useCheckoutContext as jest.MockedFunction<
   typeof useCheckoutContext
@@ -153,9 +155,32 @@ const TestWrapper = ({
   )
 }
 
+type SavedAddressOptionsProps = React.ComponentProps<typeof SavedAddressOptions>
+
+const renderSavedAddressOptions = (
+  props: Partial<SavedAddressOptionsProps> = {},
+) => {
+  return render(
+    <TestWrapper>
+      <SavedAddressOptions
+        hasDeliveryAddress={true}
+        savedAddresses={[mockUSAddress1, mockUSAddress2]}
+        initialSelectedAddress={mockUSAddress1}
+        onSelectAddress={onSelectAddress}
+        onSelectInvalidAddress={onSelectInvalidAddress}
+        newAddressInitialValues={mockNewAddressInitialValues}
+        {...props}
+      />
+    </TestWrapper>,
+  )
+}
+
 describe("SavedAddressOptions", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+
+    onSelectAddress = jest.fn()
+    onSelectInvalidAddress = jest.fn()
 
     mockCheckoutContext = {
       setUserAddressMode: jest.fn(),
@@ -181,19 +206,7 @@ describe("SavedAddressOptions", () => {
 
   describe("Address list rendering", () => {
     it("displays address details correctly", () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
 
       expect(screen.getByText("123 Main St")).toBeInTheDocument()
       expect(screen.getByText("Apt 4B")).toBeInTheDocument()
@@ -203,19 +216,7 @@ describe("SavedAddressOptions", () => {
     })
 
     it("renders multiple addresses", () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions()
 
       expect(screen.getByText("John Doe")).toBeInTheDocument()
       expect(screen.getByText("Jane Smith")).toBeInTheDocument()
@@ -224,19 +225,7 @@ describe("SavedAddressOptions", () => {
 
   describe("Address selection", () => {
     it("tracks onSelectAddress when clicking an address", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions()
 
       const secondAddress = screen.getByRole("radio", { name: /Jane Smith/i })
       await userEvent.click(secondAddress)
@@ -247,19 +236,7 @@ describe("SavedAddressOptions", () => {
     })
 
     it("tracks shipping address click", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions()
 
       const secondAddress = screen.getByRole("radio", { name: /Jane Smith/i })
       await userEvent.click(secondAddress)
@@ -272,19 +249,9 @@ describe("SavedAddressOptions", () => {
 
   describe("Error handling", () => {
     it("displays error banner when selecting an invalid address", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockInvalidAddress]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockInvalidAddress],
+      })
 
       const invalidAddress = screen.getByRole("radio", {
         name: /Invalid Address/i,
@@ -302,26 +269,20 @@ describe("SavedAddressOptions", () => {
           },
         )
       })
+
+      expect(onSelectInvalidAddress).toHaveBeenCalled()
+      expect(onSelectAddress).not.toHaveBeenCalled()
     })
 
     it("displays error banner when selecting an unshippable address in non-OFFER mode", async () => {
-      const onSelectAddress = jest.fn()
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
         orderData: { mode: "BUY" },
       })
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockUnshippableAddress],
+      })
 
       const unshippableAddress = screen.getByRole("radio", {
         name: /Unshippable Address/i,
@@ -340,26 +301,20 @@ describe("SavedAddressOptions", () => {
           },
         )
       })
+
+      expect(onSelectInvalidAddress).toHaveBeenCalled()
+      expect(onSelectAddress).not.toHaveBeenCalled()
     })
 
     it("does not display error banner when selecting an unshippable address in OFFER mode", async () => {
-      const onSelectAddress = jest.fn()
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
         orderData: { mode: "OFFER" },
       })
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUnshippableAddress]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockUnshippableAddress],
+      })
 
       const unshippableAddress = screen.getByRole("radio", {
         name: /Unshippable Address/i,
@@ -374,22 +329,13 @@ describe("SavedAddressOptions", () => {
           },
         )
       })
+
+      expect(onSelectAddress).toHaveBeenCalledWith(mockUnshippableAddress)
+      expect(onSelectInvalidAddress).not.toHaveBeenCalled()
     })
 
     it("clears error banner when selecting a valid and shippable address", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions()
 
       const validAddress = screen.getByRole("radio", { name: /Jane Smith/i })
       await userEvent.click(validAddress)
@@ -407,7 +353,6 @@ describe("SavedAddressOptions", () => {
 
   describe("Address editing validation", () => {
     it("re-validates address after editing and clears error if now valid", async () => {
-      const onSelectAddress = jest.fn()
       const mockInvalidAddressWithMissingCity: ProcessedUserAddress = {
         ...mockInvalidAddress,
         address: {
@@ -423,17 +368,9 @@ describe("SavedAddressOptions", () => {
         isShippable: true,
       }
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockInvalidAddressWithMissingCity]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockInvalidAddressWithMissingCity],
+      })
 
       const invalidAddress = screen.getByRole("radio", {
         name: /Test User/i,
@@ -497,20 +434,10 @@ describe("SavedAddressOptions", () => {
     })
 
     it("shows error when editing a valid address to make it invalid", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-            availableShippingCountries={["US"]}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1],
+        availableShippingCountries: ["US"],
+      })
 
       // The validation effect fires on mount with error: null for the valid address
       await waitFor(() => {
@@ -584,24 +511,16 @@ describe("SavedAddressOptions", () => {
 
   describe("Single saved address behavior", () => {
     it("opens edit form on mount for single invalid address", async () => {
-      const onSelectAddress = jest.fn()
       const mockSingleInvalidAddress: ProcessedUserAddress = {
         ...mockUSAddress1,
         isValid: false,
         address: { ...mockUSAddress1.address, city: "" },
       }
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockSingleInvalidAddress]}
-            initialSelectedAddress={mockSingleInvalidAddress}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        savedAddresses: [mockSingleInvalidAddress],
+        initialSelectedAddress: mockSingleInvalidAddress,
+      })
 
       await waitFor(() => {
         expect(mockCheckoutContext.setUserAddressMode).toHaveBeenCalledWith({
@@ -612,19 +531,7 @@ describe("SavedAddressOptions", () => {
     })
 
     it("does not open edit form on mount for single valid address", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
 
       await waitFor(() => {
         expect(mockCheckoutContext.setUserAddressMode).not.toHaveBeenCalledWith(
@@ -636,19 +543,7 @@ describe("SavedAddressOptions", () => {
 
   describe("Auto-save on mount when no fulfillment details", () => {
     it("calls onSelectAddress with the first valid address on mount", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={false}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({ hasDeliveryAddress: false })
 
       await waitFor(() => {
         expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress1)
@@ -656,25 +551,37 @@ describe("SavedAddressOptions", () => {
       expect(onSelectAddress).toHaveBeenCalledTimes(1)
     })
 
-    it("skips unshippable addresses and selects the first valid shippable one", async () => {
-      const onSelectAddress = jest.fn()
+    it("calls onSelectInvalidAddress on mount when no shippable+valid address is available", async () => {
       const unshippable = {
         ...mockUSAddress1,
         internalID: "unshippable",
         isShippable: false,
       }
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={false}
-            savedAddresses={[unshippable, mockUSAddress2]}
-            initialSelectedAddress={unshippable}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        hasDeliveryAddress: false,
+        savedAddresses: [unshippable],
+        initialSelectedAddress: unshippable,
+      })
+
+      await waitFor(() => {
+        expect(onSelectInvalidAddress).toHaveBeenCalled()
+      })
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
+    it("skips unshippable addresses and selects the first valid shippable one", async () => {
+      const unshippable = {
+        ...mockUSAddress1,
+        internalID: "unshippable",
+        isShippable: false,
+      }
+
+      renderSavedAddressOptions({
+        hasDeliveryAddress: false,
+        savedAddresses: [unshippable, mockUSAddress2],
+        initialSelectedAddress: unshippable,
+      })
 
       await waitFor(() => {
         expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress2)
@@ -682,27 +589,13 @@ describe("SavedAddressOptions", () => {
     })
 
     it("does not auto-save when fulfillment details already exist", async () => {
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions()
 
       await new Promise(resolve => setTimeout(resolve, 50))
       expect(onSelectAddress).not.toHaveBeenCalled()
     })
 
     it("does not auto-save when the step is not yet ACTIVE (e.g. UPCOMING in offer flow)", async () => {
-      const onSelectAddress = jest.fn()
-
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
         steps: [
@@ -713,17 +606,7 @@ describe("SavedAddressOptions", () => {
         ],
       })
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={false}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({ hasDeliveryAddress: false })
 
       await new Promise(resolve => setTimeout(resolve, 50))
       expect(onSelectAddress).not.toHaveBeenCalled()
@@ -754,24 +637,15 @@ describe("SavedAddressOptions", () => {
     }
 
     it("preserves the selected address when a different address is deleted", async () => {
-      const onSelectAddress = jest.fn()
-
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
         userAddressMode: { mode: "edit", address: mockUSAddress3 },
       })
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2, mockUSAddress3]}
-            initialSelectedAddress={mockUSAddress2}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockUSAddress2, mockUSAddress3],
+        initialSelectedAddress: mockUSAddress2,
+      })
 
       await userEvent.click(
         screen.getByRole("button", { name: /Delete address/i }),
@@ -781,24 +655,12 @@ describe("SavedAddressOptions", () => {
     })
 
     it("selects another valid address when the selected address is deleted", async () => {
-      const onSelectAddress = jest.fn()
-
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
         userAddressMode: { mode: "edit", address: mockUSAddress1 },
       })
 
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
-      )
+      renderSavedAddressOptions()
 
       await userEvent.click(
         screen.getByRole("button", { name: /Delete address/i }),
@@ -811,7 +673,7 @@ describe("SavedAddressOptions", () => {
   })
 
   describe("Tracking", () => {
-    it("tracks savedAddressViewed when saved addresses are displayed and step is active", async () => {
+    const setupTrackingContext = (stepState: CheckoutStepState) => {
       const mockSavedAddressViewed = jest.fn()
       mockCheckoutContext = {
         ...mockCheckoutContext,
@@ -820,28 +682,20 @@ describe("SavedAddressOptions", () => {
           savedAddressViewed: mockSavedAddressViewed,
         },
         steps: [
-          {
-            name: CheckoutStepName.FULFILLMENT_DETAILS,
-            state: "ACTIVE",
-          },
+          { name: CheckoutStepName.FULFILLMENT_DETAILS, state: stepState },
         ],
       } as any
 
       mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
+      return mockSavedAddressViewed
+    }
 
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
+    it("tracks savedAddressViewed when saved addresses are displayed and step is active", async () => {
+      const mockSavedAddressViewed = setupTrackingContext(
+        CheckoutStepState.ACTIVE,
       )
+
+      renderSavedAddressOptions()
 
       await waitFor(() => {
         expect(mockSavedAddressViewed).toHaveBeenCalledTimes(1)
@@ -853,36 +707,11 @@ describe("SavedAddressOptions", () => {
     })
 
     it("does not track savedAddressViewed when step is not active", async () => {
-      const mockSavedAddressViewed = jest.fn()
-      mockCheckoutContext = {
-        ...mockCheckoutContext,
-        checkoutTracking: {
-          ...mockCheckoutContext.checkoutTracking,
-          savedAddressViewed: mockSavedAddressViewed,
-        },
-        steps: [
-          {
-            name: CheckoutStepName.FULFILLMENT_DETAILS,
-            state: "UPCOMING",
-          },
-        ],
-      } as any
-
-      mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
-
-      const onSelectAddress = jest.fn()
-
-      render(
-        <TestWrapper>
-          <SavedAddressOptions
-            hasDeliveryAddress={true}
-            savedAddresses={[mockUSAddress1, mockUSAddress2]}
-            initialSelectedAddress={mockUSAddress1}
-            onSelectAddress={onSelectAddress}
-            newAddressInitialValues={mockNewAddressInitialValues}
-          />
-        </TestWrapper>,
+      const mockSavedAddressViewed = setupTrackingContext(
+        CheckoutStepState.UPCOMING,
       )
+
+      renderSavedAddressOptions()
 
       await waitFor(() => {
         expect(mockSavedAddressViewed).not.toHaveBeenCalled()
