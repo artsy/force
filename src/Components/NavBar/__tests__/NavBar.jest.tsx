@@ -84,6 +84,12 @@ jest.mock("System/Contexts/NavigationDataContext", () => ({
   NavigationDataProvider: ({ children }) => children,
 }))
 
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    match: { location: { pathname: "/" } },
+  })),
+}))
+
 describe("NavBar", () => {
   const trackEvent = jest.fn()
   const mockUseNavigationData = useNavigationData as jest.Mock

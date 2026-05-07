@@ -64,6 +64,8 @@ describe("Order2DeliveryForm", () => {
 
   describe("with no saved addresses", () => {
     const baseMeProps = {
+      name: null,
+      phoneNumber: null,
       addressConnection: {
         edges: [],
       },
@@ -124,6 +126,30 @@ describe("Order2DeliveryForm", () => {
       expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
       expect(screen.getByDisplayValue("10001")).toBeInTheDocument()
       expect(screen.getByDisplayValue("5551234567")).toBeInTheDocument()
+    })
+
+    it("pre-fills name and phone from me data when no fulfillment details", async () => {
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          name: "Jane Doe",
+          phoneNumber: {
+            display: "212-555-0100",
+            originalNumber: "2125550100",
+            regionCode: "us",
+          },
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: null,
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByDisplayValue("Jane Doe")).toBeInTheDocument()
+      })
+
+      expect(screen.getByDisplayValue("212-555-0100")).toBeInTheDocument()
     })
 
     it("syncs phone country code when country is changed", async () => {

@@ -3,8 +3,7 @@ import type {
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { sanitizeRedirect } from "Utils/sanitizeRedirect"
-
-const opts = require("../options")
+import opts from "../options"
 
 export const redirectBack = (
   req: ArtsyRequest & { artsyPassportSignedUp?: boolean },
