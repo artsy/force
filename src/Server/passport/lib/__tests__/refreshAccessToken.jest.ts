@@ -1,9 +1,9 @@
+import { requestGravity } from "../http"
 import {
   decodeJwtExp,
   refreshAccessToken,
   shouldRefresh,
 } from "../refreshAccessToken"
-import request from "superagent"
 
 jest.mock("Server/config", () => ({
   API_URL: "https://example.test",
@@ -11,9 +11,9 @@ jest.mock("Server/config", () => ({
   CLIENT_SECRET: "client-secret",
 }))
 
-jest.mock("superagent", () => ({
-  post: jest.fn(),
-}))
+jest.mock("../http")
+
+const mockRequestGravity = requestGravity as jest.Mock
 
 const buildJwt = (payload: object): string => {
   const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" }))
@@ -71,44 +71,38 @@ describe("shouldRefresh", () => {
 })
 
 describe("refreshAccessToken", () => {
-  const post = request.post as jest.Mock
+  type Outcome =
+    | { body: any }
+    | { error: { status?: number; body?: any; message?: string } }
 
-  const mockChain = (
-    trust: { body?: any; throw?: { status?: number } },
-    token?: { body?: any; throw?: { status?: number } },
-  ) => {
-    const trustChain: any = {
-      set: jest
-        .fn()
-        .mockImplementation(() =>
-          trust.throw
-            ? Promise.reject({ status: trust.throw.status })
-            : Promise.resolve({ body: trust.body }),
-        ),
-    }
-    const tokenChain: any = {
-      set: jest.fn().mockReturnThis(),
-      send: jest
-        .fn()
-        .mockImplementation(() =>
-          !token
-            ? Promise.resolve({ body: {} })
-            : token.throw
-              ? Promise.reject({ status: token.throw.status })
-              : Promise.resolve({ body: token.body }),
-        ),
-    }
-    post.mockImplementation((url: string) =>
-      url.includes("trust_token") ? trustChain : tokenChain,
-    )
+  const mockRoute = (trust: Outcome, token?: Outcome) => {
+    mockRequestGravity.mockImplementation(({ url }: { url: string }) => {
+      const outcome = url.includes("trust_token") ? trust : token
+
+      if (!outcome) return Promise.resolve({ body: {} })
+
+      if ("error" in outcome) {
+        return Promise.reject({
+          message: outcome.error.message ?? "Error",
+          response: {
+            body: outcome.error.body ?? {},
+            ok: false,
+            status: outcome.error.status,
+            text: "",
+          },
+        })
+      }
+
+      return Promise.resolve({ body: outcome.body, ok: true })
+    })
   }
 
   beforeEach(() => {
-    post.mockReset()
+    mockRequestGravity.mockReset()
   })
 
   it("returns a fresh access token on success", async () => {
-    mockChain(
+    mockRoute(
       { body: { trust_token: "TT" } },
       { body: { access_token: "NEW" } },
     )
@@ -116,26 +110,65 @@ describe("refreshAccessToken", () => {
     expect(result).toEqual({ ok: true, accessToken: "NEW" })
   })
 
+  it("forwards the access token and IP when requesting a trust token", async () => {
+    mockRoute(
+      { body: { trust_token: "TT" } },
+      { body: { access_token: "NEW" } },
+    )
+    await refreshAccessToken("OLD", "127.0.0.1")
+    expect(mockRequestGravity).toHaveBeenCalledWith(
+      expect.objectContaining({
+        method: "POST",
+        url: "https://example.test/api/v1/me/trust_token",
+        headers: expect.objectContaining({
+          "X-Access-Token": "OLD",
+          "X-Forwarded-For": "127.0.0.1",
+        }),
+      }),
+    )
+    expect(mockRequestGravity).toHaveBeenCalledWith(
+      expect.objectContaining({
+        method: "POST",
+        url: "https://example.test/oauth2/access_token",
+        headers: expect.objectContaining({
+          "X-Forwarded-For": "127.0.0.1",
+        }),
+        body: expect.objectContaining({
+          grant_type: "trust_token",
+          client_id: "client-id",
+          client_secret: "client-secret",
+          code: "TT",
+        }),
+      }),
+    )
+  })
+
   it("returns invalid when trust_token call returns 401", async () => {
-    mockChain({ throw: { status: 401 } })
+    mockRoute({ error: { status: 401 } })
     const result = await refreshAccessToken("OLD", "127.0.0.1")
     expect(result).toEqual({ ok: false, reason: "invalid" })
   })
 
   it("returns invalid when access_token call returns 403", async () => {
-    mockChain({ body: { trust_token: "TT" } }, { throw: { status: 403 } })
+    mockRoute({ body: { trust_token: "TT" } }, { error: { status: 403 } })
     const result = await refreshAccessToken("OLD", "127.0.0.1")
     expect(result).toEqual({ ok: false, reason: "invalid" })
   })
 
   it("returns transient on 5xx", async () => {
-    mockChain({ throw: { status: 503 } })
+    mockRoute({ error: { status: 503 } })
     const result = await refreshAccessToken("OLD", "127.0.0.1")
     expect(result).toEqual({ ok: false, reason: "transient" })
   })
 
   it("returns transient when trust_token body is missing", async () => {
-    mockChain({ body: {} })
+    mockRoute({ body: {} })
+    const result = await refreshAccessToken("OLD", "127.0.0.1")
+    expect(result).toEqual({ ok: false, reason: "transient" })
+  })
+
+  it("returns transient when access_token body is missing", async () => {
+    mockRoute({ body: { trust_token: "TT" } }, { body: {} })
     const result = await refreshAccessToken("OLD", "127.0.0.1")
     expect(result).toEqual({ ok: false, reason: "transient" })
   })

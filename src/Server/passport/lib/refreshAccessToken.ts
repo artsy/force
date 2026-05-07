@@ -1,5 +1,5 @@
-import request from "superagent"
 import { API_URL, CLIENT_ID, CLIENT_SECRET } from "Server/config"
+import { type GravityError, requestGravity } from "./http"
 
 export type RefreshResult =
   | { ok: true; accessToken: string }
@@ -32,44 +32,45 @@ export const shouldRefresh = (
 const isInvalidStatus = (status: number | undefined): boolean =>
   status === 401 || status === 403
 
+const reasonFromError = (err: GravityError): "invalid" | "transient" =>
+  isInvalidStatus(err?.response?.status) ? "invalid" : "transient"
+
 export const refreshAccessToken = async (
   currentToken: string,
   forwardedFor: string,
 ): Promise<RefreshResult> => {
   let trustToken: string
   try {
-    const trustRes = await request
-      .post(`${API_URL}/api/v1/me/trust_token`)
-      .set({
+    const trustRes = await requestGravity({
+      headers: {
         "X-Access-Token": currentToken,
         "X-Forwarded-For": forwardedFor,
-      })
+      },
+      method: "POST",
+      url: `${API_URL}/api/v1/me/trust_token`,
+    })
     trustToken = trustRes.body?.trust_token
     if (!trustToken) return { ok: false, reason: "transient" }
-  } catch (err: any) {
-    return {
-      ok: false,
-      reason: isInvalidStatus(err?.status) ? "invalid" : "transient",
-    }
+  } catch (err) {
+    return { ok: false, reason: reasonFromError(err as GravityError) }
   }
 
   try {
-    const tokenRes = await request
-      .post(`${API_URL}/oauth2/access_token`)
-      .set({ "X-Forwarded-For": forwardedFor })
-      .send({
+    const tokenRes = await requestGravity({
+      body: {
         grant_type: "trust_token",
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET,
         code: trustToken,
-      })
+      },
+      headers: { "X-Forwarded-For": forwardedFor },
+      method: "POST",
+      url: `${API_URL}/oauth2/access_token`,
+    })
     const accessToken = tokenRes.body?.access_token
     if (!accessToken) return { ok: false, reason: "transient" }
     return { ok: true, accessToken }
-  } catch (err: any) {
-    return {
-      ok: false,
-      reason: isInvalidStatus(err?.status) ? "invalid" : "transient",
-    }
+  } catch (err) {
+    return { ok: false, reason: reasonFromError(err as GravityError) }
   }
 }
