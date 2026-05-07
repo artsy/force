@@ -374,21 +374,27 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                   await submitForm()
                 }}
                 onSelectInvalidAddress={async () => {
-                  if (orderData.selectedFulfillmentOption?.type) {
-                    try {
-                      await unsetOrderFulfillmentOption.submitMutation({
-                        variables: {
-                          input: { id: orderData.internalID },
-                        },
-                      })
-                    } catch (error) {
-                      logger.error(
-                        "Error unsetting fulfillment option after invalid address selection:",
-                        error,
-                      )
+                  try {
+                    if (orderData.selectedFulfillmentOption?.type) {
+                      try {
+                        await unsetOrderFulfillmentOption.submitMutation({
+                          variables: {
+                            input: { id: orderData.internalID },
+                          },
+                        })
+                      } catch (error) {
+                        logger.error(
+                          "Error unsetting fulfillment option after invalid address selection:",
+                          error,
+                        )
+                      }
+                    }
+                    editStep(CheckoutStepName.FULFILLMENT_DETAILS)
+                  } finally {
+                    if (!isInitialAutoSaveComplete) {
+                      setInitialAutoSaveComplete()
                     }
                   }
-                  editStep(CheckoutStepName.FULFILLMENT_DETAILS)
                 }}
               />
             ) : (
