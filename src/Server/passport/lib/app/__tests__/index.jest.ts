@@ -24,7 +24,7 @@ describe("passport app setup", () => {
       facebookCallbackPath: "/users/auth/facebook/callback",
       facebookPath: "/users/auth/facebook",
       googleCallbackPath: "/users/auth/google/callback",
-      googleOneTapCallbackPath: "/users/auth/google_one_tap/callback",
+      googleOneTapCallbackPath: "/users/auth/google/one_tap/callback",
       googlePath: "/users/auth/google",
       loginPagePath: "/log_in",
       logoutPath: "/users/sign_out",
@@ -81,7 +81,7 @@ describe("passport app setup", () => {
     setupApp()
 
     const oneTapPost = app.post.mock.calls.find(
-      ([path]) => path === "/users/auth/google_one_tap/callback",
+      ([path]) => path === "/users/auth/google/one_tap/callback",
     )
 
     expect(oneTapPost).toBeDefined()
