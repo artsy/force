@@ -79,6 +79,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     setCheckoutMode,
     checkoutTracking,
     completeStep,
+    editStep,
     setUserAddressMode,
     setSectionErrorMessage,
     setIsFulfillmentDetailsSaving,
@@ -261,10 +262,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           throw new LocalCheckoutError("no_shipping_options")
         }
 
-        setSectionErrorMessage({
-          section: CheckoutStepName.FULFILLMENT_DETAILS,
-          error: null,
-        })
+        if (!hasSavedAddresses) {
+          setSectionErrorMessage({
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: null,
+          })
+        }
 
         setSectionErrorMessage({
           section: "EXPRESS_CHECKOUT",
@@ -369,6 +372,23 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 onSelectAddress={async values => {
                   await setValues(values)
                   await submitForm()
+                }}
+                onSelectInvalidAddress={async () => {
+                  if (orderData.selectedFulfillmentOption?.type) {
+                    try {
+                      await unsetOrderFulfillmentOption.submitMutation({
+                        variables: {
+                          input: { id: orderData.internalID },
+                        },
+                      })
+                    } catch (error) {
+                      logger.error(
+                        "Error unsetting fulfillment option after invalid address selection:",
+                        error,
+                      )
+                    }
+                  }
+                  editStep(CheckoutStepName.FULFILLMENT_DETAILS)
                 }}
               />
             ) : (
