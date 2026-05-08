@@ -326,6 +326,92 @@ describe("Order2DeliveryOptionsForm", () => {
       ).toBeInTheDocument()
       expect(screen.getByText("Ships from New York, NY")).toBeInTheDocument()
     })
+
+    it("selects SHIPPING_TBD when 'Continue to Payment' is clicked for OFFER orders", async () => {
+      mockSetOrderFulfillmentOption.mockResolvedValue({
+        setOrderFulfillmentOption: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              internalID: "order-123",
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            mode: "OFFER",
+            shippingOrigin: "New York, NY",
+            fulfillmentOptions: [
+              {
+                type: "SHIPPING_TBD",
+                amount: { display: null },
+                selected: false,
+              },
+            ],
+            selectedFulfillmentOption: null,
+          },
+        }),
+      })
+
+      const continueButton = screen.getByRole("button", {
+        name: "Continue to Payment",
+      })
+
+      await userEvent.click(continueButton)
+
+      await waitFor(() => {
+        expect(mockSetOrderFulfillmentOption).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-123",
+              fulfillmentOption: { type: "SHIPPING_TBD" },
+            },
+          },
+        })
+      })
+
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+        CheckoutStepName.DELIVERY_OPTION,
+      )
+    })
+
+    it("does not select SHIPPING_TBD for BUY orders", async () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            mode: "BUY",
+            shippingOrigin: "New York, NY",
+            fulfillmentOptions: [
+              {
+                type: "SHIPPING_TBD",
+                amount: { display: null },
+                selected: false,
+              },
+            ],
+            selectedFulfillmentOption: null,
+          },
+        }),
+      })
+
+      const continueButton = screen.getByRole("button", {
+        name: "Continue to Payment",
+      })
+
+      await userEvent.click(continueButton)
+
+      // Should not call the mutation for BUY orders
+      expect(mockSetOrderFulfillmentOption).not.toHaveBeenCalled()
+
+      // Should still complete the step
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+        CheckoutStepName.DELIVERY_OPTION,
+      )
+    })
   })
 
   describe("with no delivery options", () => {

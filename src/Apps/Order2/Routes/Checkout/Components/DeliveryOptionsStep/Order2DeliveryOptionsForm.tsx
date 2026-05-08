@@ -58,16 +58,23 @@ export const Order2DeliveryOptionsForm: React.FC<
     CheckoutStepName.DELIVERY_OPTION,
   )
 
-  const { fulfillmentOptions, shippingOrigin, shippingRadius } = orderData
+  const {
+    fulfillmentOptions,
+    shippingOrigin,
+    shippingRadius,
+    mode,
+    internalID,
+  } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
     option => option.type !== "PICKUP",
   )
   const selectableOptions = deliveryOptions.filter(o =>
     SELECTABLE_TYPES.includes(o.type),
   )
-  // When all options are SHIPPING_TBD, no mutation is needed.
+
   const onlyShippingTBD =
     deliveryOptions.length > 0 && selectableOptions.length === 0
+  const isOffer = mode === "OFFER"
 
   const hasFulfillmentDetails =
     useCompleteFulfillmentDetailsData(orderData) !== null
@@ -113,12 +120,32 @@ export const Order2DeliveryOptionsForm: React.FC<
     checkoutTracking.shippingQuoteViewed(JSON.parse(artaQuotesJson))
   }, [artaQuotesJson, checkoutTracking, deliveryOptionsStep?.state])
 
-  const handleContinue = useCallback(() => {
+  const handleContinue = useCallback(async () => {
     checkoutTracking.clickedOrderProgression(
       ContextModule.ordersShippingMethods,
     )
+
+    // When only SHIPPING_TBD is available, explicitly select it to ensure
+    // the order's fulfillment_type is saved as SHIP.
+    // Only OFFER orders are allowed to proceed with SHIPPING_TBD.
+    if (onlyShippingTBD && isOffer) {
+      setIsDeliveryOptionSaving(true)
+      const success = await selectDeliveryOption(internalID, "SHIPPING_TBD")
+      setIsDeliveryOptionSaving(false)
+      if (!success) {
+        return
+      }
+    }
+
     completeStep(CheckoutStepName.DELIVERY_OPTION)
-  }, [checkoutTracking, completeStep])
+  }, [
+    checkoutTracking,
+    completeStep,
+    onlyShippingTBD,
+    isOffer,
+    selectDeliveryOption,
+    internalID,
+  ])
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
@@ -242,6 +269,7 @@ const FRAGMENT = graphql`
   fragment Order2DeliveryOptionsForm_order on Order {
     ...useCompleteFulfillmentDetailsData_order
     internalID
+    mode
     fulfillmentOptions {
       amount {
         display
