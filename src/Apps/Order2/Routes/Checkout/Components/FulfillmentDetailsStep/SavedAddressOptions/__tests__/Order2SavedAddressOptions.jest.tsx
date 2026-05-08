@@ -245,6 +245,37 @@ describe("SavedAddressOptions", () => {
         mockCheckoutContext.checkoutTracking.clickedShippingAddress,
       ).toHaveBeenCalled()
     })
+
+    it("disables non-selected addresses while a selection is in flight", async () => {
+      let resolveSelect: () => void = () => {}
+      onSelectAddress.mockImplementation(
+        () =>
+          new Promise<void>(resolve => {
+            resolveSelect = resolve
+          }),
+      )
+
+      renderSavedAddressOptions()
+
+      const firstRadio = screen.getByRole("radio", { name: /John Doe/i })
+      const secondRadio = screen.getByRole("radio", { name: /Jane Smith/i })
+
+      expect(firstRadio).toHaveAttribute("tabindex", "0")
+      expect(secondRadio).toHaveAttribute("tabindex", "0")
+
+      await userEvent.click(secondRadio)
+
+      await waitFor(() => {
+        expect(firstRadio).toHaveAttribute("tabindex", "-1")
+      })
+      expect(secondRadio).toHaveAttribute("tabindex", "0")
+
+      resolveSelect()
+
+      await waitFor(() => {
+        expect(firstRadio).toHaveAttribute("tabindex", "0")
+      })
+    })
   })
 
   describe("Error handling", () => {
