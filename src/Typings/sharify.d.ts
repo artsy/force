@@ -58,6 +58,7 @@ declare module "sharify" {
       FAIR?: any // mobile fair app data
       GEMINI_CLOUDFRONT_URL: string
       GOOGLE_ADWORDS_ID: string
+      GOOGLE_CLIENT_ID: string
       GRAPHQL_CACHE_SIZE: string
       GRAPHQL_CACHE_TTL: string
       GRAVITY_WEBSOCKET_URL: string

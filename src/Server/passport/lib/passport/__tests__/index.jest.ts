@@ -9,12 +9,14 @@ describe("passport setup", () => {
     }
     const FacebookStrategy = jest.fn()
     const GoogleStrategy = jest.fn()
+    const GoogleOneTapStrategy = jest.fn()
     const AppleStrategy = jest.fn()
     const LocalWithOtpStrategy = jest.fn()
     const callbacks = {
       apple: jest.fn(),
       facebook: jest.fn(),
       google: jest.fn(),
+      googleOneTap: jest.fn(),
       local: jest.fn(),
     }
     const serializers = {
@@ -26,6 +28,9 @@ describe("passport setup", () => {
     jest.doMock("passport-facebook", () => ({ Strategy: FacebookStrategy }))
     jest.doMock("passport-google-oauth20", () => ({
       Strategy: GoogleStrategy,
+    }))
+    jest.doMock("passport-google-one-tap", () => ({
+      GoogleOneTapStrategy,
     }))
     jest.doMock("passport-apple", () => AppleStrategy)
     jest.doMock("Server/passport-local-with-otp/lib", () => ({
@@ -46,6 +51,7 @@ describe("passport setup", () => {
     return {
       AppleStrategy,
       FacebookStrategy,
+      GoogleOneTapStrategy,
       GoogleStrategy,
       LocalWithOtpStrategy,
       callbacks,
@@ -91,6 +97,7 @@ describe("passport setup", () => {
       AppleStrategy,
       callbacks,
       FacebookStrategy,
+      GoogleOneTapStrategy,
       GoogleStrategy,
       passport,
       setupPassport,
@@ -128,6 +135,15 @@ describe("passport setup", () => {
       },
       callbacks.google,
     )
+    expect(GoogleOneTapStrategy).toHaveBeenCalledWith(
+      {
+        clientID: "google-client-id",
+        clientSecret: "google-secret",
+        verifyCsrfToken: false,
+        passReqToCallback: true,
+      },
+      callbacks.googleOneTap,
+    )
     expect(AppleStrategy).toHaveBeenCalledWith(
       {
         callbackURL: "https://www.artsy.net/users/auth/apple/callback",
@@ -140,6 +156,6 @@ describe("passport setup", () => {
       },
       callbacks.apple,
     )
-    expect(passport.use).toHaveBeenCalledTimes(4)
+    expect(passport.use).toHaveBeenCalledTimes(5)
   })
 })

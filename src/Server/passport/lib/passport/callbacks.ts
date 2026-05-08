@@ -2,9 +2,9 @@ import artsyXapp from "@artsy/xapp"
 import ip from "ip"
 import extend from "lodash/extend"
 import {
-  requestGravity,
   type GravityError,
   type GravityResponse,
+  requestGravity,
 } from "../http"
 import type { OAuthProfile, PassportDone, PassportRequest } from "../types"
 
@@ -206,6 +206,44 @@ export const google = (
   }
 }
 
+export const googleOneTap = (
+  req: PassportRequest,
+  profile: OAuthProfile,
+  done?: PassportDone,
+) => {
+  requestGravity({
+    body: {
+      client_id: opts.ARTSY_ID,
+      client_secret: opts.ARTSY_SECRET,
+      grant_type: "jwt",
+      jwt: req.body.credential,
+      oauth_provider: "google",
+    },
+    headers: {
+      "User-Agent": req.get("user-agent"),
+      ...(req && req.connection && req.connection.remoteAddress
+        ? { "X-Forwarded-For": resolveProxies(req) }
+        : {}),
+    },
+    method: "POST",
+    url: `${opts.ARTSY_URL}/oauth2/access_token`,
+  })
+    .then(response =>
+      onAccessToken(req, done, {
+        jwt: req.body.credential,
+        provider: "google",
+        name: profile != null ? profile.displayName : undefined,
+      })(null, response),
+    )
+    .catch((err: GravityError) =>
+      onAccessToken(req, done, {
+        jwt: req.body.credential,
+        provider: "google",
+        name: profile != null ? profile.displayName : undefined,
+      })(err, err.response),
+    )
+}
+
 export const apple = (
   req: PassportRequest,
   idToken: string,
@@ -290,6 +328,7 @@ const onAccessToken =
     // error message.
     let accessTokenError = err
     let msg: string | undefined
+
     if (
       (accessTokenError && !(res != null ? res.body : undefined)) ||
       (!accessTokenError && Number(res != null ? res.status : undefined) > 400)

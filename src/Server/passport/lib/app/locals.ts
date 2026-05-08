@@ -34,6 +34,7 @@ const addLocals = (
       "facebookCallbackPath",
       "googlePath",
       "googleCallbackPath",
+      "googleOneTapCallbackPath",
       "loginPagePath",
       "signupPagePath",
       "settingsPagePath",
