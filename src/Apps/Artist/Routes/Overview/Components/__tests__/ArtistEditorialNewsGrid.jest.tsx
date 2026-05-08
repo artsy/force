@@ -138,8 +138,8 @@ describe("ArtistEditorialNewsGrid", () => {
       })
     })
 
-    it("tracks empty state button click", () => {
-      renderWithRelay(
+    it("tracks empty state article clicks", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
         {
           Artist: () => ({
             articlesConnection: {
@@ -150,8 +150,18 @@ describe("ArtistEditorialNewsGrid", () => {
         { showEmptyStateWhenNoArticles: true },
       )
 
+      mockResolveLastOperation({
+        Article: () => ({
+          internalID: "featured-article",
+          href: "/article/featured-article",
+          title: "Featured Article",
+          thumbnailTitle: "Featured Article",
+          vertical: "Art Market",
+        }),
+      })
+
       fireEvent.click(
-        screen.getByRole("link", { name: /browse artsy editorial/i }),
+        await screen.findByRole("link", { name: /featured article/i }),
       )
 
       expect(trackEvent).toBeCalledWith({
@@ -160,8 +170,43 @@ describe("ArtistEditorialNewsGrid", () => {
         context_page_owner_id: "example-artist-id",
         context_page_owner_slug: "example-artist-slug",
         context_page_owner_type: "artist",
+        destination_page_owner_type: "article",
+        type: "thumbnail",
+      })
+    })
+
+    it("tracks empty state view all clicks", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
+        {
+          Artist: () => ({
+            articlesConnection: {
+              edges: [],
+            },
+          }),
+        },
+        { showEmptyStateWhenNoArticles: true },
+      )
+
+      mockResolveLastOperation({
+        Article: () => ({
+          internalID: "featured-article",
+          href: "/article/featured-article",
+          title: "Featured Article",
+          thumbnailTitle: "Featured Article",
+          vertical: "Art Market",
+        }),
+      })
+
+      fireEvent.click(await screen.findByRole("link", { name: "View All" }))
+
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedArticleGroup",
+        context_module: "marketNews",
+        context_page_owner_id: "example-artist-id",
+        context_page_owner_slug: "example-artist-slug",
+        context_page_owner_type: "artist",
         destination_page_owner_type: "articles",
-        type: "emptyState",
+        type: "viewAll",
       })
     })
   })
@@ -181,10 +226,11 @@ describe("ArtistEditorialNewsGrid", () => {
       ).not.toBeInTheDocument()
     })
 
-    it("renders the experiment empty state when enabled and there are no articles", () => {
-      renderWithRelay(
+    it("renders the experiment empty state when enabled and there are no articles", async () => {
+      const { mockResolveLastOperation } = renderWithRelay(
         {
           Artist: () => ({
+            name: "Test Artist",
             articlesConnection: {
               edges: [],
             },
@@ -193,16 +239,24 @@ describe("ArtistEditorialNewsGrid", () => {
         { showEmptyStateWhenNoArticles: true },
       )
 
+      mockResolveLastOperation({
+        Article: () => ({
+          internalID: "featured-article",
+          href: "/article/featured-article",
+          title: "Featured Article",
+          thumbnailTitle: "Featured Article",
+          vertical: "Art Market",
+        }),
+      })
+
       expect(
-        screen.getByText(
-          "There are currently no editorial pieces about this artist.",
-        ),
-      ).toBeInTheDocument()
-      expect(
-        screen.getByText(
-          "Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy.",
-        ),
-      ).toBeInTheDocument()
+        await screen.findByRole("link", { name: "From Artsy Editorial" }),
+      ).toHaveAttribute("href", "/articles")
+      expect(screen.getByRole("link", { name: "View All" })).toHaveAttribute(
+        "href",
+        "/articles",
+      )
+      expect(await screen.findAllByText("Featured Article")).not.toHaveLength(0)
     })
   })
 })

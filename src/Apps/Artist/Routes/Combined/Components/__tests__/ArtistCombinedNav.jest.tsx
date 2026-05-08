@@ -60,30 +60,23 @@ describe("ArtistCombinedNav", () => {
     }))
   })
 
-  it("does not render editorial tab by default", () => {
-    render(
-      <ArtistCombinedNav
-        waitUntil={waitUntil}
-        navigating={{ artworks: false, auction: false, about: false }}
-      />,
-    )
-
-    expect(screen.queryByText("Stories")).not.toBeInTheDocument()
-  })
-
   it("renders editorial tab and jumps to editorial section", async () => {
     render(
       <ArtistCombinedNav
         waitUntil={waitUntil}
-        navigating={{ artworks: false, auction: false, about: false }}
-        showEditorialTab
+        navigating={{
+          artworks: false,
+          auction: false,
+          about: false,
+          editorial: false,
+        }}
       />,
     )
 
-    fireEvent.click(screen.getByText("Stories"))
+    fireEvent.click(screen.getByText("Editorial"))
 
     await waitFor(() => {
-      expect(waitUntil).toHaveBeenCalledWith("about")
+      expect(waitUntil).toHaveBeenCalledWith("editorial")
       expect(mockJumpTo).toHaveBeenCalledWith("artistEditorialTop")
       expect(mockTrackEvent).toHaveBeenCalledWith({
         action: "clickedHeader",
