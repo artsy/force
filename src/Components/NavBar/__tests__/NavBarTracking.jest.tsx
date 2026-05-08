@@ -31,6 +31,12 @@ jest.mock("Components/NavBar/Menus/NavBarUserMenuAvatar", () => ({
   NavBarUserMenuAvatar: () => <div />,
 }))
 
+jest.mock("System/Hooks/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    match: { location: { pathname: "/" } },
+  })),
+}))
+
 describe("NavBarTracking", () => {
   const trackEvent = jest.fn()
 

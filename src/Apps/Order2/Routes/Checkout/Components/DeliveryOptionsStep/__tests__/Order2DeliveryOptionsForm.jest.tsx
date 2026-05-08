@@ -85,6 +85,29 @@ describe("Order2DeliveryOptionsForm", () => {
 
       expect(screen.queryByRole("radio")).not.toBeInTheDocument()
     })
+
+    it("shows white glove description only when white glove is selected", async () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "ARTSY_WHITE_GLOVE",
+                amount: { display: "$25.00" },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(
+        screen.getByText(
+          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
+        ),
+      ).toBeInTheDocument()
+    })
   })
 
   describe("with multiple delivery options", () => {

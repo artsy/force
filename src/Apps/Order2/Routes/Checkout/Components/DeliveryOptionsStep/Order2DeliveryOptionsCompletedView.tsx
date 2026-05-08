@@ -2,6 +2,7 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { INTERNATIONAL_SHIPPING_WARNING } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCallback } from "react"
 
@@ -11,6 +12,8 @@ export interface Order2DeliveryOptionsCompletedViewProps {
   timeEstimateRange: string | null
   price?: string | null
   allowEdit?: boolean
+  shippingOrigin?: string | null
+  shippingRadius?: string | null
 }
 
 export const Order2DeliveryOptionsCompletedView: React.FC<
@@ -19,6 +22,8 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   label,
   timeEstimatePrefix,
   timeEstimateRange,
+  shippingOrigin,
+  shippingRadius,
   price,
   allowEdit = true,
 }) => {
@@ -38,6 +43,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           <Spacer x={1} />
           <SectionHeading>Shipping method</SectionHeading>
         </Flex>
+
         {allowEdit && (
           <Clickable
             textDecoration="underline"
@@ -52,13 +58,22 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           </Clickable>
         )}
       </Flex>
+
       <Box ml="30px" mt={1}>
-        <Flex>
-          <Text variant="sm-display" color="mono100">
-            {[label, price].filter(Boolean).join(" ")}
-          </Text>
-          <Spacer x={2} />
-        </Flex>
+        {shippingOrigin && (
+          <Text variant="xs">Ships from {shippingOrigin}</Text>
+        )}
+
+        {shippingRadius === "international" && (
+          <Text variant="xs">{INTERNATIONAL_SHIPPING_WARNING}</Text>
+        )}
+
+        <Spacer y={2} />
+
+        <Text variant="sm-display" color="mono100">
+          {[label, price].filter(Boolean).join(" ")}
+        </Text>
+
         {timeEstimatePrefix && timeEstimateRange && (
           <Text variant="sm" color="mono60">
             {timeEstimatePrefix} <strong>{timeEstimateRange}</strong>

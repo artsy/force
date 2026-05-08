@@ -21,6 +21,7 @@ import { SingleShippingOption } from "Apps/Order2/Routes/Checkout/Components/Del
 import {
   ARTA_FULFILLMENT_TYPES,
   SELECTABLE_TYPES,
+  INTERNATIONAL_SHIPPING_WARNING,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
@@ -160,9 +161,7 @@ export const Order2DeliveryOptionsForm: React.FC<
         )}
 
         {shippingRadius === "international" && (
-          <Text variant="xs">
-            Additional processing times may vary by destination
-          </Text>
+          <Text variant="xs">{INTERNATIONAL_SHIPPING_WARNING}</Text>
         )}
 
         <Spacer y={2} />

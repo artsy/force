@@ -64,11 +64,15 @@ export const useCompleteDeliveryOptionData = (
     timeEstimatePrefix: timeEstimate?.[0] || null,
     timeEstimateRange: timeEstimate?.[1] || null,
     price: simplePriceDisplay,
+    shippingOrigin: orderData.shippingOrigin,
+    shippingRadius: orderData.shippingRadius,
   }
 }
 
 const FRAGMENT = graphql`
   fragment useCompleteDeliveryOptionData_order on Order {
+    shippingOrigin
+    shippingRadius
     selectedFulfillmentOption {
       type
       amount {

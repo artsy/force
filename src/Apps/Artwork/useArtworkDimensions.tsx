@@ -1,6 +1,3 @@
-import { SystemContext } from "System/Contexts/SystemContext"
-import { useContext } from "react"
-
 interface ArtworkDimensions {
   in: string | null | undefined
   cm: string | null | undefined
@@ -52,13 +49,7 @@ export const useArtworkDimensions = ({
   framed,
   isUnlisted,
 }: UseArtworkDimensionsOptions) => {
-  const { featureFlags } = useContext(SystemContext)
-  const isFeatureEnabled =
-    featureFlags?.isEnabled("topaz_framed-dims-on-artwork-page") ?? false
-
-  // Decide which dimensions to use based on feature flag and availability
-  const hasFramedDims = hasDimensions(framedDimensions)
-  const shouldUseFramedDims = isFeatureEnabled && hasFramedDims
+  const shouldUseFramedDims = hasDimensions(framedDimensions)
   const activeDimensions = shouldUseFramedDims ? framedDimensions : dimensions
 
   const hasActiveDimensions = hasDimensions(activeDimensions)

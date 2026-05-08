@@ -54,7 +54,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const createUserAddress = useOrder2CreateUserAddressMutation()
   const logger = createLogger("Order2DeliveryForm")
 
-  const { addressConnection } = meData
+  const { addressConnection, name: meName, phoneNumber: mePhoneNumber } = meData
 
   const shippableCountries = getShippableCountryData(
     orderData.availableShippingCountries,
@@ -97,10 +97,17 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     useOrder2UnsetOrderFulfillmentOptionMutation()
   const { selectDeliveryOption } = useSelectDeliveryOption()
 
+  const phoneCountryCode =
+    mePhoneNumber?.regionCode ||
+    locationBasedInitialValues.phoneNumberCountryCode ||
+    ""
+  const userPhone =
+    mePhoneNumber?.display ?? mePhoneNumber?.originalNumber ?? ""
+
   const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({
       address: {
-        name: "",
+        name: meName || "",
         country: locationBasedInitialValues.selectedCountry || "",
         postalCode: "",
         addressLine1: "",
@@ -108,12 +115,11 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         city: "",
         region: "",
       },
-      phoneNumber: "",
-      phoneNumberCountryCode:
-        locationBasedInitialValues.phoneNumberCountryCode || "",
+      phoneNumber: userPhone,
+      phoneNumberCountryCode: phoneCountryCode,
       setAsDefault: false,
     }),
-    [locationBasedInitialValues],
+    [locationBasedInitialValues, meName, userPhone, phoneCountryCode],
   )
 
   const initialValues: FormikContextWithAddress = useMemo(
@@ -454,6 +460,12 @@ const DeliveryFormFields: React.FC<DeliveryFormFieldsProps> = ({
 
 const ME_FRAGMENT = graphql`
   fragment Order2DeliveryForm_me on Me {
+    name
+    phoneNumber {
+      display(format: NATIONAL)
+      originalNumber
+      regionCode
+    }
     addressConnection(first: 20) {
       edges {
         node {

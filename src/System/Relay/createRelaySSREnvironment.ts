@@ -1,6 +1,5 @@
-import { getENV } from "Utils/getENV"
-import { getTimeZone } from "Utils/getTimeZone"
-import createLogger from "Utils/logger"
+// Force runs Node with --no-experimental-fetch in production, so keep the fetch polyfill explicit
+import "isomorphic-fetch"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import {
   hasNoCacheParamPresent,
@@ -9,6 +8,9 @@ import {
 } from "System/Relay/isRequestCacheable"
 import { cacheHeaderMiddleware } from "System/Relay/middleware/cacheHeaderMiddleware"
 import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddleware"
+import { getENV } from "Utils/getENV"
+import { getTimeZone } from "Utils/getTimeZone"
+import createLogger from "Utils/logger"
 import { isEmpty } from "lodash"
 import type { Environment as IEnvironment } from "react-relay"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
