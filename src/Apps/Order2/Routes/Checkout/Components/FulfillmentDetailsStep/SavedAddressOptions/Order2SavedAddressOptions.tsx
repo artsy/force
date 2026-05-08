@@ -67,6 +67,7 @@ export const SavedAddressOptions = ({
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
   >(initialSelectedAddress)
+  const [isSelecting, setIsSelecting] = useState(false)
 
   const previousUserAddressMode = usePrevious(userAddressMode)
   const isOfferOrder =
@@ -130,10 +131,7 @@ export const SavedAddressOptions = ({
       savedAddresses.find(a => a.isShippable && a.isValid) || savedAddresses[0]
     if (firstValid) {
       setSelectedAddress(firstValid)
-      if (
-        !firstValid.isValid ||
-        (!firstValid.isShippable && !isOfferOrder)
-      ) {
+      if (!firstValid.isValid || (!firstValid.isShippable && !isOfferOrder)) {
         onSelectInvalidAddress()
       } else {
         onSelectAddress(firstValid)
@@ -236,18 +234,34 @@ export const SavedAddressOptions = ({
     async (processedAddress: ProcessedUserAddress) => {
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
+      setIsSelecting(true)
 
-      if (
-        !processedAddress.isValid ||
-        (!processedAddress.isShippable && !isOfferOrder)
-      ) {
-        await onSelectInvalidAddress()
-        return
+      setSectionErrorMessage({
+        section: CheckoutStepName.DELIVERY_OPTION,
+        error: null,
+      })
+
+      try {
+        if (
+          !processedAddress.isValid ||
+          (!processedAddress.isShippable && !isOfferOrder)
+        ) {
+          await onSelectInvalidAddress()
+          return
+        }
+
+        await onSelectAddress(processedAddress)
+      } finally {
+        setIsSelecting(false)
       }
-
-      await onSelectAddress(processedAddress)
     },
-    [checkoutTracking, isOfferOrder, onSelectAddress, onSelectInvalidAddress],
+    [
+      checkoutTracking,
+      isOfferOrder,
+      onSelectAddress,
+      onSelectInvalidAddress,
+      setSectionErrorMessage,
+    ],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -294,6 +308,7 @@ export const SavedAddressOptions = ({
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
+                disabled={isSelecting && !isSelected}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }
