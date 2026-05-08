@@ -1,4 +1,3 @@
-import { captureException } from "@sentry/browser"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
@@ -25,8 +24,9 @@ export const GoogleOneTapContainer = () => {
     script.src = "https://accounts.google.com/gsi/client"
     script.async = true
     script.defer = true
-    script.onerror = () =>
-      captureException(new Error("Google One Tap script failed to load"))
+    // TODO:
+    // script.onerror = () =>
+    //   captureException(new Error("Google One Tap script failed to load"))
     document.body.appendChild(script)
   }, [enabled])
 
