@@ -5,7 +5,7 @@ orbs:
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.15.0
-  node: circleci/node@5.3.0
+  node: circleci/node@7.2.1
 
 executors:
   node-executor:
