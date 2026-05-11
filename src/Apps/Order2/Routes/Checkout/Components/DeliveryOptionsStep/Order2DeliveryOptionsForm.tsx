@@ -193,7 +193,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 
         <Spacer y={2} />
 
-        {!refreshingOptions ? (
+        {refreshingOptions ? (
           <Skeleton>
             <Flex flexDirection="column" gap={1}>
               {[0, 1, 2].map(i => (
