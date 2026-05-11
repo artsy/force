@@ -267,6 +267,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           order={orderData}
           contextModule={ContextModule.ordersReview}
           isLoading={isFulfillmentDetailsSaving}
+          checkoutTracking={checkoutTracking}
         />
       </Box>
       <Spacer y={2} />

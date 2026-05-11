@@ -195,7 +195,21 @@ const goToOrder2CheckoutIfEnabled: OrderPredicate = ({
   }
 }
 
+const goToOrder2RespondIfEnabled: OrderPredicate = ({
+  order,
+  featureFlags,
+}) => {
+  if (counterofferRedesignEnabled({ order, featureFlags })) {
+    return {
+      path: `/orders2/${order.internalID}/respond`,
+      reason: "Order2 counteroffer is enabled for this order",
+    }
+  }
+}
+
 export const CHECKOUT_REDESIGN_FLAG = "emerald_checkout-redesign"
+export const COUNTEROFFER_REDESIGN_FLAG =
+  "emerald_collector-counteroffer-redesign"
 
 // Temporary type to allow orders queried for the new checkout page to work here
 interface Order2RedirectArgs {
@@ -210,6 +224,16 @@ export const newCheckoutEnabled = ({
   return !!(variant?.enabled && variant?.name === "experiment")
 }
 
+export const counterofferRedesignEnabled = ({
+  order,
+  featureFlags,
+}: Order2RedirectArgs): boolean => {
+  if (!newCheckoutEnabled({ order, featureFlags })) {
+    return false
+  }
+  return !!featureFlags?.isEnabled(COUNTEROFFER_REDESIGN_FLAG)
+}
+
 export const redirects: RedirectRecord<OrderQuery> = {
   path: "",
   rules: [goToArtworkIfOrderWasAbandoned],
@@ -221,6 +245,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToDetailsIfNotAwaitingBuyerResponse,
         goToDetailsIfOrderIsNotSubmitted,
         goToNewPaymentIfOfferLastTransactionFailed,
+        goToOrder2RespondIfEnabled,
       ],
     },
     {
@@ -271,6 +296,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToDetailsIfNotAwaitingBuyerResponse,
         goToDetailsIfOrderIsNotSubmitted,
         goToRespondIfMyLastOfferIsNotMostRecentOffer,
+        goToOrder2RespondIfEnabled,
       ],
     },
     {
@@ -279,6 +305,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToDetailsIfNotOfferOrder,
         goToDetailsIfNotAwaitingBuyerResponse,
         goToDetailsIfOrderIsNotSubmitted,
+        goToOrder2RespondIfEnabled,
       ],
     },
     {
@@ -287,6 +314,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToDetailsIfNotOfferOrder,
         goToDetailsIfNotAwaitingBuyerResponse,
         goToDetailsIfOrderIsNotSubmitted,
+        goToOrder2RespondIfEnabled,
       ],
     },
     {
