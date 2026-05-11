@@ -103,5 +103,6 @@ const ERROR_CODES = {
 const PROVIDERS = {
   facebook: "Facebook",
   google: "Google",
+  "google-one-tap": "Google",
   apple: "Apple",
 }
