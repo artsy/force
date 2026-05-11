@@ -176,9 +176,6 @@ export const SavedAddressOptions = ({
 
   const onSaveAddress = useCallback(
     async (values: FormikContextWithAddress, addressID: string) => {
-      await onSelectAddress(values)
-      setUserAddressMode(null)
-
       const isValid = validateAddressFields(values)
       const isShippable = availableShippingCountries.includes(
         values.address.country,
@@ -193,12 +190,21 @@ export const SavedAddressOptions = ({
         isShippable,
         isDefault,
       })
+      setUserAddressMode(null)
+
+      if (!isValid || (!isShippable && !isOfferOrder)) {
+        await onSelectInvalidAddress()
+      } else {
+        await onSelectAddress(values)
+      }
     },
     [
       onSelectAddress,
+      onSelectInvalidAddress,
       setUserAddressMode,
       availableShippingCountries,
       savedAddresses,
+      isOfferOrder,
     ],
   )
 
