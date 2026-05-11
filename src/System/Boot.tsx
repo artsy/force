@@ -18,6 +18,7 @@ import { FeatureFlagProvider } from "System/FeatureFlags/FeatureFlagContext"
 import type { RouteProps } from "System/Router/Route"
 import type { ClientContext } from "System/Router/Utils/clientAppContext"
 import Events from "Utils/Events"
+import { GoogleOneTapContainer } from "Utils/GoogleOneTapContainer"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import {
   type MatchingMediaQueries,
@@ -91,6 +92,7 @@ export const Boot: React.FC<
                             >
                               <CookieConsentManager>
                                 <SiftContainer />
+                                <GoogleOneTapContainer />
                                 {isDevelopment && (
                                   <>
                                     <DeveloperBreakpointOverlay />

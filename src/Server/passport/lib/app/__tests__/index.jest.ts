@@ -24,6 +24,7 @@ describe("passport app setup", () => {
       facebookCallbackPath: "/users/auth/facebook/callback",
       facebookPath: "/users/auth/facebook",
       googleCallbackPath: "/users/auth/google/callback",
+      googleOneTapCallbackPath: "/users/auth/google/one_tap/callback",
       googlePath: "/users/auth/google",
       loginPagePath: "/log_in",
       logoutPath: "/users/sign_out",
@@ -72,5 +73,17 @@ describe("passport app setup", () => {
     expect(signupPost).toBeDefined()
     expect(signupPost[1]).toBe(csrfMiddleware)
     expect(csrf).toHaveBeenCalledWith({ cookie: true })
+  })
+
+  it("registers the google one tap callback route", () => {
+    const { app, setupApp } = loadSetup()
+
+    setupApp()
+
+    const oneTapPost = app.post.mock.calls.find(
+      ([path]) => path === "/users/auth/google/one_tap/callback",
+    )
+
+    expect(oneTapPost).toBeDefined()
   })
 })

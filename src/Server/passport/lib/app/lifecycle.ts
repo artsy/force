@@ -154,7 +154,7 @@ const signupErrorMessage = (err: GravityError) => {
   return ""
 }
 
-type Provider = "facebook" | "apple" | "google"
+type Provider = "facebook" | "apple" | "google" | "google-one-tap"
 const UNKNOWN_AUTH_ERROR = "An unknown error occurred. Please try again."
 const SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR =
   "Please log in with email and password to use two-factor authentication."

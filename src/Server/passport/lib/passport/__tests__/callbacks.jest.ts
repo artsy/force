@@ -98,6 +98,91 @@ describe("passport callbacks", () => {
     expect(sendArgs.oauth_token).toEqual("foo-token")
   })
 
+  it("gets a user with an access token via google one tap", done => {
+    req.body = { credential: "google-jwt-credential" }
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    cbs.googleOneTap(req, {}, (err, user) => {
+      expect(user.accessToken).toEqual("access-token")
+      done()
+    })
+    const sendArgs = mockRequestGravity.mock.calls[0][0].body
+    expect(sendArgs.grant_type).toEqual("jwt")
+    expect(sendArgs.jwt).toEqual("google-jwt-credential")
+    expect(sendArgs.oauth_provider).toEqual("google")
+  })
+
+  it("passes the user agent through google one tap", async () => {
+    req.body = { credential: "google-jwt-credential" }
+    req.get.mockReturnValue("foo-bar-baz-ua")
+    const res = {
+      body: { error_description: "no account linked" },
+      status: 403,
+    }
+    mockRequestGravity
+      .mockRejectedValueOnce(gravityError(res))
+      .mockImplementationOnce(() => new Promise(() => {}))
+    cbs.googleOneTap(req, { displayName: "Some User" })
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(mockRequestGravity.mock.calls[1][0].headers["User-Agent"]).toEqual(
+      "foo-bar-baz-ua",
+    )
+  })
+
+  it("creates a user and retries google one tap login when no account is linked", done => {
+    req.body = { credential: "google-jwt-credential" }
+    req.connection = { remoteAddress: "99.99.99.99" }
+    req.headers = {}
+    req.session = {
+      accepted_terms_of_service: true,
+      agreed_to_receive_emails: false,
+      sign_up_intent: "buy art",
+      sign_up_referer: "auction",
+    }
+    req.get.mockImplementation(header => {
+      if (header === "referer") {
+        return "https://www.artsy.net/sign_up"
+      }
+      return "chrome-foo"
+    })
+    mockRequestGravity
+      .mockRejectedValueOnce(
+        gravityError({
+          body: { error_description: "no account linked" },
+          status: 403,
+        }),
+      )
+      .mockResolvedValueOnce({})
+      .mockResolvedValueOnce(gravityResponse({ access_token: "access-token" }))
+
+    cbs.googleOneTap(req, { displayName: "Some User" }, (err, user) => {
+      expect(err).toBeNull()
+      expect(user.accessToken).toEqual("access-token")
+      expect(req.artsyPassportSignedUp).toBe(true)
+      expect(mockRequestGravity.mock.calls[1][0]).toEqual(
+        expect.objectContaining({
+          body: expect.objectContaining({
+            accepted_terms_of_service: true,
+            agreed_to_receive_emails: false,
+            jwt: "google-jwt-credential",
+            provider: "google",
+            sign_up_intent: "buy art",
+            sign_up_referer: "auction",
+          }),
+          headers: expect.objectContaining({
+            Referer: "https://www.artsy.net/sign_up",
+            "User-Agent": "chrome-foo",
+          }),
+          method: "POST",
+          url: "http://apiz.artsy.net/api/v1/user",
+        }),
+      )
+      done()
+    })
+  })
+
   it("gets a user with an access token apple", done => {
     mockRequestGravity.mockResolvedValue(
       gravityResponse({ access_token: "access-token" }),

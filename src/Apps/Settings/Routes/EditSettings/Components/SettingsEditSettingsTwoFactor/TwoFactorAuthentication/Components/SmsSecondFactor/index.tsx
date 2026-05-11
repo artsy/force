@@ -17,6 +17,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import { isArtsyEmail } from "Utils/isArtsyEmail"
+import { logout } from "Utils/auth"
 import type { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import type { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import type * as React from "react"
@@ -26,8 +27,6 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
-import request from "superagent"
 import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 
@@ -108,9 +107,7 @@ export const SmsSecondFactor: React.FC<
     if (me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
-      await request
-        .delete("/users/sign_out")
-        .set("X-Requested-With", "XMLHttpRequest")
+      await logout()
 
       location.reload()
     }
