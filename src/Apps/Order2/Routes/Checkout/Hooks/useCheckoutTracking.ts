@@ -22,11 +22,13 @@ import {
   type PageOwnerType,
   type SavedAddressViewed,
   type SavedPaymentMethodViewed,
+  type ShippingQuoteViewed,
   type SubmittedOffer,
   type SubmittedOrder,
   type ToggledCollapsibleOrderSummary,
 } from "@artsy/cohesion"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
+import type { ProcessedUserAddress } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useMemo } from "react"
 import { useTracking } from "react-tracking"
@@ -298,13 +300,28 @@ export const useCheckoutTracking = ({
         trackEvent(payload)
       },
 
-      savedAddressViewed: (addressIds: string[]) => {
+      savedAddressViewed: (addresses: ProcessedUserAddress[]) => {
+        const addressIds = addresses.map(a => a.internalID)
+        const defaultAddress = addresses.find(a => a.isDefault) ?? addresses[0]
         const payload: SavedAddressViewed = {
           action: ActionType.savedAddressViewed,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
           flow,
           address_ids: addressIds,
+          default_address_id: defaultAddress.internalID,
+          default_address_country: defaultAddress.address.country,
+        }
+        trackEvent(payload)
+      },
+
+      shippingQuoteViewed: (quotes: ShippingQuoteViewed["shipping_quotes"]) => {
+        const payload: ShippingQuoteViewed = {
+          action: ActionType.shippingQuoteViewed,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          flow,
+          shipping_quotes: quotes,
         }
         trackEvent(payload)
       },

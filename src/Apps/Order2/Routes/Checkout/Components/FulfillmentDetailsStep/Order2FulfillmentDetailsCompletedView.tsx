@@ -2,6 +2,7 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 export interface FulfillmentDetails {
@@ -24,11 +25,11 @@ export interface Order2FulfillmentDetailsCompletedViewProps {
 export const Order2FulfillmentDetailsCompletedView: React.FC<
   Order2FulfillmentDetailsCompletedViewProps
 > = ({ isPickup, fulfillmentDetails, isOffer = false }) => {
-  const { editFulfillmentDetails, checkoutTracking } = useCheckoutContext()
+  const { editStep, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = () => {
     checkoutTracking.clickedChangeShippingAddress()
-    editFulfillmentDetails()
+    editStep(CheckoutStepName.FULFILLMENT_DETAILS)
   }
 
   if (isPickup) {

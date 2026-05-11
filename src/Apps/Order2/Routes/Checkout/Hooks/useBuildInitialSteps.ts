@@ -3,6 +3,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { applyDeliveryOptionLogic } from "Apps/Order2/Routes/Checkout/CheckoutContext/stepUtils"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCompleteOfferData } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Hooks/useCompleteOfferData"
@@ -67,15 +68,30 @@ export const useBuildInitialSteps = (
     confirmationStep,
   ].filter((step): step is CheckoutStep => step !== false)
 
-  const firstUpcomingStep = steps.find(
+  const firstUpcomingIndex = steps.findIndex(
     step => step.state === CheckoutStepState.UPCOMING,
   )
 
-  if (firstUpcomingStep) {
-    firstUpcomingStep.state = CheckoutStepState.ACTIVE
+  if (firstUpcomingIndex !== -1) {
+    const firstUpcomingStep = steps[firstUpcomingIndex]
+    const prevStep =
+      firstUpcomingIndex > 0 ? steps[firstUpcomingIndex - 1] : null
+
+    // Don't jump directly to PAYMENT on load when a delivery option has
+    // already been selected. Keep the user on DELIVERY_OPTION (ACTIVE) so
+    // they can explicitly confirm and continue to payment themselves.
+    if (
+      firstUpcomingStep.name === CheckoutStepName.PAYMENT &&
+      prevStep?.name === CheckoutStepName.DELIVERY_OPTION &&
+      prevStep.state === CheckoutStepState.COMPLETED
+    ) {
+      prevStep.state = CheckoutStepState.ACTIVE
+    } else {
+      firstUpcomingStep.state = CheckoutStepState.ACTIVE
+    }
   }
 
-  return steps
+  return applyDeliveryOptionLogic(steps)
 }
 
 const FRAGMENT = graphql`

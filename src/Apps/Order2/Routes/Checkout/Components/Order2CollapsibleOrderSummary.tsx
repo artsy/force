@@ -17,7 +17,8 @@ interface Order2CollapsibleOrderSummaryProps {
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
 > = ({ order }) => {
-  const { checkoutTracking, artworkPath } = useCheckoutContext()
+  const { checkoutTracking, artworkPath, isFulfillmentDetailsSaving } =
+    useCheckoutContext()
   const { isEigen } = useSystemContext()
   const orderData = useFragment(FRAGMENT, order)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -120,6 +121,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
           <Order2CheckoutPricingBreakdown
             order={orderData}
             contextModule={ContextModule.ordersCheckout}
+            isLoading={isFulfillmentDetailsSaving}
           />
         </Box>
         <Spacer y={1} />

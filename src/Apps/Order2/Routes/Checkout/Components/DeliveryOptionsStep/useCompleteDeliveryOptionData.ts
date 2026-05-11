@@ -1,5 +1,6 @@
 import type { Order2DeliveryOptionsCompletedViewProps } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsCompletedView"
 import {
+  SELECTABLE_TYPES,
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
@@ -35,13 +36,7 @@ export const useCompleteDeliveryOptionData = (
     }
   }
 
-  const isSpecificMethod = [
-    "ARTSY_STANDARD",
-    "ARTSY_EXPRESS",
-    "ARTSY_WHITE_GLOVE",
-    "DOMESTIC_FLAT",
-    "INTERNATIONAL_FLAT",
-  ].includes(fulfillmentType)
+  const isSpecificMethod = SELECTABLE_TYPES.includes(fulfillmentType)
 
   if (!isSpecificMethod) {
     return null
@@ -49,11 +44,26 @@ export const useCompleteDeliveryOptionData = (
 
   const label = deliveryOptionLabel(fulfillmentType, cost)
   const timeEstimate = deliveryOptionTimeEstimate(fulfillmentType)
+  const isFlatRate = ["DOMESTIC_FLAT", "INTERNATIONAL_FLAT"].includes(
+    fulfillmentType,
+  )
+
+  // We don't use the disambiguated currency symbol in this case because
+  // the full pricing breakdown includes it - it is more like a label for the
+  // delivery option, eg "Domestic Flat Rate $42".
+  // TODO: Possible improvement: allow the Money.display graphQL field to
+  // accept a formatting argument.
+  const amount = orderData.selectedFulfillmentOption?.amount
+  const simplePriceDisplay =
+    isFlatRate && amount && amount.minor > 0
+      ? `${amount.currencySymbol}${amount.major}`
+      : null
 
   return {
     label: label || "",
     timeEstimatePrefix: timeEstimate?.[0] || null,
     timeEstimateRange: timeEstimate?.[1] || null,
+    price: simplePriceDisplay,
     shippingOrigin: orderData.shippingOrigin,
     shippingRadius: orderData.shippingRadius,
   }
@@ -67,6 +77,9 @@ const FRAGMENT = graphql`
       type
       amount {
         minor
+        display
+        currencySymbol
+        major
       }
     }
   }

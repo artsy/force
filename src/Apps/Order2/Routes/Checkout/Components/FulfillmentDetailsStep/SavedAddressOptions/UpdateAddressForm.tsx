@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Button,
   Clickable,
@@ -65,7 +66,8 @@ export const UpdateAddressForm = ({
   const deleteUserAddress = useOrder2DeleteUserAddressMutation()
   const unsetOrderFulfillmentOption =
     useOrder2UnsetOrderFulfillmentOptionMutation()
-  const { setUserAddressMode, orderData } = useCheckoutContext()
+  const { setUserAddressMode, orderData, checkoutTracking } =
+    useCheckoutContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<{
@@ -217,7 +219,17 @@ export const UpdateAddressForm = ({
 
             <Spacer y={4} />
 
-            <Button width="100%" type="submit" loading={isSubmitting}>
+            <Button
+              width="100%"
+              type="submit"
+              onClick={() => {
+                // tracked separately from onSubmit — fires on click regardless of validation
+                checkoutTracking.clickedOrderProgression(
+                  ContextModule.ordersFulfillment,
+                )
+              }}
+              loading={isSubmitting}
+            >
               Save Address
             </Button>
 

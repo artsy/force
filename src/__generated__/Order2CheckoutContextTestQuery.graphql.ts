@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d933a30f94a1f99d94a4ac7a9c5c853>>
+ * @generated SignedSource<<b0827b0779b944918f2be30d425e9fde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type Order2CheckoutContextTestQuery$data = {
       readonly order: {
         readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_order">;
       } | null | undefined;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutContext_me">;
     } | null | undefined;
   } | null | undefined;
 };
@@ -37,7 +38,7 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "minor",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
@@ -47,36 +48,43 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v3 = [
+  (v1/*: any*/),
+  (v2/*: any*/)
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "minor",
   "storageKey": null
 },
-v4 = [
-  (v3/*: any*/),
-  (v2/*: any*/)
-],
 v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
+  "storageKey": null
+},
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Money"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -105,6 +113,11 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2CheckoutContext_me"
+              },
               {
                 "alias": null,
                 "args": (v0/*: any*/),
@@ -155,6 +168,44 @@ return {
             "selections": [
               {
                 "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 20
+                  }
+                ],
+                "concreteType": "UserAddressConnection",
+                "kind": "LinkedField",
+                "name": "addressConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddressEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "UserAddress",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": (v3/*: any*/),
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "addressConnection(first:20)"
+              },
+              {
+                "alias": null,
                 "args": (v0/*: any*/),
                 "concreteType": "Order",
                 "kind": "LinkedField",
@@ -191,14 +242,8 @@ return {
                         "name": "amount",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "display",
-                            "storageKey": null
-                          }
+                          (v4/*: any*/),
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -313,7 +358,22 @@ return {
                         "name": "amount",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/)
+                          (v4/*: any*/),
+                          (v5/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "currencySymbol",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "major",
+                            "storageKey": null
+                          }
                         ],
                         "storageKey": null
                       }
@@ -358,13 +418,13 @@ return {
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v3/*: any*/),
                         "type": "CreditCard",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v3/*: any*/),
                         "type": "BankAccount",
                         "abstractKey": null
                       },
@@ -385,7 +445,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -445,7 +505,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cfd9d22d593ba28b598b3a2e84210ecd",
+    "cacheID": "6b91129cf8b5a357eb7d6efd7a9e07a1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -461,7 +521,27 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "viewer.me.id": (v5/*: any*/),
+        "viewer.me.addressConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddressConnection"
+        },
+        "viewer.me.addressConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "UserAddressEdge"
+        },
+        "viewer.me.addressConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "UserAddress"
+        },
+        "viewer.me.addressConnection.edges.node.id": (v6/*: any*/),
+        "viewer.me.addressConnection.edges.node.internalID": (v6/*: any*/),
+        "viewer.me.id": (v6/*: any*/),
         "viewer.me.order": {
           "enumValues": null,
           "nullable": true,
@@ -474,22 +554,22 @@ return {
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "viewer.me.order.fulfillmentDetails.addressLine1": (v6/*: any*/),
-        "viewer.me.order.fulfillmentDetails.addressLine2": (v6/*: any*/),
-        "viewer.me.order.fulfillmentDetails.city": (v6/*: any*/),
-        "viewer.me.order.fulfillmentDetails.country": (v6/*: any*/),
-        "viewer.me.order.fulfillmentDetails.name": (v6/*: any*/),
+        "viewer.me.order.fulfillmentDetails.addressLine1": (v7/*: any*/),
+        "viewer.me.order.fulfillmentDetails.addressLine2": (v7/*: any*/),
+        "viewer.me.order.fulfillmentDetails.city": (v7/*: any*/),
+        "viewer.me.order.fulfillmentDetails.country": (v7/*: any*/),
+        "viewer.me.order.fulfillmentDetails.name": (v7/*: any*/),
         "viewer.me.order.fulfillmentDetails.phoneNumber": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "viewer.me.order.fulfillmentDetails.phoneNumber.display": (v6/*: any*/),
-        "viewer.me.order.fulfillmentDetails.postalCode": (v6/*: any*/),
-        "viewer.me.order.fulfillmentDetails.region": (v6/*: any*/),
-        "viewer.me.order.id": (v5/*: any*/),
-        "viewer.me.order.internalID": (v5/*: any*/),
+        "viewer.me.order.fulfillmentDetails.phoneNumber.display": (v7/*: any*/),
+        "viewer.me.order.fulfillmentDetails.postalCode": (v7/*: any*/),
+        "viewer.me.order.fulfillmentDetails.region": (v7/*: any*/),
+        "viewer.me.order.id": (v6/*: any*/),
+        "viewer.me.order.internalID": (v6/*: any*/),
         "viewer.me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -502,9 +582,9 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "viewer.me.order.lineItems.artwork.id": (v5/*: any*/),
-        "viewer.me.order.lineItems.artwork.slug": (v5/*: any*/),
-        "viewer.me.order.lineItems.id": (v5/*: any*/),
+        "viewer.me.order.lineItems.artwork.id": (v6/*: any*/),
+        "viewer.me.order.lineItems.artwork.slug": (v6/*: any*/),
+        "viewer.me.order.lineItems.id": (v6/*: any*/),
         "viewer.me.order.mode": {
           "enumValues": [
             "BUY",
@@ -537,8 +617,8 @@ return {
           "plural": false,
           "type": "String"
         },
-        "viewer.me.order.paymentMethodDetails.id": (v5/*: any*/),
-        "viewer.me.order.paymentMethodDetails.internalID": (v5/*: any*/),
+        "viewer.me.order.paymentMethodDetails.id": (v6/*: any*/),
+        "viewer.me.order.paymentMethodDetails.internalID": (v6/*: any*/),
         "viewer.me.order.paymentMethodDetails.isManualPayment": {
           "enumValues": null,
           "nullable": false,
@@ -551,19 +631,27 @@ return {
           "plural": false,
           "type": "Offer"
         },
-        "viewer.me.order.pendingOffer.amount": (v7/*: any*/),
-        "viewer.me.order.pendingOffer.amount.display": (v6/*: any*/),
-        "viewer.me.order.pendingOffer.amount.minor": (v8/*: any*/),
-        "viewer.me.order.pendingOffer.id": (v5/*: any*/),
-        "viewer.me.order.pendingOffer.note": (v6/*: any*/),
+        "viewer.me.order.pendingOffer.amount": (v8/*: any*/),
+        "viewer.me.order.pendingOffer.amount.display": (v7/*: any*/),
+        "viewer.me.order.pendingOffer.amount.minor": (v9/*: any*/),
+        "viewer.me.order.pendingOffer.id": (v6/*: any*/),
+        "viewer.me.order.pendingOffer.note": (v7/*: any*/),
         "viewer.me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FulfillmentOption"
         },
-        "viewer.me.order.selectedFulfillmentOption.amount": (v7/*: any*/),
-        "viewer.me.order.selectedFulfillmentOption.amount.minor": (v8/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount": (v8/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.currencySymbol": (v7/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.display": (v7/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.major": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Float"
+        },
+        "viewer.me.order.selectedFulfillmentOption.amount.minor": (v9/*: any*/),
         "viewer.me.order.selectedFulfillmentOption.type": {
           "enumValues": [
             "ARTSY_EXPRESS",
@@ -578,8 +666,8 @@ return {
           "plural": false,
           "type": "FulfillmentOptionTypeEnum"
         },
-        "viewer.me.order.shippingOrigin": (v6/*: any*/),
-        "viewer.me.order.shippingRadius": (v6/*: any*/),
+        "viewer.me.order.shippingOrigin": (v7/*: any*/),
+        "viewer.me.order.shippingRadius": (v7/*: any*/),
         "viewer.me.order.source": {
           "enumValues": [
             "ARTWORK_PAGE",
@@ -591,16 +679,16 @@ return {
           "plural": false,
           "type": "OrderSourceEnum"
         },
-        "viewer.me.order.stripeConfirmationToken": (v6/*: any*/)
+        "viewer.me.order.stripeConfirmationToken": (v7/*: any*/)
       }
     },
     "name": "Order2CheckoutContextTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "query Order2CheckoutContextTestQuery {\n  viewer {\n    me {\n      ...Order2CheckoutContext_me\n      order(id: \"order-id\") {\n        ...Order2CheckoutContext_order\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Order2CheckoutContext_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0d2bbf974c47774a0e65f0f65adcf893";
+(node as any).hash = "0495032c5174354813cc3a11f58e73cb";
 
 export default node;

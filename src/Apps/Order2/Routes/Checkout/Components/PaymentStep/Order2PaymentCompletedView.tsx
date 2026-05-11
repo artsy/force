@@ -2,6 +2,7 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type {
@@ -18,12 +19,11 @@ export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
 > = ({ order }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  const { editPayment, checkoutTracking, confirmationToken } =
-    useCheckoutContext()
+  const { editStep, checkoutTracking, confirmationToken } = useCheckoutContext()
 
   const onClickEdit = () => {
     checkoutTracking.clickedChangePaymentMethod()
-    editPayment()
+    editStep(CheckoutStepName.PAYMENT)
   }
 
   const savedPaymentMethod = orderData.paymentMethodDetails

@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { INTERNATIONAL_SHIPPING_WARNING } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCallback } from "react"
@@ -9,6 +10,8 @@ export interface Order2DeliveryOptionsCompletedViewProps {
   label: string
   timeEstimatePrefix: string | null
   timeEstimateRange: string | null
+  price?: string | null
+  allowEdit?: boolean
   shippingOrigin?: string | null
   shippingRadius?: string | null
 }
@@ -21,14 +24,16 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   timeEstimateRange,
   shippingOrigin,
   shippingRadius,
+  price,
+  allowEdit = true,
 }) => {
-  const { editDeliveryOption, checkoutTracking } = useCheckoutContext()
+  const { editStep, checkoutTracking } = useCheckoutContext()
 
   const onClickEdit = useCallback(() => {
     checkoutTracking.clickedChangeDeliveryOptions()
 
-    editDeliveryOption()
-  }, [checkoutTracking, editDeliveryOption])
+    editStep(CheckoutStepName.DELIVERY_OPTION)
+  }, [checkoutTracking, editStep])
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
@@ -39,17 +44,19 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           <SectionHeading>Shipping method</SectionHeading>
         </Flex>
 
-        <Clickable
-          textDecoration="underline"
-          cursor="pointer"
-          type="button"
-          aria-label="Edit shipping method"
-          onClick={onClickEdit}
-        >
-          <Text variant="sm" fontWeight="normal" color="mono100">
-            Edit
-          </Text>
-        </Clickable>
+        {allowEdit && (
+          <Clickable
+            textDecoration="underline"
+            cursor="pointer"
+            type="button"
+            aria-label="Edit shipping method"
+            onClick={onClickEdit}
+          >
+            <Text variant="sm" fontWeight="normal" color="mono100">
+              Edit
+            </Text>
+          </Clickable>
+        )}
       </Flex>
 
       <Box ml="30px" mt={1}>
@@ -64,7 +71,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
         <Spacer y={2} />
 
         <Text variant="sm-display" color="mono100">
-          {label}
+          {[label, price].filter(Boolean).join(" ")}
         </Text>
 
         {timeEstimatePrefix && timeEstimateRange && (
