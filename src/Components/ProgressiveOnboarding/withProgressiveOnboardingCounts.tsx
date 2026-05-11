@@ -2,6 +2,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { withProgressiveOnboardingCountsQuery } from "__generated__/withProgressiveOnboardingCountsQuery.graphql"
 import type { ComponentType } from "react"
+import { useEffect, useState } from "react"
 import { graphql } from "react-relay"
 
 export interface WithProgressiveOnboardingCountsProps {
@@ -29,7 +30,18 @@ export const withProgressiveOnboardingCounts = <
   >,
 ): ComponentType<React.PropsWithChildren<Omit<T, "counts">>> => {
   return (props: T) => {
+    const [mounted, setMounted] = useState(false)
     const { isLoggedIn } = useSystemContext()
+
+    useEffect(() => {
+      setMounted(true)
+    }, [])
+
+    if (!mounted) {
+      return (
+        <Component {...props} counts={{ ...INITIAL_COUNTS, isReady: false }} />
+      )
+    }
 
     if (!isLoggedIn) {
       return (
