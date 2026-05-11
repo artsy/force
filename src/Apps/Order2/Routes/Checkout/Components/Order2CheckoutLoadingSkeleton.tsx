@@ -101,16 +101,14 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
                       {props.artworkArtistNames}
                     </SkeletonText>
                     {/* Price and chevron */}
-                    <Flex
-                      flexGrow={0}
-                      justifyContent={"flex-end"}
-                      display={["none", "block", "none"]}
-                    >
-                      <SkeletonText variant="xs" mr={0.5}>
-                        {props.artworkPrice}
-                      </SkeletonText>
-                      <SkeletonBox width={18} height={16} mt="2px" />
-                    </Flex>
+                    <Box display={["none", "block", "block"]}>
+                      <Flex flexGrow={0} justifyContent={"flex-end"}>
+                        <SkeletonText variant="xs" mr={0.5}>
+                          {props.artworkPrice}
+                        </SkeletonText>
+                        <SkeletonBox width={18} height={16} mt="2px" />
+                      </Flex>
+                    </Box>
                   </Flex>
                   <SkeletonText variant="xs">
                     {props.artworkTitle}, {props.artworkDate}
