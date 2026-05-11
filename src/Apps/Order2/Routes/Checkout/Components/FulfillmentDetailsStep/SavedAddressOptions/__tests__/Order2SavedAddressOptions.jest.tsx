@@ -12,6 +12,26 @@ import { SavedAddressOptions } from "../Order2SavedAddressOptions"
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
+let mockAddAddressValues: FormikContextWithAddress
+
+jest.mock("../AddAddressForm", () => ({
+  AddAddressForm: ({
+    onSaveAddress,
+  }: {
+    onSaveAddress: (
+      values: FormikContextWithAddress,
+      id: string,
+    ) => Promise<void>
+  }) => (
+    <button
+      type="button"
+      onClick={() => onSaveAddress(mockAddAddressValues, "new-address-id")}
+    >
+      Save new address
+    </button>
+  ),
+}))
+
 jest.mock("../UpdateAddressForm", () => ({
   UpdateAddressForm: ({
     onDeleteAddress,
@@ -700,6 +720,99 @@ describe("SavedAddressOptions", () => {
       await waitFor(() => {
         expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress2)
       })
+    })
+  })
+
+  describe("Adding a new address", () => {
+    const validNewAddress: FormikContextWithAddress = {
+      phoneNumber: "5551234567",
+      phoneNumberCountryCode: "us",
+      address: {
+        name: "New User",
+        addressLine1: "100 New St",
+        addressLine2: "",
+        city: "New York",
+        region: "NY",
+        postalCode: "10001",
+        country: "US",
+      },
+    }
+
+    beforeEach(() => {
+      mockAddAddressValues = validNewAddress
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        userAddressMode: { mode: "add" },
+      })
+    })
+
+    it("calls onSelectAddress when a valid shippable address is saved", async () => {
+      renderSavedAddressOptions({ availableShippingCountries: ["US"] })
+
+      await userEvent.click(screen.getByText("Save new address"))
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledWith(validNewAddress)
+      })
+      expect(onSelectInvalidAddress).not.toHaveBeenCalled()
+    })
+
+    it("calls onSelectInvalidAddress when the new address has missing required fields", async () => {
+      mockAddAddressValues = {
+        ...validNewAddress,
+        address: { ...validNewAddress.address, name: "", city: "" },
+      }
+
+      renderSavedAddressOptions({ availableShippingCountries: ["US"] })
+
+      await userEvent.click(screen.getByText("Save new address"))
+
+      await waitFor(() => {
+        expect(onSelectInvalidAddress).toHaveBeenCalled()
+      })
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
+    it("calls onSelectInvalidAddress when the new address is not shippable in non-OFFER mode", async () => {
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        userAddressMode: { mode: "add" },
+        orderData: { mode: "BUY" },
+      })
+      mockAddAddressValues = {
+        ...validNewAddress,
+        address: { ...validNewAddress.address, country: "DE" },
+      }
+
+      renderSavedAddressOptions({ availableShippingCountries: ["US"] })
+
+      await userEvent.click(screen.getByText("Save new address"))
+
+      await waitFor(() => {
+        expect(onSelectInvalidAddress).toHaveBeenCalled()
+      })
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
+    it("calls onSelectAddress when the new address is not shippable in OFFER mode", async () => {
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        userAddressMode: { mode: "add" },
+        orderData: { mode: "OFFER" },
+      })
+      mockAddAddressValues = {
+        ...validNewAddress,
+        address: { ...validNewAddress.address, country: "DE" },
+      }
+
+      renderSavedAddressOptions({ availableShippingCountries: ["US"] })
+
+      await userEvent.click(screen.getByText("Save new address"))
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledWith(mockAddAddressValues)
+      })
+      expect(onSelectInvalidAddress).not.toHaveBeenCalled()
     })
   })
 
