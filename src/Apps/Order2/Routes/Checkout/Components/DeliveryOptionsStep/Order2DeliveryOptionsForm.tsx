@@ -20,8 +20,8 @@ import { MultipleShippingOptionsForm } from "Apps/Order2/Routes/Checkout/Compone
 import { SingleShippingOption } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/SingleShippingOption"
 import {
   ARTA_FULFILLMENT_TYPES,
-  SELECTABLE_TYPES,
   INTERNATIONAL_SHIPPING_WARNING,
+  SELECTABLE_TYPES,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
@@ -197,7 +197,7 @@ export const Order2DeliveryOptionsForm: React.FC<
           <Skeleton>
             <Flex flexDirection="column" gap={1}>
               {[0, 1, 2].map(i => (
-                <SkeletonBox key={i} height="52px" width="100%" />
+                <SkeletonBox key={i} height={30} width="100%" />
               ))}
             </Flex>
           </Skeleton>
