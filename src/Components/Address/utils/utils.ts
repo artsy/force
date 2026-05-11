@@ -152,6 +152,22 @@ export const richPhoneValidators = {
   phoneNumberCountryCode: Yup.string(),
 }
 
+export const phoneInitialValuesFromMe = (
+  mePhoneNumber:
+    | {
+        display?: string | null
+        originalNumber?: string | null
+        regionCode?: string | null
+      }
+    | null
+    | undefined,
+): { phoneNumber: string; phoneNumberCountryCode: string } => {
+  return {
+    phoneNumber: mePhoneNumber?.display ?? mePhoneNumber?.originalNumber ?? "",
+    phoneNumberCountryCode: mePhoneNumber?.regionCode ?? "us",
+  }
+}
+
 export const richRequiredPhoneValidators = {
   phoneNumber: richPhoneValidators.phoneNumber.required(
     "Phone number is required",
