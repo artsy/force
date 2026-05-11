@@ -20,6 +20,7 @@ interface AccessTokenParams extends Record<string, unknown> {
   apple_uid?: string
   email?: string
   id_token?: string
+  jwt?: string
   name?: string | null
   oauth_token?: string
   provider?: string
@@ -398,6 +399,11 @@ const onAccessToken =
           if (params!.provider === "apple") {
             auth_params = extend(params, {
               grant_type: "apple_uid",
+            })
+          } else if (params!.jwt) {
+            auth_params = extend(params, {
+              grant_type: "jwt",
+              oauth_provider: "google",
             })
           } else {
             auth_params = extend(params, {
