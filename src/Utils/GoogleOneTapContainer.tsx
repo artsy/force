@@ -3,12 +3,29 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
 
+const AUTH_PATHS = [
+  "/log_in",
+  "/sign_up",
+  "/login",
+  "/signup",
+  "/forgot",
+  "/reset_password",
+  "/auth-redirect",
+]
+
+const isAuthPath = (pathname: string) =>
+  AUTH_PATHS.some(path => pathname.startsWith(path))
+
 export const GoogleOneTapContainer = () => {
   const { isLoggedIn } = useSystemContext()
   const isGoogleOneTapEnabled = !!useFlag("diamond_google-one-tap")
   const googleClientId = getENV("GOOGLE_CLIENT_ID")
 
-  const enabled = !isLoggedIn && isGoogleOneTapEnabled && !!googleClientId
+  const enabled =
+    !isLoggedIn &&
+    isGoogleOneTapEnabled &&
+    !!googleClientId &&
+    !isAuthPath(window.location.pathname)
 
   useEffect(() => {
     if (!enabled) {

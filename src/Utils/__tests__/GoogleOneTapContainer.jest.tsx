@@ -91,6 +91,35 @@ describe("GoogleOneTapContainer", () => {
       render(<GoogleOneTapContainer />)
       expect(document.getElementById("g_id_onload")).not.toBeInTheDocument()
     })
+
+    describe("on auth paths", () => {
+      const originalPathname = window.location.pathname
+
+      afterEach(() => {
+        Object.defineProperty(window, "location", {
+          value: { ...window.location, pathname: originalPathname },
+          writable: true,
+        })
+      })
+
+      it.each([
+        "/log_in",
+        "/sign_up",
+        "/login",
+        "/signup",
+        "/forgot",
+        "/reset_password",
+        "/auth-redirect",
+      ])("does not render on %s", path => {
+        enableOneTap()
+        Object.defineProperty(window, "location", {
+          value: { ...window.location, pathname: path },
+          writable: true,
+        })
+        render(<GoogleOneTapContainer />)
+        expect(document.getElementById("g_id_onload")).not.toBeInTheDocument()
+      })
+    })
   })
 
   describe("GSI script injection", () => {
