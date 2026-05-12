@@ -30,7 +30,6 @@ import {
 } from "Components/Address/AddressFormFields"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
-import { phoneInitialValuesFromMe } from "Components/Address/utils/utils"
 import type { CountryData } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm_me.graphql"
@@ -98,8 +97,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     useOrder2UnsetOrderFulfillmentOptionMutation()
   const { selectDeliveryOption } = useSelectDeliveryOption()
 
-  const { phoneNumber: userPhone, phoneNumberCountryCode: phoneCountryCode } =
-    phoneInitialValuesFromMe(mePhoneNumber)
+  const phoneCountryCode =
+    mePhoneNumber?.regionCode ||
+    locationBasedInitialValues.phoneNumberCountryCode ||
+    ""
+  const userPhone =
+    mePhoneNumber?.display ?? mePhoneNumber?.originalNumber ?? ""
 
   const blankAddressValuesForUser: FormikContextWithAddress = useMemo(
     () => ({

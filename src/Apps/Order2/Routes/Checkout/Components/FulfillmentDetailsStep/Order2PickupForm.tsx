@@ -12,6 +12,7 @@ import {
   handlePhoneNumberChange,
   richRequiredPhoneValidators,
 } from "Components/Address/utils"
+import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
 import type { Order2PickupForm_me$key } from "__generated__/Order2PickupForm_me.graphql"
@@ -121,8 +122,8 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
     ],
   )
 
-  const { phoneNumber: mePhone, phoneNumberCountryCode: mePhoneCountryCode } =
-    phoneInitialValuesFromMe(meData.phoneNumber)
+  const { phoneNumber: mePhone } = phoneInitialValuesFromMe(meData.phoneNumber)
+  const locationValues = useInitialLocationValues()
 
   const initialValues = useMemo(() => {
     const existingPhone =
@@ -139,13 +140,17 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 
     return {
       phoneNumber: mePhone,
-      phoneNumberCountryCode: mePhoneCountryCode,
+      phoneNumberCountryCode:
+        meData.phoneNumber?.regionCode ||
+        locationValues.phoneNumberCountryCode ||
+        "us",
     }
   }, [
     orderData?.selectedFulfillmentOption?.type,
     orderData?.fulfillmentDetails?.phoneNumber,
     mePhone,
-    mePhoneCountryCode,
+    meData.phoneNumber?.regionCode,
+    locationValues.phoneNumberCountryCode,
   ])
 
   return (
