@@ -52,7 +52,7 @@ afterEach(() => {
 const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutContextTestQuery>({
   Component: ({ viewer }: any) => {
     return (
-      <Order2CheckoutContextProvider order={viewer.me.order}>
+      <Order2CheckoutContextProvider order={viewer.me.order} me={viewer.me}>
         <TestComponent />
       </Order2CheckoutContextProvider>
     )
@@ -61,6 +61,7 @@ const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutContextTestQuery>({
     query Order2CheckoutContextTestQuery @relay_test_operation {
       viewer {
         me {
+          ...Order2CheckoutContext_me
           order(id: "order-id") {
             ...Order2CheckoutContext_order
           }
@@ -110,6 +111,7 @@ describe("Order2CheckoutContext", () => {
     await renderWithRelay({
       Viewer: () => ({
         me: {
+          addressConnection: { edges: [] },
           order: {
             ...baseOrderProps,
             ...orderProps,
@@ -148,14 +150,10 @@ describe("Order2CheckoutContext", () => {
         expect.arrayContaining([
           "setExpressCheckoutLoaded",
           "setExpressCheckoutState",
-          "setFulfillmentDetailsComplete",
+          "completeStep",
+          "editStep",
           "setActiveFulfillmentDetailsTab",
-          "editFulfillmentDetails",
-          "setDeliveryOptionComplete",
-          "editDeliveryOption",
-          "editPayment",
           "setLoadingComplete",
-          "setPaymentComplete",
           "setConfirmationToken",
           "setSavePaymentMethod",
           "redirectToOrderDetails",
@@ -193,7 +191,7 @@ describe("Order2CheckoutContext", () => {
         },
         {
           name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.UPCOMING,
+          state: CheckoutStepState.ACTIVE,
         },
         { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.UPCOMING },
         {
@@ -273,7 +271,7 @@ describe("Order2CheckoutContext", () => {
         },
         {
           name: CheckoutStepName.DELIVERY_OPTION,
-          state: CheckoutStepState.UPCOMING,
+          state: CheckoutStepState.ACTIVE,
         },
         { name: CheckoutStepName.PAYMENT, state: CheckoutStepState.UPCOMING },
         {
@@ -340,41 +338,80 @@ describe("Order2CheckoutContext", () => {
       })
     })
 
-    describe("setFulfillmentDetailsComplete", () => {
-      it("completes fulfillment details step and activates next step", async () => {
+    describe("completeStep", () => {
+      it("marks the named step COMPLETED and activates the next step", async () => {
         const { getState, actions } = await setup()
 
         act(() => {
-          actions.setFulfillmentDetailsComplete({})
+          actions.completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
         })
 
-        const fulfillmentStep = getState().steps.find(
-          step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
-        )
-        expect(fulfillmentStep?.state).toBe(CheckoutStepState.COMPLETED)
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+          )?.state,
+        ).toBe(CheckoutStepState.COMPLETED)
 
-        const deliveryStep = getState().steps.find(
-          step => step.name === CheckoutStepName.DELIVERY_OPTION,
-        )
-        expect(deliveryStep?.state).toBe(CheckoutStepState.ACTIVE)
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.DELIVERY_OPTION,
+          )?.state,
+        ).toBe(CheckoutStepState.ACTIVE)
       })
 
-      it("hides delivery option step for pickup", async () => {
+      it("skips HIDDEN steps when activating the next step (pickup flow)", async () => {
         const { getState, actions } = await setup()
 
         act(() => {
-          actions.setFulfillmentDetailsComplete({ isPickup: true })
+          actions.setActiveFulfillmentDetailsTab("PICKUP")
         })
 
-        const deliveryStep = getState().steps.find(
-          step => step.name === CheckoutStepName.DELIVERY_OPTION,
-        )
-        expect(deliveryStep?.state).toBe(CheckoutStepState.HIDDEN)
+        act(() => {
+          actions.completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
+        })
 
-        const paymentStep = getState().steps.find(
-          step => step.name === CheckoutStepName.PAYMENT,
-        )
-        expect(paymentStep?.state).toBe(CheckoutStepState.ACTIVE)
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.DELIVERY_OPTION,
+          )?.state,
+        ).toBe(CheckoutStepState.HIDDEN)
+
+        expect(
+          getState().steps.find(step => step.name === CheckoutStepName.PAYMENT)
+            ?.state,
+        ).toBe(CheckoutStepState.ACTIVE)
+      })
+    })
+
+    describe("editStep", () => {
+      it("re-activates the target step and resets following steps to UPCOMING", async () => {
+        const { getState, actions } = await setup()
+
+        act(() => {
+          actions.completeStep(CheckoutStepName.FULFILLMENT_DETAILS)
+          actions.completeStep(CheckoutStepName.DELIVERY_OPTION)
+        })
+
+        act(() => {
+          actions.editStep(CheckoutStepName.FULFILLMENT_DETAILS)
+        })
+
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
+          )?.state,
+        ).toBe(CheckoutStepState.ACTIVE)
+
+        expect(
+          getState().steps.find(
+            step => step.name === CheckoutStepName.DELIVERY_OPTION,
+          )?.state,
+        ).toBe(CheckoutStepState.ACTIVE)
+
+        expect(
+          getState().steps.find(step => step.name === CheckoutStepName.PAYMENT)
+            ?.state,
+        ).toBe(CheckoutStepState.UPCOMING)
       })
     })
 

@@ -89,7 +89,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
           >
             <Tab name={<Text variant="sm-display">Delivery</Text>}>
               <Box px={[2, 2, 4]}>
-                <Order2DeliveryForm order={orderData} me={meData} />
+                <Order2DeliveryForm
+                  order={orderData}
+                  me={meData}
+                  hasFulfillmentDetails={completedViewProps !== null}
+                />
               </Box>
             </Tab>
             <Tab name={<Text variant="sm-display">Pickup</Text>}>
@@ -100,7 +104,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
           </Tabs>
         ) : (
           <Box px={[2, 2, 4]} hidden={stepState !== CheckoutStepState.ACTIVE}>
-            <Order2DeliveryForm order={orderData} me={meData} />
+            <Order2DeliveryForm
+              order={orderData}
+              me={meData}
+              hasFulfillmentDetails={completedViewProps !== null}
+            />
           </Box>
         )}
       </Box>

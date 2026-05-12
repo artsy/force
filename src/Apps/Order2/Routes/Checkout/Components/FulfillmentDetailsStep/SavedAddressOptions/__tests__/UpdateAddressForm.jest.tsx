@@ -120,6 +120,9 @@ describe("UpdateAddressForm", () => {
     mockUseCheckoutContext.mockReturnValue({
       setUserAddressMode: mockSetUserAddressMode,
       orderData: { internalID: "order-id-123" },
+      checkoutTracking: {
+        clickedOrderProgression: jest.fn(),
+      },
     } as any)
   })
 

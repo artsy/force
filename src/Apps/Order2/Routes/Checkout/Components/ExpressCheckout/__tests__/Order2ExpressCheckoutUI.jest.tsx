@@ -73,7 +73,7 @@ const mockCheckoutContext = {
   redirectToOrderDetails: mockRedirectToOrderDetails,
   setCheckoutMode: mockSetCheckoutMode,
   setConfirmationToken: mockSetConfirmationToken,
-  editFulfillmentDetails: mockEditFulfillmentDetails,
+  editStep: mockEditFulfillmentDetails,
   setSectionErrorMessage: mockSetSectionErrorMessage,
   messages: { ...mockMessages },
 } as any

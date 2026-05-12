@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4147e7d2f3c0cda30ffc4ff325ac2a8>>
+ * @generated SignedSource<<e0952ab96f5e902ccbd81c859540076c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DeliveryOptionsStep_order$data = {
+  readonly fulfillmentOptions: ReadonlyArray<{
+    readonly type: FulfillmentOptionTypeEnum;
+  }>;
   readonly internalID: string;
   readonly selectedFulfillmentOption: {
     readonly amount: {
@@ -19,7 +22,7 @@ export type Order2DeliveryOptionsStep_order$data = {
     } | null | undefined;
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order" | "useCompleteDeliveryOptionData_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsForm_order" | "useCompleteDeliveryOptionData_order" | "useCompleteFulfillmentDetailsData_order">;
   readonly " $fragmentType": "Order2DeliveryOptionsStep_order";
 };
 export type Order2DeliveryOptionsStep_order$key = {
@@ -27,7 +30,15 @@ export type Order2DeliveryOptionsStep_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2DeliveryOptionsStep_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "type",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -37,6 +48,11 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "useCompleteDeliveryOptionData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteFulfillmentDetailsData_order"
     },
     {
       "args": null,
@@ -55,16 +71,22 @@ const node: ReaderFragment = {
       "args": null,
       "concreteType": "FulfillmentOption",
       "kind": "LinkedField",
+      "name": "fulfillmentOptions",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "FulfillmentOption",
+      "kind": "LinkedField",
       "name": "selectedFulfillmentOption",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -90,7 +112,8 @@ const node: ReaderFragment = {
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "4e57194b7cf08815045412601739576b";
+(node as any).hash = "a71ff901e92216a9602799660d734838";
 
 export default node;

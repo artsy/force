@@ -78,7 +78,17 @@ const mockOrder = {
 const { renderWithRelay } =
   setupTestWrapperTL<Order2CollapsibleOrderSummaryTestQuery>({
     Component: (props: any) => {
-      return <Order2CollapsibleOrderSummary order={props.me.order!} />
+      const checkoutTracking = useCheckoutTracking({
+        source: "artwork page",
+        mode: "BUY",
+      })
+      return (
+        <Order2CollapsibleOrderSummary
+          order={props.me.order!}
+          checkoutTracking={checkoutTracking}
+          artworkPath="/artwork/test"
+        />
+      )
     },
     query: graphql`
       query Order2CollapsibleOrderSummaryTestQuery @relay_test_operation {

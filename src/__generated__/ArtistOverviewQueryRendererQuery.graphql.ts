@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1c2f55e8ba0f3a2805eda7f50accf82>>
+ * @generated SignedSource<<c3592a0847fd1809e5e05b84817e1ca6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -183,13 +183,6 @@ return {
                 "kind": "ScalarField",
                 "name": "relatedArtists",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "articles",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -253,12 +246,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bc41d443fb8e1a9fa11061c7b7af5228",
+    "cacheID": "b501bf05149587dcc3d5c0466ac3b12c",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewQueryRendererQuery",
     "operationKind": "query",
-    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

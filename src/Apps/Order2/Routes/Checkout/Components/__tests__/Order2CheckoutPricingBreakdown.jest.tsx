@@ -10,6 +10,7 @@ import { Order2CheckoutPricingBreakdown } from "../Order2CheckoutPricingBreakdow
 
 jest.unmock("react-relay")
 
+let mockIsLoading = false
 let mockCheckoutContext: DeepPartial<ReturnType<typeof useCheckoutContext>>
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => {
@@ -38,6 +39,7 @@ jest.mock("Utils/Hooks/useCountdownTimer", () => ({
 }))
 
 beforeEach(() => {
+  mockIsLoading = false
   mockCheckoutContext = {}
   mockCountdownTimer = {
     remainingTime: "Calculating time",
@@ -53,10 +55,16 @@ const { renderWithRelay } =
   setupTestWrapperTL<Order2CheckoutPricingBreakdownTestQuery>({
     Component: props => {
       const order = props.me!.order!
+      const checkoutTracking = useCheckoutTracking({
+        source: "artwork page",
+        mode: "BUY",
+      })
       return (
         <Order2CheckoutPricingBreakdown
           order={order}
           contextModule={ContextModule.ordersCheckout}
+          isLoading={mockIsLoading}
+          checkoutTracking={checkoutTracking}
         />
       )
     },
@@ -351,5 +359,95 @@ describe("Order2PricingBreakdown", () => {
 
     const totalRow = screen.getByText("Total").parentElement
     expect(totalRow).toHaveTextContent("Waiting for final totals")
+  })
+
+  describe("skeleton", () => {
+    const pricingLinesWithNoAmounts = [
+      {
+        __typename: "SubtotalLine",
+        displayName: "Subtotal",
+        amount: { amount: "1000", currencySymbol: "$" },
+      },
+      {
+        __typename: "ShippingLine",
+        displayName: "Shipping",
+        amountFallbackText: "Calculated in next steps",
+        amount: null,
+      },
+      {
+        __typename: "TaxLine",
+        displayName: "Tax",
+        amountFallbackText: "Calculated in next steps",
+        amount: null,
+      },
+      {
+        __typename: "TotalLine",
+        displayName: "Total",
+        amountFallbackText: "Waiting for final costs",
+        amount: null,
+      },
+    ]
+
+    it("shows skeleton for shipping, tax, and total when isLoading and amounts are null", () => {
+      mockIsLoading = true
+
+      renderWithRelay({
+        Me: () => ({
+          order: { pricingBreakdownLines: pricingLinesWithNoAmounts },
+        }),
+      })
+
+      expect(
+        screen.queryByText("Calculated in next steps"),
+      ).not.toBeInTheDocument()
+      expect(
+        screen.queryByText("Waiting for final costs"),
+      ).not.toBeInTheDocument()
+    })
+
+    it("shows real amounts instead of skeleton when isLoading but amounts are present", () => {
+      mockIsLoading = true
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            pricingBreakdownLines: [
+              {
+                __typename: "ShippingLine",
+                displayName: "Shipping",
+                amountFallbackText: "Calculated in next steps",
+                amount: { amount: "12.00", currencySymbol: "$" },
+              },
+              {
+                __typename: "TotalLine",
+                displayName: "Total",
+                amountFallbackText: "Waiting for final costs",
+                amount: { display: "$US 1012.00" },
+              },
+            ],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Shipping").parentElement).toHaveTextContent(
+        "$12.00",
+      )
+      expect(screen.getByText("Total").parentElement).toHaveTextContent(
+        "$US 1012.00",
+      )
+    })
+
+    it("shows fallback text instead of skeleton when not loading and amounts are null", () => {
+      mockIsLoading = false
+
+      renderWithRelay({
+        Me: () => ({
+          order: { pricingBreakdownLines: pricingLinesWithNoAmounts },
+        }),
+      })
+
+      expect(screen.getAllByText("Calculated in next steps")).toHaveLength(2)
+      expect(screen.getByText("Waiting for final costs")).toBeInTheDocument()
+    })
   })
 })

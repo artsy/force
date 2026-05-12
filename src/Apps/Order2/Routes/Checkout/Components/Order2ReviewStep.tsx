@@ -75,8 +75,9 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     redirectToOrderDetails,
     checkoutTracking,
     artworkPath,
-    editPayment,
+    editStep,
     setSectionErrorMessage,
+    isFulfillmentDetailsSaving,
   } = useCheckoutContext()
 
   const { showCheckoutErrorModal } = useCheckoutModal()
@@ -95,7 +96,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   const [loading, setLoading] = useState(false)
 
   const showPaymentError = () => {
-    editPayment()
+    editStep(CheckoutStepName.PAYMENT)
     setSectionErrorMessage({
       section: CheckoutStepName.PAYMENT,
       error: PAYMENT_METHOD_UPDATE_REQUIRED,
@@ -134,8 +135,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   }
 
   const handleSubmit = async (confirmedSetupIntentId?: any) => {
-    checkoutTracking.clickedOrderProgression(ContextModule.ordersReview)
-
     if (!stripe) return
 
     setLoading(true)
@@ -267,6 +266,8 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         <Order2CheckoutPricingBreakdown
           order={orderData}
           contextModule={ContextModule.ordersReview}
+          isLoading={isFulfillmentDetailsSaving}
+          checkoutTracking={checkoutTracking}
         />
       </Box>
       <Spacer y={2} />
@@ -299,7 +300,13 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Button
             variant="primaryBlack"
             width="100%"
-            onClick={() => handleSubmit()}
+            onClick={() => {
+              // tracked separately from handleSubmit — fires on click regardless of outcome
+              checkoutTracking.clickedOrderProgression(
+                ContextModule.ordersReview,
+              )
+              handleSubmit()
+            }}
             loading={loading}
           >
             Submit

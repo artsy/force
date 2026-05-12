@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2CollapsibleOrderSummary_order$key } from "__generated__/Order2CollapsibleOrderSummary_order.graphql"
@@ -12,20 +12,29 @@ import { graphql, useFragment } from "react-relay"
 
 interface Order2CollapsibleOrderSummaryProps {
   order: Order2CollapsibleOrderSummary_order$key
+  checkoutTracking: ReturnType<typeof useCheckoutTracking>
+  artworkPath: string
+  contextModule?: ContextModule
+  isFulfillmentDetailsSaving?: boolean
 }
 
 export const Order2CollapsibleOrderSummary: React.FC<
   Order2CollapsibleOrderSummaryProps
-> = ({ order }) => {
-  const { checkoutTracking, artworkPath } = useCheckoutContext()
-  const { isEigen } = useSystemContext()
+> = ({
+  order,
+  checkoutTracking,
+  artworkPath,
+  contextModule = ContextModule.ordersCheckout,
+  isFulfillmentDetailsSaving,
+}) => {
   const orderData = useFragment(FRAGMENT, order)
   const [isExpanded, setIsExpanded] = useState(false)
+  const { isEigen } = useSystemContext()
 
   const artworkVersion = orderData.lineItems[0]?.artworkVersion
 
   const handleToggle = () => {
-    checkoutTracking.toggledCollapsibleOrderSummary(!isExpanded)
+    checkoutTracking?.toggledCollapsibleOrderSummary(!isExpanded)
     setIsExpanded(!isExpanded)
   }
 
@@ -68,9 +77,9 @@ export const Order2CollapsibleOrderSummary: React.FC<
               const artworkInternalID =
                 orderData.lineItems[0]?.artwork?.internalID
               if (artworkInternalID) {
-                checkoutTracking.clickedOrderArtworkImage({
+                checkoutTracking?.clickedOrderArtworkImage({
                   destinationPageOwnerId: artworkInternalID,
-                  contextModule: ContextModule.ordersCheckout,
+                  contextModule,
                 })
               }
             }}
@@ -119,7 +128,9 @@ export const Order2CollapsibleOrderSummary: React.FC<
         <Box mb={2}>
           <Order2CheckoutPricingBreakdown
             order={orderData}
-            contextModule={ContextModule.ordersCheckout}
+            contextModule={contextModule}
+            isLoading={isFulfillmentDetailsSaving}
+            checkoutTracking={checkoutTracking}
           />
         </Box>
         <Spacer y={1} />

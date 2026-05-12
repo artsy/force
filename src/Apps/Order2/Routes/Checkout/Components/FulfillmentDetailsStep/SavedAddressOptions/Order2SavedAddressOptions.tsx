@@ -1,6 +1,5 @@
 import AddIcon from "@artsy/icons/AddIcon"
 import {
-  Button,
   Clickable,
   Flex,
   Radio,
@@ -25,8 +24,7 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
-import { useFormikContext } from "formik"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
   unableToShipToAddress: {
@@ -42,14 +40,18 @@ const ADDRESS_ERROR_MESSAGES = {
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
   initialSelectedAddress?: ProcessedUserAddress
+  hasDeliveryAddress: boolean
   onSelectAddress: (address: FormikContextWithAddress) => Promise<void>
+  onSelectInvalidAddress: () => Promise<void> | void
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
 }
 export const SavedAddressOptions = ({
   savedAddresses,
   initialSelectedAddress,
+  hasDeliveryAddress,
   onSelectAddress,
+  onSelectInvalidAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
 }: SavedAddressOptionsProps) => {
@@ -62,11 +64,10 @@ export const SavedAddressOptions = ({
     orderData,
   } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
-  const parentFormikContext = useFormikContext<FormikContextWithAddress>()
-
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
   >(initialSelectedAddress)
+  const [isSelecting, setIsSelecting] = useState(false)
 
   const previousUserAddressMode = usePrevious(userAddressMode)
   const isOfferOrder =
@@ -77,18 +78,25 @@ export const SavedAddressOptions = ({
   )
 
   // Track when saved addresses are viewed (only once when step is active)
+  const hasTrackedAddressViewRef = useRef(false)
+
   useEffect(() => {
+    if (fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE) {
+      hasTrackedAddressViewRef.current = false
+      return
+    }
+
     if (
       !checkoutTracking ||
-      fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE ||
-      !!userAddressMode
+      !!userAddressMode ||
+      hasTrackedAddressViewRef.current
     ) {
       return
     }
 
     if (savedAddresses.length > 0) {
-      const addressIds = savedAddresses.map(address => address.internalID)
-      checkoutTracking.savedAddressViewed(addressIds)
+      checkoutTracking.savedAddressViewed(savedAddresses)
+      hasTrackedAddressViewRef.current = true
     }
   }, [
     savedAddresses,
@@ -105,6 +113,31 @@ export const SavedAddressOptions = ({
       scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
+
+  const isStepActive =
+    fulfillmentDetailsStep?.state === CheckoutStepState.ACTIVE
+
+  // Auto-submit the first valid address when no delivery address is confirmed.
+  // This covers two cases:
+  // 1. Initial load: no fulfillment details saved yet.
+  // 2. Switching back from the Pickup tab: Palette's Tabs unmounts inactive tab
+  //    content, so this component is mounted fresh when the user clicks Delivery.
+  //    The parent passes hasDeliveryAddress=false when the saved fulfillment type
+  //    is PICKUP, so the effect fires on mount as if no address were set.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: when step first becomes active
+  useEffect(() => {
+    if (!isStepActive || hasDeliveryAddress) return
+    const firstValid =
+      savedAddresses.find(a => a.isShippable && a.isValid) || savedAddresses[0]
+    if (firstValid) {
+      setSelectedAddress(firstValid)
+      if (!firstValid.isValid || (!firstValid.isShippable && !isOfferOrder)) {
+        onSelectInvalidAddress()
+      } else {
+        onSelectAddress(firstValid)
+      }
+    }
+  }, [isStepActive])
 
   // Auto-open edit form for the single saved address if it has missing fields
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
@@ -143,9 +176,6 @@ export const SavedAddressOptions = ({
 
   const onSaveAddress = useCallback(
     async (values: FormikContextWithAddress, addressID: string) => {
-      await onSelectAddress(values)
-      setUserAddressMode(null)
-
       const isValid = validateAddressFields(values)
       const isShippable = availableShippingCountries.includes(
         values.address.country,
@@ -160,12 +190,21 @@ export const SavedAddressOptions = ({
         isShippable,
         isDefault,
       })
+      setUserAddressMode(null)
+
+      if (!isValid || (!isShippable && !isOfferOrder)) {
+        await onSelectInvalidAddress()
+      } else {
+        await onSelectAddress(values)
+      }
     },
     [
       onSelectAddress,
+      onSelectInvalidAddress,
       setUserAddressMode,
       availableShippingCountries,
       savedAddresses,
+      isOfferOrder,
     ],
   )
 
@@ -187,20 +226,48 @@ export const SavedAddressOptions = ({
         setSelectedAddress(addressToSelect)
         await onSelectAddress(addressToSelect)
       } else {
+        // No remaining valid address — let the Relay store update naturally switch
+        // the UI to the new-address form. Calling onSelectAddress with blank values
+        // would trigger a form submission with empty fields, causing a validation
+        // error flash and potentially clearing the fulfillment option on the order.
         setSelectedAddress(undefined)
-        await onSelectAddress(newAddressInitialValues)
       }
     },
-    [selectedAddress, savedAddresses, onSelectAddress, newAddressInitialValues],
+    [selectedAddress, savedAddresses, onSelectAddress],
   )
 
   const handleAddressClick = useCallback(
     async (processedAddress: ProcessedUserAddress) => {
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
-      await onSelectAddress(processedAddress)
+      setIsSelecting(true)
+
+      setSectionErrorMessage({
+        section: CheckoutStepName.DELIVERY_OPTION,
+        error: null,
+      })
+
+      try {
+        if (
+          !processedAddress.isValid ||
+          (!processedAddress.isShippable && !isOfferOrder)
+        ) {
+          await onSelectInvalidAddress()
+          return
+        }
+
+        await onSelectAddress(processedAddress)
+      } finally {
+        setIsSelecting(false)
+      }
     },
-    [checkoutTracking, onSelectAddress],
+    [
+      checkoutTracking,
+      isOfferOrder,
+      onSelectAddress,
+      onSelectInvalidAddress,
+      setSectionErrorMessage,
+    ],
   )
 
   if (userAddressMode?.mode === "add") {
@@ -247,6 +314,7 @@ export const SavedAddressOptions = ({
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
+                disabled={isSelecting && !isSelected}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }
@@ -302,22 +370,6 @@ export const SavedAddressOptions = ({
           </Text>
         </Flex>
       </Clickable>
-
-      <Spacer y={4} />
-
-      <Button
-        type="submit"
-        loading={parentFormikContext.isSubmitting}
-        disabled={
-          (!selectedAddress?.isShippable && !isOfferOrder) ||
-          !selectedAddress?.isValid
-        }
-        onClick={() => {
-          parentFormikContext.handleSubmit()
-        }}
-      >
-        See Shipping Methods
-      </Button>
     </Flex>
   )
 }

@@ -733,10 +733,22 @@ describe("Order2CheckoutRoute", () => {
           flow: "Buy now",
         },
         {
+          action: "orderProgressionViewed",
+          context_module: "ordersShippingMethods",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
           action: "clickedFulfillmentTab",
           context_page_owner_id: "order-id",
           flow: "Buy now",
           method: "Pickup",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
         },
         {
           action: "clickedOrderProgression",
@@ -1093,7 +1105,7 @@ describe("Order2CheckoutRoute", () => {
 
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
-      const submitButton = screen.getByText("See Shipping Methods")
+      const submitButton = screen.getByText("Save and Continue")
 
       // Verify submit button does not work
       act(() => {
@@ -1213,9 +1225,6 @@ describe("Order2CheckoutRoute", () => {
           return mockResolveLastOperation({
             updateOrderShippingAddressPayload: () =>
               orderMutationSuccess(initialOrder, {
-                selectedFulfillmentOption: {
-                  type: "DOMESTIC_FLAT",
-                },
                 fulfillmentDetails: {
                   phoneNumber: {
                     originalNumber: "1234567890",
@@ -1256,14 +1265,9 @@ describe("Order2CheckoutRoute", () => {
         await flushPromiseQueue()
       })
 
-      // Complete shipping option step
-      const submitPaymentButton = await screen.findByText("Continue to Payment")
-
+      // Single flat-rate option: auto-save fires on step activation, auto-advances to payment
       let setFulfillmentOptionOperation
-      userEvent.click(submitPaymentButton)
-
       await act(async () => {
-        // Shipping MUTATIONS
         const operation = await waitFor(() => {
           return mockResolveLastOperation({
             setOrderFulfillmentOptionPayload: () =>
@@ -1298,16 +1302,16 @@ describe("Order2CheckoutRoute", () => {
           context_module: "ordersFulfillment",
         },
         {
-          action: "clickedOrderProgression",
-          context_module: "ordersFulfillment",
-        },
-        {
           action: "orderProgressionViewed",
           context_module: "ordersShippingMethods",
         },
         {
           action: "clickedOrderProgression",
-          context_module: "ordersShippingMethods",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersFulfillment",
         },
         {
           action: "orderProgressionViewed",
@@ -1364,7 +1368,7 @@ describe("Order2CheckoutRoute", () => {
 
       expect(screen.getByText("Shipping method")).toBeInTheDocument()
 
-      const submitButton = screen.getByText("See Shipping Methods")
+      const submitButton = screen.getByText("Save and Continue")
 
       const addressInputValue = {
         name: "John Doe",
@@ -1496,7 +1500,7 @@ describe("Order2CheckoutRoute", () => {
                 {
                   node: {
                     internalID: "address-1",
-                    name: "John Doe",
+                    name: "Alice Smith",
                     addressLine1: "123 Main St",
                     addressLine2: "Apt 4",
                     city: "New York",
@@ -1515,7 +1519,7 @@ describe("Order2CheckoutRoute", () => {
                 {
                   node: {
                     internalID: "address-2",
-                    name: "John Doe",
+                    name: "Bob Müller",
                     addressLine1: "345 Marx Str",
                     addressLine2: "Apt 4",
                     city: "Berlin",
@@ -1539,22 +1543,18 @@ describe("Order2CheckoutRoute", () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Viewer: () => props,
         })
-        await helpers.waitForLoadingComplete()
-        await waitFor(() => {
-          expect(screen.getByText("Delivery address")).toBeInTheDocument()
-        })
-        await userEvent.click(screen.getByText("See Shipping Methods"))
 
+        // Flush async Promise chain started by the auto-save effect
         await flushPromiseQueue()
 
-        let mutation
+        // Resolve initial auto-save mutations (fires automatically before skeleton clears)
         await act(async () => {
           await waitFor(() => {
-            mutation = mockResolveLastOperation({
+            mockResolveLastOperation({
               updateOrderShippingAddressPayload: () =>
                 orderMutationSuccess(props.me.order, {
                   fulfillmentDetails: {
-                    name: "John Doe",
+                    name: "Alice Smith",
                     addressLine1: "123 Main St",
                     addressLine2: "Apt 4",
                     city: "New York",
@@ -1566,6 +1566,70 @@ describe("Order2CheckoutRoute", () => {
                       originalNumber: "5551234567",
                     },
                   },
+                  fulfillmentOptions: [{ type: "DOMESTIC_FLAT" }],
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        await helpers.waitForLoadingComplete()
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        // Alice is already auto-selected; switch to Bob to verify explicit address selection
+        act(() => {
+          userEvent.click(screen.getByRole("radio", { name: /Bob/i }))
+        })
+
+        await flushPromiseQueue()
+
+        // Selecting a different address when one is already set: unset → set address → set fulfillment
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              unsetOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: null,
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        let mutation
+        await act(async () => {
+          await waitFor(() => {
+            mutation = mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  fulfillmentDetails: {
+                    name: "Bob Müller",
+                    addressLine1: "345 Marx Str",
+                    addressLine2: "Apt 4",
+                    city: "Berlin",
+                    region: "Berlin",
+                    postalCode: "56789",
+                    country: "DE",
+                    phoneNumber: {
+                      regionCode: "de",
+                      originalNumber: "5559876543",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "DOMESTIC_FLAT" }],
                 }),
             })
           })
@@ -1577,15 +1641,27 @@ describe("Order2CheckoutRoute", () => {
         )
         expect(mutation.operationVariables.input).toEqual({
           id: "order-id",
-          buyerPhoneNumber: "5551234567",
-          buyerPhoneNumberCountryCode: "us",
-          shippingAddressLine1: "123 Main St",
+          buyerPhoneNumber: "5559876543",
+          buyerPhoneNumberCountryCode: "de",
+          shippingAddressLine1: "345 Marx Str",
           shippingAddressLine2: "Apt 4",
-          shippingCity: "New York",
-          shippingRegion: "NY",
-          shippingPostalCode: "10001",
-          shippingCountry: "US",
-          shippingName: "John Doe",
+          shippingCity: "Berlin",
+          shippingRegion: "Berlin",
+          shippingPostalCode: "56789",
+          shippingCountry: "DE",
+          shippingName: "Bob Müller",
+        })
+
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+                }),
+            })
+          })
+          await flushPromiseQueue()
         })
       })
 
@@ -1637,6 +1713,48 @@ describe("Order2CheckoutRoute", () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Viewer: () => props,
         })
+
+        // Flush async Promise chain started by the auto-save effect
+        await flushPromiseQueue()
+
+        // Resolve initial auto-save mutations (fires automatically before skeleton clears)
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  fulfillmentDetails: {
+                    name: "John Doe",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
+                    phoneNumber: {
+                      regionCode: "us",
+                      originalNumber: "5551234567",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "DOMESTIC_FLAT" }],
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
         await helpers.waitForLoadingComplete()
         await waitFor(() => {
           expect(screen.getByText("Delivery address")).toBeInTheDocument()
@@ -1691,9 +1809,48 @@ describe("Order2CheckoutRoute", () => {
           await flushPromiseQueue()
         })
 
+        // After saving, onSaveAddress auto-submits: resolve the delivery address mutation
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              updateOrderShippingAddressPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  fulfillmentDetails: {
+                    name: "John Smith",
+                    addressLine1: "123 Main St",
+                    addressLine2: "Apt 4",
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10001",
+                    country: "US",
+                    phoneNumber: {
+                      regionCode: "us",
+                      originalNumber: "5551234567",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "DOMESTIC_FLAT" }],
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
+        // Resolve the selectDeliveryOption mutation
+        await act(async () => {
+          await waitFor(() => {
+            mockResolveLastOperation({
+              setOrderFulfillmentOptionPayload: () =>
+                orderMutationSuccess(props.me.order, {
+                  selectedFulfillmentOption: { type: "DOMESTIC_FLAT" },
+                }),
+            })
+          })
+          await flushPromiseQueue()
+        })
+
         // Verify we're back to the address selection view
         await waitFor(() => {
-          expect(screen.getByText("See Shipping Methods")).toBeInTheDocument()
+          expect(screen.getByText("Add new address")).toBeInTheDocument()
         })
       })
     })
@@ -1804,6 +1961,18 @@ describe("Order2CheckoutRoute", () => {
         {
           action: "clickedOrderProgression",
           context_module: "ordersFulfillment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersPayment",
+          context_page_owner_id: "order-id",
+          flow: "Buy now",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersReview",
           context_page_owner_id: "order-id",
           flow: "Buy now",
         },

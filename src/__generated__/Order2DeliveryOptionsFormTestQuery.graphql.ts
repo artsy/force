@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2741108dd740def66ec0e2e9bb4d6e29>>
+ * @generated SignedSource<<c8e0f657c167a8cbc56fcbbe839ea549>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,20 +35,41 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "type",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v5 = {
+  "enumValues": [
+    "ARTSY_EXPRESS",
+    "ARTSY_STANDARD",
+    "ARTSY_WHITE_GLOVE",
+    "DOMESTIC_FLAT",
+    "INTERNATIONAL_FLAT",
+    "PICKUP",
+    "SHIPPING_TBD"
+  ],
+  "nullable": false,
+  "plural": false,
+  "type": "FulfillmentOptionTypeEnum"
 };
 return {
   "fragment": {
@@ -114,6 +135,109 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FulfillmentDetails",
+                "kind": "LinkedField",
+                "name": "fulfillmentDetails",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine1",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine2",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "city",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "country",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "postalCode",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "region",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PhoneNumberType",
+                    "kind": "LinkedField",
+                    "name": "phoneNumber",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "INTERNATIONAL"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "display",
+                        "storageKey": "display(format:\"INTERNATIONAL\")"
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FulfillmentOption",
+                "kind": "LinkedField",
+                "name": "selectedFulfillmentOption",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "internalID",
                 "storageKey": null
               },
@@ -146,22 +270,30 @@ return {
                         "kind": "ScalarField",
                         "name": "minor",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "currencyCode",
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "type",
-                    "storageKey": null
-                  },
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "selected",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "shippingQuoteId",
                     "storageKey": null
                   }
                 ],
@@ -181,18 +313,18 @@ return {
                 "name": "shippingRadius",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3a7fcf5538cde3be8ecc733620477d52",
+    "cacheID": "7127d5ee7a587ea0595df6f642d0fa9d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -202,13 +334,33 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v2/*: any*/),
+        "me.id": (v3/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Order"
         },
+        "me.order.fulfillmentDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FulfillmentDetails"
+        },
+        "me.order.fulfillmentDetails.addressLine1": (v4/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v4/*: any*/),
+        "me.order.fulfillmentDetails.city": (v4/*: any*/),
+        "me.order.fulfillmentDetails.country": (v4/*: any*/),
+        "me.order.fulfillmentDetails.name": (v4/*: any*/),
+        "me.order.fulfillmentDetails.phoneNumber": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PhoneNumberType"
+        },
+        "me.order.fulfillmentDetails.phoneNumber.display": (v4/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v4/*: any*/),
+        "me.order.fulfillmentDetails.region": (v4/*: any*/),
         "me.order.fulfillmentOptions": {
           "enumValues": null,
           "nullable": false,
@@ -221,7 +373,13 @@ return {
           "plural": false,
           "type": "Money"
         },
-        "me.order.fulfillmentOptions.amount.display": (v3/*: any*/),
+        "me.order.fulfillmentOptions.amount.currencyCode": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "me.order.fulfillmentOptions.amount.display": (v4/*: any*/),
         "me.order.fulfillmentOptions.amount.minor": {
           "enumValues": null,
           "nullable": false,
@@ -234,29 +392,33 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "me.order.fulfillmentOptions.type": {
+        "me.order.fulfillmentOptions.shippingQuoteId": (v4/*: any*/),
+        "me.order.fulfillmentOptions.type": (v5/*: any*/),
+        "me.order.id": (v3/*: any*/),
+        "me.order.internalID": (v3/*: any*/),
+        "me.order.mode": {
           "enumValues": [
-            "ARTSY_EXPRESS",
-            "ARTSY_STANDARD",
-            "ARTSY_WHITE_GLOVE",
-            "DOMESTIC_FLAT",
-            "INTERNATIONAL_FLAT",
-            "PICKUP",
-            "SHIPPING_TBD"
+            "BUY",
+            "OFFER"
           ],
           "nullable": false,
           "plural": false,
-          "type": "FulfillmentOptionTypeEnum"
+          "type": "OrderModeEnum"
         },
-        "me.order.id": (v2/*: any*/),
-        "me.order.internalID": (v2/*: any*/),
-        "me.order.shippingOrigin": (v3/*: any*/),
-        "me.order.shippingRadius": (v3/*: any*/)
+        "me.order.selectedFulfillmentOption": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FulfillmentOption"
+        },
+        "me.order.selectedFulfillmentOption.type": (v5/*: any*/),
+        "me.order.shippingOrigin": (v4/*: any*/),
+        "me.order.shippingRadius": (v4/*: any*/)
       }
     },
     "name": "Order2DeliveryOptionsFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n    }\n    type\n    selected\n  }\n  shippingOrigin\n  shippingRadius\n}\n"
+    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  mode\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n  shippingRadius\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
   }
 };
 })();

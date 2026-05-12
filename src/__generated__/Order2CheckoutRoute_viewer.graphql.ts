@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7c6cc9aca771fe7cef58b92a765fe67>>
+ * @generated SignedSource<<5fb482b7ece18cb38b240f861cd92721>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type Order2CheckoutRoute_viewer$data = {
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_order" | "Order2CheckoutContext_order">;
     } | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutApp_me" | "Order2CheckoutContext_me">;
   } | null | undefined;
   readonly " $fragmentType": "Order2CheckoutRoute_viewer";
 };
@@ -49,6 +49,11 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "FragmentSpread",
           "name": "Order2CheckoutApp_me"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "Order2CheckoutContext_me"
         },
         {
           "alias": null,
@@ -92,6 +97,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "78b22fd92562bb4ee75880369d75f0b4";
+(node as any).hash = "547621e854a4748fe6672f448c2cb4c6";
 
 export default node;

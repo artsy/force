@@ -1,5 +1,9 @@
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { Order2DeliveryOptionsForm } from "../Order2DeliveryOptionsForm"
@@ -23,6 +27,8 @@ jest.mock(
   }),
 )
 
+const mockShippingQuoteViewed = jest.fn()
+
 beforeEach(() => {
   jest.clearAllMocks()
   mockCheckoutContext = {
@@ -30,9 +36,12 @@ beforeEach(() => {
       clickedOrderProgression: jest.fn(),
       clickedBuyerProtection: jest.fn(),
       clickedSelectShippingOption: jest.fn(),
+      shippingQuoteViewed: mockShippingQuoteViewed,
     },
-    setDeliveryOptionComplete: jest.fn(),
+    completeStep: jest.fn(),
+    setSectionErrorMessage: jest.fn(),
     messages: {},
+    steps: [],
   }
 })
 
@@ -194,6 +203,57 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(standardRadio).not.toBeChecked()
     })
 
+    it("reverts selection visually when the save mutation fails", async () => {
+      mockSetOrderFulfillmentOption.mockRejectedValueOnce(
+        new Error("Network error"),
+      )
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
+            fulfillmentOptions: [
+              {
+                type: "ARTSY_STANDARD",
+                amount: { display: "$25.00" },
+                selected: true,
+              },
+              {
+                type: "ARTSY_EXPRESS",
+                amount: { display: "$50.00" },
+                selected: false,
+              },
+              {
+                type: "ARTSY_WHITE_GLOVE",
+                amount: { display: "$200.00" },
+                selected: false,
+              },
+            ],
+          },
+        }),
+      })
+
+      const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
+      await userEvent.click(whiteGloveRadio)
+
+      // Description appears optimistically
+      expect(
+        screen.getByText(
+          /custom packing, transportation on a fine art shuttle/,
+        ),
+      ).toBeInTheDocument()
+
+      // After mutation failure, description reverts (white glove is no longer "selected")
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            /custom packing, transportation on a fine art shuttle/,
+          ),
+        ).not.toBeInTheDocument()
+      })
+    })
+
     it("calls clickedSelectShippingOption tracking when selecting a shipping option", async () => {
       renderWithRelay(multipleOptionsData)
 
@@ -265,6 +325,92 @@ describe("Order2DeliveryOptionsForm", () => {
         screen.getByText(/Shipping details will be updated after checkout/),
       ).toBeInTheDocument()
       expect(screen.getByText("Ships from New York, NY")).toBeInTheDocument()
+    })
+
+    it("selects SHIPPING_TBD when 'Continue to Payment' is clicked for OFFER orders", async () => {
+      mockSetOrderFulfillmentOption.mockResolvedValue({
+        setOrderFulfillmentOption: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: {
+              internalID: "order-123",
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            mode: "OFFER",
+            shippingOrigin: "New York, NY",
+            fulfillmentOptions: [
+              {
+                type: "SHIPPING_TBD",
+                amount: { display: null },
+                selected: false,
+              },
+            ],
+            selectedFulfillmentOption: null,
+          },
+        }),
+      })
+
+      const continueButton = screen.getByRole("button", {
+        name: "Continue to Payment",
+      })
+
+      await userEvent.click(continueButton)
+
+      await waitFor(() => {
+        expect(mockSetOrderFulfillmentOption).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-123",
+              fulfillmentOption: { type: "SHIPPING_TBD" },
+            },
+          },
+        })
+      })
+
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+        CheckoutStepName.DELIVERY_OPTION,
+      )
+    })
+
+    it("does not select SHIPPING_TBD for BUY orders", async () => {
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            mode: "BUY",
+            shippingOrigin: "New York, NY",
+            fulfillmentOptions: [
+              {
+                type: "SHIPPING_TBD",
+                amount: { display: null },
+                selected: false,
+              },
+            ],
+            selectedFulfillmentOption: null,
+          },
+        }),
+      })
+
+      const continueButton = screen.getByRole("button", {
+        name: "Continue to Payment",
+      })
+
+      await userEvent.click(continueButton)
+
+      // Should not call the mutation for BUY orders
+      expect(mockSetOrderFulfillmentOption).not.toHaveBeenCalled()
+
+      // Should still complete the step
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
+        CheckoutStepName.DELIVERY_OPTION,
+      )
     })
   })
 
@@ -365,6 +511,107 @@ describe("Order2DeliveryOptionsForm", () => {
       })
 
       expect(screen.queryByText(/Ships from/)).not.toBeInTheDocument()
+    })
+  })
+
+  describe("shippingQuoteViewed tracking", () => {
+    const artaOptionsData = {
+      Me: () => ({
+        order: {
+          internalID: "order-123",
+          fulfillmentOptions: [
+            {
+              type: "ARTSY_STANDARD",
+              shippingQuoteId: "quote-standard-id",
+              amount: { display: "$25.00", minor: 2500, currencyCode: "USD" },
+              selected: true,
+            },
+            {
+              type: "ARTSY_EXPRESS",
+              shippingQuoteId: "quote-express-id",
+              amount: { display: "$50.00", minor: 5000, currencyCode: "USD" },
+              selected: false,
+            },
+          ],
+        },
+      }),
+    }
+
+    it("tracks shippingQuoteViewed when step is active and Arta options are present", async () => {
+      mockCheckoutContext.steps = [
+        {
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ]
+
+      renderWithRelay(artaOptionsData)
+
+      await waitFor(() => {
+        expect(mockShippingQuoteViewed).toHaveBeenCalledTimes(1)
+        expect(mockShippingQuoteViewed).toHaveBeenCalledWith([
+          {
+            id: "quote-standard-id",
+            type: "arta",
+            subtype: "standard",
+            price_minor: 2500,
+            price_currency: "USD",
+            timeline: "Est. delivery 3-5 days after shipping",
+          },
+          {
+            id: "quote-express-id",
+            type: "arta",
+            subtype: "express",
+            price_minor: 5000,
+            price_currency: "USD",
+            timeline: "Est. delivery 2 days after shipping",
+          },
+        ])
+      })
+    })
+
+    it("does not track shippingQuoteViewed when step is not active", async () => {
+      mockCheckoutContext.steps = [
+        {
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.UPCOMING,
+        },
+      ]
+
+      renderWithRelay(artaOptionsData)
+
+      await waitFor(() => {
+        expect(mockShippingQuoteViewed).not.toHaveBeenCalled()
+      })
+    })
+
+    it("does not track shippingQuoteViewed when there are no Arta options", async () => {
+      mockCheckoutContext.steps = [
+        {
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.ACTIVE,
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          order: {
+            internalID: "order-123",
+            fulfillmentOptions: [
+              {
+                type: "DOMESTIC_FLAT",
+                shippingQuoteId: null,
+                amount: { display: "$10.00", minor: 1000, currencyCode: "USD" },
+                selected: true,
+              },
+            ],
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(mockShippingQuoteViewed).not.toHaveBeenCalled()
+      })
     })
   })
 })

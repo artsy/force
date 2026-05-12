@@ -17,6 +17,7 @@ import {
   BankAccountBalanceCheckResult,
   Order2PollBankAccountBalanceQueryRenderer,
 } from "Apps/Order2/Components/Order2PollBankAccountBalance"
+import { getLastUsedSavedPaymentMethodId } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import {
   CheckoutStepName,
   CheckoutStepState,
@@ -228,13 +229,14 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const {
     setConfirmationToken,
     checkoutTracking,
-    setPaymentComplete,
+    completeStep,
     setSavePaymentMethod,
     savePaymentMethod,
     activeFulfillmentDetailsTab,
     messages,
     setSectionErrorMessage,
     steps,
+    setLastUsedPaymentMethodId,
   } = useCheckoutContext()
 
   const paymentError = messages[CheckoutStepName.PAYMENT]?.error
@@ -302,6 +304,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       (hasSavedCreditCards || hasSavedBankAccounts)
     ) {
       setSelectedPaymentMethod("saved")
+      const allSavedMethods = [...savedCreditCards, ...allowedSavedBankAccounts]
+      const lastUsedId = getLastUsedSavedPaymentMethodId()
+      const lastUsed = lastUsedId
+        ? (allSavedMethods.find(m => m.internalID === lastUsedId) ?? null)
+        : null
+      setSelectedSavedPaymentMethod(lastUsed ?? allSavedMethods[0] ?? null)
 
       const savedPaymentTypes = [
         hasSavedCreditCards && "CREDIT_CARD",
@@ -390,13 +398,13 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           handleError(PAYMENT_ERROR_MESSAGES.insufficientFunds)
           break
         default:
-          setPaymentComplete()
+          completeStep(CheckoutStepName.PAYMENT)
           setIsSubmittingToStripe(false)
           resetElementsToInitialParams()
           break
       }
     },
-    [handleError, setPaymentComplete, resetElementsToInitialParams],
+    [handleError, completeStep, resetElementsToInitialParams],
   )
 
   const handleBalanceCheckError = useCallback(
@@ -404,11 +412,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       logger.error("Error during balance check:", error)
       setIsCheckingBankBalance(false)
       // On error, proceed with checkout anyway
-      setPaymentComplete()
+      completeStep(CheckoutStepName.PAYMENT)
       setIsSubmittingToStripe(false)
       resetElementsToInitialParams()
     },
-    [setPaymentComplete, resetElementsToInitialParams],
+    [completeStep, resetElementsToInitialParams],
   )
 
   if (!(stripe && elements)) {
@@ -419,7 +427,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     layout: {
       type: "accordion",
       spacedAccordionItems: true,
-      defaultCollapsed: true,
+      defaultCollapsed: hasSavedCreditCards || hasSavedBankAccounts,
       radios: false,
     },
     wallets: {
@@ -552,8 +560,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
       return
     }
 
-    checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
-
     if (isSelectedPaymentMethodStripe) {
       setIsSubmittingToStripe(true)
 
@@ -655,12 +661,12 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         if (paymentMethod === "US_BANK_ACCOUNT") {
           setIsCheckingBankBalance(true)
           // Keep submitting state active during balance check
-          // The balance check handlers will call setPaymentComplete() and setIsSubmittingToStripe(false)
+          // The balance check handlers will call completeStep(CheckoutStepName.PAYMENT) and setIsSubmittingToStripe(false)
           return
         }
 
         // For other payment methods, complete immediately
-        setPaymentComplete()
+        completeStep(CheckoutStepName.PAYMENT)
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
       } catch (error) {
@@ -698,7 +704,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
         setConfirmationToken({ confirmationToken: null })
-        setPaymentComplete()
+        completeStep(CheckoutStepName.PAYMENT)
       }
     }
 
@@ -726,20 +732,21 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
         validateAndExtractOrderResponse(result.setOrderPayment?.orderOrError)
 
+        setLastUsedPaymentMethodId(selectedSavedPaymentMethod.internalID)
         setConfirmationToken({ confirmationToken: null })
 
         // For saved ACH bank accounts, start balance check
         if (paymentMethod === "US_BANK_ACCOUNT") {
           setIsCheckingBankBalance(true)
           // Keep submitting state active during balance check
-          // The balance check handlers will call setPaymentComplete() and setIsSubmittingToStripe(false)
+          // The balance check handlers will call completeStep(CheckoutStepName.PAYMENT) and setIsSubmittingToStripe(false)
           return
         }
 
         // For other saved payment methods, complete immediately
         setIsSubmittingToStripe(false)
         resetElementsToInitialParams()
-        setPaymentComplete()
+        completeStep(CheckoutStepName.PAYMENT)
       } catch (error) {
         handleError(fallbackError("selecting your payment method", error.code))
         logger.error(
@@ -823,6 +830,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
         variant="primaryBlack"
         width="100%"
         type="submit"
+        onClick={() => {
+          // tracked separately from onSubmit — fires on click regardless of validation
+          checkoutTracking.clickedOrderProgression(ContextModule.ordersPayment)
+        }}
       >
         Continue to Review
       </Button>

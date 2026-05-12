@@ -67,7 +67,7 @@
     "sha.js": "^2.4.12"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.352.0",
+    "@artsy/cohesion": "4.354.0",
     "@artsy/detect-responsive-traits": "^0.2.0",
     "@artsy/dismissible": "^0.8.0",
     "@artsy/express-reloadable": "^1.7.0",

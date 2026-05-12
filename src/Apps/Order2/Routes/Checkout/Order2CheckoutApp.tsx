@@ -35,7 +35,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump } from "Utils/Hooks/useJump"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 
@@ -61,6 +61,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     steps,
     checkoutTracking,
     checkoutMode,
+    artworkPath,
+    isFulfillmentDetailsSaving,
   } = useCheckoutContext()
 
   const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
@@ -86,29 +88,40 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     }
   }, [isExpressCheckoutEligible])
 
-  const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
+  const activeStepNames = useMemo(
+    () =>
+      steps
+        .filter(step => step.state === CheckoutStepState.ACTIVE)
+        .map(step => step.name)
+        .join(","),
+    [steps],
+  )
 
   useEffect(() => {
-    switch (activeStep?.name) {
-      case CheckoutStepName.CONFIRMATION:
-        checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
-        break
-      case CheckoutStepName.FULFILLMENT_DETAILS:
-        checkoutTracking.orderProgressionViewed(ContextModule.ordersFulfillment)
-        break
-      case CheckoutStepName.PAYMENT:
-        checkoutTracking.orderProgressionViewed(ContextModule.ordersPayment)
-        break
-      case CheckoutStepName.OFFER_AMOUNT:
-        checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
-        break
-      case CheckoutStepName.DELIVERY_OPTION:
-        checkoutTracking.orderProgressionViewed(
-          ContextModule.ordersShippingMethods,
-        )
-        break
-    }
-  }, [activeStep?.name, checkoutTracking])
+    activeStepNames.split(",").forEach(name => {
+      switch (name) {
+        case CheckoutStepName.CONFIRMATION:
+          checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
+          break
+        case CheckoutStepName.FULFILLMENT_DETAILS:
+          checkoutTracking.orderProgressionViewed(
+            ContextModule.ordersFulfillment,
+          )
+          break
+        case CheckoutStepName.PAYMENT:
+          checkoutTracking.orderProgressionViewed(ContextModule.ordersPayment)
+          break
+        case CheckoutStepName.OFFER_AMOUNT:
+          checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
+          break
+        case CheckoutStepName.DELIVERY_OPTION:
+          checkoutTracking.orderProgressionViewed(
+            ContextModule.ordersShippingMethods,
+          )
+          break
+      }
+    })
+  }, [activeStepNames, checkoutTracking])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
   useEffect(() => {
@@ -153,7 +166,12 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           >
             <Stack gap={1}>
               <Box display={["block", "block", "none"]}>
-                <Order2CollapsibleOrderSummary order={orderData} />
+                <Order2CollapsibleOrderSummary
+                  order={orderData}
+                  checkoutTracking={checkoutTracking}
+                  artworkPath={artworkPath}
+                  isFulfillmentDetailsSaving={isFulfillmentDetailsSaving}
+                />
               </Box>
               {isExpressCheckoutEligible && (
                 <Order2ExpressCheckout order={orderData} />

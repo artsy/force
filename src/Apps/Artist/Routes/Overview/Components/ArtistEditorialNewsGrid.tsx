@@ -2,24 +2,23 @@ import {
   ActionType,
   type ClickedArticleGroup,
   ContextModule,
-  type EntityModuleType,
   OwnerType,
 } from "@artsy/cohesion"
 import {
   Column,
+  GridColumns,
   Image,
+  ResponsiveBox,
   Skeleton,
   SkeletonBox,
   SkeletonText,
-  Stack,
   Text,
 } from "@artsy/palette"
-import { GridColumns, ResponsiveBox } from "@artsy/palette"
+import { ArtistEditorialNewsEmptyState } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsEmptyState"
 import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
-import { EmptyState } from "Components/EmptyState"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -38,17 +37,11 @@ const ARTICLE_COUNT = 6
 
 interface ArtistEditorialNewsGridProps {
   artist: ArtistEditorialNewsGrid_artist$data
-  // diamond_editorial-section
-  showEmptyStateWhenNoArticles?: boolean
 }
 
 const ArtistEditorialNewsGrid: FC<
   React.PropsWithChildren<ArtistEditorialNewsGridProps>
-> = ({
-  artist,
-  // diamond_editorial-section
-  showEmptyStateWhenNoArticles = false,
-}) => {
+> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -59,39 +52,7 @@ const ArtistEditorialNewsGrid: FC<
   const viewAllHref = `${artist.href}/articles`
 
   if (articles.length === 0) {
-    // diamond_editorial-section
-    if (showEmptyStateWhenNoArticles) {
-      return (
-        <Stack gap={2}>
-          <Text variant="lg-display">
-            Artsy Editorial Featuring {artist.name}
-          </Text>
-
-          <EmptyState
-            title="There are currently no editorial pieces about this artist."
-            description="Check back soon — we’ll add coverage as it becomes available. In the meantime, browse art world stories and features on Artsy."
-            action={{
-              label: "Browse Artsy Editorial",
-              href: "/articles",
-              onClick: () => {
-                const trackingEvent: ClickedArticleGroup = {
-                  action: ActionType.clickedArticleGroup,
-                  context_module: ContextModule.marketNews,
-                  context_page_owner_type: contextPageOwnerType!,
-                  context_page_owner_id: contextPageOwnerId,
-                  context_page_owner_slug: contextPageOwnerSlug,
-                  destination_page_owner_type: OwnerType.articles,
-                  type: "emptyState" as EntityModuleType,
-                }
-                trackEvent(trackingEvent)
-              },
-            }}
-          />
-        </Stack>
-      )
-    }
-
-    return null
+    return <ArtistEditorialNewsEmptyState />
   }
 
   const [firstArticle, ...restOfArticles] = articles
@@ -297,14 +258,8 @@ const PLACEHOLDER = (
 export const ArtistEditorialNewsGridQueryRenderer: FC<
   React.PropsWithChildren<{
     id: string
-    // diamond_editorial-section
-    showEmptyStateWhenNoArticles?: boolean
   }>
-> = ({
-  id,
-  // diamond_editorial-section
-  showEmptyStateWhenNoArticles = false,
-}) => {
+> = ({ id }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -330,11 +285,7 @@ export const ArtistEditorialNewsGridQueryRenderer: FC<
         }
 
         return (
-          <ArtistEditorialNewsGridFragmentContainer
-            artist={props.artist}
-            // diamond_editorial-section
-            showEmptyStateWhenNoArticles={showEmptyStateWhenNoArticles}
-          />
+          <ArtistEditorialNewsGridFragmentContainer artist={props.artist} />
         )
       }}
     />

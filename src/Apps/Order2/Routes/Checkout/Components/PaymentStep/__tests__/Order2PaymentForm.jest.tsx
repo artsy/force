@@ -1,4 +1,4 @@
-import { Elements } from "@stripe/react-stripe-js"
+import { Elements, PaymentElement } from "@stripe/react-stripe-js"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -6,6 +6,16 @@ import type { Order2PaymentFormTestQuery } from "__generated__/Order2PaymentForm
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2PaymentForm } from "../Order2PaymentForm"
+
+jest.mock(
+  "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext",
+  () => ({
+    ...jest.requireActual(
+      "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext",
+    ),
+    getLastUsedSavedPaymentMethodId: jest.fn(() => mockLastUsedPaymentMethodId),
+  }),
+)
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -95,7 +105,7 @@ jest.mock("react-relay", () => {
 const mockCheckoutContext = {
   setConfirmationToken: jest.fn(),
   setSavePaymentMethod: jest.fn(),
-  setPaymentComplete: jest.fn(),
+  completeStep: jest.fn(),
   savePaymentMethod: false,
   messages: {
     PAYMENT: {
@@ -118,6 +128,9 @@ const mockCheckoutContext = {
     },
   ],
   activeFulfillmentDetailsTab: "DELIVERY" as "PICKUP" | "DELIVERY" | null,
+  setLastUsedPaymentMethodId: jest.fn((id: string) => {
+    mockLastUsedPaymentMethodId = id
+  }),
 }
 
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
@@ -135,6 +148,8 @@ jest.mock(
     useOrder2SetOrderPaymentMutation: () => mockSetPaymentMutation,
   }),
 )
+
+let mockLastUsedPaymentMethodId: string | null = null
 
 // Mock balance check component - store callback for manual triggering in tests
 let mockOnBalanceCheckComplete:
@@ -233,6 +248,7 @@ const waitForPaymentElement = async () => {
 beforeEach(() => {
   jest.clearAllMocks()
   mockOnBalanceCheckComplete = null
+  mockLastUsedPaymentMethodId = null
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: jest.fn(),
   }))
@@ -983,7 +999,7 @@ describe("Order2PaymentForm", () => {
      * 2. Fetch confirmation token details from Exchange
      * 3. setOrderPaymentMutation with corresponding payment method (CREDIT_CARD, US_BANK_ACCOUNT, or SEPA_DEBIT)
      * 4. setConfirmationToken with payment method preview
-     * 5. setPaymentComplete
+     * 5. completeStep
      *
      * Saved Credit Card / Bank Account:
      * 1. No Stripe interaction needed
@@ -1105,9 +1121,9 @@ describe("Order2PaymentForm", () => {
       expect(mockOnBalanceCheckComplete).not.toBeNull()
       mockOnBalanceCheckComplete?.("SUFFICIENT")
 
-      // Wait for balance check to complete and trigger setPaymentComplete
+      // Wait for balance check to complete and trigger completeStep
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1178,7 +1194,7 @@ describe("Order2PaymentForm", () => {
         })
       })
 
-      expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+      expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
     })
 
     it("handles wire transfer submission error", async () => {
@@ -1548,9 +1564,9 @@ describe("Order2PaymentForm", () => {
       expect(mockOnBalanceCheckComplete).not.toBeNull()
       mockOnBalanceCheckComplete?.("SUFFICIENT")
 
-      // Verify setPaymentComplete is called after balance check completes
+      // Verify completeStep is called after balance check completes
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1629,9 +1645,9 @@ describe("Order2PaymentForm", () => {
       expect(mockOnBalanceCheckComplete).not.toBeNull()
       mockOnBalanceCheckComplete?.("SUFFICIENT")
 
-      // Verify setPaymentComplete is called after balance check completes
+      // Verify completeStep is called after balance check completes
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
     })
 
@@ -1700,8 +1716,168 @@ describe("Order2PaymentForm", () => {
 
       // Verify payment completes immediately without balance check
       await waitFor(() => {
-        expect(mockCheckoutContext.setPaymentComplete).toHaveBeenCalled()
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
       })
+    })
+  })
+
+  describe("default payment selection", () => {
+    it("auto-selects the first saved payment method without user interaction", async () => {
+      const savedCards = [
+        {
+          __typename: "CreditCard",
+          id: "card-1",
+          internalID: "card-1",
+          brand: "Visa",
+          last4: "1234",
+          lastDigits: "1234",
+          expirationMonth: 12,
+          expirationYear: 2025,
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+        }),
+      })
+
+      await waitForPaymentElement()
+
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
+        setOrderPayment: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: { paymentMethod: "CREDIT_CARD" },
+          },
+        },
+      })
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+              paymentMethod: "CREDIT_CARD",
+              paymentMethodId: "card-1",
+            },
+          },
+        })
+      })
+    })
+
+    it("opens the Stripe payment element when there are no saved payments", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      const calls = (PaymentElement as jest.Mock).mock.calls
+      const lastCallOptions = calls[calls.length - 1][0].options
+      expect(lastCallOptions.layout.defaultCollapsed).toBe(false)
+    })
+
+    it("pre-selects the last-used payment method from localStorage over the first card", async () => {
+      const savedCards = [
+        {
+          __typename: "CreditCard",
+          id: "card-1",
+          internalID: "card-1",
+          brand: "Visa",
+          last4: "1111",
+          lastDigits: "1111",
+          expirationMonth: 1,
+          expirationYear: 2026,
+        },
+        {
+          __typename: "CreditCard",
+          id: "card-2",
+          internalID: "card-2",
+          brand: "Mastercard",
+          last4: "2222",
+          lastDigits: "2222",
+          expirationMonth: 6,
+          expirationYear: 2027,
+        },
+      ]
+
+      mockLastUsedPaymentMethodId = "card-2"
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+        }),
+      })
+
+      await waitForPaymentElement()
+
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
+        setOrderPayment: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: { paymentMethod: "CREDIT_CARD" },
+          },
+        },
+      })
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        expect(mockSetPaymentMutation.submitMutation).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-id",
+              paymentMethod: "CREDIT_CARD",
+              paymentMethodId: "card-2",
+            },
+          },
+        })
+      })
+    })
+
+    it("saves the used payment method ID to localStorage after successful submission", async () => {
+      const savedCards = [
+        {
+          __typename: "CreditCard",
+          id: "card-1",
+          internalID: "card-1",
+          brand: "Visa",
+          last4: "1234",
+          lastDigits: "1234",
+          expirationMonth: 12,
+          expirationYear: 2025,
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+        }),
+      })
+
+      await waitForPaymentElement()
+
+      mockSetPaymentMutation.submitMutation.mockResolvedValueOnce({
+        setOrderPayment: {
+          orderOrError: {
+            __typename: "OrderMutationSuccess",
+            order: { paymentMethod: "CREDIT_CARD" },
+          },
+        },
+      })
+
+      await userEvent.click(screen.getByText("Continue to Review"))
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.completeStep).toHaveBeenCalled()
+      })
+
+      expect(
+        mockCheckoutContext.setLastUsedPaymentMethodId,
+      ).toHaveBeenCalledWith("card-1")
     })
   })
 

@@ -1,7 +1,7 @@
 import type { ContextModule } from "@artsy/cohesion"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
-import { Flex, Spacer, Text } from "@artsy/palette"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { Flex, SkeletonText, Spacer, Text } from "@artsy/palette"
+import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import type {
@@ -15,6 +15,8 @@ import { graphql, useFragment } from "react-relay"
 interface Order2CheckoutPricingBreakdownProps {
   order: Order2CheckoutPricingBreakdown_order$key
   contextModule: ContextModule
+  isLoading?: boolean
+  checkoutTracking: ReturnType<typeof useCheckoutTracking>
 }
 
 const TAX_CALCULATION_ARTICLE_URL =
@@ -22,8 +24,7 @@ const TAX_CALCULATION_ARTICLE_URL =
 
 export const Order2CheckoutPricingBreakdown: React.FC<
   Order2CheckoutPricingBreakdownProps
-> = ({ order, contextModule }) => {
-  const { checkoutTracking } = useCheckoutContext()
+> = ({ order, contextModule, isLoading, checkoutTracking }) => {
   const orderData = useFragment(FRAGMENT, order)
   const { mode, pendingOffer, source, buyerStateExpiresAt } = orderData
 
@@ -64,6 +65,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
         let secondLine: JSX.Element | null = null
 
         let amountText = ""
+        let showSkeleton = false
         switch (typename) {
           case "SubtotalLine":
             if (line.amount) {
@@ -92,22 +94,35 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 
             break
           case "ShippingLine":
-            amountText = line.amount
-              ? `${line.amount.currencySymbol}${line.amount.amount}`
-              : (line.amountFallbackText as string)
+            if (line.amount) {
+              amountText = `${line.amount.currencySymbol}${line.amount.amount}`
+            } else if (isLoading) {
+              showSkeleton = true
+            } else {
+              amountText = line.amountFallbackText as string
+            }
             break
           case "TaxLine":
-            amountText = line.amount
-              ? `${line.amount.currencySymbol}${line.amount.amount}`
-              : (line.amountFallbackText as string)
+            if (line.amount) {
+              amountText = `${line.amount.currencySymbol}${line.amount.amount}`
+            } else if (isLoading) {
+              showSkeleton = true
+            } else {
+              amountText = line.amountFallbackText as string
+            }
             withAsterisk = true
             break
           case "TotalLine":
             variant = "sm-display"
             fontWeight = "bold"
             color = "mono100"
-            amountText = (line.amount?.display ||
-              line.amountFallbackText) as string
+            if (line.amount?.display) {
+              amountText = line.amount.display
+            } else if (isLoading) {
+              showSkeleton = true
+            } else {
+              amountText = line.amountFallbackText as string
+            }
         }
 
         return (
@@ -119,7 +134,11 @@ export const Order2CheckoutPricingBreakdown: React.FC<
                 {withAsterisk && "*"}
               </Text>
               <Text flexGrow={0} variant={variant} fontWeight={fontWeight}>
-                {amountText}
+                {showSkeleton ? (
+                  <SkeletonText variant={variant}>Loading</SkeletonText>
+                ) : (
+                  amountText
+                )}
               </Text>
             </Flex>
             {secondLine}
@@ -134,7 +153,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => {
-            checkoutTracking.clickedImportFees(contextModule)
+            checkoutTracking?.clickedImportFees(contextModule)
           }}
         >
           may apply at import
