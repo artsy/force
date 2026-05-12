@@ -74,7 +74,7 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           {[label, price].filter(Boolean).join(" ")}
         </Text>
 
-        {timeEstimatePrefix && timeEstimateRange && (
+        {timeEstimateRange && (
           <Text variant="sm" color="mono60">
             {timeEstimatePrefix} <strong>{timeEstimateRange}</strong>
           </Text>
