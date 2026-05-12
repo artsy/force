@@ -10,7 +10,10 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
-import { richPhoneValidators } from "Components/Address/utils"
+import {
+  handlePhoneNumberChange,
+  richPhoneValidators,
+} from "Components/Address/utils"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
@@ -171,7 +174,7 @@ export const SettingsEditSettingsInformation: React.FC<
                 label="Phone Number"
                 mt={4}
                 name="phoneNumber"
-                onChange={handleChange}
+                onChange={e => handlePhoneNumberChange(e, setFieldValue)}
                 onBlur={handleBlur}
                 options={countryPhoneOptions}
                 onSelect={option => {
