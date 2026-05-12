@@ -91,7 +91,7 @@ const setupApp = () => {
   // Google One Tap
   app.post(
     opts.googleOneTapCallbackPath,
-    middleware(afterSocialAuth("google-one-tap")),
+    middleware(afterSocialAuth("google", "one-tap")),
     middleware(trackSignup("google-one-tap")),
     middleware(ssoAndRedirectBack),
   )
