@@ -55,11 +55,16 @@ const { renderWithRelay } =
   setupTestWrapperTL<Order2CheckoutPricingBreakdownTestQuery>({
     Component: props => {
       const order = props.me!.order!
+      const checkoutTracking = useCheckoutTracking({
+        source: "artwork page",
+        mode: "BUY",
+      })
       return (
         <Order2CheckoutPricingBreakdown
           order={order}
           contextModule={ContextModule.ordersCheckout}
           isLoading={mockIsLoading}
+          checkoutTracking={checkoutTracking}
         />
       )
     },

@@ -12,6 +12,7 @@ import type { ApiError } from "Apps/Settings/Routes/EditSettings/Components/Sett
 import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { logout } from "Utils/auth"
 import type { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
 import type { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import type * as React from "react"
@@ -21,8 +22,6 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
-import request from "superagent"
 import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 
@@ -102,9 +101,7 @@ export const AppSecondFactor: React.FC<
     if (me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
-      await request
-        .delete("/users/sign_out")
-        .set("X-Requested-With", "XMLHttpRequest")
+      await logout()
 
       location.reload()
     }

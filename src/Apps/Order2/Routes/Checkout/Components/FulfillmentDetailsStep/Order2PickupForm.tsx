@@ -9,6 +9,7 @@ import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/C
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
 import {
   phoneInitialValuesFromMe,
+  handlePhoneNumberChange,
   richRequiredPhoneValidators,
 } from "Components/Address/utils"
 import { countries as phoneCountryOptions } from "Utils/countries"
@@ -205,7 +206,7 @@ const PickupFormInput: React.FC = () => {
         label="Phone number"
         mt={1}
         name="phoneNumber"
-        onChange={formikContext.handleChange}
+        onChange={e => handlePhoneNumberChange(e, formikContext.setFieldValue)}
         onBlur={formikContext.handleBlur}
         data-testid={"PickupPhoneNumberInput"}
         options={phoneCountryOptions}

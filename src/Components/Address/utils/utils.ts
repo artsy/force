@@ -135,20 +135,29 @@ export const basicPhoneValidator = {
     .matches(/^[+\-\(\)\d\s]+$/, "Please enter a valid phone number"),
 }
 
+export const handlePhoneNumberChange = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  setFieldValue: (field: string, value: string) => void,
+): void => {
+  setFieldValue("phoneNumber", e.target.value.replace(/[a-zA-Z]/g, ""))
+}
+
 export const richPhoneValidators = {
-  phoneNumber: Yup.string().test({
-    name: "phone-number-is-valid",
-    message: "Please enter a valid phone number",
-    test: (national, context) => {
-      if (!national || national.length === 0) {
-        return true
-      }
-      return validatePhoneNumber({
-        national: `${national}`,
-        regionCode: `${context.parent.phoneNumberCountryCode}`,
-      })
-    },
-  }),
+  phoneNumber: Yup.string()
+    .matches(/^[^a-zA-Z]*$/, "Please enter a valid phone number")
+    .test({
+      name: "phone-number-is-valid",
+      message: "Please enter a valid phone number",
+      test: (national, context) => {
+        if (!national || national.length === 0) {
+          return true
+        }
+        return validatePhoneNumber({
+          national: `${national}`,
+          regionCode: `${context.parent.phoneNumberCountryCode}`,
+        })
+      },
+    }),
   phoneNumberCountryCode: Yup.string(),
 }
 

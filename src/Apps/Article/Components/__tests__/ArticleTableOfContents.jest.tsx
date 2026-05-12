@@ -28,22 +28,20 @@ const { renderWithRelay } = setupTestWrapperTL({
   `,
 })
 
-const FIVE_HEADINGS = [
+const THREE_HEADINGS = [
   { heading: "Section One", slug: "section-one" },
   { heading: "Section Two", slug: "section-two" },
   { heading: "Section Three", slug: "section-three" },
-  { heading: "Section Four", slug: "section-four" },
-  { heading: "Section Five", slug: "section-five" },
 ]
 
 describe("ArticleTableOfContents", () => {
-  describe("when the outline has fewer than five entries", () => {
+  describe("when the outline has fewer than three entries", () => {
     it("renders nothing", () => {
       renderWithRelay({
         Article: () => ({
           slug: "example-article",
           href: "/article/example-article",
-          outline: FIVE_HEADINGS.slice(0, 4),
+          outline: THREE_HEADINGS.slice(0, 2),
         }),
       })
 
@@ -53,13 +51,13 @@ describe("ArticleTableOfContents", () => {
     })
   })
 
-  describe("when the outline has at least five entries", () => {
+  describe("when the outline has at least three entries", () => {
     const renderToc = () =>
       renderWithRelay({
         Article: () => ({
           slug: "example-article",
           href: "/article/example-article",
-          outline: FIVE_HEADINGS,
+          outline: THREE_HEADINGS,
         }),
       })
 
@@ -71,9 +69,9 @@ describe("ArticleTableOfContents", () => {
 
       const list = nav.querySelector("ol")
       expect(list).not.toBeNull()
-      expect(list?.querySelectorAll("li")).toHaveLength(FIVE_HEADINGS.length)
+      expect(list?.querySelectorAll("li")).toHaveLength(THREE_HEADINGS.length)
 
-      for (const { heading, slug } of FIVE_HEADINGS) {
+      for (const { heading, slug } of THREE_HEADINGS) {
         const link = screen.getByRole("link", { name: heading })
         expect(link).toHaveAttribute("href", `#JUMP--example-article--${slug}`)
       }
@@ -97,7 +95,7 @@ describe("ArticleTableOfContents", () => {
         name: "Table of contents",
       })
       expect(data.itemListElement).toEqual(
-        FIVE_HEADINGS.map((entry, index) => ({
+        THREE_HEADINGS.map((entry, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: entry.heading,

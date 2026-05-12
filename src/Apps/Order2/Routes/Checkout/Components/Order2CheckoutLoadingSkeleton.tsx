@@ -97,18 +97,20 @@ const Order2CollapsibleOrderSummarySkeleton: React.FC<
                 {/* Artwork details */}
                 <Box ml={1} flexGrow={1}>
                   <Flex>
-                    <SkeletonText variant="sm" flexGrow={1}>
+                    <SkeletonText variant="xs" flexGrow={1}>
                       {props.artworkArtistNames}
                     </SkeletonText>
                     {/* Price and chevron */}
-                    <Flex flexGrow={0} justifyContent={"flex-end"}>
-                      <SkeletonText variant="sm" mr={0.5}>
-                        {props.artworkPrice}
-                      </SkeletonText>
-                      <SkeletonBox width={18} height={16} mt="2px" />
-                    </Flex>
+                    <Box display={["none", "block", "block"]}>
+                      <Flex flexGrow={0} justifyContent={"flex-end"}>
+                        <SkeletonText variant="xs" mr={0.5}>
+                          {props.artworkPrice}
+                        </SkeletonText>
+                        <SkeletonBox width={18} height={16} mt="2px" />
+                      </Flex>
+                    </Box>
                   </Flex>
-                  <SkeletonText variant="sm">
+                  <SkeletonText variant="xs">
                     {props.artworkTitle}, {props.artworkDate}
                   </SkeletonText>
                 </Box>
@@ -156,7 +158,11 @@ const StepsSkeleton = () => {
           First step title
         </SkeletonText>
 
-        <SkeletonText flex={0} variant="sm-display">
+        <SkeletonText
+          flex={0}
+          variant="sm-display"
+          display={["none", "block", "none"]}
+        >
           Loading...
         </SkeletonText>
       </Flex>

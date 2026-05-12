@@ -24,6 +24,12 @@ const DebugClientError500Route = loadable(
   { resolveComponent: component => component.DebugClientError500Route },
 )
 
+const DebugHydrationErrorRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "debugBundle" */ "./DebugHydrationErrorRoute"),
+  { resolveComponent: component => component.DebugHydrationErrorRoute },
+)
+
 /**
  * These routes are just for testing baseline page shell stuff -- Lighthouse,
  * Calibre, assets loaded on page, and other debugging things that might
@@ -60,6 +66,10 @@ export const debugRoutes: RouteProps[] = [
       {
         path: "client-error-500",
         getComponent: () => DebugClientError500Route,
+      },
+      {
+        path: "hydration-error",
+        getComponent: () => DebugHydrationErrorRoute,
       },
     ],
   },

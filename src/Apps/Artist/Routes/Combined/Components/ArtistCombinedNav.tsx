@@ -15,15 +15,38 @@ import { useTracking } from "react-tracking"
 interface ArtistCombinedNavProps {
   waitUntil: (section: string) => Promise<void>
   navigating: Record<string, boolean>
-  // diamond_editorial-section
-  showEditorialTab?: boolean
 }
+
+const ARTIST_COMBINED_NAV_ITEMS = [
+  {
+    activeSection: "artistArtworksTop",
+    label: "Artworks",
+    section: "artworks",
+    subject: "artworks",
+  },
+  {
+    activeSection: "marketSignalsTop",
+    label: "Auction Results",
+    section: "auction",
+    subject: "auction results",
+  },
+  {
+    activeSection: "artistAboutTop",
+    label: "About",
+    section: "about",
+    subject: "about",
+  },
+  {
+    activeSection: "artistEditorialTop",
+    label: "Editorial",
+    section: "editorial",
+    subject: "editorial",
+  },
+] as const
 
 export const ArtistCombinedNav = ({
   waitUntil,
   navigating,
-  // diamond_editorial-section
-  showEditorialTab = false,
 }: ArtistCombinedNavProps) => {
   const backdrop = useStickyBackdrop()
 
@@ -67,59 +90,27 @@ export const ArtistCombinedNav = ({
               <AppContainer>
                 <HorizontalPadding pb={2}>
                   <RouteTabs data-test="navigationTabs" pt={2}>
-                    <BaseTab
-                      as={Clickable}
-                      active={active === "artistArtworksTop"}
-                      disabled={navigating.artworks}
-                      onClick={async () => {
-                        jumpTo("artistArtworksTop")
-                        handleClick("artworks")
-                      }}
-                    >
-                      Artworks
-                    </BaseTab>
+                    {ARTIST_COMBINED_NAV_ITEMS.map((item, index) => {
+                      return (
+                        <BaseTab
+                          key={item.section}
+                          as={Clickable}
+                          active={active === item.activeSection}
+                          disabled={navigating[item.section]}
+                          onClick={async () => {
+                            // The first section is already loaded, so it can jump immediately.
+                            if (index > 0) {
+                              await waitUntil(item.section)
+                            }
 
-                    <BaseTab
-                      as={Clickable}
-                      active={active === "marketSignalsTop"}
-                      disabled={navigating.auction}
-                      onClick={async () => {
-                        await waitUntil("auction")
-                        jumpTo("marketSignalsTop")
-                        handleClick("auction results")
-                      }}
-                    >
-                      Auction Results
-                    </BaseTab>
-
-                    {/* diamond_editorial-section */}
-                    {showEditorialTab && (
-                      <BaseTab
-                        as={Clickable}
-                        active={active === "artistEditorialTop"}
-                        disabled={navigating.about}
-                        onClick={async () => {
-                          await waitUntil("about")
-                          jumpTo("artistEditorialTop")
-                          handleClick("editorial")
-                        }}
-                      >
-                        Stories
-                      </BaseTab>
-                    )}
-
-                    <BaseTab
-                      as={Clickable}
-                      active={active === "artistAboutTop"}
-                      disabled={navigating.about}
-                      onClick={async () => {
-                        await waitUntil("about")
-                        jumpTo("artistAboutTop")
-                        handleClick("about")
-                      }}
-                    >
-                      About
-                    </BaseTab>
+                            jumpTo(item.activeSection)
+                            handleClick(item.subject)
+                          }}
+                        >
+                          {item.label}
+                        </BaseTab>
+                      )
+                    })}
                   </RouteTabs>
                 </HorizontalPadding>
               </AppContainer>

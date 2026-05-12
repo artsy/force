@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ad3f50e614716f36f216c81b79d21a9e>>
+ * @generated SignedSource<<40d5af569085b05b2f6dc01c5a31c75a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,6 @@ export type ArtistOverview_artist$data = {
     readonly totalCount: number;
   } | null | undefined;
   readonly counts: {
-    readonly articles: number | null | undefined;
     readonly relatedArtists: number | null | undefined;
   } | null | undefined;
   readonly href: string | null | undefined;
@@ -147,13 +146,6 @@ return {
           "kind": "ScalarField",
           "name": "relatedArtists",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "articles",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -213,6 +205,6 @@ return {
 };
 })();
 
-(node as any).hash = "d409e60c6d511fede7e6b68b24ac5567";
+(node as any).hash = "d045ac74566d56916833c64576a0d522";
 
 export default node;

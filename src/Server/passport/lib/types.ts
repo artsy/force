@@ -1,8 +1,8 @@
-import type { NextFunction } from "express"
 import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
+import type { NextFunction } from "express"
 
 export interface PassportOptions {
   APP_URL?: string
@@ -24,6 +24,7 @@ export interface PassportOptions {
   facebookCallbackPath: string
   facebookPath: string
   googleCallbackPath: string
+  googleOneTapCallbackPath: string
   googlePath: string
   loginPagePath: string
   logoutPath: string

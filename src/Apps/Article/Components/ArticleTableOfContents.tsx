@@ -11,7 +11,7 @@ interface ArticleTableOfContentsProps {
   article: ArticleTableOfContents_article$key
 }
 
-const MIN_OUTLINE_ENTRIES = 5
+const MIN_OUTLINE_ENTRIES = 3
 
 export const ArticleTableOfContents: FC<ArticleTableOfContentsProps> = ({
   article: articleRef,
