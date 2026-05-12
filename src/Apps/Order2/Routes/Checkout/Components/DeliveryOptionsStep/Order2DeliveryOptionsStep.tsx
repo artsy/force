@@ -9,7 +9,9 @@ import { Order2DeliveryOptionsForm } from "Apps/Order2/Routes/Checkout/Component
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { STEP_JUMP_MAP } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutAutoScroll"
 import type { Order2DeliveryOptionsStep_order$key } from "__generated__/Order2DeliveryOptionsStep_order.graphql"
+import { Jump } from "Utils/Hooks/useJump"
 import { graphql, useFragment } from "react-relay"
 
 type Order2DeliveryOptionsStepProps = {
@@ -49,7 +51,12 @@ export const Order2DeliveryOptionsStep: React.FC<
   }
 
   if (stepState === CheckoutStepState.UPCOMING) {
-    return <DeliveryOptionsPlaceholder />
+    return (
+      <Box>
+        <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
+        <DeliveryOptionsPlaceholder />
+      </Box>
+    )
   }
 
   if (stepState === CheckoutStepState.ACTIVE) {
@@ -62,14 +69,22 @@ export const Order2DeliveryOptionsStep: React.FC<
       orderData.selectedFulfillmentOption?.type !== "PICKUP"
 
     if (!hasDeliveryAddress && !isFulfillmentDetailsSaving) {
-      return <DeliveryOptionsPlaceholder />
+      return (
+        <Box>
+          <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
+          <DeliveryOptionsPlaceholder />
+        </Box>
+      )
     }
 
     return (
-      <Order2DeliveryOptionsForm
-        order={orderData}
-        refreshingOptions={isFulfillmentDetailsSaving}
-      />
+      <Box>
+        <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
+        <Order2DeliveryOptionsForm
+          order={orderData}
+          refreshingOptions={isFulfillmentDetailsSaving}
+        />
+      </Box>
     )
   }
 
@@ -79,10 +94,13 @@ export const Order2DeliveryOptionsStep: React.FC<
     )
     const allowEdit = selectableOptions.length > 1
     return (
-      <Order2DeliveryOptionsCompletedView
-        {...completedViewProps}
-        allowEdit={allowEdit}
-      />
+      <Box>
+        <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
+        <Order2DeliveryOptionsCompletedView
+          {...completedViewProps}
+          allowEdit={allowEdit}
+        />
+      </Box>
     )
   }
 

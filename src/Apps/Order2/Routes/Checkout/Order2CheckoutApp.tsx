@@ -179,10 +179,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
                 <Jump id={STEP_JUMP_MAP.FULFILLMENT_DETAILS} />
                 <Order2FulfillmentDetailsStep order={orderData} me={meData} />
               </Box>
-              <Box>
-                <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
-                <Order2DeliveryOptionsStep order={orderData} />
-              </Box>
+              <Order2DeliveryOptionsStep order={orderData} />
               <Box>
                 <Jump id={STEP_JUMP_MAP.PAYMENT} />
                 <Order2PaymentStep order={orderData} me={meData} />
