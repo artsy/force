@@ -41,9 +41,6 @@ export const GoogleOneTapContainer = () => {
     script.src = "https://accounts.google.com/gsi/client"
     script.async = true
     script.defer = true
-    // TODO:
-    // script.onerror = () =>
-    //   captureException(new Error("Google One Tap script failed to load"))
     document.body.appendChild(script)
   }, [enabled])
 

@@ -152,15 +152,5 @@ describe("GoogleOneTapContainer", () => {
       render(<GoogleOneTapContainer />)
       expect(gsiScript()).not.toBeInTheDocument()
     })
-
-    // TODO:
-    // it("calls captureException when the GSI script fails to load", () => {
-    //   enableOneTap()
-    //   render(<GoogleOneTapContainer />)
-    //   gsiScript()!.onerror!(new Event("error"))
-    //   expect(mockCaptureException).toHaveBeenCalledWith(
-    //     new Error("Google One Tap script failed to load"),
-    //   )
-    // })
   })
 })
