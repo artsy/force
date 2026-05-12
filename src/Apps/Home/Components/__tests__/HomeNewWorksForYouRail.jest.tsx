@@ -1,17 +1,22 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { act, fireEvent, screen } from "@testing-library/react"
 import { HomeNewWorksForYouRailFragmentContainer } from "Apps/Home/Components/HomeNewWorksForYouRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: () => ({ contextPageOwnerType: "home" }),
+}))
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
     return (
       <HomeNewWorksForYouRailFragmentContainer
         artworksForUser={props.artworksForUser!}
+        railPositionY={4}
       />
     )
   },
@@ -32,6 +37,7 @@ beforeAll(() => {
 
 afterEach(() => {
   trackEvent.mockClear()
+  jest.useRealTimers()
 })
 
 describe("HomeNewWorksForYouRail", () => {
@@ -102,6 +108,35 @@ describe("HomeNewWorksForYouRail", () => {
         signal_label: "",
         signal_bid_count: 1,
         signal_lot_watcher_count: 5,
+      })
+    })
+
+    it("tracks item viewed impressions", () => {
+      jest.useFakeTimers()
+
+      renderWithRelay({
+        Artwork: () => ({
+          internalID: "artwork-1-id",
+          slug: "artwork-1",
+        }),
+      })
+
+      const item = screen.getAllByTestId("ArtworkItemImpression")[0]
+
+      act(() => intersect(item, true))
+      act(() => jest.advanceTimersByTime(500))
+
+      expect(trackEvent).not.toHaveBeenCalled()
+
+      act(() => jest.advanceTimersByTime(501))
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "item_viewed",
+        context_module: "newWorksForYouRail",
+        context_screen: "home",
+        item_id: "artwork-1-id",
+        item_type: "artwork",
+        position: 0,
       })
     })
   })

@@ -18,6 +18,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { getSignalLabel } from "Utils/getSignalLabel"
+import { HomeArtworkItemImpression } from "Apps/Home/Components/HomeArtworkItemImpression"
 import type { HomeArtworkRecommendationsRailQuery } from "__generated__/HomeArtworkRecommendationsRailQuery.graphql"
 import type { HomeArtworkRecommendationsRail_me$key } from "__generated__/HomeArtworkRecommendationsRail_me.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -64,36 +65,43 @@ export const HomeArtworkRecommendationsRail: React.FC<
         trackEvent(trackingEvent)
       }}
       getItems={() => {
-        return artworks.map(artwork => (
-          <ShelfArtworkFragmentContainer
-            artwork={artwork}
+        return artworks.map((artwork, index) => (
+          <HomeArtworkItemImpression
+            artworkID={artwork.internalID}
+            contextModule={ContextModule.artworkRecommendationsRail}
+            disabled={railPositionY === undefined}
             key={artwork.internalID}
-            lazyLoad
-            contextModule={
-              ContextModule.artworkRecommendationsRail as AuthContextModule
-            }
-            onClick={() => {
-              const trackingEvent: ClickedArtworkGroup = {
-                action: ActionType.clickedArtworkGroup,
-                context_module: ContextModule.artworkRecommendationsRail,
-                context_page_owner_type: OwnerType.home,
-                destination_page_owner_id: artwork.internalID,
-                destination_page_owner_slug: artwork.slug,
-                destination_page_owner_type: OwnerType.artwork,
-                type: "thumbnail",
-                signal_label: getSignalLabel({
-                  signals: signals?.[artwork.internalID] ?? [],
-                }),
-                signal_bid_count:
-                  artwork.collectorSignals?.auction?.bidCount ?? undefined,
-                signal_lot_watcher_count:
-                  artwork.collectorSignals?.auction?.lotWatcherCount ??
-                  undefined,
+            position={index}
+          >
+            <ShelfArtworkFragmentContainer
+              artwork={artwork}
+              lazyLoad
+              contextModule={
+                ContextModule.artworkRecommendationsRail as AuthContextModule
               }
+              onClick={() => {
+                const trackingEvent: ClickedArtworkGroup = {
+                  action: ActionType.clickedArtworkGroup,
+                  context_module: ContextModule.artworkRecommendationsRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: artwork.internalID,
+                  destination_page_owner_slug: artwork.slug,
+                  destination_page_owner_type: OwnerType.artwork,
+                  type: "thumbnail",
+                  signal_label: getSignalLabel({
+                    signals: signals?.[artwork.internalID] ?? [],
+                  }),
+                  signal_bid_count:
+                    artwork.collectorSignals?.auction?.bidCount ?? undefined,
+                  signal_lot_watcher_count:
+                    artwork.collectorSignals?.auction?.lotWatcherCount ??
+                    undefined,
+                }
 
-              trackEvent(trackingEvent)
-            }}
-          />
+                trackEvent(trackingEvent)
+              }}
+            />
+          </HomeArtworkItemImpression>
         ))
       }}
     />

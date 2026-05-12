@@ -54,6 +54,11 @@ interface ArtworkGridProps {
   to?: (artwork: Artwork) => string | null
   savedListId?: string
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  renderItemWrapper?: (props: {
+    artwork: Artwork
+    artworkIndex: number
+    children: React.ReactElement
+  }) => React.ReactNode
   popoverContent?: ReactNode | null
   onPopoverDismiss?: () => void
   className?: string
@@ -137,6 +142,22 @@ export class ArtworkGridContainer extends React.Component<
     }
   }
 
+  renderArtworkItemWrapper(
+    artwork: Artwork,
+    artworkIndex: number,
+    children: React.ReactElement,
+  ) {
+    if (!this.props.renderItemWrapper) {
+      return children
+    }
+
+    return this.props.renderItemWrapper({
+      artwork,
+      artworkIndex,
+      children,
+    })
+  }
+
   renderSectionsForSingleBreakpoint(
     columnCount: number,
     sectionedArtworks: SectionedArtworks,
@@ -174,40 +195,45 @@ export class ArtworkGridContainer extends React.Component<
         const artwork = sectionedArtworks[column][row]
 
         artworkComponents.push(
-          <GridItem
-            contextModule={contextModule}
-            artwork={artwork}
-            hideSaleInfo={hideSaleInfo}
-            key={artwork.id}
-            lazyLoad={
-              !!(
-                typeof preloadImageCount === "number" &&
-                artworkIndex >= preloadImageCount
-              )
-            }
-            onClick={() => {
-              if (this.props.onBrickClick) {
-                this.props.onBrickClick(artwork, artworkIndex)
-              }
-            }}
-            showHighDemandIcon={showHighDemandIcon}
-            showHoverDetails={
-              showHoverDetails === undefined ? true : showSaveButton
-            }
-            showSaveButton={
-              showSaveButton === undefined ? true : showSaveButton
-            }
-            to={to?.(artwork)}
-            savedListId={this.props.savedListId}
-            renderSaveButton={this.props.renderSaveButton}
-            popoverContent={
-              firstP1Artwork?.id === artwork.id
-                ? this.props.popoverContent
-                : null
-            }
-            onPopoverDismiss={this.props.onPopoverDismiss}
-            showSubmissionStatus={showSubmissionStatus}
-          />,
+          <React.Fragment key={artwork.id}>
+            {this.renderArtworkItemWrapper(
+              artwork,
+              artworkIndex,
+              <GridItem
+                contextModule={contextModule}
+                artwork={artwork}
+                hideSaleInfo={hideSaleInfo}
+                lazyLoad={
+                  !!(
+                    typeof preloadImageCount === "number" &&
+                    artworkIndex >= preloadImageCount
+                  )
+                }
+                onClick={() => {
+                  if (this.props.onBrickClick) {
+                    this.props.onBrickClick(artwork, artworkIndex)
+                  }
+                }}
+                showHighDemandIcon={showHighDemandIcon}
+                showHoverDetails={
+                  showHoverDetails === undefined ? true : showSaveButton
+                }
+                showSaveButton={
+                  showSaveButton === undefined ? true : showSaveButton
+                }
+                to={to?.(artwork)}
+                savedListId={this.props.savedListId}
+                renderSaveButton={this.props.renderSaveButton}
+                popoverContent={
+                  firstP1Artwork?.id === artwork.id
+                    ? this.props.popoverContent
+                    : null
+                }
+                onPopoverDismiss={this.props.onPopoverDismiss}
+                showSubmissionStatus={showSubmissionStatus}
+              />,
+            )}
+          </React.Fragment>,
         )
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.
         if (row < sectionedArtworks[column].length - 1) {
@@ -248,14 +274,18 @@ export class ArtworkGridContainer extends React.Component<
         {nodes.map((artwork, index) => {
           return (
             <Column span={[6, 3]} key={artwork.internalID} minWidth={0}>
-              <FlatGridItemFragmentContainer
-                onClick={() => {
-                  if (this.props.onBrickClick) {
-                    this.props.onBrickClick(artwork, index)
-                  }
-                }}
-                artwork={artwork}
-              />
+              {this.renderArtworkItemWrapper(
+                artwork,
+                index,
+                <FlatGridItemFragmentContainer
+                  onClick={() => {
+                    if (this.props.onBrickClick) {
+                      this.props.onBrickClick(artwork, index)
+                    }
+                  }}
+                  artwork={artwork}
+                />,
+              )}
             </Column>
           )
         })}
