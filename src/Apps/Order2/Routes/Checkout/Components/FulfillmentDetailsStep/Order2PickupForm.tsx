@@ -8,6 +8,7 @@ import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
 import {
+  handlePhoneNumberChange,
   richRequiredPhoneValidators,
   useInitialLocationValues,
 } from "Components/Address/utils"
@@ -200,7 +201,7 @@ const PickupFormInput: React.FC = () => {
         label="Phone number"
         mt={1}
         name="phoneNumber"
-        onChange={formikContext.handleChange}
+        onChange={e => handlePhoneNumberChange(e, formikContext.setFieldValue)}
         onBlur={formikContext.handleBlur}
         data-testid={"PickupPhoneNumberInput"}
         options={phoneCountryOptions}

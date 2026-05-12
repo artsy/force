@@ -12,6 +12,7 @@ import { AddressAutocompleteInput } from "Components/Address/AddressAutocomplete
 import {
   type Address,
   basicPhoneValidator,
+  handlePhoneNumberChange,
   isPostalCodeRequired,
   isRegionRequired,
   richRequiredPhoneValidators,
@@ -308,7 +309,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             placeholder="Add phone number"
             autoComplete="tel"
             value={values.phoneNumber}
-            onChange={handleChange}
+            onChange={e => handlePhoneNumberChange(e, setFieldValue)}
             onBlur={handleBlur}
             error={
               touched.phoneNumber && (errors.phoneNumber as string | undefined)
@@ -325,7 +326,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
             // mt required to match spacing for other text inputs
             mt={1}
             name="phoneNumber"
-            onChange={handleChange}
+            onChange={e => handlePhoneNumberChange(e, setFieldValue)}
             onBlur={handleBlur}
             data-testid={`${dataTestIdPrefix}.phoneNumber`}
             options={phoneCountryOptions}
