@@ -156,6 +156,17 @@ const signupErrorMessage = (err: GravityError) => {
 
 type Provider = "facebook" | "apple" | "google" | "google-one-tap"
 const UNKNOWN_AUTH_ERROR = "An unknown error occurred. Please try again."
+
+const ONE_TAP_SUPPRESS_COOKIE = "g_one_tap_suppress"
+const ONE_TAP_SUPPRESS_DURATION_MS = 30 * 60 * 1000
+
+const suppressOneTapPrompt = (provider: Provider, res: ArtsyResponse) => {
+  if (provider === "google-one-tap") {
+    res.cookie(ONE_TAP_SUPPRESS_COOKIE, "1", {
+      maxAge: ONE_TAP_SUPPRESS_DURATION_MS,
+    })
+  }
+}
 const SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR =
   "Please log in with email and password to use two-factor authentication."
 const SOCIAL_LINKING_TWO_FACTOR_AUTH_ERROR =
@@ -220,6 +231,7 @@ export const afterSocialAuth =
         // A user with the email address <req.socialProfileEmail> already exists.
         // Log in to Artsy via email and password and link ${providerName} in your settings instead.
         // Redirect back to login page.
+        suppressOneTapPrompt(provider, res)
         return res.redirect(
           redirectWithQuery(redirectPath, {
             email: req.socialProfileEmail,
@@ -233,6 +245,7 @@ export const afterSocialAuth =
         // Provider account previously linked to Artsy.
         // Log in to your Artsy account via email and password and link the provider in your settings instead.
         // Redirect back to login page.
+        suppressOneTapPrompt(provider, res)
         return res.redirect(
           redirectWithQuery(redirectPath, {
             error_code: "PREVIOUSLY_LINKED_SETTINGS",
@@ -243,6 +256,7 @@ export const afterSocialAuth =
 
       if (err?.response?.body?.error === "Another Account Already Linked") {
         // Provider account previously linked to Artsy. Redirect back to settings page.
+        suppressOneTapPrompt(provider, res)
         return res.redirect(
           redirectWithQuery(redirectPath, {
             error_code: "PREVIOUSLY_LINKED",
@@ -253,6 +267,7 @@ export const afterSocialAuth =
 
       if (err?.message?.match("Unauthorized source IP address")) {
         // Your IP address was blocked by the provider. Redirect back to login page.
+        suppressOneTapPrompt(provider, res)
         return res.redirect(
           redirectWithQuery(redirectPath, {
             error_code: "IP_BLOCKED",
@@ -265,6 +280,7 @@ export const afterSocialAuth =
         const message = extractError(err)
 
         if (message.includes("missing two-factor authentication code")) {
+          suppressOneTapPrompt(provider, res)
           return res.redirect(
             redirectWithQuery(redirectPath, {
               error: SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR,
@@ -279,6 +295,7 @@ export const afterSocialAuth =
             "Unable to link third-party authentication if account has Artsy two-factor authentication enabled",
           )
         ) {
+          suppressOneTapPrompt(provider, res)
           return res.redirect(
             redirectWithQuery(redirectPath, {
               error: SOCIAL_LINKING_TWO_FACTOR_AUTH_ERROR,
@@ -290,6 +307,7 @@ export const afterSocialAuth =
 
         // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
         console.warn(`Error authenticating with ${provider}: ${message}`)
+        suppressOneTapPrompt(provider, res)
         return res.redirect(
           redirectWithQuery(redirectPath, {
             error: UNKNOWN_AUTH_ERROR,

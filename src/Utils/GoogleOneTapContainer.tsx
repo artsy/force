@@ -40,6 +40,7 @@ export const GoogleOneTapContainer = () => {
       data-client_id={googleClientId}
       data-login_uri={`${getENV("APP_URL")}/users/auth/google/one_tap/callback`}
       data-auto_prompt="true"
+      data-skip_prompt_cookie="g_one_tap_suppress"
     />
   )
 }
