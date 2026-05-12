@@ -1,5 +1,4 @@
 import { Box, Separator, Spacer, Spinner, Text, useTheme } from "@artsy/palette"
-import { useVariant } from "@unleash/proxy-client-react"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -11,7 +10,6 @@ import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Compone
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
 import { useRouter } from "System/Hooks/useRouter"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { useJump } from "Utils/Hooks/useJump"
 import { Section, SectionNavProvider } from "Utils/Hooks/useSectionNav"
 import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
@@ -24,20 +22,10 @@ interface ArtistCombinedRouteProps {
   artist: ArtistCombinedRoute_artist$data
 }
 
-const EDITORIAL_SECTION_EXPERIMENT = "diamond_editorial-section"
-
 const ArtistCombinedRoute: React.FC<
   React.PropsWithChildren<ArtistCombinedRouteProps>
 > = ({ artist }) => {
   const { handleScrollToTop } = useScrollToTopOfAuctionResults()
-  const variant = useVariant(EDITORIAL_SECTION_EXPERIMENT)
-  useTrackFeatureVariantOnMount({
-    experimentName: EDITORIAL_SECTION_EXPERIMENT,
-    variantName: variant?.name,
-  })
-
-  const isEditorialSectionExperiment =
-    variant.enabled && variant.name === "experiment"
 
   const { jumpTo } = useJump()
 
@@ -46,6 +34,7 @@ const ArtistCombinedRoute: React.FC<
     "market",
     "auction",
     "about",
+    "editorial",
   ])
 
   const { theme } = useTheme()
@@ -111,11 +100,7 @@ const ArtistCombinedRoute: React.FC<
         </Box>
       )}
 
-      <ArtistCombinedNav
-        waitUntil={waitUntil}
-        navigating={navigating}
-        showEditorialTab={isEditorialSectionExperiment}
-      />
+      <ArtistCombinedNav waitUntil={waitUntil} navigating={navigating} />
 
       <Spacer y={[2, 4]} />
 
@@ -159,28 +144,20 @@ const ArtistCombinedRoute: React.FC<
         />
       </Section>
 
-      {isEditorialSectionExperiment && (
-        <>
-          <Separator my={4} />
-
-          <Section id="artistEditorialTop">
-            <ArtistEditorialNewsGridQueryRenderer
-              id={artist.internalID}
-              showEmptyStateWhenNoArticles
-            />
-          </Section>
-        </>
-      )}
-
       <Separator my={4} />
 
       <Section id="artistAboutTop">
         <ArtistOverviewQueryRenderer
           id={artist.internalID}
-          hideEditorial={isEditorialSectionExperiment}
           lazyLoad={lazy.about}
           onReady={() => markReady("about")}
         />
+      </Section>
+
+      <Separator my={4} />
+
+      <Section id="artistEditorialTop">
+        <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
       </Section>
     </SectionNavProvider>
   )

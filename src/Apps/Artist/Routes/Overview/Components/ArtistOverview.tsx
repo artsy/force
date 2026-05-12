@@ -20,7 +20,6 @@ import {
   ArtistCareerHighlightsQueryRenderer,
 } from "./ArtistCareerHighlights"
 import { ArtistCurrentShowsRailQueryRenderer } from "./ArtistCurrentShowsRail"
-import { ArtistEditorialNewsGridQueryRenderer } from "./ArtistEditorialNewsGrid"
 import { ArtistOverviewEmpty } from "./ArtistOverviewEmpty"
 import { ArtistRelatedArtistsRailQueryRenderer } from "./ArtistRelatedArtistsRail"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "./ArtistRelatedGeneCategories"
@@ -29,19 +28,11 @@ type ArtistOverviewQueryRendererProps = {
   id: string
   lazyLoad?: boolean
   onReady?: () => void
-  // diamond_editorial-section
-  hideEditorial?: boolean
 }
 
 export const ArtistOverviewQueryRenderer: React.FC<
   ArtistOverviewQueryRendererProps
-> = ({
-  id,
-  lazyLoad,
-  onReady,
-  // diamond_editorial-section
-  hideEditorial,
-}) => {
+> = ({ id, lazyLoad, onReady }) => {
   const { handleReady } = useSectionReady({ onReady })
 
   return (
@@ -68,13 +59,7 @@ export const ArtistOverviewQueryRenderer: React.FC<
 
         handleReady()
 
-        return (
-          <ArtistOverviewFragmentContainer
-            artist={props.artist}
-            // diamond_editorial-section
-            hideEditorial={hideEditorial}
-          />
-        )
+        return <ArtistOverviewFragmentContainer artist={props.artist} />
       }}
     />
   )
@@ -82,17 +67,11 @@ export const ArtistOverviewQueryRenderer: React.FC<
 
 interface ArtistOverviewProps {
   artist: ArtistOverview_artist$data
-  // diamond_editorial-section
-  hideEditorial?: boolean
 }
 
 export const ArtistOverview: React.FC<
   React.PropsWithChildren<ArtistOverviewProps>
-> = ({
-  artist,
-  // diamond_editorial-section
-  hideEditorial = false,
-}) => {
+> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
@@ -102,8 +81,6 @@ export const ArtistOverview: React.FC<
     Array.isArray(artist.insights) &&
     artist.insights.length > ARTIST_HEADER_NUMBER_OF_INSIGHTS
   const hasArtistSeries = (artist.artistSeriesConnection?.totalCount ?? 0) > 0
-  const hasEditorial = (artist.counts?.articles ?? 0) > 0
-  const hasEditorialContent = hasEditorial && !hideEditorial // diamond_editorial-section
   const hasCurrentShows = (artist.showsConnection?.totalCount ?? 0) > 0
   const hasRelatedArtists = (artist.counts?.relatedArtists ?? 0) > 0
   const hasRelatedCategories =
@@ -126,8 +103,6 @@ export const ArtistOverview: React.FC<
   if (
     !hasCareerHighlights &&
     !hasArtistSeries &&
-    // diamond_editorial-section
-    !hasEditorialContent &&
     !hasCurrentShows &&
     !hasRelatedArtists &&
     !hasRelatedCategories
@@ -157,10 +132,6 @@ export const ArtistOverview: React.FC<
           id={artist.internalID}
           title={`${artist.name} Series`}
         />
-      )}
-
-      {hasEditorialContent && (
-        <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
       )}
 
       {hasCurrentShows && (
@@ -197,7 +168,6 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
         }
         counts {
           relatedArtists
-          articles
         }
         related {
           genes(first: 1) {
