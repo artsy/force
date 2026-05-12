@@ -154,14 +154,14 @@ const signupErrorMessage = (err: GravityError) => {
   return ""
 }
 
-type Provider = "facebook" | "apple" | "google" | "google-one-tap"
+type Provider = "facebook" | "apple" | "google"
 const UNKNOWN_AUTH_ERROR = "An unknown error occurred. Please try again."
 
 const ONE_TAP_SUPPRESS_COOKIE = "g_one_tap_suppress"
 const ONE_TAP_SUPPRESS_DURATION_MS = 30 * 60 * 1000
 
-const suppressOneTapPrompt = (provider: Provider, res: ArtsyResponse) => {
-  if (provider === "google-one-tap") {
+const suppressOneTapPrompt = (isOneTap: boolean, res: ArtsyResponse) => {
+  if (isOneTap) {
     res.cookie(ONE_TAP_SUPPRESS_COOKIE, "1", {
       maxAge: ONE_TAP_SUPPRESS_DURATION_MS,
     })
@@ -212,8 +212,11 @@ export const beforeSocialAuth =
   }
 
 export const afterSocialAuth =
-  (provider: Provider) =>
+  (provider: Provider, mode?: "one-tap") =>
   (req: Req, res: ArtsyResponse, next: NextFunction) => {
+    const isOneTap = provider === "google" && mode === "one-tap"
+    const strategyName = isOneTap ? "google-one-tap" : provider
+
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
     }
@@ -223,9 +226,9 @@ export const afterSocialAuth =
     const linkingAccount = req.user != null
     const redirectPath = req.user ? opts.settingsPagePath : opts.loginPagePath
 
-    passport.authenticate(provider)(req, res, (err: any) => {
+    passport.authenticate(strategyName)(req, res, (err: any) => {
       if (err != null) {
-        suppressOneTapPrompt(provider, res)
+        suppressOneTapPrompt(isOneTap, res)
       }
 
       if (
