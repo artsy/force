@@ -139,12 +139,12 @@ export const handlePhoneNumberChange = (
   e: React.ChangeEvent<HTMLInputElement>,
   setFieldValue: (field: string, value: string) => void,
 ): void => {
-  setFieldValue("phoneNumber", e.target.value.replace(/\D/g, ""))
+  setFieldValue("phoneNumber", e.target.value.replace(/[a-zA-Z]/g, ""))
 }
 
 export const richPhoneValidators = {
   phoneNumber: Yup.string()
-    .matches(/^\d*$/, "Please enter numbers only")
+    .matches(/^[^a-zA-Z]*$/, "Please enter a valid phone number")
     .test({
       name: "phone-number-is-valid",
       message: "Please enter a valid phone number",
