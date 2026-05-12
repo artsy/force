@@ -400,7 +400,7 @@ const onAccessToken =
             auth_params = extend(params, {
               grant_type: "apple_uid",
             })
-          } else if (params!.jwt) {
+          } else if (params!.provider === "google" && params!.jwt) {
             auth_params = extend(params, {
               grant_type: "jwt",
               oauth_provider: "google",
