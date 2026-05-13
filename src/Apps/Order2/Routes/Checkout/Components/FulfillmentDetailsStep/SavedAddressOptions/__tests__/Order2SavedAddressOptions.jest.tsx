@@ -267,13 +267,18 @@ describe("SavedAddressOptions", () => {
     })
 
     it("does not call onSelectAddress when clicking the already-selected address", async () => {
-      renderSavedAddressOptions()
+      renderSavedAddressOptions({ initialSelectedAddress: undefined })
 
-      // mockUSAddress1 is the initialSelectedAddress, so it's already selected
-      const firstAddress = screen.getByRole("radio", { name: /John Doe/i })
-      await userEvent.click(firstAddress)
+      const secondAddress = screen.getByRole("radio", { name: /Jane Smith/i })
 
-      expect(onSelectAddress).not.toHaveBeenCalled()
+      // First click: selects Jane Smith and triggers onSelectAddress
+      await userEvent.click(secondAddress)
+      expect(onSelectAddress).toHaveBeenCalledTimes(1)
+      expect(onSelectAddress).toHaveBeenCalledWith(mockUSAddress2)
+
+      // Second click on same address: guard fires, no re-submission
+      await userEvent.click(secondAddress)
+      expect(onSelectAddress).toHaveBeenCalledTimes(1)
     })
 
     it("disables non-selected addresses while a selection is in flight", async () => {
