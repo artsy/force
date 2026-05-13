@@ -42,6 +42,7 @@ describe("lifecycle", () => {
     }
 
     res = {
+      cookie: jest.fn(),
       redirect: jest.fn(),
       send,
       status: jest.fn().mockReturnValue({ send }),
@@ -435,6 +436,41 @@ describe("lifecycle", () => {
 
       expect(res.redirect).toHaveBeenCalledWith("/settings")
       expect(next).not.toHaveBeenCalled()
+    })
+
+    describe('with mode "one-tap"', () => {
+      it('delegates to the "google-one-tap" passport strategy', () => {
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(passport.authenticate).toHaveBeenCalledWith("google-one-tap")
+      })
+
+      it("sets the suppress cookie on auth error", () => {
+        passport.authenticate.mockReturnValueOnce((_req, _res, next) =>
+          next(new Error("auth error")),
+        )
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.cookie).toHaveBeenCalledWith(
+          "g_one_tap_suppress",
+          "1",
+          expect.objectContaining({ maxAge: expect.any(Number) }),
+        )
+      })
+
+      it("does not set the suppress cookie on success", () => {
+        passport.authenticate.mockReturnValueOnce((_req, _res, next) => next())
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.cookie).not.toHaveBeenCalled()
+      })
+
+      it("uses google as the provider in error redirects", () => {
+        passport.authenticate.mockReturnValueOnce((_req, _res, next) => {
+          next(new Error("Unauthorized source IP address"))
+        })
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.redirect).toHaveBeenCalledWith(
+          "/login?error_code=IP_BLOCKED&provider=google",
+        )
+      })
     })
   })
 
