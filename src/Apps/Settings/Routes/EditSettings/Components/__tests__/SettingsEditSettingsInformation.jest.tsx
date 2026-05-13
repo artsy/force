@@ -22,7 +22,7 @@ describe("SettingsEditSettingsInformation", () => {
 
     expect(screen.queryByText("Email")).toBeInTheDocument()
     expect(screen.queryByText("Price Range")).toBeInTheDocument()
-    expect(screen.queryByText("Mobile Number")).toBeInTheDocument()
+    expect(screen.queryByText("Phone Number")).toBeInTheDocument()
     expect(screen.queryByText("Password")).not.toBeInTheDocument()
   })
 

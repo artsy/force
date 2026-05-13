@@ -16,19 +16,27 @@ interface HydrationErrorDetail {
   componentStack?: string
 }
 
+const hydrationErrors: HydrationErrorDetail[] = []
+
 export const dispatchHydrationError = (
   error: unknown,
   componentStack?: string,
 ): void => {
   const errorMessage = error instanceof Error ? error.message : String(error)
+  const detail = { message: errorMessage, componentStack }
+
+  hydrationErrors.push(detail)
+
   const event = new CustomEvent<HydrationErrorDetail>(HYDRATION_ERROR_EVENT, {
-    detail: { message: errorMessage, componentStack },
+    detail,
   })
   window.dispatchEvent(event)
 }
 
 export const HydrationErrorOverlay: React.FC = () => {
-  const [errors, setErrors] = useState<HydrationErrorDetail[]>([])
+  const [errors, setErrors] = useState<HydrationErrorDetail[]>(() => [
+    ...hydrationErrors,
+  ])
   const [dismissed, setDismissed] = useState(false)
 
   useEffect(() => {
@@ -39,6 +47,8 @@ export const HydrationErrorOverlay: React.FC = () => {
     }
 
     window.addEventListener(HYDRATION_ERROR_EVENT, handleError)
+    setErrors([...hydrationErrors])
+
     return () => window.removeEventListener(HYDRATION_ERROR_EVENT, handleError)
   }, [])
 
