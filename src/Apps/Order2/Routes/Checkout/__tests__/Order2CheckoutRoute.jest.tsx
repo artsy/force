@@ -861,6 +861,7 @@ describe("Order2CheckoutRoute", () => {
         ...baseProps,
         me: {
           ...baseProps.me,
+          phoneNumber: null,
           order: {
             ...baseProps.me.order,
             fulfillmentOptions: [

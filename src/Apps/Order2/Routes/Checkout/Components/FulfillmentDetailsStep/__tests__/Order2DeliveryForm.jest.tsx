@@ -170,6 +170,41 @@ describe("Order2DeliveryForm", () => {
       expect(screen.getByDisplayValue("212-555-0100")).toBeInTheDocument()
     })
 
+    it("prefers existing fulfillment details phone over me phone", async () => {
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          phoneNumber: {
+            display: "212-555-0100",
+            originalNumber: "2125550100",
+            regionCode: "us",
+          },
+          order: {
+            ...baseOrderProps,
+            fulfillmentDetails: {
+              name: "John Doe",
+              addressLine1: "123 Main St",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              postalCode: "10001",
+              country: "US",
+              phoneNumber: {
+                regionCode: "us",
+                originalNumber: "9995550199",
+              },
+            },
+          },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByDisplayValue("9995550199")).toBeInTheDocument()
+      })
+
+      expect(screen.queryByDisplayValue("212-555-0100")).not.toBeInTheDocument()
+    })
+
     it("syncs phone country code when country is changed", async () => {
       renderWithRelay({
         Me: () => ({

@@ -98,7 +98,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
             </Tab>
             <Tab name={<Text variant="sm-display">Pickup</Text>}>
               <Box px={[2, 2, 4]}>
-                <Order2PickupForm order={orderData} />
+                <Order2PickupForm order={orderData} me={meData} />
               </Box>
             </Tab>
           </Tabs>
@@ -119,6 +119,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
 const ME_FRAGMENT = graphql`
   fragment Order2FulfillmentDetailsStep_me on Me {
     ...Order2DeliveryForm_me
+    ...Order2PickupForm_me
   }
 `
 
