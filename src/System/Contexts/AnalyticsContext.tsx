@@ -131,6 +131,8 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
       return OwnerType.article
     case type === "artFairs":
       return OwnerType.fairs
+    case type === "recommendations" && slug === "artworks":
+      return OwnerType.artworkRecommendations
     case type === "settings":
     case type === "collectorProfile":
       return OwnerType.editProfile
