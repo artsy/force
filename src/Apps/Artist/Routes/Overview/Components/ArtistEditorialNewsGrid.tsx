@@ -4,7 +4,6 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useVariant } from "@unleash/proxy-client-react"
 import {
   Column,
   GridColumns,
@@ -15,6 +14,7 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
 import { ArtistEditorialNewsEmptyState } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsEmptyState"
 import {
   CellArticleFragmentContainer,
@@ -29,25 +29,24 @@ import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVaria
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
+import type { ArtistEditorialNewsGrid_artist$data } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
+import type { ArtistEditorialNewsGrid_artist$key } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
 import { take } from "lodash"
 import type { FC } from "react"
-import { graphql, useLazyLoadQuery } from "react-relay"
+import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const ARTICLE_COUNT = 6
 const ARTIST_EDITORIAL_RAIL_EXPERIMENT = "diamond_artist-editorial-rail"
 
-type ArtistEditorialNewsGridArtist = NonNullable<
-  ArtistEditorialNewsGridQuery["response"]["artist"]
->
-
 interface ArtistEditorialNewsGridProps {
-  artist: ArtistEditorialNewsGridArtist
+  artist: ArtistEditorialNewsGrid_artist$key
 }
 
-const ArtistEditorialNewsGrid: FC<
+export const ArtistEditorialNewsGrid: FC<
   React.PropsWithChildren<ArtistEditorialNewsGridProps>
-> = ({ artist }) => {
+> = ({ artist: artistKey }) => {
+  const artist = useFragment(ARTIST_EDITORIAL_NEWS_GRID_FRAGMENT, artistKey)
   const articles = extractNodes(artist.articlesConnection)
 
   if (articles.length === 0) {
@@ -57,8 +56,44 @@ const ArtistEditorialNewsGrid: FC<
   return <ArtistEditorialNewsGridLayout artist={artist} />
 }
 
+const ARTIST_EDITORIAL_NEWS_GRID_FRAGMENT = graphql`
+  fragment ArtistEditorialNewsGrid_artist on Artist {
+    internalID
+    name
+    slug
+    href
+    articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
+      edges {
+        node {
+          ...CellArticle_article
+          internalID
+          href
+          byline
+          slug
+          title
+          publishedAt(format: "MMM D, YYYY")
+          vertical
+          thumbnailTitle
+          thumbnailImage {
+            large: cropped(width: 670, height: 720) {
+              width
+              height
+              src
+              srcSet
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+interface ArtistEditorialNewsGridLayoutProps {
+  artist: ArtistEditorialNewsGrid_artist$data
+}
+
 const ArtistEditorialNewsGridLayout: FC<
-  React.PropsWithChildren<ArtistEditorialNewsGridProps>
+  React.PropsWithChildren<ArtistEditorialNewsGridLayoutProps>
 > = ({ artist }) => {
   const { trackEvent } = useTracking()
 
@@ -274,33 +309,7 @@ const ArtistEditorialNewsGridContent: FC<
     graphql`
       query ArtistEditorialNewsGridQuery($id: String!) {
         artist(id: $id) {
-          internalID
-          name
-          slug
-          href
-          articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
-            edges {
-              node {
-                ...CellArticle_article
-                internalID
-                href
-                byline
-                slug
-                title
-                publishedAt(format: "MMM D, YYYY")
-                vertical
-                thumbnailTitle
-                thumbnailImage {
-                  large: cropped(width: 670, height: 720) {
-                    width
-                    height
-                    src
-                    srcSet
-                  }
-                }
-              }
-            }
-          }
+          ...ArtistEditorialNewsGrid_artist
         }
       }
     `,

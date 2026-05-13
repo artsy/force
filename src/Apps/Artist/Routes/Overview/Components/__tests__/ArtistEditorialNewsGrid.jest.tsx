@@ -1,9 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react"
-import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
-import { MockBoot } from "DevTools/MockBoot"
-import { RelayEnvironmentProvider } from "react-relay"
+import { fireEvent, screen } from "@testing-library/react"
+import { ArtistEditorialNewsGrid } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { ArtistEditorialNewsGridTestQuery } from "__generated__/ArtistEditorialNewsGridTestQuery.graphql"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("@artsy/palette", () => ({
@@ -26,6 +26,38 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 
 const trackEvent = jest.fn()
 
+const { renderWithRelay } =
+  setupTestWrapperTL<ArtistEditorialNewsGridTestQuery>({
+    Component: props => {
+      if (!props.artist) return null
+
+      return <ArtistEditorialNewsGrid artist={props.artist} />
+    },
+    query: graphql`
+      query ArtistEditorialNewsGridTestQuery @relay_test_operation {
+        artist(id: "test-artist") {
+          ...ArtistEditorialNewsGrid_artist
+        }
+      }
+    `,
+  })
+
+const renderArtistEditorialNewsGrid = () => {
+  return renderWithRelay()
+}
+
+const getArticleLink = () => {
+  const links = screen.getAllByRole("link")
+  const viewAllLink = screen.getByRole("link", { name: "View All" })
+  const articleLink = links.find(link => link !== viewAllLink)
+
+  if (!articleLink) {
+    throw new Error("Expected an article link")
+  }
+
+  return articleLink
+}
+
 beforeAll(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 })
@@ -36,7 +68,7 @@ afterEach(() => {
 
 describe("ArtistEditorialNewsGrid", () => {
   it("renders the editorial grid", () => {
-    renderWithRelay()
+    renderArtistEditorialNewsGrid()
 
     expect(screen.getByText(/Artsy Editorial Featuring/)).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "View All" })).toBeInTheDocument()
@@ -44,12 +76,9 @@ describe("ArtistEditorialNewsGrid", () => {
 
   describe("tracking", () => {
     it("tracks article clicks", () => {
-      renderWithRelay()
+      renderArtistEditorialNewsGrid()
 
-      const links = screen.getAllByRole("link")
-      expect(links.length).toBeGreaterThan(1)
-
-      fireEvent.click(links[1])
+      fireEvent.click(getArticleLink())
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
@@ -63,7 +92,7 @@ describe("ArtistEditorialNewsGrid", () => {
     })
 
     it("tracks view all clicks", () => {
-      renderWithRelay()
+      renderArtistEditorialNewsGrid()
 
       fireEvent.click(screen.getByRole("link", { name: "View All" }))
 
@@ -79,19 +108,3 @@ describe("ArtistEditorialNewsGrid", () => {
     })
   })
 })
-
-const renderWithRelay = () => {
-  const env = createMockEnvironment()
-
-  env.mock.queueOperationResolver(operation => {
-    return MockPayloadGenerator.generate(operation)
-  })
-
-  return render(
-    <MockBoot relayEnvironment={env}>
-      <RelayEnvironmentProvider environment={env}>
-        <ArtistEditorialNewsGridQueryRenderer id="test-artist" />
-      </RelayEnvironmentProvider>
-    </MockBoot>,
-  )
-}

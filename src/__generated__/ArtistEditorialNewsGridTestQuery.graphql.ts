@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf765b5ed58d67d3966fa5c02ad01403>>
+ * @generated SignedSource<<e25eddb82223baaefe98023635d071c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,56 +10,47 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistEditorialNewsGridQuery$variables = {
-  id: string;
-};
-export type ArtistEditorialNewsGridQuery$data = {
+export type ArtistEditorialNewsGridTestQuery$variables = Record<PropertyKey, never>;
+export type ArtistEditorialNewsGridTestQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistEditorialNewsGrid_artist">;
   } | null | undefined;
 };
-export type ArtistEditorialNewsGridQuery = {
-  response: ArtistEditorialNewsGridQuery$data;
-  variables: ArtistEditorialNewsGridQuery$variables;
+export type ArtistEditorialNewsGridTestQuery = {
+  response: ArtistEditorialNewsGridTestQuery$data;
+  variables: ArtistEditorialNewsGridTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "id"
+    "value": "test-artist"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v5 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -89,23 +80,53 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistEditorialNewsGridQuery",
+    "name": "ArtistEditorialNewsGridTestQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -117,7 +138,7 @@ return {
             "name": "ArtistEditorialNewsGrid_artist"
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"test-artist\")"
       }
     ],
     "type": "Query",
@@ -125,19 +146,19 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtistEditorialNewsGridQuery",
+    "name": "ArtistEditorialNewsGridTestQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -145,8 +166,8 @@ return {
             "name": "name",
             "storageKey": null
           },
+          (v2/*: any*/),
           (v3/*: any*/),
-          (v4/*: any*/),
           {
             "alias": null,
             "args": [
@@ -210,7 +231,7 @@ return {
                         "name": "byline",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": [
@@ -250,7 +271,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v5/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": "cropped(height:334,width:445)"
                           },
                           {
@@ -271,15 +292,15 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v5/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": "cropped(height:720,width:670)"
                           }
                         ],
                         "storageKey": null
                       },
+                      (v1/*: any*/),
                       (v2/*: any*/),
-                      (v3/*: any*/),
-                      (v6/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -289,23 +310,80 @@ return {
             ],
             "storageKey": "articlesConnection(first:6,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v6/*: any*/)
+          (v5/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"test-artist\")"
       }
     ]
   },
   "params": {
-    "cacheID": "fae04e66246a0bd8c84e7fa2c1c4146e",
+    "cacheID": "aabfaf0d2fd10395318f0c1e4d921060",
     "id": null,
-    "metadata": {},
-    "name": "ArtistEditorialNewsGridQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.articlesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleConnection"
+        },
+        "artist.articlesConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArticleEdge"
+        },
+        "artist.articlesConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Article"
+        },
+        "artist.articlesConnection.edges.node.byline": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.href": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.id": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.internalID": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.publishedAt": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.slug": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped": (v8/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.height": (v9/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.src": (v10/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v10/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v9/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.large": (v8/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.large.height": (v9/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.large.src": (v10/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v10/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.large.width": (v9/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailTitle": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.title": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.vertical": (v6/*: any*/),
+        "artist.href": (v6/*: any*/),
+        "artist.id": (v7/*: any*/),
+        "artist.internalID": (v7/*: any*/),
+        "artist.name": (v6/*: any*/),
+        "artist.slug": (v7/*: any*/)
+      }
+    },
+    "name": "ArtistEditorialNewsGridTestQuery",
     "operationKind": "query",
-    "text": "query ArtistEditorialNewsGridQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistEditorialNewsGrid_artist\n    id\n  }\n}\n\nfragment ArtistEditorialNewsGrid_artist on Artist {\n  internalID\n  name\n  slug\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        href\n        byline\n        slug\n        title\n        publishedAt(format: \"MMM D, YYYY\")\n        vertical\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 670, height: 720) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistEditorialNewsGridTestQuery {\n  artist(id: \"test-artist\") {\n    ...ArtistEditorialNewsGrid_artist\n    id\n  }\n}\n\nfragment ArtistEditorialNewsGrid_artist on Artist {\n  internalID\n  name\n  slug\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        href\n        byline\n        slug\n        title\n        publishedAt(format: \"MMM D, YYYY\")\n        vertical\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 670, height: 720) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cf4a189b59da2fdacf6695c826dc9060";
+(node as any).hash = "2f90b3f8d02f57e33647ecf1c61d40ac";
 
 export default node;
