@@ -1,5 +1,9 @@
 import { act, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import {
+  CheckoutStepName,
+  CheckoutStepState,
+} from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -9,7 +13,6 @@ import {
   orderMutationError,
   orderMutationSuccess,
 } from "../../../__tests__/utils"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { Order2DeliveryForm } from "../Order2DeliveryForm"
 
 jest.unmock("react-relay")
@@ -1292,7 +1295,21 @@ describe("Order2DeliveryForm", () => {
       screen.getByText("Germany")
     })
 
-    it("pre-selects a matching saved address and auto-submits on radio click", async () => {
+    it("pre-selects the saved address matching existing fulfillment details and auto-submits", async () => {
+      mockCheckoutContext = {
+        ...mockCheckoutContext,
+        checkoutTracking: {
+          ...mockCheckoutContext.checkoutTracking,
+          savedAddressViewed: jest.fn(),
+        },
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: CheckoutStepState.ACTIVE,
+          },
+        ],
+      }
+
       const { mockResolveLastOperation } = renderWithRelay({
         Me: () => ({
           ...baseMeProps,
@@ -1316,12 +1333,15 @@ describe("Order2DeliveryForm", () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        expect(screen.getByText("New York, NY 10001")).toBeInTheDocument()
       })
 
-      // Two addresses share the name "John Doe" — click by street address text
-      userEvent.click(screen.getByText("123 Main St"))
+      // The matching saved address is pre-selected
+      expect(
+        screen.getByRole("radio", { name: /123 Main St/i }),
+      ).toHaveAttribute("aria-checked", "true")
 
+      // Auto-save fires on mount and submits the pre-selected address
       let mutation
       await waitFor(() => {
         mutation = mockResolveLastOperation({
@@ -1629,19 +1649,6 @@ describe("Order2DeliveryForm", () => {
           ...baseMeProps,
           order: {
             ...baseOrderProps,
-            fulfillmentDetails: {
-              name: "John Doe",
-              addressLine1: "123 Main St",
-              addressLine2: "Apt 4",
-              city: "New York",
-              region: "NY",
-              postalCode: "10001",
-              country: "US",
-              phoneNumber: {
-                regionCode: "us",
-                originalNumber: "5551234567",
-              },
-            },
           },
         }),
       })
