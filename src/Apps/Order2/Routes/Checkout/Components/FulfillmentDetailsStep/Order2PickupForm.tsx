@@ -8,12 +8,14 @@ import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
 import {
+  phoneInitialValuesFromMe,
   handlePhoneNumberChange,
   richRequiredPhoneValidators,
-  useInitialLocationValues,
 } from "Components/Address/utils"
+import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import { countries as phoneCountryOptions } from "Utils/countries"
 import createLogger from "Utils/logger"
+import type { Order2PickupForm_me$key } from "__generated__/Order2PickupForm_me.graphql"
 import type { Order2PickupForm_order$key } from "__generated__/Order2PickupForm_order.graphql"
 import {
   Form,
@@ -30,6 +32,7 @@ const logger = createLogger("Order2PickupForm.tsx")
 
 interface Order2PickupFormProps {
   order: Order2PickupForm_order$key
+  me: Order2PickupForm_me$key
 }
 
 interface PickupFormValues {
@@ -39,8 +42,10 @@ interface PickupFormValues {
 
 export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   order,
+  me,
 }) => {
-  const orderData = useFragment(FRAGMENT, order)
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+  const meData = useFragment(ME_FRAGMENT, me)
 
   const { completeStep, checkoutTracking, setCheckoutMode } =
     useCheckoutContext()
@@ -117,7 +122,8 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
     ],
   )
 
-  const locationBasedInitialValues = useInitialLocationValues()
+  const { phoneNumber: mePhone } = phoneInitialValuesFromMe(meData.phoneNumber)
+  const locationValues = useInitialLocationValues()
 
   const initialValues = useMemo(() => {
     const existingPhone =
@@ -133,14 +139,18 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
     }
 
     return {
-      phoneNumber: "",
+      phoneNumber: mePhone,
       phoneNumberCountryCode:
-        locationBasedInitialValues.phoneNumberCountryCode || "us",
+        meData.phoneNumber?.regionCode ||
+        locationValues.phoneNumberCountryCode ||
+        "us",
     }
   }, [
     orderData?.selectedFulfillmentOption?.type,
     orderData?.fulfillmentDetails?.phoneNumber,
-    locationBasedInitialValues.phoneNumberCountryCode,
+    mePhone,
+    meData.phoneNumber?.regionCode,
+    locationValues.phoneNumberCountryCode,
   ])
 
   return (
@@ -231,7 +241,17 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   ...richRequiredPhoneValidators,
 })
 
-const FRAGMENT = graphql`
+const ME_FRAGMENT = graphql`
+  fragment Order2PickupForm_me on Me {
+    phoneNumber {
+      display(format: NATIONAL)
+      originalNumber
+      regionCode
+    }
+  }
+`
+
+const ORDER_FRAGMENT = graphql`
   fragment Order2PickupForm_order on Order {
     internalID
     mode
