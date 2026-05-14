@@ -9,8 +9,8 @@ import * as Yup from "yup"
 const USE_SOCIAL_AUTH_TRACKING_KEY = "useSocialAuthTracking"
 
 /**
- * Picks up on the cookie set by `setSocialAuthTracking` and logs
- * the appropriate event once the user is redirected back to the app successfully.
+ * Picks up on the cookie set by the passport server after social auth and fires
+ * the appropriate Cohesion tracking event once the user is redirected back.
  */
 export const useSocialAuthTracking = () => {
   const {
@@ -53,7 +53,11 @@ export const useSocialAuthTracking = () => {
     track[value.action]({
       service: value.service,
       userId: user.id,
-      ...value.analytics,
+      ...(value.trigger ? { trigger: value.trigger } : {}),
+      ...(value.context_page_path
+        ? { context_page_path: value.context_page_path }
+        : {}),
+      ...(value.analytics ?? {}),
     })
 
     Cookies.expire(USE_SOCIAL_AUTH_TRACKING_KEY)
@@ -63,17 +67,19 @@ export const useSocialAuthTracking = () => {
 const schema = Yup.object({
   action: Yup.string().oneOf(["loggedIn", "signedUp"]).required(),
   analytics: Yup.object({
-    contextModule: Yup.string().required(),
+    contextModule: Yup.string(),
     intent: Yup.string(),
     trigger: Yup.string(),
-  }),
+  }).optional(),
   service: Yup.string().oneOf(["apple", "google", "facebook"]).required(),
+  trigger: Yup.string().oneOf(["click", "tap", "timed", "scroll"]).optional(),
+  context_page_path: Yup.string().optional(),
 })
 
 type Payload = Omit<Yup.InferType<typeof schema>, "analytics"> & {
   // We assume that the unions are valid because it would
   // be difficult to get the runtime values from Cohesion
-  analytics: AuthDialogAnalytics
+  analytics?: AuthDialogAnalytics
 }
 
 const isValid = (value: any): value is Payload => {

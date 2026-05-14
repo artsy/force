@@ -2,7 +2,7 @@ import express from "express"
 import type { ErrorRequestHandler, RequestHandler } from "express"
 import passport from "passport"
 import opts from "../options"
-import { setCampaign, trackLogin, trackSignup } from "./analytics"
+import { setCampaign, setAuthTrackingCookie } from "./analytics"
 import {
   afterSocialAuth,
   beforeSocialAuth,
@@ -36,7 +36,6 @@ const setupApp = () => {
     opts.loginPagePath,
     csrf({ cookie: true }),
     middleware(onLocalLogin),
-    middleware(trackLogin),
     middleware(ssoAndRedirectBack),
   )
   app.post(
@@ -45,7 +44,6 @@ const setupApp = () => {
     middleware(setCampaign),
     middleware(onLocalSignup),
     middleware(onLocalLogin),
-    middleware(trackSignup("email")),
     middleware(ssoAndRedirectBack),
   )
 
@@ -58,7 +56,7 @@ const setupApp = () => {
   app.post(
     opts.appleCallbackPath,
     middleware(afterSocialAuth("apple")),
-    middleware(trackSignup("apple")),
+    middleware(setAuthTrackingCookie("apple")),
     middleware(ssoAndRedirectBack),
   )
 
@@ -71,7 +69,7 @@ const setupApp = () => {
   app.get(
     opts.facebookCallbackPath,
     middleware(afterSocialAuth("facebook")),
-    middleware(trackSignup("facebook")),
+    middleware(setAuthTrackingCookie("facebook")),
     middleware(ssoAndRedirectBack),
   )
 
@@ -84,7 +82,7 @@ const setupApp = () => {
   app.get(
     opts.googleCallbackPath,
     middleware(afterSocialAuth("google")),
-    middleware(trackSignup("google")),
+    middleware(setAuthTrackingCookie("google")),
     middleware(ssoAndRedirectBack),
   )
 
@@ -92,7 +90,7 @@ const setupApp = () => {
   app.post(
     opts.googleOneTapCallbackPath,
     middleware(afterSocialAuth("google", "one-tap")),
-    middleware(trackSignup("google-one-tap")),
+    middleware(setAuthTrackingCookie("google-one-tap")),
     middleware(ssoAndRedirectBack),
   )
 
