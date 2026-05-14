@@ -210,6 +210,7 @@ describe("SavedAddressOptions", () => {
         clickedShippingAddress: jest.fn(),
         savedAddressViewed: jest.fn(),
         clickedAddNewShippingAddress: jest.fn(),
+        clickedEditShippingAddress: jest.fn(),
       },
       steps: [
         {
@@ -860,6 +861,18 @@ describe("SavedAddressOptions", () => {
       await waitFor(() => {
         expect(mockSavedAddressViewed).not.toHaveBeenCalled()
       })
+    })
+
+    it("tracks clickedEditShippingAddress when the edit button is clicked", async () => {
+      renderSavedAddressOptions()
+
+      await userEvent.click(
+        screen.getByRole("button", { name: /Edit address for John Doe/i }),
+      )
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedEditShippingAddress,
+      ).toHaveBeenCalledTimes(1)
     })
   })
 })

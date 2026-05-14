@@ -331,6 +331,7 @@ export const SavedAddressOptions = ({
                 type="button"
                 aria-label={`Edit address for ${address.name}`}
                 onClick={() => {
+                  checkoutTracking.clickedEditShippingAddress()
                   setUserAddressMode({
                     mode: "edit",
                     address: processedAddress,
