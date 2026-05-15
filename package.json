@@ -69,7 +69,7 @@
   "dependencies": {
     "@artsy/cohesion": "4.354.0",
     "@artsy/detect-responsive-traits": "^0.2.0",
-    "@artsy/dismissible": "^0.8.0",
+    "@artsy/dismissible": "^0.8.1",
     "@artsy/express-reloadable": "^1.7.0",
     "@artsy/fresnel": "^8.1.0",
     "@artsy/icons": "3.67.0",
