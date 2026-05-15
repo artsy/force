@@ -2,6 +2,7 @@ import { Button, Input, Stack, Text } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSocial"
 import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
+import { AUTHENTICATION_MODES } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { recaptcha } from "Utils/recaptcha"
 import type { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
@@ -26,7 +27,10 @@ export const AuthDialogWelcome: FC<
     <Formik
       validateOnBlur={false}
       validationSchema={welcomeValidationSchema}
-      initialValues={{ email: values.email || "", mode: "Pending" }}
+      initialValues={{
+        email: values.email || "",
+        mode: AUTHENTICATION_MODES.Pending,
+      }}
       onSubmit={async ({ email }) => {
         dispatch({ type: "SET", payload: { values: { email } } })
 
