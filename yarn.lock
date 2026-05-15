@@ -138,9 +138,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette@npm:46.9.1":
-  version: 46.9.1
-  resolution: "@artsy/palette@npm:46.9.1"
+"@artsy/palette@npm:46.9.2":
+  version: 46.9.2
+  resolution: "@artsy/palette@npm:46.9.2"
   dependencies:
     "@artsy/palette-tokens": "npm:^7.3.0"
     "@floating-ui/react": "npm:^0.27.18"
@@ -157,7 +157,7 @@ __metadata:
     react: ^18
     react-dom: ^18
     styled-components: ^6
-  checksum: 10c0/09b4332fd61b2e3878ee8d933f28b4a2c2bc4de577a8e6cbcb19451eccb555d5409e6290f4db305f4a2a11a7b57ba0bd9727346e0f643173b4e5cbd38d8cd9b3
+  checksum: 10c0/d55aa5c87c82d305a1975f789e254bf4bbc84686e10279ac7a88e4d1baba7c45bd555e0294108286d05319de9fb8cfafcff36f5c0333e4c05ad735ca975d29e2
   languageName: node
   linkType: hard
 
@@ -8751,7 +8751,7 @@ __metadata:
     "@artsy/icons": "npm:3.67.0"
     "@artsy/img": "npm:1.1.2"
     "@artsy/multienv": "npm:^1.2.0"
-    "@artsy/palette": "npm:46.9.1"
+    "@artsy/palette": "npm:46.9.2"
     "@artsy/palette-charts": "npm:45.9.2"
     "@artsy/palette-tokens": "npm:7.3.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
