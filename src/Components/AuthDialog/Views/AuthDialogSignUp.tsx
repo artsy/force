@@ -201,10 +201,12 @@ export const passwordValidator = Yup.string()
   .matches(/[a-z]{1}/, "Your password must have at least 1 lowercase letter.")
   .matches(/[A-Z]{1}/, "Your password must have at least 1 uppercase letter.")
 
+export const emailValidator = Yup.string()
+  .email("Please enter a valid email.")
+  .required("Please enter a valid email.")
+
 const VALIDATION_SCHEMA = Yup.object().shape({
   name: Yup.string().required("Name is required."),
-  email: Yup.string()
-    .email("Please enter a valid email.")
-    .required("Please enter a valid email."),
+  email: emailValidator,
   password: passwordValidator,
 })

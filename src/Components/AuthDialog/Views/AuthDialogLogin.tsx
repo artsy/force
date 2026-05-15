@@ -19,6 +19,25 @@ import { Form, Formik } from "formik"
 import type { FC } from "react"
 import * as Yup from "yup"
 
+export const AUTHENTICATION_MODES = {
+  Pending: "Pending",
+  Loading: "Loading",
+  TwoFactor: "TwoFactor",
+  OnDemand: "OnDemand",
+  Error: "Error",
+  Success: "Success",
+} as const
+
+export type AuthenticationMode =
+  (typeof AUTHENTICATION_MODES)[keyof typeof AUTHENTICATION_MODES]
+
+type LoginFormValues = {
+  email: string
+  password: string
+  authenticationCode: string
+  mode: AuthenticationMode
+}
+
 export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
   const { dispatch, state } = useAuthDialogContext()
 
@@ -27,28 +46,28 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
   const track = useAuthDialogTracking()
 
   return (
-    <Formik
+    <Formik<LoginFormValues>
       validateOnBlur={false}
-      validationSchema={VALIDATION_SCHEMA}
+      validationSchema={loginValidationSchema}
       initialValues={{
         email: state.values.email || "",
         password: "",
         authenticationCode: "",
-        mode: "Pending",
+        mode: AUTHENTICATION_MODES.Pending,
       }}
       onSubmit={async (
         { email, password, authenticationCode },
         { setStatus, setFieldValue },
       ) => {
         setStatus({ error: null })
-        setFieldValue("mode", "Loading")
+        setFieldValue("mode", AUTHENTICATION_MODES.Loading)
 
         try {
           const { user } = await login({ email, password, authenticationCode })
 
           runAfterAuthentication({ accessToken: user.accessToken })
 
-          setFieldValue("mode", "Success")
+          setFieldValue("mode", AUTHENTICATION_MODES.Success)
 
           track.loggedIn({ service: "email", userId: user.id })
 
@@ -58,23 +77,23 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
 
           switch (err.message) {
             case "missing on-demand authentication code": {
-              setFieldValue("mode", "OnDemand")
+              setFieldValue("mode", AUTHENTICATION_MODES.OnDemand)
               return
             }
 
             case "missing two-factor authentication code": {
-              setFieldValue("mode", "TwoFactor")
+              setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
               return
             }
 
             case "invalid two-factor authentication code": {
-              setFieldValue("mode", "TwoFactor")
+              setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
               setStatus({ error: formatErrorMessage(err) })
               return
             }
 
             default: {
-              setFieldValue("mode", "Error")
+              setFieldValue("mode", AUTHENTICATION_MODES.Error)
               setStatus({ error: formatErrorMessage(err) })
               return
             }
@@ -126,7 +145,7 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
                 </Text>
               </Box>
 
-              {values.mode === "OnDemand" && (
+              {values.mode === AUTHENTICATION_MODES.OnDemand && (
                 <Message variant="info">
                   Your safety and security are important to us. Please check
                   your email for a one-time authentication code to complete your
@@ -134,7 +153,8 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
                 </Message>
               )}
 
-              {(values.mode === "TwoFactor" || values.mode === "OnDemand") && (
+              {(values.mode === AUTHENTICATION_MODES.TwoFactor ||
+                values.mode === AUTHENTICATION_MODES.OnDemand) && (
                 <Input
                   name="authenticationCode"
                   title="Authentication Code"
@@ -157,7 +177,8 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
                   type="submit"
                   width="100%"
                   loading={
-                    values.mode === "Loading" || values.mode === "Success"
+                    values.mode === AUTHENTICATION_MODES.Loading ||
+                    values.mode === AUTHENTICATION_MODES.Success
                   }
                   disabled={!isValid || !dirty}
                 >
@@ -187,20 +208,23 @@ export const AuthDialogLogin: FC<React.PropsWithChildren<unknown>> = () => {
   )
 }
 
-const VALIDATION_SCHEMA = Yup.object().shape({
+export const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter a valid email.")
     .required("Email required."),
   // We allow any input for password since requirements have changed over the years.
   password: Yup.string().required("Password required"),
   // If auth code then require it
-  authenticationCode: Yup.string()
-    .when("mode", {
-      is: "OnDemand",
-      then: Yup.string().required("Authentication code required."),
-    })
-    .when("mode", {
-      is: "TwoFactor",
-      then: Yup.string().required("Authentication code required."),
-    }),
+  authenticationCode: Yup.string().when("mode", (mode, schema) => {
+    const authenticationMode = Array.isArray(mode) ? mode[0] : mode
+
+    if (
+      authenticationMode === AUTHENTICATION_MODES.OnDemand ||
+      authenticationMode === AUTHENTICATION_MODES.TwoFactor
+    ) {
+      return schema.required("Authentication code required.")
+    }
+
+    return schema
+  }),
 })
