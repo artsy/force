@@ -6,11 +6,20 @@ import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const SignupFormSocial = () => {
   const {
     state: { analytics, mode, options },
   } = useAuthDialogContext()
+
+  const { match } = useRouter()
+  const location = match ? match.location : window.location
+
+  // Compute default redirect without onboarding param
+  const defaultRedirect = ["/login", "/signup"].includes(location.pathname)
+    ? "/"
+    : location.pathname + (location.search || "")
 
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
     applePath: "/users/auth/apple",
@@ -20,7 +29,7 @@ export const SignupFormSocial = () => {
 
   const query = stringify(
     {
-      "redirect-to": options.redirectTo || "/",
+      "redirect-to": options.redirectTo || defaultRedirect,
       "signup-intent": "signup",
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
       accepted_terms_of_service: true,

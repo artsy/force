@@ -7,6 +7,7 @@ import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuth
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
 import type { FC } from "react"
+import { useRouter } from "System/Hooks/useRouter"
 
 export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
@@ -19,13 +20,20 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
     state: { options, analytics, mode },
   } = useAuthDialogContext()
 
+  const { match } = useRouter()
+  const location = match ? match.location : window.location
+
+  const defaultRedirect = ["/login", "/signup"].includes(location.pathname)
+    ? "/"
+    : location.pathname + (location.search || "")
+
   // These params are handled by the routes in the Passport app,
   // they get pushed onto the session and then handled when the social
   // service redirects back to Force.
   const query = stringify(
     {
       afterSignUpAction: options.afterAuthAction,
-      "redirect-to": options.redirectTo || "/",
+      "redirect-to": options.redirectTo || defaultRedirect,
       "signup-intent": analytics.intent,
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
       accepted_terms_of_service: true,
