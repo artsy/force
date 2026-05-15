@@ -54,4 +54,12 @@ test.describe("redirection", () => {
       "/artist-series/zeng-fanzhi-ceng-fan-zhi-mask-series",
     )
   })
+
+  test("redirects selected collections to genes", async ({ page }) => {
+    await page.goto("/collection/feminist-art")
+    expect(page.url()).toContain("/gene/feminist-art")
+
+    await page.goto("/collection/chinese-artists")
+    expect(page.url()).toContain("/gene/china")
+  })
 })
