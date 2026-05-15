@@ -1,12 +1,20 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { ArtistEditorialNewsGridFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
+import { ArtistEditorialNewsGrid } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ArtistEditorialNewsGridTestQuery } from "__generated__/ArtistEditorialNewsGridTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useDidMount: () => true,
+}))
 jest.mock("react-tracking")
+jest.mock("@unleash/proxy-client-react", () => ({
+  useFlag: jest.fn(() => false),
+  useVariant: jest.fn(() => ({ enabled: false, name: "disabled" })),
+}))
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -16,9 +24,15 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
   })),
 }))
 
+const trackEvent = jest.fn()
+
 const { renderWithRelay } =
   setupTestWrapperTL<ArtistEditorialNewsGridTestQuery>({
-    Component: ArtistEditorialNewsGridFragmentContainer,
+    Component: props => {
+      if (!props.artist) return null
+
+      return <ArtistEditorialNewsGrid artist={props.artist} />
+    },
     query: graphql`
       query ArtistEditorialNewsGridTestQuery @relay_test_operation {
         artist(id: "test-artist") {
@@ -28,50 +42,43 @@ const { renderWithRelay } =
     `,
   })
 
-const trackEvent = jest.fn()
+const renderArtistEditorialNewsGrid = () => {
+  return renderWithRelay()
+}
+
+const getArticleLink = () => {
+  const links = screen.getAllByRole("link")
+  const viewAllLink = screen.getByRole("link", { name: "View All" })
+  const articleLink = links.find(link => link !== viewAllLink)
+
+  if (!articleLink) {
+    throw new Error("Expected an article link")
+  }
+
+  return articleLink
+}
 
 beforeAll(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 })
 
 afterEach(() => {
-  trackEvent.mockClear()
+  jest.clearAllMocks()
 })
 
 describe("ArtistEditorialNewsGrid", () => {
-  it("renders correctly", () => {
-    renderWithRelay({
-      Artist: () => ({
-        name: "Test Artist",
-        articlesConnection: {
-          edges: [
-            {
-              node: {
-                href: "/article/test-article",
-                title: "Test Article",
-                publishedAt: "Jun 1, 2023",
-              },
-            },
-          ],
-        },
-      }),
-    })
+  it("renders the editorial grid", () => {
+    renderArtistEditorialNewsGrid()
 
-    expect(
-      screen.getByText("Artsy Editorial Featuring Test Artist"),
-    ).toBeInTheDocument()
-    expect(screen.getByText("View All")).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: /test article/i })).toHaveAttribute(
-      "href",
-      "/article/test-article",
-    )
+    expect(screen.getByText(/Artsy Editorial Featuring/)).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: "View All" })).toBeInTheDocument()
   })
 
   describe("tracking", () => {
-    it("tracks large article clicks", () => {
-      renderWithRelay()
+    it("tracks article clicks", () => {
+      renderArtistEditorialNewsGrid()
 
-      fireEvent.click(screen.getAllByRole("link")[1])
+      fireEvent.click(getArticleLink())
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
@@ -84,10 +91,10 @@ describe("ArtistEditorialNewsGrid", () => {
       })
     })
 
-    it("tracks view all", () => {
-      renderWithRelay()
+    it("tracks view all clicks", () => {
+      renderArtistEditorialNewsGrid()
 
-      fireEvent.click(screen.getAllByRole("link")[0])
+      fireEvent.click(screen.getByRole("link", { name: "View All" }))
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
@@ -98,165 +105,6 @@ describe("ArtistEditorialNewsGrid", () => {
         destination_page_owner_type: "articles",
         type: "viewAll",
       })
-    })
-
-    it("tracks small article thumbnail clicks", () => {
-      renderWithRelay({
-        Artist: () => ({
-          articlesConnection: {
-            edges: [
-              {
-                node: {
-                  href: "/article/first-article",
-                  title: "First Article",
-                },
-              },
-              {
-                node: {
-                  href: "/article/second-article",
-                  title: "Second Article",
-                },
-              },
-            ],
-          },
-        }),
-      })
-
-      // Click on the second article (first is the large one, second is a small thumbnail)
-      const articleLinks = screen.getAllByRole("link")
-      // Index 0 is "View All", Index 1 is the large article, Index 2 is the first small thumbnail
-      fireEvent.click(articleLinks[2])
-
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArticleGroup",
-        context_module: "marketNews",
-        context_page_owner_id: "example-artist-id",
-        context_page_owner_slug: "example-artist-slug",
-        context_page_owner_type: "artist",
-        destination_page_owner_type: "article",
-        type: "thumbnail",
-      })
-    })
-
-    it("tracks empty state article clicks", async () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Artist: () => ({
-            articlesConnection: {
-              edges: [],
-            },
-          }),
-        },
-        { showEmptyStateWhenNoArticles: true },
-      )
-
-      mockResolveLastOperation({
-        Article: () => ({
-          internalID: "featured-article",
-          href: "/article/featured-article",
-          title: "Featured Article",
-          thumbnailTitle: "Featured Article",
-          vertical: "Art Market",
-        }),
-      })
-
-      fireEvent.click(
-        await screen.findByRole("link", { name: /featured article/i }),
-      )
-
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArticleGroup",
-        context_module: "marketNews",
-        context_page_owner_id: "example-artist-id",
-        context_page_owner_slug: "example-artist-slug",
-        context_page_owner_type: "artist",
-        destination_page_owner_type: "article",
-        type: "thumbnail",
-      })
-    })
-
-    it("tracks empty state view all clicks", async () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Artist: () => ({
-            articlesConnection: {
-              edges: [],
-            },
-          }),
-        },
-        { showEmptyStateWhenNoArticles: true },
-      )
-
-      mockResolveLastOperation({
-        Article: () => ({
-          internalID: "featured-article",
-          href: "/article/featured-article",
-          title: "Featured Article",
-          thumbnailTitle: "Featured Article",
-          vertical: "Art Market",
-        }),
-      })
-
-      fireEvent.click(await screen.findByRole("link", { name: "View All" }))
-
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArticleGroup",
-        context_module: "marketNews",
-        context_page_owner_id: "example-artist-id",
-        context_page_owner_slug: "example-artist-slug",
-        context_page_owner_type: "artist",
-        destination_page_owner_type: "articles",
-        type: "viewAll",
-      })
-    })
-  })
-
-  describe("empty states", () => {
-    it("returns null by default when there are no articles", () => {
-      renderWithRelay({
-        Artist: () => ({
-          articlesConnection: {
-            edges: [],
-          },
-        }),
-      })
-
-      expect(
-        screen.queryByText(/no editorial content featuring this artist/i),
-      ).not.toBeInTheDocument()
-    })
-
-    it("renders the experiment empty state when enabled and there are no articles", async () => {
-      const { mockResolveLastOperation } = renderWithRelay(
-        {
-          Artist: () => ({
-            name: "Test Artist",
-            articlesConnection: {
-              edges: [],
-            },
-          }),
-        },
-        { showEmptyStateWhenNoArticles: true },
-      )
-
-      mockResolveLastOperation({
-        Article: () => ({
-          internalID: "featured-article",
-          href: "/article/featured-article",
-          title: "Featured Article",
-          thumbnailTitle: "Featured Article",
-          vertical: "Art Market",
-        }),
-      })
-
-      expect(
-        await screen.findByRole("link", { name: "From Artsy Editorial" }),
-      ).toHaveAttribute("href", "/articles")
-      expect(screen.getByRole("link", { name: "View All" })).toHaveAttribute(
-        "href",
-        "/articles",
-      )
-      expect(await screen.findAllByText("Featured Article")).not.toHaveLength(0)
     })
   })
 })

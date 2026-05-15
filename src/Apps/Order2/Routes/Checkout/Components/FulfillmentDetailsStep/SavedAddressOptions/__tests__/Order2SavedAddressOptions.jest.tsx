@@ -210,6 +210,7 @@ describe("SavedAddressOptions", () => {
         clickedShippingAddress: jest.fn(),
         savedAddressViewed: jest.fn(),
         clickedAddNewShippingAddress: jest.fn(),
+        clickedEditShippingAddress: jest.fn(),
       },
       steps: [
         {
@@ -264,6 +265,28 @@ describe("SavedAddressOptions", () => {
       expect(
         mockCheckoutContext.checkoutTracking.clickedShippingAddress,
       ).toHaveBeenCalled()
+    })
+
+    it("does not call onSelectAddress when clicking the already-selected address", async () => {
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: CheckoutStepState.ACTIVE,
+          },
+          {
+            name: CheckoutStepName.DELIVERY_OPTION,
+            state: CheckoutStepState.ACTIVE,
+          },
+        ],
+      })
+
+      renderSavedAddressOptions({ initialSelectedAddress: mockUSAddress1 })
+
+      await userEvent.click(screen.getByRole("radio", { name: /John Doe/i }))
+
+      expect(onSelectAddress).not.toHaveBeenCalled()
     })
 
     it("disables non-selected addresses while a selection is in flight", async () => {
@@ -860,6 +883,18 @@ describe("SavedAddressOptions", () => {
       await waitFor(() => {
         expect(mockSavedAddressViewed).not.toHaveBeenCalled()
       })
+    })
+
+    it("tracks clickedEditShippingAddress when the edit button is clicked", async () => {
+      renderSavedAddressOptions()
+
+      await userEvent.click(
+        screen.getByRole("button", { name: /Edit address for John Doe/i }),
+      )
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedEditShippingAddress,
+      ).toHaveBeenCalledTimes(1)
     })
   })
 })

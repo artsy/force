@@ -3862,6 +3862,7 @@ enum ArtworkImportState {
   ARTWORKS_CREATION_COMPLETE
   ARTWORK_IMPORT_PROCESSING_COMPLETE
   CANCELED
+  FAILED
   PENDING
   POSITION_VALIDATION_COMPLETE
   SALE_ARTWORKS_CREATION_COMPLETE
@@ -20750,6 +20751,9 @@ type Partner implements Node {
     after: String
     before: String
     first: Int
+
+    # Include inactive imports in results. Defaults to false.
+    includeInactive: Boolean
     last: Int
 
     # Filter by import source: 'bulk_import' or 'multi_add'. Returns all sources if omitted.
