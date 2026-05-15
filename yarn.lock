@@ -47,13 +47,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/dismissible@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "@artsy/dismissible@npm:0.8.0"
+"@artsy/dismissible@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@artsy/dismissible@npm:0.8.1"
   dependencies:
     lodash.uniqby: "npm:^4.7.0"
     yup: "npm:^1.3.3"
-  checksum: 10c0/e4b7cff4620b34c82996137dd1a8efe274b4d542cdb164e3c37f0f0b877563abfab3fa428fd6028258a69f7adc0f9e59d727b4716d13d8394684c195c98a0c03
+  checksum: 10c0/56be3ce1642003df56f42354cab118d00779a3ce2b3f500e5e9b19555dc82fa6e20ea22a8de4ed9649828b5c1a6269c76ffaf60a6abd27564cca6803be44af7e
   languageName: node
   linkType: hard
 
@@ -8745,7 +8745,7 @@ __metadata:
     "@artaio/arta-browser": "npm:^2.16.1"
     "@artsy/cohesion": "npm:4.354.0"
     "@artsy/detect-responsive-traits": "npm:^0.2.0"
-    "@artsy/dismissible": "npm:^0.8.0"
+    "@artsy/dismissible": "npm:^0.8.1"
     "@artsy/express-reloadable": "npm:^1.7.0"
     "@artsy/fresnel": "npm:^8.1.0"
     "@artsy/icons": "npm:3.67.0"
