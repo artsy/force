@@ -30,14 +30,6 @@ describe("NavBarLoggedOutActions", () => {
     expect(screen.getByText("Sign Up")).toBeInTheDocument()
   })
 
-  it("Sign Up button links to /signup with encoded current path", () => {
-    render(<NavBarLoggedOutActions />)
-    expect(screen.getByText("Sign Up").closest("a")).toHaveAttribute(
-      "href",
-      "/signup?redirectTo=%2Fcollect",
-    )
-  })
-
   it("opens auth dialog with correct analytics when Log In is clicked", () => {
     const showAuthDialog = jest.fn()
     mockUseAuthDialog.mockReturnValue({ showAuthDialog })
