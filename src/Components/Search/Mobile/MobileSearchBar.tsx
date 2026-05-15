@@ -1,10 +1,7 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput, useDidMount } from "@artsy/palette"
 import { type FC, useState } from "react"
-import { useVariant } from "@unleash/proxy-client-react"
-import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { OverlayRefetchContainer } from "./Overlay"
-
 import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -13,9 +10,6 @@ import type {
   MobileSearchBarSuggestQuery$data,
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
 import { graphql } from "react-relay"
-
-const SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT =
-  "onyx_search-autosuggest-experiment"
 
 interface MobileSearchBarProps {
   viewer: NonNullable<MobileSearchBarSuggestQuery$data["viewer"]>
@@ -26,19 +20,6 @@ export const MobileSearchBar: FC<
   React.PropsWithChildren<MobileSearchBarProps>
 > = ({ viewer, onClose }) => {
   const [overlayDisplayed, setOverlayDisplayed] = useState(false)
-
-  // Get variant from Unleash for A/B testing (on page load)
-  const unleashVariant = useVariant(SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT)
-  const variant =
-    unleashVariant.enabled && unleashVariant.name !== "disabled"
-      ? unleashVariant.name
-      : undefined
-
-  // Track experiment view for analytics (on page load, not on overlay open)
-  useTrackFeatureVariantOnMount({
-    experimentName: SEARCH_AUTOSUGGEST_VARIANT_EXPERIMENT,
-    variantName: unleashVariant.name,
-  })
 
   const displayOverlay = () => {
     setOverlayDisplayed(true)
@@ -55,7 +36,7 @@ export const MobileSearchBar: FC<
         <OverlayRefetchContainer
           viewer={viewer}
           onClose={handleOverlayClose}
-          variant={variant}
+          variant="experiment"
         />
       )}
 
@@ -108,7 +89,7 @@ export const MobileSearchBarQueryRenderer: FC<
         hasTerm: false,
         term: "",
         entities: [],
-        variant: undefined,
+        variant: "experiment",
       }}
       render={({ props: relayProps }) => {
         if (relayProps?.viewer) {

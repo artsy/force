@@ -102,6 +102,18 @@ describe("SearchBarInput", () => {
 
   afterEach(() => jest.clearAllMocks())
 
+  it("passes the experiment variant to autosuggest", () => {
+    render(<SearchBarInput searchTerm="andy" />)
+
+    expect(useClientQuery).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: expect.objectContaining({
+          variant: "experiment",
+        }),
+      }),
+    )
+  })
+
   it("redirects on a normal suggestion click", async () => {
     render(<SearchBarInput searchTerm="andy" />)
     await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
