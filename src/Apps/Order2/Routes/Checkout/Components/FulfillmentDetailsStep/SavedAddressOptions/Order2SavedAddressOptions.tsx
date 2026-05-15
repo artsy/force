@@ -238,6 +238,8 @@ export const SavedAddressOptions = ({
 
   const handleAddressClick = useCallback(
     async (processedAddress: ProcessedUserAddress) => {
+      if (processedAddress.internalID === selectedAddress?.internalID) return
+
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
       setIsSelecting(true)
@@ -266,6 +268,7 @@ export const SavedAddressOptions = ({
       isOfferOrder,
       onSelectAddress,
       onSelectInvalidAddress,
+      selectedAddress,
       setSectionErrorMessage,
     ],
   )
