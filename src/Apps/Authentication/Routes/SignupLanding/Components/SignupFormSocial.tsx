@@ -6,14 +6,11 @@ import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
-import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 
 export const SignupFormSocial = () => {
   const {
-    state: { analytics, mode },
+    state: { analytics, mode, options },
   } = useAuthDialogContext()
-
-  const { redirectUrl } = useAfterAuthenticationRedirectUrl()
 
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
     applePath: "/users/auth/apple",
@@ -23,7 +20,7 @@ export const SignupFormSocial = () => {
 
   const query = stringify(
     {
-      "redirect-to": redirectUrl,
+      "redirect-to": options.redirectTo || "/",
       "signup-intent": "signup",
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
       accepted_terms_of_service: true,
