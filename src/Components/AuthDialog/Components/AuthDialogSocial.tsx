@@ -3,11 +3,11 @@ import FacebookIcon from "@artsy/icons/FacebookIcon"
 import GoogleIcon from "@artsy/icons/GoogleIcon"
 import { Button, Stack } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
 import type { FC } from "react"
-import { useRouter } from "System/Hooks/useRouter"
 
 export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
@@ -20,12 +20,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
     state: { options, analytics, mode },
   } = useAuthDialogContext()
 
-  const { match } = useRouter()
-  const location = match ? match.location : window.location
-
-  const defaultRedirect = ["/login", "/signup"].includes(location.pathname)
-    ? "/"
-    : location.pathname + (location.search || "")
+  const { redirectUrl } = useAfterAuthenticationRedirectUrl(false)
 
   // These params are handled by the routes in the Passport app,
   // they get pushed onto the session and then handled when the social
@@ -33,7 +28,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
   const query = stringify(
     {
       afterSignUpAction: options.afterAuthAction,
-      "redirect-to": options.redirectTo || defaultRedirect,
+      "redirect-to": redirectUrl,
       "signup-intent": analytics.intent,
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
       accepted_terms_of_service: true,
