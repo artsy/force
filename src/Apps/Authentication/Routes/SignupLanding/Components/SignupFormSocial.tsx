@@ -13,7 +13,7 @@ export const SignupFormSocial = () => {
     state: { analytics, mode },
   } = useAuthDialogContext()
 
-  const { redirectUrl } = useAfterAuthenticationRedirectUrl()
+  const { redirectUrl } = useAfterAuthenticationRedirectUrl(false)
 
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
     applePath: "/users/auth/apple",
