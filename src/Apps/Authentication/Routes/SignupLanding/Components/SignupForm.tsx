@@ -86,25 +86,24 @@ const signupFormReducer = (
   }
 }
 
-const signupSchema = Yup.object().shape({
+const signUpValidationSchema = Yup.object({
   name: Yup.string().required("Name is required."),
   email: emailValidator,
   password: passwordValidator,
-  agreedToReceiveEmails: Yup.boolean(),
-})
-
-const signupFormValuesSchema = Yup.object({
-  name: Yup.string().defined(),
-  email: emailValidator,
-  password: Yup.string().defined(),
-  authenticationCode: Yup.string().defined(),
+  // `mode` and `authenticationCode` aren't entered on the SignUp step, but they
+  // are tracked in Formik values across steps so that `loginValidationSchema`
+  // can key off `mode` via `.when("mode", …)`. `authenticationCode` uses
+  // `.default("")` because Formik converts empty-string inputs to undefined
+  // before passing values to Yup (see `prepareDataForValidation`), which would
+  // otherwise fail `.defined()` here.
+  authenticationCode: Yup.string().default(""),
   mode: Yup.string()
     .oneOf(Object.values(AUTHENTICATION_MODES))
     .required() as Yup.StringSchema<AuthenticationMode>,
   agreedToReceiveEmails: Yup.boolean().defined(),
 })
 
-type SignupFormValues = Yup.InferType<typeof signupFormValuesSchema>
+type SignupFormValues = Yup.InferType<typeof signUpValidationSchema>
 
 const initialValues: SignupFormValues = {
   name: "",
@@ -114,6 +113,12 @@ const initialValues: SignupFormValues = {
   mode: AUTHENTICATION_MODES.Pending,
   agreedToReceiveEmails: false,
 }
+
+const VALIDATION_SCHEMAS = {
+  [FORM_STEPS.Welcome]: welcomeValidationSchema,
+  [FORM_STEPS.SignUp]: signUpValidationSchema,
+  [FORM_STEPS.Login]: loginValidationSchema,
+} satisfies Record<FormStep, Yup.AnySchema>
 
 export const SignupForm = () => {
   const [{ step, error }, dispatch] = useReducer(signupFormReducer, {
@@ -200,23 +205,27 @@ export const SignupForm = () => {
         switch (err.message) {
           case "missing on-demand authentication code": {
             actions.setFieldValue("mode", AUTHENTICATION_MODES.OnDemand)
+            actions.setSubmitting(false)
             return
           }
 
           case "missing two-factor authentication code": {
             actions.setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
+            actions.setSubmitting(false)
             return
           }
 
           case "invalid two-factor authentication code": {
             actions.setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
             dispatch({ type: "Error", error: formatErrorMessage(err) })
+            actions.setSubmitting(false)
             return
           }
 
           default: {
             actions.setFieldValue("mode", AUTHENTICATION_MODES.Error)
             dispatch({ type: "Error", error: formatErrorMessage(err) })
+            actions.setSubmitting(false)
             return
           }
         }
@@ -272,13 +281,7 @@ export const SignupForm = () => {
 
       <Formik<SignupFormValues>
         initialValues={initialValues}
-        validationSchema={
-          step === FORM_STEPS.Welcome
-            ? welcomeValidationSchema
-            : step === FORM_STEPS.SignUp
-              ? signupSchema
-              : loginValidationSchema
-        }
+        validationSchema={VALIDATION_SCHEMAS[step]}
         onSubmit={handleSubmit}
       >
         {({
