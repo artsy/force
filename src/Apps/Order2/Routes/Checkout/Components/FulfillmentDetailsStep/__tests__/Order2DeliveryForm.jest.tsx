@@ -42,6 +42,7 @@ beforeEach(() => {
       clickedOrderProgression: jest.fn(),
       clickedShippingAddress: jest.fn(),
       clickedAddNewShippingAddress: jest.fn(),
+      clickedEditShippingAddress: jest.fn(),
     },
     completeStep: jest.fn(),
     setUserAddressMode: jest.fn(),
