@@ -25,7 +25,7 @@ export const AuthDialogWelcome: FC<
   return (
     <Formik
       validateOnBlur={false}
-      validationSchema={VALIDATION_SCHEMA}
+      validationSchema={welcomeValidationSchema}
       initialValues={{ email: values.email || "", mode: "Pending" }}
       onSubmit={async ({ email }) => {
         dispatch({ type: "SET", payload: { values: { email } } })
@@ -106,7 +106,7 @@ export const AuthDialogWelcome: FC<
   )
 }
 
-const VALIDATION_SCHEMA = Yup.object().shape({
+export const welcomeValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter a valid email.")
     .required("Email required."),
