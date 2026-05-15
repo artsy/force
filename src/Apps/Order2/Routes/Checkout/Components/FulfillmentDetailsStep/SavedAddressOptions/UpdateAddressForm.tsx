@@ -208,7 +208,7 @@ export const UpdateAddressForm = ({
         phoneNumberCountryCode: true,
       }}
     >
-      {({ isSubmitting }) => {
+      {({ isSubmitting, dirty }) => {
         return (
           <Form noValidate>
             <SectionHeading>Edit address</SectionHeading>
@@ -222,6 +222,7 @@ export const UpdateAddressForm = ({
             <Button
               width="100%"
               type="submit"
+              disabled={!dirty}
               onClick={() => {
                 // tracked separately from onSubmit — fires on click regardless of validation
                 checkoutTracking.clickedOrderProgression(
