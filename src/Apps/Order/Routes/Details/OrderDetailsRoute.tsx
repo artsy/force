@@ -6,6 +6,8 @@ import type React from "react"
 import { Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 
+const NOT_FOUND_ERROR = "Please check the URL or verify your account details."
+
 interface DetailsProps {
   viewer: OrderDetailsRoute_viewer$key
 }
@@ -15,7 +17,7 @@ export const OrderDetailsRoute: React.FC<DetailsProps> = ({ viewer }) => {
   const order = data.me?.order
 
   if (!order) {
-    return <OrderErrorApp code={404} />
+    return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
 
   return (
