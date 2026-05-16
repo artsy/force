@@ -6,9 +6,15 @@ import { useMemo } from "react"
 
 /**
  * Returns a string representing the URL to redirect to after authentication.
- * @param appendOnboarding - Whether to append ?onboarding=true to the URL (defaults to true)
+ * @param onboardingOptions - Configuration object for onboarding behavior
+ * @param onboardingOptions.appendOnboarding - Whether to append ?onboarding=true to the URL (defaults to
+   true)
  */
-export const useAfterAuthenticationRedirectUrl = (appendOnboarding = true) => {
+export const useAfterAuthenticationRedirectUrl = (
+  onboardingOptions: { appendOnboarding?: boolean } = {},
+) => {
+  const appendOnboarding = onboardingOptions.appendOnboarding ?? true
+
   const {
     state: { options },
   } = useAuthDialogContext()
