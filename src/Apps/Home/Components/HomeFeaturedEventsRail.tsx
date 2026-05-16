@@ -13,6 +13,8 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { Media } from "Utils/Responsive"
 import { getInternalHref } from "Utils/url"
@@ -22,14 +24,18 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeFeaturedEventsRailProps {
+interface HomeFeaturedEventsRailProps extends HomeRailTrackingProps {
   orderedSet: HomeFeaturedEventsRail_orderedSet$data
 }
 
 const HomeFeaturedEventsRail: React.FC<
   React.PropsWithChildren<HomeFeaturedEventsRailProps>
-> = ({ orderedSet }) => {
+> = ({ orderedSet, railPositionY }) => {
   const { trackEvent } = useTracking()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.featuredRail,
+    positionY: railPositionY,
+  })
 
   const events = take(
     compact(orderedSet.items).flatMap(item =>
@@ -41,7 +47,7 @@ const HomeFeaturedEventsRail: React.FC<
   if (events.length === 0) return null
 
   return (
-    <>
+    <Box ref={railImpressionRef} width="100%">
       <Text variant="lg-display" mb={4}>
         Featured
       </Text>
@@ -126,7 +132,7 @@ const HomeFeaturedEventsRail: React.FC<
           )
         })}
       </GridColumns>
-    </>
+    </Box>
   )
 }
 

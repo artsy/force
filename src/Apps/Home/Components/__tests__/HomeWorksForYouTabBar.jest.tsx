@@ -22,7 +22,7 @@ jest.mock("System/Hooks/useSystemContext", () => ({
 
 describe("HomeWorksForYouTabBar", () => {
   const getWrapper = () => {
-    return render(<HomeWorksForYouTabBar />)
+    return render(<HomeWorksForYouTabBar railPositionY={4} />)
   }
 
   it("renders the new for you tab by default", () => {

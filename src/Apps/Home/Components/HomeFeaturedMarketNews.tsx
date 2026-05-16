@@ -1,3 +1,4 @@
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import {
   ActionType,
   type ClickedArticleGroup,
@@ -5,6 +6,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import {
+  Box,
   Column,
   Flex,
   GridColumns,
@@ -21,6 +23,7 @@ import {
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
 import { Masonry } from "Components/Masonry"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -34,89 +37,95 @@ import { useTracking } from "react-tracking"
 
 const ARTICLE_COUNT = 6
 
-interface HomeFeaturedMarketNewsProps {
+interface HomeFeaturedMarketNewsProps extends HomeRailTrackingProps {
   articles: HomeFeaturedMarketNews_articles$data
 }
 const HomeFeaturedMarketNews: React.FC<
   React.PropsWithChildren<HomeFeaturedMarketNewsProps>
-> = ({ articles }) => {
+> = ({ articles, railPositionY }) => {
   const { trackEvent } = useTracking()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.marketNews,
+    positionY: railPositionY,
+  })
   const [firstArticle, ...restOfArticles] = articles
   const truncatedRestOfArticles = take(restOfArticles, ARTICLE_COUNT)
   const firstImage = firstArticle.thumbnailImage?.large
 
   return (
-    <HomeFeaturedMarketNewsContainer>
-      <GridColumns>
-        <Column span={[12, 6]} mb={[4, 0]}>
-          <RouterLink
-            key={firstArticle.internalID}
-            to={firstArticle.href ?? ""}
-            display="block"
-            textDecoration="none"
-            onClick={() => {
-              const trackingEvent: ClickedArticleGroup = {
-                action: ActionType.clickedArticleGroup,
-                context_module: ContextModule.marketNews,
-                context_page_owner_type: OwnerType.home,
-                context_page_owner_id: firstArticle.internalID,
-                context_page_owner_slug: firstArticle.slug ?? "",
-                destination_page_owner_type: OwnerType.article,
-                type: "thumbnail",
-              }
-              trackEvent(trackingEvent)
-            }}
-          >
-            {firstImage && (
-              <ResponsiveBox
-                aspectWidth={firstImage.width}
-                aspectHeight={firstImage.height}
-                maxWidth="100%"
-              >
-                <Image
-                  src={firstImage.src}
-                  srcSet={firstImage.srcSet}
-                  width="100%"
-                  height="100%"
-                  lazyLoad
-                />
-              </ResponsiveBox>
-            )}
+    <Box ref={railImpressionRef} width="100%">
+      <HomeFeaturedMarketNewsContainer>
+        <GridColumns>
+          <Column span={[12, 6]} mb={[4, 0]}>
+            <RouterLink
+              key={firstArticle.internalID}
+              to={firstArticle.href ?? ""}
+              display="block"
+              textDecoration="none"
+              onClick={() => {
+                const trackingEvent: ClickedArticleGroup = {
+                  action: ActionType.clickedArticleGroup,
+                  context_module: ContextModule.marketNews,
+                  context_page_owner_type: OwnerType.home,
+                  context_page_owner_id: firstArticle.internalID,
+                  context_page_owner_slug: firstArticle.slug ?? "",
+                  destination_page_owner_type: OwnerType.article,
+                  type: "thumbnail",
+                }
+                trackEvent(trackingEvent)
+              }}
+            >
+              {firstImage && (
+                <ResponsiveBox
+                  aspectWidth={firstImage.width}
+                  aspectHeight={firstImage.height}
+                  maxWidth="100%"
+                >
+                  <Image
+                    src={firstImage.src}
+                    srcSet={firstImage.srcSet}
+                    width="100%"
+                    height="100%"
+                    lazyLoad
+                  />
+                </ResponsiveBox>
+              )}
 
-            <Text variant="xs" fontWeight="bold" mt={1}>
-              {firstArticle.vertical}
-            </Text>
+              <Text variant="xs" fontWeight="bold" mt={1}>
+                {firstArticle.vertical}
+              </Text>
 
-            <Text variant={["lg-display", "xl"]} mt={0.5}>
-              {firstArticle.title}
-            </Text>
+              <Text variant={["lg-display", "xl"]} mt={0.5}>
+                {firstArticle.title}
+              </Text>
 
-            <Text variant="lg-display" mt={1}>
-              By {firstArticle.byline}
-            </Text>
+              <Text variant="lg-display" mt={1}>
+                By {firstArticle.byline}
+              </Text>
 
-            <Text variant="lg-display" color="mono60" mt={0.5}>
-              {firstArticle.publishedAt}
-            </Text>
-          </RouterLink>
-        </Column>
+              <Text variant="lg-display" color="mono60" mt={0.5}>
+                {firstArticle.publishedAt}
+              </Text>
+            </RouterLink>
+          </Column>
 
-        <Column span={[12, 6]}>
-          <Masonry columnCount={2}>
-            {truncatedRestOfArticles.map(article => {
-              return (
-                <CellArticleFragmentContainer
-                  key={article.internalID}
-                  article={article}
-                  mode="GRID"
-                  mb={4}
-                />
-              )
-            })}
-          </Masonry>
-        </Column>
-      </GridColumns>
-    </HomeFeaturedMarketNewsContainer>
+          <Column span={[12, 6]}>
+            <Masonry columnCount={2}>
+              {truncatedRestOfArticles.map(article => {
+                return (
+                  <CellArticleFragmentContainer
+                    key={article.internalID}
+                    article={article}
+                    mode="GRID"
+                    mb={4}
+                  />
+                )
+              })}
+            </Masonry>
+          </Column>
+        </GridColumns>
+      </HomeFeaturedMarketNewsContainer>
+    </Box>
   )
 }
 
@@ -228,8 +237,8 @@ const PLACEHOLDER = (
 )
 
 export const HomeFeaturedMarketNewsQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -258,6 +267,7 @@ export const HomeFeaturedMarketNewsQueryRenderer: React.FC<
           return (
             <HomeFeaturedMarketNewsFragmentContainer
               articles={compact(props.articles)}
+              railPositionY={railPositionY}
             />
           )
         }
