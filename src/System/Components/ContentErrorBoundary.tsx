@@ -60,6 +60,11 @@ export class ContentErrorBoundary extends React.Component<
         componentStack: errorInfo.componentStack,
       })
       scope.setTag("errorBoundary", "content")
+      scope.setFingerprint([
+        "ContentErrorBoundary",
+        "{{ error.type }}",
+        "{{ default }}",
+      ])
       captureException(error)
     })
   }
