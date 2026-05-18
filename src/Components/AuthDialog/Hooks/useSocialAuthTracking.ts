@@ -69,7 +69,9 @@ const schema = Yup.object({
     trigger: Yup.string(),
   }).optional(),
   service: Yup.string().oneOf(["apple", "google", "facebook"]).required(),
-  trigger: Yup.string().oneOf(["click", "tap", "timed", "scroll"]).optional(),
+  trigger: Yup.string()
+    .oneOf(["click", "tap", "timed", "scroll", "one-tap"])
+    .optional(),
 })
 
 type Payload = Omit<Yup.InferType<typeof schema>, "analytics"> & {

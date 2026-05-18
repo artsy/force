@@ -67,9 +67,7 @@ export const useAuthDialogTracking = () => {
           user_id: userId,
         }
 
-        return trackEvent({
-          ...payload,
-        })
+        return trackEvent(payload)
       },
 
       signedUp: ({
@@ -97,9 +95,7 @@ export const useAuthDialogTracking = () => {
           user_id: userId,
         }
 
-        return trackEvent({
-          ...payload,
-        })
+        return trackEvent(payload)
       },
 
       resetPassword: () => {
