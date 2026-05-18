@@ -89,6 +89,7 @@ declare module "sharify" {
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SEGMENT_WRITE_KEY: string
       SENTRY_PUBLIC_DSN: string
+      SENTRY_RELEASE: string
       SESSION_ID?: string
       SET_PASSWORD: string
       SHOW_ANALYTICS_CALLS: boolean
