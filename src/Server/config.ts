@@ -97,6 +97,7 @@ export const SEGMENT_WRITE_KEY_SERVER: any = null
 export const SEGMENT_WRITE_KEY: any = null
 export const SENTRY_PRIVATE_DSN: any = null
 export const SENTRY_PUBLIC_DSN: any = null
+export const SENTRY_RELEASE: any = null
 export const SENTRY_TRACING_ENABLED: any = false
 export const SESSION_COOKIE_KEY: any = "force.sess"
 export const SESSION_COOKIE_MAX_AGE: any = 31536000000

@@ -5,8 +5,11 @@ import { defineConfig } from "@rsbuild/core"
 import { pluginAssetsRetry } from "@rsbuild/plugin-assets-retry"
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
 import { pluginReact } from "@rsbuild/plugin-react"
+import { sentryWebpackPlugin } from "@sentry/webpack-plugin"
 import nodeExternals from "webpack-node-externals"
 import { EarlyHintsPlugin } from "./rspack/plugins/EarlyHintsPlugin"
+
+const isProduction = process.env.NODE_ENV === "production"
 
 loadEnvs(".env.shared", ".env")
 
@@ -30,6 +33,7 @@ export default defineConfig({
         externals: {
           async_hooks: "async_hooks", // Required because getAsyncStorage isn't using async import()
         },
+        sourceMap: isProduction ? { js: "hidden-source-map" } : false,
       },
       tools: {
         htmlPlugin: false,
@@ -39,6 +43,18 @@ export default defineConfig({
             new LoadablePlugin({
               filename: "loadable-stats.json",
             }),
+            ...(isProduction && process.env.SENTRY_AUTH_TOKEN
+              ? [
+                  sentryWebpackPlugin({
+                    org: "artsynet",
+                    project: "force-production",
+                    release: { name: process.env.SENTRY_RELEASE },
+                    sourcemaps: {
+                      filesToDeleteAfterUpload: ["dist/static/**/*.map"],
+                    },
+                  }),
+                ]
+              : []),
           ],
         },
       },
