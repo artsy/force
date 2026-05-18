@@ -189,8 +189,7 @@ describe("ErrorBoundary", () => {
     expect(mockSetTag).toHaveBeenCalledWith("errorBoundary", "outer")
     expect(mockSetFingerprint).toHaveBeenCalledWith([
       "ErrorBoundary",
-      "{{ error.type }}",
-      "{{ default }}",
+      "sentry test error",
     ])
     expect(mockCaptureException).toHaveBeenCalled()
   })
