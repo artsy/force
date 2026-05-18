@@ -54,9 +54,6 @@ export const useSocialAuthTracking = () => {
       service: value.service,
       userId: user.id,
       ...(value.trigger ? { trigger: value.trigger } : {}),
-      ...(value.context_page_path
-        ? { context_page_path: value.context_page_path }
-        : {}),
       ...(value.analytics ?? {}),
     })
 
@@ -73,7 +70,6 @@ const schema = Yup.object({
   }).optional(),
   service: Yup.string().oneOf(["apple", "google", "facebook"]).required(),
   trigger: Yup.string().oneOf(["click", "tap", "timed", "scroll"]).optional(),
-  context_page_path: Yup.string().optional(),
 })
 
 type Payload = Omit<Yup.InferType<typeof schema>, "analytics"> & {

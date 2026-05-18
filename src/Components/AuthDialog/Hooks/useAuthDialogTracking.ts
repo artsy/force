@@ -49,14 +49,12 @@ export const useAuthDialogTracking = () => {
         userId,
         intent = analytics.intent || Intent.login,
         trigger = analytics.trigger || "click",
-        context_page_path,
       }: {
         contextModule?: SuccessfullyLoggedIn["context_module"]
         service: SuccessfullyLoggedIn["service"]
         userId: SuccessfullyLoggedIn["user_id"]
         intent?: SuccessfullyLoggedIn["intent"]
         trigger?: SuccessfullyLoggedIn["trigger"]
-        context_page_path?: string
       }) => {
         const payload: SuccessfullyLoggedIn = {
           action: ActionType.successfullyLoggedIn,
@@ -71,7 +69,6 @@ export const useAuthDialogTracking = () => {
 
         return trackEvent({
           ...payload,
-          ...(context_page_path ? { context_page_path } : {}),
         })
       },
 
@@ -81,14 +78,12 @@ export const useAuthDialogTracking = () => {
         userId,
         intent = analytics.intent || Intent.signup,
         trigger = analytics.trigger || "click",
-        context_page_path,
       }: {
         contextModule?: CreatedAccount["context_module"]
         service: CreatedAccount["service"]
         userId: CreatedAccount["user_id"]
         intent?: CreatedAccount["intent"]
         trigger?: CreatedAccount["trigger"]
-        context_page_path?: string
       }) => {
         const payload: CreatedAccount = {
           action: ActionType.createdAccount,
@@ -104,7 +99,6 @@ export const useAuthDialogTracking = () => {
 
         return trackEvent({
           ...payload,
-          ...(context_page_path ? { context_page_path } : {}),
         })
       },
 

@@ -12,25 +12,12 @@ export const setAuthTrackingCookie =
     const isOneTap = service === "google-one-tap"
     const cookieService = isOneTap ? "google" : service
 
-    let contextPagePath: string | undefined
-    if (isOneTap) {
-      const referer = req.headers?.referer
-      if (referer) {
-        try {
-          contextPagePath = new URL(referer).pathname
-        } catch {
-          // malformed referer — omit
-        }
-      }
-    }
-
     res.cookie(
       SOCIAL_AUTH_TRACKING_COOKIE,
       JSON.stringify({
         action,
         service: cookieService,
-        ...(isOneTap ? { trigger: "tap" } : {}),
-        ...(contextPagePath ? { context_page_path: contextPagePath } : {}),
+        ...(isOneTap ? { trigger: "one-tap" } : {}),
       }),
       { httpOnly: false },
     )
