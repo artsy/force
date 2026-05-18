@@ -9,7 +9,7 @@ export const redirectBack = (
   req: ArtsyRequest & { artsyPassportSignedUp?: boolean },
   res: ArtsyResponse | null = null,
 ) => {
-  const url = sanitizeRedirect(
+  let url = sanitizeRedirect(
     req.session.redirectTo ||
       (req.artsyPassportSignedUp && !req.session.skipOnboarding
         ? opts.afterSignupPagePath
@@ -19,6 +19,12 @@ export const redirectBack = (
       req.params.redirect_uri ||
       "/",
   )
+
+  // If this is a new social auth signup, append onboarding=true
+  if (req.artsyPassportSignedUp && !req.session.skipOnboarding) {
+    const separator = url.includes("?") ? "&" : "?"
+    url = `${url}${separator}onboarding=true`
+  }
 
   if (res !== null) {
     delete req.session.redirectTo

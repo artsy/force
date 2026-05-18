@@ -33,6 +33,7 @@ export function setupSentryClient() {
     denyUrls: DENIED_URLS,
     dsn: getENV("SENTRY_PUBLIC_DSN"),
     ignoreErrors: IGNORED_ERRORS,
+    release: getENV("SENTRY_RELEASE"),
     tracesSampleRate: 0.08,
     integrations: [
       browserTracingIntegration({

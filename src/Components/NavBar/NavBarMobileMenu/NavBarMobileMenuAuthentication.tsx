@@ -6,7 +6,6 @@ import { trackEvent } from "Server/analytics/helpers"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type * as React from "react"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
-import { useState, useEffect } from "react"
 
 export const NavBarMobileMenuLoggedIn: React.FC<
   React.PropsWithChildren<unknown>
@@ -56,16 +55,10 @@ export const NavBarMobileMenuLoggedIn: React.FC<
 const NavBarMobileMenuLoggedOut: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
-  const [currentPath, setCurrentPath] = useState("/")
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname)
-  }, [])
-
   return (
     <>
       <NavBarMobileMenuItemLink
-        to={`/signup?redirectTo=${encodeURIComponent(currentPath)}`}
+        to={`/signup?intent=${Intent.signup}&contextModule=${ContextModule.header}`}
       >
         Sign Up
       </NavBarMobileMenuItemLink>

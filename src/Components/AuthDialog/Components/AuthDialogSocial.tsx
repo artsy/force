@@ -20,7 +20,9 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
     state: { options, analytics, mode },
   } = useAuthDialogContext()
 
-  const { redirectUrl } = useAfterAuthenticationRedirectUrl()
+  const { redirectUrl } = useAfterAuthenticationRedirectUrl({
+    appendOnboarding: false,
+  })
 
   // These params are handled by the routes in the Passport app,
   // they get pushed onto the session and then handled when the social
