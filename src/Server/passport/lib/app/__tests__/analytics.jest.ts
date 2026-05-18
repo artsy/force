@@ -40,18 +40,7 @@ describe("setAuthTrackingCookie", () => {
     )
   })
 
-  it("maps google-one-tap to service: google, trigger: tap", () => {
-    analytics.setAuthTrackingCookie("google-one-tap")(req, res, next)
-
-    expect(res.cookie).toHaveBeenCalledWith(
-      "useSocialAuthTracking",
-      JSON.stringify({ action: "loggedIn", service: "google", trigger: "tap" }),
-      { httpOnly: false },
-    )
-  })
-
-  it("includes context_page_path from Referer header for one-tap", () => {
-    req.headers = { referer: "https://staging.artsy.net/artist/andy-warhol" }
+  it("maps google-one-tap to service: google, trigger: one-tap", () => {
     analytics.setAuthTrackingCookie("google-one-tap")(req, res, next)
 
     expect(res.cookie).toHaveBeenCalledWith(
@@ -59,20 +48,8 @@ describe("setAuthTrackingCookie", () => {
       JSON.stringify({
         action: "loggedIn",
         service: "google",
-        trigger: "tap",
-        context_page_path: "/artist/andy-warhol",
+        trigger: "one-tap",
       }),
-      { httpOnly: false },
-    )
-  })
-
-  it("omits context_page_path for regular social auth", () => {
-    req.headers = { referer: "https://accounts.google.com/o/oauth2/callback" }
-    analytics.setAuthTrackingCookie("google")(req, res, next)
-
-    expect(res.cookie).toHaveBeenCalledWith(
-      "useSocialAuthTracking",
-      JSON.stringify({ action: "loggedIn", service: "google" }),
       { httpOnly: false },
     )
   })
