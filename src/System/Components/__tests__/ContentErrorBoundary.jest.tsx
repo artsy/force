@@ -10,6 +10,7 @@ jest.mock("Utils/getENV", () => ({
 const mockCaptureException = jest.fn()
 const mockSetContext = jest.fn()
 const mockSetTag = jest.fn()
+const mockSetFingerprint = jest.fn()
 
 jest.mock("@sentry/browser", () => ({
   captureException: (...args: unknown[]) => mockCaptureException(...args),
@@ -17,6 +18,7 @@ jest.mock("@sentry/browser", () => ({
     cb({
       setContext: mockSetContext,
       setTag: mockSetTag,
+      setFingerprint: mockSetFingerprint,
     }),
 }))
 
@@ -39,7 +41,7 @@ describe("ContentErrorBoundary", () => {
     render(
       <ContentErrorBoundary pathname="/test">
         <div>Hello World</div>
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     expect(screen.getByText("Hello World")).toBeInTheDocument()
@@ -53,7 +55,7 @@ describe("ContentErrorBoundary", () => {
     render(
       <ContentErrorBoundary pathname="/test">
         <ErrorComponent />
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     expect(screen.getByTestId("error-page")).toBeInTheDocument()
@@ -68,7 +70,7 @@ describe("ContentErrorBoundary", () => {
     render(
       <ContentErrorBoundary pathname="/test">
         <ErrorComponent />
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     expect(screen.getByText("Something Went Wrong")).toBeInTheDocument()
@@ -95,7 +97,7 @@ describe("ContentErrorBoundary", () => {
           <ContentErrorBoundary pathname="/test">
             <ErrorComponent />
           </ContentErrorBoundary>
-        </OuterBoundary>
+        </OuterBoundary>,
       )
     }).toThrow("Loading chunk abc123.js failed")
   })
@@ -111,7 +113,7 @@ describe("ContentErrorBoundary", () => {
         }}
       >
         <div>Content</div>
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     // Simulate an error state
@@ -133,7 +135,7 @@ describe("ContentErrorBoundary", () => {
         }}
       >
         <div>Content</div>
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     expect(screen.getByText("Content")).toBeInTheDocument()
@@ -150,7 +152,7 @@ describe("ContentErrorBoundary", () => {
         }}
       >
         <div>Content</div>
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     act(() => {
@@ -171,13 +173,13 @@ describe("ContentErrorBoundary", () => {
         }}
       >
         <div>Content</div>
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     expect(screen.getByText("Something Went Wrong")).toBeInTheDocument()
   })
 
-  it("reports to Sentry with errorBoundary: 'content' tag", () => {
+  it("reports to Sentry with tags, fingerprint, and exception", () => {
     const ErrorComponent = () => {
       throw new Error("sentry test error")
     }
@@ -185,10 +187,15 @@ describe("ContentErrorBoundary", () => {
     render(
       <ContentErrorBoundary pathname="/test">
         <ErrorComponent />
-      </ContentErrorBoundary>
+      </ContentErrorBoundary>,
     )
 
     expect(mockSetTag).toHaveBeenCalledWith("errorBoundary", "content")
+    expect(mockSetFingerprint).toHaveBeenCalledWith([
+      "ContentErrorBoundary",
+      "{{ error.type }}",
+      "{{ default }}",
+    ])
     expect(mockCaptureException).toHaveBeenCalled()
   })
 
@@ -201,7 +208,7 @@ describe("ContentErrorBoundary", () => {
       render(
         <ContentErrorBoundary pathname="/test">
           <ErrorComponent />
-        </ContentErrorBoundary>
+        </ContentErrorBoundary>,
       )
     }).toThrow()
 
