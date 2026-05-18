@@ -53,6 +53,54 @@ describe("setAuthTrackingCookie", () => {
       { httpOnly: false },
     )
   })
+
+  it("includes analytics context from session when present", () => {
+    req.session.contextModule = "artworkPage"
+    req.session.sign_up_intent = "follow"
+    req.session.trigger = "click"
+    analytics.setAuthTrackingCookie("apple")(req, res, next)
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({
+        action: "loggedIn",
+        service: "apple",
+        analytics: {
+          contextModule: "artworkPage",
+          intent: "follow",
+          trigger: "click",
+        },
+      }),
+      { httpOnly: false },
+    )
+  })
+
+  it("omits analytics when no session context is present", () => {
+    analytics.setAuthTrackingCookie("apple")(req, res, next)
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({ action: "loggedIn", service: "apple" }),
+      { httpOnly: false },
+    )
+  })
+
+  it("does not include session trigger in analytics for google-one-tap", () => {
+    req.session.contextModule = "header"
+    req.session.trigger = "click"
+    analytics.setAuthTrackingCookie("google-one-tap")(req, res, next)
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({
+        action: "loggedIn",
+        service: "google",
+        trigger: "one-tap",
+        analytics: { contextModule: "header" },
+      }),
+      { httpOnly: false },
+    )
+  })
 })
 
 describe("setCampaign", () => {

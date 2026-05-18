@@ -28,8 +28,10 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
     {
       afterSignUpAction: options.afterAuthAction,
       "redirect-to": redirectUrl,
+      "context-module": analytics.contextModule,
       "signup-intent": analytics.intent,
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
+      trigger: analytics.trigger,
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
     },
