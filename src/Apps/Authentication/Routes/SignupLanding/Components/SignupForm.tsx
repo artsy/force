@@ -24,6 +24,7 @@ import {
   passwordValidator,
 } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { welcomeValidationSchema } from "Components/AuthDialog/Views/AuthDialogWelcome"
+import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { login, signUp } from "Utils/auth"
@@ -419,6 +420,16 @@ export const SignupForm = () => {
                     >
                       Go back.
                     </Clickable>
+                    <br />
+                    {step === FORM_STEPS.Login && (
+                      <RouterLink
+                        to="/forgot"
+                        textDecoration="underline"
+                        color="mono100"
+                      >
+                        Forgot password?
+                      </RouterLink>
+                    )}
                   </Text>
                 ) : (
                   <>
