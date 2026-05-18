@@ -6,8 +6,15 @@ import { useMemo } from "react"
 
 /**
  * Returns a string representing the URL to redirect to after authentication.
+ * @param onboardingOptions - Configuration object for onboarding behavior
+ * @param onboardingOptions.appendOnboarding - Whether to append ?onboarding=true to the URL (defaults to
+   true)
  */
-export const useAfterAuthenticationRedirectUrl = () => {
+export const useAfterAuthenticationRedirectUrl = (
+  onboardingOptions: { appendOnboarding?: boolean } = {},
+) => {
+  const appendOnboarding = onboardingOptions.appendOnboarding ?? true
+
   const {
     state: { options },
   } = useAuthDialogContext()
@@ -24,7 +31,7 @@ export const useAfterAuthenticationRedirectUrl = () => {
       getENV("APP_URL") ?? "https://www.artsy.net",
     )
 
-    if (isElligibleForOnboarding) {
+    if (appendOnboarding && isElligibleForOnboarding) {
       redirectUri.searchParams.append("onboarding", "true")
     }
 
@@ -40,7 +47,12 @@ export const useAfterAuthenticationRedirectUrl = () => {
     }
 
     return redirectUri.toString()
-  }, [defaultRedirect, isElligibleForOnboarding, options.redirectTo])
+  }, [
+    appendOnboarding,
+    defaultRedirect,
+    isElligibleForOnboarding,
+    options.redirectTo,
+  ])
 
   return { redirectUrl }
 }
