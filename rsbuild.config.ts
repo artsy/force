@@ -50,7 +50,7 @@ export default defineConfig({
                     project: "force-production",
                     release: { name: process.env.SENTRY_RELEASE },
                     sourcemaps: {
-                      filesToDeleteAfterUpload: ["dist/**/*.map"],
+                      filesToDeleteAfterUpload: ["dist/static/**/*.map"],
                     },
                   }),
                 ]
