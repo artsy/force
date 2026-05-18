@@ -41,11 +41,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
         componentStack: errorInfo.componentStack,
       })
       scope.setTag("errorBoundary", "outer")
-      scope.setFingerprint([
-        "ErrorBoundary",
-        "{{ error.type }}",
-        "{{ default }}",
-      ])
+      scope.setFingerprint(["ErrorBoundary", String(message)])
       captureException(error)
     })
 
