@@ -1,3 +1,5 @@
+import { ContextModule } from "@artsy/cohesion"
+import { useAuthDialog } from "Components/AuthDialog"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import type * as React from "react"
 import { HomeHeroUnitBase } from "./HomeHeroUnit"
@@ -6,6 +8,7 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
   index,
 }) => {
   const { downloadAppUrl } = useDeviceDetection()
+  const { showAuthDialog } = useAuthDialog()
 
   return (
     <HomeHeroUnitBase
@@ -16,6 +19,15 @@ export const HomeHeroUnitLoggedOut: React.FC<{ index: number }> = ({
         desktop: {
           text: "Sign Up",
           url: "/signup",
+          onClick: e => {
+            e.preventDefault()
+
+            showAuthDialog({
+              analytics: {
+                contextModule: ContextModule.heroUnitsRail,
+              },
+            })
+          },
         },
         mobile: {
           text: "Get the App",
