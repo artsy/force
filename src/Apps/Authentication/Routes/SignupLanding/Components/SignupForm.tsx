@@ -163,110 +163,117 @@ export const SignupForm = () => {
     values: SignupFormValues,
     actions: FormikHelpers<SignupFormValues>,
   ) => {
-    if (step === FORM_STEPS.Welcome) {
-      dispatch({ type: "ClearError" })
-
-      try {
-        const exists = await verifyUserExists(values.email)
-
-        dispatch({
-          type: "Step",
-          step: exists ? FORM_STEPS.Login : FORM_STEPS.SignUp,
-        })
-        resetAuthenticationFields(actions)
-      } catch (err) {
-        console.error(err)
-        dispatch({
-          type: "Error",
-          error: "Something went wrong. Please try again.",
-        })
-        actions.setSubmitting(false)
-      }
-
-      return
-    }
-
-    if (step === FORM_STEPS.Login) {
-      dispatch({ type: "ClearError" })
-      actions.setFieldValue("mode", AUTHENTICATION_MODES.Loading)
-
-      try {
-        const response = await login({
-          email: values.email,
-          password: values.password,
-          authenticationCode: values.authenticationCode,
-        })
-
-        track.loggedIn({ service: "email", userId: response.user.id })
-
-        actions.setFieldValue("mode", AUTHENTICATION_MODES.Success)
-
-        await runAfterAuthentication({ accessToken: response.user.accessToken })
-      } catch (err) {
-        switch (err.message) {
-          case "missing on-demand authentication code": {
-            actions.setFieldValue("mode", AUTHENTICATION_MODES.OnDemand)
-            actions.setSubmitting(false)
-            return
-          }
-
-          case "missing two-factor authentication code": {
-            actions.setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
-            actions.setSubmitting(false)
-            return
-          }
-
-          case "invalid two-factor authentication code": {
-            actions.setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
-            dispatch({ type: "Error", error: formatErrorMessage(err) })
-            actions.setSubmitting(false)
-            return
-          }
-
-          default: {
-            actions.setFieldValue("mode", AUTHENTICATION_MODES.Error)
-            dispatch({ type: "Error", error: formatErrorMessage(err) })
-            actions.setSubmitting(false)
-            return
-          }
-        }
-      }
-
-      return
-    }
-
     dispatch({ type: "ClearError" })
 
-    try {
-      const response = await signUp({
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        agreedToReceiveEmails: values.agreedToReceiveEmails,
-      })
+    switch (step) {
+      case FORM_STEPS.Welcome: {
+        try {
+          const exists = await verifyUserExists(values.email)
 
-      track.signedUp({ service: "email", userId: response.user.id })
-
-      await runAfterAuthentication({ accessToken: response.user.accessToken })
-    } catch (err) {
-      const message =
-        formatErrorMessage(err) || "Something went wrong. Please try again."
-
-      try {
-        const exists = await verifyUserExists(values.email)
-
-        if (exists) {
-          dispatch({ type: "Step", step: FORM_STEPS.Login })
+          dispatch({
+            type: "Step",
+            step: exists ? FORM_STEPS.Login : FORM_STEPS.SignUp,
+          })
           resetAuthenticationFields(actions)
+        } catch (err) {
+          console.error(err)
+          dispatch({
+            type: "Error",
+            error: "Something went wrong. Please try again.",
+          })
           actions.setSubmitting(false)
-          return
         }
-      } catch (verifyUserError) {
-        console.error(verifyUserError)
+
+        return
       }
 
-      dispatch({ type: "Error", error: message })
-      actions.setSubmitting(false)
+      case FORM_STEPS.Login: {
+        actions.setFieldValue("mode", AUTHENTICATION_MODES.Loading)
+
+        try {
+          const response = await login({
+            email: values.email,
+            password: values.password,
+            authenticationCode: values.authenticationCode,
+          })
+
+          track.loggedIn({ service: "email", userId: response.user.id })
+
+          actions.setFieldValue("mode", AUTHENTICATION_MODES.Success)
+
+          await runAfterAuthentication({
+            accessToken: response.user.accessToken,
+          })
+        } catch (err) {
+          switch (err.message) {
+            case "missing on-demand authentication code": {
+              actions.setFieldValue("mode", AUTHENTICATION_MODES.OnDemand)
+              actions.setSubmitting(false)
+              return
+            }
+
+            case "missing two-factor authentication code": {
+              actions.setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
+              actions.setSubmitting(false)
+              return
+            }
+
+            case "invalid two-factor authentication code": {
+              actions.setFieldValue("mode", AUTHENTICATION_MODES.TwoFactor)
+              dispatch({ type: "Error", error: formatErrorMessage(err) })
+              actions.setSubmitting(false)
+              return
+            }
+
+            default: {
+              actions.setFieldValue("mode", AUTHENTICATION_MODES.Error)
+              dispatch({ type: "Error", error: formatErrorMessage(err) })
+              actions.setSubmitting(false)
+              return
+            }
+          }
+        }
+
+        return
+      }
+
+      case FORM_STEPS.SignUp: {
+        try {
+          const response = await signUp({
+            name: values.name,
+            email: values.email,
+            password: values.password,
+            agreedToReceiveEmails: values.agreedToReceiveEmails,
+          })
+
+          track.signedUp({ service: "email", userId: response.user.id })
+
+          await runAfterAuthentication({
+            accessToken: response.user.accessToken,
+          })
+        } catch (err) {
+          const message =
+            formatErrorMessage(err) || "Something went wrong. Please try again."
+
+          try {
+            const exists = await verifyUserExists(values.email)
+
+            if (exists) {
+              dispatch({ type: "Step", step: FORM_STEPS.Login })
+              resetAuthenticationFields(actions)
+              actions.setSubmitting(false)
+              return
+            }
+          } catch (verifyUserError) {
+            console.error(verifyUserError)
+          }
+
+          dispatch({ type: "Error", error: message })
+          actions.setSubmitting(false)
+        }
+
+        return
+      }
     }
   }
 
