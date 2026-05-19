@@ -28,69 +28,6 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
 
   if (!artwork) return null
 
-  const partner: ArtGallery | undefined = useMemo(() => {
-    if (!artwork?.partner?.name) return
-    const partner = artwork.partner
-
-    const image = partner.profile?.image?.resized?.url
-    const location = partner.locationsConnection?.edges?.[0]?.node
-
-    const address: PostalAddress | undefined = location
-      ? {
-          "@type": "PostalAddress",
-          streetAddress: location.address ?? undefined,
-          addressLocality: location.city ?? undefined,
-          addressRegion: location.state ?? undefined,
-          postalCode: location.postalCode ?? undefined,
-          addressCountry: location.country ?? undefined,
-        }
-      : undefined
-
-    return {
-      "@type": "ArtGallery" as const,
-      name: artwork.partner.name,
-      image,
-      url: `${getENV("APP_URL")}${artwork.partner.href}`,
-      address,
-    }
-  }, [artwork?.partner])
-
-  const offer: Offer | undefined = useMemo(() => {
-    if (!artwork?.listPrice || artwork?.isPriceHidden) return
-
-    const availability = artwork.availability
-      ? AVAILABILITIES[artwork.availability as keyof typeof AVAILABILITIES]
-      : undefined
-
-    switch (artwork.listPrice.__typename) {
-      case "PriceRange":
-        return {
-          "@type": "AggregateOffer",
-          lowPrice: artwork.listPrice.minPrice?.major,
-          highPrice: artwork.listPrice.maxPrice?.major,
-          priceCurrency: artwork.listPrice.minPrice?.currencyCode,
-          availability,
-          itemCondition: "https://schema.org/NewCondition",
-          seller: partner,
-        }
-
-      case "Money":
-        return {
-          "@type": "Offer",
-          price: artwork.listPrice.major,
-          priceCurrency: artwork.listPrice.currencyCode,
-          availability,
-          itemCondition: "https://schema.org/NewCondition",
-          seller: partner,
-        }
-    }
-  }, [
-    artwork?.listPrice,
-    artwork?.isPriceHidden,
-    artwork?.availability,
-    partner,
-  ])
-
   const artworkUrl = `${getENV("APP_URL")}${artwork.href}`
   const artistUrl = `${getENV("APP_URL")}${artwork.artists?.[0]?.href}`
   const creator: Person | undefined = artwork.artists
@@ -120,6 +57,64 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
           },
         }
       : undefined
+
+  const partner: ArtGallery | undefined = useMemo(() => {
+    if (!artwork.partner?.name) return
+    const partner = artwork.partner
+
+    const image = partner.profile?.image?.resized?.url
+    const location = partner.locationsConnection?.edges?.[0]?.node
+
+    const address: PostalAddress | undefined = location
+      ? {
+          "@type": "PostalAddress",
+          streetAddress: location.address ?? undefined,
+          addressLocality: location.city ?? undefined,
+          addressRegion: location.state ?? undefined,
+          postalCode: location.postalCode ?? undefined,
+          addressCountry: location.country ?? undefined,
+        }
+      : undefined
+
+    return {
+      "@type": "ArtGallery" as const,
+      name: artwork.partner.name,
+      image,
+      url: `${getENV("APP_URL")}${artwork.partner.href}`,
+      address,
+    }
+  }, [artwork.partner])
+
+  const offer: Offer | undefined = useMemo(() => {
+    if (!artwork.listPrice || artwork.isPriceHidden) return
+
+    const availability = artwork.availability
+      ? AVAILABILITIES[artwork.availability as keyof typeof AVAILABILITIES]
+      : undefined
+
+    switch (artwork.listPrice.__typename) {
+      case "PriceRange":
+        return {
+          "@type": "AggregateOffer",
+          lowPrice: artwork.listPrice.minPrice?.major,
+          highPrice: artwork.listPrice.maxPrice?.major,
+          priceCurrency: artwork.listPrice.minPrice?.currencyCode,
+          availability,
+          itemCondition: "https://schema.org/NewCondition",
+          seller: partner,
+        }
+
+      case "Money":
+        return {
+          "@type": "Offer",
+          price: artwork.listPrice.major,
+          priceCurrency: artwork.listPrice.currencyCode,
+          availability,
+          itemCondition: "https://schema.org/NewCondition",
+          seller: partner,
+        }
+    }
+  }, [artwork.listPrice, artwork.isPriceHidden, artwork.availability, partner])
 
   const publisher: Organization | undefined = artwork.publisher
     ? {
