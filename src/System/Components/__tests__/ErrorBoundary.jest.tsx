@@ -6,6 +6,21 @@ jest.mock("Utils/getENV", () => ({
   getENV: () => "development",
 }))
 
+const mockCaptureException = jest.fn()
+const mockSetContext = jest.fn()
+const mockSetTag = jest.fn()
+const mockSetFingerprint = jest.fn()
+
+jest.mock("@sentry/browser", () => ({
+  captureException: (...args: unknown[]) => mockCaptureException(...args),
+  withScope: (cb: (scope: unknown) => void) =>
+    cb({
+      setContext: mockSetContext,
+      setTag: mockSetTag,
+      setFingerprint: mockSetFingerprint,
+    }),
+}))
+
 describe("ErrorBoundary", () => {
   const errorLog = console.error
 
@@ -14,6 +29,7 @@ describe("ErrorBoundary", () => {
   })
 
   afterEach(() => {
+    jest.clearAllMocks()
     console.error = errorLog
   })
 
@@ -32,7 +48,6 @@ describe("ErrorBoundary", () => {
 
     const ErrorComponent = () => {
       throw new Error("throw error")
-      return null
     }
 
     try {
@@ -51,7 +66,6 @@ describe("ErrorBoundary", () => {
   it("updates `detail` state with stack trace", () => {
     const ErrorComponent = () => {
       throw new Error("throw error")
-      return null
     }
 
     let errorBoundaryInstance: any = null
@@ -159,5 +173,24 @@ describe("ErrorBoundary", () => {
 
     expect(state.kind).toBe("AsyncChunkLoadError")
     expect(state.message).toContain("Loading chunk c3495.js failed")
+  })
+
+  it("reports to Sentry with tags, fingerprint, and exception", () => {
+    const ErrorComponent = () => {
+      throw new Error("sentry test error")
+    }
+
+    render(
+      <ErrorBoundary>
+        <ErrorComponent />
+      </ErrorBoundary>,
+    )
+
+    expect(mockSetTag).toHaveBeenCalledWith("errorBoundary", "outer")
+    expect(mockSetFingerprint).toHaveBeenCalledWith([
+      "ErrorBoundary",
+      "sentry test error",
+    ])
+    expect(mockCaptureException).toHaveBeenCalled()
   })
 })

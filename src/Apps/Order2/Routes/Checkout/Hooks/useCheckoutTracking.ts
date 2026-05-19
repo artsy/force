@@ -6,6 +6,7 @@ import {
   type ClickedChangePaymentMethod,
   type ClickedChangeShippingAddress,
   type ClickedChangeShippingMethod,
+  type ClickedEditShippingAddress,
   type ClickedExpressCheckout,
   type ClickedFulfillmentTab,
   type ClickedOfferOption,
@@ -172,6 +173,16 @@ export const useCheckoutTracking = ({
         const payload: ClickedChangeShippingAddress = {
           action: ActionType.clickedChangeShippingAddress,
           context_module: ContextModule.ordersCheckout,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+        }
+        trackEvent(payload)
+      },
+
+      clickedEditShippingAddress: () => {
+        const payload: ClickedEditShippingAddress = {
+          action: ActionType.clickedEditShippingAddress,
+          context_module: ContextModule.ordersFulfillment,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
         }

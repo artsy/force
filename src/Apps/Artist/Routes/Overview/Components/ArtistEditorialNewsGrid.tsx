@@ -14,45 +14,151 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
+import { useVariant } from "@unleash/proxy-client-react"
 import { ArtistEditorialNewsEmptyState } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsEmptyState"
 import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
 } from "Components/Cells/CellArticle"
+import { ClientSuspense } from "Components/ClientSuspense"
 import { Masonry } from "Components/Masonry"
+import { Rail } from "Components/Rail/Rail"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
 import type { ArtistEditorialNewsGrid_artist$data } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
+import type { ArtistEditorialNewsGrid_artist$key } from "__generated__/ArtistEditorialNewsGrid_artist.graphql"
 import { take } from "lodash"
 import type { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment, useLazyLoadQuery } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const ARTICLE_COUNT = 6
+const ARTIST_EDITORIAL_RAIL_EXPERIMENT = "diamond_artist-editorial-rail"
 
 interface ArtistEditorialNewsGridProps {
+  artist: ArtistEditorialNewsGrid_artist$key
+}
+
+export const ArtistEditorialNewsGrid: FC<
+  React.PropsWithChildren<ArtistEditorialNewsGridProps>
+> = ({ artist: artistKey }) => {
+  const artist = useFragment(ARTIST_EDITORIAL_NEWS_GRID_FRAGMENT, artistKey)
+  const articles = extractNodes(artist.articlesConnection)
+
+  if (articles.length === 0) {
+    return <ArtistEditorialNewsEmptyState />
+  }
+
+  return <ArtistEditorialNewsGridLayout artist={artist} />
+}
+
+const ARTIST_EDITORIAL_NEWS_GRID_FRAGMENT = graphql`
+  fragment ArtistEditorialNewsGrid_artist on Artist {
+    internalID
+    name
+    slug
+    href
+    articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
+      edges {
+        node {
+          ...CellArticle_article
+          internalID
+          href
+          byline
+          slug
+          title
+          publishedAt(format: "MMM D, YYYY")
+          vertical
+          thumbnailTitle
+          thumbnailImage {
+            large: cropped(width: 670, height: 720) {
+              width
+              height
+              src
+              srcSet
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+interface ArtistEditorialNewsGridLayoutProps {
   artist: ArtistEditorialNewsGrid_artist$data
 }
 
-const ArtistEditorialNewsGrid: FC<
-  React.PropsWithChildren<ArtistEditorialNewsGridProps>
+const ArtistEditorialNewsGridLayout: FC<
+  React.PropsWithChildren<ArtistEditorialNewsGridLayoutProps>
 > = ({ artist }) => {
   const { trackEvent } = useTracking()
+
+  const variant = useVariant(ARTIST_EDITORIAL_RAIL_EXPERIMENT)
+
+  useTrackFeatureVariantOnMount({
+    experimentName: ARTIST_EDITORIAL_RAIL_EXPERIMENT,
+    variantName: variant?.name,
+  })
 
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
 
   const articles = extractNodes(artist.articlesConnection)
-
   const viewAllHref = `${artist.href}/articles`
 
-  if (articles.length === 0) {
-    return <ArtistEditorialNewsEmptyState />
+  const trackArticleClick = () => {
+    const trackingEvent: ClickedArticleGroup = {
+      action: ActionType.clickedArticleGroup,
+      context_module: ContextModule.marketNews,
+      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_page_owner_type: OwnerType.article,
+      type: "thumbnail",
+    }
+
+    trackEvent(trackingEvent)
+  }
+
+  const trackViewAllClick = () => {
+    const trackingEvent: ClickedArticleGroup = {
+      action: ActionType.clickedArticleGroup,
+      context_module: ContextModule.marketNews,
+      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_page_owner_type: OwnerType.articles,
+      type: "viewAll",
+    }
+
+    trackEvent(trackingEvent)
+  }
+
+  if (variant?.enabled && variant.name === "experiment") {
+    return (
+      <Rail
+        title={`Artsy Editorial Featuring ${artist.name}`}
+        alignItems="flex-start"
+        viewAllHref={viewAllHref}
+        viewAllLabel="View All"
+        viewAllOnClick={trackViewAllClick}
+        getItems={() => {
+          return articles.map(article => {
+            return (
+              <CellArticleFragmentContainer
+                key={article.internalID}
+                article={article}
+                onClick={trackArticleClick}
+              />
+            )
+          })
+        }}
+      />
+    )
   }
 
   const [firstArticle, ...restOfArticles] = articles
@@ -76,19 +182,7 @@ const ArtistEditorialNewsGrid: FC<
           flexShrink={0}
           as={RouterLink}
           to={viewAllHref}
-          onClick={() => {
-            const trackingEvent: ClickedArticleGroup = {
-              action: ActionType.clickedArticleGroup,
-              context_module: ContextModule.marketNews,
-              context_page_owner_type: contextPageOwnerType!,
-              context_page_owner_id: contextPageOwnerId,
-              context_page_owner_slug: contextPageOwnerSlug,
-              destination_page_owner_type: OwnerType.articles,
-              type: "viewAll",
-            }
-
-            trackEvent(trackingEvent)
-          }}
+          onClick={trackViewAllClick}
         >
           View All
         </Text>
@@ -100,19 +194,7 @@ const ArtistEditorialNewsGrid: FC<
           to={firstArticle.href}
           display="block"
           textDecoration="none"
-          onClick={() => {
-            const trackingEvent: ClickedArticleGroup = {
-              action: ActionType.clickedArticleGroup,
-              context_module: ContextModule.marketNews,
-              context_page_owner_type: contextPageOwnerType!,
-              context_page_owner_id: contextPageOwnerId,
-              context_page_owner_slug: contextPageOwnerSlug,
-              destination_page_owner_type: OwnerType.article,
-              type: "thumbnail",
-            }
-
-            trackEvent(trackingEvent)
-          }}
+          onClick={trackArticleClick}
         >
           {firstImage && (
             <ResponsiveBox
@@ -158,19 +240,7 @@ const ArtistEditorialNewsGrid: FC<
                 article={article}
                 mode="GRID"
                 mb={4}
-                onClick={() => {
-                  const trackingEvent: ClickedArticleGroup = {
-                    action: ActionType.clickedArticleGroup,
-                    context_module: ContextModule.marketNews,
-                    context_page_owner_type: contextPageOwnerType!,
-                    context_page_owner_id: contextPageOwnerId,
-                    context_page_owner_slug: contextPageOwnerSlug,
-                    destination_page_owner_type: OwnerType.article,
-                    type: "thumbnail",
-                  }
-
-                  trackEvent(trackingEvent)
-                }}
+                onClick={trackArticleClick}
               />
             )
           })}
@@ -179,43 +249,6 @@ const ArtistEditorialNewsGrid: FC<
     </GridColumns>
   )
 }
-
-export const ArtistEditorialNewsGridFragmentContainer = createFragmentContainer(
-  ArtistEditorialNewsGrid,
-  {
-    artist: graphql`
-      fragment ArtistEditorialNewsGrid_artist on Artist {
-        internalID
-        name
-        slug
-        href
-        articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
-          edges {
-            node {
-              ...CellArticle_article
-              internalID
-              href
-              byline
-              slug
-              title
-              publishedAt(format: "MMM D, YYYY")
-              vertical
-              thumbnailTitle
-              thumbnailImage {
-                large: cropped(width: 670, height: 720) {
-                  width
-                  height
-                  src
-                  srcSet
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-  },
-)
 
 const PLACEHOLDER = (
   <Skeleton>
@@ -260,34 +293,31 @@ export const ArtistEditorialNewsGridQueryRenderer: FC<
     id: string
   }>
 > = ({ id }) => {
-  const { relayEnvironment } = useSystemContext()
-
   return (
-    <SystemQueryRenderer<ArtistEditorialNewsGridQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{ id }}
-      placeholder={PLACEHOLDER}
-      query={graphql`
-        query ArtistEditorialNewsGridQuery($id: String!) {
-          artist(id: $id) {
-            ...ArtistEditorialNewsGrid_artist
-          }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props || !props.artist) {
-          return PLACEHOLDER
-        }
-
-        return (
-          <ArtistEditorialNewsGridFragmentContainer artist={props.artist} />
-        )
-      }}
-    />
+    <ClientSuspense fallback={PLACEHOLDER}>
+      <ArtistEditorialNewsGridContent id={id} />
+    </ClientSuspense>
   )
+}
+
+const ArtistEditorialNewsGridContent: FC<
+  React.PropsWithChildren<{
+    id: string
+  }>
+> = ({ id }) => {
+  const data = useLazyLoadQuery<ArtistEditorialNewsGridQuery>(
+    graphql`
+      query ArtistEditorialNewsGridQuery($id: String!) {
+        artist(id: $id) {
+          ...ArtistEditorialNewsGrid_artist
+        }
+      }
+    `,
+    { id },
+    { fetchPolicy: "store-or-network" },
+  )
+
+  if (!data.artist) return null
+
+  return <ArtistEditorialNewsGrid artist={data.artist} />
 }

@@ -94,7 +94,7 @@ describe("redirectBack", () => {
 
     const redirect = redirectBack(req)
 
-    expect(redirect).toEqual("/")
+    expect(redirect).toEqual("/?onboarding=true")
   })
 
   it("does not use the after-signup destination when onboarding is skipped", () => {
@@ -186,5 +186,47 @@ describe("redirectBack", () => {
     expect(res.redirect).toHaveBeenCalledWith("/artworks")
     expect(req.session.redirectTo).toBeUndefined()
     expect(req.session.skipOnboarding).toBeUndefined()
+  })
+
+  it("appends onboarding=true for new social auth signups", () => {
+    const req = {
+      artsyPassportSignedUp: true,
+      body: {},
+      params: {},
+      query: { "redirect-to": "/" },
+      session: {},
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/?onboarding=true")
+  })
+
+  it("does not append onboarding=true for existing user logins", () => {
+    const req = {
+      artsyPassportSignedUp: false,
+      body: {},
+      params: {},
+      query: { "redirect-to": "/" },
+      session: {},
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/")
+  })
+
+  it("does not append onboarding=true when skipOnboarding is true", () => {
+    const req = {
+      artsyPassportSignedUp: true,
+      body: {},
+      params: {},
+      query: { "redirect-to": "/" },
+      session: { skipOnboarding: true },
+    } as any
+
+    const redirect = redirectBack(req)
+
+    expect(redirect).toEqual("/")
   })
 })

@@ -3862,6 +3862,7 @@ enum ArtworkImportState {
   ARTWORKS_CREATION_COMPLETE
   ARTWORK_IMPORT_PROCESSING_COMPLETE
   CANCELED
+  FAILED
   PENDING
   POSITION_VALIDATION_COMPLETE
   SALE_ARTWORKS_CREATION_COMPLETE
@@ -5928,6 +5929,13 @@ type CatalogArtworkDocument {
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+}
+
+# Fields that can be synced from catalog artwork (OS) to CMS.
+enum CatalogSyncableField {
+  AVAILABILITY
+  MEDIUM
+  PRICE
 }
 
 type CausalityLotState {
@@ -20750,6 +20758,9 @@ type Partner implements Node {
     after: String
     before: String
     first: Int
+
+    # Include inactive imports in results. Defaults to false.
+    includeInactive: Boolean
     last: Int
 
     # Filter by import source: 'bulk_import' or 'multi_add'. Returns all sources if omitted.
@@ -26742,6 +26753,9 @@ input SyncCatalogToArtworkMutationInput {
   # The ID of the artwork to sync.
   artworkID: String!
   clientMutationId: String
+
+  # Specific fields to sync. Omit to sync all.
+  fields: [CatalogSyncableField]
 }
 
 type SyncCatalogToArtworkMutationPayload {

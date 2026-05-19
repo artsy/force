@@ -1,13 +1,15 @@
-import { Button, Stack } from "@artsy/palette"
-import GoogleIcon from "@artsy/icons/GoogleIcon"
 import AppleIcon from "@artsy/icons/AppleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
+import { Button, Stack } from "@artsy/palette"
+import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
-import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 
 export const SignupFormSocial = () => {
-  const { redirectUrl } = useAfterAuthenticationRedirectUrl()
+  const { redirectUrl } = useAfterAuthenticationRedirectUrl({
+    appendOnboarding: false,
+  })
 
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
     applePath: "/users/auth/apple",
