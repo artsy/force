@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
@@ -33,6 +34,7 @@ import type { SignupFormQuery } from "__generated__/SignupFormQuery.graphql"
 import { Form, Formik, type FormikHelpers } from "formik"
 import { useReducer } from "react"
 import { fetchQuery, graphql } from "react-relay"
+import styled from "styled-components"
 import * as Yup from "yup"
 import { SignupFormDisclaimer } from "./SignupFormDisclaimer"
 import { SignupFormSocial } from "./SignupFormSocial"
@@ -60,14 +62,26 @@ const STEP_COPY = {
   },
 } satisfies Record<FormStep, { title: string; submit: string }>
 
+const FORM_MODES = {
+  Pending: "Pending",
+  // Set when the Welcome-step `verifyUser` call fails, so we can surface a
+  // manual fallback (sign up / log in) and avoid trapping users behind a
+  // broken verification check (e.g. reCAPTCHA blocked).
+  VerifyFailed: "VerifyFailed",
+} as const
+
+type FormMode = (typeof FORM_MODES)[keyof typeof FORM_MODES]
+
 type SignupFormState = {
   step: FormStep
+  mode: FormMode
   error?: string
 }
 
 type SignupFormAction =
   | { type: "ClearError" }
   | { type: "Error"; error: string }
+  | { type: "VerifyFailed"; error: string }
   | { type: "Reset" }
   | { type: "Step"; step: FormStep }
 
@@ -80,10 +94,12 @@ const signupFormReducer = (
       return { ...state, error: undefined }
     case "Error":
       return { ...state, error: action.error }
+    case "VerifyFailed":
+      return { ...state, mode: FORM_MODES.VerifyFailed, error: action.error }
     case "Reset":
-      return { step: FORM_STEPS.Welcome }
+      return { step: FORM_STEPS.Welcome, mode: FORM_MODES.Pending }
     case "Step":
-      return { step: action.step }
+      return { step: action.step, mode: FORM_MODES.Pending }
   }
 }
 
@@ -115,6 +131,15 @@ const initialValues: SignupFormValues = {
   agreedToReceiveEmails: false,
 }
 
+// Per-attempt fields that should be cleared when moving between authentication
+// steps (e.g. Welcome → Login, or falling back to Login after a failed signup),
+// so the user starts each step with a fresh password / 2FA code prompt.
+const PENDING_AUTH_FIELDS = {
+  password: "",
+  authenticationCode: "",
+  mode: AUTHENTICATION_MODES.Pending,
+} satisfies Partial<SignupFormValues>
+
 const VALIDATION_SCHEMAS = {
   [FORM_STEPS.Welcome]: welcomeValidationSchema,
   [FORM_STEPS.SignUp]: signUpValidationSchema,
@@ -122,8 +147,9 @@ const VALIDATION_SCHEMAS = {
 } satisfies Record<FormStep, Yup.AnySchema>
 
 export const SignupForm = () => {
-  const [{ step, error }, dispatch] = useReducer(signupFormReducer, {
+  const [{ step, mode, error }, dispatch] = useReducer(signupFormReducer, {
     step: FORM_STEPS.Welcome,
+    mode: FORM_MODES.Pending,
   })
 
   useRecaptcha()
@@ -152,11 +178,9 @@ export const SignupForm = () => {
   }
 
   const resetAuthenticationFields = (
-    actions: FormikHelpers<SignupFormValues>,
+    setValues: FormikHelpers<SignupFormValues>["setValues"],
   ) => {
-    actions.setFieldValue("password", "")
-    actions.setFieldValue("authenticationCode", "")
-    actions.setFieldValue("mode", AUTHENTICATION_MODES.Pending)
+    setValues(prev => ({ ...prev, ...PENDING_AUTH_FIELDS }))
   }
 
   const handleSubmit = async (
@@ -174,12 +198,12 @@ export const SignupForm = () => {
             type: "Step",
             step: exists ? FORM_STEPS.Login : FORM_STEPS.SignUp,
           })
-          resetAuthenticationFields(actions)
+          resetAuthenticationFields(actions.setValues)
         } catch (err) {
           console.error(err)
           dispatch({
-            type: "Error",
-            error: "Something went wrong. Please try again.",
+            type: "VerifyFailed",
+            error: "We couldn’t verify your email. Please try again.",
           })
           actions.setSubmitting(false)
         }
@@ -260,7 +284,7 @@ export const SignupForm = () => {
 
             if (exists) {
               dispatch({ type: "Step", step: FORM_STEPS.Login })
-              resetAuthenticationFields(actions)
+              resetAuthenticationFields(actions.setValues)
               actions.setSubmitting(false)
               return
             }
@@ -302,6 +326,7 @@ export const SignupForm = () => {
           handleChange,
           handleBlur,
           setFieldValue,
+          setValues,
           resetForm,
         }) => (
           <Form>
@@ -399,7 +424,36 @@ export const SignupForm = () => {
                   </Checkbox>
                 )}
 
-                {error && <Message variant="error">{error}</Message>}
+                {error && <ErrorMessage>{error}</ErrorMessage>}
+
+                {step === FORM_STEPS.Welcome &&
+                  mode === FORM_MODES.VerifyFailed && (
+                    <Text variant="xs" textAlign="center" color="mono60">
+                      Or continue to{" "}
+                      <Clickable
+                        textDecoration="underline"
+                        color="mono100"
+                        onClick={() => {
+                          dispatch({ type: "Step", step: FORM_STEPS.SignUp })
+                          resetAuthenticationFields(setValues)
+                        }}
+                      >
+                        sign up
+                      </Clickable>{" "}
+                      or{" "}
+                      <Clickable
+                        textDecoration="underline"
+                        color="mono100"
+                        onClick={() => {
+                          dispatch({ type: "Step", step: FORM_STEPS.Login })
+                          resetAuthenticationFields(setValues)
+                        }}
+                      >
+                        log in
+                      </Clickable>
+                      .
+                    </Text>
+                  )}
 
                 <Button
                   type="submit"
@@ -470,5 +524,12 @@ const QUERY = graphql`
     verifyUser(email: $email, recaptchaToken: $recaptchaToken) {
       exists
     }
+  }
+`
+
+const ErrorMessage = styled(Message)`
+  background-color: ${themeGet("colors.red100")};
+  && * {
+    color: ${themeGet("colors.mono0")};
   }
 `
