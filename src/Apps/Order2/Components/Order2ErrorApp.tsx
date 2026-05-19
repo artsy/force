@@ -25,8 +25,8 @@ export const OrderErrorApp: React.FC<
 
   return (
     <Box data-testid="order-error-page" {...rest}>
-      <GridColumns py={[0, 0, 4]} px={[0, 0, 4]}>
-        <Column span={6} wrap>
+      <GridColumns pt={[2, 4]} px={[2, 4]}>
+        <Column span={8} wrap>
           <Spacer y={[2, 2, 4]} />
           <Text variant="xl">{headline}</Text>
 
