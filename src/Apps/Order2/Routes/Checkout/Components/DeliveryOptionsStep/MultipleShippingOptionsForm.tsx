@@ -4,7 +4,7 @@ import {
   deliveryOptionLabel,
   deliveryOptionTimeEstimate,
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type DeliveryOption =
   Order2DeliveryOptionsForm_order$data["fulfillmentOptions"][number]
@@ -18,13 +18,21 @@ export const MultipleShippingOptionsForm = ({
   options,
   onSelectOption,
 }: MultipleShippingOptionsFormProps) => {
-  const defaultOption = options.find(option => option.selected) || options[0]
-  const [selectedOption, setSelectedOption] = useState(defaultOption)
+  const initialSelectedOption =
+    options.find(option => option.selected) || options[0]
+  const [selectedOption, setSelectedOption] = useState(initialSelectedOption)
+
+  useEffect(() => {
+    // Sync local state when options change (after mutation or component remount from address change)
+    const updatedSelectedOption =
+      options.find(option => option.selected) || options[0]
+    setSelectedOption(updatedSelectedOption)
+  }, [options])
 
   return (
     <RadioGroup
       flexDirection="column"
-      defaultValue={defaultOption}
+      defaultValue={selectedOption}
       onSelect={async option => {
         const previous = selectedOption
         setSelectedOption(option)
