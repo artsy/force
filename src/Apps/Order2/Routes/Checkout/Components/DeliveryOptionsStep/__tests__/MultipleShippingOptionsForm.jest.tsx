@@ -12,22 +12,22 @@ describe("MultipleShippingOptionsForm", () => {
   it("syncs selection when options prop changes (address change scenario)", () => {
     const initialOptions = [
       {
-        type: "ARTSY_STANDARD",
+        type: "ARTSY_STANDARD" as const,
         amount: { display: "$25.00", minor: 2500, currencyCode: "USD" },
         selected: true,
         shippingQuoteId: "quote-1",
       },
       {
-        type: "ARTSY_EXPRESS",
+        type: "ARTSY_EXPRESS" as const,
         amount: { display: "$50.00", minor: 5000, currencyCode: "USD" },
         selected: false,
         shippingQuoteId: "quote-2",
       },
-    ]
+    ] as const
 
     const { rerender } = render(
       <MultipleShippingOptionsForm
-        options={initialOptions}
+        options={initialOptions as any}
         onSelectOption={mockOnSelectOption}
       />,
     )
@@ -43,22 +43,22 @@ describe("MultipleShippingOptionsForm", () => {
     // Simulate address change: new quotes arrive with Express now selected
     const newOptions = [
       {
-        type: "ARTSY_STANDARD",
+        type: "ARTSY_STANDARD" as const,
         amount: { display: "$30.00", minor: 3000, currencyCode: "USD" },
         selected: false,
         shippingQuoteId: "quote-3",
       },
       {
-        type: "ARTSY_EXPRESS",
+        type: "ARTSY_EXPRESS" as const,
         amount: { display: "$60.00", minor: 6000, currencyCode: "USD" },
         selected: true,
         shippingQuoteId: "quote-4",
       },
-    ]
+    ] as const
 
     rerender(
       <MultipleShippingOptionsForm
-        options={newOptions}
+        options={newOptions as any}
         onSelectOption={mockOnSelectOption}
       />,
     )
@@ -77,22 +77,22 @@ describe("MultipleShippingOptionsForm", () => {
   it("syncs background highlight when options update", () => {
     const initialOptions = [
       {
-        type: "ARTSY_STANDARD",
+        type: "ARTSY_STANDARD" as const,
         amount: { display: "$25.00", minor: 2500, currencyCode: "USD" },
         selected: false,
         shippingQuoteId: "quote-1",
       },
       {
-        type: "ARTSY_EXPRESS",
+        type: "ARTSY_EXPRESS" as const,
         amount: { display: "$50.00", minor: 5000, currencyCode: "USD" },
         selected: true,
         shippingQuoteId: "quote-2",
       },
-    ]
+    ] as const
 
     const { rerender } = render(
       <MultipleShippingOptionsForm
-        options={initialOptions}
+        options={initialOptions as any}
         onSelectOption={mockOnSelectOption}
       />,
     )
@@ -103,22 +103,22 @@ describe("MultipleShippingOptionsForm", () => {
     // New options arrive with Standard selected
     const newOptions = [
       {
-        type: "ARTSY_STANDARD",
+        type: "ARTSY_STANDARD" as const,
         amount: { display: "$30.00", minor: 3000, currencyCode: "USD" },
         selected: true,
         shippingQuoteId: "quote-3",
       },
       {
-        type: "ARTSY_EXPRESS",
+        type: "ARTSY_EXPRESS" as const,
         amount: { display: "$60.00", minor: 6000, currencyCode: "USD" },
         selected: false,
         shippingQuoteId: "quote-4",
       },
-    ]
+    ] as const
 
     rerender(
       <MultipleShippingOptionsForm
-        options={newOptions}
+        options={newOptions as any}
         onSelectOption={mockOnSelectOption}
       />,
     )
