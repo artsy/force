@@ -1,7 +1,11 @@
 import * as Sentry from "@sentry/node"
 import { nodeProfilingIntegration } from "@sentry/profiling-node"
 import { IGNORED_ERRORS } from "Server/analytics/sentryFilters"
-import { SENTRY_PRIVATE_DSN, SENTRY_TRACING_ENABLED } from "Server/config"
+import {
+  SENTRY_PRIVATE_DSN,
+  SENTRY_RELEASE,
+  SENTRY_TRACING_ENABLED,
+} from "Server/config"
 
 const TRACING_CONFIG: Sentry.NodeOptions = {
   integrations: [nodeProfilingIntegration()],
@@ -13,6 +17,7 @@ if (SENTRY_PRIVATE_DSN) {
   Sentry.init({
     dsn: SENTRY_PRIVATE_DSN,
     ignoreErrors: IGNORED_ERRORS,
+    release: SENTRY_RELEASE,
     ...(SENTRY_TRACING_ENABLED ? TRACING_CONFIG : {}),
   })
 }

@@ -66,6 +66,7 @@ export default defineConfig({
         distPath: {
           root: "dist/server",
         },
+        sourceMap: isProduction ? { js: "hidden-source-map" } : false,
       },
       source: {
         entry: {
@@ -81,6 +82,20 @@ export default defineConfig({
           node: {
             __dirname: true,
           },
+          plugins: [
+            ...(isProduction && process.env.SENTRY_AUTH_TOKEN
+              ? [
+                  sentryWebpackPlugin({
+                    org: "artsynet",
+                    project: "force-production",
+                    release: { name: process.env.SENTRY_RELEASE },
+                    sourcemaps: {
+                      filesToDeleteAfterUpload: ["dist/server/**/*.map"],
+                    },
+                  }),
+                ]
+              : []),
+          ],
         },
         swc: {
           module: {

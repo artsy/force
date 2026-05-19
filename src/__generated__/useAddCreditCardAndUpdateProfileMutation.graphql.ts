@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2693bc13dce4a5862db81cdf541da22>>
+ * @generated SignedSource<<2e2cff97a6165e9da3b0abdcd2b3fc44>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,6 @@ export type UpdateMyProfileInput = {
   completedOnboarding?: boolean | null | undefined;
   currencyPreference?: CurrencyPreference | null | undefined;
   email?: string | null | undefined;
-  emailFrequency?: string | null | undefined;
   gender?: string | null | undefined;
   iconUrl?: string | null | undefined;
   industry?: string | null | undefined;
