@@ -207,6 +207,44 @@ describe("usePrefetchRoute", () => {
     expect(onComplete).toHaveBeenCalled()
   })
 
+  it("should pass the destination location to prepareVariables, not the current page location", () => {
+    const mockPrepareVariables = jest.fn().mockReturnValue({ keyword: "cats" })
+    const mockRoute = {
+      match: { params: {} },
+      route: {
+        path: "/search",
+        query: "SearchQuery",
+        prepareVariables: mockPrepareVariables,
+      },
+    }
+    const mockSubscription = { unsubscribe: jest.fn() }
+    const destinationLocation = { pathname: "/search", query: { term: "cats" } }
+
+    mockUseRouter.mockReturnValue({
+      match: { ...mockMatch, location: { pathname: "/artists", query: {} } },
+      router: {
+        createLocation: jest.fn().mockReturnValue(destinationLocation),
+      },
+    })
+    mockFindRoutesByPath.mockReturnValue([mockRoute])
+    mockTake.mockReturnValue([mockRoute])
+    mockFetchQuery.mockReturnValue({
+      subscribe: jest.fn(() => mockSubscription),
+    })
+
+    const { result } = renderHook(() =>
+      usePrefetchRoute({ initialPath: "/search?term=cats" }),
+    )
+    result.current.prefetch()
+
+    // prepareVariables should receive the destination /search?term=cats location,
+    // not the current /artists page location
+    expect(mockPrepareVariables).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ location: destinationLocation }),
+    )
+  })
+
   it("should pass along route TTLs to fetchQuery metadata", () => {
     const mockRoute = {
       match: { params: { id: "bar" } },

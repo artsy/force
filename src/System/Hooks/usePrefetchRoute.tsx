@@ -21,7 +21,7 @@ export const usePrefetchRoute = ({
 } => {
   const { relayEnvironment } = useSystemContext()
 
-  const { match } = useRouter()
+  const { match, router } = useRouter()
 
   const prefetchFeatureFlagEnabled = getENV("ENABLE_PREFETCH")
 
@@ -60,7 +60,14 @@ export const usePrefetchRoute = ({
             return params
           }
 
-          return prepareVariables(params, match) as OperationType["variables"]
+          const prefetchLocation = router?.createLocation?.(path as string) ?? {
+            pathname: path,
+            query: {},
+          }
+          return prepareVariables(params, {
+            ...match,
+            location: prefetchLocation,
+          }) as OperationType["variables"]
         })()
 
         const isPrefetchable = !!(query && variables)
