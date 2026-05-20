@@ -10,12 +10,14 @@ import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Com
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 
 interface ArtistSeriesAppProps {
-  artistSeries: ArtistSeriesApp_artistSeries$data
+  artistSeries: ArtistSeriesApp_artistSeries$data | null
 }
 
 const ArtistSeriesApp: React.FC<
   React.PropsWithChildren<ArtistSeriesAppProps>
 > = ({ artistSeries }) => {
+  if (!artistSeries) return null
+
   const { railArtist, internalID } = artistSeries
 
   return (
