@@ -144,7 +144,7 @@ describe("UpdateAddressForm", () => {
       expect(screen.getByDisplayValue("10117")).toBeInTheDocument()
     })
 
-    it("calls onSaveAddress when form is submitted successfully", async () => {
+    it("calls onSaveAddress when form is submitted with changes", async () => {
       mockUpdateUserAddress.mockResolvedValue({
         updateUserAddress: {
           userAddressOrErrors: {
@@ -155,6 +155,10 @@ describe("UpdateAddressForm", () => {
       })
 
       render(<UpdateAddressForm {...mockUSProps} />)
+
+      const nameField = screen.getByDisplayValue("John Doe")
+      await userEvent.clear(nameField)
+      await userEvent.type(nameField, "Jane Smith")
 
       const saveButton = screen.getByText("Save Address")
       await userEvent.click(saveButton)
@@ -239,6 +243,36 @@ describe("UpdateAddressForm", () => {
       await userEvent.click(cancelButton)
 
       expect(mockSetUserAddressMode).toHaveBeenCalledWith(null)
+    })
+  })
+
+  describe("Save button disabled state", () => {
+    it("disables the Save Address button when no changes are made", () => {
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      expect(screen.getByText("Save Address").closest("button")).toBeDisabled()
+    })
+
+    it("enables the Save Address button after a field is changed", async () => {
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      const nameField = screen.getByDisplayValue("John Doe")
+      await userEvent.clear(nameField)
+      await userEvent.type(nameField, "Jane Smith")
+
+      expect(
+        screen.getByText("Save Address").closest("button"),
+      ).not.toBeDisabled()
+    })
+
+    it("enables the Save Address button when setAsDefault is checked", async () => {
+      render(<UpdateAddressForm {...mockUSProps} />)
+
+      await userEvent.click(screen.getByTestId("setAsDefault"))
+
+      expect(
+        screen.getByText("Save Address").closest("button"),
+      ).not.toBeDisabled()
     })
   })
 
@@ -448,10 +482,7 @@ describe("UpdateAddressForm", () => {
 
     it("calls unsetOrderFulfillmentOption when the deleted address is the order address", async () => {
       render(
-        <UpdateAddressForm
-          {...mockUSProps}
-          orderAddressID="address-id-123"
-        />,
+        <UpdateAddressForm {...mockUSProps} orderAddressID="address-id-123" />,
       )
 
       await userEvent.click(screen.getByText("Delete address"))
@@ -546,6 +577,10 @@ describe("UpdateAddressForm", () => {
 
       render(<UpdateAddressForm {...mockUSProps} />)
 
+      const nameField = screen.getByDisplayValue("John Doe")
+      await userEvent.clear(nameField)
+      await userEvent.type(nameField, "Jane Smith")
+
       const checkbox = screen.getByTestId("setAsDefault")
       await userEvent.click(checkbox)
 
@@ -579,6 +614,10 @@ describe("UpdateAddressForm", () => {
 
       render(<UpdateAddressForm {...mockUSProps} />)
 
+      const nameField = screen.getByDisplayValue("John Doe")
+      await userEvent.clear(nameField)
+      await userEvent.type(nameField, "Jane Smith")
+
       const saveButton = screen.getByText("Save Address")
       await userEvent.click(saveButton)
 
@@ -602,6 +641,10 @@ describe("UpdateAddressForm", () => {
       mockUpdateUserDefaultAddress.mockRejectedValue(new Error("Network error"))
 
       render(<UpdateAddressForm {...mockUSProps} />)
+
+      const nameField = screen.getByDisplayValue("John Doe")
+      await userEvent.clear(nameField)
+      await userEvent.type(nameField, "Jane Smith")
 
       const checkbox = screen.getByTestId("setAsDefault")
       await userEvent.click(checkbox)

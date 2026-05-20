@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer, useRef } from "react"
+import { useCallback, useEffect, useMemo, useReducer, useRef } from "react"
 
 type SectionMap<TSectionKey extends string, TValue> = Record<
   TSectionKey,
@@ -211,11 +211,18 @@ type UseSectionReadyProps = {
 
 export const useSectionReady = ({ onReady }: UseSectionReadyProps) => {
   const rendered = useRef(false)
+  const pending = useRef(false)
+
+  useEffect(() => {
+    if (!pending.current) return
+    pending.current = false
+    onReady?.()
+  })
 
   const handleReady = () => {
     if (rendered.current) return
     rendered.current = true
-    onReady?.()
+    pending.current = true
   }
 
   return { handleReady }
