@@ -219,9 +219,14 @@ describe("usePrefetchRoute", () => {
     }
     const mockSubscription = { unsubscribe: jest.fn() }
     const destinationLocation = { pathname: "/search", query: { term: "cats" } }
+    const mockContext = { user: { id: "user-123" } }
 
     mockUseRouter.mockReturnValue({
-      match: { ...mockMatch, location: { pathname: "/artists", query: {} } },
+      match: {
+        ...mockMatch,
+        location: { pathname: "/artists", query: {} },
+        context: mockContext,
+      },
       router: {
         createLocation: jest.fn().mockReturnValue(destinationLocation),
       },
@@ -237,11 +242,11 @@ describe("usePrefetchRoute", () => {
     )
     result.current.prefetch()
 
-    // prepareVariables should receive the destination location, not the current page's
-    expect(mockPrepareVariables).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ location: destinationLocation }),
-    )
+    // destination location (not current page's) and current app context
+    expect(mockPrepareVariables).toHaveBeenCalledWith(expect.anything(), {
+      location: destinationLocation,
+      context: mockContext,
+    })
   })
 
   it("should pass along route TTLs to fetchQuery metadata", () => {

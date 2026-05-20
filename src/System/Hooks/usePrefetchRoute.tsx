@@ -65,8 +65,8 @@ export const usePrefetchRoute = ({
             query: {},
           }
           return prepareVariables(params, {
-            ...match,
             location: prefetchLocation,
+            context: match.context,
           }) as OperationType["variables"]
         })()
 
