@@ -64,7 +64,9 @@ COPY --chown=deploy:deploy --from=builder-base /app/.yarn ./.yarn
 
 ENTRYPOINT ["/usr/bin/dumb-init", "./scripts/load_secrets_and_run.sh"]
 
+ARG SENTRY_RELEASE
 ENV NODE_PATH=/app/src
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 # TODO: Reduce production memory, this is not a concern
 CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "--no-experimental-fetch", "-r @swc-node/register", "./src/prod.ts"]
