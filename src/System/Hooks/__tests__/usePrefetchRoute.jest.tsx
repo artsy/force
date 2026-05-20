@@ -237,8 +237,7 @@ describe("usePrefetchRoute", () => {
     )
     result.current.prefetch()
 
-    // prepareVariables should receive the destination /search?term=cats location,
-    // not the current /artists page location
+    // prepareVariables should receive the destination location, not the current page's
     expect(mockPrepareVariables).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ location: destinationLocation }),
