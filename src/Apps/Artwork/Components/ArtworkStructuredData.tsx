@@ -26,8 +26,6 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
     { fetchPolicy: "store-or-network" },
   )
 
-  if (!artwork) return null
-
   const partner: ArtGallery | undefined = useMemo(() => {
     if (!artwork?.partner?.name) return
     const partner = artwork.partner
@@ -90,6 +88,8 @@ export const ArtworkStructuredData: React.FC<ArtworkStructuredDataProps> = ({
     artwork?.availability,
     partner,
   ])
+
+  if (!artwork) return null
 
   const artworkUrl = `${getENV("APP_URL")}${artwork.href}`
   const artistUrl = `${getENV("APP_URL")}${artwork.artists?.[0]?.href}`
