@@ -444,6 +444,21 @@ describe("lifecycle", () => {
         expect(passport.authenticate).toHaveBeenCalledWith("google-one-tap")
       })
 
+      it("sets redirectTo from the Referer header when not already set", () => {
+        req.headers = { referer: "https://www.artsy.net/artist/andy-warhol" }
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.redirectTo).toBe(
+          "https://www.artsy.net/artist/andy-warhol",
+        )
+      })
+
+      it("does not override an existing redirectTo with the Referer header", () => {
+        req.session.redirectTo = "/collect"
+        req.headers = { referer: "https://www.artsy.net/artist/andy-warhol" }
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.redirectTo).toBe("/collect")
+      })
+
       it("sets the suppress cookie on auth error", () => {
         passport.authenticate.mockReturnValueOnce((_req, _res, next) =>
           next(new Error("auth error")),
