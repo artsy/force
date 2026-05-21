@@ -18,7 +18,6 @@ import { CheckoutModal } from "Apps/Order2/Routes/Checkout/Components/CheckoutMo
 import { Order2DeliveryOptionsStep } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsStep"
 import { Order2ExpressCheckout } from "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2FulfillmentDetailsStep } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsStep"
-import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { Order2OfferStep } from "Apps/Order2/Routes/Checkout/Components/OfferStep/Order2OfferStep"
 import { Order2CheckoutLoadingSkeleton } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutLoadingSkeleton"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
@@ -30,6 +29,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutAutoScroll"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
+import { useIsDeliveryOptionExpanded } from "Apps/Order2/Routes/Checkout/Hooks/useIsDeliveryOptionExpanded"
 import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -66,6 +66,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     isFulfillmentDetailsSaving,
   } = useCheckoutContext()
 
+  const isDeliveryOptionExpanded = useIsDeliveryOptionExpanded(orderData)
+
   const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
     useCheckoutModal()
 
@@ -97,25 +99,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         .join(","),
     [steps],
   )
-
-  // DELIVERY_OPTION can be in ACTIVE step state while the section is still
-  // collapsed (no delivery address on the order yet) because the dual-active
-  // rule in applyDeliveryOptionLogic eagerly promotes it. Mirror the render
-  // gate in Order2DeliveryOptionsStep so the tracking event only fires when
-  // the section is actually visible to the collector.
-  //
-  // TODO: Long-term, step state should be the single source of truth — ACTIVE
-  // should mean "expanded and interactive." That requires making the dual-
-  // active promotion reactive to fresh order data (hasCompletedFulfillment,
-  // isFulfillmentDetailsSaving), which conflicts with easy-peasy's mount-
-  // frozen runtimeModel. Once that's resolved, this duplicated predicate can
-  // go away and the render layer in Order2DeliveryOptionsStep can stop
-  // second-guessing step state too.
-  const hasCompletedFulfillment =
-    useCompleteFulfillmentDetailsData(orderData) !== null
-  const isPickup = orderData.selectedFulfillmentOption?.type === "PICKUP"
-  const isDeliveryOptionExpanded =
-    (hasCompletedFulfillment && !isPickup) || isFulfillmentDetailsSaving
 
   useEffect(() => {
     activeStepNames.split(",").forEach(name => {
@@ -277,7 +260,7 @@ const ORDER_FRAGMENT = graphql`
         isFixedShippingFeeOnly
       }
     }
-    ...useCompleteFulfillmentDetailsData_order
+    ...useIsDeliveryOptionExpanded_order
     ...useLoadCheckout_order
     ...Order2ExpressCheckout_order
     ...Order2CollapsibleOrderSummary_order
