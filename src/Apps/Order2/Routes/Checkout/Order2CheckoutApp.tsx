@@ -63,6 +63,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     checkoutMode,
     artworkPath,
     isFulfillmentDetailsSaving,
+    hasSavedAddresses,
   } = useCheckoutContext()
 
   const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
@@ -104,9 +105,14 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
           break
         case CheckoutStepName.FULFILLMENT_DETAILS:
-          checkoutTracking.orderProgressionViewed(
-            ContextModule.ordersFulfillment,
-          )
+          // Suppress for users with no saved address — the Delivery section
+          // is the address-collection form, not a real "fulfillment viewed"
+          // step until they have at least one address on file.
+          if (hasSavedAddresses) {
+            checkoutTracking.orderProgressionViewed(
+              ContextModule.ordersFulfillment,
+            )
+          }
           break
         case CheckoutStepName.PAYMENT:
           checkoutTracking.orderProgressionViewed(ContextModule.ordersPayment)
@@ -115,13 +121,17 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
           break
         case CheckoutStepName.DELIVERY_OPTION:
-          checkoutTracking.orderProgressionViewed(
-            ContextModule.ordersShippingMethods,
-          )
+          // Same rationale as above: with no saved address, the dual-active
+          // rule auto-promotes DELIVERY_OPTION before it's actually visible.
+          if (hasSavedAddresses) {
+            checkoutTracking.orderProgressionViewed(
+              ContextModule.ordersShippingMethods,
+            )
+          }
           break
       }
     })
-  }, [activeStepNames, checkoutTracking])
+  }, [activeStepNames, checkoutTracking, hasSavedAddresses])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
   useEffect(() => {
