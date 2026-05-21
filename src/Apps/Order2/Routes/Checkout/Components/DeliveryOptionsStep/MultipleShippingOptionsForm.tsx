@@ -14,19 +14,20 @@ interface MultipleShippingOptionsFormProps {
   onSelectOption: (option: DeliveryOption) => Promise<boolean>
 }
 
+const getSelectedOption = (options: DeliveryOption[]) =>
+  options.find(option => option.selected) || options[0]
+
 export const MultipleShippingOptionsForm = ({
   options,
   onSelectOption,
 }: MultipleShippingOptionsFormProps) => {
-  const initialSelectedOption =
-    options.find(option => option.selected) || options[0]
-  const [selectedOption, setSelectedOption] = useState(initialSelectedOption)
+  const [selectedOption, setSelectedOption] = useState(() =>
+    getSelectedOption(options),
+  )
 
   useEffect(() => {
     // Sync local state when options change (after mutation or component remount from address change)
-    const updatedSelectedOption =
-      options.find(option => option.selected) || options[0]
-    setSelectedOption(updatedSelectedOption)
+    setSelectedOption(getSelectedOption(options))
   }, [options])
 
   return (
