@@ -661,12 +661,45 @@ describe("ExpressCheckoutUI", () => {
     })
   })
 
-  it("resets the order without reloading the page", async () => {
+  it("resets the order without reloading the page when the user changed shipping in the sheet", async () => {
     const { mockResolveLastOperation, env } = renderWithRelay({
       Order: () => orderData,
     })
 
+    // Simulate the user changing the shipping address inside the Apple Pay
+    // sheet — this marks the express session as having mutated the order.
+    const elementProps = mockExpressCheckoutElement.mock.calls[0][0]
+    elementProps.onShippingAddressChange({
+      address: {
+        city: "New York",
+        state: "NY",
+        country: "US",
+        postal_code: "10013",
+      },
+      name: "Buyer Name",
+      resolve: jest.fn(),
+      reject: jest.fn(),
+    })
+
+    await flushPromiseQueue()
+
+    await mockResolveLastOperation({
+      updateOrderShippingAddress: () => ({
+        orderOrError: { __typename: "OrderMutationSuccess" },
+      }),
+      Order: () => orderData,
+      FulfillmentOption: () => ({
+        type: "DOMESTIC_FLAT",
+        amount: { minor: 4200, currencyCode: "USD" },
+        selected: null,
+      }),
+    })
+
+    await flushPromiseQueue()
+
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+    await flushPromiseQueue()
 
     const unsetPaymentMutation = await mockResolveLastOperation({
       unsetOrderPaymentMethodPayload: () => ({
@@ -698,6 +731,28 @@ describe("ExpressCheckoutUI", () => {
     expect(env.mock.getAllOperations()).toHaveLength(0)
 
     // Verify state is reset without page reload
+    expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
+    expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
+    expect(window.location.reload).not.toHaveBeenCalled()
+  })
+
+  it("closes the express UI without unsetting fulfillment when the user cancels without changes", async () => {
+    const { env } = renderWithRelay({
+      Order: () => orderData,
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-button"))
+    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+    await flushPromiseQueue()
+
+    // No unset mutations should have been issued
+    expect(env.mock.getAllOperations()).toHaveLength(0)
+
+    // Step should not have been rewound
+    expect(mockEditFulfillmentDetails).not.toHaveBeenCalled()
+
+    // Express UI state is still cleared
     expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
     expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
     expect(window.location.reload).not.toHaveBeenCalled()

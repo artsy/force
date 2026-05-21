@@ -42,7 +42,7 @@ import type {
 } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
@@ -87,6 +87,12 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
+
+  // Tracks whether the user mutated the order (shipping address or
+  // fulfillment option) inside the open express checkout sheet. If they
+  // didn't, we can skip the resetOrder() rewind on cancel and leave the
+  // user on their current step with their selections intact.
+  const orderMutatedDuringExpressSessionRef = useRef(false)
 
   const {
     setExpressCheckoutLoaded,
@@ -301,6 +307,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
+    orderMutatedDuringExpressSessionRef.current = false
     setCheckoutMode("express")
     setExpressCheckoutState("active")
 
@@ -350,7 +357,17 @@ export const Order2ExpressCheckoutUI: React.FC<
       return
     }
 
-    await resetOrder()
+    if (orderMutatedDuringExpressSessionRef.current) {
+      await resetOrder()
+      return
+    }
+
+    // No server-side changes were made during the express session, so
+    // leave the user's step + fulfillment option intact and just close
+    // the express UI.
+    setExpressCheckoutType(null)
+    setCheckoutMode("standard")
+    setExpressCheckoutState(null)
   }
 
   // User selects a shipping address
@@ -370,6 +387,8 @@ export const Order2ExpressCheckoutUI: React.FC<
         postal_code,
         name,
       })
+
+      orderMutatedDuringExpressSessionRef.current = true
 
       updateStripeElements(result.order)
 
@@ -406,6 +425,8 @@ export const Order2ExpressCheckoutUI: React.FC<
       const result = await setFulfillmentOption(
         shippingRate.id as FulfillmentOptionInputEnum,
       )
+
+      orderMutatedDuringExpressSessionRef.current = true
 
       updateStripeElements(result.order)
 
