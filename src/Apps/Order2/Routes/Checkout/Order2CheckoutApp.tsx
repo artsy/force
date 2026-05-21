@@ -117,16 +117,24 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         case CheckoutStepName.OFFER_AMOUNT:
           checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
           break
-        case CheckoutStepName.DELIVERY_OPTION:
-          if (isDeliveryOptionExpanded) {
-            checkoutTracking.orderProgressionViewed(
-              ContextModule.ordersShippingMethods,
-            )
-          }
-          break
       }
     })
-  }, [activeStepNames, checkoutTracking, isDeliveryOptionExpanded])
+  }, [activeStepNames, checkoutTracking])
+
+  // DELIVERY_OPTION is tracked in a separate effect so its expansion signal
+  // (which can flip while FULFILLMENT_DETAILS is still ACTIVE) doesn't cause
+  // the main effect above to re-fire FULFILLMENT_DETAILS's orderProgressionViewed.
+  const isDeliveryOptionVisible =
+    activeStepNames.split(",").includes(CheckoutStepName.DELIVERY_OPTION) &&
+    isDeliveryOptionExpanded
+
+  useEffect(() => {
+    if (isDeliveryOptionVisible) {
+      checkoutTracking.orderProgressionViewed(
+        ContextModule.ordersShippingMethods,
+      )
+    }
+  }, [isDeliveryOptionVisible, checkoutTracking])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
   useEffect(() => {
