@@ -105,14 +105,9 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
           break
         case CheckoutStepName.FULFILLMENT_DETAILS:
-          // Suppress for users with no saved address — the Delivery section
-          // is the address-collection form, not a real "fulfillment viewed"
-          // step until they have at least one address on file.
-          if (hasSavedAddresses) {
-            checkoutTracking.orderProgressionViewed(
-              ContextModule.ordersFulfillment,
-            )
-          }
+          checkoutTracking.orderProgressionViewed(
+            ContextModule.ordersFulfillment,
+          )
           break
         case CheckoutStepName.PAYMENT:
           checkoutTracking.orderProgressionViewed(ContextModule.ordersPayment)
@@ -121,8 +116,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
           break
         case CheckoutStepName.DELIVERY_OPTION:
-          // Same rationale as above: with no saved address, the dual-active
-          // rule auto-promotes DELIVERY_OPTION before it's actually visible.
+          // With no saved address, the dual-active rule auto-promotes
+          // DELIVERY_OPTION before it's actually visible to the user.
           if (hasSavedAddresses) {
             checkoutTracking.orderProgressionViewed(
               ContextModule.ordersShippingMethods,
