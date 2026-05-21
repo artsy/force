@@ -35,30 +35,13 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Jump } from "Utils/Hooks/useJump"
 import type { Order2CheckoutApp_me$key } from "__generated__/Order2CheckoutApp_me.graphql"
 import type { Order2CheckoutApp_order$key } from "__generated__/Order2CheckoutApp_order.graphql"
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo } from "react"
 import { Meta, Title } from "react-head"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2CheckoutAppProps {
   order: Order2CheckoutApp_order$key
   me: Order2CheckoutApp_me$key
-}
-
-const STEP_TO_CONTEXT_MODULE: Partial<
-  Record<
-    CheckoutStepName,
-    | ContextModule.ordersOffer
-    | ContextModule.ordersFulfillment
-    | ContextModule.ordersShippingMethods
-    | ContextModule.ordersPayment
-    | ContextModule.ordersReview
-  >
-> = {
-  [CheckoutStepName.OFFER_AMOUNT]: ContextModule.ordersOffer,
-  [CheckoutStepName.FULFILLMENT_DETAILS]: ContextModule.ordersFulfillment,
-  [CheckoutStepName.DELIVERY_OPTION]: ContextModule.ordersShippingMethods,
-  [CheckoutStepName.PAYMENT]: ContextModule.ordersPayment,
-  [CheckoutStepName.CONFIRMATION]: ContextModule.ordersReview,
 }
 
 export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
@@ -105,52 +88,40 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     }
   }, [isExpressCheckoutEligible])
 
-  // Fire `orderProgressionViewed` exactly once per step per checkout session,
-  // and only when the step is actually visible to the user — or was just
-  // auto-skipped through (e.g. flat/free shipping where DELIVERY_OPTION
-  // auto-completes immediately after the address is saved).
-  //
-  // The rules:
-  //   1. The step's preceding non-HIDDEN steps must all be COMPLETED — only
-  //      then can the user actually see it.
-  //   2. We only fire for steps that have been seen as ACTIVE at some point,
-  //      so a step that was already COMPLETED on initial load (e.g. a saved
-  //      address) doesn't retroactively emit an event.
-  const firedStepsRef = useRef(new Set<CheckoutStepName>())
-  const seenActiveRef = useRef(new Set<CheckoutStepName>())
+  const activeStepNames = useMemo(
+    () =>
+      steps
+        .filter(step => step.state === CheckoutStepState.ACTIVE)
+        .map(step => step.name)
+        .join(","),
+    [steps],
+  )
 
   useEffect(() => {
-    const visibleSteps = steps.filter(
-      step => step.state !== CheckoutStepState.HIDDEN,
-    )
-
-    for (let i = 0; i < visibleSteps.length; i++) {
-      const step = visibleSteps[i]
-
-      if (step.state === CheckoutStepState.ACTIVE) {
-        seenActiveRef.current.add(step.name)
+    activeStepNames.split(",").forEach(name => {
+      switch (name) {
+        case CheckoutStepName.CONFIRMATION:
+          checkoutTracking.orderProgressionViewed(ContextModule.ordersReview)
+          break
+        case CheckoutStepName.FULFILLMENT_DETAILS:
+          checkoutTracking.orderProgressionViewed(
+            ContextModule.ordersFulfillment,
+          )
+          break
+        case CheckoutStepName.PAYMENT:
+          checkoutTracking.orderProgressionViewed(ContextModule.ordersPayment)
+          break
+        case CheckoutStepName.OFFER_AMOUNT:
+          checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
+          break
+        case CheckoutStepName.DELIVERY_OPTION:
+          checkoutTracking.orderProgressionViewed(
+            ContextModule.ordersShippingMethods,
+          )
+          break
       }
-
-      if (firedStepsRef.current.has(step.name)) continue
-
-      const allPrevCompleted = visibleSteps
-        .slice(0, i)
-        .every(s => s.state === CheckoutStepState.COMPLETED)
-      if (!allPrevCompleted) continue
-
-      const isAutoSkipped =
-        step.state === CheckoutStepState.COMPLETED &&
-        seenActiveRef.current.has(step.name)
-      const isNewlyVisible = step.state === CheckoutStepState.ACTIVE
-      if (!isAutoSkipped && !isNewlyVisible) continue
-
-      const contextModule = STEP_TO_CONTEXT_MODULE[step.name]
-      if (!contextModule) continue
-
-      firedStepsRef.current.add(step.name)
-      checkoutTracking.orderProgressionViewed(contextModule)
-    }
-  }, [steps, checkoutTracking])
+    })
+  }, [activeStepNames, checkoutTracking])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
   useEffect(() => {
