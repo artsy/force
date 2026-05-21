@@ -30,7 +30,7 @@ export const setAuthTrackingCookie =
       JSON.stringify({
         action,
         service: params.service,
-        ...(isOneTap ? { trigger: "one-tap" } : {}),
+        ...(isOneTap ? { method: "one-tap" } : {}),
         ...(hasContext ? { analytics: analyticsContext } : {}),
       }),
       { httpOnly: false },

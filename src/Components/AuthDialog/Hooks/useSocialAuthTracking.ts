@@ -53,7 +53,7 @@ export const useSocialAuthTracking = () => {
     track[value.action]({
       service: value.service,
       userId: user.id,
-      ...(value.trigger ? { trigger: value.trigger } : {}),
+      ...(value.method ? { method: value.method } : {}),
       ...(value.analytics ?? {}),
     })
 
@@ -68,8 +68,9 @@ const schema = Yup.object({
     intent: Yup.string(),
     trigger: Yup.string(),
   }),
+  method: Yup.string().oneOf(["one-tap"]),
   service: Yup.string().oneOf(["apple", "google", "facebook"]).required(),
-  trigger: Yup.string().oneOf(["click", "tap", "timed", "scroll", "one-tap"]),
+  trigger: Yup.string().oneOf(["click", "tap", "timed", "scroll"]),
 })
 
 type Payload = Omit<Yup.InferType<typeof schema>, "analytics"> & {

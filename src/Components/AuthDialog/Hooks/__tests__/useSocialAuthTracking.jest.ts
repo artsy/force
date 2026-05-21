@@ -57,6 +57,27 @@ describe("useSocialAuthTracking", () => {
     expect(mockCookiesExpire).toBeCalledWith("useSocialAuthTracking")
   })
 
+  it("passes method to the tracking function when present", () => {
+    const loggedIn = jest.fn()
+    mockUseAuthDialogTracking.mockImplementation(() => ({ loggedIn }))
+
+    mockCookiesGet.mockImplementation(() =>
+      JSON.stringify({
+        action: "loggedIn",
+        service: "google",
+        method: "one-tap",
+      }),
+    )
+
+    renderHook(useSocialAuthTracking)
+
+    expect(loggedIn).toBeCalledWith({
+      method: "one-tap",
+      service: "google",
+      userId: "example",
+    })
+  })
+
   it("does not call the tracking function if the cookie is invalid and expires the cookie", () => {
     const loggedIn = jest.fn()
     mockUseAuthDialogTracking.mockImplementation(() => ({ loggedIn }))

@@ -52,7 +52,7 @@ describe("setAuthTrackingCookie", () => {
       JSON.stringify({
         action: "loggedIn",
         service: "google",
-        trigger: "one-tap",
+        method: "one-tap",
       }),
       { httpOnly: false },
     )
@@ -103,7 +103,7 @@ describe("setAuthTrackingCookie", () => {
       JSON.stringify({
         action: "loggedIn",
         service: "google",
-        trigger: "one-tap",
+        method: "one-tap",
         analytics: { contextModule: "header" },
       }),
       { httpOnly: false },
