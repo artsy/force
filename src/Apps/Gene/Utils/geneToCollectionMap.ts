@@ -21,6 +21,12 @@ export const geneToCollectionMap: Record<string, string> = {
   "women-artists": "women-artists",
   // Curated/editorially-defined collections
   "curators-picks-unique-works-under-25k": "curators-picks-unique-works-under-25k",
+  "furniture-wood-and-lacquer-at-collect-2022": "furniture-collect-22",
+  "promises-young-galleries-and-emerging-artists-from-art-paris-2022": "promises-art-paris-2022",
+  "under-the-same-sun": "under-the-same-sun-bhm-2022",
+  "year-of-the-tiger-2022": "year-of-the-tiger-cny-2022",
+  "jewellery-metalwork-and-minerals-at-collect-2022": "jewellery-collect-22",
+  "textile-weave-and-fibre-at-collect-2022": "textile-collect-22",
   // Legacy gene-to-collection redirects (pre-existing)
   "artists-on-the-rise": "artists-on-the-rise",
   "black-painters-on-our-radar": "black-painters-on-our-radar",
