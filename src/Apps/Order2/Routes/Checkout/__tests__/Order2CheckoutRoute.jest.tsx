@@ -1306,6 +1306,14 @@ describe("Order2CheckoutRoute", () => {
         },
         {
           action: "orderProgressionViewed",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "orderProgressionViewed",
+          context_module: "ordersShippingMethods",
+        },
+        {
+          action: "orderProgressionViewed",
           context_module: "ordersPayment",
         },
         {
