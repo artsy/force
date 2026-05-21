@@ -9,11 +9,15 @@ import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checko
 import { Order2PickupForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2PickupForm"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useOrder2UnsetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UnsetOrderFulfillmentOptionMutation"
+import createLogger from "Utils/logger"
 import type { Order2FulfillmentDetailsStep_me$key } from "__generated__/Order2FulfillmentDetailsStep_me.graphql"
 import type { Order2FulfillmentDetailsStep_order$key } from "__generated__/Order2FulfillmentDetailsStep_order.graphql"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2FulfillmentDetailsStep")
 
 interface Order2FulfillmentDetailsStepProps {
   order: Order2FulfillmentDetailsStep_order$key
@@ -32,7 +36,11 @@ export const Order2FulfillmentDetailsStep: React.FC<
     setActiveFulfillmentDetailsTab,
     checkoutTracking,
     setUserAddressMode,
+    setIsFulfillmentDetailsSaving,
   } = useCheckoutContext()
+
+  const unsetOrderFulfillmentOption =
+    useOrder2UnsetOrderFulfillmentOptionMutation()
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
@@ -47,6 +55,46 @@ export const Order2FulfillmentDetailsStep: React.FC<
   const initialPickupSelected = useMemo(() => {
     return pickupOption?.selected ?? false
   }, [])
+
+  const handleTabChange = useCallback(
+    (tabInfo?: { tabIndex: number }) => {
+      const isPickup = tabInfo?.tabIndex === 1
+
+      if (!isPickup) {
+        checkoutTracking.clickedFulfillmentTab("Delivery")
+        setActiveFulfillmentDetailsTab("DELIVERY")
+        return
+      }
+
+      checkoutTracking.clickedFulfillmentTab("Pickup")
+      setActiveFulfillmentDetailsTab("PICKUP")
+      setUserAddressMode(null)
+
+      const currentType = orderData.selectedFulfillmentOption?.type
+      if (!currentType || currentType === "PICKUP") return
+
+      setIsFulfillmentDetailsSaving(true)
+      unsetOrderFulfillmentOption
+        .submitMutation({
+          variables: { input: { id: orderData.internalID } },
+        })
+        .catch(error => {
+          logger.error("Error unsetting fulfillment option:", error)
+        })
+        .finally(() => {
+          setIsFulfillmentDetailsSaving(false)
+        })
+    },
+    [
+      checkoutTracking,
+      setActiveFulfillmentDetailsTab,
+      setUserAddressMode,
+      orderData.selectedFulfillmentOption?.type,
+      orderData.internalID,
+      setIsFulfillmentDetailsSaving,
+      unsetOrderFulfillmentOption,
+    ],
+  )
 
   return (
     <Flex
@@ -75,17 +123,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
             data-testid="FulfillmentDetailsStepTabs"
             justifyContent="space-between"
             initialTabIndex={initialPickupSelected ? 1 : 0}
-            onChange={tabInfo => {
-              const { tabIndex } = tabInfo ?? {}
-              if (tabIndex === 1) {
-                checkoutTracking.clickedFulfillmentTab("Pickup")
-                setActiveFulfillmentDetailsTab("PICKUP")
-                setUserAddressMode(null)
-              } else {
-                checkoutTracking.clickedFulfillmentTab("Delivery")
-                setActiveFulfillmentDetailsTab("DELIVERY")
-              }
-            }}
+            onChange={handleTabChange}
           >
             <Tab name={<Text variant="sm-display">Delivery</Text>}>
               <Box px={[2, 2, 4]}>
@@ -129,6 +167,7 @@ const ORDER_FRAGMENT = graphql`
     ...Order2PickupForm_order
     ...Order2DeliveryForm_order
     id
+    internalID
     fulfillmentDetails {
       phoneNumber {
         countryCode
