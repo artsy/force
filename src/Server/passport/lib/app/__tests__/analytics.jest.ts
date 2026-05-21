@@ -19,7 +19,7 @@ describe("setAuthTrackingCookie", () => {
   })
 
   it("sets a loggedIn cookie when not signed up", () => {
-    analytics.setAuthTrackingCookie("google")(req, res, next)
+    analytics.setAuthTrackingCookie({ service: "google" })(req, res, next)
 
     expect(res.cookie).toHaveBeenCalledWith(
       "useSocialAuthTracking",
@@ -31,7 +31,7 @@ describe("setAuthTrackingCookie", () => {
 
   it("sets a signedUp cookie when artsyPassportSignedUp is true", () => {
     req.artsyPassportSignedUp = true
-    analytics.setAuthTrackingCookie("facebook")(req, res, next)
+    analytics.setAuthTrackingCookie({ service: "facebook" })(req, res, next)
 
     expect(res.cookie).toHaveBeenCalledWith(
       "useSocialAuthTracking",
@@ -40,8 +40,12 @@ describe("setAuthTrackingCookie", () => {
     )
   })
 
-  it("maps google-one-tap to service: google, trigger: one-tap", () => {
-    analytics.setAuthTrackingCookie("google-one-tap")(req, res, next)
+  it("sets service: google and trigger: one-tap when mode is one-tap", () => {
+    analytics.setAuthTrackingCookie({ service: "google", mode: "one-tap" })(
+      req,
+      res,
+      next,
+    )
 
     expect(res.cookie).toHaveBeenCalledWith(
       "useSocialAuthTracking",
@@ -58,7 +62,7 @@ describe("setAuthTrackingCookie", () => {
     req.session.contextModule = "artworkPage"
     req.session.sign_up_intent = "follow"
     req.session.trigger = "click"
-    analytics.setAuthTrackingCookie("apple")(req, res, next)
+    analytics.setAuthTrackingCookie({ service: "apple" })(req, res, next)
 
     expect(res.cookie).toHaveBeenCalledWith(
       "useSocialAuthTracking",
@@ -76,7 +80,7 @@ describe("setAuthTrackingCookie", () => {
   })
 
   it("omits analytics when no session context is present", () => {
-    analytics.setAuthTrackingCookie("apple")(req, res, next)
+    analytics.setAuthTrackingCookie({ service: "apple" })(req, res, next)
 
     expect(res.cookie).toHaveBeenCalledWith(
       "useSocialAuthTracking",
@@ -85,10 +89,14 @@ describe("setAuthTrackingCookie", () => {
     )
   })
 
-  it("does not include session trigger in analytics for google-one-tap", () => {
+  it("does not include session trigger in analytics when mode is one-tap", () => {
     req.session.contextModule = "header"
     req.session.trigger = "click"
-    analytics.setAuthTrackingCookie("google-one-tap")(req, res, next)
+    analytics.setAuthTrackingCookie({ service: "google", mode: "one-tap" })(
+      req,
+      res,
+      next,
+    )
 
     expect(res.cookie).toHaveBeenCalledWith(
       "useSocialAuthTracking",

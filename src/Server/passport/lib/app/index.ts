@@ -56,7 +56,7 @@ const setupApp = () => {
   app.post(
     opts.appleCallbackPath,
     middleware(afterSocialAuth("apple")),
-    middleware(setAuthTrackingCookie("apple")),
+    middleware(setAuthTrackingCookie({ service: "apple" })),
     middleware(ssoAndRedirectBack),
   )
 
@@ -69,7 +69,7 @@ const setupApp = () => {
   app.get(
     opts.facebookCallbackPath,
     middleware(afterSocialAuth("facebook")),
-    middleware(setAuthTrackingCookie("facebook")),
+    middleware(setAuthTrackingCookie({ service: "facebook" })),
     middleware(ssoAndRedirectBack),
   )
 
@@ -82,7 +82,7 @@ const setupApp = () => {
   app.get(
     opts.googleCallbackPath,
     middleware(afterSocialAuth("google")),
-    middleware(setAuthTrackingCookie("google")),
+    middleware(setAuthTrackingCookie({ service: "google" })),
     middleware(ssoAndRedirectBack),
   )
 
@@ -90,7 +90,7 @@ const setupApp = () => {
   app.post(
     opts.googleOneTapCallbackPath,
     middleware(afterSocialAuth("google", "one-tap")),
-    middleware(setAuthTrackingCookie("google-one-tap")),
+    middleware(setAuthTrackingCookie({ service: "google", mode: "one-tap" })),
     middleware(ssoAndRedirectBack),
   )
 

@@ -3,14 +3,17 @@ import type { PassportRequest, PassportResponse } from "../types"
 
 const SOCIAL_AUTH_TRACKING_COOKIE = "useSocialAuthTracking"
 
-type SocialService = "apple" | "facebook" | "google" | "google-one-tap"
+type SocialService = "apple" | "facebook" | "google"
+
+type SocialAuthParams =
+  | { service: Exclude<SocialService, "google"> }
+  | { service: "google"; mode?: "one-tap" }
 
 export const setAuthTrackingCookie =
-  (service: SocialService) =>
+  (params: SocialAuthParams) =>
   (req: PassportRequest, res: PassportResponse, next: NextFunction) => {
     const action = req.artsyPassportSignedUp ? "signedUp" : "loggedIn"
-    const isOneTap = service === "google-one-tap"
-    const cookieService = isOneTap ? "google" : service
+    const isOneTap = params.service === "google" && params.mode === "one-tap"
 
     const analyticsContext: Record<string, string> = {}
     if (req.session.contextModule)
@@ -26,7 +29,7 @@ export const setAuthTrackingCookie =
       SOCIAL_AUTH_TRACKING_COOKIE,
       JSON.stringify({
         action,
-        service: cookieService,
+        service: params.service,
         ...(isOneTap ? { trigger: "one-tap" } : {}),
         ...(hasContext ? { analytics: analyticsContext } : {}),
       }),
