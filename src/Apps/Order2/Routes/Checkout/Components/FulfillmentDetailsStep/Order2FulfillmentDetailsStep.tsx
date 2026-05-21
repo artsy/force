@@ -57,7 +57,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
   }, [])
 
   const handleTabChange = useCallback(
-    (tabInfo?: { tabIndex: number }) => {
+    async (tabInfo?: { tabIndex: number }) => {
       const isPickup = tabInfo?.tabIndex === 1
 
       if (!isPickup) {
@@ -73,17 +73,16 @@ export const Order2FulfillmentDetailsStep: React.FC<
       const currentType = orderData.selectedFulfillmentOption?.type
       if (!currentType || currentType === "PICKUP") return
 
-      setIsFulfillmentDetailsSaving(true)
-      unsetOrderFulfillmentOption
-        .submitMutation({
+      try {
+        setIsFulfillmentDetailsSaving(true)
+        await unsetOrderFulfillmentOption.submitMutation({
           variables: { input: { id: orderData.internalID } },
         })
-        .catch(error => {
-          logger.error("Error unsetting fulfillment option:", error)
-        })
-        .finally(() => {
-          setIsFulfillmentDetailsSaving(false)
-        })
+      } catch (error) {
+        logger.error("Error unsetting fulfillment option:", error)
+      } finally {
+        setIsFulfillmentDetailsSaving(false)
+      }
     },
     [
       checkoutTracking,
