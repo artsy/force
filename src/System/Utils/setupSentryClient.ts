@@ -9,7 +9,6 @@ import {
   startBrowserTracingNavigationSpan,
   startBrowserTracingPageLoadSpan,
 } from "@sentry/browser"
-import { sentryBeforeSend } from "./sentryBeforeSend"
 import {
   ALLOWED_URLS,
   DENIED_URLS,
@@ -36,7 +35,6 @@ export function setupSentryClient() {
     ignoreErrors: IGNORED_ERRORS,
     release: getENV("SENTRY_RELEASE"),
     tracesSampleRate: 0.08,
-    beforeSend: sentryBeforeSend,
     integrations: [
       browserTracingIntegration({
         // See sentry router tracing below
