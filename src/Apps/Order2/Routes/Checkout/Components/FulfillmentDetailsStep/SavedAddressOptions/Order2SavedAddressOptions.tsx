@@ -59,6 +59,8 @@ export const SavedAddressOptions = ({
     setUserAddressMode,
     userAddressMode,
     setSectionErrorMessage,
+    setIsFulfillmentDetailsSaving,
+    isFulfillmentDetailsSaving,
     checkoutTracking,
     steps,
     orderData,
@@ -67,7 +69,6 @@ export const SavedAddressOptions = ({
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
   >(initialSelectedAddress)
-  const [isSelecting, setIsSelecting] = useState(false)
 
   const previousUserAddressMode = usePrevious(userAddressMode)
   const isOfferOrder =
@@ -242,7 +243,7 @@ export const SavedAddressOptions = ({
 
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
-      setIsSelecting(true)
+      setIsFulfillmentDetailsSaving(true)
 
       setSectionErrorMessage({
         section: CheckoutStepName.DELIVERY_OPTION,
@@ -260,7 +261,7 @@ export const SavedAddressOptions = ({
 
         await onSelectAddress(processedAddress)
       } finally {
-        setIsSelecting(false)
+        setIsFulfillmentDetailsSaving(false)
       }
     },
     [
@@ -270,6 +271,7 @@ export const SavedAddressOptions = ({
       onSelectInvalidAddress,
       selectedAddress,
       setSectionErrorMessage,
+      setIsFulfillmentDetailsSaving,
     ],
   )
 
@@ -317,7 +319,7 @@ export const SavedAddressOptions = ({
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
-                disabled={isSelecting && !isSelected}
+                disabled={isFulfillmentDetailsSaving && !isSelected}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }

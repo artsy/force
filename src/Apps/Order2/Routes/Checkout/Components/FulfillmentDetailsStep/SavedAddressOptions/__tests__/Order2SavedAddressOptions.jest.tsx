@@ -7,6 +7,7 @@ import {
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import { Formik } from "formik"
+import { useState } from "react"
 import type { ProcessedUserAddress } from "../../utils"
 import { SavedAddressOptions } from "../Order2SavedAddressOptions"
 
@@ -206,6 +207,8 @@ describe("SavedAddressOptions", () => {
       setUserAddressMode: jest.fn(),
       userAddressMode: null,
       setSectionErrorMessage: jest.fn(),
+      setIsFulfillmentDetailsSaving: jest.fn(),
+      isFulfillmentDetailsSaving: false,
       checkoutTracking: {
         clickedShippingAddress: jest.fn(),
         savedAddressViewed: jest.fn(),
@@ -290,6 +293,16 @@ describe("SavedAddressOptions", () => {
     })
 
     it("disables non-selected addresses while a selection is in flight", async () => {
+      mockUseCheckoutContext.mockImplementation((() => {
+        const [isFulfillmentDetailsSaving, setIsFulfillmentDetailsSaving] =
+          useState(false)
+        return {
+          ...mockCheckoutContext,
+          isFulfillmentDetailsSaving,
+          setIsFulfillmentDetailsSaving,
+        }
+      }) as any)
+
       let resolveSelect: () => void = () => {}
       onSelectAddress.mockImplementation(
         () =>
