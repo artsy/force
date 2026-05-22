@@ -4,7 +4,6 @@ import GoogleIcon from "@artsy/icons/GoogleIcon"
 import { Button, Stack } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
-import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
 import type { FC } from "react"
@@ -17,7 +16,7 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
   }
 
   const {
-    state: { options, analytics, mode },
+    state: { options, analytics },
   } = useAuthDialogContext()
 
   const { redirectUrl } = useAfterAuthenticationRedirectUrl({
@@ -31,21 +30,15 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
     {
       afterSignUpAction: options.afterAuthAction,
       "redirect-to": redirectUrl,
+      "context-module": analytics.contextModule,
       "signup-intent": analytics.intent,
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
+      trigger: analytics.trigger,
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
     },
     { skipNulls: true },
   )
-
-  const handleClick = (service: "facebook" | "apple" | "google") => () => {
-    setSocialAuthTracking({
-      action: { Login: "loggedIn", SignUp: "signedUp" }[mode],
-      analytics,
-      service,
-    })
-  }
 
   return (
     <Stack gap={1} flexDirection="row">
@@ -55,7 +48,6 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
         // @ts-ignore
         as="a"
         href={`${applePath}?${query}`}
-        onClick={handleClick("apple")}
         rel="nofollow"
         title="Continue with Apple"
       >
@@ -68,7 +60,6 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
         // @ts-ignore
         as="a"
         href={`${googlePath}?${query}`}
-        onClick={handleClick("google")}
         rel="nofollow"
         title="Continue with Google"
       >
@@ -81,7 +72,6 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
         // @ts-ignore
         as="a"
         href={`${facebookPath}?${query}`}
-        onClick={handleClick("facebook")}
         rel="nofollow"
         title="Continue with Facebook"
       >

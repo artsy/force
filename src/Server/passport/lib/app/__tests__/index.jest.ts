@@ -32,8 +32,7 @@ describe("passport app setup", () => {
     }))
     jest.doMock("../analytics", () => ({
       setCampaign: jest.fn(),
-      trackLogin: jest.fn(),
-      trackSignup: jest.fn(() => jest.fn()),
+      setAuthTrackingCookie: jest.fn(() => jest.fn()),
     }))
     jest.doMock("../lifecycle", () => ({
       afterSocialAuth: jest.fn(() => jest.fn()),

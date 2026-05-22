@@ -275,6 +275,18 @@ describe("lifecycle", () => {
       })
     })
 
+    it("sets analytics context on the session", () => {
+      req.query["context-module"] = "artworkPage"
+      req.query["trigger"] = "click"
+
+      lifecycle.beforeSocialAuth("facebook")(req, res, next)
+
+      expect(req.session).toMatchObject({
+        contextModule: "artworkPage",
+        trigger: "click",
+      })
+    })
+
     it("sets google auth scopes", () => {
       lifecycle.beforeSocialAuth("google")(req, res, next)
 

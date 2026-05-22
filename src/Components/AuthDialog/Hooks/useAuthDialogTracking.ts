@@ -45,12 +45,14 @@ export const useAuthDialogTracking = () => {
 
       loggedIn: ({
         contextModule = analytics.contextModule,
+        method,
         service = "email",
         userId,
         intent = analytics.intent || Intent.login,
         trigger = analytics.trigger || "click",
       }: {
         contextModule?: SuccessfullyLoggedIn["context_module"]
+        method?: SuccessfullyLoggedIn["method"]
         service: SuccessfullyLoggedIn["service"]
         userId: SuccessfullyLoggedIn["user_id"]
         intent?: SuccessfullyLoggedIn["intent"]
@@ -61,6 +63,7 @@ export const useAuthDialogTracking = () => {
           auth_redirect: redirectUrl,
           context_module: contextModule,
           intent,
+          method,
           service,
           trigger,
           type: AuthModalType.login,
@@ -72,12 +75,14 @@ export const useAuthDialogTracking = () => {
 
       signedUp: ({
         contextModule = analytics.contextModule,
+        method,
         service = "email",
         userId,
         intent = analytics.intent || Intent.signup,
         trigger = analytics.trigger || "click",
       }: {
         contextModule?: CreatedAccount["context_module"]
+        method?: CreatedAccount["method"]
         service: CreatedAccount["service"]
         userId: CreatedAccount["user_id"]
         intent?: CreatedAccount["intent"]
@@ -88,6 +93,7 @@ export const useAuthDialogTracking = () => {
           auth_redirect: redirectUrl,
           context_module: contextModule,
           intent,
+          method,
           onboarding: isElligibleForOnboarding,
           service,
           trigger,

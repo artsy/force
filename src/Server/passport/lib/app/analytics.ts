@@ -1,68 +1,52 @@
 import type { NextFunction } from "express"
 import type { PassportRequest, PassportResponse } from "../types"
 
-import Analytics from "analytics-node"
-import { data as sd } from "sharify"
+const SOCIAL_AUTH_TRACKING_COOKIE = "useSocialAuthTracking"
 
-export const analytics = sd.SEGMENT_WRITE_KEY
-  ? new Analytics(sd.SEGMENT_WRITE_KEY)
-  : null
+type SocialService = "apple" | "facebook" | "google"
+
+type SocialAuthParams =
+  | { service: Exclude<SocialService, "google"> }
+  | { service: "google"; mode?: "one-tap" }
+
+export const setAuthTrackingCookie =
+  (params: SocialAuthParams) =>
+  (req: PassportRequest, res: PassportResponse, next: NextFunction) => {
+    const action = req.artsyPassportSignedUp ? "signedUp" : "loggedIn"
+    const isOneTap = params.service === "google" && params.mode === "one-tap"
+
+    const analyticsContext: Record<string, string> = {}
+    if (req.session.contextModule)
+      analyticsContext.contextModule = req.session.contextModule as string
+    if (req.session.sign_up_intent)
+      analyticsContext.intent = req.session.sign_up_intent as string
+    if (!isOneTap && req.session.trigger)
+      analyticsContext.trigger = req.session.trigger as string
+
+    const hasContext = Object.keys(analyticsContext).length > 0
+
+    res.cookie(
+      SOCIAL_AUTH_TRACKING_COOKIE,
+      JSON.stringify({
+        action,
+        service: params.service,
+        ...(isOneTap ? { method: "one-tap" } : {}),
+        ...(hasContext ? { analytics: analyticsContext } : {}),
+      }),
+      { httpOnly: false },
+    )
+
+    next()
+  }
 
 export const setCampaign = (
   req: PassportRequest,
   _res: PassportResponse,
   next: NextFunction,
 ) => {
-  if (!sd.SEGMENT_WRITE_KEY) {
-    return next()
-  }
-
   req.session.modalId = req.body.modal_id || req.query.modal_id
   req.session.acquisitionInitiative =
     req.body.acquisition_initiative || req.query.acquisition_initiative
-
-  next()
-}
-
-export const trackSignup =
-  (service: string) =>
-  (req: PassportRequest, _res: PassportResponse, next: NextFunction) => {
-    const { acquisitionInitiative, modalId } = req.session
-
-    delete req.session.acquisitionInitiative
-    delete req.session.modalId
-
-    if (!sd.SEGMENT_WRITE_KEY) {
-      return next()
-    }
-
-    analytics?.track({
-      event: "Created account",
-      userId: req.user!.id,
-      properties: {
-        modal_id: modalId,
-        acquisition_initiative: acquisitionInitiative,
-        signup_service: service,
-        user_id: req.user!.id,
-      },
-    })
-
-    next()
-  }
-
-export const trackLogin = (
-  req: PassportRequest,
-  _res: PassportResponse,
-  next: NextFunction,
-) => {
-  if (!sd.SEGMENT_WRITE_KEY) {
-    return next()
-  }
-
-  analytics?.track({
-    event: "Successfully logged in",
-    userId: req.user!.id,
-  })
 
   next()
 }

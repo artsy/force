@@ -194,8 +194,10 @@ export const beforeSocialAuth =
 
     req.session.redirectTo = req.query["redirect-to"]
     req.session.skipOnboarding = req.query["skip-onboarding"]
+    req.session.contextModule = req.query["context-module"]
     req.session.sign_up_intent = req.query["signup-intent"]
     req.session.sign_up_referer = req.query["signup-referer"]
+    req.session.trigger = req.query["trigger"]
     // accepted_terms_of_service and agreed_to_receive_emails use underscores
     req.session.accepted_terms_of_service =
       req.query["accepted_terms_of_service"]
