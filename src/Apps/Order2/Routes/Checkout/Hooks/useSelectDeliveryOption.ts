@@ -40,9 +40,26 @@ export const useSelectDeliveryOption = () => {
         })
         return true
       } catch (error) {
+        // here
+        console.log("Error delivery →", {
+          name: error?.name,
+          message: error?.message,
+          code: error?.code,
+          raw: error,
+        })
+        const bannerError =
+          error?.code === "missing_postal_code"
+            ? {
+                title: "Postal code is required",
+                message:
+                  "Add a postal code to your address to see shipping options.",
+                code: error.code as string,
+              }
+            : fallbackError("selecting your shipping method", error?.code)
+
         setSectionErrorMessage({
           section: CheckoutStepName.DELIVERY_OPTION,
-          error: fallbackError("selecting your shipping method", error?.code),
+          error: bannerError,
         })
         return false
       }
