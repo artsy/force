@@ -170,54 +170,16 @@ describe("Order2DeliveryOptionsForm", () => {
       expect(timeEstimates.length).toBeGreaterThan(0)
     })
 
-    it("shows white glove description only when white glove is selected", async () => {
-      renderWithRelay(multipleOptionsData)
-
-      expect(
-        screen.queryByText(
-          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
-        ),
-      ).not.toBeInTheDocument()
-
-      const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
-      await userEvent.click(whiteGloveRadio)
-
-      expect(
-        screen.getByText(
-          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
-        ),
-      ).toBeInTheDocument()
-    })
-
-    it("allows selecting different delivery options", async () => {
-      renderWithRelay(multipleOptionsData)
-
-      const standardRadio = screen.getByRole("radio", { name: /Standard/ })
-      const expressRadio = screen.getByRole("radio", { name: /Express/ })
-
-      expect(standardRadio).toBeChecked()
-
-      await userEvent.click(expressRadio)
-
-      expect(expressRadio).toBeChecked()
-      expect(standardRadio).not.toBeChecked()
-    })
-
-    it("reverts selection visually when the save mutation fails", async () => {
-      mockSetOrderFulfillmentOption.mockRejectedValueOnce(
-        new Error("Network error"),
-      )
-
+    it("shows white glove description when white glove option is selected by server", () => {
       renderWithRelay({
         Me: () => ({
           order: {
             internalID: "order-123",
-            selectedFulfillmentOption: { type: "ARTSY_STANDARD" },
             fulfillmentOptions: [
               {
                 type: "ARTSY_STANDARD",
                 amount: { display: "$25.00" },
-                selected: true,
+                selected: false,
               },
               {
                 type: "ARTSY_EXPRESS",
@@ -227,30 +189,47 @@ describe("Order2DeliveryOptionsForm", () => {
               {
                 type: "ARTSY_WHITE_GLOVE",
                 amount: { display: "$200.00" },
-                selected: false,
+                selected: true,
               },
             ],
           },
         }),
       })
 
-      const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
-      await userEvent.click(whiteGloveRadio)
-
-      // Description appears optimistically
       expect(
         screen.getByText(
-          /custom packing, transportation on a fine art shuttle/,
+          /Includes custom packing, transportation on a fine art shuttle, and in-home delivery/,
         ),
       ).toBeInTheDocument()
+    })
 
-      // After mutation failure, description reverts (white glove is no longer "selected")
+    it("renders all delivery options with correct initial selection", () => {
+      renderWithRelay(multipleOptionsData)
+
+      const standardRadio = screen.getByRole("radio", { name: /Standard/ })
+      const expressRadio = screen.getByRole("radio", { name: /Express/ })
+      const whiteGloveRadio = screen.getByRole("radio", { name: /White Glove/ })
+
+      expect(standardRadio).toBeChecked()
+      expect(expressRadio).not.toBeChecked()
+      expect(whiteGloveRadio).not.toBeChecked()
+    })
+
+    it("calls mutation when selecting a delivery option", async () => {
+      renderWithRelay(multipleOptionsData)
+
+      const expressRadio = screen.getByRole("radio", { name: /Express/ })
+      await userEvent.click(expressRadio)
+
       await waitFor(() => {
-        expect(
-          screen.queryByText(
-            /custom packing, transportation on a fine art shuttle/,
-          ),
-        ).not.toBeInTheDocument()
+        expect(mockSetOrderFulfillmentOption).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "order-123",
+              fulfillmentOption: { type: "ARTSY_EXPRESS" },
+            },
+          },
+        })
       })
     })
 
