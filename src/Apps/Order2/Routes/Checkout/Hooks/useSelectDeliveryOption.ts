@@ -1,6 +1,9 @@
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { fallbackError } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  type CheckoutErrorBannerMessage,
+  fallbackError,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import { useCallback } from "react"
@@ -40,26 +43,9 @@ export const useSelectDeliveryOption = () => {
         })
         return true
       } catch (error) {
-        // here
-        console.log("Error delivery →", {
-          name: error?.name,
-          message: error?.message,
-          code: error?.code,
-          raw: error,
-        })
-        const bannerError =
-          error?.code === "missing_postal_code"
-            ? {
-                title: "Postal code is required",
-                message:
-                  "Add a postal code to your address to see shipping options.",
-                code: error.code as string,
-              }
-            : fallbackError("selecting your shipping method", error?.code)
-
         setSectionErrorMessage({
           section: CheckoutStepName.DELIVERY_OPTION,
-          error: bannerError,
+          error: bannerErrorForSelectDeliveryOption(error),
         })
         return false
       }
@@ -68,4 +54,25 @@ export const useSelectDeliveryOption = () => {
   )
 
   return { selectDeliveryOption }
+}
+
+/**
+ * Maps an error caught from `setOrderFulfillmentOption` to a section banner.
+ * Add a new `case` for any error code that warrants a tailored message;
+ * unknown codes fall through to the generic "something went wrong" banner.
+ */
+const bannerErrorForSelectDeliveryOption = (
+  error: { code?: string } | null | undefined,
+): CheckoutErrorBannerMessage => {
+  switch (error?.code) {
+    case "missing_postal_code":
+      return {
+        title: "Postal code is required",
+        message:
+          "Add a postal code to your address to proceed with the checkout.",
+        code: error.code,
+      }
+    default:
+      return fallbackError("selecting your shipping method", error?.code)
+  }
 }
