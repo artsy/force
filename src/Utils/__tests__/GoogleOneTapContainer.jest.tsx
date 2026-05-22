@@ -1,13 +1,19 @@
 import { render } from "@testing-library/react"
+import { useToasts } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { GoogleOneTapContainer } from "Utils/GoogleOneTapContainer"
 import { getENV } from "Utils/getENV"
 
 const mockCaptureException = jest.fn()
+const mockSendToast = jest.fn()
 
 jest.mock("@sentry/browser", () => ({
   captureException: (...args: unknown[]) => mockCaptureException(...args),
+}))
+
+jest.mock("@artsy/palette", () => ({
+  useToasts: jest.fn(),
 }))
 
 jest.mock("Utils/getENV", () => ({
@@ -26,6 +32,7 @@ describe("GoogleOneTapContainer", () => {
   const mockUseFlag = useFlag as jest.Mock
   const mockGetENV = getENV as jest.Mock
   const mockUseSystemContext = useSystemContext as jest.Mock
+  const mockUseToasts = useToasts as jest.Mock
 
   const enableOneTap = () => {
     mockUseFlag.mockReturnValue(true)
@@ -42,6 +49,8 @@ describe("GoogleOneTapContainer", () => {
     mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
     mockGetENV.mockReturnValue(null)
     mockCaptureException.mockClear()
+    mockSendToast.mockClear()
+    mockUseToasts.mockReturnValue({ sendToast: mockSendToast })
   })
 
   afterEach(() => {
@@ -151,6 +160,101 @@ describe("GoogleOneTapContainer", () => {
       mockGetENV.mockReturnValue("test-client-id")
       render(<GoogleOneTapContainer />)
       expect(gsiScript()).not.toBeInTheDocument()
+    })
+  })
+
+  describe("inline error toasts", () => {
+    const originalLocation = window.location
+
+    afterEach(() => {
+      Object.defineProperty(window, "location", {
+        value: originalLocation,
+        writable: true,
+      })
+    })
+
+    const setLocation = (search: string) => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/artist/andy-warhol",
+          search,
+          href: `http://localhost/artist/andy-warhol${search}`,
+        },
+        writable: true,
+      })
+    }
+
+    it("shows a toast for IP_BLOCKED", () => {
+      setLocation("?g_one_tap_error=IP_BLOCKED&g_one_tap_provider=google")
+      enableOneTap()
+      render(<GoogleOneTapContainer />)
+      expect(mockSendToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: "Your IP address was blocked by Google.",
+          variant: "error",
+        }),
+      )
+    })
+
+    it("shows a toast for TWO_FACTOR_AUTHENTICATION_REQUIRED", () => {
+      setLocation(
+        "?g_one_tap_error=TWO_FACTOR_AUTHENTICATION_REQUIRED&g_one_tap_provider=google",
+      )
+      enableOneTap()
+      render(<GoogleOneTapContainer />)
+      expect(mockSendToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message:
+            "Please log in with email and password to use two-factor authentication.",
+          variant: "error",
+        }),
+      )
+    })
+
+    it("shows a generic toast for UNKNOWN", () => {
+      setLocation("?g_one_tap_error=UNKNOWN&g_one_tap_provider=google")
+      enableOneTap()
+      render(<GoogleOneTapContainer />)
+      expect(mockSendToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: "An unknown error occurred. Please try again.",
+          variant: "error",
+        }),
+      )
+    })
+
+    it("falls back to the generic message for unrecognized error codes", () => {
+      setLocation("?g_one_tap_error=SOMETHING_NEW&g_one_tap_provider=google")
+      enableOneTap()
+      render(<GoogleOneTapContainer />)
+      expect(mockSendToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: "An unknown error occurred. Please try again.",
+          variant: "error",
+        }),
+      )
+    })
+
+    it("cleans up error params from the URL after showing the toast", () => {
+      setLocation("?g_one_tap_error=IP_BLOCKED&g_one_tap_provider=google")
+      const replaceStateSpy = jest
+        .spyOn(window.history, "replaceState")
+        .mockImplementation(() => {})
+      enableOneTap()
+      render(<GoogleOneTapContainer />)
+      expect(replaceStateSpy).toHaveBeenCalledWith(
+        {},
+        "",
+        "http://localhost/artist/andy-warhol",
+      )
+      replaceStateSpy.mockRestore()
+    })
+
+    it("does not show a toast when no error params are present", () => {
+      setLocation("")
+      enableOneTap()
+      render(<GoogleOneTapContainer />)
+      expect(mockSendToast).not.toHaveBeenCalled()
     })
   })
 })

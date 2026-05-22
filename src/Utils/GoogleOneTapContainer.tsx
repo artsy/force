@@ -1,7 +1,21 @@
+import { useToasts } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
+
+const ONE_TAP_ERROR_MESSAGES: Record<string, string> = {
+  IP_BLOCKED: "Your IP address was blocked by {provider}.",
+  TWO_FACTOR_AUTHENTICATION_REQUIRED:
+    "Please log in with email and password to use two-factor authentication.",
+  UNKNOWN: "An unknown error occurred. Please try again.",
+}
+
+const PROVIDERS: Record<string, string> = {
+  facebook: "Facebook",
+  google: "Google",
+  apple: "Apple",
+}
 
 const AUTH_PATHS = [
   "/log_in",
@@ -20,12 +34,35 @@ export const GoogleOneTapContainer = () => {
   const { isLoggedIn } = useSystemContext()
   const isGoogleOneTapEnabled = !!useFlag("diamond_google-one-tap")
   const googleClientId = getENV("GOOGLE_CLIENT_ID")
+  const { sendToast } = useToasts()
 
   const enabled =
     !isLoggedIn &&
     isGoogleOneTapEnabled &&
     !!googleClientId &&
     !isAuthPath(window.location.pathname)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const errorCode = params.get("g_one_tap_error")
+    const providerKey = params.get("g_one_tap_provider")
+
+    if (!errorCode) return
+
+    const template =
+      ONE_TAP_ERROR_MESSAGES[errorCode] ?? ONE_TAP_ERROR_MESSAGES.UNKNOWN
+    const message = template.replace(
+      "{provider}",
+      PROVIDERS[providerKey ?? ""] ?? "provider",
+    )
+
+    sendToast({ message, variant: "error", ttl: Number.POSITIVE_INFINITY })
+
+    const cleanUrl = new URL(window.location.href)
+    cleanUrl.searchParams.delete("g_one_tap_error")
+    cleanUrl.searchParams.delete("g_one_tap_provider")
+    window.history.replaceState({}, "", cleanUrl.toString())
+  }, [sendToast])
 
   useEffect(() => {
     if (!enabled) {

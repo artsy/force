@@ -187,6 +187,20 @@ const redirectWithQuery = (
   return `${path}?${query.toString()}`
 }
 
+const oneTapInlineRedirect = (
+  req: Req,
+  res: ArtsyResponse,
+  errorCode: string,
+  provider: Provider,
+) => {
+  return res.redirect(
+    redirectWithQuery(req.session.redirectTo || "/", {
+      g_one_tap_error: errorCode,
+      g_one_tap_provider: provider,
+    }),
+  )
+}
+
 export const beforeSocialAuth =
   (provider: Provider) =>
   (req: Req, res: ArtsyResponse, next: NextFunction) => {
@@ -278,6 +292,9 @@ export const afterSocialAuth =
       }
 
       if (err?.message?.match("Unauthorized source IP address")) {
+        if (isOneTap) {
+          return oneTapInlineRedirect(req, res, "IP_BLOCKED", provider)
+        }
         // Your IP address was blocked by the provider. Redirect back to login page.
         return res.redirect(
           redirectWithQuery(redirectPath, {
@@ -291,6 +308,14 @@ export const afterSocialAuth =
         const message = extractError(err)
 
         if (message.includes("missing two-factor authentication code")) {
+          if (isOneTap) {
+            return oneTapInlineRedirect(
+              req,
+              res,
+              "TWO_FACTOR_AUTHENTICATION_REQUIRED",
+              provider,
+            )
+          }
           return res.redirect(
             redirectWithQuery(redirectPath, {
               error: SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR,
@@ -314,8 +339,11 @@ export const afterSocialAuth =
           )
         }
 
-        // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
+        // Unknown error. Do not show error message to user; log to console.
         console.warn(`Error authenticating with ${provider}: ${message}`)
+        if (isOneTap) {
+          return oneTapInlineRedirect(req, res, "UNKNOWN", provider)
+        }
         return res.redirect(
           redirectWithQuery(redirectPath, {
             error: UNKNOWN_AUTH_ERROR,
