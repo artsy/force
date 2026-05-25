@@ -44,11 +44,13 @@ export interface PassportSession {
   accepted_terms_of_service?: unknown
   acquisitionInitiative?: unknown
   agreed_to_receive_emails?: unknown
+  contextModule?: unknown
   modalId?: unknown
   redirectTo?: string
   sign_up_intent?: unknown
   sign_up_referer?: unknown
   skipOnboarding?: unknown
+  trigger?: unknown
   [key: string]: unknown
 }
 

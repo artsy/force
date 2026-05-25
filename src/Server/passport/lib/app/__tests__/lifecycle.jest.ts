@@ -275,6 +275,18 @@ describe("lifecycle", () => {
       })
     })
 
+    it("sets analytics context on the session", () => {
+      req.query["context-module"] = "artworkPage"
+      req.query["trigger"] = "click"
+
+      lifecycle.beforeSocialAuth("facebook")(req, res, next)
+
+      expect(req.session).toMatchObject({
+        contextModule: "artworkPage",
+        trigger: "click",
+      })
+    })
+
     it("sets google auth scopes", () => {
       lifecycle.beforeSocialAuth("google")(req, res, next)
 
@@ -442,6 +454,21 @@ describe("lifecycle", () => {
       it('delegates to the "google-one-tap" passport strategy', () => {
         lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
         expect(passport.authenticate).toHaveBeenCalledWith("google-one-tap")
+      })
+
+      it("sets redirectTo from the Referer header when not already set", () => {
+        req.headers = { referer: "https://www.artsy.net/artist/andy-warhol" }
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.redirectTo).toBe(
+          "https://www.artsy.net/artist/andy-warhol",
+        )
+      })
+
+      it("does not override an existing redirectTo with the Referer header", () => {
+        req.session.redirectTo = "/collect"
+        req.headers = { referer: "https://www.artsy.net/artist/andy-warhol" }
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.redirectTo).toBe("/collect")
       })
 
       it("sets the suppress cookie on auth error", () => {

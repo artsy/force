@@ -194,8 +194,10 @@ export const beforeSocialAuth =
 
     req.session.redirectTo = req.query["redirect-to"]
     req.session.skipOnboarding = req.query["skip-onboarding"]
+    req.session.contextModule = req.query["context-module"]
     req.session.sign_up_intent = req.query["signup-intent"]
     req.session.sign_up_referer = req.query["signup-referer"]
+    req.session.trigger = req.query["trigger"]
     // accepted_terms_of_service and agreed_to_receive_emails use underscores
     req.session.accepted_terms_of_service =
       req.query["accepted_terms_of_service"]
@@ -216,6 +218,12 @@ export const afterSocialAuth =
   (req: Req, res: ArtsyResponse, next: NextFunction) => {
     const isOneTap = provider === "google" && mode === "one-tap"
     const strategyName = isOneTap ? "google-one-tap" : provider
+
+    // One-tap has no beforeSocialAuth step to capture redirect-to, so fall back
+    // to the Referer header to return the user to the page they were on.
+    if (isOneTap && !req.session.redirectTo && req.headers?.referer) {
+      req.session.redirectTo = req.headers.referer
+    }
 
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
