@@ -405,7 +405,7 @@ describe("Order2PricingBreakdown", () => {
       ).not.toBeInTheDocument()
     })
 
-    it("shows real amounts instead of skeleton when isLoading but amounts are present", () => {
+    it("shows skeleton instead of stale amounts when isLoading and amounts are present", () => {
       mockIsLoading = true
 
       renderWithRelay({
@@ -429,10 +429,10 @@ describe("Order2PricingBreakdown", () => {
         }),
       })
 
-      expect(screen.getByText("Shipping").parentElement).toHaveTextContent(
-        "$12.00",
-      )
-      expect(screen.getByText("Total").parentElement).toHaveTextContent(
+      expect(
+        screen.getByText("Shipping").parentElement,
+      ).not.toHaveTextContent("$12.00")
+      expect(screen.getByText("Total").parentElement).not.toHaveTextContent(
         "$US 1012.00",
       )
     })
