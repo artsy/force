@@ -7,6 +7,7 @@ import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
+import { AUTH_ERROR_CODES, AUTH_PROVIDERS } from "Utils/authConstants"
 import { type FC, useEffect } from "react"
 
 const AuthenticationInlineDialogContents: FC<
@@ -26,8 +27,8 @@ const AuthenticationInlineDialogContents: FC<
     if (!location.query.error_code) return
 
     const message = (
-      ERROR_CODES[location.query.error_code] || ERROR_CODES.UNKNOWN
-    ).replace(/{provider}/g, PROVIDERS[location.query.provider] || "—")
+      AUTH_ERROR_CODES[location.query.error_code] || AUTH_ERROR_CODES.UNKNOWN
+    ).replace(/{provider}/g, AUTH_PROVIDERS[location.query.provider] || "—")
 
     if (location.query.error) {
       console.error(location.query.error)
@@ -84,24 +85,4 @@ export const AuthenticationInlineDialog: FC<
       <AuthenticationInlineDialogContents />
     </AuthenticationInlineDialogProvider>
   )
-}
-
-const ERROR_CODES = {
-  ALREADY_EXISTS:
-    "A user with this email address already exists. Log in to Artsy via email and password and link {provider} in your settings instead.",
-  PREVIOUSLY_LINKED_SETTINGS:
-    "{provider} account previously linked to Artsy. Log in to your Artsy account via email and password and link {provider} in your settings instead.",
-  PREVIOUSLY_LINKED: "{provider} account previously linked to Artsy.",
-  IP_BLOCKED: "Your IP address was blocked by {provider}.",
-  TWO_FACTOR_AUTHENTICATION_REQUIRED:
-    "Please log in with email and password to use two-factor authentication.",
-  TWO_FACTOR_AUTHENTICATION_ENABLED:
-    "Social account linking is not available while two-factor authentication is enabled on your Artsy account.",
-  UNKNOWN: "An unknown error occurred. Please try again.",
-}
-
-const PROVIDERS = {
-  facebook: "Facebook",
-  google: "Google",
-  apple: "Apple",
 }

@@ -187,16 +187,38 @@ const redirectWithQuery = (
   return `${path}?${query.toString()}`
 }
 
-const oneTapInlineRedirect = (
+const redirectSocialAuthError = (
   req: Req,
   res: ArtsyResponse,
-  errorCode: string,
-  provider: Provider,
+  {
+    isOneTap,
+    redirectPath,
+    errorCode,
+    provider,
+    errorMessage,
+  }: {
+    isOneTap: boolean
+    redirectPath: string
+    errorCode: string
+    provider: Provider
+    errorMessage?: string
+  },
 ) => {
+  if (isOneTap) {
+    // One-tap errors are handled inline via toast on page that initialized flow
+    return res.redirect(
+      redirectWithQuery(req.session.redirectTo || "/", {
+        g_one_tap_error: errorCode,
+        g_one_tap_provider: provider,
+      }),
+    )
+  }
+  // All other social auth errors redirect to login page
   return res.redirect(
-    redirectWithQuery(req.session.redirectTo || "/", {
-      g_one_tap_error: errorCode,
-      g_one_tap_provider: provider,
+    redirectWithQuery(redirectPath, {
+      ...(errorMessage != null ? { error: errorMessage } : {}),
+      error_code: errorCode,
+      provider,
     }),
   )
 }
@@ -292,37 +314,25 @@ export const afterSocialAuth =
       }
 
       if (err?.message?.match("Unauthorized source IP address")) {
-        if (isOneTap) {
-          return oneTapInlineRedirect(req, res, "IP_BLOCKED", provider)
-        }
-        // Your IP address was blocked by the provider. Redirect back to login page.
-        return res.redirect(
-          redirectWithQuery(redirectPath, {
-            error_code: "IP_BLOCKED",
-            provider,
-          }),
-        )
+        return redirectSocialAuthError(req, res, {
+          isOneTap,
+          redirectPath,
+          errorCode: "IP_BLOCKED",
+          provider,
+        })
       }
 
       if (err != null) {
         const message = extractError(err)
 
         if (message.includes("missing two-factor authentication code")) {
-          if (isOneTap) {
-            return oneTapInlineRedirect(
-              req,
-              res,
-              "TWO_FACTOR_AUTHENTICATION_REQUIRED",
-              provider,
-            )
-          }
-          return res.redirect(
-            redirectWithQuery(redirectPath, {
-              error: SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR,
-              error_code: "TWO_FACTOR_AUTHENTICATION_REQUIRED",
-              provider,
-            }),
-          )
+          return redirectSocialAuthError(req, res, {
+            isOneTap,
+            redirectPath,
+            errorCode: "TWO_FACTOR_AUTHENTICATION_REQUIRED",
+            provider,
+            errorMessage: SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR,
+          })
         }
 
         if (
@@ -341,15 +351,13 @@ export const afterSocialAuth =
 
         // Unknown error. Do not show error message to user; log to console.
         console.warn(`Error authenticating with ${provider}: ${message}`)
-        if (isOneTap) {
-          return oneTapInlineRedirect(req, res, "UNKNOWN", provider)
-        }
-        return res.redirect(
-          redirectWithQuery(redirectPath, {
-            error: UNKNOWN_AUTH_ERROR,
-            error_code: "UNKNOWN",
-          }),
-        )
+        return redirectSocialAuthError(req, res, {
+          isOneTap,
+          redirectPath,
+          errorCode: "UNKNOWN",
+          provider,
+          errorMessage: UNKNOWN_AUTH_ERROR,
+        })
       }
 
       if (linkingAccount) {

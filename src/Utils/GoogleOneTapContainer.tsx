@@ -1,21 +1,9 @@
 import { useToasts } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { AUTH_ERROR_CODES, AUTH_PROVIDERS } from "Utils/authConstants"
 import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
-
-const ONE_TAP_ERROR_MESSAGES: Record<string, string> = {
-  IP_BLOCKED: "Your IP address was blocked by {provider}.",
-  TWO_FACTOR_AUTHENTICATION_REQUIRED:
-    "Please log in with email and password to use two-factor authentication.",
-  UNKNOWN: "An unknown error occurred. Please try again.",
-}
-
-const PROVIDERS: Record<string, string> = {
-  facebook: "Facebook",
-  google: "Google",
-  apple: "Apple",
-}
 
 const AUTH_PATHS = [
   "/log_in",
@@ -49,11 +37,10 @@ export const GoogleOneTapContainer = () => {
 
     if (!errorCode) return
 
-    const template =
-      ONE_TAP_ERROR_MESSAGES[errorCode] ?? ONE_TAP_ERROR_MESSAGES.UNKNOWN
+    const template = AUTH_ERROR_CODES[errorCode] ?? AUTH_ERROR_CODES.UNKNOWN
     const message = template.replace(
       "{provider}",
-      PROVIDERS[providerKey ?? ""] ?? "provider",
+      AUTH_PROVIDERS[providerKey ?? ""] ?? "provider",
     )
 
     sendToast({ message, variant: "error", ttl: Number.POSITIVE_INFINITY })

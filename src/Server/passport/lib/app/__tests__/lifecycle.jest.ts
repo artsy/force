@@ -339,7 +339,7 @@ describe("lifecycle", () => {
       )
       lifecycle.afterSocialAuth("facebook")(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?error=An+unknown+error+occurred.+Please+try+again.&error_code=UNKNOWN",
+        "/login?error=An+unknown+error+occurred.+Please+try+again.&error_code=UNKNOWN&provider=facebook",
       )
       expect(warn).toHaveBeenCalledWith(
         "Error authenticating with facebook: Facebook authorization failed",
