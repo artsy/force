@@ -98,6 +98,24 @@ describe("passport callbacks", () => {
     expect(sendArgs.oauth_token).toEqual("foo-token")
   })
 
+  it("sets socialProfileEmail from google profile", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    const profile = { emails: [{ value: "user@example.com" }] }
+    cbs.google(req, "foo-token", "refresh-token", profile, jest.fn())
+    expect(req.socialProfileEmail).toEqual("user@example.com")
+  })
+
+  it("clears socialProfileEmail when google profile has no email", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    req.socialProfileEmail = "previous@example.com"
+    cbs.google(req, "foo-token", "refresh-token", {}, jest.fn())
+    expect(req.socialProfileEmail).toBeUndefined()
+  })
+
   it("gets a user with an access token via google one tap", done => {
     req.body = { credential: "google-jwt-credential" }
     mockRequestGravity.mockResolvedValue(
@@ -111,6 +129,26 @@ describe("passport callbacks", () => {
     expect(sendArgs.grant_type).toEqual("jwt")
     expect(sendArgs.jwt).toEqual("google-jwt-credential")
     expect(sendArgs.oauth_provider).toEqual("google")
+  })
+
+  it("sets socialProfileEmail from google one tap profile", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    req.body = { credential: "google-jwt-credential" }
+    const profile = { emails: [{ value: "user@example.com" }] }
+    cbs.googleOneTap(req, profile, jest.fn())
+    expect(req.socialProfileEmail).toEqual("user@example.com")
+  })
+
+  it("clears socialProfileEmail when google one tap profile has no email", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    req.body = { credential: "google-jwt-credential" }
+    req.socialProfileEmail = "previous@example.com"
+    cbs.googleOneTap(req, {}, jest.fn())
+    expect(req.socialProfileEmail).toBeUndefined()
   })
 
   it("passes the user agent through google one tap", async () => {
