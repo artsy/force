@@ -310,28 +310,19 @@ describe("AddressAutocompleteInput", () => {
   })
 
   describe("International address autocomplete", () => {
-    it("logs error when ARTSY_SUPPORTED_ISO3_CODES contains countries not in SMARTY_SUPPORTED_ISO3_CODES", () => {
-      const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation()
-
-      // Simulate the logic with an unsupported country
-      const mockArtsySupported = ["GBR", "DEU", "CHE", "ITA", "FRA", "XXX"] // XXX is not in Smarty list
-      const mockSmartySupported = ["GBR", "DEU", "CHE", "ITA", "FRA"] // Real Smarty list subset
-
-      const unsupportedCountries = mockArtsySupported.filter(
-        iso3 => !mockSmartySupported.includes(iso3),
+    it("contains exactly the expected countries in SUPPORTED_INTERNATIONAL_COUNTRY_CODES", () => {
+      const { SUPPORTED_INTERNATIONAL_COUNTRY_CODES } = jest.requireActual(
+        "Components/Address/AddressAutocompleteInput",
       )
 
-      if (unsupportedCountries.length > 0) {
-        console.error(
-          `ARTSY_SUPPORTED_ISO3_CODES contains countries not supported by Smarty API: ${unsupportedCountries.join(", ")}`,
-        )
-      }
-
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "ARTSY_SUPPORTED_ISO3_CODES contains countries not supported by Smarty API: XXX",
+      const expectedCountries = ["GB", "DE", "CH", "IT", "FR"]
+      expect(SUPPORTED_INTERNATIONAL_COUNTRY_CODES.size).toBe(
+        expectedCountries.length,
       )
 
-      consoleErrorSpy.mockRestore()
+      // Verify the exact counties in SUPPORTED_INTERNATIONAL_COUNTRY_CODES
+      const actualCountries = Array.from(SUPPORTED_INTERNATIONAL_COUNTRY_CODES)
+      expect(actualCountries.sort()).toEqual(expectedCountries.sort())
     })
 
     it("renders a normal input for a non-US address when international flag is off", async () => {

@@ -78,26 +78,13 @@ const ARTSY_SUPPORTED_ISO3_CODES = [
  * ISO-2 country codes where international address autocomplete is available.
  * This is the intersection of Smarty API support and Artsy's enabled countries.
  */
-export const SUPPORTED_INTERNATIONAL_COUNTRY_CODES: Set<string> = (() => {
-  // Verify ARTSY_SUPPORTED_ISO3_CODES is a subset of SMARTY_SUPPORTED_ISO3_CODES
-  const unsupportedCountries = ARTSY_SUPPORTED_ISO3_CODES.filter(
-    iso3 => !SMARTY_SUPPORTED_ISO3_CODES.includes(iso3),
+export const SUPPORTED_INTERNATIONAL_COUNTRY_CODES: Set<string> = new Set(
+  ARTSY_SUPPORTED_ISO3_CODES.filter(iso3 =>
+    SMARTY_SUPPORTED_ISO3_CODES.includes(iso3),
   )
-
-  if (unsupportedCountries.length > 0) {
-    console.error(
-      `ARTSY_SUPPORTED_ISO3_CODES contains countries not supported by Smarty API: ${unsupportedCountries.join(", ")}`,
-    )
-  }
-
-  return new Set(
-    ARTSY_SUPPORTED_ISO3_CODES.filter(iso3 =>
-      SMARTY_SUPPORTED_ISO3_CODES.includes(iso3),
-    )
-      .map(iso3 => ISO3_TO_ISO2[iso3])
-      .filter(Boolean),
-  )
-})()
+    .map(iso3 => ISO3_TO_ISO2[iso3])
+    .filter(Boolean),
+)
 
 interface AutocompleteTrackingValues {
   contextPageOwnerId: string
