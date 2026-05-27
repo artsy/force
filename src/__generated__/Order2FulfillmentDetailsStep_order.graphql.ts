@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9803885594e4ffc1bbbd08f29ca65ca>>
+ * @generated SignedSource<<801da5a2e8d1176047146ad4d9ef757c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,7 @@ export type Order2FulfillmentDetailsStep_order$data = {
     readonly type: FulfillmentOptionTypeEnum;
   }>;
   readonly id: string;
+  readonly internalID: string;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
@@ -78,6 +79,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -229,6 +237,6 @@ return {
 };
 })();
 
-(node as any).hash = "01a7f73d356c701b2871b29f022a9f0c";
+(node as any).hash = "c915c558cc63809c8524f0afb367671b";
 
 export default node;
