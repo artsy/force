@@ -496,7 +496,7 @@ describe("lifecycle", () => {
         )
         lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
         expect(res.redirect).toHaveBeenCalledWith(
-          "/?g_one_tap_error=IP_BLOCKED&g_one_tap_provider=google",
+          "/?g_one_tap_error=IP_BLOCKED",
         )
       })
 
@@ -508,7 +508,7 @@ describe("lifecycle", () => {
         )
         lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
         expect(res.redirect).toHaveBeenCalledWith(
-          "/artist/andy-warhol?g_one_tap_error=IP_BLOCKED&g_one_tap_provider=google",
+          "/artist/andy-warhol?g_one_tap_error=IP_BLOCKED",
         )
       })
 
@@ -519,7 +519,7 @@ describe("lifecycle", () => {
         )
         lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
         expect(res.redirect).toHaveBeenCalledWith(
-          "/?g_one_tap_error=TWO_FACTOR_AUTHENTICATION_REQUIRED&g_one_tap_provider=google",
+          "/?g_one_tap_error=TWO_FACTOR_AUTHENTICATION_REQUIRED",
         )
       })
 
@@ -529,9 +529,7 @@ describe("lifecycle", () => {
             next(new Error("some unexpected error")),
         )
         lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
-        expect(res.redirect).toHaveBeenCalledWith(
-          "/?g_one_tap_error=UNKNOWN&g_one_tap_provider=google",
-        )
+        expect(res.redirect).toHaveBeenCalledWith("/?g_one_tap_error=UNKNOWN")
       })
 
       it("still redirects ALREADY_EXISTS to the login page", () => {

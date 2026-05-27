@@ -209,7 +209,6 @@ const redirectSocialAuthError = (
     return res.redirect(
       redirectWithQuery(req.session.redirectTo || "/", {
         g_one_tap_error: errorCode,
-        g_one_tap_provider: provider,
       }),
     )
   }

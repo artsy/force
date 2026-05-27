@@ -1,7 +1,7 @@
 import { useToasts } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { AUTH_ERROR_CODES, AUTH_PROVIDERS } from "Utils/authConstants"
+import { AUTH_ERROR_CODES } from "Utils/authConstants"
 import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
 
@@ -33,21 +33,16 @@ export const GoogleOneTapContainer = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const errorCode = params.get("g_one_tap_error")
-    const providerKey = params.get("g_one_tap_provider")
 
     if (!errorCode) return
 
     const template = AUTH_ERROR_CODES[errorCode] ?? AUTH_ERROR_CODES.UNKNOWN
-    const message = template.replace(
-      "{provider}",
-      AUTH_PROVIDERS[providerKey ?? ""] ?? "provider",
-    )
+    const message = template.replace("{provider}", "Google")
 
     sendToast({ message, variant: "error", ttl: Number.POSITIVE_INFINITY })
 
     const cleanUrl = new URL(window.location.href)
     cleanUrl.searchParams.delete("g_one_tap_error")
-    cleanUrl.searchParams.delete("g_one_tap_provider")
     window.history.replaceState({}, "", cleanUrl.toString())
   }, [sendToast])
 

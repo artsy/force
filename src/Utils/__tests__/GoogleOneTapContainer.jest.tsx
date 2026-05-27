@@ -185,7 +185,7 @@ describe("GoogleOneTapContainer", () => {
     }
 
     it("shows a toast for IP_BLOCKED", () => {
-      setLocation("?g_one_tap_error=IP_BLOCKED&g_one_tap_provider=google")
+      setLocation("?g_one_tap_error=IP_BLOCKED")
       enableOneTap()
       render(<GoogleOneTapContainer />)
       expect(mockSendToast).toHaveBeenCalledWith(
@@ -197,9 +197,7 @@ describe("GoogleOneTapContainer", () => {
     })
 
     it("shows a toast for TWO_FACTOR_AUTHENTICATION_REQUIRED", () => {
-      setLocation(
-        "?g_one_tap_error=TWO_FACTOR_AUTHENTICATION_REQUIRED&g_one_tap_provider=google",
-      )
+      setLocation("?g_one_tap_error=TWO_FACTOR_AUTHENTICATION_REQUIRED")
       enableOneTap()
       render(<GoogleOneTapContainer />)
       expect(mockSendToast).toHaveBeenCalledWith(
@@ -212,7 +210,7 @@ describe("GoogleOneTapContainer", () => {
     })
 
     it("shows a generic toast for UNKNOWN", () => {
-      setLocation("?g_one_tap_error=UNKNOWN&g_one_tap_provider=google")
+      setLocation("?g_one_tap_error=UNKNOWN")
       enableOneTap()
       render(<GoogleOneTapContainer />)
       expect(mockSendToast).toHaveBeenCalledWith(
@@ -224,7 +222,7 @@ describe("GoogleOneTapContainer", () => {
     })
 
     it("falls back to the generic message for unrecognized error codes", () => {
-      setLocation("?g_one_tap_error=SOMETHING_NEW&g_one_tap_provider=google")
+      setLocation("?g_one_tap_error=SOMETHING_NEW")
       enableOneTap()
       render(<GoogleOneTapContainer />)
       expect(mockSendToast).toHaveBeenCalledWith(
@@ -236,7 +234,7 @@ describe("GoogleOneTapContainer", () => {
     })
 
     it("cleans up error params from the URL after showing the toast", () => {
-      setLocation("?g_one_tap_error=IP_BLOCKED&g_one_tap_provider=google")
+      setLocation("?g_one_tap_error=IP_BLOCKED")
       const replaceStateSpy = jest
         .spyOn(window.history, "replaceState")
         .mockImplementation(() => {})
