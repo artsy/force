@@ -8,6 +8,7 @@ import {
   init,
   startBrowserTracingNavigationSpan,
   startBrowserTracingPageLoadSpan,
+  startSpan,
 } from "@sentry/browser"
 import {
   ALLOWED_URLS,
@@ -124,3 +125,35 @@ function routeMatchToParamSpanAttributes(
 
   return paramAttributes
 }
+
+/**
+ * Wraps an async HTTP call in a Sentry span that is forced to be a root
+ * transaction. Useful for interaction-triggered requests that fire outside of
+ * an active pageload/navigation transaction — without `forceTransaction: true`
+ * those calls would attach to a non-recording span and never be sent.
+ *
+ * @example
+ * await traceFetch(
+ *   { name: "smarty.autocomplete.us", url },
+ *   async () => {
+ *     const response = await fetch(url)
+ *     return response.json()
+ *   },
+ * )
+ */
+export const traceFetch = <T>(
+  { name, url, method = "GET" }: { name: string; url: string; method?: string },
+  fn: () => Promise<T>,
+): Promise<T> =>
+  startSpan(
+    {
+      name,
+      op: "http.client",
+      forceTransaction: true,
+      attributes: {
+        "http.method": method,
+        "http.url": url,
+      },
+    },
+    fn,
+  )
