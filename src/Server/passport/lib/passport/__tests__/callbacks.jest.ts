@@ -107,15 +107,6 @@ describe("passport callbacks", () => {
     expect(req.socialProfileEmail).toEqual("user@example.com")
   })
 
-  it("clears socialProfileEmail when google profile has no email", () => {
-    mockRequestGravity.mockResolvedValue(
-      gravityResponse({ access_token: "access-token" }),
-    )
-    req.socialProfileEmail = "previous@example.com"
-    cbs.google(req, "foo-token", "refresh-token", {}, jest.fn())
-    expect(req.socialProfileEmail).toBeUndefined()
-  })
-
   it("gets a user with an access token via google one tap", done => {
     req.body = { credential: "google-jwt-credential" }
     mockRequestGravity.mockResolvedValue(
@@ -139,16 +130,6 @@ describe("passport callbacks", () => {
     const profile = { emails: [{ value: "user@example.com" }] }
     cbs.googleOneTap(req, profile, jest.fn())
     expect(req.socialProfileEmail).toEqual("user@example.com")
-  })
-
-  it("clears socialProfileEmail when google one tap profile has no email", () => {
-    mockRequestGravity.mockResolvedValue(
-      gravityResponse({ access_token: "access-token" }),
-    )
-    req.body = { credential: "google-jwt-credential" }
-    req.socialProfileEmail = "previous@example.com"
-    cbs.googleOneTap(req, {}, jest.fn())
-    expect(req.socialProfileEmail).toBeUndefined()
   })
 
   it("passes the user agent through google one tap", async () => {
