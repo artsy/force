@@ -76,12 +76,14 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).toHaveBeenCalled()
-      expect(onDropMock).toHaveBeenCalledWith([
-        validImage,
-        validImage,
-        validImage,
-      ])
+      await waitFor(() => {
+        expect(onDropMock).toHaveBeenCalled()
+        expect(onDropMock).toHaveBeenCalledWith([
+          validImage,
+          validImage,
+          validImage,
+        ])
+      })
     })
 
     it("rejects not image files", async () => {
@@ -99,20 +101,22 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).not.toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalled()
-      expect(onRejectMock).toHaveBeenCalledWith(
-        [...Array(3)].map(() => ({
-          file: pdfFile,
-          errors: [
-            {
-              message:
-                "File type must be one of image/jpeg, image/png, image/heic",
-              code: "file-invalid-type",
-            },
-          ],
-        })),
-      )
+      await waitFor(() => {
+        expect(onDropMock).not.toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalled()
+        expect(onRejectMock).toHaveBeenCalledWith(
+          [...Array(3)].map(() => ({
+            file: pdfFile,
+            errors: [
+              {
+                message:
+                  "File type must be one of image/jpeg, image/png, image/heic",
+                code: "file-invalid-type",
+              },
+            ],
+          })),
+        )
+      })
     })
 
     it("rejects too big files", async () => {
@@ -239,12 +243,14 @@ describe("PhotoDropzone", () => {
 
       await flushPromiseQueue()
 
-      expect(onDropMock).toHaveBeenCalled()
-      expect(onDropMock).toHaveBeenCalledWith([
-        validImage,
-        validImage,
-        validImage,
-      ])
+      await waitFor(() => {
+        expect(onDropMock).toHaveBeenCalled()
+        expect(onDropMock).toHaveBeenCalledWith([
+          validImage,
+          validImage,
+          validImage,
+        ])
+      })
     })
 
     it("rejects not image files", async () => {
