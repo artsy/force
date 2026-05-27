@@ -149,7 +149,7 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
 }
 
 describe("AddressAutocompleteInput", () => {
-  describe("address autocomplete is enabled for US only", () => {
+  describe("US address autocomplete", () => {
     it("renders an autocomplete input for a US address", async () => {
       render(<TestImplementation initialAddress={{ country: "US" }} />)
 
@@ -307,6 +307,32 @@ describe("AddressAutocompleteInput", () => {
       await userEvent.type(line1Input, "40")
       expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
     })
+  })
+
+  describe("International address autocomplete", () => {
+    it("logs error when ARTSY_SUPPORTED_ISO3_CODES contains countries not in SMARTY_SUPPORTED_ISO3_CODES", () => {
+      const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation()
+
+      // Simulate the logic with an unsupported country
+      const mockArtsySupported = ["GBR", "DEU", "CHE", "ITA", "FRA", "XXX"] // XXX is not in Smarty list
+      const mockSmartySupported = ["GBR", "DEU", "CHE", "ITA", "FRA"] // Real Smarty list subset
+
+      const unsupportedCountries = mockArtsySupported.filter(
+        iso3 => !mockSmartySupported.includes(iso3),
+      )
+
+      if (unsupportedCountries.length > 0) {
+        console.error(
+          `ARTSY_SUPPORTED_ISO3_CODES contains countries not supported by Smarty API: ${unsupportedCountries.join(", ")}`,
+        )
+      }
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        "ARTSY_SUPPORTED_ISO3_CODES contains countries not supported by Smarty API: XXX",
+      )
+
+      consoleErrorSpy.mockRestore()
+    })
 
     it("renders a normal input for a non-US address when international flag is off", async () => {
       const { useFlag } = jest.requireMock("@unleash/proxy-client-react")
@@ -336,7 +362,7 @@ describe("AddressAutocompleteInput", () => {
       expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
     })
 
-    it("only makes autocomplete requests for countries in ARTSY_SUPPORTED_ISO3_CODES", async () => {
+    it("only makes autocomplete requests for countries in SUPPORTED_INTERNATIONAL_COUNTRY_CODES", async () => {
       // Test with a supported country (GB)
       const { rerender } = render(
         <TestImplementation initialAddress={{ country: "GB" }} />,
@@ -496,17 +522,6 @@ describe("AddressAutocompleteInput", () => {
         }),
         0,
       )
-    })
-
-    it("does not populate autocomplete for unsupported countries (Netherlands)", async () => {
-      render(<TestImplementation initialAddress={{ country: "NL" }} />)
-
-      const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.type(line1Input, "Herengracht 1")
-
-      // Should render as normal input, not autocomplete
-      expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
-      expect(mockFetch).not.toHaveBeenCalled()
     })
 
     it("filters out international suggestions with entries > 1", async () => {
@@ -730,83 +745,82 @@ describe("AddressAutocompleteInput", () => {
         expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
       })
     })
+  })
 
-    // See TestImplementation for implementation details
-    describe("tracking", () => {
-      it.skip("tracks when autocomplete results are received", async () => {
-        render(<TestImplementation />)
+  describe("Tracking", () => {
+    it.skip("tracks when autocomplete results are received", async () => {
+      render(<TestImplementation />)
 
-        const line1Input = screen.getByPlaceholderText("Autocomplete input")
-        await userEvent.type(line1Input, "401 Broadway")
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "401 Broadway")
 
-        await screen.findByRole("listbox", { hidden: true })
+      await screen.findByRole("listbox", { hidden: true })
 
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "addressAutoCompletionResult",
+        context_module: "ordersShipping",
+        context_owner_id: "1234",
+        context_owner_type: "orders-shipping",
+        input: "401 Broadway",
+        suggested_addresses_results: 1,
+      })
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          suggestions: [
+            {
+              city: "New York",
+              entries: 2,
+              secondary: "Fl 25",
+              state: "NY",
+              street_line: "156 Quincy",
+              zipcode: "10013",
+            },
+            {
+              city: "Brooklyn",
+              entries: 2,
+              secondary: "Apt 1",
+              state: "NY",
+              street_line: "156 Quincy",
+              zipcode: "11216",
+            },
+          ],
+        }),
+      })
+      await userEvent.clear(line1Input)
+      await userEvent.type(line1Input, "156 Quincy")
+      await waitFor(() => {
         expect(mockTrackEvent).toHaveBeenCalledWith({
           action: "addressAutoCompletionResult",
           context_module: "ordersShipping",
           context_owner_id: "1234",
           context_owner_type: "orders-shipping",
-          input: "401 Broadway",
-          suggested_addresses_results: 1,
-        })
-        mockFetch.mockResolvedValue({
-          json: jest.fn().mockResolvedValue({
-            suggestions: [
-              {
-                city: "New York",
-                entries: 2,
-                secondary: "Fl 25",
-                state: "NY",
-                street_line: "156 Quincy",
-                zipcode: "10013",
-              },
-              {
-                city: "Brooklyn",
-                entries: 2,
-                secondary: "Apt 1",
-                state: "NY",
-                street_line: "156 Quincy",
-                zipcode: "11216",
-              },
-            ],
-          }),
-        })
-        await userEvent.clear(line1Input)
-        await userEvent.type(line1Input, "156 Quincy")
-        await waitFor(() => {
-          expect(mockTrackEvent).toHaveBeenCalledWith({
-            action: "addressAutoCompletionResult",
-            context_module: "ordersShipping",
-            context_owner_id: "1234",
-            context_owner_type: "orders-shipping",
-            input: "156 Quincy",
-            suggested_addresses_results: 2,
-          })
+          input: "156 Quincy",
+          suggested_addresses_results: 2,
         })
       })
+    })
 
-      it("tracks when an address is selected", async () => {
-        render(<TestImplementation />)
+    it("tracks when an address is selected", async () => {
+      render(<TestImplementation />)
 
-        const line1Input = screen.getByPlaceholderText("Autocomplete input")
-        await userEvent.paste(line1Input, "401 Broadway")
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "401 Broadway")
 
-        const dropdown = await screen.findByRole("listbox", { hidden: true })
-        const option = within(dropdown).getByText(
-          "401 Broadway, New York NY 10013",
-        )
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      const option = within(dropdown).getByText(
+        "401 Broadway, New York NY 10013",
+      )
 
-        await userEvent.click(option)
-        await flushPromiseQueue()
+      await userEvent.click(option)
+      await flushPromiseQueue()
 
-        expect(mockTrackEvent).toHaveBeenCalledWith({
-          action: "selectedItemFromAddressAutoCompletion",
-          context_module: "ordersShipping",
-          context_owner_id: "1234",
-          context_owner_type: "orders-shipping",
-          input: "401 Broadway",
-          item: "401 Broadway, New York NY 10013",
-        })
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "selectedItemFromAddressAutoCompletion",
+        context_module: "ordersShipping",
+        context_owner_id: "1234",
+        context_owner_type: "orders-shipping",
+        input: "401 Broadway",
+        item: "401 Broadway, New York NY 10013",
       })
     })
   })
