@@ -58,7 +58,7 @@ const NavBarMobileMenuLoggedOut: React.FC<
   return (
     <>
       <NavBarMobileMenuItemLink
-        to={`/signup?intent=${Intent.signup}&contextModule=${ContextModule.header}`}
+        to={`/login?intent=${Intent.signup}&contextModule=${ContextModule.header}`}
       >
         Sign Up
       </NavBarMobileMenuItemLink>
