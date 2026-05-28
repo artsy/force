@@ -286,7 +286,7 @@ export const afterSocialAuth =
             email: req.socialProfileEmail,
             error_code: "ALREADY_EXISTS",
             existing_providers: (
-              (err.response.body.providers as string[]) ?? []
+              (err.response.body.providers as string[] | undefined) ?? ["email"]
             ).join(","),
             provider,
           }),

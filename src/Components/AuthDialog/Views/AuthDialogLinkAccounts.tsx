@@ -49,7 +49,10 @@ export const AuthDialogLinkAccounts: FC = () => {
   const emailOnly =
     permittedProviders.length === 1 && permittedProviders[0] === "email"
 
-  const [showPasswordForm, setShowPasswordForm] = useState(emailOnly)
+  // Fall back to password form if providers are missing or unrecognised
+  const [showPasswordForm, setShowPasswordForm] = useState(
+    emailOnly || permittedProviders.length === 0,
+  )
 
   return showPasswordForm ? (
     <PasswordForm
@@ -61,7 +64,6 @@ export const AuthDialogLinkAccounts: FC = () => {
   ) : (
     <ProviderList
       email={email}
-      providerName={providerName}
       permittedProviders={permittedProviders}
       onShowPasswordForm={() => setShowPasswordForm(true)}
     />
@@ -70,14 +72,12 @@ export const AuthDialogLinkAccounts: FC = () => {
 
 interface ProviderListProps {
   email: string
-  providerName: string
   permittedProviders: Provider[]
   onShowPasswordForm: () => void
 }
 
 const ProviderList: FC<ProviderListProps> = ({
   email,
-  providerName,
   permittedProviders,
   onShowPasswordForm,
 }) => {
