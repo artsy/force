@@ -99,8 +99,6 @@ export const facebook = (
 ) => {
   if (profile && profile.emails && profile.emails[0]) {
     req.socialProfileEmail = profile.emails[0].value
-  } else {
-    req.socialProfileEmail = undefined
   }
   // Link Facebook account
   if (req.user) {
@@ -158,6 +156,10 @@ export const google = (
   profile: OAuthProfile,
   done?: PassportDone,
 ) => {
+  if (profile?.emails?.[0]) {
+    req.socialProfileEmail = profile.emails[0].value
+  }
+
   // Link Google account
   if (req.user) {
     return requestGravity({
@@ -212,6 +214,10 @@ export const googleOneTap = (
   profile: OAuthProfile,
   done?: PassportDone,
 ) => {
+  if (profile?.emails?.[0]) {
+    req.socialProfileEmail = profile.emails[0].value
+  }
+
   requestGravity({
     body: {
       client_id: opts.ARTSY_ID,

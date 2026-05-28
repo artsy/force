@@ -80,6 +80,7 @@ export const useAuthDialogTracking = () => {
         userId,
         intent = analytics.intent || Intent.signup,
         trigger = analytics.trigger || "click",
+        onboarding = isElligibleForOnboarding,
       }: {
         contextModule?: CreatedAccount["context_module"]
         method?: CreatedAccount["method"]
@@ -87,6 +88,7 @@ export const useAuthDialogTracking = () => {
         userId: CreatedAccount["user_id"]
         intent?: CreatedAccount["intent"]
         trigger?: CreatedAccount["trigger"]
+        onboarding?: CreatedAccount["onboarding"]
       }) => {
         const payload: CreatedAccount = {
           action: ActionType.createdAccount,
@@ -94,7 +96,7 @@ export const useAuthDialogTracking = () => {
           context_module: contextModule,
           intent,
           method,
-          onboarding: isElligibleForOnboarding,
+          onboarding,
           service,
           trigger,
           type: AuthModalType.signup,
