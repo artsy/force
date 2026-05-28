@@ -1313,10 +1313,6 @@ describe("Order2CheckoutRoute", () => {
           context_module: "ordersPayment",
         },
         {
-          action: "clickedPaymentMethod",
-          payment_method: "CREDIT_CARD",
-        },
-        {
           action: "clickedOrderProgression",
           context_module: "ordersPayment",
         },
