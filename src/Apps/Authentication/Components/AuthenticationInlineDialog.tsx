@@ -3,6 +3,7 @@ import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Componen
 import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
 import { AuthDialogView } from "Components/AuthDialog/AuthDialog"
 import type { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
@@ -17,14 +18,27 @@ const AuthenticationInlineDialogContents: FC<
   const { title, pageTitle, description } = useAuthDialogOptions()
 
   const { sendToast } = useToasts()
+  const { dispatch } = useAuthDialogContext()
 
   const {
     match: { location },
   } = useRouter()
 
-  // Errors might come back from 3rd party authentication so display them if present.
+  // When an OAuth attempt finds an existing account, switch to the link
+  // accounts view instead of showing a generic error toast.
   useEffect(() => {
-    if (!location.query.error_code) return
+    if (location.query.error_code !== "ALREADY_EXISTS") return
+    dispatch({ type: "MODE", payload: { mode: "LinkAccounts" } })
+  }, [location.query.error_code, dispatch])
+
+  // All other OAuth errors surface as a toast.
+  useEffect(() => {
+    if (
+      !location.query.error_code ||
+      location.query.error_code === "ALREADY_EXISTS"
+    ) {
+      return
+    }
 
     const message = (
       AUTH_ERROR_CODES[location.query.error_code] || AUTH_ERROR_CODES.UNKNOWN
@@ -41,6 +55,20 @@ const AuthenticationInlineDialogContents: FC<
     location.query.provider,
     sendToast,
   ])
+
+  // Success toast after an OAuth re-auth linking flow completes.
+  useEffect(() => {
+    if (!location.query.linked_provider) return
+
+    const providerName =
+      AUTH_PROVIDERS[location.query.linked_provider] ||
+      location.query.linked_provider
+
+    sendToast({
+      message: `Your ${providerName} account has been successfully linked.`,
+      variant: "success",
+    })
+  }, [location.query.linked_provider, sendToast])
 
   return (
     <>

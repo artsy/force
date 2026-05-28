@@ -40,11 +40,24 @@ export interface PassportUser {
   [key: string]: unknown
 }
 
+export type LinkingTokenData =
+  | { provider: "google" | "facebook"; oauth_token: string }
+  | {
+      provider: "apple"
+      apple_uid: string
+      id_token: string
+      email?: string
+      name?: string | null
+    }
+
 export interface PassportSession {
   accepted_terms_of_service?: unknown
   acquisitionInitiative?: unknown
   agreed_to_receive_emails?: unknown
   contextModule?: unknown
+  linkingError?: boolean
+  linkingToken?: LinkingTokenData
+  linkedProvider?: string
   modalId?: unknown
   redirectTo?: string
   sign_up_intent?: unknown
@@ -77,6 +90,7 @@ export interface PassportRequest extends ArtsyRequest {
   params: Record<string, any>
   query: Record<string, any>
   session: PassportSession
+  socialOAuthToken?: LinkingTokenData
   socialProfileEmail?: string
   user?: PassportUser | null
   xhr: boolean

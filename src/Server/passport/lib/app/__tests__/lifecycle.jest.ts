@@ -388,6 +388,7 @@ describe("lifecycle", () => {
           response: {
             body: {
               error: "User Already Exists",
+              providers: ["email", "facebook"],
             },
           },
         }
@@ -397,7 +398,7 @@ describe("lifecycle", () => {
       lifecycle.afterSocialAuth("facebook")(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&provider=facebook",
+        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&existing_providers=email%2Cfacebook&provider=facebook",
       )
     })
 

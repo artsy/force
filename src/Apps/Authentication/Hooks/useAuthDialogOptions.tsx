@@ -95,6 +95,7 @@ export const useAuthDialogOptions = () => {
 const DEFAULT_DESCRIPTIONS: Record<AuthDialogMode, string | null> = {
   Welcome: null,
   Login: null,
+  LinkAccounts: null,
   ForgotPassword: null,
   SignUp:
     "Build your personalized profile. Get art market insights. Buy and sell with confidence.",
@@ -103,6 +104,7 @@ const DEFAULT_DESCRIPTIONS: Record<AuthDialogMode, string | null> = {
 const PAGE_TITLES: Record<AuthDialogMode, string> = {
   Welcome: "Sign up or log in",
   Login: "Log in or sign up",
+  LinkAccounts: "Link accounts",
   SignUp: "Sign up or log in",
   ForgotPassword: "Reset your password", // pragma: allowlist secret
 }
