@@ -109,7 +109,3 @@ const parse = (value: any): Payload | null => {
     return null
   }
 }
-
-export const setSocialAuthTracking = (payload: Payload) => {
-  Cookies.set(USE_SOCIAL_AUTH_TRACKING_KEY, JSON.stringify(payload))
-}
