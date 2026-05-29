@@ -35,9 +35,14 @@ const SMARTY_US_AUTOCOMPLETE_URL =
 const SMARTY_INTL_AUTOCOMPLETE_URL =
   "https://international-autocomplete.api.smarty.com/v2/lookup"
 
+// Prefix used by Sentry client to adjust traces sampling rate
+export const SMARTY_TRACE_PREFIX = "smarty.autocomplete"
+const SMARTY_US_AUTOCOMPLETE_SPAN_NAME = `${SMARTY_TRACE_PREFIX}.us`
+const SMARTY_INTL_AUTOCOMPLETE_SPAN_NAME = `${SMARTY_TRACE_PREFIX}.international`
+
 /**
- * ISO-2 country codes supported by the Smarty international autocomplete v2 API.
- * Derived from the ISO-3 list at:
+ * ISO-3 country codes supported by the Smarty international autocomplete v2 API.
+ * Derived from the list at:
  * https://www.smarty.com/docs/cloud/international-address-autocomplete-api#supported-countries
  * US territories (GU, PR, VI, MP, AS, UM, MH) are absent — they are covered by the US API.
  */
@@ -63,8 +68,28 @@ const SMARTY_SUPPORTED_ISO3_CODES = [
   "YEM","ZMB","ZWE","ALA",
 ] as const
 
+/**
+ * ISO-3 country codes where Artsy enables international address autocomplete.
+ * Must be a subset of SMARTY_SUPPORTED_ISO3_CODES.
+ */
+const ARTSY_SUPPORTED_ISO3_CODES = [
+  "GBR", // United Kingdom
+  "DEU", // Germany
+  "CHE", // Switzerland
+  "ITA", // Italy
+  "FRA", // France
+] as const
+
+/**
+ * ISO-2 country codes where international address autocomplete is available.
+ * This is the intersection of Smarty API support and Artsy's enabled countries.
+ */
 export const SUPPORTED_INTERNATIONAL_COUNTRY_CODES: Set<string> = new Set(
-  SMARTY_SUPPORTED_ISO3_CODES.map(iso3 => ISO3_TO_ISO2[iso3]).filter(Boolean),
+  ARTSY_SUPPORTED_ISO3_CODES.filter(iso3 =>
+    SMARTY_SUPPORTED_ISO3_CODES.includes(iso3),
+  )
+    .map(iso3 => ISO3_TO_ISO2[iso3])
+    .filter(Boolean),
 )
 
 interface AutocompleteTrackingValues {
@@ -539,13 +564,16 @@ const fetchSuggestionsWithThrottle = throttle(
 
     const url = `${SMARTY_US_AUTOCOMPLETE_URL}?${new URLSearchParams(params).toString()}`
 
-    return traceFetch({ name: "smarty.autocomplete.us", url }, async () => {
-      const response = await fetch(url)
-      if (!response.ok) {
-        throw new Error(`US autocomplete request failed: ${response.status}`)
-      }
-      return response.json()
-    })
+    return traceFetch(
+      { name: SMARTY_US_AUTOCOMPLETE_SPAN_NAME, url },
+      async () => {
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error(`US autocomplete request failed: ${response.status}`)
+        }
+        return response.json()
+      },
+    )
   },
   THROTTLE_DELAY,
   {
@@ -575,7 +603,7 @@ const fetchInternationalSuggestionsWithThrottle = throttle(
     const url = `${SMARTY_INTL_AUTOCOMPLETE_URL}?${new URLSearchParams(params).toString()}`
 
     return traceFetch(
-      { name: "smarty.autocomplete.international", url },
+      { name: SMARTY_INTL_AUTOCOMPLETE_SPAN_NAME, url },
       async () => {
         const response = await fetch(url)
         if (!response.ok) {

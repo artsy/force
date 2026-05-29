@@ -149,7 +149,7 @@ const TestImplementation: FC<React.PropsWithChildren<ImplementationProps>> = ({
 }
 
 describe("AddressAutocompleteInput", () => {
-  describe("address autocomplete is enabled for US only", () => {
+  describe("US address autocomplete", () => {
     it("renders an autocomplete input for a US address", async () => {
       render(<TestImplementation initialAddress={{ country: "US" }} />)
 
@@ -307,6 +307,23 @@ describe("AddressAutocompleteInput", () => {
       await userEvent.type(line1Input, "40")
       expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
     })
+  })
+
+  describe("International address autocomplete", () => {
+    it("contains exactly the expected countries in SUPPORTED_INTERNATIONAL_COUNTRY_CODES", () => {
+      const { SUPPORTED_INTERNATIONAL_COUNTRY_CODES } = jest.requireActual(
+        "Components/Address/AddressAutocompleteInput",
+      )
+
+      const expectedCountries = ["GB", "DE", "CH", "IT", "FR"]
+      expect(SUPPORTED_INTERNATIONAL_COUNTRY_CODES.size).toBe(
+        expectedCountries.length,
+      )
+
+      // Verify the exact counties in SUPPORTED_INTERNATIONAL_COUNTRY_CODES
+      const actualCountries = Array.from(SUPPORTED_INTERNATIONAL_COUNTRY_CODES)
+      expect(actualCountries.sort()).toEqual(expectedCountries.sort())
+    })
 
     it("renders a normal input for a non-US address when international flag is off", async () => {
       const { useFlag } = jest.requireMock("@unleash/proxy-client-react")
@@ -334,6 +351,32 @@ describe("AddressAutocompleteInput", () => {
       // Type 2 chars (below 3-char fetch threshold) so loading stays false
       await userEvent.type(line1Input, "10")
       expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
+    })
+
+    it("only makes autocomplete requests for countries in SUPPORTED_INTERNATIONAL_COUNTRY_CODES", async () => {
+      // Test with a supported country (GB)
+      const { rerender } = render(
+        <TestImplementation initialAddress={{ country: "GB" }} />,
+      )
+
+      let line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "10 Downing")
+
+      await waitFor(() => {
+        expect(mockFetch).toHaveBeenCalled()
+      })
+
+      mockFetch.mockClear()
+
+      // Test with an unsupported but Smarty-supported country (NL)
+      rerender(<TestImplementation initialAddress={{ country: "NL" }} />)
+
+      line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "Herengracht 1")
+
+      // Should render as normal input, not autocomplete
+      expect(screen.queryByLabelText("Clear input")).not.toBeInTheDocument()
+      expect(mockFetch).not.toHaveBeenCalled()
     })
 
     it("shows suggestions for an international address", async () => {
@@ -472,62 +515,6 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
-    it("populates all fields from structured components on select (Netherlands)", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          json: jest.fn().mockResolvedValue({
-            candidates: [
-              {
-                address_text: "Herengracht 1 1015 BA Amsterdam",
-                address_id: "nl-addr-id",
-                entries: 1,
-              },
-            ],
-          }),
-          ok: true,
-        })
-        .mockResolvedValueOnce({
-          json: jest.fn().mockResolvedValue({
-            candidates: [
-              {
-                country_iso3: "NLD",
-                administrative_area: "Noord-Holland",
-                locality: "Amsterdam",
-                postal_code: "1015 BA",
-                street: "Herengracht 1",
-              },
-            ],
-          }),
-          ok: true,
-        })
-
-      render(<TestImplementation initialAddress={{ country: "NL" }} />)
-
-      const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.paste(line1Input, "Herengracht")
-
-      const dropdown = await screen.findByRole("listbox", { hidden: true })
-      await userEvent.click(
-        within(dropdown).getByText("Herengracht 1 1015 BA Amsterdam"),
-      )
-      await flushPromiseQueue()
-
-      expect(mockFetch.mock.calls[1][0]).toContain("/v2/lookup/nl-addr-id")
-      expect(mockOnSelect).toHaveBeenCalledWith(
-        expect.objectContaining({
-          address: {
-            addressLine1: "Herengracht 1",
-            addressLine2: "",
-            city: "Amsterdam",
-            region: "Noord-Holland",
-            postalCode: "1015 BA",
-            country: "NL",
-          },
-        }),
-        0,
-      )
-    })
-
     it("filters out international suggestions with entries > 1", async () => {
       mockFetch.mockResolvedValue({
         json: jest.fn().mockResolvedValue({
@@ -563,8 +550,8 @@ describe("AddressAutocompleteInput", () => {
           json: jest.fn().mockResolvedValue({
             candidates: [
               {
-                address_text: "1-1 Shibuya Tokyo",
-                address_id: "jp-addr-id",
+                address_text: "Via Roma 1 00100 Roma",
+                address_id: "it-addr-id",
                 entries: 1,
               },
             ],
@@ -576,22 +563,22 @@ describe("AddressAutocompleteInput", () => {
           ok: true,
         })
 
-      render(<TestImplementation initialAddress={{ country: "JP" }} />)
+      render(<TestImplementation initialAddress={{ country: "IT" }} />)
 
       const line1Input = screen.getByPlaceholderText("Autocomplete input")
-      await userEvent.paste(line1Input, "Shibuya")
+      await userEvent.paste(line1Input, "Via Roma")
 
       const dropdown = await screen.findByRole("listbox", { hidden: true })
-      await userEvent.click(within(dropdown).getByText("1-1 Shibuya Tokyo"))
+      await userEvent.click(within(dropdown).getByText("Via Roma 1 00100 Roma"))
       await flushPromiseQueue()
 
       expect(mockOnSelect).toHaveBeenCalledWith(
         expect.objectContaining({
           address: expect.objectContaining({
-            addressLine1: "1-1 Shibuya Tokyo",
+            addressLine1: "Via Roma 1 00100 Roma",
             city: "",
             postalCode: "",
-            country: "JP",
+            country: "IT",
           }),
         }),
         0,
@@ -749,83 +736,82 @@ describe("AddressAutocompleteInput", () => {
         expect(screen.getByLabelText("Clear input")).toBeInTheDocument()
       })
     })
+  })
 
-    // See TestImplementation for implementation details
-    describe("tracking", () => {
-      it.skip("tracks when autocomplete results are received", async () => {
-        render(<TestImplementation />)
+  describe("Tracking", () => {
+    it.skip("tracks when autocomplete results are received", async () => {
+      render(<TestImplementation />)
 
-        const line1Input = screen.getByPlaceholderText("Autocomplete input")
-        await userEvent.type(line1Input, "401 Broadway")
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.type(line1Input, "401 Broadway")
 
-        await screen.findByRole("listbox", { hidden: true })
+      await screen.findByRole("listbox", { hidden: true })
 
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "addressAutoCompletionResult",
+        context_module: "ordersShipping",
+        context_owner_id: "1234",
+        context_owner_type: "orders-shipping",
+        input: "401 Broadway",
+        suggested_addresses_results: 1,
+      })
+      mockFetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          suggestions: [
+            {
+              city: "New York",
+              entries: 2,
+              secondary: "Fl 25",
+              state: "NY",
+              street_line: "156 Quincy",
+              zipcode: "10013",
+            },
+            {
+              city: "Brooklyn",
+              entries: 2,
+              secondary: "Apt 1",
+              state: "NY",
+              street_line: "156 Quincy",
+              zipcode: "11216",
+            },
+          ],
+        }),
+      })
+      await userEvent.clear(line1Input)
+      await userEvent.type(line1Input, "156 Quincy")
+      await waitFor(() => {
         expect(mockTrackEvent).toHaveBeenCalledWith({
           action: "addressAutoCompletionResult",
           context_module: "ordersShipping",
           context_owner_id: "1234",
           context_owner_type: "orders-shipping",
-          input: "401 Broadway",
-          suggested_addresses_results: 1,
-        })
-        mockFetch.mockResolvedValue({
-          json: jest.fn().mockResolvedValue({
-            suggestions: [
-              {
-                city: "New York",
-                entries: 2,
-                secondary: "Fl 25",
-                state: "NY",
-                street_line: "156 Quincy",
-                zipcode: "10013",
-              },
-              {
-                city: "Brooklyn",
-                entries: 2,
-                secondary: "Apt 1",
-                state: "NY",
-                street_line: "156 Quincy",
-                zipcode: "11216",
-              },
-            ],
-          }),
-        })
-        await userEvent.clear(line1Input)
-        await userEvent.type(line1Input, "156 Quincy")
-        await waitFor(() => {
-          expect(mockTrackEvent).toHaveBeenCalledWith({
-            action: "addressAutoCompletionResult",
-            context_module: "ordersShipping",
-            context_owner_id: "1234",
-            context_owner_type: "orders-shipping",
-            input: "156 Quincy",
-            suggested_addresses_results: 2,
-          })
+          input: "156 Quincy",
+          suggested_addresses_results: 2,
         })
       })
+    })
 
-      it("tracks when an address is selected", async () => {
-        render(<TestImplementation />)
+    it("tracks when an address is selected", async () => {
+      render(<TestImplementation />)
 
-        const line1Input = screen.getByPlaceholderText("Autocomplete input")
-        await userEvent.paste(line1Input, "401 Broadway")
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "401 Broadway")
 
-        const dropdown = await screen.findByRole("listbox", { hidden: true })
-        const option = within(dropdown).getByText(
-          "401 Broadway, New York NY 10013",
-        )
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      const option = within(dropdown).getByText(
+        "401 Broadway, New York NY 10013",
+      )
 
-        await userEvent.click(option)
-        await flushPromiseQueue()
+      await userEvent.click(option)
+      await flushPromiseQueue()
 
-        expect(mockTrackEvent).toHaveBeenCalledWith({
-          action: "selectedItemFromAddressAutoCompletion",
-          context_module: "ordersShipping",
-          context_owner_id: "1234",
-          context_owner_type: "orders-shipping",
-          input: "401 Broadway",
-          item: "401 Broadway, New York NY 10013",
-        })
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "selectedItemFromAddressAutoCompletion",
+        context_module: "ordersShipping",
+        context_owner_id: "1234",
+        context_owner_type: "orders-shipping",
+        input: "401 Broadway",
+        item: "401 Broadway, New York NY 10013",
       })
     })
   })

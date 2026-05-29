@@ -35,9 +35,8 @@ describe("useAuthDialogOptions", () => {
       payload: {
         analytics: { intent: "signup" },
         mode: "Welcome",
-        options: {
-          title: "Sign up or log in",
-        },
+        options: { title: "Sign up or log in" },
+        values: { email: undefined },
       },
       type: "SET",
     })
@@ -63,9 +62,8 @@ describe("useAuthDialogOptions", () => {
       payload: {
         analytics: { intent: "signup" },
         mode: "Welcome",
-        options: {
-          title: "Sign up or log in",
-        },
+        options: { title: "Sign up or log in" },
+        values: { email: undefined },
       },
       type: "SET",
     })
@@ -112,6 +110,7 @@ describe("useAuthDialogOptions", () => {
           title: "Example Title",
           redirectTo: "/example-redirect",
         },
+        values: { email: undefined },
       },
       type: "SET",
     })
@@ -149,9 +148,7 @@ describe("useAuthDialogOptions", () => {
 
     expect(dispatch).toHaveBeenCalledWith({
       payload: {
-        analytics: {
-          intent: "signup",
-        },
+        analytics: { intent: "signup" },
         mode: "Welcome",
         options: {
           title: "Sign up or log in",
@@ -161,8 +158,36 @@ describe("useAuthDialogOptions", () => {
             objectId: "exampleId",
           },
         },
+        values: { email: undefined },
       },
       type: "SET",
     })
+  })
+
+  it("pre-fills email from query param", () => {
+    const dispatch = jest.fn()
+
+    mockUseAuthDialogContext.mockImplementation(() => ({
+      state: { mode: "Login" },
+      dispatch,
+    }))
+
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          query: { email: "user@example.com" },
+        },
+      },
+    }))
+
+    renderHook(useAuthDialogOptions)
+
+    expect(dispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        payload: expect.objectContaining({
+          values: { email: "user@example.com" },
+        }),
+      }),
+    )
   })
 })

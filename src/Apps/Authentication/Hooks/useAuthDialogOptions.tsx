@@ -73,6 +73,9 @@ export const useAuthDialogOptions = () => {
           afterAuthAction,
           redirectTo: query.redirectTo,
         },
+        values: {
+          email: query.email,
+        },
       },
     })
   }, [
@@ -80,6 +83,7 @@ export const useAuthDialogOptions = () => {
     dispatch,
     mode,
     query.contextModule,
+    query.email,
     query.intent,
     query.redirectTo,
     title,

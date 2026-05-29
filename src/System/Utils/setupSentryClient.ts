@@ -10,6 +10,7 @@ import {
   startBrowserTracingPageLoadSpan,
   startSpan,
 } from "@sentry/browser"
+import { SMARTY_TRACE_PREFIX } from "Components/Address/AddressAutocompleteInput"
 import {
   ALLOWED_URLS,
   DENIED_URLS,
@@ -24,6 +25,14 @@ let initialPageLoadSpan: Span | undefined | null
 // For use in router RenderStates callback hooks
 export let sentryRouterTracing
 
+const tracesSampler = (samplingContext: { name?: string }): number => {
+  // Sample Smarty autocomplete traces at 100%
+  if (samplingContext.name?.startsWith(SMARTY_TRACE_PREFIX)) {
+    return 1
+  }
+  return 0.08
+}
+
 export function setupSentryClient() {
   if (getENV("NODE_ENV") !== "production") {
     return
@@ -35,7 +44,7 @@ export function setupSentryClient() {
     dsn: getENV("SENTRY_PUBLIC_DSN"),
     ignoreErrors: IGNORED_ERRORS,
     release: getENV("SENTRY_RELEASE"),
-    tracesSampleRate: 0.08,
+    tracesSampler,
     integrations: [
       browserTracingIntegration({
         // See sentry router tracing below

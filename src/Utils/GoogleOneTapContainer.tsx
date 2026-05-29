@@ -1,5 +1,7 @@
+import { useToasts } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { AUTH_ERROR_CODES } from "Utils/authConstants"
 import { getENV } from "Utils/getENV"
 import { useEffect } from "react"
 
@@ -20,12 +22,29 @@ export const GoogleOneTapContainer = () => {
   const { isLoggedIn } = useSystemContext()
   const isGoogleOneTapEnabled = !!useFlag("diamond_google-one-tap")
   const googleClientId = getENV("GOOGLE_CLIENT_ID")
+  const { sendToast } = useToasts()
 
   const enabled =
     !isLoggedIn &&
     isGoogleOneTapEnabled &&
     !!googleClientId &&
     !isAuthPath(window.location.pathname)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const errorCode = params.get("g_one_tap_error")
+
+    if (!errorCode) return
+
+    const template = AUTH_ERROR_CODES[errorCode] ?? AUTH_ERROR_CODES.UNKNOWN
+    const message = template.replace("{provider}", "Google")
+
+    sendToast({ message, variant: "error", ttl: Number.POSITIVE_INFINITY })
+
+    const cleanUrl = new URL(window.location.href)
+    cleanUrl.searchParams.delete("g_one_tap_error")
+    window.history.replaceState({}, "", cleanUrl.toString())
+  }, [sendToast])
 
   useEffect(() => {
     if (!enabled) {
