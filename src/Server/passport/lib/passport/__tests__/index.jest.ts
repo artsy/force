@@ -120,6 +120,7 @@ describe("passport setup", () => {
         clientID: "facebook-id",
         clientSecret: "facebook-secret",
         passReqToCallback: true,
+        profileFields: ["id", "emails", "name", "displayName"],
         state: true,
       },
       callbacks.facebook,
