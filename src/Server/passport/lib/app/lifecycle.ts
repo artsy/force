@@ -287,7 +287,9 @@ export const afterSocialAuth =
             error_code: "ALREADY_EXISTS",
             existing_providers: (
               (err.response.body.providers as string[] | undefined) ?? ["email"]
-            ).join(","),
+            )
+              .map((p: string) => p.toLowerCase())
+              .join(","),
             provider,
           }),
         )
