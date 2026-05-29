@@ -1,9 +1,6 @@
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import {
-  type CheckoutErrorBannerMessage,
-  fallbackError,
-} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import { fallbackError } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
 import type { KnownErrorCodes } from "Apps/Order2/Utils/errors"

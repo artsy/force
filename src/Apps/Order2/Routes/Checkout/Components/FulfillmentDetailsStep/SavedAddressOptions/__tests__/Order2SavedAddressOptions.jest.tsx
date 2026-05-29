@@ -910,4 +910,63 @@ describe("SavedAddressOptions", () => {
       ).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe("Missing postal code error", () => {
+    const missingPostalCodeError = {
+      title: "Missing postal code",
+      message: "Add a postal code to the selected address.",
+      code: "missing_postal_code",
+    }
+
+    const setFulfillmentDetailsError = (error: Record<string, unknown>) => {
+      mockCheckoutContext.messages = {
+        [CheckoutStepName.FULFILLMENT_DETAILS]: { error },
+      } as any
+      // The real banner fires this on mount; the base mock omits it.
+      mockCheckoutContext.checkoutTracking.errorMessageViewed = jest.fn()
+    }
+
+    it("renders the relocated error banner above the address list", () => {
+      setFulfillmentDetailsError(missingPostalCodeError)
+
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
+
+      expect(screen.getByText("Missing postal code")).toBeInTheDocument()
+      expect(
+        screen.getByText("Add a postal code to the selected address."),
+      ).toBeInTheDocument()
+    })
+
+    it("tracks errorMessageViewed with the shipping-address flow", () => {
+      setFulfillmentDetailsError(missingPostalCodeError)
+
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
+
+      expect(
+        mockCheckoutContext.checkoutTracking.errorMessageViewed,
+      ).toHaveBeenCalledWith({
+        error_code: "missing_postal_code",
+        title: "Missing postal code",
+        message: "Add a postal code to the selected address.",
+        flow: "User setting shipping address",
+      })
+    })
+
+    it("does not render the banner when the error is not a missing postal code", () => {
+      setFulfillmentDetailsError({
+        title: "Something else went wrong",
+        message: "Unrelated error.",
+        code: "destination_could_not_be_geocoded",
+      })
+
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
+
+      expect(
+        screen.queryByText("Something else went wrong"),
+      ).not.toBeInTheDocument()
+      expect(
+        mockCheckoutContext.checkoutTracking.errorMessageViewed,
+      ).not.toHaveBeenCalled()
+    })
+  })
 })
