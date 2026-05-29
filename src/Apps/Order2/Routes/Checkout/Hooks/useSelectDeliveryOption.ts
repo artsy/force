@@ -56,9 +56,8 @@ export const useSelectDeliveryOption = () => {
           setSectionErrorMessage({
             section: CheckoutStepName.FULFILLMENT_DETAILS,
             error: {
-              title: "Postal code is required",
-              message:
-                "Add a postal code to your address to proceed with the checkout.",
+              title: "Missing postal code",
+              message: "Add a postal code to the selected address.",
               code: error.code as string,
             },
           })
