@@ -1,10 +1,10 @@
-import type * as React from "react"
-import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
-import { SystemContextProvider } from "System/Contexts/SystemContext"
-import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
-import { logout } from "Utils/auth"
 import { render, screen } from "@testing-library/react"
 import { fireEvent } from "@testing-library/react"
+import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
+import { SystemContextProvider } from "System/Contexts/SystemContext"
+import { logout } from "Utils/auth"
+import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
+import type * as React from "react"
 import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -129,7 +129,7 @@ describe("NavBarMobileMenu", () => {
         ["/institutions", "Museums"],
         ["/price-database", "Price Database"],
         ["/articles", "Editorial"],
-        ["/signup?intent=signup&contextModule=header", "Sign Up"],
+        ["/login?intent=signup&contextModule=header", "Sign Up"],
         ["/login?intent=login&contextModule=header", "Log In"],
       ].map(link => link.join(""))
 

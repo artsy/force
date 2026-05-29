@@ -24,6 +24,7 @@ export const AuthDialogWelcome: FC<
 
   return (
     <Formik
+      enableReinitialize
       validateOnBlur={false}
       validationSchema={VALIDATION_SCHEMA}
       initialValues={{ email: values.email || "", mode: "Pending" }}

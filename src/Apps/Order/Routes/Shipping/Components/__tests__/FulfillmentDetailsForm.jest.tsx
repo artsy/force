@@ -502,6 +502,7 @@ describe("FulfillmentDetailsForm", () => {
 
     beforeEach(() => {
       mockFetch = jest.fn().mockResolvedValue({
+        ok: true,
         json: jest.fn().mockResolvedValue({
           suggestions: [
             {

@@ -94,19 +94,19 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 
             break
           case "ShippingLine":
-            if (line.amount) {
-              amountText = `${line.amount.currencySymbol}${line.amount.amount}`
-            } else if (isLoading) {
+            if (isLoading) {
               showSkeleton = true
+            } else if (line.amount) {
+              amountText = `${line.amount.currencySymbol}${line.amount.amount}`
             } else {
               amountText = line.amountFallbackText as string
             }
             break
           case "TaxLine":
-            if (line.amount) {
-              amountText = `${line.amount.currencySymbol}${line.amount.amount}`
-            } else if (isLoading) {
+            if (isLoading) {
               showSkeleton = true
+            } else if (line.amount) {
+              amountText = `${line.amount.currencySymbol}${line.amount.amount}`
             } else {
               amountText = line.amountFallbackText as string
             }
@@ -116,10 +116,10 @@ export const Order2CheckoutPricingBreakdown: React.FC<
             variant = "sm-display"
             fontWeight = "bold"
             color = "mono100"
-            if (line.amount?.display) {
-              amountText = line.amount.display
-            } else if (isLoading) {
+            if (isLoading) {
               showSkeleton = true
+            } else if (line.amount?.display) {
+              amountText = line.amount.display
             } else {
               amountText = line.amountFallbackText as string
             }

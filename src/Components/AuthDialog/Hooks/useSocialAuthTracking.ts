@@ -9,8 +9,8 @@ import * as Yup from "yup"
 const USE_SOCIAL_AUTH_TRACKING_KEY = "useSocialAuthTracking"
 
 /**
- * Picks up on the cookie set by `setSocialAuthTracking` and logs
- * the appropriate event once the user is redirected back to the app successfully.
+ * Picks up on the cookie set by the passport server after social auth and fires
+ * the appropriate Cohesion tracking event once the user is redirected back.
  */
 export const useSocialAuthTracking = () => {
   const {
@@ -50,30 +50,48 @@ export const useSocialAuthTracking = () => {
       return
     }
 
-    track[value.action]({
+    const params = {
       service: value.service,
       userId: user.id,
-      ...value.analytics,
-    })
+      ...(value.method ? { method: value.method } : {}),
+      ...(value.analytics ?? {}),
+    }
+
+    if (value.action === "signedUp") {
+      // for social auth, tracking fires after a full-page redirect, so the
+      // dialog context is gone. We read onboarding from the URL instead
+      const onboarding =
+        new URLSearchParams(location.search).get("onboarding") === "true"
+      track.signedUp({ ...params, onboarding })
+    } else {
+      track.loggedIn(params)
+    }
 
     Cookies.expire(USE_SOCIAL_AUTH_TRACKING_KEY)
-  }, [location.pathname, track, user])
+  }, [location.pathname, location.search, track, user])
 }
 
 const schema = Yup.object({
   action: Yup.string().oneOf(["loggedIn", "signedUp"]).required(),
   analytics: Yup.object({
-    contextModule: Yup.string().required(),
+    contextModule: Yup.string(),
     intent: Yup.string(),
     trigger: Yup.string(),
   }),
+  method: Yup.string().oneOf(["one-tap"]),
   service: Yup.string().oneOf(["apple", "google", "facebook"]).required(),
+  trigger: Yup.string().oneOf(["click", "tap", "timed", "scroll"]),
 })
 
-type Payload = Omit<Yup.InferType<typeof schema>, "analytics"> & {
+type Payload = Omit<
+  Yup.InferType<typeof schema>,
+  "analytics" | "method" | "service"
+> & {
   // We assume that the unions are valid because it would
   // be difficult to get the runtime values from Cohesion
-  analytics: AuthDialogAnalytics
+  analytics?: AuthDialogAnalytics
+  method?: "one-tap"
+  service: "apple" | "facebook" | "google"
 }
 
 const isValid = (value: any): value is Payload => {
@@ -90,8 +108,4 @@ const parse = (value: any): Payload | null => {
   } catch (err) {
     return null
   }
-}
-
-export const setSocialAuthTracking = (payload: Payload) => {
-  Cookies.set(USE_SOCIAL_AUTH_TRACKING_KEY, JSON.stringify(payload))
 }

@@ -1,18 +1,12 @@
-import { Button, Stack } from "@artsy/palette"
-import GoogleIcon from "@artsy/icons/GoogleIcon"
 import AppleIcon from "@artsy/icons/AppleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
-import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
+import { Button, Stack } from "@artsy/palette"
+import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
-import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 
 export const SignupFormSocial = () => {
-  const {
-    state: { analytics, mode },
-  } = useAuthDialogContext()
-
   const { redirectUrl } = useAfterAuthenticationRedirectUrl({
     appendOnboarding: false,
   })
@@ -34,14 +28,6 @@ export const SignupFormSocial = () => {
     { skipNulls: true },
   )
 
-  const handleClick = (service: "facebook" | "apple" | "google") => () => {
-    setSocialAuthTracking({
-      action: { Login: "loggedIn", SignUp: "signedUp" }[mode],
-      analytics,
-      service,
-    })
-  }
-
   return (
     <Stack gap={1}>
       <Button
@@ -50,7 +36,6 @@ export const SignupFormSocial = () => {
         // @ts-ignore
         as="a"
         href={`${googlePath}?${query}`}
-        onClick={handleClick("google")}
         rel="nofollow"
         Icon={GoogleIcon}
       >
@@ -63,7 +48,6 @@ export const SignupFormSocial = () => {
         // @ts-ignore
         as="a"
         href={`${facebookPath}?${query}`}
-        onClick={handleClick("facebook")}
         rel="nofollow"
         Icon={FacebookIcon}
       >
@@ -76,7 +60,6 @@ export const SignupFormSocial = () => {
         // @ts-ignore
         as="a"
         href={`${applePath}?${query}`}
-        onClick={handleClick("apple")}
         rel="nofollow"
         Icon={AppleIcon}
       >

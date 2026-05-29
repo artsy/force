@@ -187,6 +187,41 @@ const redirectWithQuery = (
   return `${path}?${query.toString()}`
 }
 
+const redirectSocialAuthError = (
+  req: Req,
+  res: ArtsyResponse,
+  {
+    isOneTap,
+    redirectPath,
+    errorCode,
+    provider,
+    errorMessage,
+  }: {
+    isOneTap: boolean
+    redirectPath: string
+    errorCode: string
+    provider: Provider
+    errorMessage?: string
+  },
+) => {
+  if (isOneTap) {
+    // One-tap errors are handled inline via toast on page that initialized flow
+    return res.redirect(
+      redirectWithQuery(req.session.redirectTo || "/", {
+        g_one_tap_error: errorCode,
+      }),
+    )
+  }
+  // All other social auth errors redirect to login page
+  return res.redirect(
+    redirectWithQuery(redirectPath, {
+      ...(errorMessage != null ? { error: errorMessage } : {}),
+      error_code: errorCode,
+      provider,
+    }),
+  )
+}
+
 export const beforeSocialAuth =
   (provider: Provider) =>
   (req: Req, res: ArtsyResponse, next: NextFunction) => {
@@ -194,8 +229,10 @@ export const beforeSocialAuth =
 
     req.session.redirectTo = req.query["redirect-to"]
     req.session.skipOnboarding = req.query["skip-onboarding"]
+    req.session.contextModule = req.query["context-module"]
     req.session.sign_up_intent = req.query["signup-intent"]
     req.session.sign_up_referer = req.query["signup-referer"]
+    req.session.trigger = req.query["trigger"]
     // accepted_terms_of_service and agreed_to_receive_emails use underscores
     req.session.accepted_terms_of_service =
       req.query["accepted_terms_of_service"]
@@ -216,6 +253,12 @@ export const afterSocialAuth =
   (req: Req, res: ArtsyResponse, next: NextFunction) => {
     const isOneTap = provider === "google" && mode === "one-tap"
     const strategyName = isOneTap ? "google-one-tap" : provider
+
+    // One-tap has no beforeSocialAuth step to capture redirect-to, so fall back
+    // to the Referer header to return the user to the page they were on.
+    if (isOneTap && !req.session.redirectTo && req.headers?.referer) {
+      req.session.redirectTo = req.headers.referer
+    }
 
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
@@ -270,26 +313,25 @@ export const afterSocialAuth =
       }
 
       if (err?.message?.match("Unauthorized source IP address")) {
-        // Your IP address was blocked by the provider. Redirect back to login page.
-        return res.redirect(
-          redirectWithQuery(redirectPath, {
-            error_code: "IP_BLOCKED",
-            provider,
-          }),
-        )
+        return redirectSocialAuthError(req, res, {
+          isOneTap,
+          redirectPath,
+          errorCode: "IP_BLOCKED",
+          provider,
+        })
       }
 
       if (err != null) {
         const message = extractError(err)
 
         if (message.includes("missing two-factor authentication code")) {
-          return res.redirect(
-            redirectWithQuery(redirectPath, {
-              error: SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR,
-              error_code: "TWO_FACTOR_AUTHENTICATION_REQUIRED",
-              provider,
-            }),
-          )
+          return redirectSocialAuthError(req, res, {
+            isOneTap,
+            redirectPath,
+            errorCode: "TWO_FACTOR_AUTHENTICATION_REQUIRED",
+            provider,
+            errorMessage: SOCIAL_LOGIN_TWO_FACTOR_AUTH_ERROR,
+          })
         }
 
         if (
@@ -306,14 +348,15 @@ export const afterSocialAuth =
           )
         }
 
-        // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
+        // Unknown error. Do not show error message to user; log to console.
         console.warn(`Error authenticating with ${provider}: ${message}`)
-        return res.redirect(
-          redirectWithQuery(redirectPath, {
-            error: UNKNOWN_AUTH_ERROR,
-            error_code: "UNKNOWN",
-          }),
-        )
+        return redirectSocialAuthError(req, res, {
+          isOneTap,
+          redirectPath,
+          errorCode: "UNKNOWN",
+          provider,
+          errorMessage: UNKNOWN_AUTH_ERROR,
+        })
       }
 
       if (linkingAccount) {
