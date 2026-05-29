@@ -36,6 +36,7 @@ const setupPassport = () => {
           clientSecret: opts.FACEBOOK_SECRET,
           passReqToCallback: true,
           callbackURL: `${opts.APP_URL}${opts.facebookCallbackPath}`,
+          profileFields: ["id", "emails", "name", "displayName"],
         },
         facebook,
       ),
