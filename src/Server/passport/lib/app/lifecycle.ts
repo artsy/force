@@ -281,15 +281,23 @@ export const afterSocialAuth =
         req.socialProfileEmail
       ) {
         req.session.linkingToken = req.socialOAuthToken
+
+        const gravityProviders = (
+          (err.response.body.providers as string[] | undefined) ?? []
+        ).map((p: string) => p.toLowerCase())
+
+        if (
+          err.response.body.has_password === true &&
+          !gravityProviders.includes("email")
+        ) {
+          gravityProviders.unshift("email")
+        }
+
         return res.redirect(
           redirectWithQuery(redirectPath, {
             email: req.socialProfileEmail,
             error_code: "ALREADY_EXISTS",
-            existing_providers: (
-              (err.response.body.providers as string[] | undefined) ?? ["email"]
-            )
-              .map((p: string) => p.toLowerCase())
-              .join(","),
+            existing_providers: gravityProviders.join(",") || "email",
             provider,
           }),
         )
