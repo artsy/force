@@ -6,6 +6,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
+import { ExchangeErrorCodes } from "Apps/Order2/Utils/errors"
 import { useCallback } from "react"
 
 /**
@@ -43,6 +44,27 @@ export const useSelectDeliveryOption = () => {
         })
         return true
       } catch (error) {
+        if (error?.code === ExchangeErrorCodes.MISSING_POSTAL_CODE) {
+          // The address on the order has no postal code, so the user can't
+          // fix this from the Shipping Methods step. Surface the error in
+          // the Delivery Address section instead — the completed Fulfillment
+          // view renders the banner and outlines the offending address card.
+          setSectionErrorMessage({
+            section: CheckoutStepName.DELIVERY_OPTION,
+            error: null,
+          })
+          setSectionErrorMessage({
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Postal code is required",
+              message:
+                "Add a postal code to your address to proceed with the checkout.",
+              code: error.code as string,
+            },
+          })
+          return false
+        }
+
         setSectionErrorMessage({
           section: CheckoutStepName.DELIVERY_OPTION,
           error: bannerErrorForSelectDeliveryOption(error),
