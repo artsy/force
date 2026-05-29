@@ -702,9 +702,22 @@ describe("Order2PaymentForm", () => {
   })
 
   describe("payment method tracking", () => {
+    it("does not track on Stripe element's initial onChange (load event)", async () => {
+      renderPaymentForm()
+      await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedPaymentMethod,
+      ).not.toHaveBeenCalled()
+    })
+
     it("tracks payment method selection for credit card", async () => {
       renderPaymentForm()
       await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-sepa"))
 
       await userEvent.click(screen.getByTestId("mock-credit-card"))
 
@@ -720,6 +733,8 @@ describe("Order2PaymentForm", () => {
     it("tracks payment method selection for ACH", async () => {
       renderPaymentForm()
       await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
 
       await userEvent.click(screen.getByTestId("mock-ach"))
 
@@ -750,6 +765,8 @@ describe("Order2PaymentForm", () => {
     it("tracks payment method selection for SEPA", async () => {
       renderPaymentForm()
       await waitForPaymentElement()
+
+      await userEvent.click(screen.getByTestId("mock-credit-card"))
 
       await userEvent.click(screen.getByTestId("mock-sepa"))
 

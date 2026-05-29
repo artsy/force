@@ -459,7 +459,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   }
 
   const handleCardPaymentSelect = () => {
-    if (selectedPaymentMethod !== "stripe-card") {
+    if (
+      selectedPaymentMethod !== null &&
+      selectedPaymentMethod !== "stripe-card"
+    ) {
       trackPaymentMethodSelection("CREDIT_CARD")
     }
     unsetStepError()
@@ -470,7 +473,10 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     paymentType: "sepa_debit" | "us_bank_account",
     methodType: "stripe-sepa" | "stripe-ach",
   ) => {
-    if (selectedPaymentMethod !== methodType) {
+    if (
+      selectedPaymentMethod !== null &&
+      selectedPaymentMethod !== methodType
+    ) {
       const trackingMethod =
         paymentType === "sepa_debit" ? "SEPA_DEBIT" : "US_BANK_ACCOUNT"
       trackPaymentMethodSelection(trackingMethod)
