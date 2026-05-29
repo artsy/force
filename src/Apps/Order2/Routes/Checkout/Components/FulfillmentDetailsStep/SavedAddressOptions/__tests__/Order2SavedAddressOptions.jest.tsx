@@ -912,58 +912,51 @@ describe("SavedAddressOptions", () => {
   })
 
   describe("Missing postal code error", () => {
-    const missingPostalCodeError = {
-      title: "Missing postal code",
-      message: "Add a postal code to the selected address.",
-      code: "missing_postal_code",
-    }
-
-    const setFulfillmentDetailsError = (error: Record<string, unknown>) => {
+    // The banner copy itself is pinned by useSelectDeliveryOption's unit test.
+    // Here only the error code (which drives the gate) and the tracking flow
+    // are meaningful, so we don't assert on the rendered text.
+    const setFulfillmentDetailsError = (code: string) => {
       mockCheckoutContext.messages = {
-        [CheckoutStepName.FULFILLMENT_DETAILS]: { error },
+        [CheckoutStepName.FULFILLMENT_DETAILS]: {
+          error: { title: "Title", message: "Message", code },
+        },
       } as any
       // The real banner fires this on mount; the base mock omits it.
       mockCheckoutContext.checkoutTracking.errorMessageViewed = jest.fn()
     }
 
-    it("renders the relocated error banner above the address list", () => {
-      setFulfillmentDetailsError(missingPostalCodeError)
+    const queryErrorBanner = () =>
+      document.querySelector('[data-error-banner="true"]')
+
+    it("renders the relocated error banner for a missing_postal_code error", () => {
+      setFulfillmentDetailsError("missing_postal_code")
 
       renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
 
-      expect(screen.getByText("Missing postal code")).toBeInTheDocument()
-      expect(
-        screen.getByText("Add a postal code to the selected address."),
-      ).toBeInTheDocument()
+      expect(queryErrorBanner()).toBeInTheDocument()
     })
 
     it("tracks errorMessageViewed with the shipping-address flow", () => {
-      setFulfillmentDetailsError(missingPostalCodeError)
+      setFulfillmentDetailsError("missing_postal_code")
 
       renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
 
       expect(
         mockCheckoutContext.checkoutTracking.errorMessageViewed,
-      ).toHaveBeenCalledWith({
-        error_code: "missing_postal_code",
-        title: "Missing postal code",
-        message: "Add a postal code to the selected address.",
-        flow: "User setting shipping address",
-      })
+      ).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error_code: "missing_postal_code",
+          flow: "User setting shipping address",
+        }),
+      )
     })
 
-    it("does not render the banner when the error is not a missing postal code", () => {
-      setFulfillmentDetailsError({
-        title: "Something else went wrong",
-        message: "Unrelated error.",
-        code: "destination_could_not_be_geocoded",
-      })
+    it("does not render the banner for other error codes", () => {
+      setFulfillmentDetailsError("destination_could_not_be_geocoded")
 
       renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
 
-      expect(
-        screen.queryByText("Something else went wrong"),
-      ).not.toBeInTheDocument()
+      expect(queryErrorBanner()).not.toBeInTheDocument()
       expect(
         mockCheckoutContext.checkoutTracking.errorMessageViewed,
       ).not.toHaveBeenCalled()
