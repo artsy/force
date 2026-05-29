@@ -47,22 +47,25 @@ export const useSelectDeliveryOption = () => {
         if (error?.code === ("missing_postal_code" satisfies KnownErrorCodes)) {
           // The address on the order has no postal code, so the user can't
           // fix this from the Shipping Methods step. Surface the error in
-          // the Delivery Address section instead — the completed Fulfillment
-          // view renders the banner and outlines the offending address card.
+          // the Delivery Address section instead
           setSectionErrorMessage({
             section: CheckoutStepName.DELIVERY_OPTION,
             error: null,
           })
           setSectionErrorMessage({
             section: CheckoutStepName.FULFILLMENT_DETAILS,
-            error: bannerErrorForSelectDeliveryOption(error),
+            error: {
+              title: "Missing postal code",
+              message: "Add a postal code to the selected address.",
+              code: error.code as string,
+            },
           })
           return false
         }
 
         setSectionErrorMessage({
           section: CheckoutStepName.DELIVERY_OPTION,
-          error: bannerErrorForSelectDeliveryOption(error),
+          error: fallbackError("selecting your shipping method", error?.code),
         })
         return false
       }
@@ -71,24 +74,4 @@ export const useSelectDeliveryOption = () => {
   )
 
   return { selectDeliveryOption }
-}
-
-/**
- * Maps an error caught from `setOrderFulfillmentOption` to a section banner.
- * Add a new `case` for any error code that warrants a tailored message;
- * unknown codes fall through to the generic "something went wrong" banner.
- */
-const bannerErrorForSelectDeliveryOption = (
-  error: { code?: string } | null | undefined,
-): CheckoutErrorBannerMessage => {
-  switch (error?.code) {
-    case "missing_postal_code":
-      return {
-        title: "Missing postal code",
-        message: "Add a postal code to the selected address.",
-        code: error.code,
-      }
-    default:
-      return fallbackError("selecting your shipping method", error?.code)
-  }
 }
