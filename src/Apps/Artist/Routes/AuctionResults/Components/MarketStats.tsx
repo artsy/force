@@ -329,6 +329,7 @@ export const MarketStatsQueryRenderer: FC<
       `}
       render={({ props, error }) => {
         if (error) {
+          handleReady()
           onRender(false)
           console.error(error)
           return null

@@ -660,6 +660,7 @@ export const ArtistAuctionResultsQueryRenderer: React.FC<
       }}
       render={({ error, props }) => {
         if (error) {
+          handleReady()
           console.error(
             "[ArtistAuctionResults]: Error loading auction results",
             error,

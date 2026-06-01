@@ -239,6 +239,7 @@ export const ArtistArtworkFilterQueryRenderer: FC<
       placeholder={<ArtworkFilterPlaceholder showCreateAlert />}
       render={({ error, props }) => {
         if (error) {
+          handleReady()
           console.error(
             "[ArtistArtworkFilter]: Error loading artwork grid",
             error,
