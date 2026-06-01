@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Join, Spacer, Text } from "@artsy/palette"
 import type { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
 import { useAuctionFormContext } from "Apps/Auction/Hooks/useAuctionFormContext"
@@ -42,7 +43,10 @@ export const AddressFormWithCreditCard: React.FC<
         required
       />
 
-      <AddressFormFields<AuctionFormValues> withLegacyPhoneInput />
+      <AddressFormFields<AuctionFormValues>
+        contextModule={ContextModule.auctionRegistration}
+        withLegacyPhoneInput
+      />
     </Join>
   )
 }

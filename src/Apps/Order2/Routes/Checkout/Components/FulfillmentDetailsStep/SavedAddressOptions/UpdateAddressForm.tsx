@@ -321,6 +321,7 @@ const UpdateAddressFormFields: React.FC<UpdateAddressFormFieldsProps> = ({
   return (
     <div ref={formRef}>
       <AddressFormFields
+        contextModule={ContextModule.ordersFulfillment}
         withPhoneNumber
         withSetAsDefault={!address.isDefault}
       />

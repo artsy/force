@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Button } from "@artsy/palette"
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
@@ -35,7 +36,7 @@ describe("AddressFormFields", () => {
         >
           {formikBag => (
             <>
-              <AddressFormFields />
+              <AddressFormFields contextModule={ContextModule.ordersShipping} />
               <Button type="submit" onClick={() => formikBag.handleSubmit()}>
                 Submit
               </Button>
@@ -116,7 +117,10 @@ describe("AddressFormFields", () => {
         >
           {formikBag => (
             <>
-              <AddressFormFields withPhoneNumber />
+              <AddressFormFields
+                contextModule={ContextModule.ordersShipping}
+                withPhoneNumber
+              />
               <Button type="submit" onClick={() => formikBag.handleSubmit()}>
                 Submit
               </Button>
@@ -171,7 +175,10 @@ describe("AddressFormFields", () => {
         >
           {formikBag => (
             <>
-              <AddressFormFields withLegacyPhoneInput />
+              <AddressFormFields
+                contextModule={ContextModule.ordersShipping}
+                withLegacyPhoneInput
+              />
               <Button type="submit" onClick={() => formikBag.handleSubmit()}>
                 Submit
               </Button>

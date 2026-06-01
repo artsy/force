@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Join, Spacer } from "@artsy/palette"
 import { useFormContext } from "Apps/Invoice/Hooks/useFormContext"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
@@ -38,7 +39,13 @@ export const AddressFormWithCreditCard: React.FC<
         required
       />
 
-      <AddressFormFields<AddressFormValues> />
+      {/* TODO: switch to a dedicated `invoice` ContextModule once one is
+          added to @artsy/cohesion. Keeping `auctionRegistration` preserves
+          the existing (incorrect) analytics value until then so we don't
+          churn the dimension twice. */}
+      <AddressFormFields<AddressFormValues>
+        contextModule={ContextModule.auctionRegistration}
+      />
     </Join>
   )
 }
