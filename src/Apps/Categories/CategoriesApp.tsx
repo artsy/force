@@ -20,7 +20,10 @@ const CategoriesApp: React.FC<React.PropsWithChildren<CategoriesAppProps>> = ({
 
   return (
     <>
-      <MetaTags pathname="categories" />
+      <MetaTags
+        pathname="categories"
+        title="Browse and Shop Art by Category | Artsy"
+      />
 
       <Spacer y={[2, 4]} />
 
