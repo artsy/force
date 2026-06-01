@@ -8,7 +8,7 @@ export interface PassportOptions {
   APP_URL?: string
   APPLE_CLIENT_ID?: string
   APPLE_KEY_ID?: string
-  APPLE_PRIVATE_KEY?: string
+  APPLE_PRIVATE_KEY_BASE64?: string
   APPLE_TEAM_ID?: string
   ARTSY_ID?: string
   ARTSY_SECRET?: string

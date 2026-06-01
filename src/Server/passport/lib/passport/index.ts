@@ -74,7 +74,7 @@ const setupPassport = () => {
     opts.APPLE_CLIENT_ID &&
     opts.APPLE_TEAM_ID &&
     opts.APPLE_KEY_ID &&
-    opts.APPLE_PRIVATE_KEY
+    opts.APPLE_PRIVATE_KEY_BASE64
   ) {
     passport.use(
       new AppleStrategy(
@@ -82,7 +82,10 @@ const setupPassport = () => {
           clientID: opts.APPLE_CLIENT_ID,
           teamID: opts.APPLE_TEAM_ID,
           keyID: opts.APPLE_KEY_ID,
-          privateKeyString: opts.APPLE_PRIVATE_KEY,
+          privateKeyString: Buffer.from(
+            opts.APPLE_PRIVATE_KEY_BASE64,
+            "base64",
+          ).toString("utf8"),
           passReqToCallback: true,
           callbackURL: `${opts.APP_URL}${opts.appleCallbackPath}`,
           scope: ["name", "email"],

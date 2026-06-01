@@ -104,7 +104,8 @@ describe("passport setup", () => {
     } = loadSetup({
       APPLE_CLIENT_ID: "apple-client-id",
       APPLE_KEY_ID: "apple-key-id",
-      APPLE_PRIVATE_KEY: "apple-private-key", // pragma: allowlist secret
+      APPLE_PRIVATE_KEY_BASE64:
+        Buffer.from("apple-private-key").toString("base64"), // pragma: allowlist secret
       APPLE_TEAM_ID: "apple-team-id",
       FACEBOOK_ID: "facebook-id",
       FACEBOOK_SECRET: "facebook-secret",
