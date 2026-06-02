@@ -82,6 +82,26 @@ const reducer = <TSectionKey extends string>(
   }
 }
 
+/**
+ * Default timeout (ms) applied to {@link UseSectionReadinessReturn.waitFor} and
+ * {@link UseSectionReadinessReturn.waitUntil}. Prevents a section whose
+ * `onReady` callback never fires (e.g. a query that errors out or never
+ * resolves) from blocking navigation and loading UI indefinitely.
+ */
+export const DEFAULT_SECTION_READINESS_TIMEOUT_MS = 8000
+
+type WaitOptions = {
+  /**
+   * Maximum time (in ms) to wait for the section(s) to become ready before
+   * giving up and resolving anyway. When a wait times out, the affected
+   * section is force-marked as ready so subsequent waits don't re-hang.
+   *
+   * Defaults to {@link DEFAULT_SECTION_READINESS_TIMEOUT_MS}. Pass `0` or a
+   * negative number to disable the timeout (not recommended in production).
+   */
+  timeoutMs?: number
+}
+
 type UseSectionReadinessReturn<TSectionKey extends string> = {
   /** Maps each section key to whether it should be lazily loaded (true) or eagerly loaded (false) */
   lazy: SectionMap<TSectionKey, boolean>
@@ -91,14 +111,14 @@ type UseSectionReadinessReturn<TSectionKey extends string> = {
   navigating: SectionMap<TSectionKey, boolean>
   /** Callback function to mark a section as ready. Call this when a section finishes loading. */
   markReady: (key: TSectionKey) => void
-  /** Wait for one or more sections to become ready. Returns a promise that resolves when all specified sections are ready. */
-  waitFor: (keys: TSectionKey[]) => Promise<void>
+  /** Wait for one or more sections to become ready. Returns a promise that resolves when all specified sections are ready, or when the timeout elapses. */
+  waitFor: (keys: TSectionKey[], options?: WaitOptions) => Promise<void>
   /** Get all section keys that come before the target section in the order */
   priorTo: (target: TSectionKey) => TSectionKey[]
   /** Wait for all sections up to (and optionally including) a target section to be ready. This will trigger eager loading of those sections. */
   waitUntil: (
     target: TSectionKey,
-    options?: { includeTarget?: boolean },
+    options?: WaitOptions & { includeTarget?: boolean },
   ) => Promise<void>
   /** The original ordered array of section keys */
   order: TSectionKey[]
@@ -139,18 +159,43 @@ export const useSectionReadiness = <TSectionKey extends string>(
   )
 
   const waitFor = useCallback(
-    async (keys: TSectionKey[]) => {
+    async (keys: TSectionKey[], options?: WaitOptions) => {
+      const timeoutMs =
+        options?.timeoutMs ?? DEFAULT_SECTION_READINESS_TIMEOUT_MS
+
       await Promise.all(
         keys.map(key => {
           return new Promise<void>(resolve => {
             if (mode[key] === "Ready") return resolve()
 
-            waitersRef.current[key].push(resolve)
+            let settled = false
+            let timer: ReturnType<typeof setTimeout> | null = null
+
+            const settle = () => {
+              if (settled) return
+              settled = true
+              if (timer !== null) clearTimeout(timer)
+              resolve()
+            }
+
+            if (timeoutMs > 0) {
+              timer = setTimeout(() => {
+                console.warn(
+                  `[useSectionReadiness] Section "${String(
+                    key,
+                  )}" did not become ready within ${timeoutMs}ms; resolving to avoid an indefinite hang.`,
+                )
+                markReady(key)
+                settle()
+              }, timeoutMs)
+            }
+
+            waitersRef.current[key].push(settle)
           })
         }),
       )
     },
-    [mode],
+    [mode, markReady],
   )
 
   const priorTo = useCallback(
@@ -163,7 +208,10 @@ export const useSectionReadiness = <TSectionKey extends string>(
   }, [])
 
   const waitUntil = useCallback(
-    async (target: TSectionKey, options?: { includeTarget?: boolean }) => {
+    async (
+      target: TSectionKey,
+      options?: WaitOptions & { includeTarget?: boolean },
+    ) => {
       const index = orderedKeys.indexOf(target)
       const end = index + (options?.includeTarget ? 1 : 0)
       const keys = orderedKeys.slice(0, Math.max(0, end))
@@ -174,7 +222,7 @@ export const useSectionReadiness = <TSectionKey extends string>(
       eagerLoad(keys)
 
       try {
-        await waitFor(keys)
+        await waitFor(keys, { timeoutMs: options?.timeoutMs })
       } finally {
         dispatch({ type: "END_NAVIGATION" })
       }
