@@ -39,12 +39,8 @@ export const AddressFormWithCreditCard: React.FC<
         required
       />
 
-      {/* TODO: switch to a dedicated `invoice` ContextModule once one is
-          added to @artsy/cohesion. Keeping `auctionRegistration` preserves
-          the existing (incorrect) analytics value until then so we don't
-          churn the dimension twice. */}
       <AddressFormFields<AddressFormValues>
-        contextModule={ContextModule.auctionRegistration}
+        contextModule={ContextModule.invoice}
       />
     </Join>
   )
