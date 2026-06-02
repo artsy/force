@@ -414,6 +414,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 availableShippingCountries={
                   orderData.availableShippingCountries
                 }
+                shippingOriginRegion={
+                  orderData.lineItems?.[0]?.artwork?.shippingOriginRegion
+                }
                 onSelectAddress={async values => {
                   await setValues(values)
                   await submitForm()
@@ -528,6 +531,11 @@ const ORDER_FRAGMENT = graphql`
         originalNumber
         regionCode
         countryCode
+      }
+    }
+    lineItems {
+      artwork {
+        shippingOriginRegion
       }
     }
   }
