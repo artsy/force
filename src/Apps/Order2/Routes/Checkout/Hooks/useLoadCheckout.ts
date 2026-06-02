@@ -128,17 +128,39 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     loadingErrorRef.current = checkoutModalError
   }, [checkoutModalError])
 
+  // Mirror the loading-gate flags into a ref so the one-shot timeout below
+  // can read their *current* values when it fires. Without this, the timeout
+  // closure captures the values at mount (all false), making the Sentry log
+  // useless for diagnosing which flag was actually stuck.
+  const flagsRef = useRef({
+    minimumLoadingPassed,
+    orderValidated,
+    isExpressCheckoutLoaded,
+    isStripeRedirectHandled,
+    isInitialAutoSaveComplete,
+  })
+  useEffect(() => {
+    flagsRef.current = {
+      minimumLoadingPassed,
+      orderValidated,
+      isExpressCheckoutLoaded,
+      isStripeRedirectHandled,
+      isInitialAutoSaveComplete,
+    }
+  }, [
+    minimumLoadingPassed,
+    orderValidated,
+    isExpressCheckoutLoaded,
+    isStripeRedirectHandled,
+    isInitialAutoSaveComplete,
+  ])
+
   // Set timeout for maximum loading duration
   // biome-ignore lint/correctness/useExhaustiveDependencies: 1-time effect
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (isLoadingRef.current && !loadingErrorRef.current) {
-        const loadingState = Object.entries({
-          minimumLoadingPassed,
-          orderValidated,
-          isExpressCheckoutLoaded,
-          isStripeRedirectHandled,
-        })
+        const loadingState = Object.entries(flagsRef.current)
           .map(([key, value]) => `${key}: ${value}`)
           .join(", ")
 
