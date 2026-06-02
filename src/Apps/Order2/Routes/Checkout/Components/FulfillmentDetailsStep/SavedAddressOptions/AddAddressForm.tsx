@@ -139,7 +139,11 @@ const AddAddressFormFields: React.FC = () => {
 
   return (
     <div ref={formRef}>
-      <AddressFormFields withPhoneNumber withSetAsDefault />
+      <AddressFormFields
+        contextModule={ContextModule.ordersFulfillment}
+        withPhoneNumber
+        withSetAsDefault
+      />
     </div>
   )
 }

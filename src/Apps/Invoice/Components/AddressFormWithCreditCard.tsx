@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Join, Spacer } from "@artsy/palette"
 import { useFormContext } from "Apps/Invoice/Hooks/useFormContext"
 import { AddressFormFields } from "Components/Address/AddressFormFields"
@@ -38,7 +39,9 @@ export const AddressFormWithCreditCard: React.FC<
         required
       />
 
-      <AddressFormFields<AddressFormValues> />
+      <AddressFormFields<AddressFormValues>
+        contextModule={ContextModule.invoice}
+      />
     </Join>
   )
 }

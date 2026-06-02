@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import type { ContextModule } from "@artsy/cohesion"
 import {
   Checkbox,
   Column,
@@ -34,6 +34,9 @@ export interface FormikContextWithAddress {
 type CountryData = (typeof countryPhoneOptions)[number]
 
 interface Props {
+  /** Cohesion ContextModule for the surface hosting this form. Used as the
+   * `context_module` on address-autocomplete analytics events. */
+  contextModule: ContextModule
   /** Whether to include rich phone number input */
   withPhoneNumber?: boolean
   /* @deprecated - legacy plain-text phone input */
@@ -65,7 +68,9 @@ interface Props {
  *   <AddressFormFields<AddressFormValues> withLegacyPhoneInput />
  * ```
  */
-export const addressFormFieldsValidator = (args: Props = {}) => ({
+export const addressFormFieldsValidator = (
+  args: Pick<Props, "withLegacyPhoneInput" | "withPhoneNumber"> = {},
+) => ({
   address: yupAddressValidator,
   ...(args.withLegacyPhoneInput && basicPhoneValidator),
   ...(args.withPhoneNumber && richRequiredPhoneValidators),
@@ -126,7 +131,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
   const autocompleteTrackingValues = {
-    contextModule: ContextModule.auctionRegistration,
+    contextModule: props.contextModule,
     contextOwnerType: contextPageOwnerType,
     contextPageOwnerId: contextPageOwnerId || "",
   }

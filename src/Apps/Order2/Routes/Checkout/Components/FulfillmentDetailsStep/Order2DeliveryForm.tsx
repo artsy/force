@@ -461,6 +461,7 @@ const DeliveryFormFields: React.FC<DeliveryFormFieldsProps> = ({
   return (
     <div ref={formRef}>
       <AddressFormFields
+        contextModule={ContextModule.ordersFulfillment}
         withPhoneNumber
         syncPhoneCountryCode
         shippableCountries={shippableCountries as any}

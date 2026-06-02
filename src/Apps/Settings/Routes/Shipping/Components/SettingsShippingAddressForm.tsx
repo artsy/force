@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -199,6 +200,7 @@ export const SettingsShippingAddressForm: FC<
           >
             <Form>
               <AddressFormFields
+                contextModule={ContextModule.accountSettings}
                 withPhoneNumber
                 withSetAsDefault={!address?.isDefault}
               />
