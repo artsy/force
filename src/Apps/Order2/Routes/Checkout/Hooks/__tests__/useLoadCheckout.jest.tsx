@@ -231,6 +231,54 @@ describe("useLoadCheckout", () => {
       )
     })
 
+    it("logs the current loading-gate flags when the timeout fires, not their initial values", async () => {
+      // Simulate the common failure path:
+      //   - minimumLoadingPassed has flipped to true via the 1s timer
+      //   - The Stripe redirect handler has called its callback
+      //   - The order validated synchronously
+      //   - isInitialAutoSaveComplete is true (no autosave needed for this user)
+      //   - expressCheckoutPaymentMethods is still null (Express Checkout never resolved)
+      // The Sentry log should reflect this exact shape so we can diagnose
+      // which flag was actually stuck, instead of always reporting all-false.
+      useCheckoutContext.mockReturnValue({
+        isLoading: true,
+        expressCheckoutPaymentMethods: null,
+        steps: [],
+        setLoadingComplete: mockSetLoadingComplete,
+        isInitialAutoSaveComplete: true,
+      })
+
+      renderHook(() => useLoadCheckout(mockOrder))
+
+      // Pass the minimum-loading gate.
+      act(() => {
+        jest.advanceTimersByTime(MIN_LOADING_MS)
+      })
+
+      // Stripe redirect handler resolves.
+      act(() => {
+        mockStripeCallback?.()
+      })
+
+      // Advance past the 8s deadline; Express Checkout never loaded.
+      act(() => {
+        jest.advanceTimersByTime(MAX_LOADING_MS - MIN_LOADING_MS)
+      })
+
+      await waitFor(() => {
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: "loading_timeout",
+        })
+      })
+
+      const errorMessage = mockLogger.error.mock.calls[0][0].message
+      expect(errorMessage).toContain("minimumLoadingPassed: true")
+      expect(errorMessage).toContain("orderValidated: true")
+      expect(errorMessage).toContain("isExpressCheckoutLoaded: false")
+      expect(errorMessage).toContain("isStripeRedirectHandled: true")
+      expect(errorMessage).toContain("isInitialAutoSaveComplete: true")
+    })
+
     it("does not set timeout error if loading completes before MAX_LOADING_MS", async () => {
       let isLoading = true
       useCheckoutContext.mockImplementation(() => ({
