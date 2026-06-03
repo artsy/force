@@ -19455,6 +19455,11 @@ type Mutation {
     input: UpdateCatalogArtworkInput!
   ): UpdateCatalogArtworkPayload
 
+  # Updates a catalog edition set. Requires partner or partner support permissions.
+  updateCatalogEditionSet(
+    input: UpdateCatalogEditionSetInput!
+  ): UpdateCatalogEditionSetPayload
+
   # Update a collection
   updateCollection(input: updateCollectionInput!): updateCollectionPayload
 
@@ -27717,6 +27722,35 @@ union UpdateCatalogArtworkResponseOrError =
 
 type UpdateCatalogArtworkSuccess {
   catalogArtwork: CatalogArtwork
+}
+
+type UpdateCatalogEditionSetFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCatalogEditionSetInput {
+  # Availability of the edition set.
+  availability: String
+  clientMutationId: String
+
+  # The ID of the edition set.
+  editionSetID: String!
+
+  # Price in minor currency units (e.g., cents).
+  priceMinor: Int
+}
+
+type UpdateCatalogEditionSetPayload {
+  catalogEditionSetOrError: UpdateCatalogEditionSetResponseOrError
+  clientMutationId: String
+}
+
+union UpdateCatalogEditionSetResponseOrError =
+  | UpdateCatalogEditionSetFailure
+  | UpdateCatalogEditionSetSuccess
+
+type UpdateCatalogEditionSetSuccess {
+  catalogEditionSet: CatalogEditionSet
 }
 
 type UpdateCollectionFailure {
