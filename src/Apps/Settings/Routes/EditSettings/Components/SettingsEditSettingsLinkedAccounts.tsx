@@ -1,7 +1,7 @@
 import AppleIcon from "@artsy/icons/AppleIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import GoogleIcon from "@artsy/icons/GoogleIcon"
-import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
+import { Button, Join, Message, Spacer, Text, useToasts } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
 import { useMode } from "Utils/Hooks/useMode"
 import { getENV } from "Utils/getENV"
@@ -54,11 +54,20 @@ export const SettingsEditSettingsLinkedAccounts: FC<
       </Text>
 
       <Join separator={<Spacer y={2} />}>
+        {me.hasSecondFactorEnabled && (
+          <Message variant="info">
+            Linked accounts are unavailable while two-factor authentication is
+            enabled. Disable two-factor authentication to manage your linked
+            accounts.
+          </Message>
+        )}
+
         <SettingsEditSettingsLinkedAccountsButton
           me={me}
           provider="FACEBOOK"
           href={authenticationPaths?.facebookPath}
           Icon={FacebookIcon}
+          disabled={me.hasSecondFactorEnabled}
         />
 
         <SettingsEditSettingsLinkedAccountsButton
@@ -66,6 +75,7 @@ export const SettingsEditSettingsLinkedAccounts: FC<
           provider="APPLE"
           href={authenticationPaths?.applePath}
           Icon={AppleIcon}
+          disabled={me.hasSecondFactorEnabled}
         />
 
         <SettingsEditSettingsLinkedAccountsButton
@@ -73,6 +83,7 @@ export const SettingsEditSettingsLinkedAccounts: FC<
           provider="GOOGLE"
           href={authenticationPaths?.googlePath}
           Icon={GoogleIcon}
+          disabled={me.hasSecondFactorEnabled}
         />
       </Join>
     </>
@@ -83,6 +94,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer =
   createFragmentContainer(SettingsEditSettingsLinkedAccounts, {
     me: graphql`
       fragment SettingsEditSettingsLinkedAccounts_me on Me {
+        hasSecondFactorEnabled
         authentications {
           provider
         }
@@ -95,13 +107,14 @@ interface SettingsEditSettingsLinkedAccountsButtonProps {
   me: SettingsEditSettingsLinkedAccounts_me$data
   href?: string
   provider: AuthenticationProvider
+  disabled?: boolean
 }
 
 type Mode = "Disconnected" | "Connecting" | "Connected" | "Disconnecting"
 
 const SettingsEditSettingsLinkedAccountsButton: FC<
   React.PropsWithChildren<SettingsEditSettingsLinkedAccountsButtonProps>
-> = ({ Icon, me, href, provider }) => {
+> = ({ Icon, me, href, provider, disabled }) => {
   const isConnected = me.authentications.find(
     authentication => authentication.provider === provider,
   )
@@ -158,8 +171,9 @@ const SettingsEditSettingsLinkedAccountsButton: FC<
   return (
     <Button
       onClick={handleClick}
+      disabled={disabled}
       loading={mode === "Connecting" || mode === "Disconnecting"}
-      {...(mode === "Connected"
+      {...(mode === "Connected" || disabled
         ? { variant: "secondaryBlack" }
         : {
             variant: "primaryBlack",

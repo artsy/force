@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9f8abfbb58660d8fa2bf03ea031b235>>
+ * @generated SignedSource<<11b86879403f0bfd337ad495b36b35ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -73,6 +73,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "hasSecondFactorEnabled",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AuthenticationType",
             "kind": "LinkedField",
             "name": "authentications",
@@ -96,12 +103,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80873362a12b6f0256e1534d3b35f5d2",
+    "cacheID": "e533c0c3c4c29315de10523831031490",
     "id": null,
     "metadata": {},
     "name": "SettingsEditSettingsLinkedAccounts_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsLinkedAccounts_Test_Query {\n  me {\n    ...SettingsEditSettingsLinkedAccounts_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n"
+    "text": "query SettingsEditSettingsLinkedAccounts_Test_Query {\n  me {\n    ...SettingsEditSettingsLinkedAccounts_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  hasSecondFactorEnabled\n  authentications {\n    provider\n    id\n  }\n}\n"
   }
 };
 })();
