@@ -31,15 +31,27 @@ import type { Order2CheckoutContext_order$data } from "__generated__/Order2Check
 import { useCallback, useEffect, useRef, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
-  unableToShipToAddress: {
-    title: "Unable to ship to this address",
-    message: "Select a different address or add a new one to continue.",
-  },
   missingAddressInfo: {
     title: "Missing required information",
     message: "Edit your address and/or phone number to continue.",
   },
 } satisfies Record<string, CheckoutErrorBannerMessage>
+
+const getUnableToShipMessage = (
+  region: string | null,
+  isBuyNow: boolean,
+): CheckoutErrorBannerMessage => {
+  if (region && isBuyNow) {
+    return {
+      title: `Ships within ${region} only`,
+      message: "Try a different address or contact the gallery for help.",
+    }
+  }
+  return {
+    title: "Unable to ship to this address",
+    message: "Select a different address or add a new one to continue.",
+  }
+}
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -49,6 +61,7 @@ interface SavedAddressOptionsProps {
   onSelectInvalidAddress: () => Promise<void> | void
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
+  shippingOriginRegion?: string | null
 }
 export const SavedAddressOptions = ({
   savedAddresses,
@@ -58,6 +71,7 @@ export const SavedAddressOptions = ({
   onSelectInvalidAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
+  shippingOriginRegion,
 }: SavedAddressOptionsProps) => {
   const {
     setUserAddressMode,
@@ -166,7 +180,10 @@ export const SavedAddressOptions = ({
     if (!selectedAddress.isShippable && !isOfferOrder) {
       setSectionErrorMessage({
         section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
+        error: getUnableToShipMessage(
+          shippingOriginRegion ?? null,
+          !isOfferOrder,
+        ),
       })
       return
     }
@@ -183,7 +200,13 @@ export const SavedAddressOptions = ({
       section: CheckoutStepName.FULFILLMENT_DETAILS,
       error: null,
     })
-  }, [selectedAddress, userAddressMode, isOfferOrder, setSectionErrorMessage])
+  }, [
+    selectedAddress,
+    userAddressMode,
+    isOfferOrder,
+    setSectionErrorMessage,
+    shippingOriginRegion,
+  ])
 
   const onSaveAddress = useCallback(
     async (values: FormikContextWithAddress, addressID: string) => {

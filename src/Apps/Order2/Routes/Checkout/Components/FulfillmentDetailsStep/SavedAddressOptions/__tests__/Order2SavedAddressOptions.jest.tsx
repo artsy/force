@@ -393,6 +393,39 @@ describe("SavedAddressOptions", () => {
       expect(onSelectAddress).not.toHaveBeenCalled()
     })
 
+    it("displays region-specific error banner when selecting unshippable address in BUY mode with shippingOriginRegion", async () => {
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "BUY" },
+      })
+
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockUnshippableAddress],
+        shippingOriginRegion: "Continental US",
+      })
+
+      const unshippableAddress = screen.getByRole("radio", {
+        name: /Unshippable Address/i,
+      })
+      await userEvent.click(unshippableAddress)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Ships within Continental US only",
+              message:
+                "Try a different address or contact the gallery for help.",
+            },
+          },
+        )
+      })
+
+      expect(onSelectInvalidAddress).toHaveBeenCalled()
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
     it("does not display error banner when selecting an unshippable address in OFFER mode", async () => {
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
