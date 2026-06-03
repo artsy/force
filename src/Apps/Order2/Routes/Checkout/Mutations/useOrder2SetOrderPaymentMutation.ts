@@ -18,6 +18,7 @@ export const useOrder2SetOrderPaymentMutation = () => {
             ... on OrderMutationError {
               mutationError {
                 message
+                code
               }
             }
           }

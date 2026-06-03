@@ -12,7 +12,10 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerMessage,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
@@ -21,6 +24,7 @@ import {
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useFulfillmentDetailsError } from "Apps/Order2/Routes/Checkout/Hooks/useFulfillmentDetailsError"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
@@ -65,6 +69,12 @@ export const SavedAddressOptions = ({
     steps,
     orderData,
   } = useCheckoutContext()
+
+  const {
+    error: fulfillmentDetailsError,
+    isMissingPostalCode: hasMissingPostalCodeError,
+  } = useFulfillmentDetailsError()
+
   const { scrollToStep } = useScrollToStep()
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
@@ -300,6 +310,16 @@ export const SavedAddressOptions = ({
     <Flex flexDirection="column">
       <SectionHeading>Delivery address</SectionHeading>
 
+      {hasMissingPostalCodeError && fulfillmentDetailsError && (
+        <>
+          <Spacer y={1} />
+          <CheckoutErrorBanner
+            error={fulfillmentDetailsError}
+            analytics={{ flow: "User setting shipping address" }}
+          />
+        </>
+      )}
+
       <Spacer y={2} />
 
       <Flex flexDirection="column">
@@ -307,6 +327,7 @@ export const SavedAddressOptions = ({
           const { address, internalID, phoneNumberParsed } = processedAddress
           const isSelected = selectedAddress?.internalID === internalID
           const textColor = isSelected ? "mono100" : "mono60"
+          const showErrorOutline = isSelected && hasMissingPostalCodeError
 
           return (
             <Flex
@@ -314,12 +335,15 @@ export const SavedAddressOptions = ({
               alignItems="flex-start"
               backgroundColor={isSelected ? "mono5" : "mono0"}
               p={1}
+              border={showErrorOutline ? "1px solid" : undefined}
+              borderColor={showErrorOutline ? "red100" : undefined}
             >
               <Radio
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
                 disabled={isFulfillmentDetailsSaving && !isSelected}
+                error={showErrorOutline}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }

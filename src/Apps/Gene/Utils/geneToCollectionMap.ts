@@ -17,12 +17,14 @@ export const geneToCollectionMap: Record<string, string> = {
   // Subjective subject-matter categories requiring editorial selection
   "celebrity-photography": "celebrity-photography",
   "popular-culture": "popular-culture",
-  "skyscapes": "skyscapes",
+  skyscapes: "skyscapes",
   "women-artists": "women-artists",
   // Curated/editorially-defined collections
-  "curators-picks-unique-works-under-25k": "curators-picks-unique-works-under-25k",
+  "curators-picks-unique-works-under-25k":
+    "curators-picks-unique-works-under-25k",
   "furniture-wood-and-lacquer-at-collect-2022": "furniture-collect-22",
-  "promises-young-galleries-and-emerging-artists-from-art-paris-2022": "promises-art-paris-2022",
+  "promises-young-galleries-and-emerging-artists-from-art-paris-2022":
+    "promises-art-paris-2022",
   "under-the-same-sun": "under-the-same-sun-bhm-2022",
   "year-of-the-tiger-2022": "year-of-the-tiger-cny-2022",
   "jewellery-metalwork-and-minerals-at-collect-2022": "jewellery-collect-22",
@@ -41,6 +43,6 @@ export const geneToCollectionMap: Record<string, string> = {
   "street-art-now-1": "street-art-highlights",
   "the-collectibles-shop": "the-collectibles-shop",
   "trending-this-week": "trending-this-week",
-  "trove": "curators-picks-emerging",
+  trove: "curators-picks-emerging",
   "women-artists-now": "women-artists-to-watch",
 }
