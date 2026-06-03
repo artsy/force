@@ -12,6 +12,10 @@ jest.mock("Server/passport/lib/options", () => ({
   ARTSY_URL: "https://api.artsy.net",
 }))
 
+jest.mock("System/FeatureFlags/unleashServer", () => ({
+  isFeatureFlagEnabled: jest.fn().mockReturnValue(true),
+}))
+
 jest.mock("../../http")
 jest.mock("passport", () => {
   return {

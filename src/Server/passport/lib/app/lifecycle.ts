@@ -14,6 +14,7 @@ import type { NextFunction } from "express"
 import { get, isFunction, isString } from "lodash"
 import passport from "passport"
 import { type GravityError, requestGravity } from "../http"
+import { isFeatureFlagEnabled } from "System/FeatureFlags/unleashServer"
 import type { LinkingTokenData } from "../types"
 import forwardedFor from "./forwarded_for"
 import redirectBack from "./redirectBack"
@@ -277,6 +278,7 @@ export const afterSocialAuth =
       }
 
       if (
+        isFeatureFlagEnabled("diamond_inline-account-linking") &&
         err?.response?.body?.error === "User Already Exists" &&
         req.socialProfileEmail
       ) {
