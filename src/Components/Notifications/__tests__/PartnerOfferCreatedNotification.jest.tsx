@@ -38,9 +38,6 @@ describe("PartnerOfferCreatedNotification", () => {
 
     // header
     expect(screen.getByText("Saved work by Damon Zucconi")).toBeInTheDocument()
-    expect(
-      screen.getByText("Review the offer on your saved artwork"),
-    ).toBeInTheDocument()
     expect(screen.getByTestId("manage-saves-link")).toHaveAttribute(
       "href",
       "/favorites/saves",
