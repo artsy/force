@@ -227,6 +227,22 @@ describe("passport callbacks", () => {
     expect(sendArgs.id_token).toEqual("id-token")
   })
 
+  it("sets socialProfileEmail from apple decodedIdToken", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    const decodedIdToken = { email: "user@example.com", sub: "some-apple-uid" }
+    cbs.apple(
+      req,
+      "id-token",
+      decodedIdToken,
+      "access_token",
+      "refresh-token",
+      jest.fn(),
+    )
+    expect(req.socialProfileEmail).toEqual("user@example.com")
+  })
+
   it("links a facebook account to the current user", async () => {
     req.get.mockReturnValue("chrome-foo")
     req.user = { accessToken: "current-user-token", id: "user-id" }

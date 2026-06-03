@@ -278,6 +278,9 @@ export const apple = (
     email: decodedIdToken.email,
     name: displayName,
   } satisfies LinkingTokenData
+  if (decodedIdToken.email) {
+    req.socialProfileEmail = decodedIdToken.email
+  }
   // Link Apple account
   if (req.user) {
     return requestGravity({
