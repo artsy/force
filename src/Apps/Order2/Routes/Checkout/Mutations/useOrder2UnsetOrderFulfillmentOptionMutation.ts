@@ -21,6 +21,7 @@ export const useOrder2UnsetOrderFulfillmentOptionMutation = () => {
             ... on OrderMutationError {
               mutationError {
                 message
+                code
               }
             }
           }

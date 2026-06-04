@@ -20,6 +20,7 @@ import {
   cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
+  retryMiddleware,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
 import { Environment, type INetwork, RecordSource, Store } from "relay-runtime"
@@ -142,6 +143,21 @@ export function createRelaySSREnvironment(config: Config = {}) {
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),
+    // Keep retries closest to fetch so cache/SSR/error middlewares only see the final response.
+    // SSR gets a tighter budget because it shares the request timeout with route matching and rendering.
+    retryMiddleware({
+      fetchTimeout: isServer ? 8000 : 15000,
+      retryDelays: isServer ? [500] : [500, 1500],
+      statusCodes: [502, 503, 504],
+      beforeRetry: ({ attempt, delay, lastError, req }) => {
+        const operationName =
+          "operation" in req ? req.operation.name : "batched request"
+
+        logger.warn(
+          `Relay retry attempt=${attempt} delay=${delay}ms op=${operationName} reason=${lastError?.message ?? "status"}`,
+        )
+      },
+    }),
   ]
 
   // TODO: The `noThrow` option is used since we do our own error handling,

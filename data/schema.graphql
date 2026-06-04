@@ -3142,9 +3142,15 @@ type Artwork implements Node & Searchable & Sellable {
     before: String
     first: Int
     last: Int
+
+    # Filter by offer type(s). Gravity defaults to bulk offers when omitted.
+    offerType: [PartnerOfferTypeEnum]
     page: Int
     size: Int
     sort: PartnerOfferSorts
+
+    # Only return offers targeting this user (e.g. a personalized offer from a conversation).
+    userID: String
   ): PartnerOfferConnection
 
   # A connection of orders for this artwork from the partner's perspective.
@@ -5880,6 +5886,9 @@ type CareerHighlight implements Node {
 type CatalogArtwork {
   artworkId: String
   availability: String
+
+  # Edition sets associated with this catalog artwork.
+  catalogEditionSets: [CatalogEditionSet]
   createdAt(
     format: String
 
@@ -5927,6 +5936,31 @@ type CatalogArtworkDocument {
   internalID: ID!
   publicURL: String!
   title: String
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+}
+
+type CatalogEditionSet {
+  availability: String
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  editionSetId: String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  priceCurrency: String
+  priceListed: Money
   updatedAt(
     format: String
 
@@ -10822,7 +10856,7 @@ input CreateInstagramPostInput {
   # The internal ID of the Instagram account to post from
   instagramAccountId: String!
 
-  # Slides for the Instagram post. Each slide references an artwork and a custom image. The order determines the carousel position.
+  # Slides for the Instagram post. Each slide requires an s3Key and an optional artworkId for custom image-only slides. The order determines the carousel position.
   slides: [InstagramPostSlideInput!]!
 }
 
@@ -16473,10 +16507,10 @@ type InstagramPostEdge {
 
 # A slide in an Instagram carousel post. The order of slides in the array determines their position in the carousel.
 input InstagramPostSlideInput {
-  # The ID of the artwork for this slide
-  artworkId: String!
+  # The ID of the artwork for this slide (optional for custom image-only slides)
+  artworkId: String
 
-  # S3 object key for this slide's custom image
+  # S3 object key for this slide's image (required)
   s3Key: String!
 }
 
@@ -19422,6 +19456,11 @@ type Mutation {
     input: UpdateCatalogArtworkInput!
   ): UpdateCatalogArtworkPayload
 
+  # Updates a catalog edition set. Requires partner or partner support permissions.
+  updateCatalogEditionSet(
+    input: UpdateCatalogEditionSetInput!
+  ): UpdateCatalogEditionSetPayload
+
   # Update a collection
   updateCollection(input: updateCollectionInput!): updateCollectionPayload
 
@@ -22140,6 +22179,7 @@ enum PartnerOfferSorts {
 
 enum PartnerOfferSourceEnum {
   ABANDONED_ORDER
+  CONVERSATION
   SAVE
 }
 
@@ -22196,6 +22236,11 @@ enum PartnerOfferToCollectorSorts {
   CREATED_AT_DESC
   END_AT_ASC
   END_AT_DESC
+}
+
+enum PartnerOfferTypeEnum {
+  BULK
+  PERSONALIZED
 }
 
 # A connection to a list of items.
@@ -27680,6 +27725,38 @@ type UpdateCatalogArtworkSuccess {
   catalogArtwork: CatalogArtwork
 }
 
+type UpdateCatalogEditionSetFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCatalogEditionSetInput {
+  # Availability of the edition set.
+  availability: String
+  clientMutationId: String
+
+  # The ID of the edition set.
+  editionSetID: String!
+
+  # Price currency (ISO 4217).
+  priceCurrency: String
+
+  # Price in minor currency units (e.g., cents).
+  priceMinor: Int
+}
+
+type UpdateCatalogEditionSetPayload {
+  catalogEditionSetOrError: UpdateCatalogEditionSetResponseOrError
+  clientMutationId: String
+}
+
+union UpdateCatalogEditionSetResponseOrError =
+  | UpdateCatalogEditionSetFailure
+  | UpdateCatalogEditionSetSuccess
+
+type UpdateCatalogEditionSetSuccess {
+  catalogEditionSet: CatalogEditionSet
+}
+
 type UpdateCollectionFailure {
   mutationError: GravityMutationError
 }
@@ -31728,7 +31805,9 @@ input createPartnerOfferMutationInput {
   artwork_id: String!
   clientMutationId: String
   discount_percentage: Int!
+  impulse_conversation_id: String
   note: String
+  user_id: String
 }
 
 type createPartnerOfferMutationPayload {

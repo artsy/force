@@ -3,6 +3,7 @@ import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/ty
 import { fallbackError } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderFulfillmentOptionMutation"
+import type { KnownErrorCodes } from "Apps/Order2/Utils/errors"
 import { useCallback } from "react"
 
 /**
@@ -40,6 +41,25 @@ export const useSelectDeliveryOption = () => {
         })
         return true
       } catch (error) {
+        if (error?.code === ("missing_postal_code" satisfies KnownErrorCodes)) {
+          // The address on the order has no postal code, so the user can't
+          // fix this from the Shipping Methods step. Surface the error in
+          // the Delivery Address section instead
+          setSectionErrorMessage({
+            section: CheckoutStepName.DELIVERY_OPTION,
+            error: null,
+          })
+          setSectionErrorMessage({
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing postal code",
+              message: "Add a postal code to the selected address.",
+              code: error.code as string,
+            },
+          })
+          return false
+        }
+
         setSectionErrorMessage({
           section: CheckoutStepName.DELIVERY_OPTION,
           error: fallbackError("selecting your shipping method", error?.code),

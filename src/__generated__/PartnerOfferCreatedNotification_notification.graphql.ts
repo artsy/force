@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c0661f54d390b0d98eb07ef115ad7313>>
+ * @generated SignedSource<<310a3e91b73148aa211f5b720d9feed7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type PartnerOfferSourceEnum = "ABANDONED_ORDER" | "SAVE" | "%future added value";
+export type PartnerOfferSourceEnum = "ABANDONED_ORDER" | "CONVERSATION" | "SAVE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferCreatedNotification_notification$data = {
   readonly headline: string;
