@@ -393,6 +393,39 @@ describe("SavedAddressOptions", () => {
       expect(onSelectAddress).not.toHaveBeenCalled()
     })
 
+    it("displays region-specific error banner when selecting unshippable address in BUY mode with shippingOriginRegion", async () => {
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        orderData: { mode: "BUY" },
+      })
+
+      renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockUnshippableAddress],
+        shippingOriginRegion: "Continental US",
+      })
+
+      const unshippableAddress = screen.getByRole("radio", {
+        name: /Unshippable Address/i,
+      })
+      await userEvent.click(unshippableAddress)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Ships within Continental US only",
+              message:
+                "Try a different address or contact the gallery for help.",
+            },
+          },
+        )
+      })
+
+      expect(onSelectInvalidAddress).toHaveBeenCalled()
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+
     it("does not display error banner when selecting an unshippable address in OFFER mode", async () => {
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
@@ -908,6 +941,58 @@ describe("SavedAddressOptions", () => {
       expect(
         mockCheckoutContext.checkoutTracking.clickedEditShippingAddress,
       ).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe("Missing postal code error", () => {
+    // The banner copy itself is pinned by useSelectDeliveryOption's unit test.
+    // Here only the error code (which drives the gate) and the tracking flow
+    // are meaningful, so we don't assert on the rendered text.
+    const setFulfillmentDetailsError = (code: string) => {
+      mockCheckoutContext.messages = {
+        [CheckoutStepName.FULFILLMENT_DETAILS]: {
+          error: { title: "Title", message: "Message", code },
+        },
+      } as any
+      // The real banner fires this on mount; the base mock omits it.
+      mockCheckoutContext.checkoutTracking.errorMessageViewed = jest.fn()
+    }
+
+    const queryErrorBanner = () =>
+      document.querySelector('[data-error-banner="true"]')
+
+    it("renders the relocated error banner for a missing_postal_code error", () => {
+      setFulfillmentDetailsError("missing_postal_code")
+
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
+
+      expect(queryErrorBanner()).toBeInTheDocument()
+    })
+
+    it("tracks errorMessageViewed with the shipping-address flow", () => {
+      setFulfillmentDetailsError("missing_postal_code")
+
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
+
+      expect(
+        mockCheckoutContext.checkoutTracking.errorMessageViewed,
+      ).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error_code: "missing_postal_code",
+          flow: "User setting shipping address",
+        }),
+      )
+    })
+
+    it("does not render the banner for other error codes", () => {
+      setFulfillmentDetailsError("destination_could_not_be_geocoded")
+
+      renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
+
+      expect(queryErrorBanner()).not.toBeInTheDocument()
+      expect(
+        mockCheckoutContext.checkoutTracking.errorMessageViewed,
+      ).not.toHaveBeenCalled()
     })
   })
 })

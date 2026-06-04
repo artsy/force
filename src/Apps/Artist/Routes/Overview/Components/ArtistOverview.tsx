@@ -49,6 +49,7 @@ export const ArtistOverviewQueryRenderer: React.FC<
       variables={{ artistID: id }}
       render={({ error, props }) => {
         if (error) {
+          handleReady()
           console.error("[ArtistOverview]: Error loading overview", error)
           return null
         }

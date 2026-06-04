@@ -43,6 +43,7 @@ export const useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation =
                 ... on OrderMutationError {
                   mutationError {
                     message
+                    code
                   }
                 }
               }

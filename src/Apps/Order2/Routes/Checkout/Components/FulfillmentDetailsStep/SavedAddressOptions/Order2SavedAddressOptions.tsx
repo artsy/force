@@ -12,7 +12,10 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerMessage,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
@@ -21,21 +24,34 @@ import {
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useFulfillmentDetailsError } from "Apps/Order2/Routes/Checkout/Hooks/useFulfillmentDetailsError"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
-  unableToShipToAddress: {
-    title: "Unable to ship to this address",
-    message: "Select a different address or add a new one to continue.",
-  },
   missingAddressInfo: {
     title: "Missing required information",
     message: "Edit your address and/or phone number to continue.",
   },
 } satisfies Record<string, CheckoutErrorBannerMessage>
+
+const getUnableToShipMessage = (
+  region: string | null,
+  isBuyNow: boolean,
+): CheckoutErrorBannerMessage => {
+  if (region && isBuyNow) {
+    return {
+      title: `Ships within ${region} only`,
+      message: "Try a different address or contact the gallery for help.",
+    }
+  }
+  return {
+    title: "Unable to ship to this address",
+    message: "Select a different address or add a new one to continue.",
+  }
+}
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -45,6 +61,7 @@ interface SavedAddressOptionsProps {
   onSelectInvalidAddress: () => Promise<void> | void
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
+  shippingOriginRegion?: string | null
 }
 export const SavedAddressOptions = ({
   savedAddresses,
@@ -54,6 +71,7 @@ export const SavedAddressOptions = ({
   onSelectInvalidAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
+  shippingOriginRegion,
 }: SavedAddressOptionsProps) => {
   const {
     setUserAddressMode,
@@ -65,6 +83,12 @@ export const SavedAddressOptions = ({
     steps,
     orderData,
   } = useCheckoutContext()
+
+  const {
+    error: fulfillmentDetailsError,
+    isMissingPostalCode: hasMissingPostalCodeError,
+  } = useFulfillmentDetailsError()
+
   const { scrollToStep } = useScrollToStep()
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
@@ -156,7 +180,10 @@ export const SavedAddressOptions = ({
     if (!selectedAddress.isShippable && !isOfferOrder) {
       setSectionErrorMessage({
         section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
+        error: getUnableToShipMessage(
+          shippingOriginRegion ?? null,
+          !isOfferOrder,
+        ),
       })
       return
     }
@@ -173,7 +200,13 @@ export const SavedAddressOptions = ({
       section: CheckoutStepName.FULFILLMENT_DETAILS,
       error: null,
     })
-  }, [selectedAddress, userAddressMode, isOfferOrder, setSectionErrorMessage])
+  }, [
+    selectedAddress,
+    userAddressMode,
+    isOfferOrder,
+    setSectionErrorMessage,
+    shippingOriginRegion,
+  ])
 
   const onSaveAddress = useCallback(
     async (values: FormikContextWithAddress, addressID: string) => {
@@ -300,6 +333,16 @@ export const SavedAddressOptions = ({
     <Flex flexDirection="column">
       <SectionHeading>Delivery address</SectionHeading>
 
+      {hasMissingPostalCodeError && fulfillmentDetailsError && (
+        <>
+          <Spacer y={1} />
+          <CheckoutErrorBanner
+            error={fulfillmentDetailsError}
+            analytics={{ flow: "User setting shipping address" }}
+          />
+        </>
+      )}
+
       <Spacer y={2} />
 
       <Flex flexDirection="column">
@@ -307,6 +350,7 @@ export const SavedAddressOptions = ({
           const { address, internalID, phoneNumberParsed } = processedAddress
           const isSelected = selectedAddress?.internalID === internalID
           const textColor = isSelected ? "mono100" : "mono60"
+          const showErrorOutline = isSelected && hasMissingPostalCodeError
 
           return (
             <Flex
@@ -314,12 +358,15 @@ export const SavedAddressOptions = ({
               alignItems="flex-start"
               backgroundColor={isSelected ? "mono5" : "mono0"}
               p={1}
+              border={showErrorOutline ? "1px solid" : undefined}
+              borderColor={showErrorOutline ? "red100" : undefined}
             >
               <Radio
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
                 disabled={isFulfillmentDetailsSaving && !isSelected}
+                error={showErrorOutline}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }

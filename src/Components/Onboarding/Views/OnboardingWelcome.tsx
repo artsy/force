@@ -32,7 +32,7 @@ export const OnboardingWelcome = () => {
 
           <Box width="100%">
             <Text ref={register(1)} variant={["xl", "xxl"]} hyphenate>
-              Welcome to Artsy{user ? `, ${user.name}` : ""}.
+              Welcome to Artsy{!!user?.name ? `, ${user.name}` : ""}.
             </Text>
 
             <Spacer y={[2, 4]} />

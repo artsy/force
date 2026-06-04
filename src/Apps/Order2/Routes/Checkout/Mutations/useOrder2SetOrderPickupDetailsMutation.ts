@@ -20,6 +20,7 @@ export const useOrder2SetOrderPickupDetailsMutation = () => {
             ... on OrderMutationError {
               mutationError {
                 message
+                code
               }
             }
           }

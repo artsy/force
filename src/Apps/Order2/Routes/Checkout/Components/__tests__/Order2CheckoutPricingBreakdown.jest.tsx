@@ -429,9 +429,9 @@ describe("Order2PricingBreakdown", () => {
         }),
       })
 
-      expect(
-        screen.getByText("Shipping").parentElement,
-      ).not.toHaveTextContent("$12.00")
+      expect(screen.getByText("Shipping").parentElement).not.toHaveTextContent(
+        "$12.00",
+      )
       expect(screen.getByText("Total").parentElement).not.toHaveTextContent(
         "$US 1012.00",
       )

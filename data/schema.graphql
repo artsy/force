@@ -3142,9 +3142,15 @@ type Artwork implements Node & Searchable & Sellable {
     before: String
     first: Int
     last: Int
+
+    # Filter by offer type(s). Gravity defaults to bulk offers when omitted.
+    offerType: [PartnerOfferTypeEnum]
     page: Int
     size: Int
     sort: PartnerOfferSorts
+
+    # Only return offers targeting this user (e.g. a personalized offer from a conversation).
+    userID: String
   ): PartnerOfferConnection
 
   # A connection of orders for this artwork from the partner's perspective.
@@ -3211,6 +3217,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Minimal location information describing from where artwork will be shipped.
   shippingOrigin: String
+
+  # Display name of the shipping origin country or region (e.g., 'United Kingdom', 'European Union'). Returns empty string if shipping origin is not set.
+  shippingOriginRegion: String
   shippingWeight: Float
 
   # The unit of measurement for the shipping weight
@@ -5877,6 +5886,9 @@ type CareerHighlight implements Node {
 type CatalogArtwork {
   artworkId: String
   availability: String
+
+  # Edition sets associated with this catalog artwork.
+  catalogEditionSets: [CatalogEditionSet]
   createdAt(
     format: String
 
@@ -5924,6 +5936,30 @@ type CatalogArtworkDocument {
   internalID: ID!
   publicURL: String!
   title: String
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+}
+
+type CatalogEditionSet {
+  availability: String
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  editionSetId: String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  priceListed: Money
   updatedAt(
     format: String
 
@@ -19419,6 +19455,11 @@ type Mutation {
     input: UpdateCatalogArtworkInput!
   ): UpdateCatalogArtworkPayload
 
+  # Updates a catalog edition set. Requires partner or partner support permissions.
+  updateCatalogEditionSet(
+    input: UpdateCatalogEditionSetInput!
+  ): UpdateCatalogEditionSetPayload
+
   # Update a collection
   updateCollection(input: updateCollectionInput!): updateCollectionPayload
 
@@ -22137,6 +22178,7 @@ enum PartnerOfferSorts {
 
 enum PartnerOfferSourceEnum {
   ABANDONED_ORDER
+  CONVERSATION
   SAVE
 }
 
@@ -22193,6 +22235,11 @@ enum PartnerOfferToCollectorSorts {
   CREATED_AT_DESC
   END_AT_ASC
   END_AT_DESC
+}
+
+enum PartnerOfferTypeEnum {
+  BULK
+  PERSONALIZED
 }
 
 # A connection to a list of items.
@@ -27677,6 +27724,35 @@ type UpdateCatalogArtworkSuccess {
   catalogArtwork: CatalogArtwork
 }
 
+type UpdateCatalogEditionSetFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCatalogEditionSetInput {
+  # Availability of the edition set.
+  availability: String
+  clientMutationId: String
+
+  # The ID of the edition set.
+  editionSetID: String!
+
+  # Price in minor currency units (e.g., cents).
+  priceMinor: Int
+}
+
+type UpdateCatalogEditionSetPayload {
+  catalogEditionSetOrError: UpdateCatalogEditionSetResponseOrError
+  clientMutationId: String
+}
+
+union UpdateCatalogEditionSetResponseOrError =
+  | UpdateCatalogEditionSetFailure
+  | UpdateCatalogEditionSetSuccess
+
+type UpdateCatalogEditionSetSuccess {
+  catalogEditionSet: CatalogEditionSet
+}
+
 type UpdateCollectionFailure {
   mutationError: GravityMutationError
 }
@@ -31725,7 +31801,9 @@ input createPartnerOfferMutationInput {
   artwork_id: String!
   clientMutationId: String
   discount_percentage: Int!
+  impulse_conversation_id: String
   note: String
+  user_id: String
 }
 
 type createPartnerOfferMutationPayload {

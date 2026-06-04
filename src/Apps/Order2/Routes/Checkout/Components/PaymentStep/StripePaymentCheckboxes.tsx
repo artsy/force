@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import {
   Box,
@@ -159,7 +160,7 @@ const BillingAddressFormFields: React.FC = () => {
 
   return (
     <div ref={formRef}>
-      <AddressFormFields />
+      <AddressFormFields contextModule={ContextModule.ordersPayment} />
     </div>
   )
 }

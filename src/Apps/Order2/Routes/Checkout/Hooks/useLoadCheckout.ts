@@ -20,7 +20,7 @@ import { graphql, useFragment } from "react-relay"
 const logger = createLogger("useLoadCheckout.tsx")
 
 export const MIN_LOADING_MS = 1000
-export const MAX_LOADING_MS = 8000
+export const MAX_LOADING_MS = 6000
 
 export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
@@ -31,6 +31,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const {
     isLoading,
     setLoadingComplete,
+    setExpressCheckoutLoaded,
     expressCheckoutPaymentMethods,
     expressCheckoutState,
     steps,
@@ -128,25 +129,63 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     loadingErrorRef.current = checkoutModalError
   }, [checkoutModalError])
 
-  // Set timeout for maximum loading duration
+  // Mirror the loading-gate flags into a ref so the one-shot timeout below
+  // can read their *current* values when it fires. Without this, the timeout
+  // closure captures the values at mount (all false), making the Sentry log
+  // useless for diagnosing which flag was actually stuck.
+  const flagsRef = useRef({
+    minimumLoadingPassed,
+    orderValidated,
+    isExpressCheckoutLoaded,
+    isStripeRedirectHandled,
+    isInitialAutoSaveComplete,
+  })
+  useEffect(() => {
+    flagsRef.current = {
+      minimumLoadingPassed,
+      orderValidated,
+      isExpressCheckoutLoaded,
+      isStripeRedirectHandled,
+      isInitialAutoSaveComplete,
+    }
+  }, [
+    minimumLoadingPassed,
+    orderValidated,
+    isExpressCheckoutLoaded,
+    isStripeRedirectHandled,
+    isInitialAutoSaveComplete,
+  ])
+
+  // After MAX_LOADING_MS without loading completing, log the stuck flags to
+  // Sentry, then either degrade gracefully (Express Checkout-only failure)
+  // or surface a blocking modal (anything else is stuck).
+  //
   // biome-ignore lint/correctness/useExhaustiveDependencies: 1-time effect
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (isLoadingRef.current && !loadingErrorRef.current) {
-        const loadingState = Object.entries({
-          minimumLoadingPassed,
-          orderValidated,
-          isExpressCheckoutLoaded,
-          isStripeRedirectHandled,
-        })
-          .map(([key, value]) => `${key}: ${value}`)
-          .join(", ")
+      if (!isLoadingRef.current || loadingErrorRef.current) return
 
-        const error = new Error(
+      const flags = flagsRef.current
+      const loadingState = Object.entries(flags)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(", ")
+
+      logger.error(
+        new Error(
           `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout: ${loadingState}`,
-        )
+        ),
+      )
 
-        logger.error(error)
+      const onlyExpressCheckoutStuck =
+        !flags.isExpressCheckoutLoaded &&
+        flags.minimumLoadingPassed &&
+        flags.orderValidated &&
+        flags.isStripeRedirectHandled &&
+        flags.isInitialAutoSaveComplete
+
+      if (onlyExpressCheckoutStuck) {
+        setExpressCheckoutLoaded([])
+      } else {
         showCheckoutErrorModal({
           error: CheckoutModalError.LOADING_TIMEOUT,
         })
