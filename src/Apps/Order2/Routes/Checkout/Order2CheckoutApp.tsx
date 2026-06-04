@@ -156,6 +156,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
+      {/* Prevent mobile browsers (iOS Safari) from auto-linking phone-number
+          text — e.g. the phone on the delivery address — into tappable
+          `tel:` links. Explicit `tel:` links are unaffected. */}
+      <Meta name="format-detection" content="telephone=no" />
       {showLoadingSkeleton && (
         <Order2CheckoutLoadingSkeleton
           order={orderData}
