@@ -278,37 +278,45 @@ export const afterSocialAuth =
       }
 
       if (
-        isFeatureFlagEnabled("diamond_inline-account-linking") &&
         err?.response?.body?.error === "User Already Exists" &&
         req.socialProfileEmail
       ) {
-        req.session.linkingToken = req.socialOAuthToken
+        if (isFeatureFlagEnabled("diamond_inline-account-linking")) {
+          req.session.linkingToken = req.socialOAuthToken
 
-        const gravityProviders = (
-          (err.response.body.providers as string[] | undefined) ?? []
-        ).map((p: string) => p.toLowerCase())
+          const gravityProviders = (
+            (err.response.body.providers as string[] | undefined) ?? []
+          ).map((p: string) => p.toLowerCase())
 
-        if (
-          err.response.body.has_password === true &&
-          !gravityProviders.includes("email")
-        ) {
-          gravityProviders.unshift("email")
+          if (
+            err.response.body.has_password === true &&
+            !gravityProviders.includes("email")
+          ) {
+            gravityProviders.unshift("email")
+          }
+
+          return res.redirect(
+            redirectWithQuery(redirectPath, {
+              email: req.socialProfileEmail,
+              error_code: "ALREADY_EXISTS",
+              existing_providers: gravityProviders.join(",") || "email",
+              provider,
+            }),
+          )
         }
 
         return res.redirect(
           redirectWithQuery(redirectPath, {
             email: req.socialProfileEmail,
             error_code: "ALREADY_EXISTS",
-            existing_providers: gravityProviders.join(",") || "email",
             provider,
           }),
         )
       }
 
       if (err?.response?.body?.error === "User Already Exists") {
-        // Provider account previously linked to Artsy.
+        // Provider account previously linked to Artsy, but no email from provider.
         // Log in to your Artsy account via email and password and link the provider in your settings instead.
-        // Redirect back to login page.
         return res.redirect(
           redirectWithQuery(redirectPath, {
             error_code: "PREVIOUSLY_LINKED_SETTINGS",
