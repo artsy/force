@@ -33,8 +33,6 @@ export const AuthDialogWelcome: FC<
         mode: AUTHENTICATION_MODES.Pending,
       }}
       onSubmit={async ({ email }) => {
-        dispatch({ type: "SET", payload: { values: { email } } })
-
         try {
           const recaptchaToken = await recaptcha("verify_user")
 
@@ -52,6 +50,7 @@ export const AuthDialogWelcome: FC<
 
           const mode = verifyUser.exists ? "Login" : "SignUp"
 
+          dispatch({ type: "SET", payload: { values: { email } } })
           dispatch({ type: "MODE", payload: { mode } })
         } catch (error) {
           console.error(error)
