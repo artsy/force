@@ -15136,6 +15136,71 @@ type GravityMutationError {
   type: String
 }
 
+type GuidedTourChecklist {
+  completedCount: Int!
+  items: [GuidedTourChecklistItem!]!
+  totalCount: Int!
+}
+
+type GuidedTourChecklistItem {
+  key: String!
+  showMeHowTour: GuidedTourTour
+  state: GuidedTourChecklistItemState!
+  title: String!
+}
+
+enum GuidedTourChecklistItemState {
+  COMPLETE
+  INCOMPLETE
+}
+
+enum GuidedTourContext {
+  CATALOG_OS
+}
+
+enum GuidedTourEventType {
+  CHECKLIST_ITEM_COMPLETED
+  STEP_VIEWED
+  TOUR_COMPLETED
+  TOUR_DISMISSED
+  TOUR_STARTED
+}
+
+enum GuidedTourState {
+  COMPLETED
+  DISMISSED
+  IN_PROGRESS
+  NOT_STARTED
+}
+
+# A user's guided tour state for a context, server-driven.
+type GuidedTourStateView {
+  # The single step to render now, or null when no required tour is active.
+  activeStep: GuidedTourStep
+  activeTour: GuidedTourTour
+  checklist: GuidedTourChecklist!
+  context: GuidedTourContext!
+}
+
+type GuidedTourStep {
+  anchorKey: String!
+  body: String
+  completesItemKey: String
+  ctaLabel: String
+  index: Int!
+  key: String!
+  placement: String!
+  title: String
+  total: Int!
+}
+
+# An ordered sequence of steps and the user's state in it.
+type GuidedTourTour {
+  key: String!
+  state: GuidedTourState
+  steps: [GuidedTourStep!]!
+}
+
 # A Hero Unit
 type HeroUnit {
   # Main Hero Unit content.
@@ -17599,6 +17664,9 @@ type Me implements Node {
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
   followsAndSaves: FollowsAndSaves
+
+  # The logged-in user's guided tour state for a given context.
+  guidedTour(context: GuidedTourContext!): GuidedTourStateView
   hasCreditCards: Boolean
   hasPassword: Boolean!
   hasPriceRange: Boolean!
@@ -19242,6 +19310,11 @@ type Mutation {
 
   # Records a user viewing an artwork
   recordArtworkView(input: RecordArtworkViewInput!): RecordArtworkViewPayload
+
+  # Record a guided tour event for the logged-in user and return the refreshed state.
+  recordGuidedTourEvent(
+    input: RecordGuidedTourEventInput!
+  ): RecordGuidedTourEventPayload
 
   # Refresh the access token for a connected Instagram account
   refreshInstagramAccount(
@@ -24595,6 +24668,34 @@ type RecordArtworkViewPayload {
   artworkId: String!
   artwork_id: String! @deprecated(reason: "Use artworkId")
   clientMutationId: String
+}
+
+type RecordGuidedTourEventFailure {
+  mutationError: GravityMutationError!
+}
+
+input RecordGuidedTourEventInput {
+  clientMutationId: String
+  context: GuidedTourContext!
+  itemKey: String
+  reason: String
+  stepPosition: Int
+  tourKey: String
+  type: GuidedTourEventType!
+}
+
+type RecordGuidedTourEventPayload {
+  clientMutationId: String
+  recordGuidedTourEventOrError: RecordGuidedTourEventResponseOrError!
+}
+
+union RecordGuidedTourEventResponseOrError =
+  | RecordGuidedTourEventFailure
+  | RecordGuidedTourEventSuccess
+
+type RecordGuidedTourEventSuccess {
+  guidedTour: GuidedTourStateView!
+  me: Me!
 }
 
 type RefreshInstagramAccountFailure {
