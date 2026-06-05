@@ -1,7 +1,8 @@
-import { AutocompleteInput, useDidMount } from "@artsy/palette"
+import { AutocompleteInput, Box, useDidMount } from "@artsy/palette"
 import {
   type ChangeEvent,
   type FC,
+  type FocusEvent,
   type MouseEvent,
   useEffect,
   useRef,
@@ -14,6 +15,7 @@ import {
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
+import { Z } from "Apps/Components/constants"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
@@ -29,6 +31,7 @@ import { useDebounce } from "use-debounce"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
+import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
@@ -64,6 +67,7 @@ export const SearchBarInput: FC<
   const [value, setValue] = useState(searchTerm)
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
+  const [isFocused, setIsFocused] = useState(false)
   // Request tracking / cancellation
   const [requestId, setRequestId] = useState(0)
   const lastRequestIdRef = useRef<number | null>(null)
@@ -265,11 +269,23 @@ export const SearchBarInput: FC<
   }
 
   const handleFocus = () => {
+    setIsFocused(true)
     tracking.trackEvent({
       action_type: ActionType.focusedOnSearchInput,
       context_module: selectedPill.analyticsContextModule,
     })
   }
+
+  // Close the trending panel when focus leaves the search container entirely
+  // (clicks inside the panel keep focus via onMouseDown preventDefault below).
+  const handleContainerBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setIsFocused(false)
+    }
+  }
+
+  // Show trending only when focused with an empty/too-short query.
+  const showTrending = isFocused && !shouldStartSearching(value)
   const handlePaste = () => {
     tracking.trackEvent({
       action_type: ActionType.pastedIntoSearchInput,
@@ -307,56 +323,79 @@ export const SearchBarInput: FC<
   }
 
   return (
-    <AutocompleteInput
-      forwardRef={ref}
-      key={match.location.pathname}
-      value={value}
-      placeholder="Search by artist, gallery, style, theme, tag, etc."
-      spellCheck={false}
-      options={shouldStartSearching(value) ? formattedOptions : []}
-      defaultValue={value}
-      onChange={handleChange}
-      onClear={resetValue}
-      onSelect={handleSelect}
-      onSubmit={handleSubmit}
-      onFocus={handleFocus}
-      onPaste={handlePaste}
-      header={
-        data?.viewer ? (
-          <SearchInputPillsFragmentContainer
-            viewer={data.viewer}
-            selectedPill={selectedPill}
-            onPillClick={handlePillClick}
-          />
-        ) : null
-      }
-      renderOption={option => {
-        if (!value) return <></>
-
-        if (option.typename === "Footer") {
-          return (
-            <SearchBarFooter
-              query={value}
-              href={encodedSearchURL}
+    <Box position="relative" onBlur={handleContainerBlur}>
+      <AutocompleteInput
+        forwardRef={ref}
+        key={match.location.pathname}
+        value={value}
+        placeholder="Search by artist, gallery, style, theme, tag, etc."
+        spellCheck={false}
+        options={shouldStartSearching(value) ? formattedOptions : []}
+        defaultValue={value}
+        onChange={handleChange}
+        onClear={resetValue}
+        onSelect={handleSelect}
+        onSubmit={handleSubmit}
+        onFocus={handleFocus}
+        onPaste={handlePaste}
+        header={
+          data?.viewer ? (
+            <SearchInputPillsFragmentContainer
+              viewer={data.viewer}
               selectedPill={selectedPill}
+              onPillClick={handlePillClick}
+            />
+          ) : null
+        }
+        renderOption={option => {
+          if (!value) return <></>
+
+          if (option.typename === "Footer") {
+            return (
+              <SearchBarFooter
+                query={value}
+                href={encodedSearchURL}
+                selectedPill={selectedPill}
+              />
+            )
+          }
+
+          return (
+            <SuggestionItem
+              query={value}
+              option={option}
+              onClick={handleSuggestionClick}
+              onQuickNavClick={handleQuickNavClick}
             />
           )
-        }
+        }}
+        dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
+        dropdownMinWidth={600}
+        flip={false}
+        height={40}
+      />
 
-        return (
-          <SuggestionItem
-            query={value}
-            option={option}
-            onClick={handleSuggestionClick}
-            onQuickNavClick={handleQuickNavClick}
-          />
-        )
-      }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
-      dropdownMinWidth={600}
-      flip={false}
-      height={40}
-    />
+      {showTrending && (
+        <Box
+          position="absolute"
+          top="calc(100% + 8px)"
+          left={0}
+          right={0}
+          zIndex={Z.dropdown}
+          bg="mono0"
+          border="1px solid"
+          borderColor="mono10"
+          borderRadius={4}
+          boxShadow="0px 4px 12px rgba(0, 0, 0, 0.1)"
+          maxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
+          overflowY="auto"
+          // Keep input focused so the panel stays open while clicking inside it
+          onMouseDown={event => event.preventDefault()}
+        >
+          <TrendingSearches onNavigate={() => setIsFocused(false)} />
+        </Box>
+      )}
+    </Box>
   )
 }
 
