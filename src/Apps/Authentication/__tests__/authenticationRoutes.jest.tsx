@@ -10,6 +10,7 @@ import type {
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { getENV } from "Utils/getENV"
+import { useFlagsStatus } from "@unleash/proxy-client-react"
 import type { NextFunction } from "express"
 import qs from "qs"
 import { useTracking } from "react-tracking"
@@ -52,6 +53,12 @@ describe("authenticationRoutes", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
+  })
+
+  beforeEach(() => {
+    // afterEach resets all mocks, which wipes the global useFlagsStatus
+    // return value, so re-establish it before each test.
+    ;(useFlagsStatus as jest.Mock).mockReturnValue({ flagsReady: true })
   })
 
   const renderClientRoute = (route: string) => {
