@@ -642,6 +642,61 @@ describe("AddressAutocompleteInput", () => {
       )
     })
 
+    it("defaults fields Smarty omits to empty strings on selection", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "10 Downing Street London SW1A 2AA",
+                address_id: "gb-addr-id",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            // Smarty omits administrative_area when it has no value for it.
+            candidates: [
+              {
+                country_iso3: "GBR",
+                locality: "London",
+                postal_code: "SW1A 2AA",
+                street: "10 Downing Street",
+              },
+            ],
+          }),
+          ok: true,
+        })
+
+      render(<TestImplementation initialAddress={{ country: "GB" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "10 Downing")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      await userEvent.click(
+        within(dropdown).getByText("10 Downing Street London SW1A 2AA"),
+      )
+      await flushPromiseQueue()
+
+      expect(mockOnSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: {
+            addressLine1: "10 Downing Street",
+            addressLine2: "",
+            city: "London",
+            region: "",
+            postalCode: "SW1A 2AA",
+            country: "GB",
+          },
+        }),
+        0,
+      )
+    })
+
     it("falls back to full address_text in addressLine1 when components endpoint returns no components", async () => {
       mockFetch
         .mockResolvedValueOnce({
