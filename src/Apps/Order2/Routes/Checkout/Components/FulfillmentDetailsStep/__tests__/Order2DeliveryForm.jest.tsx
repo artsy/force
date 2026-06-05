@@ -259,7 +259,7 @@ describe("Order2DeliveryForm", () => {
         expect(queryErrorBanner()).toBeInTheDocument()
       })
 
-      it("suppresses the section error banner for a missing_postal_code error", async () => {
+      it("renders the section error banner for a missing_postal_code error", async () => {
         setFulfillmentDetailsError("missing_postal_code")
 
         renderWithRelay({
@@ -270,9 +270,7 @@ describe("Order2DeliveryForm", () => {
           expect(screen.getByText("Delivery address")).toBeInTheDocument()
         })
 
-        // With no saved addresses, SavedAddressOptions isn't rendered, so the
-        // suppressed top banner is the only place this error could surface.
-        expect(queryErrorBanner()).not.toBeInTheDocument()
+        expect(queryErrorBanner()).toBeInTheDocument()
       })
     })
 
