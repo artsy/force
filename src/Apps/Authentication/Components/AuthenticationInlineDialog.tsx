@@ -9,6 +9,7 @@ import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { AUTH_ERROR_CODES, AUTH_PROVIDERS } from "Utils/authConstants"
+import { useFlag } from "@unleash/proxy-client-react"
 import { type FC, useEffect } from "react"
 
 const AuthenticationInlineDialogContents: FC<
@@ -19,6 +20,9 @@ const AuthenticationInlineDialogContents: FC<
 
   const { sendToast } = useToasts()
   const { dispatch } = useAuthDialogContext()
+  const isInlineAccountLinkingEnabled = !!useFlag(
+    "diamond_inline-account-linking",
+  )
 
   const {
     match: { location },
@@ -28,14 +32,18 @@ const AuthenticationInlineDialogContents: FC<
   // accounts view instead of showing a generic error toast.
   useEffect(() => {
     if (location.query.error_code !== "ALREADY_EXISTS") return
+    if (!isInlineAccountLinkingEnabled) return
     dispatch({ type: "MODE", payload: { mode: "LinkAccounts" } })
-  }, [location.query.error_code, dispatch])
+  }, [location.query.error_code, dispatch, isInlineAccountLinkingEnabled])
 
   // All other OAuth errors surface as a toast.
+  // When the inline account linking flag is off, ALREADY_EXISTS also surfaces
+  // as a toast directing the user to link via settings.
   useEffect(() => {
+    if (!location.query.error_code) return
     if (
-      !location.query.error_code ||
-      location.query.error_code === "ALREADY_EXISTS"
+      location.query.error_code === "ALREADY_EXISTS" &&
+      isInlineAccountLinkingEnabled
     ) {
       return
     }
@@ -50,6 +58,7 @@ const AuthenticationInlineDialogContents: FC<
 
     sendToast({ message, variant: "error", ttl: Number.POSITIVE_INFINITY })
   }, [
+    isInlineAccountLinkingEnabled,
     location.query.error,
     location.query.error_code,
     location.query.provider,
