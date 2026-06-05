@@ -101,7 +101,6 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
           action === ResultAction.SavedToDefaultList
             ? "Saved Artwork"
             : "Removed Artwork",
-        // @ts-ignore TODO: Cohesion schema
         entity_slug: artwork.slug,
         entity_id: artwork.internalID,
       })

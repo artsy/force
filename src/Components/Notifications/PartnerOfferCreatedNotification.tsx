@@ -30,8 +30,8 @@ export const PartnerOfferCreatedNotification: FC<
   const { hasEnded } = useTimer(partnerOffer?.endAt || "")
   const isOfferFromSaves = partnerOffer?.source === "SAVE"
 
-  let subtitle = isOfferFromSaves
-    ? "Review the offer on your saved artwork"
+  let subtitle: string | null = isOfferFromSaves
+    ? null
     : "Review the offer before it expires"
 
   if (hasEnded)
@@ -69,7 +69,7 @@ export const PartnerOfferCreatedNotification: FC<
         </Flex>
       </Flex>
 
-      <Text variant="sm-display">{subtitle}</Text>
+      {subtitle && <Text variant="sm-display">{subtitle}</Text>}
 
       <Spacer y={0.5} />
 

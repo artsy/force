@@ -1,6 +1,5 @@
 import type { AuthContextModule } from "@artsy/cohesion"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
-import { ResultAction } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { useArtworkLists } from "Components/Artwork/useArtworkLists"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
@@ -8,7 +7,6 @@ import type { SaveArtworkToListsButtonQuery } from "__generated__/SaveArtworkToL
 import type { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 
 const logger = createLogger("SaveArtworkToListsButton")
 
@@ -20,8 +18,6 @@ interface SaveArtworkToListsButtonProps {
 const SaveArtworkToListsButton: FC<
   React.PropsWithChildren<SaveArtworkToListsButtonProps>
 > = ({ artwork, contextModule }) => {
-  const tracking = useTracking()
-
   const { saveArtworkToLists } = useArtworkLists({
     contextModule,
     artwork: {
@@ -45,20 +41,8 @@ const SaveArtworkToListsButton: FC<
 
   const handleSave = async () => {
     try {
-      const action = await saveArtworkToLists()
-
-      if (
-        action === ResultAction.SavedToDefaultList ||
-        action === ResultAction.RemovedFromDefaultList
-      ) {
-        const label = labelByResultAction[action]
-
-        tracking.trackEvent({
-          action: label,
-          entity_slug: artwork.slug,
-          entity_id: artwork.internalID,
-        })
-      }
+      // Tracking is handled within `useArtworkLists`
+      await saveArtworkToLists()
     } catch (error) {
       logger.error(error)
     }
@@ -105,11 +89,6 @@ export const SaveArtworkToListsButtonFragmentContainer =
       }
     `,
   })
-
-const labelByResultAction = {
-  [ResultAction.SavedToDefaultList]: "Saved Artwork",
-  [ResultAction.RemovedFromDefaultList]: "Removed Artwork",
-}
 
 interface SaveArtworkToListsButtonQueryRendererProps
   extends Omit<SaveArtworkToListsButtonProps, "artwork"> {
