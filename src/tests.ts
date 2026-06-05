@@ -34,6 +34,7 @@ jest.mock("System/FeatureFlags/FeatureFlagContext.tsx", () => ({
 jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn().mockReturnValue(false),
   useVariant: jest.fn().mockReturnValue({ name: "disabled" }),
+  useFlagsStatus: jest.fn().mockReturnValue({ flagsReady: true }),
 }))
 
 jest.mock("Components/CookieConsentManager/CookieConsentManager", () => ({

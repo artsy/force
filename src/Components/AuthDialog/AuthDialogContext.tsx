@@ -27,12 +27,14 @@ export const AUTH_DIALOG_MODES = [
   "Login",
   "SignUp",
   "ForgotPassword",
+  "LinkAccounts",
 ] as const
 
 export type AuthDialogMode = (typeof AUTH_DIALOG_MODES)[number]
 
 export const AUTH_MODAL_TYPES: Record<AuthDialogMode, AuthModalType> = {
   ForgotPassword: AuthModalType.forgot,
+  LinkAccounts: AuthModalType.login,
   Login: AuthModalType.login,
   SignUp: AuthModalType.signup,
   Welcome: AuthModalType.welcome, // FIXME: Needs to be removed or updated
@@ -40,6 +42,7 @@ export const AUTH_MODAL_TYPES: Record<AuthDialogMode, AuthModalType> = {
 
 export const DEFAULT_AUTH_MODAL_INTENTS: Record<AuthDialogMode, AuthIntent> = {
   ForgotPassword: Intent.forgot,
+  LinkAccounts: Intent.login,
   Login: Intent.login,
   SignUp: Intent.signup,
   Welcome: Intent.signup, // Is updated once the status of the email is determined

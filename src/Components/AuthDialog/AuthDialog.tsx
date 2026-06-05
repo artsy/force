@@ -8,6 +8,7 @@ import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { MODAL_WIDTH } from "Components/AuthDialog/Utils/authDialogConstants"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
+import { AuthDialogLinkAccounts } from "Components/AuthDialog/Views/AuthDialogLinkAccounts"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { AuthDialogWelcome } from "Components/AuthDialog/Views/AuthDialogWelcome"
@@ -70,6 +71,8 @@ export const AuthDialogView: FC<React.PropsWithChildren<unknown>> = () => {
   const { state } = useAuthDialogContext()
 
   switch (state.mode) {
+    case "LinkAccounts":
+      return <AuthDialogLinkAccounts />
     case "Login":
       return <AuthDialogLogin />
     case "SignUp":
@@ -82,6 +85,7 @@ export const AuthDialogView: FC<React.PropsWithChildren<unknown>> = () => {
 }
 
 export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
+  LinkAccounts: "Link Accounts",
   Login: "Welcome back to Artsy!",
   SignUp: "Welcome to Artsy — Create an account",
   ForgotPassword: "Reset your password", // pragma: allowlist secret

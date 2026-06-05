@@ -14,11 +14,14 @@ import type { NextFunction } from "express"
 import { get, isFunction, isString } from "lodash"
 import passport from "passport"
 import { type GravityError, requestGravity } from "../http"
+import { isFeatureFlagEnabled } from "System/FeatureFlags/unleashServer"
+import type { LinkingTokenData } from "../types"
 import forwardedFor from "./forwarded_for"
 import redirectBack from "./redirectBack"
 
 interface Req extends ArtsyRequest {
   artsyPassportSignedUp?: boolean
+  socialOAuthToken?: LinkingTokenData
   socialProfileEmail?: string
 }
 
@@ -278,9 +281,30 @@ export const afterSocialAuth =
         err?.response?.body?.error === "User Already Exists" &&
         req.socialProfileEmail
       ) {
-        // A user with the email address <req.socialProfileEmail> already exists.
-        // Log in to Artsy via email and password and link ${providerName} in your settings instead.
-        // Redirect back to login page.
+        if (isFeatureFlagEnabled("diamond_inline-account-linking")) {
+          req.session.linkingToken = req.socialOAuthToken
+
+          const gravityProviders = (
+            (err.response.body.providers as string[] | undefined) ?? []
+          ).map((p: string) => p.toLowerCase())
+
+          if (
+            err.response.body.has_password === true &&
+            !gravityProviders.includes("email")
+          ) {
+            gravityProviders.unshift("email")
+          }
+
+          return res.redirect(
+            redirectWithQuery(redirectPath, {
+              email: req.socialProfileEmail,
+              error_code: "ALREADY_EXISTS",
+              existing_providers: gravityProviders.join(",") || "email",
+              provider,
+            }),
+          )
+        }
+
         return res.redirect(
           redirectWithQuery(redirectPath, {
             email: req.socialProfileEmail,
@@ -291,9 +315,8 @@ export const afterSocialAuth =
       }
 
       if (err?.response?.body?.error === "User Already Exists") {
-        // Provider account previously linked to Artsy.
+        // Provider account previously linked to Artsy, but no email from provider.
         // Log in to your Artsy account via email and password and link the provider in your settings instead.
-        // Redirect back to login page.
         return res.redirect(
           redirectWithQuery(redirectPath, {
             error_code: "PREVIOUSLY_LINKED_SETTINGS",
@@ -387,15 +410,66 @@ export const onError = (
   next: NextFunction,
 ) => next(err)
 
+export const completeLinking = async (
+  req: Req,
+  res: ArtsyResponse,
+  next: NextFunction,
+) => {
+  const token = req.session.linkingToken
+
+  if (!token || !req.user) {
+    return next()
+  }
+
+  delete req.session.linkingToken
+
+  const body: Record<string, unknown> =
+    token.provider === "apple"
+      ? {
+          apple_uid: token.apple_uid,
+          id_token: token.id_token,
+          email: token.email,
+          name: token.name,
+          oauth_token: "",
+          access_token: req.user.accessToken,
+        }
+      : {
+          oauth_token: token.oauth_token,
+          access_token: req.user.accessToken,
+        }
+
+  try {
+    await requestGravity({
+      body,
+      headers: { "User-Agent": req.get("user-agent") },
+      method: "POST",
+      url: `${opts.ARTSY_URL}/api/v1/me/authentications/${token.provider}`,
+    })
+    req.session.linkedProvider = token.provider
+  } catch (err) {
+    console.error("completeLinking failed", err)
+    req.session.linkingError = true
+  }
+
+  next()
+}
+
 export const ssoAndRedirectBack = async (
   req: Req,
   res: ArtsyResponse,
   _next: NextFunction,
 ) => {
+  const linkedProvider = req.session.linkedProvider
+  const linkingError = req.session.linkingError
+  delete req.session.linkedProvider
+  delete req.session.linkingError
+
   if (req.xhr) {
     return res.send({
       success: true,
       user: req.user,
+      linkedProvider: linkedProvider || null,
+      linkingError: linkingError || false,
     })
   }
 
@@ -417,6 +491,15 @@ export const ssoAndRedirectBack = async (
   delete req.session.redirectTo
   delete req.session.skipOnboarding
 
+  const linkingParams: Record<string, string> = {}
+  if (linkedProvider) linkingParams.linked_provider = String(linkedProvider)
+  if (linkingError) linkingParams.linking_error = "true"
+
+  const destination =
+    Object.keys(linkingParams).length > 0
+      ? redirectWithQuery(parsed.href, linkingParams)
+      : parsed.href
+
   try {
     const sres = await requestGravity({
       headers: {
@@ -428,13 +511,13 @@ export const ssoAndRedirectBack = async (
     })
 
     const params = new URLSearchParams({
-      redirect_uri: parsed.href,
+      redirect_uri: destination,
       trust_token: sres.body.trust_token,
     })
 
     res.redirect(`${opts.ARTSY_URL}/users/sign_in?${params.toString()}`)
   } catch {
-    return res.redirect(parsed.href)
+    return res.redirect(destination)
   }
 }
 
