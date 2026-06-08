@@ -30,6 +30,7 @@ const { key: API_KEY } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
 
 const THROTTLE_DELAY = 500
 const INTERNATIONAL_LICENSE = "international-autocomplete-v2-cloud"
+const INTERNATIONAL_MAX_RESULTS = 10
 const SMARTY_US_AUTOCOMPLETE_URL =
   "https://us-autocomplete-pro.api.smarty.com/lookup"
 const SMARTY_INTL_AUTOCOMPLETE_URL =
@@ -384,7 +385,7 @@ export const AddressAutocompleteInput = ({
               // Multiple entry suggestions require secondary address selection which we
               // don't have a UI for yet.
               .filter((c: ProviderSuggestionInternational) => c.entries === 1)
-              .slice(0, 5),
+              .slice(0, INTERNATIONAL_MAX_RESULTS),
           })
         }
       } catch (e) {
@@ -596,7 +597,7 @@ const fetchInternationalSuggestionsWithThrottle = throttle(
       key: apiKey,
       search,
       country,
-      max_results: "5",
+      max_results: String(INTERNATIONAL_MAX_RESULTS),
       license: INTERNATIONAL_LICENSE,
     }
 
