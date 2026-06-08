@@ -647,9 +647,19 @@ const fetchInternationalComponents = async ({
     throw new Error(`Address component lookup failed: ${response.status}`)
   }
   const json = (await response.json()) as {
-    candidates: InternationalAddressComponents[]
+    candidates: Array<Partial<InternationalAddressComponents>>
   }
-  return json.candidates?.[0] ?? null
+  const candidate = json.candidates?.[0]
+  if (!candidate) return null
+
+  return {
+    country_iso3: "",
+    administrative_area: "",
+    locality: "",
+    postal_code: "",
+    street: "",
+    ...candidate,
+  }
 }
 
 /**

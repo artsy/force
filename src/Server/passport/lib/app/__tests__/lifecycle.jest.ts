@@ -12,6 +12,10 @@ jest.mock("Server/passport/lib/options", () => ({
   ARTSY_URL: "https://api.artsy.net",
 }))
 
+jest.mock("System/FeatureFlags/unleashServer", () => ({
+  isFeatureFlagEnabled: jest.fn().mockReturnValue(true),
+}))
+
 jest.mock("../../http")
 jest.mock("passport", () => {
   return {
@@ -388,6 +392,7 @@ describe("lifecycle", () => {
           response: {
             body: {
               error: "User Already Exists",
+              providers: ["email", "facebook"],
             },
           },
         }
@@ -397,7 +402,29 @@ describe("lifecycle", () => {
       lifecycle.afterSocialAuth("facebook")(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&provider=facebook",
+        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&existing_providers=email%2Cfacebook&provider=facebook",
+      )
+    })
+
+    it("injects email into existing_providers when has_password is true but email is absent", () => {
+      req.socialProfileEmail = "user+social@example.com"
+      passport.authenticate.mockReturnValueOnce((req, res, next) => {
+        const err = {
+          response: {
+            body: {
+              error: "User Already Exists",
+              providers: ["Facebook"],
+              has_password: true,
+            },
+          },
+        }
+        next(err)
+      })
+
+      lifecycle.afterSocialAuth("google")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&existing_providers=email%2Cfacebook&provider=google",
       )
     })
 

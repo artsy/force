@@ -12,10 +12,7 @@ import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import {
-  CheckoutErrorBanner,
-  type CheckoutErrorBannerMessage,
-} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 import { AddAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/AddAddressForm"
 import { UpdateAddressForm } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/UpdateAddressForm"
@@ -84,10 +81,8 @@ export const SavedAddressOptions = ({
     orderData,
   } = useCheckoutContext()
 
-  const {
-    error: fulfillmentDetailsError,
-    isMissingPostalCode: hasMissingPostalCodeError,
-  } = useFulfillmentDetailsError()
+  const { isMissingPostalCode: hasMissingPostalCodeError } =
+    useFulfillmentDetailsError()
 
   const { scrollToStep } = useScrollToStep()
   const [selectedAddress, setSelectedAddress] = useState<
@@ -332,16 +327,6 @@ export const SavedAddressOptions = ({
   return (
     <Flex flexDirection="column">
       <SectionHeading>Delivery address</SectionHeading>
-
-      {hasMissingPostalCodeError && fulfillmentDetailsError && (
-        <>
-          <Spacer y={1} />
-          <CheckoutErrorBanner
-            error={fulfillmentDetailsError}
-            analytics={{ flow: "User setting shipping address" }}
-          />
-        </>
-      )}
 
       <Spacer y={2} />
 

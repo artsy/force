@@ -6,6 +6,7 @@ import { setCampaign, setAuthTrackingCookie } from "./analytics"
 import {
   afterSocialAuth,
   beforeSocialAuth,
+  completeLinking,
   onError,
   onLocalLogin,
   onLocalSignup,
@@ -36,6 +37,7 @@ const setupApp = () => {
     opts.loginPagePath,
     csrf({ cookie: true }),
     middleware(onLocalLogin),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
   app.post(
@@ -44,6 +46,7 @@ const setupApp = () => {
     middleware(setCampaign),
     middleware(onLocalSignup),
     middleware(onLocalLogin),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -57,6 +60,7 @@ const setupApp = () => {
     opts.appleCallbackPath,
     middleware(afterSocialAuth("apple")),
     middleware(setAuthTrackingCookie({ service: "apple" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -70,6 +74,7 @@ const setupApp = () => {
     opts.facebookCallbackPath,
     middleware(afterSocialAuth("facebook")),
     middleware(setAuthTrackingCookie({ service: "facebook" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -83,6 +88,7 @@ const setupApp = () => {
     opts.googleCallbackPath,
     middleware(afterSocialAuth("google")),
     middleware(setAuthTrackingCookie({ service: "google" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -91,6 +97,7 @@ const setupApp = () => {
     opts.googleOneTapCallbackPath,
     middleware(afterSocialAuth("google", "one-tap")),
     middleware(setAuthTrackingCookie({ service: "google", mode: "one-tap" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
