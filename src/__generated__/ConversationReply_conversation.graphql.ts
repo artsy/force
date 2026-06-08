@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<680e15471477393d79f124137dc08a61>>
+ * @generated SignedSource<<c090084009b3e4bdc6e18ef3240bf0ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,9 @@ export type ConversationReply_conversation$data = {
   readonly internalID: string;
   readonly items: ReadonlyArray<{
     readonly item: {
+      readonly href?: string | null | undefined;
       readonly id?: string;
+      readonly internalID?: string;
     } | null | undefined;
   } | null | undefined> | null | undefined;
   readonly lastMessageID: string | null | undefined;
@@ -37,6 +39,13 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -83,13 +92,7 @@ return {
     },
     {
       "kind": "RequiredField",
-      "field": {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "internalID",
-        "storageKey": null
-      },
+      "field": (v1/*: any*/),
       "action": "NONE"
     },
     {
@@ -122,7 +125,15 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v0/*: any*/)
+                (v0/*: any*/),
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "href",
+                  "storageKey": null
+                }
               ],
               "type": "Artwork",
               "abstractKey": null
@@ -146,6 +157,6 @@ return {
 };
 })();
 
-(node as any).hash = "0d2f6c610b891b6030defa169a4fced8";
+(node as any).hash = "10be0dfcd8c03d3fa5994264124bbf94";
 
 export default node;

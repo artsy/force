@@ -49,8 +49,13 @@ export const ConversationCTA: React.FC<
   // Inactive order waiting for commercial actions
   const canPurchase = artwork.isAcquireable || !!activePartnerOffer
   const canMakeOffer = artwork.isOfferable || artwork.isOfferableFromInquiry
+  // When there's an active partner offer, the partner-offer bar is the sole CTA,
+  // so the purchase / make-offer buttons are suppressed here.
   const showTransactionButtons =
-    !activeOrder && artwork.published && (canPurchase || canMakeOffer)
+    !activeOrder &&
+    !activePartnerOffer &&
+    artwork.published &&
+    (canPurchase || canMakeOffer)
 
   return (
     <>
