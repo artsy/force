@@ -6,6 +6,8 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
+import { ContextModule } from "@artsy/cohesion"
+import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
@@ -34,7 +36,8 @@ type HydratedArtwork = NonNullable<
   >[number]
 >["node"]
 
-const MAX_RESULTS = 10
+const MAX_ARTISTS = 7
+const MAX_ARTWORKS = 5
 
 export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -85,7 +88,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
           Trending on Artsy
         </Text>
 
-        <Flex>
+        <Flex gap={1}>
           {TRENDING_WINDOWS.map((w, i) => (
             <Tab
               key={w.window}
@@ -99,17 +102,17 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
         </Flex>
       </Flex>
 
-      <Flex flexDirection={["column", "row"]} px={2} pb={2} gap={2}>
+      <Flex flexDirection={["column", "row"]} px={2} pb={2} gap={4}>
         {/* Artists */}
-        <Box flex={1}>
+        <Box width={["auto", 280]} flexShrink={0}>
           <SectionLabel>Artists</SectionLabel>
 
           {loading
-            ? Array.from({ length: 6 }).map((_, i) => (
+            ? Array.from({ length: MAX_ARTISTS }).map((_, i) => (
                 <ArtistRowSkeleton key={i} />
               ))
             : active.artists
-                .slice(0, MAX_RESULTS)
+                .slice(0, MAX_ARTISTS)
                 .map(item => (
                   <ArtistRow
                     key={item.internalID}
@@ -120,19 +123,27 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
                 ))}
         </Box>
 
+        <Box
+          width="1px"
+          bg="mono10"
+          alignSelf="stretch"
+          flexShrink={0}
+          display={["none", "block"]}
+        />
+
         {/* Artworks */}
-        <Box flex={1}>
+        <Box flex={1} overflow="hidden">
           <SectionLabel>Artworks</SectionLabel>
 
-          <Flex flexWrap="wrap" gap={1} mt={1}>
+          <Flex gap={2} mt={1} alignItems="flex-end">
             {loading
-              ? Array.from({ length: 6 }).map((_, i) => (
-                  <SkeletonBox key={i} width={92} height={92} />
+              ? Array.from({ length: MAX_ARTWORKS }).map((_, i) => (
+                  <ArtworkCardSkeleton key={i} />
                 ))
               : active.artworks
-                  .slice(0, MAX_RESULTS)
+                  .slice(0, MAX_ARTWORKS)
                   .map(item => (
-                    <ArtworkTile
+                    <ArtworkCard
                       key={item.internalID}
                       item={item}
                       hydrated={artworkById.get(item.internalID)}
@@ -146,21 +157,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
   )
 }
 
-const GrowthChip: FC<{ growthPct: number | null }> = ({ growthPct }) => {
-  if (growthPct === null) {
-    return (
-      <Text variant="xs" color="blue100" flexShrink={0}>
-        New
-      </Text>
-    )
-  }
-  const up = growthPct >= 0
-  return (
-    <Text variant="xs" color={up ? "green100" : "mono60"} flexShrink={0}>
-      {up ? "▲" : "▼"} {Math.abs(growthPct)}%
-    </Text>
-  )
-}
+const ARTIST_IMAGE_SIZE = 48
 
 const ArtistRow: FC<{
   item: TrendingArtist
@@ -172,7 +169,7 @@ const ArtistRow: FC<{
 
   return (
     <RowLink to={href} onClick={onNavigate}>
-      <Text variant="xs" color="mono60" width={16} flexShrink={0}>
+      <Text variant="sm" color="mono60" width={16} flexShrink={0}>
         {item.rank}
       </Text>
 
@@ -180,20 +177,19 @@ const ArtistRow: FC<{
         <Image
           src={image.src}
           srcSet={image.srcSet}
-          width={40}
-          height={40}
+          width={ARTIST_IMAGE_SIZE}
+          height={ARTIST_IMAGE_SIZE}
           alt=""
-          style={{ borderRadius: 2, objectFit: "cover", flexShrink: 0 }}
+          style={{ objectFit: "cover", flexShrink: 0 }}
         />
       ) : (
         <Flex
-          width={40}
-          height={40}
+          width={ARTIST_IMAGE_SIZE}
+          height={ARTIST_IMAGE_SIZE}
           bg="mono10"
           alignItems="center"
           justifyContent="center"
           flexShrink={0}
-          style={{ borderRadius: 2 }}
         >
           <Text variant="xs" color="mono60">
             {hydrated?.initials ?? item.name?.[0]}
@@ -202,7 +198,7 @@ const ArtistRow: FC<{
       )}
 
       <Box flex={1} overflow="hidden">
-        <Text variant="sm" overflowEllipsis>
+        <Text variant="sm-display" overflowEllipsis>
           {hydrated?.name ?? item.name}
         </Text>
         {item.nationality && (
@@ -211,60 +207,109 @@ const ArtistRow: FC<{
           </Text>
         )}
       </Box>
-
-      <GrowthChip growthPct={item.growthPct} />
     </RowLink>
   )
 }
 
-const ArtworkTile: FC<{
+const ARTWORK_IMAGE_HEIGHT = 230
+
+const ArtworkCard: FC<{
   item: TrendingArtwork
   hydrated?: HydratedArtwork
   onNavigate?: () => void
 }> = ({ item, hydrated, onNavigate }) => {
-  const image = hydrated?.image?.cropped
+  const image = hydrated?.image?.resized
   const href = hydrated?.href ?? `/artwork/${item.slug}`
 
-  if (!image?.src) return null
+  if (!hydrated || !image?.src) {
+    return null
+  }
 
   return (
-    <RouterLink
-      to={href}
-      onClick={onNavigate}
-      style={{ textDecoration: "none" }}
-      title={`${hydrated?.title ?? ""}${
-        item.artistName ? ` — ${item.artistName}` : ""
-      }`}
-    >
-      <Image
-        src={image.src}
-        srcSet={image.srcSet}
-        width={92}
-        height={92}
-        alt={hydrated?.title ?? ""}
-        style={{ borderRadius: 2, objectFit: "cover", display: "block" }}
-      />
-    </RouterLink>
+    <Box flex={1} minWidth={0}>
+      <RouterLink to={href} onClick={onNavigate} display="block">
+        <Flex height={ARTWORK_IMAGE_HEIGHT} alignItems="flex-end">
+          <Image
+            src={image.src}
+            srcSet={image.srcSet}
+            width={image.width}
+            height={image.height}
+            alt={hydrated.title ?? ""}
+            style={{
+              display: "block",
+              maxWidth: "100%",
+              maxHeight: "100%",
+              width: "auto",
+              height: "auto",
+              objectFit: "contain",
+            }}
+          />
+        </Flex>
+      </RouterLink>
+
+      <Flex mt={1} alignItems="flex-start" justifyContent="space-between">
+        <RouterLink
+          to={href}
+          onClick={onNavigate}
+          display="block"
+          textDecoration="none"
+          overflow="hidden"
+        >
+          <Text variant="sm-display" overflowEllipsis>
+            {hydrated.artistNames ?? item.artistName}
+          </Text>
+          <Text variant="xs" color="mono60">
+            {hydrated.title}
+            {hydrated.date ? `, ${hydrated.date}` : ""}
+          </Text>
+          {hydrated.partner?.name && (
+            <Text variant="xs" color="mono60" overflowEllipsis>
+              {hydrated.partner.name}
+            </Text>
+          )}
+          {hydrated.saleMessage && (
+            <Text variant="xs" fontWeight="bold" mt={0.5}>
+              {hydrated.saleMessage}
+            </Text>
+          )}
+        </RouterLink>
+
+        <Box flexShrink={0} ml={1}>
+          <SaveButtonFragmentContainer
+            artwork={hydrated}
+            contextModule={ContextModule.header}
+          />
+        </Box>
+      </Flex>
+    </Box>
   )
 }
 
 const ArtistRowSkeleton: FC = () => (
   <Flex alignItems="center" gap={1} py={1}>
-    <SkeletonBox width={40} height={40} ml={3} />
+    <SkeletonBox width={ARTIST_IMAGE_SIZE} height={ARTIST_IMAGE_SIZE} ml={3} />
     <Box flex={1}>
-      <SkeletonText variant="sm">Artist name</SkeletonText>
+      <SkeletonText variant="sm-display">Artist name</SkeletonText>
       <SkeletonText variant="xs">Nationality</SkeletonText>
     </Box>
   </Flex>
 )
 
+const ArtworkCardSkeleton: FC = () => (
+  <Box flex={1} minWidth={0}>
+    <SkeletonBox width="100%" height={ARTWORK_IMAGE_HEIGHT} />
+    <SkeletonText variant="sm-display" mt={1}>
+      Artist name
+    </SkeletonText>
+    <SkeletonText variant="xs">Artwork title, date</SkeletonText>
+    <SkeletonText variant="xs">Partner</SkeletonText>
+  </Box>
+)
+
 const SectionLabel = styled(Text).attrs({
-  variant: "xs",
+  variant: "sm",
   color: "mono60",
-})`
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`
+})``
 
 const Tab = styled.button<{ selected: boolean }>`
   border: none;
@@ -272,8 +317,9 @@ const Tab = styled.button<{ selected: boolean }>`
   cursor: pointer;
   font-family: inherit;
   font-size: 13px;
-  padding: 2px 8px;
-  border-radius: 12px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  white-space: nowrap;
   color: ${({ selected }) =>
     selected ? themeGet("colors.mono100") : themeGet("colors.mono60")};
   background-color: ${({ selected }) =>
@@ -287,10 +333,9 @@ const Tab = styled.button<{ selected: boolean }>`
 const RowLink = styled(RouterLink)`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   padding: 6px 8px;
   text-decoration: none;
-  border-radius: 2px;
 
   &:hover {
     background-color: ${themeGet("colors.mono5")};
@@ -308,8 +353,8 @@ const QUERY = graphql`
       coverArtwork {
         image {
           cropped(
-            width: 80
-            height: 80
+            width: 96
+            height: 96
             version: ["square", "small", "large"]
           ) {
             src
@@ -325,16 +370,25 @@ const QUERY = graphql`
           slug
           href
           title
+          date
+          artistNames
+          saleMessage
+          partner(shallow: true) {
+            name
+          }
           image {
-            cropped(
-              width: 184
-              height: 184
-              version: ["square", "small", "large"]
+            resized(
+              width: 240
+              height: 230
+              version: ["larger", "large", "medium"]
             ) {
               src
               srcSet
+              width
+              height
             }
           }
+          ...SaveButton_artwork
         }
       }
     }
