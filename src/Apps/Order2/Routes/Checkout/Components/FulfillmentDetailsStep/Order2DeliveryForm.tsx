@@ -88,10 +88,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     isInitialAutoSaveComplete,
   } = checkoutContext
 
-  const {
-    error: fulfillmentDetailsError,
-    isMissingPostalCode: isMissingPostalCodeError,
-  } = useFulfillmentDetailsError()
+  const { error: fulfillmentDetailsError } = useFulfillmentDetailsError()
 
   const setOrderDeliveryAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
@@ -388,13 +385,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       onSubmit={onSubmit}
     >
       {({ isSubmitting, setValues, status, submitForm }) => {
-        // `missing_postal_code` is rendered under the "Delivery address"
-        // heading (inside SavedAddressOptions or the inline Form below) so
-        // the banner sits right next to the address it's about. Other
-        // errors stay above the section.
         return (
           <Flex flexDirection={"column"} mb={2}>
-            {fulfillmentDetailsError && !isMissingPostalCodeError && (
+            {fulfillmentDetailsError && (
               <>
                 <CheckoutErrorBanner
                   ref={errorBannerRef}
