@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<962a8e6767f24290eb8dfe52f7769e95>>
+ * @generated SignedSource<<c6fa730caa4121f7deec9fa7bd984a5b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,11 @@ export type Order2DeliveryForm_order$data = {
     readonly region: string | null | undefined;
   } | null | undefined;
   readonly internalID: string;
+  readonly lineItems: ReadonlyArray<{
+    readonly artwork: {
+      readonly shippingOriginRegion: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
@@ -176,12 +181,41 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "LineItem",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "shippingOriginRegion",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Order",
   "abstractKey": null
 };
 
-(node as any).hash = "3f8dd0a2dec3c425455482916a5b6c02";
+(node as any).hash = "42fee346eabaf8e4af3ee28252066a51";
 
 export default node;

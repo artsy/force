@@ -8,7 +8,7 @@ export interface PassportOptions {
   APP_URL?: string
   APPLE_CLIENT_ID?: string
   APPLE_KEY_ID?: string
-  APPLE_PRIVATE_KEY?: string
+  APPLE_PRIVATE_KEY_BASE64?: string
   APPLE_TEAM_ID?: string
   ARTSY_ID?: string
   ARTSY_SECRET?: string
@@ -40,15 +40,30 @@ export interface PassportUser {
   [key: string]: unknown
 }
 
+export type LinkingTokenData =
+  | { provider: "google" | "facebook"; oauth_token: string }
+  | {
+      provider: "apple"
+      apple_uid: string
+      id_token: string
+      email?: string
+      name?: string | null
+    }
+
 export interface PassportSession {
   accepted_terms_of_service?: unknown
   acquisitionInitiative?: unknown
   agreed_to_receive_emails?: unknown
+  contextModule?: unknown
+  linkingError?: boolean
+  linkingToken?: LinkingTokenData
+  linkedProvider?: string
   modalId?: unknown
   redirectTo?: string
   sign_up_intent?: unknown
   sign_up_referer?: unknown
   skipOnboarding?: unknown
+  trigger?: unknown
   [key: string]: unknown
 }
 
@@ -75,6 +90,7 @@ export interface PassportRequest extends ArtsyRequest {
   params: Record<string, any>
   query: Record<string, any>
   session: PassportSession
+  socialOAuthToken?: LinkingTokenData
   socialProfileEmail?: string
   user?: PassportUser | null
   xhr: boolean

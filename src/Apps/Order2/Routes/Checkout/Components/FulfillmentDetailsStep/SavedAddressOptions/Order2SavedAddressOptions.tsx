@@ -21,21 +21,34 @@ import {
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useFulfillmentDetailsError } from "Apps/Order2/Routes/Checkout/Hooks/useFulfillmentDetailsError"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
-  unableToShipToAddress: {
-    title: "Unable to ship to this address",
-    message: "Select a different address or add a new one to continue.",
-  },
   missingAddressInfo: {
     title: "Missing required information",
     message: "Edit your address and/or phone number to continue.",
   },
 } satisfies Record<string, CheckoutErrorBannerMessage>
+
+const getUnableToShipMessage = (
+  region: string | null,
+  isBuyNow: boolean,
+): CheckoutErrorBannerMessage => {
+  if (region && isBuyNow) {
+    return {
+      title: `Ships within ${region} only`,
+      message: "Try a different address or contact the gallery for help.",
+    }
+  }
+  return {
+    title: "Unable to ship to this address",
+    message: "Select a different address or add a new one to continue.",
+  }
+}
 
 interface SavedAddressOptionsProps {
   savedAddresses: ProcessedUserAddress[]
@@ -45,6 +58,7 @@ interface SavedAddressOptionsProps {
   onSelectInvalidAddress: () => Promise<void> | void
   newAddressInitialValues: FormikContextWithAddress
   availableShippingCountries?: readonly string[]
+  shippingOriginRegion?: string | null
 }
 export const SavedAddressOptions = ({
   savedAddresses,
@@ -54,20 +68,26 @@ export const SavedAddressOptions = ({
   onSelectInvalidAddress,
   newAddressInitialValues,
   availableShippingCountries = [],
+  shippingOriginRegion,
 }: SavedAddressOptionsProps) => {
   const {
     setUserAddressMode,
     userAddressMode,
     setSectionErrorMessage,
+    setIsFulfillmentDetailsSaving,
+    isFulfillmentDetailsSaving,
     checkoutTracking,
     steps,
     orderData,
   } = useCheckoutContext()
+
+  const { isMissingPostalCode: hasMissingPostalCodeError } =
+    useFulfillmentDetailsError()
+
   const { scrollToStep } = useScrollToStep()
   const [selectedAddress, setSelectedAddress] = useState<
     ProcessedUserAddress | undefined
   >(initialSelectedAddress)
-  const [isSelecting, setIsSelecting] = useState(false)
 
   const previousUserAddressMode = usePrevious(userAddressMode)
   const isOfferOrder =
@@ -155,7 +175,10 @@ export const SavedAddressOptions = ({
     if (!selectedAddress.isShippable && !isOfferOrder) {
       setSectionErrorMessage({
         section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: ADDRESS_ERROR_MESSAGES.unableToShipToAddress,
+        error: getUnableToShipMessage(
+          shippingOriginRegion ?? null,
+          !isOfferOrder,
+        ),
       })
       return
     }
@@ -172,7 +195,13 @@ export const SavedAddressOptions = ({
       section: CheckoutStepName.FULFILLMENT_DETAILS,
       error: null,
     })
-  }, [selectedAddress, userAddressMode, isOfferOrder, setSectionErrorMessage])
+  }, [
+    selectedAddress,
+    userAddressMode,
+    isOfferOrder,
+    setSectionErrorMessage,
+    shippingOriginRegion,
+  ])
 
   const onSaveAddress = useCallback(
     async (values: FormikContextWithAddress, addressID: string) => {
@@ -242,7 +271,7 @@ export const SavedAddressOptions = ({
 
       checkoutTracking.clickedShippingAddress()
       setSelectedAddress(processedAddress)
-      setIsSelecting(true)
+      setIsFulfillmentDetailsSaving(true)
 
       setSectionErrorMessage({
         section: CheckoutStepName.DELIVERY_OPTION,
@@ -260,7 +289,7 @@ export const SavedAddressOptions = ({
 
         await onSelectAddress(processedAddress)
       } finally {
-        setIsSelecting(false)
+        setIsFulfillmentDetailsSaving(false)
       }
     },
     [
@@ -270,6 +299,7 @@ export const SavedAddressOptions = ({
       onSelectInvalidAddress,
       selectedAddress,
       setSectionErrorMessage,
+      setIsFulfillmentDetailsSaving,
     ],
   )
 
@@ -305,6 +335,7 @@ export const SavedAddressOptions = ({
           const { address, internalID, phoneNumberParsed } = processedAddress
           const isSelected = selectedAddress?.internalID === internalID
           const textColor = isSelected ? "mono100" : "mono60"
+          const showErrorOutline = isSelected && hasMissingPostalCodeError
 
           return (
             <Flex
@@ -312,12 +343,15 @@ export const SavedAddressOptions = ({
               alignItems="flex-start"
               backgroundColor={isSelected ? "mono5" : "mono0"}
               p={1}
+              border={showErrorOutline ? "1px solid" : undefined}
+              borderColor={showErrorOutline ? "red100" : undefined}
             >
               <Radio
                 flex={1}
                 value={processedAddress}
                 selected={isSelected}
-                disabled={isSelecting && !isSelected}
+                disabled={isFulfillmentDetailsSaving && !isSelected}
+                error={showErrorOutline}
                 onSelect={({ value }) =>
                   handleAddressClick(value as ProcessedUserAddress)
                 }

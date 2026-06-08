@@ -98,6 +98,15 @@ describe("passport callbacks", () => {
     expect(sendArgs.oauth_token).toEqual("foo-token")
   })
 
+  it("sets socialProfileEmail from google profile", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    const profile = { emails: [{ value: "user@example.com" }] }
+    cbs.google(req, "foo-token", "refresh-token", profile, jest.fn())
+    expect(req.socialProfileEmail).toEqual("user@example.com")
+  })
+
   it("gets a user with an access token via google one tap", done => {
     req.body = { credential: "google-jwt-credential" }
     mockRequestGravity.mockResolvedValue(
@@ -111,6 +120,16 @@ describe("passport callbacks", () => {
     expect(sendArgs.grant_type).toEqual("jwt")
     expect(sendArgs.jwt).toEqual("google-jwt-credential")
     expect(sendArgs.oauth_provider).toEqual("google")
+  })
+
+  it("sets socialProfileEmail from google one tap profile", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    req.body = { credential: "google-jwt-credential" }
+    const profile = { emails: [{ value: "user@example.com" }] }
+    cbs.googleOneTap(req, profile, jest.fn())
+    expect(req.socialProfileEmail).toEqual("user@example.com")
   })
 
   it("passes the user agent through google one tap", async () => {
@@ -206,6 +225,22 @@ describe("passport callbacks", () => {
     expect(sendArgs.grant_type).toEqual("apple_uid")
     expect(sendArgs.apple_uid).toEqual("some-apple-uid")
     expect(sendArgs.id_token).toEqual("id-token")
+  })
+
+  it("sets socialProfileEmail from apple decodedIdToken", () => {
+    mockRequestGravity.mockResolvedValue(
+      gravityResponse({ access_token: "access-token" }),
+    )
+    const decodedIdToken = { email: "user@example.com", sub: "some-apple-uid" }
+    cbs.apple(
+      req,
+      "id-token",
+      decodedIdToken,
+      "access_token",
+      "refresh-token",
+      jest.fn(),
+    )
+    expect(req.socialProfileEmail).toEqual("user@example.com")
   })
 
   it("links a facebook account to the current user", async () => {

@@ -5,7 +5,9 @@ import { useRouter } from "System/Hooks/useRouter"
 import Cookies from "cookies-js"
 
 jest.mock("System/Hooks/useRouter", () => ({
-  useRouter: jest.fn().mockImplementation(() => ({ match: { location: {} } })),
+  useRouter: jest
+    .fn()
+    .mockImplementation(() => ({ match: { location: { pathname: "/" } } })),
 }))
 
 jest.mock("System/Hooks/useSystemContext", () => ({
@@ -31,9 +33,12 @@ describe("useSocialAuthTracking", () => {
     jest.clearAllMocks()
   })
 
-  it("calls the correct tracking function with the correct data and expires the cookie", () => {
+  it("calls loggedIn with the correct data and expires the cookie", () => {
     const loggedIn = jest.fn()
-    mockUseAuthDialogTracking.mockImplementation(() => ({ loggedIn }))
+    mockUseAuthDialogTracking.mockImplementation(() => ({
+      loggedIn,
+      signedUp: jest.fn(),
+    }))
     mockCookiesExpire.mockImplementation(jest.fn())
 
     mockCookiesGet.mockImplementation(() =>
@@ -55,6 +60,87 @@ describe("useSocialAuthTracking", () => {
     })
 
     expect(mockCookiesExpire).toBeCalledWith("useSocialAuthTracking")
+  })
+
+  it("calls signedUp with onboarding=true when the URL param is present", () => {
+    const signedUp = jest.fn()
+    mockUseAuthDialogTracking.mockImplementation(() => ({
+      loggedIn: jest.fn(),
+      signedUp,
+    }))
+
+    mockCookiesGet.mockImplementation(() =>
+      JSON.stringify({
+        action: "signedUp",
+        service: "google",
+        analytics: {
+          contextModule: "header",
+          intent: "signup",
+        },
+      }),
+    )
+
+    mockUseRouter.mockImplementation(() => ({
+      match: { location: { pathname: "/", search: "?onboarding=true" } },
+    }))
+
+    renderHook(useSocialAuthTracking)
+
+    expect(signedUp).toBeCalledWith({
+      contextModule: "header",
+      intent: "signup",
+      onboarding: true,
+      service: "google",
+      userId: "example",
+    })
+  })
+
+  it("calls signedUp with onboarding=false when the URL param is absent", () => {
+    const signedUp = jest.fn()
+    mockUseAuthDialogTracking.mockImplementation(() => ({
+      loggedIn: jest.fn(),
+      signedUp,
+    }))
+
+    mockCookiesGet.mockImplementation(() =>
+      JSON.stringify({
+        action: "signedUp",
+        service: "google",
+      }),
+    )
+
+    mockUseRouter.mockImplementation(() => ({
+      match: { location: { pathname: "/" } },
+    }))
+
+    renderHook(useSocialAuthTracking)
+
+    expect(signedUp).toBeCalledWith({
+      onboarding: false,
+      service: "google",
+      userId: "example",
+    })
+  })
+
+  it("passes method to the tracking function when present", () => {
+    const loggedIn = jest.fn()
+    mockUseAuthDialogTracking.mockImplementation(() => ({ loggedIn }))
+
+    mockCookiesGet.mockImplementation(() =>
+      JSON.stringify({
+        action: "loggedIn",
+        service: "google",
+        method: "one-tap",
+      }),
+    )
+
+    renderHook(useSocialAuthTracking)
+
+    expect(loggedIn).toBeCalledWith({
+      method: "one-tap",
+      service: "google",
+      userId: "example",
+    })
   })
 
   it("does not call the tracking function if the cookie is invalid and expires the cookie", () => {

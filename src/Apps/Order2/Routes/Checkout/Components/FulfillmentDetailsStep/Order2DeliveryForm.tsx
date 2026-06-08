@@ -16,6 +16,7 @@ import {
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useFulfillmentDetailsError } from "Apps/Order2/Routes/Checkout/Hooks/useFulfillmentDetailsError"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
@@ -83,13 +84,11 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     setUserAddressMode,
     setSectionErrorMessage,
     setIsFulfillmentDetailsSaving,
-    messages,
     setInitialAutoSaveComplete,
     isInitialAutoSaveComplete,
   } = checkoutContext
 
-  const fulfillmentDetailsError =
-    messages[CheckoutStepName.FULFILLMENT_DETAILS]?.error
+  const { error: fulfillmentDetailsError } = useFulfillmentDetailsError()
 
   const setOrderDeliveryAddressMutation =
     useOrder2SetOrderDeliveryAddressMutation()
@@ -408,6 +407,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 availableShippingCountries={
                   orderData.availableShippingCountries
                 }
+                shippingOriginRegion={
+                  orderData.lineItems?.[0]?.artwork?.shippingOriginRegion
+                }
                 onSelectAddress={async values => {
                   await setValues(values)
                   await submitForm()
@@ -461,6 +463,7 @@ const DeliveryFormFields: React.FC<DeliveryFormFieldsProps> = ({
   return (
     <div ref={formRef}>
       <AddressFormFields
+        contextModule={ContextModule.ordersFulfillment}
         withPhoneNumber
         syncPhoneCountryCode
         shippableCountries={shippableCountries as any}
@@ -521,6 +524,11 @@ const ORDER_FRAGMENT = graphql`
         originalNumber
         regionCode
         countryCode
+      }
+    }
+    lineItems {
+      artwork {
+        shippingOriginRegion
       }
     }
   }

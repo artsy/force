@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0bf487151d5769d663a9efd8990522a>>
+ * @generated SignedSource<<fdefbc915d408dcff4dd0a4211377af4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type SettingsEditSettingsLinkedAccounts_me$data = {
   readonly authentications: ReadonlyArray<{
     readonly provider: AuthenticationProvider;
   }>;
+  readonly hasSecondFactorEnabled: boolean;
   readonly " $fragmentType": "SettingsEditSettingsLinkedAccounts_me";
 };
 export type SettingsEditSettingsLinkedAccounts_me$key = {
@@ -28,6 +29,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "SettingsEditSettingsLinkedAccounts_me",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasSecondFactorEnabled",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -51,6 +59,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a55e6069851be3fddb81897ba96a6c80";
+(node as any).hash = "c3d3db28bb68992831f613763c072521";
 
 export default node;

@@ -8,8 +8,9 @@ import {
   init,
   startBrowserTracingNavigationSpan,
   startBrowserTracingPageLoadSpan,
+  startSpan,
 } from "@sentry/browser"
-import { sentryBeforeSend } from "./sentryBeforeSend"
+import { SMARTY_TRACE_PREFIX } from "Components/Address/AddressAutocompleteInput"
 import {
   ALLOWED_URLS,
   DENIED_URLS,
@@ -24,6 +25,14 @@ let initialPageLoadSpan: Span | undefined | null
 // For use in router RenderStates callback hooks
 export let sentryRouterTracing
 
+const tracesSampler = (samplingContext: { name?: string }): number => {
+  // Sample Smarty autocomplete traces at 100%
+  if (samplingContext.name?.startsWith(SMARTY_TRACE_PREFIX)) {
+    return 1
+  }
+  return 0.08
+}
+
 export function setupSentryClient() {
   if (getENV("NODE_ENV") !== "production") {
     return
@@ -35,8 +44,7 @@ export function setupSentryClient() {
     dsn: getENV("SENTRY_PUBLIC_DSN"),
     ignoreErrors: IGNORED_ERRORS,
     release: getENV("SENTRY_RELEASE"),
-    tracesSampleRate: 0.08,
-    beforeSend: sentryBeforeSend,
+    tracesSampler,
     integrations: [
       browserTracingIntegration({
         // See sentry router tracing below
@@ -126,3 +134,35 @@ function routeMatchToParamSpanAttributes(
 
   return paramAttributes
 }
+
+/**
+ * Wraps an async HTTP call in a Sentry span that is forced to be a root
+ * transaction. Useful for interaction-triggered requests that fire outside of
+ * an active pageload/navigation transaction — without `forceTransaction: true`
+ * those calls would attach to a non-recording span and never be sent.
+ *
+ * @example
+ * await traceFetch(
+ *   { name: "smarty.autocomplete.us", url },
+ *   async () => {
+ *     const response = await fetch(url)
+ *     return response.json()
+ *   },
+ * )
+ */
+export const traceFetch = <T>(
+  { name, url, method = "GET" }: { name: string; url: string; method?: string },
+  fn: () => Promise<T>,
+): Promise<T> =>
+  startSpan(
+    {
+      name,
+      op: "http.client",
+      forceTransaction: true,
+      attributes: {
+        "http.method": method,
+        "http.url": url,
+      },
+    },
+    fn,
+  )

@@ -6,7 +6,12 @@ import {
   type GravityResponse,
   requestGravity,
 } from "../http"
-import type { OAuthProfile, PassportDone, PassportRequest } from "../types"
+import type {
+  LinkingTokenData,
+  OAuthProfile,
+  PassportDone,
+  PassportRequest,
+} from "../types"
 
 import opts from "../options"
 
@@ -99,9 +104,8 @@ export const facebook = (
 ) => {
   if (profile && profile.emails && profile.emails[0]) {
     req.socialProfileEmail = profile.emails[0].value
-  } else {
-    req.socialProfileEmail = undefined
   }
+  req.socialOAuthToken = { provider: "facebook", oauth_token: token }
   // Link Facebook account
   if (req.user) {
     return requestGravity({
@@ -158,6 +162,10 @@ export const google = (
   profile: OAuthProfile,
   done?: PassportDone,
 ) => {
+  if (profile?.emails?.[0]) {
+    req.socialProfileEmail = profile.emails[0].value
+  }
+  req.socialOAuthToken = { provider: "google", oauth_token: accessToken }
   // Link Google account
   if (req.user) {
     return requestGravity({
@@ -212,6 +220,10 @@ export const googleOneTap = (
   profile: OAuthProfile,
   done?: PassportDone,
 ) => {
+  if (profile?.emails?.[0]) {
+    req.socialProfileEmail = profile.emails[0].value
+  }
+
   requestGravity({
     body: {
       client_id: opts.ARTSY_ID,
@@ -259,7 +271,16 @@ export const apple = (
   if (user && user.name && user.name.firstName && user.name.lastName) {
     displayName = `${user.name.firstName} ${user.name.lastName}`
   }
-
+  req.socialOAuthToken = {
+    provider: "apple",
+    apple_uid: decodedIdToken.sub!,
+    id_token: idToken,
+    email: decodedIdToken.email,
+    name: displayName,
+  } satisfies LinkingTokenData
+  if (decodedIdToken.email) {
+    req.socialProfileEmail = decodedIdToken.email
+  }
   // Link Apple account
   if (req.user) {
     return requestGravity({

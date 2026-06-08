@@ -232,6 +232,48 @@ describe("Order2DeliveryForm", () => {
       })
     })
 
+    describe("section error banner", () => {
+      const queryErrorBanner = () =>
+        document.querySelector('[data-error-banner="true"]')
+
+      const setFulfillmentDetailsError = (code: string) => {
+        mockCheckoutContext.messages = {
+          [CheckoutStepName.FULFILLMENT_DETAILS]: {
+            error: { title: "Title", message: "Message", code },
+          },
+        }
+        mockCheckoutContext.checkoutTracking.errorMessageViewed = jest.fn()
+      }
+
+      it("renders the section error banner for a non-postal-code error", async () => {
+        setFulfillmentDetailsError("destination_could_not_be_geocoded")
+
+        renderWithRelay({
+          Me: () => ({ ...baseMeProps, order: { ...baseOrderProps } }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        expect(queryErrorBanner()).toBeInTheDocument()
+      })
+
+      it("renders the section error banner for a missing_postal_code error", async () => {
+        setFulfillmentDetailsError("missing_postal_code")
+
+        renderWithRelay({
+          Me: () => ({ ...baseMeProps, order: { ...baseOrderProps } }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        expect(queryErrorBanner()).toBeInTheDocument()
+      })
+    })
+
     describe("form submission", () => {
       it("calls setCheckoutMode during form submission", async () => {
         const { mockResolveLastOperation } = renderWithRelay({

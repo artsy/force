@@ -1,4 +1,8 @@
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  type ContextModule,
+  type EditedAutocompletedAddress,
+} from "@artsy/cohesion"
 import {
   Checkbox,
   Column,
@@ -22,7 +26,8 @@ import { sortCountriesForCountryInput } from "Components/Address/utils/sortCount
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
-import { useMemo } from "react"
+import { type ChangeEvent, useMemo, useState } from "react"
+import { useTracking } from "react-tracking"
 
 export interface FormikContextWithAddress {
   address: Address
@@ -34,6 +39,9 @@ export interface FormikContextWithAddress {
 type CountryData = (typeof countryPhoneOptions)[number]
 
 interface Props {
+  /** Cohesion ContextModule for the surface hosting this form. Used as the
+   * `context_module` on address-autocomplete analytics events. */
+  contextModule: ContextModule
   /** Whether to include rich phone number input */
   withPhoneNumber?: boolean
   /* @deprecated - legacy plain-text phone input */
@@ -65,7 +73,9 @@ interface Props {
  *   <AddressFormFields<AddressFormValues> withLegacyPhoneInput />
  * ```
  */
-export const addressFormFieldsValidator = (args: Props = {}) => ({
+export const addressFormFieldsValidator = (
+  args: Pick<Props, "withLegacyPhoneInput" | "withPhoneNumber"> = {},
+) => ({
   address: yupAddressValidator,
   ...(args.withLegacyPhoneInput && basicPhoneValidator),
   ...(args.withPhoneNumber && richRequiredPhoneValidators),
@@ -126,10 +136,34 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
 
   const autocompleteTrackingValues = {
-    contextModule: ContextModule.auctionRegistration,
+    contextModule: props.contextModule,
     contextOwnerType: contextPageOwnerType,
     contextPageOwnerId: contextPageOwnerId || "",
   }
+
+  const [autocompletedNotYetEdited, setAutocompletedNotYetEdited] =
+    useState(false)
+  const { trackEvent } = useTracking()
+
+  const trackEditOnce = (field: keyof Address) => {
+    if (!autocompletedNotYetEdited) return
+
+    const event: EditedAutocompletedAddress = {
+      action: ActionType.editedAutocompletedAddress,
+      context_module: props.contextModule,
+      context_owner_type: contextPageOwnerType,
+      context_owner_id: contextPageOwnerId || "",
+      field,
+    }
+    trackEvent(event)
+    setAutocompletedNotYetEdited(false)
+  }
+
+  const handleAddressFieldChange =
+    (field: keyof Address) => (e: ChangeEvent<HTMLInputElement>) => {
+      handleChange(e)
+      trackEditOnce(field)
+    }
 
   const phoneInputType = useMemo(() => {
     if (props.withLegacyPhoneInput) {
@@ -189,6 +223,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
                 e.target.value.toLowerCase(),
               )
             }
+            trackEditOnce("country")
           }}
           onBlur={handleBlur}
           error={touchedAddress?.country && errorsAddress?.country}
@@ -211,7 +246,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           placeholder="Add street address"
           title="Street address"
           value={values.address.addressLine1}
-          onChange={handleChange}
+          onChange={handleAddressFieldChange("addressLine1")}
           onSelect={option => {
             const selectedAddress = option.address
             setValues({
@@ -226,6 +261,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
                 country: selectedAddress.country,
               },
             })
+            setAutocompletedNotYetEdited(true)
           }}
           error={touchedAddress?.addressLine1 && errorsAddress?.addressLine1}
           onClear={() => {
@@ -243,7 +279,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           placeholder="Add apartment, floor, suite, etc."
           autoComplete="address-line2"
           value={values.address?.addressLine2}
-          onChange={handleChange}
+          onChange={handleAddressFieldChange("addressLine2")}
           onBlur={handleBlur}
           error={touchedAddress?.addressLine2 && errorsAddress?.addressLine2}
         />
@@ -258,7 +294,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           placeholder="Add city"
           autoComplete="address-level2"
           value={values.address?.city}
-          onChange={handleChange}
+          onChange={handleAddressFieldChange("city")}
           onBlur={handleBlur}
           error={touchedAddress?.city && errorsAddress?.city}
           required
@@ -274,7 +310,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           placeholder="Add state, region or province"
           autoComplete="address-level1"
           value={values.address?.region}
-          onChange={handleChange}
+          onChange={handleAddressFieldChange("region")}
           onBlur={handleBlur}
           error={touchedAddress?.region && errorsAddress?.region}
           required={isRegionRequired(values.address.country)}
@@ -290,7 +326,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
           placeholder="Add ZIP/Postal code"
           autoComplete="postal-code"
           value={values.address?.postalCode}
-          onChange={handleChange}
+          onChange={handleAddressFieldChange("postalCode")}
           onBlur={handleBlur}
           error={touchedAddress?.postalCode && errorsAddress?.postalCode}
           required={isPostalCodeRequired(values.address.country)}

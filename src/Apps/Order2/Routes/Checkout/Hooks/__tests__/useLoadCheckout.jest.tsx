@@ -40,6 +40,7 @@ const mockLogger = loggerFactory()
 jest.useFakeTimers()
 
 const mockSetLoadingComplete = jest.fn()
+const mockSetExpressCheckoutLoaded = jest.fn()
 const mockShowCheckoutErrorModal = jest.fn()
 
 const { useFragment } = jest.requireMock("react-relay")
@@ -94,6 +95,7 @@ describe("useLoadCheckout", () => {
       expressCheckoutPaymentMethods: null,
       steps: [{ state: CheckoutStepState.ACTIVE, name: "PAYMENT" }],
       setLoadingComplete: mockSetLoadingComplete,
+      setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
       isInitialAutoSaveComplete: true,
     })
 
@@ -211,11 +213,82 @@ describe("useLoadCheckout", () => {
   })
 
   describe("loading timeout", () => {
-    it("sets loading_timeout error when MAX_LOADING_MS is exceeded", async () => {
+    it("degrades gracefully without a modal when only Express Checkout is stuck", async () => {
+      // All other flags are good — only expressCheckoutPaymentMethods stays null.
+      // This is the Eigen-webview shape: Stripe.js never resolves the
+      // Express Checkout element, but the rest of the checkout is healthy.
+      useCheckoutContext.mockReturnValue({
+        isLoading: true,
+        expressCheckoutPaymentMethods: null,
+        steps: [],
+        setLoadingComplete: mockSetLoadingComplete,
+        setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
+        isInitialAutoSaveComplete: true,
+      })
+
       renderHook(() => useLoadCheckout(mockOrder))
 
+      // Pass the minimum-loading gate.
       act(() => {
-        jest.advanceTimersByTime(MAX_LOADING_MS)
+        jest.advanceTimersByTime(MIN_LOADING_MS)
+      })
+
+      // Stripe redirect handler resolves.
+      act(() => {
+        mockStripeCallback?.()
+      })
+
+      // Advance past the 8s deadline; Express Checkout never loaded.
+      act(() => {
+        jest.advanceTimersByTime(MAX_LOADING_MS - MIN_LOADING_MS)
+      })
+
+      await waitFor(() => {
+        expect(mockLogger.error).toHaveBeenCalled()
+      })
+
+      // Log fires with the *current* flag state so we can diagnose which
+      // flag was stuck, instead of always reporting all-false.
+      const errorMessage = mockLogger.error.mock.calls[0][0].message
+      expect(errorMessage).toContain("minimumLoadingPassed: true")
+      expect(errorMessage).toContain("orderValidated: true")
+      expect(errorMessage).toContain("isExpressCheckoutLoaded: false")
+      expect(errorMessage).toContain("isStripeRedirectHandled: true")
+      expect(errorMessage).toContain("isInitialAutoSaveComplete: true")
+
+      // No blocking modal; Express Checkout is force-emptied so the rest of
+      // the page can finish loading and the user can complete checkout.
+      expect(mockShowCheckoutErrorModal).not.toHaveBeenCalled()
+      expect(mockSetExpressCheckoutLoaded).toHaveBeenCalledWith([])
+    })
+
+    it("surfaces the modal when a flag other than Express Checkout is stuck", async () => {
+      // Express Checkout *is* loaded (empty list), but autosave never
+      // completed. This is a genuine problem — not graceful degradation —
+      // so the user should see the blocking modal.
+      useCheckoutContext.mockReturnValue({
+        isLoading: true,
+        expressCheckoutPaymentMethods: [],
+        steps: [],
+        setLoadingComplete: mockSetLoadingComplete,
+        setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
+        isInitialAutoSaveComplete: false,
+      })
+
+      renderHook(() => useLoadCheckout(mockOrder))
+
+      // Pass the minimum-loading gate.
+      act(() => {
+        jest.advanceTimersByTime(MIN_LOADING_MS)
+      })
+
+      // Stripe redirect handler resolves.
+      act(() => {
+        mockStripeCallback?.()
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(MAX_LOADING_MS - MIN_LOADING_MS)
       })
 
       await waitFor(() => {
@@ -225,10 +298,7 @@ describe("useLoadCheckout", () => {
       })
 
       expect(mockLogger.error).toHaveBeenCalled()
-      const errorCall = mockLogger.error.mock.calls[0][0]
-      expect(errorCall.message).toContain(
-        `Checkout loading state exceeded ${MAX_LOADING_MS}ms timeout`,
-      )
+      expect(mockSetExpressCheckoutLoaded).not.toHaveBeenCalled()
     })
 
     it("does not set timeout error if loading completes before MAX_LOADING_MS", async () => {

@@ -29,6 +29,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutAutoScroll"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
+import { useIsDeliveryOptionExpanded } from "Apps/Order2/Routes/Checkout/Hooks/useIsDeliveryOptionExpanded"
 import { useLoadCheckout } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -64,6 +65,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     artworkPath,
     isFulfillmentDetailsSaving,
   } = useCheckoutContext()
+
+  const isDeliveryOptionExpanded = useIsDeliveryOptionExpanded(orderData)
 
   const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
     useCheckoutModal()
@@ -114,14 +117,24 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
         case CheckoutStepName.OFFER_AMOUNT:
           checkoutTracking.orderProgressionViewed(ContextModule.ordersOffer)
           break
-        case CheckoutStepName.DELIVERY_OPTION:
-          checkoutTracking.orderProgressionViewed(
-            ContextModule.ordersShippingMethods,
-          )
-          break
       }
     })
   }, [activeStepNames, checkoutTracking])
+
+  // DELIVERY_OPTION is tracked in a separate effect so its expansion signal
+  // (which can flip while FULFILLMENT_DETAILS is still ACTIVE) doesn't cause
+  // the main effect above to re-fire FULFILLMENT_DETAILS's orderProgressionViewed.
+  const isDeliveryOptionVisible =
+    activeStepNames.split(",").includes(CheckoutStepName.DELIVERY_OPTION) &&
+    isDeliveryOptionExpanded
+
+  useEffect(() => {
+    if (isDeliveryOptionVisible) {
+      checkoutTracking.orderProgressionViewed(
+        ContextModule.ordersShippingMethods,
+      )
+    }
+  }, [isDeliveryOptionVisible, checkoutTracking])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
   useEffect(() => {
@@ -143,6 +156,10 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
+      {/* Prevent mobile browsers (iOS Safari) from auto-linking phone-number
+          text — e.g. the phone on the delivery address — into tappable
+          `tel:` links. Explicit `tel:` links are unaffected. */}
+      <Meta name="format-detection" content="telephone=no" />
       {showLoadingSkeleton && (
         <Order2CheckoutLoadingSkeleton
           order={orderData}
@@ -255,6 +272,7 @@ const ORDER_FRAGMENT = graphql`
         isFixedShippingFeeOnly
       }
     }
+    ...useIsDeliveryOptionExpanded_order
     ...useLoadCheckout_order
     ...Order2ExpressCheckout_order
     ...Order2CollapsibleOrderSummary_order

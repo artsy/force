@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8cefcd52491234331448dddde88a8cd3>>
+ * @generated SignedSource<<57a8f1874b722dd1902dddc2b030b231>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -882,6 +882,7 @@ return {
         "notificationsConnection.edges.node.item.partnerOffer.source": {
           "enumValues": [
             "ABANDONED_ORDER",
+            "CONVERSATION",
             "SAVE"
           ],
           "nullable": true,

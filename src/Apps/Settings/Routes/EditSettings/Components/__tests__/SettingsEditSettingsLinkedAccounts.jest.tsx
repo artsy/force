@@ -35,7 +35,7 @@ describe("SettingsEditSettingsLinkedAccounts", () => {
 
   it("renders the link if the accounts are disconnected", () => {
     renderWithRelay({
-      Me: () => ({ authentications: [] }),
+      Me: () => ({ hasSecondFactorEnabled: false, authentications: [] }),
     })
 
     const links = screen.getAllByRole("link")
@@ -48,6 +48,7 @@ describe("SettingsEditSettingsLinkedAccounts", () => {
   it("renders the buttons if the accounts are connected", () => {
     renderWithRelay({
       Me: () => ({
+        hasSecondFactorEnabled: false,
         authentications: [
           { provider: "FACEBOOK" },
           { provider: "APPLE" },
@@ -59,5 +60,26 @@ describe("SettingsEditSettingsLinkedAccounts", () => {
     expect(screen.getByText("Disconnect Facebook Account")).toBeInTheDocument()
     expect(screen.getByText("Disconnect Apple Account")).toBeInTheDocument()
     expect(screen.getByText("Disconnect Google Account")).toBeInTheDocument()
+  })
+
+  it("disables the buttons and explains why when two-factor is enabled", () => {
+    renderWithRelay({
+      Me: () => ({
+        hasSecondFactorEnabled: true,
+        authentications: [],
+      }),
+    })
+
+    expect(
+      screen.getByText(
+        /Linked accounts are unavailable while two-factor authentication is enabled/,
+      ),
+    ).toBeInTheDocument()
+
+    expect(screen.queryAllByRole("link")).toHaveLength(0)
+
+    for (const button of screen.getAllByRole("button")) {
+      expect(button).toBeDisabled()
+    }
   })
 })

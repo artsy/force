@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import {
   Banner,
   Button,
@@ -234,7 +235,10 @@ const AddressModalForm: FC<
             </Banner>
           )}
 
-          <AddressFormFields<FormValues> withLegacyPhoneInput />
+          <AddressFormFields<FormValues>
+            contextModule={ContextModule.ordersShipping}
+            withLegacyPhoneInput
+          />
 
           <Spacer y={2} />
 

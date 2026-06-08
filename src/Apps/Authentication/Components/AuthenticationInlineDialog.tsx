@@ -3,10 +3,13 @@ import { AuthenticationInlineDialogProvider } from "Apps/Authentication/Componen
 import { useAuthDialogOptions } from "Apps/Authentication/Hooks/useAuthDialogOptions"
 import { AuthDialogView } from "Components/AuthDialog/AuthDialog"
 import type { AuthDialogMode } from "Components/AuthDialog/AuthDialogContext"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogTitle } from "Components/AuthDialog/AuthDialogTitle"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Hooks/useRouter"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
+import { AUTH_ERROR_CODES, AUTH_PROVIDERS } from "Utils/authConstants"
+import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { type FC, useEffect } from "react"
 
 const AuthenticationInlineDialogContents: FC<
@@ -16,18 +19,47 @@ const AuthenticationInlineDialogContents: FC<
   const { title, pageTitle, description } = useAuthDialogOptions()
 
   const { sendToast } = useToasts()
+  const { dispatch } = useAuthDialogContext()
+  const isInlineAccountLinkingEnabled = !!useFlag(
+    "diamond_inline-account-linking",
+  )
+  const { flagsReady } = useFlagsStatus()
 
   const {
     match: { location },
   } = useRouter()
 
-  // Errors might come back from 3rd party authentication so display them if present.
+  // When an OAuth attempt finds an existing account, switch to the link
+  // accounts view instead of showing a generic error toast. Wait for the flag
+  // to hydrate so we don't act on a stale initial value.
   useEffect(() => {
+    if (!flagsReady) return
+    if (location.query.error_code !== "ALREADY_EXISTS") return
+    if (!isInlineAccountLinkingEnabled) return
+    dispatch({ type: "MODE", payload: { mode: "LinkAccounts" } })
+  }, [
+    flagsReady,
+    location.query.error_code,
+    dispatch,
+    isInlineAccountLinkingEnabled,
+  ])
+
+  // All other OAuth errors surface as a toast.
+  // When the inline account linking flag is off, ALREADY_EXISTS also surfaces
+  // as a toast directing the user to link via settings.
+  useEffect(() => {
+    if (!flagsReady) return
     if (!location.query.error_code) return
+    if (
+      location.query.error_code === "ALREADY_EXISTS" &&
+      isInlineAccountLinkingEnabled
+    ) {
+      return
+    }
 
     const message = (
-      ERROR_CODES[location.query.error_code] || ERROR_CODES.UNKNOWN
-    ).replace(/{provider}/g, PROVIDERS[location.query.provider] || "—")
+      AUTH_ERROR_CODES[location.query.error_code] || AUTH_ERROR_CODES.UNKNOWN
+    ).replace(/{provider}/g, AUTH_PROVIDERS[location.query.provider] || "—")
 
     if (location.query.error) {
       console.error(location.query.error)
@@ -35,11 +67,27 @@ const AuthenticationInlineDialogContents: FC<
 
     sendToast({ message, variant: "error", ttl: Number.POSITIVE_INFINITY })
   }, [
+    flagsReady,
+    isInlineAccountLinkingEnabled,
     location.query.error,
     location.query.error_code,
     location.query.provider,
     sendToast,
   ])
+
+  // Success toast after an OAuth re-auth linking flow completes.
+  useEffect(() => {
+    if (!location.query.linked_provider) return
+
+    const providerName =
+      AUTH_PROVIDERS[location.query.linked_provider] ||
+      location.query.linked_provider
+
+    sendToast({
+      message: `Your ${providerName} account has been successfully linked.`,
+      variant: "success",
+    })
+  }, [location.query.linked_provider, sendToast])
 
   return (
     <>
@@ -84,24 +132,4 @@ export const AuthenticationInlineDialog: FC<
       <AuthenticationInlineDialogContents />
     </AuthenticationInlineDialogProvider>
   )
-}
-
-const ERROR_CODES = {
-  ALREADY_EXISTS:
-    "A user with this email address already exists. Log in to Artsy via email and password and link {provider} in your settings instead.",
-  PREVIOUSLY_LINKED_SETTINGS:
-    "{provider} account previously linked to Artsy. Log in to your Artsy account via email and password and link {provider} in your settings instead.",
-  PREVIOUSLY_LINKED: "{provider} account previously linked to Artsy.",
-  IP_BLOCKED: "Your IP address was blocked by {provider}.",
-  TWO_FACTOR_AUTHENTICATION_REQUIRED:
-    "Please log in with email and password to use two-factor authentication.",
-  TWO_FACTOR_AUTHENTICATION_ENABLED:
-    "Social account linking is not available while two-factor authentication is enabled on your Artsy account.",
-  UNKNOWN: "An unknown error occurred. Please try again.",
-}
-
-const PROVIDERS = {
-  facebook: "Facebook",
-  google: "Google",
-  apple: "Apple",
 }

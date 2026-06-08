@@ -1,103 +1,143 @@
 const analytics = require("../analytics")
 
-jest.mock("sharify", () => ({
-  data: {
-    SEGMENT_WRITE_KEY: "foobar",
-  },
-}))
-
-describe("analytics", () => {
-  let req, res, next
+describe("setAuthTrackingCookie", () => {
+  let req: any
+  let res: any
+  let next: jest.Mock
 
   beforeEach(() => {
     req = {
       session: {},
       body: {},
+      headers: {},
       user: { id: "foo" },
       query: {},
+      artsyPassportSignedUp: false,
     }
-    res = { locals: { sd: {} } }
+    res = { cookie: jest.fn() }
     next = jest.fn()
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
+  it("sets a loggedIn cookie when not signed up", () => {
+    analytics.setAuthTrackingCookie({ service: "google" })(req, res, next)
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({ action: "loggedIn", service: "google" }),
+      { httpOnly: false },
+    )
+    expect(next).toHaveBeenCalled()
   })
 
-  it("tracks signup", () => {
-    const spy = jest.spyOn(analytics.analytics, "track")
-    analytics.trackSignup("email")(req, res, next)
-    expect(spy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        event: "Created account",
-        properties: {
-          acquisition_initiative: undefined,
-          modal_id: undefined,
-          signup_service: "email",
-          user_id: "foo",
+  it("sets a signedUp cookie when artsyPassportSignedUp is true", () => {
+    req.artsyPassportSignedUp = true
+    analytics.setAuthTrackingCookie({ service: "facebook" })(req, res, next)
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({ action: "signedUp", service: "facebook" }),
+      { httpOnly: false },
+    )
+  })
+
+  it("sets service: google and trigger: one-tap when mode is one-tap", () => {
+    analytics.setAuthTrackingCookie({ service: "google", mode: "one-tap" })(
+      req,
+      res,
+      next,
+    )
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({
+        action: "loggedIn",
+        service: "google",
+        method: "one-tap",
+      }),
+      { httpOnly: false },
+    )
+  })
+
+  it("includes analytics context from session when present", () => {
+    req.session.contextModule = "artworkPage"
+    req.session.sign_up_intent = "follow"
+    req.session.trigger = "click"
+    analytics.setAuthTrackingCookie({ service: "apple" })(req, res, next)
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({
+        action: "loggedIn",
+        service: "apple",
+        analytics: {
+          contextModule: "artworkPage",
+          intent: "follow",
+          trigger: "click",
         },
-        userId: "foo",
       }),
+      { httpOnly: false },
     )
   })
 
-  it("tracks login", () => {
-    const spy = jest.spyOn(analytics.analytics, "track")
-    analytics.trackLogin(req, res, next)
-    expect(spy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        event: "Successfully logged in",
-        userId: "foo",
-      }),
+  it("omits analytics when no session context is present", () => {
+    analytics.setAuthTrackingCookie({ service: "apple" })(req, res, next)
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({ action: "loggedIn", service: "apple" }),
+      { httpOnly: false },
     )
   })
 
-  it("passes along modal_id and acquisition_initiative submitted fields", () => {
-    const spy = jest.spyOn(analytics.analytics, "track")
-    req.body.modal_id = "foo"
-    req.body.acquisition_initiative = "bar"
+  it("does not include session trigger in analytics when mode is one-tap", () => {
+    req.session.contextModule = "header"
+    req.session.trigger = "click"
+    analytics.setAuthTrackingCookie({ service: "google", mode: "one-tap" })(
+      req,
+      res,
+      next,
+    )
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "useSocialAuthTracking",
+      JSON.stringify({
+        action: "loggedIn",
+        service: "google",
+        method: "one-tap",
+        analytics: { contextModule: "header" },
+      }),
+      { httpOnly: false },
+    )
+  })
+})
+
+describe("setCampaign", () => {
+  let req: any
+  let res: any
+  let next: jest.Mock
+
+  beforeEach(() => {
+    req = { session: {}, body: {}, query: {} }
+    res = {}
+    next = jest.fn()
+  })
+
+  it("stores modal_id and acquisition_initiative from body", () => {
+    req.body.modal_id = "modal-1"
+    req.body.acquisition_initiative = "initiative-1"
     analytics.setCampaign(req, res, next)
-    analytics.trackSignup("email")(req, res, next)
 
-    expect(spy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        event: "Created account",
-        properties: {
-          acquisition_initiative: "bar",
-          modal_id: "foo",
-          signup_service: "email",
-          user_id: "foo",
-        },
-        userId: "foo",
-      }),
-    )
+    expect(req.session.modalId).toBe("modal-1")
+    expect(req.session.acquisitionInitiative).toBe("initiative-1")
+    expect(next).toHaveBeenCalled()
   })
 
-  it("passes along acquisition_initiative query params for OAuth links", () => {
-    const spy = jest.spyOn(analytics.analytics, "track")
-    req.query.modal_id = "foo"
-    req.query.acquisition_initiative = "bar"
+  it("falls back to query params", () => {
+    req.query.modal_id = "modal-q"
+    req.query.acquisition_initiative = "initiative-q"
     analytics.setCampaign(req, res, next)
-    analytics.trackSignup("email")(req, res, next)
-    expect(spy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        event: "Created account",
-        properties: {
-          acquisition_initiative: "bar",
-          modal_id: "foo",
-          signup_service: "email",
-          user_id: "foo",
-        },
-        userId: "foo",
-      }),
-    )
-  })
 
-  it("doesnt hold on to the temporary session variable", () => {
-    req.body.modal_id = "foo"
-    req.body.acquisition_initiative = "bar"
-    analytics.setCampaign(req, res, next)
-    analytics.trackSignup("email")(req, res, next)
-    expect(Object.keys(req.session).length).toEqual(0)
+    expect(req.session.modalId).toBe("modal-q")
+    expect(req.session.acquisitionInitiative).toBe("initiative-q")
   })
 })

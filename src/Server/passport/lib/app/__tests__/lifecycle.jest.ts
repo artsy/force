@@ -12,6 +12,10 @@ jest.mock("Server/passport/lib/options", () => ({
   ARTSY_URL: "https://api.artsy.net",
 }))
 
+jest.mock("System/FeatureFlags/unleashServer", () => ({
+  isFeatureFlagEnabled: jest.fn().mockReturnValue(true),
+}))
+
 jest.mock("../../http")
 jest.mock("passport", () => {
   return {
@@ -275,6 +279,18 @@ describe("lifecycle", () => {
       })
     })
 
+    it("sets analytics context on the session", () => {
+      req.query["context-module"] = "artworkPage"
+      req.query["trigger"] = "click"
+
+      lifecycle.beforeSocialAuth("facebook")(req, res, next)
+
+      expect(req.session).toMatchObject({
+        contextModule: "artworkPage",
+        trigger: "click",
+      })
+    })
+
     it("sets google auth scopes", () => {
       lifecycle.beforeSocialAuth("google")(req, res, next)
 
@@ -327,7 +343,7 @@ describe("lifecycle", () => {
       )
       lifecycle.afterSocialAuth("facebook")(req, res, next)
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?error=An+unknown+error+occurred.+Please+try+again.&error_code=UNKNOWN",
+        "/login?error=An+unknown+error+occurred.+Please+try+again.&error_code=UNKNOWN&provider=facebook",
       )
       expect(warn).toHaveBeenCalledWith(
         "Error authenticating with facebook: Facebook authorization failed",
@@ -376,6 +392,7 @@ describe("lifecycle", () => {
           response: {
             body: {
               error: "User Already Exists",
+              providers: ["email", "facebook"],
             },
           },
         }
@@ -385,7 +402,29 @@ describe("lifecycle", () => {
       lifecycle.afterSocialAuth("facebook")(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(
-        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&provider=facebook",
+        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&existing_providers=email%2Cfacebook&provider=facebook",
+      )
+    })
+
+    it("injects email into existing_providers when has_password is true but email is absent", () => {
+      req.socialProfileEmail = "user+social@example.com"
+      passport.authenticate.mockReturnValueOnce((req, res, next) => {
+        const err = {
+          response: {
+            body: {
+              error: "User Already Exists",
+              providers: ["Facebook"],
+              has_password: true,
+            },
+          },
+        }
+        next(err)
+      })
+
+      lifecycle.afterSocialAuth("google")(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/login?email=user%2Bsocial%40example.com&error_code=ALREADY_EXISTS&existing_providers=email%2Cfacebook&provider=google",
       )
     })
 
@@ -444,6 +483,21 @@ describe("lifecycle", () => {
         expect(passport.authenticate).toHaveBeenCalledWith("google-one-tap")
       })
 
+      it("sets redirectTo from the Referer header when not already set", () => {
+        req.headers = { referer: "https://www.artsy.net/artist/andy-warhol" }
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.redirectTo).toBe(
+          "https://www.artsy.net/artist/andy-warhol",
+        )
+      })
+
+      it("does not override an existing redirectTo with the Referer header", () => {
+        req.session.redirectTo = "/collect"
+        req.headers = { referer: "https://www.artsy.net/artist/andy-warhol" }
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.redirectTo).toBe("/collect")
+      })
+
       it("sets the suppress cookie on auth error", () => {
         passport.authenticate.mockReturnValueOnce((_req, _res, next) =>
           next(new Error("auth error")),
@@ -462,13 +516,75 @@ describe("lifecycle", () => {
         expect(res.cookie).not.toHaveBeenCalled()
       })
 
-      it("uses google as the provider in error redirects", () => {
-        passport.authenticate.mockReturnValueOnce((_req, _res, next) => {
-          next(new Error("Unauthorized source IP address"))
-        })
+      it("redirects IP_BLOCKED inline to the originating page", () => {
+        passport.authenticate.mockReturnValueOnce(
+          (_req: any, _res: any, next: any) =>
+            next(new Error("Unauthorized source IP address")),
+        )
         lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
         expect(res.redirect).toHaveBeenCalledWith(
-          "/login?error_code=IP_BLOCKED&provider=google",
+          "/?g_one_tap_error=IP_BLOCKED",
+        )
+      })
+
+      it("redirects IP_BLOCKED inline to redirectTo when set", () => {
+        req.session.redirectTo = "/artist/andy-warhol"
+        passport.authenticate.mockReturnValueOnce(
+          (_req: any, _res: any, next: any) =>
+            next(new Error("Unauthorized source IP address")),
+        )
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.redirect).toHaveBeenCalledWith(
+          "/artist/andy-warhol?g_one_tap_error=IP_BLOCKED",
+        )
+      })
+
+      it("redirects TWO_FACTOR_AUTHENTICATION_REQUIRED inline", () => {
+        passport.authenticate.mockReturnValueOnce(
+          (_req: any, _res: any, next: any) =>
+            next(new Error("missing two-factor authentication code")),
+        )
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.redirect).toHaveBeenCalledWith(
+          "/?g_one_tap_error=TWO_FACTOR_AUTHENTICATION_REQUIRED",
+        )
+      })
+
+      it("redirects unknown errors inline", () => {
+        passport.authenticate.mockReturnValueOnce(
+          (_req: any, _res: any, next: any) =>
+            next(new Error("some unexpected error")),
+        )
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.redirect).toHaveBeenCalledWith("/?g_one_tap_error=UNKNOWN")
+      })
+
+      it("still redirects ALREADY_EXISTS to the login page", () => {
+        passport.authenticate.mockReturnValueOnce(
+          (_req: any, _res: any, next: any) => {
+            const err: any = new Error()
+            err.response = { body: { error: "User Already Exists" } }
+            req.socialProfileEmail = "user@example.com"
+            next(err)
+          },
+        )
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.redirect).toHaveBeenCalledWith(
+          expect.stringContaining("/login"),
+        )
+      })
+
+      it("still redirects PREVIOUSLY_LINKED_SETTINGS to the login page", () => {
+        passport.authenticate.mockReturnValueOnce(
+          (_req: any, _res: any, next: any) => {
+            const err: any = new Error()
+            err.response = { body: { error: "User Already Exists" } }
+            next(err)
+          },
+        )
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(res.redirect).toHaveBeenCalledWith(
+          expect.stringContaining("/login"),
         )
       })
     })

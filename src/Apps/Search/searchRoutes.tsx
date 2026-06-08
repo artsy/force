@@ -54,7 +54,7 @@ const prepareVariables = (_params, { location }) => {
 
   return {
     ...paramsToCamelCase(omit(location.query, "term")),
-    keyword: location.query.term.toString(),
+    keyword: location.query.term ?? "",
     aggregations,
   }
 }

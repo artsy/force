@@ -2,6 +2,7 @@ import { Button, Input, Stack, Text } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSocial"
 import { AuthDialogDisclaimer } from "Components/AuthDialog/Views/AuthDialogDisclaimer"
+import { AUTHENTICATION_MODES } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { recaptcha } from "Utils/recaptcha"
 import type { AuthDialogWelcomeQuery } from "__generated__/AuthDialogWelcomeQuery.graphql"
@@ -24,12 +25,14 @@ export const AuthDialogWelcome: FC<
 
   return (
     <Formik
+      enableReinitialize
       validateOnBlur={false}
-      validationSchema={VALIDATION_SCHEMA}
-      initialValues={{ email: values.email || "", mode: "Pending" }}
+      validationSchema={welcomeValidationSchema}
+      initialValues={{
+        email: values.email || "",
+        mode: AUTHENTICATION_MODES.Pending,
+      }}
       onSubmit={async ({ email }) => {
-        dispatch({ type: "SET", payload: { values: { email } } })
-
         try {
           const recaptchaToken = await recaptcha("verify_user")
 
@@ -47,6 +50,7 @@ export const AuthDialogWelcome: FC<
 
           const mode = verifyUser.exists ? "Login" : "SignUp"
 
+          dispatch({ type: "SET", payload: { values: { email } } })
           dispatch({ type: "MODE", payload: { mode } })
         } catch (error) {
           console.error(error)
@@ -106,7 +110,7 @@ export const AuthDialogWelcome: FC<
   )
 }
 
-const VALIDATION_SCHEMA = Yup.object().shape({
+export const welcomeValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter a valid email.")
     .required("Email required."),

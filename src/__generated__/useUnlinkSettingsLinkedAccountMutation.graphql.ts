@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf884282bed4e2abc136278b1a49370e>>
+ * @generated SignedSource<<3077f390ef86ddce9d6a7557fb280acc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -115,6 +115,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "hasSecondFactorEnabled",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "AuthenticationType",
                 "kind": "LinkedField",
                 "name": "authentications",
@@ -141,12 +148,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d93dd39b9e7eb1a49d2b4c73bd27579",
+    "cacheID": "cdde76258fc053765ad6faef429a63e3",
     "id": null,
     "metadata": {},
     "name": "useUnlinkSettingsLinkedAccountMutation",
     "operationKind": "mutation",
-    "text": "mutation useUnlinkSettingsLinkedAccountMutation(\n  $input: UnlinkAuthenticationMutationInput!\n) {\n  unlinkAuthentication(input: $input) {\n    me {\n      ...SettingsEditSettingsLinkedAccounts_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n"
+    "text": "mutation useUnlinkSettingsLinkedAccountMutation(\n  $input: UnlinkAuthenticationMutationInput!\n) {\n  unlinkAuthentication(input: $input) {\n    me {\n      ...SettingsEditSettingsLinkedAccounts_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  hasSecondFactorEnabled\n  authentications {\n    provider\n    id\n  }\n}\n"
   }
 };
 })();

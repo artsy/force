@@ -733,12 +733,6 @@ describe("Order2CheckoutRoute", () => {
           flow: "Buy now",
         },
         {
-          action: "orderProgressionViewed",
-          context_module: "ordersShippingMethods",
-          context_page_owner_id: "order-id",
-          flow: "Buy now",
-        },
-        {
           action: "clickedFulfillmentTab",
           context_page_owner_id: "order-id",
           flow: "Buy now",
@@ -1303,24 +1297,20 @@ describe("Order2CheckoutRoute", () => {
           context_module: "ordersFulfillment",
         },
         {
+          action: "clickedOrderProgression",
+          context_module: "ordersFulfillment",
+        },
+        {
+          action: "clickedOrderProgression",
+          context_module: "ordersFulfillment",
+        },
+        {
           action: "orderProgressionViewed",
           context_module: "ordersShippingMethods",
         },
         {
-          action: "clickedOrderProgression",
-          context_module: "ordersFulfillment",
-        },
-        {
-          action: "clickedOrderProgression",
-          context_module: "ordersFulfillment",
-        },
-        {
           action: "orderProgressionViewed",
           context_module: "ordersPayment",
-        },
-        {
-          action: "clickedPaymentMethod",
-          payment_method: "CREDIT_CARD",
         },
         {
           action: "clickedOrderProgression",

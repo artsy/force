@@ -43,6 +43,7 @@ export const useOrder2ExpressCheckoutUpdateOrderShippingAddressMutation =
               ... on OrderMutationError {
                 mutationError {
                   message
+                  code
                 }
               }
             }

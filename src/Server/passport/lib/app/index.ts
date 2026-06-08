@@ -2,10 +2,11 @@ import express from "express"
 import type { ErrorRequestHandler, RequestHandler } from "express"
 import passport from "passport"
 import opts from "../options"
-import { setCampaign, trackLogin, trackSignup } from "./analytics"
+import { setCampaign, setAuthTrackingCookie } from "./analytics"
 import {
   afterSocialAuth,
   beforeSocialAuth,
+  completeLinking,
   onError,
   onLocalLogin,
   onLocalSignup,
@@ -36,7 +37,7 @@ const setupApp = () => {
     opts.loginPagePath,
     csrf({ cookie: true }),
     middleware(onLocalLogin),
-    middleware(trackLogin),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
   app.post(
@@ -45,7 +46,7 @@ const setupApp = () => {
     middleware(setCampaign),
     middleware(onLocalSignup),
     middleware(onLocalLogin),
-    middleware(trackSignup("email")),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -58,7 +59,8 @@ const setupApp = () => {
   app.post(
     opts.appleCallbackPath,
     middleware(afterSocialAuth("apple")),
-    middleware(trackSignup("apple")),
+    middleware(setAuthTrackingCookie({ service: "apple" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -71,7 +73,8 @@ const setupApp = () => {
   app.get(
     opts.facebookCallbackPath,
     middleware(afterSocialAuth("facebook")),
-    middleware(trackSignup("facebook")),
+    middleware(setAuthTrackingCookie({ service: "facebook" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -84,7 +87,8 @@ const setupApp = () => {
   app.get(
     opts.googleCallbackPath,
     middleware(afterSocialAuth("google")),
-    middleware(trackSignup("google")),
+    middleware(setAuthTrackingCookie({ service: "google" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
@@ -92,7 +96,8 @@ const setupApp = () => {
   app.post(
     opts.googleOneTapCallbackPath,
     middleware(afterSocialAuth("google", "one-tap")),
-    middleware(trackSignup("google-one-tap")),
+    middleware(setAuthTrackingCookie({ service: "google", mode: "one-tap" })),
+    middleware(completeLinking),
     middleware(ssoAndRedirectBack),
   )
 
