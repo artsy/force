@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31356a1f16bf12c00dcd76302b790728>>
+ * @generated SignedSource<<fb6e8756411f033af3d40705413cc59f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type TrendingSearchesQuery$variables = {
   artistIds?: ReadonlyArray<string | null | undefined> | null | undefined;
   artworkIds?: ReadonlyArray<string | null | undefined> | null | undefined;
@@ -32,16 +33,25 @@ export type TrendingSearchesQuery$data = {
   readonly artworks: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly artistNames: string | null | undefined;
+        readonly date: string | null | undefined;
         readonly href: string | null | undefined;
         readonly image: {
-          readonly cropped: {
+          readonly resized: {
+            readonly height: number | null | undefined;
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number | null | undefined;
           } | null | undefined;
         } | null | undefined;
         readonly internalID: string;
+        readonly partner: {
+          readonly name: string | null | undefined;
+        } | null | undefined;
+        readonly saleMessage: string | null | undefined;
         readonly slug: string;
         readonly title: string | null | undefined;
+        readonly " $fragmentSpreads": FragmentRefs<"SaveButton_artwork">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -107,30 +117,19 @@ v6 = {
   "storageKey": null
 },
 v7 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "square",
-    "small",
-    "large"
-  ]
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
 },
-v8 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-],
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
+},
 v9 = {
   "alias": null,
   "args": null,
@@ -145,21 +144,32 @@ v9 = {
         {
           "kind": "Literal",
           "name": "height",
-          "value": 80
+          "value": 96
         },
-        (v7/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "version",
+          "value": [
+            "square",
+            "small",
+            "large"
+          ]
+        },
         {
           "kind": "Literal",
           "name": "width",
-          "value": 80
+          "value": 96
         }
       ],
       "concreteType": "CroppedImageUrl",
       "kind": "LinkedField",
       "name": "cropped",
       "plural": false,
-      "selections": (v8/*: any*/),
-      "storageKey": "cropped(height:80,version:[\"square\",\"small\",\"large\"],width:80)"
+      "selections": [
+        (v7/*: any*/),
+        (v8/*: any*/)
+      ],
+      "storageKey": "cropped(height:96,version:[\"square\",\"small\",\"large\"],width:96)"
     }
   ],
   "storageKey": null
@@ -191,6 +201,34 @@ v11 = {
 v12 = {
   "alias": null,
   "args": null,
+  "kind": "ScalarField",
+  "name": "date",
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artistNames",
+  "storageKey": null
+},
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "saleMessage",
+  "storageKey": null
+},
+v15 = [
+  {
+    "kind": "Literal",
+    "name": "shallow",
+    "value": true
+  }
+],
+v16 = {
+  "alias": null,
+  "args": null,
   "concreteType": "Image",
   "kind": "LinkedField",
   "name": "image",
@@ -202,26 +240,51 @@ v12 = {
         {
           "kind": "Literal",
           "name": "height",
-          "value": 184
+          "value": 230
         },
-        (v7/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "version",
+          "value": [
+            "larger",
+            "large",
+            "medium"
+          ]
+        },
         {
           "kind": "Literal",
           "name": "width",
-          "value": 184
+          "value": 240
         }
       ],
-      "concreteType": "CroppedImageUrl",
+      "concreteType": "ResizedImageUrl",
       "kind": "LinkedField",
-      "name": "cropped",
+      "name": "resized",
       "plural": false,
-      "selections": (v8/*: any*/),
-      "storageKey": "cropped(height:184,version:[\"square\",\"small\",\"large\"],width:184)"
+      "selections": [
+        (v7/*: any*/),
+        (v8/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "width",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "height",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "resized(height:230,version:[\"larger\",\"large\",\"medium\"],width:240)"
     }
   ],
   "storageKey": null
 },
-v13 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -291,7 +354,27 @@ return {
                   (v3/*: any*/),
                   (v5/*: any*/),
                   (v11/*: any*/),
-                  (v12/*: any*/)
+                  (v12/*: any*/),
+                  (v13/*: any*/),
+                  (v14/*: any*/),
+                  {
+                    "alias": null,
+                    "args": (v15/*: any*/),
+                    "concreteType": "Partner",
+                    "kind": "LinkedField",
+                    "name": "partner",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": "partner(shallow:true)"
+                  },
+                  (v16/*: any*/),
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "SaveButton_artwork"
+                  }
                 ],
                 "storageKey": null
               }
@@ -333,11 +416,11 @@ return {
             "plural": false,
             "selections": [
               (v9/*: any*/),
-              (v13/*: any*/)
+              (v17/*: any*/)
             ],
             "storageKey": null
           },
-          (v13/*: any*/)
+          (v17/*: any*/)
         ],
         "storageKey": null
       },
@@ -370,7 +453,66 @@ return {
                   (v5/*: any*/),
                   (v11/*: any*/),
                   (v12/*: any*/),
-                  (v13/*: any*/)
+                  (v13/*: any*/),
+                  (v14/*: any*/),
+                  {
+                    "alias": null,
+                    "args": (v15/*: any*/),
+                    "concreteType": "Partner",
+                    "kind": "LinkedField",
+                    "name": "partner",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      (v17/*: any*/)
+                    ],
+                    "storageKey": "partner(shallow:true)"
+                  },
+                  (v16/*: any*/),
+                  (v17/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isSaved",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CollectorSignals",
+                    "kind": "LinkedField",
+                    "name": "collectorSignals",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "AuctionCollectorSignals",
+                        "kind": "LinkedField",
+                        "name": "auction",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "lotWatcherCount",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "lotClosesAt",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               }
@@ -383,16 +525,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6657d2a4d42af13b7be30f7c86bc95db",
+    "cacheID": "61f7c2be5310566766f91d81b92088b6",
     "id": null,
     "metadata": {},
     "name": "TrendingSearchesQuery",
     "operationKind": "query",
-    "text": "query TrendingSearchesQuery(\n  $artistIds: [String]\n  $artworkIds: [String]\n) {\n  artists(ids: $artistIds) {\n    internalID\n    slug\n    name\n    href\n    initials\n    coverArtwork {\n      image {\n        cropped(width: 80, height: 80, version: [\"square\", \"small\", \"large\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  artworks(ids: $artworkIds, first: 50, respectParamsOrder: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        title\n        image {\n          cropped(width: 184, height: 184, version: [\"square\", \"small\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query TrendingSearchesQuery(\n  $artistIds: [String]\n  $artworkIds: [String]\n) {\n  artists(ids: $artistIds) {\n    internalID\n    slug\n    name\n    href\n    initials\n    coverArtwork {\n      image {\n        cropped(width: 96, height: 96, version: [\"square\", \"small\", \"large\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  artworks(ids: $artworkIds, first: 50, respectParamsOrder: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        title\n        date\n        artistNames\n        saleMessage\n        partner(shallow: true) {\n          name\n          id\n        }\n        image {\n          resized(width: 240, height: 230, version: [\"larger\", \"large\", \"medium\"]) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...SaveButton_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0bf2e48a97a334d24fc832792b890676";
+(node as any).hash = "39f319951144cc2111505ab123a12152";
 
 export default node;
