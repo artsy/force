@@ -5,13 +5,13 @@ import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import type { FC } from "react"
 
-interface ConversationPartnerOfferProps {
+interface ConversationPartnerOfferCTAProps {
   artworkID?: string | null
   artworkHref?: string | null
 }
 
-export const ConversationPartnerOffer: FC<
-  React.PropsWithChildren<ConversationPartnerOfferProps>
+export const ConversationPartnerOfferCTA: FC<
+  React.PropsWithChildren<ConversationPartnerOfferCTAProps>
 > = ({ artworkID, artworkHref }) => {
   const { findPartnerOffer } = useConversationsContext()
 
@@ -23,7 +23,6 @@ export const ConversationPartnerOffer: FC<
     return null
   }
 
-  // Don't surface an offer the collector can no longer act on.
   if (hasEnded || !partnerOffer.isAvailable) {
     return null
   }

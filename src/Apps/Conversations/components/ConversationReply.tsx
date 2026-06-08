@@ -1,7 +1,7 @@
 import { sentConversationMessage } from "@artsy/cohesion"
 import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
-import { ConversationPartnerOffer } from "Apps/Conversations/components/Message/ConversationPartnerOffer"
+import { ConversationPartnerOfferCTA } from "Apps/Conversations/components/Message/ConversationPartnerOfferCTA"
 import { useSendConversationMessage } from "Apps/Conversations/mutations/useSendConversationMessage"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -175,7 +175,7 @@ export const ConversationReply: FC<
       backgroundColor="mono5"
       flexDirection="column"
     >
-      <ConversationPartnerOffer
+      <ConversationPartnerOfferCTA
         artworkID={data.items?.[0]?.item?.internalID}
         artworkHref={data.items?.[0]?.item?.href}
       />
