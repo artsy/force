@@ -1,0 +1,103 @@
+import { screen } from "@testing-library/react"
+import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
+import { ConversationPartnerOfferCTA } from "Apps/Conversations/components/Message/ConversationPartnerOfferCTA"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
+
+jest.unmock("react-relay")
+
+const futureDate = () => {
+  const date = new Date()
+  date.setHours(date.getHours() + 1)
+  return date.toISOString()
+}
+
+const pastDate = () => {
+  const date = new Date()
+  date.setHours(date.getHours() - 1)
+  return date.toISOString()
+}
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => (
+    <ConversationsProvider viewer={props.viewer}>
+      <ConversationPartnerOfferCTA
+        artworkID="artwork-id"
+        artworkHref="/artwork/some-artwork"
+      />
+    </ConversationsProvider>
+  ),
+  query: graphql`
+    query ConversationPartnerOfferCTA_Test_Query @relay_test_operation {
+      viewer {
+        ...ConversationsContext_viewer
+      }
+    }
+  `,
+})
+
+const offerViewer = (offer: Record<string, unknown>) => () => ({
+  me: {
+    partnerOffersConnection: {
+      edges: [
+        {
+          node: {
+            internalID: "partner-offer-id",
+            artworkId: "artwork-id",
+            isAvailable: true,
+            priceWithDiscount: { display: "$450" },
+            endAt: futureDate(),
+            ...offer,
+          },
+        },
+      ],
+    },
+  },
+})
+
+describe("ConversationPartnerOfferCTA", () => {
+  it("renders the offer bar linking to the artwork with the partner offer id", () => {
+    renderWithRelay({ Viewer: offerViewer({}) })
+
+    expect(screen.getByText("Offer Received for $450")).toBeInTheDocument()
+
+    expect(screen.getByTestId("partnerOfferActionLink")).toHaveAttribute(
+      "href",
+      "/artwork/some-artwork?partner_offer_id=partner-offer-id",
+    )
+  })
+
+  it("falls back to a generic message when there is no discounted price", () => {
+    renderWithRelay({ Viewer: offerViewer({ priceWithDiscount: null }) })
+
+    expect(screen.getByText("Offer Received")).toBeInTheDocument()
+  })
+
+  it("renders nothing when there is no offer for the artwork", () => {
+    renderWithRelay({
+      Viewer: () => ({
+        me: { partnerOffersConnection: { edges: [] } },
+      }),
+    })
+
+    expect(
+      screen.queryByTestId("partnerOfferActionLink"),
+    ).not.toBeInTheDocument()
+  })
+
+  it("renders nothing when the offer has expired", () => {
+    renderWithRelay({ Viewer: offerViewer({ endAt: pastDate() }) })
+
+    expect(
+      screen.queryByTestId("partnerOfferActionLink"),
+    ).not.toBeInTheDocument()
+  })
+
+  it("renders nothing when the offer is unavailable", () => {
+    renderWithRelay({ Viewer: offerViewer({ isAvailable: false }) })
+
+    expect(
+      screen.queryByTestId("partnerOfferActionLink"),
+    ).not.toBeInTheDocument()
+  })
+})

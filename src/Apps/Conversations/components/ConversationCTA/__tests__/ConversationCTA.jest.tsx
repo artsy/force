@@ -216,8 +216,6 @@ describe("ConversationCTA", () => {
         }),
       })
 
-      // With an active partner offer, the partner-offer CTA bar is the sole
-      // action, so the purchase / make-offer buttons are suppressed.
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
       expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     })
