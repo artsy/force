@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c090084009b3e4bdc6e18ef3240bf0ce>>
+ * @generated SignedSource<<f9107889901edbd0fdc6f7e96b897be0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,9 +19,8 @@ export type ConversationReply_conversation$data = {
   readonly internalID: string;
   readonly items: ReadonlyArray<{
     readonly item: {
-      readonly href?: string | null | undefined;
       readonly id?: string;
-      readonly internalID?: string;
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferCTA_artwork">;
     } | null | undefined;
   } | null | undefined> | null | undefined;
   readonly lastMessageID: string | null | undefined;
@@ -39,13 +38,6 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -92,7 +84,13 @@ return {
     },
     {
       "kind": "RequiredField",
-      "field": (v1/*: any*/),
+      "field": {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "internalID",
+        "storageKey": null
+      },
       "action": "NONE"
     },
     {
@@ -126,13 +124,10 @@ return {
               "kind": "InlineFragment",
               "selections": [
                 (v0/*: any*/),
-                (v1/*: any*/),
                 {
-                  "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "ConversationPartnerOfferCTA_artwork"
                 }
               ],
               "type": "Artwork",
@@ -157,6 +152,6 @@ return {
 };
 })();
 
-(node as any).hash = "10be0dfcd8c03d3fa5994264124bbf94";
+(node as any).hash = "b4060d5aefcc1b137a58e3cc8c1fee86";
 
 export default node;

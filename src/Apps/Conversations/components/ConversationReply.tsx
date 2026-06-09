@@ -54,8 +54,7 @@ export const ConversationReply: FC<
           item {
             ... on Artwork {
               id
-              internalID
-              href
+              ...ConversationPartnerOfferCTA_artwork
             }
           }
         }
@@ -175,10 +174,7 @@ export const ConversationReply: FC<
       backgroundColor="mono5"
       flexDirection="column"
     >
-      <ConversationPartnerOfferCTA
-        artworkID={data.items?.[0]?.item?.internalID}
-        artworkHref={data.items?.[0]?.item?.href}
-      />
+      <ConversationPartnerOfferCTA artwork={data.items?.[0]?.item} />
 
       <ConversationCTA conversation={data} px={1} pt={1} />
 

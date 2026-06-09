@@ -4,25 +4,30 @@ import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
+import type { ConversationPartnerOfferCTA_artwork$key } from "__generated__/ConversationPartnerOfferCTA_artwork.graphql"
 import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 
 interface ConversationPartnerOfferCTAProps {
-  artworkID?: string | null
-  artworkHref?: string | null
+  artwork?: ConversationPartnerOfferCTA_artwork$key | null
 }
 
 export const ConversationPartnerOfferCTA: FC<
   React.PropsWithChildren<ConversationPartnerOfferCTAProps>
-> = ({ artworkID, artworkHref }) => {
+> = ({ artwork }) => {
   const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
+
+  const data = useFragment(ARTWORK_FRAGMENT, artwork)
 
   const { findPartnerOffer } = useConversationsContext()
 
-  const partnerOffer = artworkID ? findPartnerOffer(artworkID) : null
+  const partnerOffer = data?.internalID
+    ? findPartnerOffer(data.internalID)
+    : null
 
   const { hasEnded } = useTimer(partnerOffer?.endAt ?? "")
 
-  if (!isPartnerOfferConvoEnabled || !partnerOffer || !artworkHref) {
+  if (!isPartnerOfferConvoEnabled || !partnerOffer || !data?.href) {
     return null
   }
 
@@ -34,7 +39,7 @@ export const ConversationPartnerOfferCTA: FC<
     ? `Offer Received for ${partnerOffer.priceWithDiscount.display}`
     : "Offer Received"
 
-  const href = `${artworkHref}?partner_offer_id=${partnerOffer.internalID}`
+  const href = `${data.href}?partner_offer_id=${partnerOffer.internalID}`
 
   return (
     <Clickable width="100%">
@@ -65,3 +70,10 @@ export const ConversationPartnerOfferCTA: FC<
     </Clickable>
   )
 }
+
+const ARTWORK_FRAGMENT = graphql`
+  fragment ConversationPartnerOfferCTA_artwork on Artwork {
+    internalID
+    href
+  }
+`
