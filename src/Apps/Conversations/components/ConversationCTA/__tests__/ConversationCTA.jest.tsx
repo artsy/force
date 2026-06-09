@@ -190,7 +190,7 @@ describe("ConversationCTA", () => {
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
       expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     })
-    it("renders purchase button on orders with an active partner offer", () => {
+    it("hides the transaction buttons when there is an active partner offer", () => {
       const futureTime = new Date()
       futureTime.setHours(futureTime.getHours() + 1)
 
@@ -216,7 +216,9 @@ describe("ConversationCTA", () => {
         }),
       })
 
-      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      // With an active partner offer, the partner-offer CTA bar is the sole
+      // action, so the purchase / make-offer buttons are suppressed.
+      expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
       expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     })
 
