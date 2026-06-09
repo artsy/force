@@ -5,7 +5,6 @@ import { graphql, useFragment } from "react-relay"
 /**
  * Hook that returns props for the completed fulfillment details view if the step is complete.
  * Returns null if fulfillment details are not complete.
- * Fulfillment details is complete if the backend has saved minimal address data.
  */
 export const useCompleteFulfillmentDetailsData = (
   order: useCompleteFulfillmentDetailsData_order$key,
@@ -17,41 +16,58 @@ export const useCompleteFulfillmentDetailsData = (
   if (!fulfillmentDetails) {
     return null
   }
-  switch (orderData.selectedFulfillmentOption?.type) {
-    case "PICKUP":
-      return {
-        isPickup: true,
-        fulfillmentDetails: {
-          name: fulfillmentDetails?.name,
-          phoneNumber: orderData.fulfillmentDetails?.phoneNumber?.display,
-        },
-        isOffer,
-      }
-    default:
-      const isComplete = ["addressLine1", "country", "name"].every(field => {
-        return (
-          fulfillmentDetails[field as keyof typeof fulfillmentDetails] != null
-        )
-      })
 
-      if (!isComplete) {
-        return null
-      }
+  const selectedType = orderData.selectedFulfillmentOption?.type
 
-      return {
-        isPickup: false,
-        fulfillmentDetails: {
-          name: fulfillmentDetails?.name || null,
-          addressLine1: fulfillmentDetails?.addressLine1 || null,
-          addressLine2: fulfillmentDetails?.addressLine2 || null,
-          city: fulfillmentDetails?.city || null,
-          region: fulfillmentDetails?.region || null,
-          postalCode: fulfillmentDetails?.postalCode || null,
-          country: orderData.fulfillmentDetails?.country || null,
-          phoneNumber:
-            orderData.fulfillmentDetails?.phoneNumber?.display || null,
-        },
-      }
+  // For pickup: step is complete if name and phone number exist and PICKUP is selected.
+  if (selectedType === "PICKUP") {
+    return {
+      isPickup: true,
+      fulfillmentDetails: {
+        name: fulfillmentDetails?.name,
+        phoneNumber: orderData.fulfillmentDetails?.phoneNumber?.display,
+      },
+      isOffer,
+    }
+  }
+
+  /**
+   * For delivery addresses:
+   * - In BUY mode: requires both address data AND a valid fulfillment option to be selected.
+   *   If address exists but no fulfillment option is set, this indicates an error state
+   *   (e.g., missing postal code, unsupported region) and the step should remain active.
+   * - In OFFER mode: address data alone is sufficient since shipping is determined later (TBD).
+   *   However, we still validate that basic required fields are present.
+   *
+   * For pickup: step is complete if name and phone number exist and PICKUP is selected.
+   */
+  const isComplete = ["addressLine1", "country", "name"].every(field => {
+    return fulfillmentDetails[field as keyof typeof fulfillmentDetails] != null
+  })
+
+  if (!isComplete) {
+    return null
+  }
+
+  // In BUY mode fulfillment option has to be selected.
+  // If address exists but no option is selected, step is incomplete.
+  if (!isOffer && !selectedType) {
+    return null
+  }
+
+  // Step is complete - return the view props
+  return {
+    isPickup: false,
+    fulfillmentDetails: {
+      name: fulfillmentDetails?.name || null,
+      addressLine1: fulfillmentDetails?.addressLine1 || null,
+      addressLine2: fulfillmentDetails?.addressLine2 || null,
+      city: fulfillmentDetails?.city || null,
+      region: fulfillmentDetails?.region || null,
+      postalCode: fulfillmentDetails?.postalCode || null,
+      country: orderData.fulfillmentDetails?.country || null,
+      phoneNumber: orderData.fulfillmentDetails?.phoneNumber?.display || null,
+    },
   }
 }
 
