@@ -1,6 +1,7 @@
 import { sentConversationMessage } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
 import { act, fireEvent, screen } from "@testing-library/react"
+import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationReply } from "Apps/Conversations/components/ConversationReply"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
@@ -67,13 +68,18 @@ describe("ConversationReply", () => {
   }
 
   const { renderWithRelay } = setupTestWrapperTL<ConversationReplyTestQuery>({
-    Component: ({ conversation }) => (
-      <ConversationReply conversation={conversation!} />
+    Component: ({ conversation, viewer }) => (
+      <ConversationsProvider viewer={viewer!}>
+        <ConversationReply conversation={conversation!} />
+      </ConversationsProvider>
     ),
     query: graphql`
       query ConversationReplyTestQuery @relay_test_operation {
         conversation(id: "conversation-id") {
           ...ConversationReply_conversation
+        }
+        viewer {
+          ...ConversationsContext_viewer
         }
       }
     `,

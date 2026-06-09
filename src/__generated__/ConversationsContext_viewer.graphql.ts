@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06e03afca4440032fa2a512879535fa7>>
+ * @generated SignedSource<<fc4ba571e2fd0a15e3afb37f7e91248f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,6 +55,13 @@ const node: ReaderFragment = {
               "kind": "Literal",
               "name": "first",
               "value": 100
+            },
+            {
+              "kind": "Literal",
+              "name": "offerType",
+              "value": [
+                "PERSONALIZED"
+              ]
             }
           ],
           "concreteType": "PartnerOfferToCollectorConnection",
@@ -138,7 +145,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "partnerOffersConnection(first:100)"
+          "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
         }
       ],
       "storageKey": null
@@ -148,6 +155,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5bdddd04d3159d6b16ce2807b96d0637";
+(node as any).hash = "a29414d4d23a61cab0a39cebaf39ac56";
 
 export default node;
