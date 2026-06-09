@@ -38,6 +38,21 @@ const createSteps = (activeStep: CheckoutStepName) => {
   }))
 }
 
+const createStepsWithMultipleActive = (activeSteps: CheckoutStepName[]) => {
+  const activeIndices = activeSteps.map(s => ALL_STEPS.indexOf(s))
+  const firstActive = Math.min(...activeIndices)
+  const lastActive = Math.max(...activeIndices)
+  return ALL_STEPS.map((name, index) => ({
+    name,
+    state:
+      index < firstActive
+        ? CheckoutStepState.COMPLETED
+        : index >= firstActive && index <= lastActive
+          ? CheckoutStepState.ACTIVE
+          : CheckoutStepState.UPCOMING,
+  }))
+}
+
 describe("useCheckoutAutoScroll", () => {
   let mockJumpTo: jest.Mock
 
@@ -157,6 +172,79 @@ describe("useCheckoutAutoScroll", () => {
     expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
       behavior: "smooth",
       offset: 30,
+    })
+  })
+
+  describe("combined FULFILLMENT_DETAILS + DELIVERY_OPTION step", () => {
+    it("scrolls to the first active step (FULFILLMENT_DETAILS) on initial load", () => {
+      const steps = createStepsWithMultipleActive([
+        CheckoutStepName.FULFILLMENT_DETAILS,
+        CheckoutStepName.DELIVERY_OPTION,
+      ])
+
+      mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
+
+      const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+      mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
+
+      rerender()
+      jest.runAllTimers()
+
+      expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
+        behavior: "smooth",
+        offset: 30,
+      })
+    })
+
+    it("scrolls to DELIVERY_OPTION when advancing from the combined step to PAYMENT", () => {
+      mockUseCheckoutContext.mockReturnValue({
+        isLoading: false,
+        steps: createStepsWithMultipleActive([
+          CheckoutStepName.FULFILLMENT_DETAILS,
+          CheckoutStepName.DELIVERY_OPTION,
+        ]),
+      })
+
+      const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+      mockUseCheckoutContext.mockReturnValue({
+        isLoading: false,
+        steps: createSteps(CheckoutStepName.PAYMENT),
+      })
+
+      rerender()
+      jest.runAllTimers()
+
+      expect(mockJumpTo).toHaveBeenCalledWith("delivery-options-step", {
+        behavior: "smooth",
+        offset: 30,
+      })
+    })
+
+    it("scrolls to FULFILLMENT_DETAILS when going back from PAYMENT to the combined step", () => {
+      mockUseCheckoutContext.mockReturnValue({
+        isLoading: false,
+        steps: createSteps(CheckoutStepName.PAYMENT),
+      })
+
+      const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+      mockUseCheckoutContext.mockReturnValue({
+        isLoading: false,
+        steps: createStepsWithMultipleActive([
+          CheckoutStepName.FULFILLMENT_DETAILS,
+          CheckoutStepName.DELIVERY_OPTION,
+        ]),
+      })
+
+      rerender()
+      jest.runAllTimers()
+
+      expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
+        behavior: "smooth",
+        offset: 30,
+      })
     })
   })
 })
