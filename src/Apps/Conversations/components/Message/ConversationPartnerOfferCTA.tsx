@@ -1,5 +1,6 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -13,13 +14,15 @@ interface ConversationPartnerOfferCTAProps {
 export const ConversationPartnerOfferCTA: FC<
   React.PropsWithChildren<ConversationPartnerOfferCTAProps>
 > = ({ artworkID, artworkHref }) => {
+  const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
+
   const { findPartnerOffer } = useConversationsContext()
 
   const partnerOffer = artworkID ? findPartnerOffer(artworkID) : null
 
   const { hasEnded } = useTimer(partnerOffer?.endAt ?? "")
 
-  if (!partnerOffer || !artworkHref) {
+  if (!isPartnerOfferConvoEnabled || !partnerOffer || !artworkHref) {
     return null
   }
 
