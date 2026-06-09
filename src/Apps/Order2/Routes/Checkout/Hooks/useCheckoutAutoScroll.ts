@@ -24,6 +24,8 @@ export const useCheckoutAutoScroll = () => {
   const { isLoading, steps } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
 
+  // Combined steps (FULFILLMENT_DETAILS + DELIVERY_OPTION) are ACTIVE
+  // together, use the last one so forward-advance previousStep is correct.
   const activeSteps = steps.filter(
     step => step.state === CheckoutStepState.ACTIVE,
   )
