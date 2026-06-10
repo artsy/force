@@ -5,7 +5,6 @@ import {
 import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
-import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import { setNavigationGuardsEnabled } from "Apps/Order2/Order2App"
 import createLogger from "Utils/logger"
 import type {
@@ -25,7 +24,6 @@ export const MAX_LOADING_MS = 6000
 export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
-  const [isStripeRedirectHandled, setIsStripeRedirectHandled] = useState(false)
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
   const {
@@ -39,11 +37,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   } = useCheckoutContext()
 
   const { checkoutModalError, showCheckoutErrorModal } = useCheckoutModal()
-
-  // Handle Stripe redirect and call onComplete when done
-  useStripePaymentBySetupIntentId(orderData.internalID, () => {
-    setIsStripeRedirectHandled(true)
-  })
 
   // Express Checkout is considered "loaded" if:
   // 1. It's actually loaded (not null), OR
@@ -137,7 +130,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isStripeRedirectHandled,
     isInitialAutoSaveComplete,
   })
   useEffect(() => {
@@ -145,14 +137,12 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
       minimumLoadingPassed,
       orderValidated,
       isExpressCheckoutLoaded,
-      isStripeRedirectHandled,
       isInitialAutoSaveComplete,
     }
   }, [
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isStripeRedirectHandled,
     isInitialAutoSaveComplete,
   ])
 
@@ -180,7 +170,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         !flags.isExpressCheckoutLoaded &&
         flags.minimumLoadingPassed &&
         flags.orderValidated &&
-        flags.isStripeRedirectHandled &&
         flags.isInitialAutoSaveComplete
 
       if (onlyExpressCheckoutStuck) {
@@ -205,7 +194,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         minimumLoadingPassed,
         orderValidated,
         isExpressCheckoutLoaded,
-        isStripeRedirectHandled,
         isInitialAutoSaveComplete,
         isLoading,
         setLoadingComplete,
@@ -217,7 +205,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isStripeRedirectHandled,
     isInitialAutoSaveComplete,
     isLoading,
     setLoadingComplete,
