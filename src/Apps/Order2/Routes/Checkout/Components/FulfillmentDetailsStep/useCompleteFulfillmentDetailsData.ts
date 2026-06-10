@@ -38,8 +38,6 @@ export const useCompleteFulfillmentDetailsData = (
    *   (e.g., missing postal code, unsupported region) and the step should remain active.
    * - In OFFER mode: address data alone is sufficient since shipping is determined later (TBD).
    *   However, we still validate that basic required fields are present.
-   *
-   * For pickup: step is complete if name and phone number exist and PICKUP is selected.
    */
   const isComplete = ["addressLine1", "country", "name"].every(field => {
     return fulfillmentDetails[field as keyof typeof fulfillmentDetails] != null
