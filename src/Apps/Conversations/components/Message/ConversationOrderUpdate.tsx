@@ -1,6 +1,7 @@
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
-import { type Color, Flex, type FlexProps, THEME, Text } from "@artsy/palette"
+import { type Color, Flex, type FlexProps, THEME } from "@artsy/palette"
+import { ConversationEventRow } from "Apps/Conversations/components/Message/ConversationEventRow"
 import type {
   ConversationOrderUpdate_event$data,
   ConversationOrderUpdate_event$key,
@@ -28,15 +29,12 @@ export const ConversationOrderUpdate: React.FC<
     <Flex flexDirection="column" {...flexProps}>
       <ConversationTimeSince message={data} alignSelf="center" exact mb={1} />
 
-      <Flex px={2} justifyContent="center" flexDirection="row">
-        <Icon fill={color} />
-
-        <Flex flexDirection="column" pl={1}>
-          <Text color={textColor || color} variant="xs">
-            {message}
-          </Text>
-        </Flex>
-      </Flex>
+      <ConversationEventRow
+        Icon={Icon}
+        iconFill={color}
+        message={message}
+        textColor={textColor || color}
+      />
     </Flex>
   )
 }
@@ -124,7 +122,7 @@ const getIconProps = (
     } else if (state === "CANCELED" && reasonRejected) {
       return {
         color: "red100",
-        message: `Offer Declined`,
+        message: "Offer Declined",
         Icon: MoneyFillIcon,
       }
     } else if (state === "CANCELED" && reasonLapsed) {
@@ -138,7 +136,7 @@ const getIconProps = (
     } else if (orderUpdateState === "buy_submitted") {
       return {
         color: "mono100",
-        message: `You purchased this artwork`,
+        message: "You purchased this artwork",
         Icon: MoneyFillIcon,
       }
     }
