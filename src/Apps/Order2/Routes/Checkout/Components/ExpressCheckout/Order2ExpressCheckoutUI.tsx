@@ -31,6 +31,7 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import { RouterLink } from "System/Components/RouterLink"
+import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import createLogger from "Utils/logger"
 import type {
   Order2ExpressCheckoutUI_order$data,
@@ -72,6 +73,13 @@ export const Order2ExpressCheckoutUI: React.FC<
   const elements = useElements()
   const stripe = useStripe()
   const environment = useRelayEnvironment()
+
+  // On phones (mobile web + the native app webview) the wallet presents a
+  // native payment sheet, so we always rewind the order when it closes. On
+  // desktop the wallet uses a cross-device QR flow where only scanning sends
+  // address/rate data — see handleCancel.
+  const { device } = useDeviceDetection()
+  const isMobileDevice = device === Device.iPhone || device === Device.Android
 
   const setFulfillmentOptionMutation =
     useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
@@ -357,7 +365,12 @@ export const Order2ExpressCheckoutUI: React.FC<
       return
     }
 
-    if (orderMutatedDuringExpressSessionRef.current) {
+    // Mobile + mobile web: the wallet is a native payment sheet, so closing it
+    // always rewinds the order to a clean state.
+    // Desktop: the wallet uses a cross-device QR flow — only scanning the code
+    // sends address/rate data (flipping the mutated ref). An unscanned
+    // open-and-close mutates nothing, so we preserve the user's progress.
+    if (isMobileDevice || orderMutatedDuringExpressSessionRef.current) {
       await resetOrder()
       return
     }
