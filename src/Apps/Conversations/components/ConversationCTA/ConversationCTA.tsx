@@ -1,6 +1,7 @@
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
@@ -31,6 +32,8 @@ export const ConversationCTA: React.FC<
     partnerOffer?.endAt ?? new Date(0).toISOString(),
   )
 
+  const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
+
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
   const activePartnerOffer =
     !activeOrder && partnerOffer && !partnerOfferTimer.hasEnded
@@ -50,7 +53,12 @@ export const ConversationCTA: React.FC<
   const canPurchase = artwork.isAcquireable || !!activePartnerOffer
   const canMakeOffer = artwork.isOfferable || artwork.isOfferableFromInquiry
   const showTransactionButtons =
-    !activeOrder && artwork.published && (canPurchase || canMakeOffer)
+    !activeOrder &&
+    // When the new convo offer UI is on, an active offer is shown via the CTA
+    // bar instead, so the transaction buttons are suppressed.
+    !(isPartnerOfferConvoEnabled && activePartnerOffer) &&
+    artwork.published &&
+    (canPurchase || canMakeOffer)
 
   return (
     <>

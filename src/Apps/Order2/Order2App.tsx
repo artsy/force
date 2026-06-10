@@ -3,6 +3,7 @@ import { CHECKOUT_REDESIGN_FLAG } from "Apps/Order/redirects"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 import { useRouter } from "System/Hooks/useRouter"
+import { getENV } from "Utils/getENV"
 import { type FC, type PropsWithChildren, useEffect, useRef } from "react"
 
 let navigationGuardsEnabled = true
@@ -70,6 +71,15 @@ export const Order2App: FC<PropsWithChildren> = ({ children }) => {
       const isRedirect = newLocation?.action === "PUSH"
 
       if (isToTheSameApp || isRedirect) {
+        return true
+      }
+
+      // On mobile web, let browser back / swipe-back exit cleanly to the
+      // artwork without a warning. Farce blocks the navigation by rewinding it
+      // and showing a `window.confirm`, which the iOS swipe-back gesture cannot
+      // clear — the user gets rewound back into checkout instead of leaving. So
+      // we skip the warning on mobile and keep it for desktop only.
+      if (getENV("IS_MOBILE")) {
         return true
       }
 

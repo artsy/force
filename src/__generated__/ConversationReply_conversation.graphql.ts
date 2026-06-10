@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<680e15471477393d79f124137dc08a61>>
+ * @generated SignedSource<<f9107889901edbd0fdc6f7e96b897be0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type ConversationReply_conversation$data = {
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly id?: string;
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferCTA_artwork">;
     } | null | undefined;
   } | null | undefined> | null | undefined;
   readonly lastMessageID: string | null | undefined;
@@ -122,7 +123,12 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v0/*: any*/)
+                (v0/*: any*/),
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ConversationPartnerOfferCTA_artwork"
+                }
               ],
               "type": "Artwork",
               "abstractKey": null
@@ -146,6 +152,6 @@ return {
 };
 })();
 
-(node as any).hash = "0d2f6c610b891b6030defa169a4fced8";
+(node as any).hash = "b4060d5aefcc1b137a58e3cc8c1fee86";
 
 export default node;
