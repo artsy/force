@@ -2,7 +2,7 @@ import { Flex, type FlexProps, Text } from "@artsy/palette"
 import type { FC } from "react"
 
 interface ConversationEventRowProps extends FlexProps {
-  Icon: FC<React.PropsWithChildren<any>>
+  Icon: FC<{ fill?: string }>
   iconFill: string
   message: string
   textColor: string
