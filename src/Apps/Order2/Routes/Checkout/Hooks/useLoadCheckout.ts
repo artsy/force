@@ -19,7 +19,7 @@ import { graphql, useFragment } from "react-relay"
 const logger = createLogger("useLoadCheckout.tsx")
 
 export const MIN_LOADING_MS = 1000
-export const MAX_LOADING_MS = 6000
+export const MAX_LOADING_MS = 3000
 
 export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
@@ -33,7 +33,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     expressCheckoutPaymentMethods,
     expressCheckoutState,
     steps,
-    isInitialAutoSaveComplete,
   } = useCheckoutContext()
 
   const { checkoutModalError, showCheckoutErrorModal } = useCheckoutModal()
@@ -130,21 +129,14 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isInitialAutoSaveComplete,
   })
   useEffect(() => {
     flagsRef.current = {
       minimumLoadingPassed,
       orderValidated,
       isExpressCheckoutLoaded,
-      isInitialAutoSaveComplete,
     }
-  }, [
-    minimumLoadingPassed,
-    orderValidated,
-    isExpressCheckoutLoaded,
-    isInitialAutoSaveComplete,
-  ])
+  }, [minimumLoadingPassed, orderValidated, isExpressCheckoutLoaded])
 
   // After MAX_LOADING_MS without loading completing, log the stuck flags to
   // Sentry, then either degrade gracefully (Express Checkout-only failure)
@@ -169,8 +161,7 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
       const onlyExpressCheckoutStuck =
         !flags.isExpressCheckoutLoaded &&
         flags.minimumLoadingPassed &&
-        flags.orderValidated &&
-        flags.isInitialAutoSaveComplete
+        flags.orderValidated
 
       if (onlyExpressCheckoutStuck) {
         setExpressCheckoutLoaded([])
@@ -194,7 +185,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         minimumLoadingPassed,
         orderValidated,
         isExpressCheckoutLoaded,
-        isInitialAutoSaveComplete,
         isLoading,
         setLoadingComplete,
       ].every(Boolean)
@@ -205,7 +195,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isInitialAutoSaveComplete,
     isLoading,
     setLoadingComplete,
     checkoutModalError,
