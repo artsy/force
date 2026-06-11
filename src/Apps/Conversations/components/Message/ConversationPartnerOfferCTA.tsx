@@ -2,6 +2,7 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
+import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { RouterLink } from "System/Components/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import type { ConversationPartnerOfferCTA_artwork$key } from "__generated__/ConversationPartnerOfferCTA_artwork.graphql"
@@ -36,8 +37,8 @@ export const ConversationPartnerOfferCTA: FC<
   }
 
   const message = partnerOffer.priceWithDiscount?.display
-    ? `Offer Received for ${partnerOffer.priceWithDiscount.display}`
-    : "Offer Received"
+    ? `Offer received for ${partnerOffer.priceWithDiscount.display}`
+    : "Offer received"
 
   const href = `${data.href}?partner_offer_id=${partnerOffer.internalID}`
 
@@ -55,8 +56,15 @@ export const ConversationPartnerOfferCTA: FC<
           alignContent="center"
           alignItems="center"
         >
-          <Message variant="info" title={message} width="100%">
-            <Text variant="sm">Tap to review the offer from the gallery</Text>
+          <Message variant="info" width="100%">
+            <Text variant="sm-display" color="mono100" fontWeight="bold">
+              {message}
+            </Text>
+
+            <ExpiresInTimer
+              expiresAt={partnerOffer.endAt}
+              available={partnerOffer.isAvailable}
+            />
           </Message>
 
           <ChevronRightIcon

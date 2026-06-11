@@ -126,6 +126,28 @@ jest.mock("Utils/Hooks/useUserLocation", () => ({
   })),
 }))
 
+// Replace the async, network-backed phone-number validators with synchronous
+// Yup schemas. The real ones run a debounced Relay query with retry backoff
+// (~2.2s of timers), which otherwise pushes the saved-address load past the
+// MAX_LOADING_MS watchdog and wedges the loading skeleton.
+jest.mock("Components/Address/utils", () => {
+  const Yup = require("yup")
+  return {
+    ...jest.requireActual("Components/Address/utils"),
+    validatePhoneNumber: jest.fn().mockResolvedValue(true),
+    richPhoneValidators: {
+      phoneNumber: Yup.string(),
+      phoneNumberCountryCode: Yup.string(),
+    },
+    richRequiredPhoneValidators: {
+      phoneNumber: Yup.string().required("Phone number is required"),
+      phoneNumberCountryCode: Yup.string().required(
+        "Phone number country code is required",
+      ),
+    },
+  }
+})
+
 const mockTrackEvent = jest.fn()
 
 beforeEach(() => {
