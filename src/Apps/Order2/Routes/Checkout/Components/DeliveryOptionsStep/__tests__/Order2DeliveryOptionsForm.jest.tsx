@@ -32,6 +32,7 @@ const mockShippingQuoteViewed = jest.fn()
 beforeEach(() => {
   jest.clearAllMocks()
   mockCheckoutContext = {
+    isLoading: false,
     checkoutTracking: {
       clickedOrderProgression: jest.fn(),
       clickedBuyerProtection: jest.fn(),
@@ -554,6 +555,22 @@ describe("Order2DeliveryOptionsForm", () => {
         {
           name: CheckoutStepName.DELIVERY_OPTION,
           state: CheckoutStepState.UPCOMING,
+        },
+      ]
+
+      renderWithRelay(artaOptionsData)
+
+      await waitFor(() => {
+        expect(mockShippingQuoteViewed).not.toHaveBeenCalled()
+      })
+    })
+
+    it("does not track shippingQuoteViewed while the checkout is loading", async () => {
+      mockCheckoutContext.isLoading = true
+      mockCheckoutContext.steps = [
+        {
+          name: CheckoutStepName.DELIVERY_OPTION,
+          state: CheckoutStepState.ACTIVE,
         },
       ]
 

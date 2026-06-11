@@ -227,6 +227,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const setPaymentMutation = useOrder2SetOrderPaymentMutation()
 
   const {
+    isLoading,
     setConfirmationToken,
     checkoutTracking,
     completeStep,
@@ -295,7 +296,11 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
 
   // Default to saved payment method when available and track that it has been viewed
   useEffect(() => {
-    if (!checkoutTracking || paymentStep?.state !== CheckoutStepState.ACTIVE) {
+    if (
+      isLoading ||
+      !checkoutTracking ||
+      paymentStep?.state !== CheckoutStepState.ACTIVE
+    ) {
       return
     }
 
@@ -334,6 +339,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     paymentStep?.state,
     savedCreditCards,
     allowedSavedBankAccounts,
+    isLoading,
   ])
 
   const resetElementsToInitialParams = useCallback(() => {

@@ -71,6 +71,7 @@ export const SavedAddressOptions = ({
   shippingOriginRegion,
 }: SavedAddressOptionsProps) => {
   const {
+    isLoading,
     setUserAddressMode,
     userAddressMode,
     setSectionErrorMessage,
@@ -101,6 +102,10 @@ export const SavedAddressOptions = ({
   const hasTrackedAddressViewRef = useRef(false)
 
   useEffect(() => {
+    if (isLoading) {
+      return
+    }
+
     if (fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE) {
       hasTrackedAddressViewRef.current = false
       return
@@ -123,6 +128,7 @@ export const SavedAddressOptions = ({
     checkoutTracking,
     fulfillmentDetailsStep?.state,
     userAddressMode,
+    isLoading,
   ])
 
   // Scroll to top of step whenever userAddressMode changes

@@ -437,6 +437,34 @@ describe("Order2CheckoutRoute", () => {
     expect(artworkTitles).toHaveLength(3)
   })
 
+  it("does not fire impression tracking events while the loading skeleton is visible", async () => {
+    renderWithRelay({ Viewer: () => ({ ...baseProps }) })
+
+    // Skeleton is visible and loading has not completed yet.
+    expect(
+      screen.getByLabelText("Checkout loading skeleton"),
+    ).toBeInTheDocument()
+
+    const trackedViewedActions = () =>
+      mockTrackEvent.mock.calls
+        .map(([event]) => event.action)
+        .filter(action =>
+          [
+            "orderProgressionViewed",
+            "savedAddressViewed",
+            "savedPaymentMethodViewed",
+            "shippingQuoteViewed",
+          ].includes(action),
+        )
+
+    expect(trackedViewedActions()).toHaveLength(0)
+
+    // Once loading completes, progression tracking resumes.
+    await helpers.waitForLoadingComplete()
+
+    expect(trackedViewedActions()).toContain("orderProgressionViewed")
+  })
+
   it("renders the error page when order is not found", async () => {
     await renderWithRelay({
       Viewer: () => ({

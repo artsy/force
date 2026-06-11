@@ -178,10 +178,10 @@ const TestWrapper = ({
 
 type SavedAddressOptionsProps = React.ComponentProps<typeof SavedAddressOptions>
 
-const renderSavedAddressOptions = (
+const buildSavedAddressOptions = (
   props: Partial<SavedAddressOptionsProps> = {},
 ) => {
-  return render(
+  return (
     <TestWrapper>
       <SavedAddressOptions
         hasDeliveryAddress={true}
@@ -192,8 +192,14 @@ const renderSavedAddressOptions = (
         newAddressInitialValues={mockNewAddressInitialValues}
         {...props}
       />
-    </TestWrapper>,
+    </TestWrapper>
   )
+}
+
+const renderSavedAddressOptions = (
+  props: Partial<SavedAddressOptionsProps> = {},
+) => {
+  return render(buildSavedAddressOptions(props))
 }
 
 describe("SavedAddressOptions", () => {
@@ -204,6 +210,7 @@ describe("SavedAddressOptions", () => {
     onSelectInvalidAddress = jest.fn()
 
     mockCheckoutContext = {
+      isLoading: false,
       setUserAddressMode: jest.fn(),
       userAddressMode: null,
       setSectionErrorMessage: jest.fn(),
@@ -886,10 +893,14 @@ describe("SavedAddressOptions", () => {
   })
 
   describe("Tracking", () => {
-    const setupTrackingContext = (stepState: CheckoutStepState) => {
+    const setupTrackingContext = (
+      stepState: CheckoutStepState,
+      { isLoading = false }: { isLoading?: boolean } = {},
+    ) => {
       const mockSavedAddressViewed = jest.fn()
       mockCheckoutContext = {
         ...mockCheckoutContext,
+        isLoading,
         checkoutTracking: {
           ...mockCheckoutContext.checkoutTracking,
           savedAddressViewed: mockSavedAddressViewed,
@@ -928,6 +939,47 @@ describe("SavedAddressOptions", () => {
 
       await waitFor(() => {
         expect(mockSavedAddressViewed).not.toHaveBeenCalled()
+      })
+    })
+
+    it("does not track savedAddressViewed while the checkout is loading", async () => {
+      const mockSavedAddressViewed = setupTrackingContext(
+        CheckoutStepState.ACTIVE,
+        { isLoading: true },
+      )
+
+      renderSavedAddressOptions()
+
+      await waitFor(() => {
+        expect(mockSavedAddressViewed).not.toHaveBeenCalled()
+      })
+    })
+
+    it("tracks savedAddressViewed once after the checkout finishes loading", async () => {
+      const mockSavedAddressViewed = setupTrackingContext(
+        CheckoutStepState.ACTIVE,
+        { isLoading: true },
+      )
+
+      const { rerender } = renderSavedAddressOptions()
+
+      await waitFor(() => {
+        expect(mockSavedAddressViewed).not.toHaveBeenCalled()
+      })
+
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        isLoading: false,
+      })
+
+      rerender(buildSavedAddressOptions())
+
+      await waitFor(() => {
+        expect(mockSavedAddressViewed).toHaveBeenCalledTimes(1)
+        expect(mockSavedAddressViewed).toHaveBeenCalledWith([
+          mockUSAddress1,
+          mockUSAddress2,
+        ])
       })
     })
 

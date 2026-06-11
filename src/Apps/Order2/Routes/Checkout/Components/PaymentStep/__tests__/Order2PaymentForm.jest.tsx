@@ -103,6 +103,7 @@ jest.mock("react-relay", () => {
 })
 
 const mockCheckoutContext = {
+  isLoading: false,
   setConfirmationToken: jest.fn(),
   setSavePaymentMethod: jest.fn(),
   completeStep: jest.fn(),
@@ -247,6 +248,7 @@ const waitForPaymentElement = async () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  mockCheckoutContext.isLoading = false
   mockOnBalanceCheckComplete = null
   mockLastUsedPaymentMethodId = null
   ;(useTracking as jest.Mock).mockImplementation(() => ({
@@ -804,6 +806,34 @@ describe("Order2PaymentForm", () => {
       expect(
         mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
       ).toHaveBeenCalledWith(["CREDIT_CARD"], ["card-1"])
+    })
+
+    it("does not track savedPaymentMethodViewed while the checkout is loading", async () => {
+      mockCheckoutContext.isLoading = true
+
+      const savedCards = [
+        {
+          id: "card-1",
+          internalID: "card-1",
+          brand: "Visa",
+          last4: "1234",
+        },
+      ]
+
+      renderWithRelay({
+        Me: () => ({
+          ...baseMeProps,
+          creditCards: { edges: savedCards.map(card => ({ node: card })) },
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId("payment-element")).toBeInTheDocument()
+      })
+
+      expect(
+        mockCheckoutContext.checkoutTracking.savedPaymentMethodViewed,
+      ).not.toHaveBeenCalled()
     })
 
     it("tracks payment method selection for saved credit card", async () => {

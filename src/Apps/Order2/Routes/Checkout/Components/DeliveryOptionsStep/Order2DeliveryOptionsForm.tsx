@@ -44,6 +44,7 @@ export const Order2DeliveryOptionsForm: React.FC<
 > = ({ order, refreshingOptions = false }) => {
   const orderData = useFragment(FRAGMENT, order)
   const {
+    isLoading,
     checkoutTracking,
     completeStep,
     messages,
@@ -112,13 +113,14 @@ export const Order2DeliveryOptionsForm: React.FC<
 
   useEffect(() => {
     if (
+      isLoading ||
       deliveryOptionsStep?.state !== CheckoutStepState.ACTIVE ||
       !artaQuotesJson
     ) {
       return
     }
     checkoutTracking.shippingQuoteViewed(JSON.parse(artaQuotesJson))
-  }, [artaQuotesJson, checkoutTracking, deliveryOptionsStep?.state])
+  }, [artaQuotesJson, checkoutTracking, deliveryOptionsStep?.state, isLoading])
 
   const handleContinue = useCallback(async () => {
     checkoutTracking.clickedOrderProgression(
