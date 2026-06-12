@@ -221,8 +221,6 @@ describe("SavedAddressOptions", () => {
           state: CheckoutStepState.ACTIVE,
         },
       ],
-      isInitialAutoSaveComplete: true,
-      setInitialAutoSaveComplete: jest.fn(),
     } as any
 
     mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
