@@ -234,10 +234,13 @@ describe("useLoadCheckout", () => {
       expect(errorMessage).toContain("orderValidated: true")
       expect(errorMessage).toContain("isExpressCheckoutLoaded: false")
 
-      // No blocking modal; Express Checkout is force-emptied so the rest of
-      // the page can finish loading and the user can complete checkout.
+      // No blocking modal. The timeout stops blocking the page on express
+      // checkout via an internal timeout flag (it completes loading) WITHOUT
+      // emptying express checkout — so its element stays mounted and can still
+      // resolve its wallets later.
       expect(mockShowCheckoutErrorModal).not.toHaveBeenCalled()
-      expect(mockSetExpressCheckoutLoaded).toHaveBeenCalledWith([])
+      expect(mockSetExpressCheckoutLoaded).not.toHaveBeenCalled()
+      expect(mockSetLoadingComplete).toHaveBeenCalled()
     })
 
     it("surfaces the modal when a flag other than Express Checkout is stuck", async () => {

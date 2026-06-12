@@ -9,11 +9,21 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import mockStripe from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2CheckoutRouteTestQuery } from "__generated__/Order2CheckoutRouteTestQuery.graphql"
+import {
+  MAX_LOADING_MS,
+  MIN_LOADING_MS,
+} from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Order2ExpressCheckout as MockExpressCheckout } from "../Components/ExpressCheckout/Order2ExpressCheckout"
 import { Order2CheckoutRoute } from "../Order2CheckoutRoute"
+
+// Controls when the mocked express checkout reports its wallets:
+// - null (default): report "no wallets" instantly (existing behavior).
+// - <number>: report a wallet after this many ms, to exercise the race
+//   between express loading and the loading watchdog (MAX_LOADING_MS).
+let mockExpressCheckoutLoadDelayMs: number | null = null
 
 jest.setTimeout(15000)
 
@@ -102,16 +112,33 @@ jest.mock("System/Hooks/useRouter", () => ({
 jest.mock(
   "Apps/Order2/Routes/Checkout/Components/ExpressCheckout/Order2ExpressCheckout",
   () => {
-    const MockExpressCheckout = jest.fn(() => {
-      const { setExpressCheckoutLoaded, expressCheckoutPaymentMethods } =
-        useCheckoutContext()
+    // The load (setExpressCheckoutLoaded) lives in a child that mirrors the real
+    // <ExpressCheckoutElement>: it is unmounted when express is hidden, which
+    // cancels any in-flight load — exactly like Stripe's element being torn down.
+    const MockExpressCheckoutElement = () => {
+      const { setExpressCheckoutLoaded } = useCheckoutContext()
       // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
       useEffect(() => {
-        setExpressCheckoutLoaded([])
+        if (mockExpressCheckoutLoadDelayMs == null) {
+          setExpressCheckoutLoaded([])
+          return
+        }
+        const id = setTimeout(() => {
+          setExpressCheckoutLoaded(["applePay"])
+        }, mockExpressCheckoutLoadDelayMs)
+        return () => clearTimeout(id)
       }, [])
-      return expressCheckoutPaymentMethods == null ? (
-        <div>MockExpressCheckout</div>
-      ) : null
+      return <div>MockExpressCheckout</div>
+    }
+
+    const MockExpressCheckout = jest.fn(() => {
+      const { expressCheckoutPaymentMethods } = useCheckoutContext()
+      // Mirror the real Order2ExpressCheckout guard: an empty result unmounts
+      // the element subtree (and thus its loader); rendered while pending (null)
+      // or once wallets are available.
+      return expressCheckoutPaymentMethods?.length === 0 ? null : (
+        <MockExpressCheckoutElement />
+      )
     })
 
     return {
@@ -151,11 +178,16 @@ jest.mock("Components/Address/utils", () => {
 const mockTrackEvent = jest.fn()
 
 beforeEach(() => {
+  // Clear any timers left pending by a previous test so their callbacks don't
+  // fire inside the next test's timer advances (the loading min/max watchdogs
+  // and the express-load delay are all timer-driven).
+  jest.clearAllTimers()
   mockTrackEvent.mockClear()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
     trackEvent: mockTrackEvent,
   }))
   ;(MockExpressCheckout as jest.Mock).mockClear()
+  mockExpressCheckoutLoadDelayMs = null
 })
 
 const { renderWithRelay } = setupTestWrapperTL<Order2CheckoutRouteTestQuery>({
@@ -440,6 +472,62 @@ describe("Order2CheckoutRoute", () => {
       ).toBeInTheDocument()
 
       expect(MockExpressCheckout).not.toHaveBeenCalled()
+    })
+
+    it("renders express checkout when its load wins the race against the loading timeout", async () => {
+      // Wallets resolve well before the watchdog at MAX_LOADING_MS.
+      mockExpressCheckoutLoadDelayMs = 500
+
+      const props = { ...baseProps }
+      props.me.order.lineItems[0].artwork.isFixedShippingFeeOnly = true // express-eligible
+      renderWithRelay({ Viewer: () => props })
+
+      await helpers.waitForLoadingComplete()
+
+      expect(screen.getByText("MockExpressCheckout")).toBeInTheDocument()
+    })
+
+    it("renders express checkout even when its load lands after the loading timeout", async () => {
+      // Regression guard. In production a saved-address auto-save adds latency,
+      // so the express element can report its wallets only AFTER the loading
+      // watchdog (MAX_LOADING_MS) fires. The watchdog must unblock loading
+      // WITHOUT unmounting/emptying express, so the element stays mounted and
+      // can still render once its wallets resolve. (A previous regression
+      // force-emptied express on timeout, which unmounted it and dropped the
+      // late result.)
+      mockExpressCheckoutLoadDelayMs = MAX_LOADING_MS + 100
+
+      const props = { ...baseProps }
+      props.me.order.lineItems[0].artwork.isFixedShippingFeeOnly = true // express-eligible
+      renderWithRelay({ Viewer: () => props })
+
+      // Let the minimum-loading gate pass and flush, so the watchdog reads an
+      // up-to-date flag state (and thus takes the graceful-degrade branch).
+      await act(async () => {
+        jest.advanceTimersByTime(MIN_LOADING_MS)
+        await flushPromiseQueue()
+      })
+
+      // Watchdog fires while express is still unresolved → unblocks loading
+      // (via the timeout flag) while leaving express mounted.
+      await act(async () => {
+        jest.advanceTimersByTime(MAX_LOADING_MS - MIN_LOADING_MS)
+        await flushPromiseQueue()
+      })
+
+      await waitFor(() => {
+        expect(
+          screen.queryByLabelText("Checkout loading skeleton"),
+        ).not.toBeInTheDocument()
+      })
+
+      // The (late) real express load now fires and reports a wallet.
+      await act(async () => {
+        jest.advanceTimersByTime(200)
+        await flushPromiseQueue()
+      })
+
+      expect(screen.getByText("MockExpressCheckout")).toBeInTheDocument()
     })
   })
 

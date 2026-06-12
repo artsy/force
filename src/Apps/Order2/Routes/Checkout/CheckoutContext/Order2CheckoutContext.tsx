@@ -148,7 +148,10 @@ export const Order2CheckoutContext: ReturnType<
 
   // Actions
   setExpressCheckoutLoaded: action((state, availablePaymentMethods) => {
-    if (state.isLoading && state.expressCheckoutPaymentMethods === null) {
+    // Record the first express-checkout result (wallets or empty). The element
+    // can resolve *after* page loading has completed, so this is intentionally
+    // NOT gated on isLoading.
+    if (state.expressCheckoutPaymentMethods === null) {
       state.expressCheckoutPaymentMethods = availablePaymentMethods
     }
   }),
