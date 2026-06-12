@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40d5af569085b05b2f6dc01c5a31c75a>>
+ * @generated SignedSource<<d5dd02083222e2182319baf802d7fce3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistOverview_artist$data = {
+  readonly articlesConnection: {
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly artistSeriesConnection: {
     readonly totalCount: number;
   } | null | undefined;
@@ -52,11 +55,13 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 0
-},
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
 v2 = [
   {
     "alias": null,
@@ -65,7 +70,12 @@ v2 = [
     "name": "totalCount",
     "storageKey": null
   }
-];
+],
+v3 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 0
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -105,8 +115,18 @@ return {
     },
     {
       "alias": null,
+      "args": (v1/*: any*/),
+      "concreteType": "ArticleConnection",
+      "kind": "LinkedField",
+      "name": "articlesConnection",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": "articlesConnection(first:1)"
+    },
+    {
+      "alias": null,
       "args": [
-        (v1/*: any*/)
+        (v3/*: any*/)
       ],
       "concreteType": "ArtistSeriesConnection",
       "kind": "LinkedField",
@@ -118,7 +138,7 @@ return {
     {
       "alias": null,
       "args": [
-        (v1/*: any*/),
+        (v3/*: any*/),
         {
           "kind": "Literal",
           "name": "status",
@@ -160,13 +180,7 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 1
-            }
-          ],
+          "args": (v1/*: any*/),
           "concreteType": "GeneConnection",
           "kind": "LinkedField",
           "name": "genes",
@@ -205,6 +219,6 @@ return {
 };
 })();
 
-(node as any).hash = "d045ac74566d56916833c64576a0d522";
+(node as any).hash = "423f8b1ac84a9c7b27d18ab8c1950caa";
 
 export default node;

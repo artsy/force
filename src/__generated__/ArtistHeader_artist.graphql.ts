@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<387ca1b99a33dc3e275ee03df64f9feb>>
+ * @generated SignedSource<<8afc4d30f95d7e3fc3cef27c7766285f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { ReaderFragment } from 'relay-runtime';
 export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "AWARDS" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "CURATORS_PICK_EMERGING" | "FOUNDATIONS" | "GAINING_FOLLOWERS" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "PRIVATE_COLLECTIONS" | "RECENT_CAREER_EVENT" | "RESIDENCIES" | "REVIEWED" | "SOLO_SHOW" | "TRENDING_NOW" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistHeader_artist$data = {
+  readonly articlesConnection: {
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly biographyBlurb: {
     readonly credit: string | null | undefined;
     readonly text: string | null | undefined;
@@ -55,6 +58,7 @@ export type ArtistHeader_artist$data = {
       } | null | undefined;
     };
   }>;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist">;
   readonly " $fragmentType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$key = {
@@ -187,6 +191,40 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 3
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "PUBLISHED_AT_DESC"
+        }
+      ],
+      "concreteType": "ArticleConnection",
+      "kind": "LinkedField",
+      "name": "articlesConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "articlesConnection(first:3,sort:\"PUBLISHED_AT_DESC\")"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistHeaderEditorial_artist"
     },
     {
       "alias": null,
@@ -343,6 +381,6 @@ return {
 };
 })();
 
-(node as any).hash = "e646f8af0d12b8682664e738c4add32b";
+(node as any).hash = "6dd03d32de23ecef8c5dc53dde4f5d01";
 
 export default node;

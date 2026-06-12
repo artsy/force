@@ -6,7 +6,7 @@ import {
   GridColumns,
   SkeletonText,
 } from "@artsy/palette"
-import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -34,7 +34,10 @@ const ArtistCareerHighlights: FC<
     return null
   }
 
-  const insights = artist.insights.slice(ARTIST_HEADER_NUMBER_OF_INSIGHTS)
+  const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
+  const insights = artist.insights.slice(
+    getArtistHeaderNumberOfInsights({ hasEditorial }),
+  )
   const numOfColumns = insights.length > 4 ? 2 : 1
   const mid = Math.ceil(insights.length / 2)
   const columns =
@@ -126,6 +129,9 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
       fragment ArtistCareerHighlights_artist on Artist {
         name
         href
+        articlesConnection(first: 1) {
+          totalCount
+        }
         insights {
           ...ArtistCareerHighlight_insight
           kind
