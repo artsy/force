@@ -19,28 +19,34 @@ import { graphql, useFragment } from "react-relay"
 const logger = createLogger("useLoadCheckout.tsx")
 
 export const MIN_LOADING_MS = 1000
-export const MAX_LOADING_MS = 6000
+export const MAX_LOADING_MS = 3000
 
 export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
   const [minimumLoadingPassed, setMinimumLoadingPassed] = useState(false)
   const [orderValidated, setOrderValidated] = useState(false)
+  // Set by the hook when express checkout is not done loading by the max loading time.
+  // This unblocks page loading *without* touching expressCheckoutPaymentMethods,
+  // so the express element stays mounted and can still resolve its wallets.
+  const [expressCheckoutLoadTimedOut, setExpressCheckoutLoadTimedOut] =
+    useState(false)
   const orderData = useFragment(ORDER_FRAGMENT, order)
 
   const {
     isLoading,
     setLoadingComplete,
-    setExpressCheckoutLoaded,
     expressCheckoutPaymentMethods,
     expressCheckoutState,
     steps,
-    isInitialAutoSaveComplete,
   } = useCheckoutContext()
 
   const { checkoutModalError, showCheckoutErrorModal } = useCheckoutModal()
 
-  // Express Checkout is considered "loaded" if:
+  // Express Checkout is considered "loaded" (for the purpose of the loading
+  // gate) if:
   // 1. It's actually loaded (not null), OR
-  // 2. We're in post-payment state where Express Checkout should be hidden
+  // 2. We're in post-payment state where Express Checkout should be hidden, OR
+  // 3. It exceeded the max loading time (it may still resolve later — we just
+  //    stop blocking the page on it).
   const expressCheckoutPaymentMethodsReady =
     expressCheckoutPaymentMethods !== null
   const activeStep = steps.find(step => step.state === CheckoutStepState.ACTIVE)
@@ -48,7 +54,9 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     activeStep?.name === CheckoutStepName.CONFIRMATION
 
   const isExpressCheckoutLoaded =
-    expressCheckoutPaymentMethodsReady || isInPostPaymentState
+    expressCheckoutPaymentMethodsReady ||
+    isInPostPaymentState ||
+    expressCheckoutLoadTimedOut
 
   // Scroll lock during loading.
   // Pad the body by the scrollbar width while locked so the layout doesn't shift
@@ -130,21 +138,14 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isInitialAutoSaveComplete,
   })
   useEffect(() => {
     flagsRef.current = {
       minimumLoadingPassed,
       orderValidated,
       isExpressCheckoutLoaded,
-      isInitialAutoSaveComplete,
     }
-  }, [
-    minimumLoadingPassed,
-    orderValidated,
-    isExpressCheckoutLoaded,
-    isInitialAutoSaveComplete,
-  ])
+  }, [minimumLoadingPassed, orderValidated, isExpressCheckoutLoaded])
 
   // After MAX_LOADING_MS without loading completing, log the stuck flags to
   // Sentry, then either degrade gracefully (Express Checkout-only failure)
@@ -169,11 +170,12 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
       const onlyExpressCheckoutStuck =
         !flags.isExpressCheckoutLoaded &&
         flags.minimumLoadingPassed &&
-        flags.orderValidated &&
-        flags.isInitialAutoSaveComplete
+        flags.orderValidated
 
       if (onlyExpressCheckoutStuck) {
-        setExpressCheckoutLoaded([])
+        // Stop blocking the page on express checkout, but leave its element
+        // mounted so it can still resolve and render once Stripe is ready.
+        setExpressCheckoutLoadTimedOut(true)
       } else {
         showCheckoutErrorModal({
           error: CheckoutModalError.LOADING_TIMEOUT,
@@ -194,7 +196,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
         minimumLoadingPassed,
         orderValidated,
         isExpressCheckoutLoaded,
-        isInitialAutoSaveComplete,
         isLoading,
         setLoadingComplete,
       ].every(Boolean)
@@ -205,7 +206,6 @@ export const useLoadCheckout = (order: useLoadCheckout_order$key) => {
     minimumLoadingPassed,
     orderValidated,
     isExpressCheckoutLoaded,
-    isInitialAutoSaveComplete,
     isLoading,
     setLoadingComplete,
     checkoutModalError,

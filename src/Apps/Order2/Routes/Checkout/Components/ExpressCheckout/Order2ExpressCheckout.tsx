@@ -1,4 +1,3 @@
-import { Flex } from "@artsy/palette"
 import { Elements, useStripe } from "@stripe/react-stripe-js"
 import type {
   StripeElementsOptions,
@@ -80,11 +79,9 @@ export const Order2ExpressCheckout: React.FC<Order2ExpressCheckoutProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <Elements stripe={stripe} options={options}>
-        <Order2ExpressCheckoutUI order={orderData} />
-      </Elements>
-    </Flex>
+    <Elements stripe={stripe} options={options}>
+      <Order2ExpressCheckoutUI order={orderData} />
+    </Elements>
   )
 }
 

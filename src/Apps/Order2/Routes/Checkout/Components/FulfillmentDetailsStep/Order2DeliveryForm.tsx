@@ -84,8 +84,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     setUserAddressMode,
     setSectionErrorMessage,
     setIsFulfillmentDetailsSaving,
-    setInitialAutoSaveComplete,
-    isInitialAutoSaveComplete,
   } = checkoutContext
 
   const { error: fulfillmentDetailsError } = useFulfillmentDetailsError()
@@ -317,9 +315,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         )
       } finally {
         setIsFulfillmentDetailsSaving(false)
-        if (!isInitialAutoSaveComplete) {
-          setInitialAutoSaveComplete()
-        }
       }
     },
     [
@@ -336,41 +331,31 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       setUserAddressMode,
       unsetOrderFulfillmentOption,
       setOrderDeliveryAddressMutation,
-      isInitialAutoSaveComplete,
-      setInitialAutoSaveComplete,
     ],
   )
 
   const handleSelectInvalidAddress = useCallback(async () => {
-    try {
-      if (orderData.selectedFulfillmentOption?.type) {
-        try {
-          await unsetOrderFulfillmentOption.submitMutation({
-            variables: {
-              input: { id: orderData.internalID },
-            },
-          })
-        } catch (error) {
-          logger.error(
-            "Error unsetting fulfillment option after invalid address selection:",
-            error,
-          )
-        }
-      }
-      editStep(CheckoutStepName.FULFILLMENT_DETAILS)
-    } finally {
-      if (!isInitialAutoSaveComplete) {
-        setInitialAutoSaveComplete()
+    if (orderData.selectedFulfillmentOption?.type) {
+      try {
+        await unsetOrderFulfillmentOption.submitMutation({
+          variables: {
+            input: { id: orderData.internalID },
+          },
+        })
+      } catch (error) {
+        logger.error(
+          "Error unsetting fulfillment option after invalid address selection:",
+          error,
+        )
       }
     }
+    editStep(CheckoutStepName.FULFILLMENT_DETAILS)
   }, [
     orderData.selectedFulfillmentOption?.type,
     orderData.internalID,
     unsetOrderFulfillmentOption,
     logger,
     editStep,
-    isInitialAutoSaveComplete,
-    setInitialAutoSaveComplete,
   ])
 
   return (

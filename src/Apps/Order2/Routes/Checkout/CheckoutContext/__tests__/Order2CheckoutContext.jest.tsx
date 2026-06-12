@@ -284,20 +284,34 @@ describe("Order2CheckoutContext", () => {
         expect(getState().expressCheckoutPaymentMethods).toEqual(paymentMethods)
       })
 
-      it("does not set payment methods when not loading", async () => {
+      it("records the express result even after loading has completed (not gated on isLoading)", async () => {
         const { getState, actions } = await setup()
 
+        // The express element can resolve after loading has completed (e.g. timeout)
         act(() => {
           actions.setLoadingComplete()
         })
 
         const paymentMethods = [{ type: "apple_pay" }]
-
         act(() => {
           actions.setExpressCheckoutLoaded(paymentMethods as any)
         })
 
-        expect(getState().expressCheckoutPaymentMethods).toBe(null)
+        expect(getState().expressCheckoutPaymentMethods).toEqual(paymentMethods)
+      })
+
+      it("does not let an empty result override already-loaded wallets", async () => {
+        const { getState, actions } = await setup()
+
+        const paymentMethods = [{ type: "apple_pay" }]
+        act(() => {
+          actions.setExpressCheckoutLoaded(paymentMethods as any)
+        })
+        act(() => {
+          actions.setExpressCheckoutLoaded([])
+        })
+
+        expect(getState().expressCheckoutPaymentMethods).toEqual(paymentMethods)
       })
     })
 
