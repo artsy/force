@@ -492,6 +492,54 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(screen.queryByText("Insight 2")).not.toBeInTheDocument()
       expect(screen.queryByText("Insight 3")).not.toBeInTheDocument()
     })
+
+    it("renders styles and techniques after career highlights", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          insights: [
+            {
+              kind: "COLLECTED",
+              label: "Collected by major museums",
+              entities: ["MoMA"],
+            },
+          ],
+          movementGenes: [
+            {
+              internalID: "gene-id-cubism",
+              name: "Cubism",
+              slug: "cubism",
+            },
+          ],
+          mediumGenes: [],
+        }),
+      })
+
+      expect(screen.getByText("Styles")).toBeInTheDocument()
+      expect(screen.getByText("Cubism")).toBeInTheDocument()
+    })
+
+    it("renders styles and techniques when there are no career highlights", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          insights: [],
+          verifiedRepresentatives: [],
+          movementGenes: [],
+          mediumGenes: [
+            {
+              internalID: "gene-id-oil-paint",
+              name: "Oil Paint",
+              slug: "oil-paint",
+            },
+          ],
+        }),
+      })
+
+      expect(screen.queryByText("Styles")).not.toBeInTheDocument()
+      expect(screen.getByText("Techniques")).toBeInTheDocument()
+      expect(screen.getByText("Oil Paint")).toBeInTheDocument()
+    })
   })
 
   describe("CV link", () => {

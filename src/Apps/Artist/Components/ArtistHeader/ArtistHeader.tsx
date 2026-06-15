@@ -25,6 +25,10 @@ import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
+import {
+  ArtistStylesAndTechniques,
+  useHasArtistStylesAndTechniques,
+} from "Apps/Artist/Components/ArtistHeader/ArtistStylesAndTechniques"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
@@ -47,6 +51,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
+  const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
@@ -62,7 +67,8 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
   const hasRightDetails =
     hasVerifiedRepresentatives || hasInsights || hasEditorial
-  const hasSomething = hasImage || hasBio || hasRightDetails
+  const hasSomething =
+    hasImage || hasBio || hasRightDetails || hasStylesAndTechniques
 
   const trackToggledArtistBio = (expand: boolean) => {
     if (!contextPageOwnerId || !contextPageOwnerSlug) return
@@ -233,6 +239,13 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             See all past shows and fair booths
           </CV>
         </Text>
+
+        {hasStylesAndTechniques && (
+          <ArtistStylesAndTechniques
+            artist={artist}
+            contextModule={ContextModule.artistHeader}
+          />
+        )}
       </Column>
 
       {hasRightDetails && (
@@ -335,6 +348,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           totalCount
         }
         ...ArtistHeaderEditorial_artist
+        ...ArtistStylesAndTechniques_artist
         verifiedRepresentatives {
           partner {
             internalID

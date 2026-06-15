@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<680e021d788dc3b076dc753c3e15813c>>
+ * @generated SignedSource<<38ddae2ffd0363d6f7c49f587ed87e3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -78,50 +78,72 @@ v7 = {
   "name": "id",
   "storageKey": null
 },
-v8 = [
+v8 = {
+  "kind": "Literal",
+  "name": "minValue",
+  "value": 50
+},
+v9 = {
+  "kind": "Literal",
+  "name": "size",
+  "value": 3
+},
+v10 = [
+  (v1/*: any*/),
+  (v3/*: any*/),
+  (v2/*: any*/),
+  (v7/*: any*/)
+],
+v11 = [
   (v6/*: any*/)
 ],
-v9 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Artist"
 },
-v10 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v11 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v12 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Image"
-},
 v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "type": "String"
 },
 v14 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 },
 v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
+  "type": "Image"
+},
+v16 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v17 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v18 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
   "type": "Int"
+},
+v19 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": true,
+  "type": "Gene"
 };
 return {
   "fragment": {
@@ -380,6 +402,42 @@ return {
           },
           (v5/*: any*/),
           {
+            "alias": "movementGenes",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "geneFamilyID",
+                "value": "styles-and-movements"
+              },
+              (v8/*: any*/),
+              (v9/*: any*/)
+            ],
+            "concreteType": "Gene",
+            "kind": "LinkedField",
+            "name": "genes",
+            "plural": true,
+            "selections": (v10/*: any*/),
+            "storageKey": "genes(geneFamilyID:\"styles-and-movements\",minValue:50,size:3)"
+          },
+          {
+            "alias": "mediumGenes",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "geneFamilyID",
+                "value": "medium-and-techniques"
+              },
+              (v8/*: any*/),
+              (v9/*: any*/)
+            ],
+            "concreteType": "Gene",
+            "kind": "LinkedField",
+            "name": "genes",
+            "plural": true,
+            "selections": (v10/*: any*/),
+            "storageKey": "genes(geneFamilyID:\"medium-and-techniques\",minValue:50,size:3)"
+          },
+          {
             "alias": null,
             "args": null,
             "concreteType": "VerifiedRepresentative",
@@ -432,7 +490,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v8/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:30,width:30)"
                           },
                           {
@@ -453,7 +511,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v8/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:60,width:60)"
                           }
                         ],
@@ -554,11 +612,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f5f1281980bd5b1c93ce00fb67961781",
+    "cacheID": "aa7b1af498d08db1b4612a13eb322371",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "artist": (v9/*: any*/),
+        "artist": (v12/*: any*/),
         "artist.articlesConnection": {
           "enumValues": null,
           "nullable": true,
@@ -577,25 +635,25 @@ return {
           "plural": false,
           "type": "Article"
         },
-        "artist.articlesConnection.edges.node.byline": (v10/*: any*/),
-        "artist.articlesConnection.edges.node.href": (v10/*: any*/),
-        "artist.articlesConnection.edges.node.id": (v11/*: any*/),
-        "artist.articlesConnection.edges.node.internalID": (v11/*: any*/),
-        "artist.articlesConnection.edges.node.publishedAt": (v10/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage": (v12/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.small": (v13/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.small.src": (v14/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v14/*: any*/),
-        "artist.articlesConnection.edges.node.title": (v10/*: any*/),
-        "artist.articlesConnection.totalCount": (v15/*: any*/),
+        "artist.articlesConnection.edges.node.byline": (v13/*: any*/),
+        "artist.articlesConnection.edges.node.href": (v13/*: any*/),
+        "artist.articlesConnection.edges.node.id": (v14/*: any*/),
+        "artist.articlesConnection.edges.node.internalID": (v14/*: any*/),
+        "artist.articlesConnection.edges.node.publishedAt": (v13/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage": (v15/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.small": (v16/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.small.src": (v17/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v17/*: any*/),
+        "artist.articlesConnection.edges.node.title": (v13/*: any*/),
+        "artist.articlesConnection.totalCount": (v18/*: any*/),
         "artist.biographyBlurb": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistBlurb"
         },
-        "artist.biographyBlurb.credit": (v10/*: any*/),
-        "artist.biographyBlurb.text": (v10/*: any*/),
+        "artist.biographyBlurb.credit": (v13/*: any*/),
+        "artist.biographyBlurb.text": (v13/*: any*/),
         "artist.counts": {
           "enumValues": null,
           "nullable": true,
@@ -614,28 +672,28 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artist.coverArtwork.fallbackArtist": (v9/*: any*/),
-        "artist.coverArtwork.fallbackArtist.id": (v11/*: any*/),
-        "artist.coverArtwork.fallbackArtist.name": (v10/*: any*/),
-        "artist.coverArtwork.href": (v10/*: any*/),
-        "artist.coverArtwork.id": (v11/*: any*/),
-        "artist.coverArtwork.image": (v12/*: any*/),
-        "artist.coverArtwork.image.height": (v15/*: any*/),
-        "artist.coverArtwork.image.src": (v10/*: any*/),
-        "artist.coverArtwork.image.width": (v15/*: any*/),
-        "artist.coverArtwork.imageTitle": (v10/*: any*/),
-        "artist.coverArtwork.internalID": (v11/*: any*/),
-        "artist.coverArtwork.slug": (v11/*: any*/),
-        "artist.formattedNationalityAndBirthday": (v10/*: any*/),
-        "artist.href": (v10/*: any*/),
-        "artist.id": (v11/*: any*/),
+        "artist.coverArtwork.fallbackArtist": (v12/*: any*/),
+        "artist.coverArtwork.fallbackArtist.id": (v14/*: any*/),
+        "artist.coverArtwork.fallbackArtist.name": (v13/*: any*/),
+        "artist.coverArtwork.href": (v13/*: any*/),
+        "artist.coverArtwork.id": (v14/*: any*/),
+        "artist.coverArtwork.image": (v15/*: any*/),
+        "artist.coverArtwork.image.height": (v18/*: any*/),
+        "artist.coverArtwork.image.src": (v13/*: any*/),
+        "artist.coverArtwork.image.width": (v18/*: any*/),
+        "artist.coverArtwork.imageTitle": (v13/*: any*/),
+        "artist.coverArtwork.internalID": (v14/*: any*/),
+        "artist.coverArtwork.slug": (v14/*: any*/),
+        "artist.formattedNationalityAndBirthday": (v13/*: any*/),
+        "artist.href": (v13/*: any*/),
+        "artist.id": (v14/*: any*/),
         "artist.insights": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtistInsight"
         },
-        "artist.insights.description": (v10/*: any*/),
+        "artist.insights.description": (v13/*: any*/),
         "artist.insights.entities": {
           "enumValues": null,
           "nullable": false,
@@ -666,44 +724,54 @@ return {
           "plural": false,
           "type": "ArtistInsightKind"
         },
-        "artist.insights.label": (v14/*: any*/),
-        "artist.internalID": (v11/*: any*/),
-        "artist.name": (v10/*: any*/),
-        "artist.slug": (v11/*: any*/),
+        "artist.insights.label": (v17/*: any*/),
+        "artist.internalID": (v14/*: any*/),
+        "artist.mediumGenes": (v19/*: any*/),
+        "artist.mediumGenes.id": (v14/*: any*/),
+        "artist.mediumGenes.internalID": (v14/*: any*/),
+        "artist.mediumGenes.name": (v13/*: any*/),
+        "artist.mediumGenes.slug": (v14/*: any*/),
+        "artist.movementGenes": (v19/*: any*/),
+        "artist.movementGenes.id": (v14/*: any*/),
+        "artist.movementGenes.internalID": (v14/*: any*/),
+        "artist.movementGenes.name": (v13/*: any*/),
+        "artist.movementGenes.slug": (v14/*: any*/),
+        "artist.name": (v13/*: any*/),
+        "artist.slug": (v14/*: any*/),
         "artist.verifiedRepresentatives": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "VerifiedRepresentative"
         },
-        "artist.verifiedRepresentatives.id": (v11/*: any*/),
+        "artist.verifiedRepresentatives.id": (v14/*: any*/),
         "artist.verifiedRepresentatives.partner": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Partner"
         },
-        "artist.verifiedRepresentatives.partner.href": (v10/*: any*/),
-        "artist.verifiedRepresentatives.partner.id": (v11/*: any*/),
-        "artist.verifiedRepresentatives.partner.internalID": (v11/*: any*/),
-        "artist.verifiedRepresentatives.partner.name": (v10/*: any*/),
+        "artist.verifiedRepresentatives.partner.href": (v13/*: any*/),
+        "artist.verifiedRepresentatives.partner.id": (v14/*: any*/),
+        "artist.verifiedRepresentatives.partner.internalID": (v14/*: any*/),
+        "artist.verifiedRepresentatives.partner.name": (v13/*: any*/),
         "artist.verifiedRepresentatives.partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "artist.verifiedRepresentatives.partner.profile.icon": (v12/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src1x": (v13/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src1x.src": (v14/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src2x": (v13/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.icon.src2x.src": (v14/*: any*/),
-        "artist.verifiedRepresentatives.partner.profile.id": (v11/*: any*/)
+        "artist.verifiedRepresentatives.partner.profile.icon": (v15/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src1x": (v16/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src1x.src": (v17/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src2x": (v16/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.icon.src2x.src": (v17/*: any*/),
+        "artist.verifiedRepresentatives.partner.profile.id": (v14/*: any*/)
       }
     },
     "name": "ArtistHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 125, height: 125) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeaderImage_artwork on Artwork {\n  imageTitle\n  image {\n    src: url(version: [\"larger\", \"larger\"])\n    width\n    height\n  }\n  fallbackArtist: artist {\n    name\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n  }\n  ...ArtistHeaderEditorial_artist\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    ...ArtistHeaderImage_artwork\n    id\n  }\n}\n"
+    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistGenesRow_genes on Gene {\n  internalID\n  name\n  slug\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 125, height: 125) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeaderImage_artwork on Artwork {\n  imageTitle\n  image {\n    src: url(version: [\"larger\", \"larger\"])\n    width\n    height\n  }\n  fallbackArtist: artist {\n    name\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights {\n    kind\n    ...ArtistCareerHighlight_insight\n  }\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n  }\n  ...ArtistHeaderEditorial_artist\n  ...ArtistStylesAndTechniques_artist\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    href\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    ...ArtistHeaderImage_artwork\n    id\n  }\n}\n\nfragment ArtistStylesAndTechniques_artist on Artist {\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n}\n"
   }
 };
 })();
