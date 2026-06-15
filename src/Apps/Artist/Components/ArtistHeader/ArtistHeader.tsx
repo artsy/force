@@ -20,6 +20,7 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { ArtistHeaderEditorial } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderEditorial"
 import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
@@ -58,7 +59,9 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
       : biographyText
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
   const hasInsights = artist.insights.length > 0
-  const hasRightDetails = hasVerifiedRepresentatives || hasInsights
+  const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
+  const hasRightDetails =
+    hasVerifiedRepresentatives || hasInsights || hasEditorial
   const hasSomething = hasImage || hasBio || hasRightDetails
 
   const trackToggledArtistBio = (expand: boolean) => {
@@ -285,19 +288,23 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             </>
           )}
 
-          <Box display={["none", "block"]}>
-            {artist.insights
-              .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
-              .map((insight, index) => {
-                return (
-                  <ArtistCareerHighlightFragmentContainer
-                    key={insight.kind ?? index}
-                    insight={insight}
-                    contextModule={ContextModule.artistHeader}
-                  />
-                )
-              })}
-          </Box>
+          {hasInsights && (
+            <Box display={["none", "block"]}>
+              {artist.insights
+                .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
+                .map((insight, index) => {
+                  return (
+                    <ArtistCareerHighlightFragmentContainer
+                      key={insight.kind ?? index}
+                      insight={insight}
+                      contextModule={ContextModule.artistHeader}
+                    />
+                  )
+                })}
+            </Box>
+          )}
+
+          {hasEditorial && <ArtistHeaderEditorial artist={artist} />}
         </Column>
       )}
     </GridColumns>
@@ -324,6 +331,10 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           kind
           ...ArtistCareerHighlight_insight
         }
+        articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
+          totalCount
+        }
+        ...ArtistHeaderEditorial_artist
         verifiedRepresentatives {
           partner {
             internalID
@@ -372,3 +383,19 @@ const CV = styled(RouterLink)`
 `
 
 export const ARTIST_HEADER_NUMBER_OF_INSIGHTS = 4
+
+// When the editorial module is present, fewer insights are displayed in the
+// header to limit how far the artwork grid is pushed down. The remainder is
+// picked up by ArtistCareerHighlights in the about section, which must slice
+// from the same offset.
+export const ARTIST_HEADER_NUMBER_OF_INSIGHTS_WITH_EDITORIAL = 2
+
+export const getArtistHeaderNumberOfInsights = ({
+  hasEditorial,
+}: {
+  hasEditorial: boolean
+}): number => {
+  return hasEditorial
+    ? ARTIST_HEADER_NUMBER_OF_INSIGHTS_WITH_EDITORIAL
+    : ARTIST_HEADER_NUMBER_OF_INSIGHTS
+}
