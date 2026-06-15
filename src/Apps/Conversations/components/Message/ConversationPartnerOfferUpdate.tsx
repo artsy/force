@@ -31,20 +31,21 @@ export const ConversationPartnerOfferUpdate: FC<
     return null
   }
 
-  if (hasEnded || !partnerOffer.isAvailable) {
-    return null
-  }
+  const isExpired = hasEnded || !partnerOffer.isAvailable
+  const priceDisplay = partnerOffer.priceWithDiscount?.display
 
-  const message = partnerOffer.priceWithDiscount?.display
-    ? `You received an offer for ${partnerOffer.priceWithDiscount.display}`
-    : "You received an offer"
+  const message = isExpired
+    ? "Offer Expired"
+    : priceDisplay
+      ? `You received an offer for ${priceDisplay}`
+      : "You received an offer"
 
   return (
     <ConversationEventRow
       Icon={MoneyFillIcon}
-      iconFill="mono100"
+      iconFill={isExpired ? "red100" : "mono100"}
       message={message}
-      textColor="mono100"
+      textColor={isExpired ? "red100" : "mono100"}
       {...flexProps}
     />
   )

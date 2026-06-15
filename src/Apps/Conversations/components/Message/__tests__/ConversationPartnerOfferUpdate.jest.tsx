@@ -95,15 +95,17 @@ describe("ConversationPartnerOfferUpdate", () => {
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })
 
-  it("renders nothing when the offer has expired", () => {
+  it("renders an expired message when the offer has expired", () => {
     renderWithRelay({ Artwork, Viewer: offerViewer({ endAt: pastDate() }) })
 
+    expect(screen.getByText("Offer Expired")).toBeInTheDocument()
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })
 
-  it("renders nothing when the offer is unavailable", () => {
+  it("renders an expired message when the offer is unavailable", () => {
     renderWithRelay({ Artwork, Viewer: offerViewer({ isAvailable: false }) })
 
+    expect(screen.getByText("Offer Expired")).toBeInTheDocument()
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })
 
