@@ -381,15 +381,14 @@ describe("Order2DeliveryOptionsForm", () => {
         name: "Continue to Payment",
       })
 
-      await userEvent.click(continueButton)
+      // Button should be disabled because BUY orders require a valid fulfillment option
+      expect(continueButton).toBeDisabled()
 
       // Should not call the mutation for BUY orders
       expect(mockSetOrderFulfillmentOption).not.toHaveBeenCalled()
 
-      // Should still complete the step
-      expect(mockCheckoutContext.completeStep).toHaveBeenCalledWith(
-        CheckoutStepName.DELIVERY_OPTION,
-      )
+      // Should not complete the step since no valid option is selected
+      expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
     })
   })
 
