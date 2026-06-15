@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8588b35a320770e98107fa9399e1d4e7>>
+ * @generated SignedSource<<8ac2e9e4974f796e3a93034847d22561>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,6 +92,30 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              }
+            ],
+            "concreteType": "ArticleConnection",
+            "kind": "LinkedField",
+            "name": "articlesConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "articlesConnection(first:1)"
+          },
+          {
+            "alias": null,
             "args": null,
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
@@ -148,7 +172,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4231d35ab562fa8dda6322c8f9fee94c",
+    "cacheID": "80d1d260c3fc6e4adeb9a3f4382e5ffa",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -157,6 +181,18 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Artist"
+        },
+        "artist.articlesConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArticleConnection"
+        },
+        "artist.articlesConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
         },
         "artist.href": (v1/*: any*/),
         "artist.id": {
@@ -213,7 +249,7 @@ return {
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
   }
 };
 })();

@@ -83,7 +83,6 @@ describe("useLoadCheckout", () => {
       steps: [{ state: CheckoutStepState.ACTIVE, name: "PAYMENT" }],
       setLoadingComplete: mockSetLoadingComplete,
       setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-      isInitialAutoSaveComplete: true,
     })
 
     // Mock useCheckoutModal
@@ -210,7 +209,6 @@ describe("useLoadCheckout", () => {
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
         setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-        isInitialAutoSaveComplete: true,
       })
 
       renderHook(() => useLoadCheckout(mockOrder))
@@ -235,25 +233,26 @@ describe("useLoadCheckout", () => {
       expect(errorMessage).toContain("minimumLoadingPassed: true")
       expect(errorMessage).toContain("orderValidated: true")
       expect(errorMessage).toContain("isExpressCheckoutLoaded: false")
-      expect(errorMessage).toContain("isInitialAutoSaveComplete: true")
 
-      // No blocking modal; Express Checkout is force-emptied so the rest of
-      // the page can finish loading and the user can complete checkout.
+      // No blocking modal. The timeout stops blocking the page on express
+      // checkout via an internal timeout flag (it completes loading) WITHOUT
+      // emptying express checkout — so its element stays mounted and can still
+      // resolve its wallets later.
       expect(mockShowCheckoutErrorModal).not.toHaveBeenCalled()
-      expect(mockSetExpressCheckoutLoaded).toHaveBeenCalledWith([])
+      expect(mockSetExpressCheckoutLoaded).not.toHaveBeenCalled()
+      expect(mockSetLoadingComplete).toHaveBeenCalled()
     })
 
     it("surfaces the modal when a flag other than Express Checkout is stuck", async () => {
-      // Express Checkout *is* loaded (empty list), but autosave never
-      // completed. This is a genuine problem — not graceful degradation —
-      // so the user should see the blocking modal.
+      // Express Checkout *is* loaded (empty list), but loading is still stuck
+      // for another reason. This is a genuine problem — not graceful
+      // degradation — so the user should see the blocking modal.
       useCheckoutContext.mockReturnValue({
         isLoading: true,
         expressCheckoutPaymentMethods: [],
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
         setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-        isInitialAutoSaveComplete: false,
       })
 
       renderHook(() => useLoadCheckout(mockOrder))
@@ -284,7 +283,6 @@ describe("useLoadCheckout", () => {
         expressCheckoutPaymentMethods: [],
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
-        isInitialAutoSaveComplete: true,
       }))
 
       const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
@@ -320,7 +318,6 @@ describe("useLoadCheckout", () => {
         expressCheckoutPaymentMethods: expressCheckoutLoaded ? [] : null,
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
-        isInitialAutoSaveComplete: true,
       }))
 
       const { rerender } = renderHook(() => useLoadCheckout(mockOrder))

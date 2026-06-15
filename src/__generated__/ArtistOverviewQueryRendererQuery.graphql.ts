@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c3592a0847fd1809e5e05b84817e1ca6>>
+ * @generated SignedSource<<81c74c2c738c1dc3ebd76fbd4dfff729>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,11 +45,13 @@ v2 = {
   "name": "__typename",
   "storageKey": null
 },
-v3 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 0
-},
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
 v4 = [
   {
     "alias": null,
@@ -60,6 +62,11 @@ v4 = [
   }
 ],
 v5 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 0
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -142,8 +149,18 @@ return {
           },
           {
             "alias": null,
+            "args": (v3/*: any*/),
+            "concreteType": "ArticleConnection",
+            "kind": "LinkedField",
+            "name": "articlesConnection",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "articlesConnection(first:1)"
+          },
+          {
+            "alias": null,
             "args": [
-              (v3/*: any*/)
+              (v5/*: any*/)
             ],
             "concreteType": "ArtistSeriesConnection",
             "kind": "LinkedField",
@@ -155,7 +172,7 @@ return {
           {
             "alias": null,
             "args": [
-              (v3/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -197,13 +214,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 1
-                  }
-                ],
+                "args": (v3/*: any*/),
                 "concreteType": "GeneConnection",
                 "kind": "LinkedField",
                 "name": "genes",
@@ -226,7 +237,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v2/*: any*/),
-                          (v5/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -239,19 +250,19 @@ return {
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "b501bf05149587dcc3d5c0466ac3b12c",
+    "cacheID": "e65a279d198c5d6a1e6cb6ef56819877",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewQueryRendererQuery",
     "operationKind": "query",
-    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
