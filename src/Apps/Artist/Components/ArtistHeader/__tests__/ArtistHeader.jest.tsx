@@ -435,6 +435,63 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       // Only first 4 insights should be rendered (ARTIST_HEADER_NUMBER_OF_INSIGHTS = 4)
     })
+
+    it("shows up to 4 insights when there is no editorial", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          articlesConnection: { totalCount: 0, edges: [] },
+          insights: [
+            { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
+            { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
+            { kind: "SOLO_SHOW", label: "Insight 2", entities: ["MoMA"] },
+            { kind: "GROUP_SHOW", label: "Insight 3", entities: ["MoMA"] },
+            { kind: "TRENDING_NOW", label: "Insight 4", entities: ["MoMA"] },
+          ],
+        }),
+      })
+
+      expect(screen.getByText("Insight 0")).toBeInTheDocument()
+      expect(screen.getByText("Insight 3")).toBeInTheDocument()
+      expect(screen.queryByText("Insight 4")).not.toBeInTheDocument()
+    })
+
+    it("shows only 2 insights when the editorial module is present", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          articlesConnection: {
+            totalCount: 1,
+            edges: [
+              {
+                node: {
+                  internalID: "article-1",
+                  href: "/article/article-1",
+                  title: "Article 1",
+                  byline: "Artsy Editorial",
+                  publishedAt: "Jan 1, 2026",
+                  thumbnailImage: null,
+                },
+              },
+            ],
+          },
+          insights: [
+            { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
+            { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
+            { kind: "SOLO_SHOW", label: "Insight 2", entities: ["MoMA"] },
+            { kind: "GROUP_SHOW", label: "Insight 3", entities: ["MoMA"] },
+          ],
+        }),
+      })
+
+      expect(
+        screen.getByText("Artsy Editorial Featuring Pablo Picasso"),
+      ).toBeInTheDocument()
+      expect(screen.getByText("Insight 0")).toBeInTheDocument()
+      expect(screen.getByText("Insight 1")).toBeInTheDocument()
+      expect(screen.queryByText("Insight 2")).not.toBeInTheDocument()
+      expect(screen.queryByText("Insight 3")).not.toBeInTheDocument()
+    })
   })
 
   describe("CV link", () => {

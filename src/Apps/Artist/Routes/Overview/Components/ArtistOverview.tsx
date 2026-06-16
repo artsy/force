@@ -1,6 +1,6 @@
 import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import { Stack } from "@artsy/palette"
-import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import {
   ArtistSeriesRailPlaceholder,
   ArtistSeriesRailQueryRenderer,
@@ -78,9 +78,10 @@ export const ArtistOverview: React.FC<
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
 
+  const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
   const hasCareerHighlights =
     Array.isArray(artist.insights) &&
-    artist.insights.length > ARTIST_HEADER_NUMBER_OF_INSIGHTS
+    artist.insights.length > getArtistHeaderNumberOfInsights({ hasEditorial })
   const hasArtistSeries = (artist.artistSeriesConnection?.totalCount ?? 0) > 0
   const hasCurrentShows = (artist.showsConnection?.totalCount ?? 0) > 0
   const hasRelatedArtists = (artist.counts?.relatedArtists ?? 0) > 0
@@ -160,6 +161,9 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
         name
         insights {
           __typename
+        }
+        articlesConnection(first: 1) {
+          totalCount
         }
         artistSeriesConnection(first: 0) {
           totalCount

@@ -113,9 +113,16 @@ export const Order2ExpressCheckoutUI: React.FC<
     editStep,
     setSectionErrorMessage,
     messages,
+    expressCheckoutPaymentMethods,
   } = useCheckoutContext()
 
   const error = messages["EXPRESS_CHECKOUT"]?.error
+
+  // Only show the express-checkout chrome (heading, terms) once Stripe has
+  // resolved at least one wallet. The <ExpressCheckoutElement> is always
+  // rendered so it can fire onReady — but while it's loading or unavailable
+  // it stays an empty, effectively invisible container.
+  const hasWallets = (expressCheckoutPaymentMethods?.length ?? 0) > 0
 
   const unsetStepError = () => {
     setSectionErrorMessage({
@@ -627,8 +634,32 @@ export const Order2ExpressCheckoutUI: React.FC<
     }
   }
 
+  const expressCheckoutElement = (
+    <Box minWidth="240px" maxWidth="100%" paddingX="1px">
+      <ExpressCheckoutElement
+        options={expressCheckoutOptions}
+        onClick={handleOpenExpressCheckout}
+        onCancel={handleCancel}
+        onReady={handleReady}
+        onShippingAddressChange={handleShippingAddressChange}
+        onShippingRateChange={handleShippingRateChange}
+        onLoadError={e => {
+          logger.error("Express checkout element load error", e)
+          setExpressCheckoutLoaded([])
+        }}
+        onConfirm={handleConfirm}
+      />
+    </Box>
+  )
+
+  // Until Stripe resolves at least one wallet, render only the (empty,
+  // effectively invisible) element
+  if (!hasWallets) {
+    return expressCheckoutElement
+  }
+
   return (
-    <Box>
+    <Box backgroundColor="mono0" py={2} px={[2, 2, 4]}>
       <SectionHeading>Express checkout</SectionHeading>
       <Spacer y={[1, 1, 2]} />
       {error && (
@@ -642,21 +673,7 @@ export const Order2ExpressCheckoutUI: React.FC<
           <Spacer y={1} />
         </>
       )}
-      <Box minWidth="240px" maxWidth="100%" paddingX="1px">
-        <ExpressCheckoutElement
-          options={expressCheckoutOptions}
-          onClick={handleOpenExpressCheckout}
-          onCancel={handleCancel}
-          onReady={handleReady}
-          onShippingAddressChange={handleShippingAddressChange}
-          onShippingRateChange={handleShippingRateChange}
-          onLoadError={e => {
-            logger.error("Express checkout element load error", e)
-            setExpressCheckoutLoaded([])
-          }}
-          onConfirm={handleConfirm}
-        />
-      </Box>
+      {expressCheckoutElement}
       <Text variant="xs" color="mono60" mt={[1, 1, 2]}>
         <>By clicking Pay, I agree to Artsy's </>
         <RouterLink

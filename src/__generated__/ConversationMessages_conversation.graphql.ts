@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2458332ec51309dd839af259480d151>>
+ * @generated SignedSource<<58fadfa44627be731dbd3298a26510af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type ConversationMessages_conversation$data = {
       readonly internalID?: string;
       readonly isOfferable?: boolean | null | undefined;
       readonly isOfferableFromInquiry?: boolean | null | undefined;
-      readonly " $fragmentSpreads": FragmentRefs<"ConversationMessageArtwork_item">;
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationMessageArtwork_item" | "ConversationPartnerOfferUpdate_artwork">;
     } | null | undefined;
   } | null | undefined> | null | undefined;
   readonly messagesConnection: {
@@ -359,7 +359,12 @@ return {
                   "name": "isOfferableFromInquiry",
                   "storageKey": null
                 },
-                (v0/*: any*/)
+                (v0/*: any*/),
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ConversationPartnerOfferUpdate_artwork"
+                }
               ],
               "type": "Artwork",
               "abstractKey": null
@@ -562,6 +567,6 @@ return {
 };
 })();
 
-(node as any).hash = "4a137cec946409e933656d832a84af4e";
+(node as any).hash = "cbab7e8ce502bec7866e410977d4ccf2";
 
 export default node;

@@ -72,7 +72,7 @@
     "@artsy/dismissible": "^0.8.1",
     "@artsy/express-reloadable": "^1.7.0",
     "@artsy/fresnel": "^8.1.0",
-    "@artsy/icons": "3.67.0",
+    "@artsy/icons": "3.69.0",
     "@artsy/img": "1.1.2",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "46.9.1",
@@ -124,7 +124,7 @@
     "ip": "^1.1.9",
     "isomorphic-fetch": "^3.0.0",
     "localforage": "^1.10.0",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "luxon": "^3.2.1",
     "map-cursor-to-max": "^1.0.0",
     "memoize-one": "^5.2.1",
@@ -141,7 +141,7 @@
     "path-to-regexp": "6.3.0",
     "proportional-scale": "^4.0.0",
     "qrcode.react": "1.0.0",
-    "qs": "6.14.2",
+    "qs": "6.15.2",
     "react": "^18.3.1",
     "react-blurhash": "^0.3.0",
     "react-dfp": "^0.21.0",
@@ -160,7 +160,7 @@
     "relay-runtime": "^18.2.0",
     "s3": "4.4.0",
     "schema-dts": "^1.1.5",
-    "serialize-javascript": "5.0.1",
+    "serialize-javascript": "7.0.5",
     "serve-favicon": "2.5.0",
     "sharify": "0.1.6",
     "styled-components": "^6.1.13",
@@ -173,7 +173,7 @@
     "use-cursor": "^1.2.3",
     "use-debounce": "^10.0.2",
     "use-deep-compare-effect": "^1.2.0",
-    "uuid": "3.3.2",
+    "uuid": "14.0.0",
     "web-vitals": "^4.2.4",
     "yargs": "^17.7.2",
     "yup": "0.32.6"
@@ -250,7 +250,7 @@
     "react-test-renderer": "16.8.6",
     "relay-compiler": "^18.2.0",
     "relay-test-utils": "^16.0.0",
-    "storybook": "^8.6.15",
+    "storybook": "^8.6.17",
     "storybook-react-rsbuild": "^0.1.8",
     "storybook-states": "1.2.0",
     "typescript": "^5.6.3",
@@ -293,5 +293,5 @@
   "pull-lock": {
     "yarn.lock": "yarn install"
   },
-  "packageManager": "yarn@4.16.0"
+  "packageManager": "yarn@4.17.0"
 }

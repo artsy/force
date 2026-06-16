@@ -6,15 +6,12 @@ import {
   MIN_LOADING_MS,
   useLoadCheckout,
 } from "Apps/Order2/Routes/Checkout/Hooks/useLoadCheckout"
-import { useStripePaymentBySetupIntentId } from "Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 
 // Mock dependencies
 jest.mock("Apps/Order2/Order2App", () => ({
   setNavigationGuardsEnabled: jest.fn(),
 }))
-
-jest.mock("Apps/Order2/Routes/Checkout/Hooks/useStripePaymentBySetupIntentId")
 
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),
@@ -71,23 +68,13 @@ describe("useLoadCheckout", () => {
     ],
   } as any
 
-  let mockStripeCallback: (() => void) | null = null
-
   const mockOrder = {} as any // Fragment key
 
   beforeEach(() => {
     jest.clearAllMocks()
-    mockStripeCallback = null
 
     // Setup useFragment mock to return mockOrderData
     useFragment.mockReturnValue(mockOrderData)
-
-    // Setup default mocks
-    ;(useStripePaymentBySetupIntentId as jest.Mock).mockImplementation(
-      (_orderId, callback) => {
-        mockStripeCallback = callback
-      },
-    )
 
     // Mock useCheckoutContext
     useCheckoutContext.mockReturnValue({
@@ -96,7 +83,6 @@ describe("useLoadCheckout", () => {
       steps: [{ state: CheckoutStepState.ACTIVE, name: "PAYMENT" }],
       setLoadingComplete: mockSetLoadingComplete,
       setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-      isInitialAutoSaveComplete: true,
     })
 
     // Mock useCheckoutModal
@@ -223,7 +209,6 @@ describe("useLoadCheckout", () => {
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
         setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-        isInitialAutoSaveComplete: true,
       })
 
       renderHook(() => useLoadCheckout(mockOrder))
@@ -233,12 +218,7 @@ describe("useLoadCheckout", () => {
         jest.advanceTimersByTime(MIN_LOADING_MS)
       })
 
-      // Stripe redirect handler resolves.
-      act(() => {
-        mockStripeCallback?.()
-      })
-
-      // Advance past the 8s deadline; Express Checkout never loaded.
+      // Advance past the deadline; Express Checkout never loaded.
       act(() => {
         jest.advanceTimersByTime(MAX_LOADING_MS - MIN_LOADING_MS)
       })
@@ -253,26 +233,26 @@ describe("useLoadCheckout", () => {
       expect(errorMessage).toContain("minimumLoadingPassed: true")
       expect(errorMessage).toContain("orderValidated: true")
       expect(errorMessage).toContain("isExpressCheckoutLoaded: false")
-      expect(errorMessage).toContain("isStripeRedirectHandled: true")
-      expect(errorMessage).toContain("isInitialAutoSaveComplete: true")
 
-      // No blocking modal; Express Checkout is force-emptied so the rest of
-      // the page can finish loading and the user can complete checkout.
+      // No blocking modal. The timeout stops blocking the page on express
+      // checkout via an internal timeout flag (it completes loading) WITHOUT
+      // emptying express checkout — so its element stays mounted and can still
+      // resolve its wallets later.
       expect(mockShowCheckoutErrorModal).not.toHaveBeenCalled()
-      expect(mockSetExpressCheckoutLoaded).toHaveBeenCalledWith([])
+      expect(mockSetExpressCheckoutLoaded).not.toHaveBeenCalled()
+      expect(mockSetLoadingComplete).toHaveBeenCalled()
     })
 
     it("surfaces the modal when a flag other than Express Checkout is stuck", async () => {
-      // Express Checkout *is* loaded (empty list), but autosave never
-      // completed. This is a genuine problem — not graceful degradation —
-      // so the user should see the blocking modal.
+      // Express Checkout *is* loaded (empty list), but loading is still stuck
+      // for another reason. This is a genuine problem — not graceful
+      // degradation — so the user should see the blocking modal.
       useCheckoutContext.mockReturnValue({
         isLoading: true,
         expressCheckoutPaymentMethods: [],
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
         setExpressCheckoutLoaded: mockSetExpressCheckoutLoaded,
-        isInitialAutoSaveComplete: false,
       })
 
       renderHook(() => useLoadCheckout(mockOrder))
@@ -280,11 +260,6 @@ describe("useLoadCheckout", () => {
       // Pass the minimum-loading gate.
       act(() => {
         jest.advanceTimersByTime(MIN_LOADING_MS)
-      })
-
-      // Stripe redirect handler resolves.
-      act(() => {
-        mockStripeCallback?.()
       })
 
       act(() => {
@@ -308,7 +283,6 @@ describe("useLoadCheckout", () => {
         expressCheckoutPaymentMethods: [],
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
-        isInitialAutoSaveComplete: true,
       }))
 
       const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
@@ -316,11 +290,6 @@ describe("useLoadCheckout", () => {
       // Advance past minimum loading time
       act(() => {
         jest.advanceTimersByTime(MIN_LOADING_MS)
-      })
-
-      // Trigger stripe callback
-      act(() => {
-        mockStripeCallback?.()
       })
 
       // Loading completes
@@ -349,7 +318,6 @@ describe("useLoadCheckout", () => {
         expressCheckoutPaymentMethods: expressCheckoutLoaded ? [] : null,
         steps: [],
         setLoadingComplete: mockSetLoadingComplete,
-        isInitialAutoSaveComplete: true,
       }))
 
       const { rerender } = renderHook(() => useLoadCheckout(mockOrder))
@@ -357,11 +325,6 @@ describe("useLoadCheckout", () => {
       // Advance minimum loading time
       act(() => {
         jest.advanceTimersByTime(MIN_LOADING_MS)
-      })
-
-      // Trigger stripe callback
-      act(() => {
-        mockStripeCallback?.()
       })
 
       // Express checkout loads
@@ -383,11 +346,6 @@ describe("useLoadCheckout", () => {
 
       renderHook(() => useLoadCheckout(mockOrder))
 
-      // Trigger stripe callback
-      act(() => {
-        mockStripeCallback?.()
-      })
-
       // Don't advance time - minimum not passed
       expect(mockSetLoadingComplete).not.toHaveBeenCalled()
     })
@@ -408,26 +366,11 @@ describe("useLoadCheckout", () => {
 
       act(() => {
         jest.advanceTimersByTime(MIN_LOADING_MS)
-        mockStripeCallback?.()
       })
 
       await waitFor(() => {
         expect(mockSetLoadingComplete).not.toHaveBeenCalled()
       })
-    })
-  })
-
-  describe("stripe redirect handling", () => {
-    it("handles stripe redirect callback", () => {
-      renderHook(() => useLoadCheckout(mockOrder))
-
-      expect(useStripePaymentBySetupIntentId).toHaveBeenCalledWith(
-        "order-123",
-        expect.any(Function),
-      )
-
-      // Callback should be stored
-      expect(mockStripeCallback).not.toBeNull()
     })
   })
 
