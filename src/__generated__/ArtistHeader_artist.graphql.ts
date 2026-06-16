@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b88fe8133cec17134790be495f38eb14>>
+ * @generated SignedSource<<c8ca9f717a89c42e6cfb767c9570739b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,8 @@ export type ArtistHeader_artist$data = {
   } | null | undefined;
   readonly formattedNationalityAndBirthday: string | null | undefined;
   readonly insights: ReadonlyArray<{
+    readonly description: string | null | undefined;
+    readonly entities: ReadonlyArray<string>;
     readonly kind: ArtistInsightKind | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">;
   }>;
@@ -88,14 +90,21 @@ v2 = {
   "name": "name",
   "storageKey": null
 },
-v3 = {
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -140,13 +149,7 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "HTML"
-        }
-      ],
+      "args": (v3/*: any*/),
       "concreteType": "ArtistBlurb",
       "kind": "LinkedField",
       "name": "biographyBlurb",
@@ -183,6 +186,20 @@ return {
           "kind": "ScalarField",
           "name": "kind",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "entities",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": (v3/*: any*/),
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": "description(format:\"HTML\")"
         },
         {
           "args": null,
@@ -249,7 +266,7 @@ return {
           "selections": [
             (v0/*: any*/),
             (v2/*: any*/),
-            (v3/*: any*/),
+            (v4/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -284,7 +301,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v4/*: any*/),
+                      "selections": (v5/*: any*/),
                       "storageKey": "cropped(height:30,width:30)"
                     },
                     {
@@ -305,7 +322,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v4/*: any*/),
+                      "selections": (v5/*: any*/),
                       "storageKey": "cropped(height:60,width:60)"
                     }
                   ],
@@ -330,7 +347,7 @@ return {
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
-        (v3/*: any*/),
+        (v4/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -386,6 +403,6 @@ return {
 };
 })();
 
-(node as any).hash = "3239ecba8207ed8dc3dcd8d6067d6075";
+(node as any).hash = "7d8e7d17a63c0946ca56820ca97c34ea";
 
 export default node;
