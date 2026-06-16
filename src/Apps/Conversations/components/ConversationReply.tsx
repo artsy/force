@@ -43,6 +43,7 @@ export const ConversationReply: FC<
     graphql`
       fragment ConversationReply_conversation on Conversation {
         ...ConversationCTA_conversation
+        ...ConversationPartnerOfferCTA_conversation
 
         from @required(action: NONE) {
           email @required(action: NONE)
@@ -50,14 +51,6 @@ export const ConversationReply: FC<
         }
         internalID @required(action: NONE)
         inquiryID @required(action: NONE)
-        items {
-          item {
-            ... on Artwork {
-              id
-              ...ConversationPartnerOfferCTA_artwork
-            }
-          }
-        }
         # TODO: the suggested field is returning empty edges, we need to take a look
         # Suggested: The field Conversation.lastMessageID is deprecated.
         # Deprecation reason: "Prefer querying messagesConnection(last:1) { edges { node { internalID } } }
@@ -174,7 +167,7 @@ export const ConversationReply: FC<
       backgroundColor="mono5"
       flexDirection="column"
     >
-      <ConversationPartnerOfferCTA artwork={data.items?.[0]?.item} />
+      <ConversationPartnerOfferCTA conversation={data} />
 
       <ConversationCTA conversation={data} px={1} pt={1} />
 
