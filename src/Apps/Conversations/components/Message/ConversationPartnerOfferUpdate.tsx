@@ -34,11 +34,11 @@ export const ConversationPartnerOfferUpdate: FC<
   const isExpired = hasEnded || !partnerOffer.isAvailable
   const priceDisplay = partnerOffer.priceWithDiscount?.display
 
-  const message = isExpired
-    ? "Offer Expired"
-    : priceDisplay
-      ? `You received an offer for ${priceDisplay}`
-      : "You received an offer"
+  const offerMessage = priceDisplay
+    ? `You received an offer for ${priceDisplay}`
+    : "You received an offer"
+
+  const message = isExpired ? "Offer Expired" : offerMessage
 
   return (
     <ConversationEventRow
