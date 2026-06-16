@@ -174,7 +174,10 @@ export const ConversationReply: FC<
       backgroundColor="mono5"
       flexDirection="column"
     >
-      <ConversationPartnerOfferCTA artwork={data.items?.[0]?.item} />
+      <ConversationPartnerOfferCTA
+        artwork={data.items?.[0]?.item}
+        conversationId={data.internalID}
+      />
 
       <ConversationCTA conversation={data} px={1} pt={1} />
 

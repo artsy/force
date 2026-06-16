@@ -11,11 +11,12 @@ import { graphql, useFragment } from "react-relay"
 
 interface ConversationPartnerOfferCTAProps {
   artwork?: ConversationPartnerOfferCTA_artwork$key | null
+  conversationId?: string | null
 }
 
 export const ConversationPartnerOfferCTA: FC<
   React.PropsWithChildren<ConversationPartnerOfferCTAProps>
-> = ({ artwork }) => {
+> = ({ artwork, conversationId }) => {
   const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
 
   const data = useFragment(ARTWORK_FRAGMENT, artwork)
@@ -42,7 +43,10 @@ export const ConversationPartnerOfferCTA: FC<
     return null
   }
 
-  const href = `${data.href}?partner_offer_id=${partnerOffer.internalID}`
+  const conversationParam = conversationId
+    ? `&conversation_id=${conversationId}`
+    : ""
+  const href = `${data.href}?partner_offer_id=${partnerOffer.internalID}${conversationParam}`
 
   return (
     <Clickable width="100%">
