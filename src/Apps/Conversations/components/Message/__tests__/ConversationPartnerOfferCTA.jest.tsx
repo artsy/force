@@ -119,16 +119,6 @@ describe("ConversationPartnerOfferCTA", () => {
     ).not.toBeInTheDocument()
   })
 
-  it("renders nothing when the partner-offer-convo flag is off", () => {
-    mockUseFlag.mockImplementation(() => false)
-
-    renderWithRelay({ Artwork, Viewer: offerViewer({}) })
-
-    expect(
-      screen.queryByTestId("partnerOfferActionLink"),
-    ).not.toBeInTheDocument()
-  })
-
   describe("expiry countdown", () => {
     const NOW = DateTime.fromISO("2026-01-01T00:00:00.000Z").toMillis()
 
@@ -163,5 +153,15 @@ describe("ConversationPartnerOfferCTA", () => {
         color: THEME.colors.red100,
       })
     })
+  })
+
+  it("renders nothing when the partner-offer-convo flag is off", () => {
+    mockUseFlag.mockImplementation(() => false)
+
+    renderWithRelay({ Artwork, Viewer: offerViewer({}) })
+
+    expect(
+      screen.queryByTestId("partnerOfferActionLink"),
+    ).not.toBeInTheDocument()
   })
 })

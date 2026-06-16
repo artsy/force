@@ -32,13 +32,15 @@ export const ConversationPartnerOfferCTA: FC<
     return null
   }
 
-  if (hasEnded || !partnerOffer.isAvailable) {
-    return null
-  }
+  const isExpired = hasEnded || !partnerOffer.isAvailable
 
   const message = partnerOffer.priceWithDiscount?.display
     ? `Offer received for ${partnerOffer.priceWithDiscount.display}`
     : "Offer received"
+
+  if (isExpired) {
+    return null
+  }
 
   const href = `${data.href}?partner_offer_id=${partnerOffer.internalID}`
 
