@@ -87,7 +87,9 @@ describe("ConversationPartnerOfferCTA", () => {
 
     expect(screen.getByTestId("partnerOfferActionLink")).toHaveAttribute(
       "href",
-      "/artwork/some-artwork?partner_offer_id=partner-offer-id",
+      expect.stringMatching(
+        /^\/artwork\/some-artwork\?partner_offer_id=partner-offer-id&conversation_id=.+$/,
+      ),
     )
   })
 

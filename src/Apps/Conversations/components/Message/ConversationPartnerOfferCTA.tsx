@@ -47,7 +47,7 @@ export const ConversationPartnerOfferCTA: FC<
     ? `Offer received for ${partnerOffer.priceWithDiscount.display}`
     : "Offer received"
 
-  const href = `${artwork.href}?partner_offer_id=${partnerOffer.internalID}`
+  const href = `${artwork.href}?partner_offer_id=${partnerOffer.internalID}&conversation_id=${data.internalID}`
 
   return (
     <Clickable width="100%">
@@ -88,6 +88,7 @@ export const ConversationPartnerOfferCTA: FC<
 
 const CONVERSATION_FRAGMENT = graphql`
   fragment ConversationPartnerOfferCTA_conversation on Conversation {
+    internalID
     items {
       item {
         __typename

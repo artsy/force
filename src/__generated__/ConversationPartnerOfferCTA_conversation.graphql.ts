@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<743bf75b4901dd5a68244c1696c17303>>
+ * @generated SignedSource<<2f7a135715fbbbc6c9bade2f939d0695>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ConversationPartnerOfferCTA_conversation$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
+  readonly internalID: string | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
@@ -50,6 +51,7 @@ return {
   "metadata": null,
   "name": "ConversationPartnerOfferCTA_conversation",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -151,6 +153,6 @@ return {
 };
 })();
 
-(node as any).hash = "7b2c960c6bd2e7bca398bc6cd5c53da4";
+(node as any).hash = "32d91448f5f02eaa40e418844bc0fb65";
 
 export default node;

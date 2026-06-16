@@ -149,10 +149,15 @@ export const ArtworkSidebarCommercialButtons: React.FC<
 
     try {
       setIsCommitingCreateOrderMutation(true)
+      const conversationId = match?.location?.query?.conversation_id
+        ? String(match.location.query.conversation_id)
+        : undefined
+
       const response = await createPartnerOfferCheckout.submitMutation({
         variables: {
           input: {
             partnerOfferId: activePartnerOffer.internalID,
+            impulseConversationId: conversationId,
           },
         },
       })
