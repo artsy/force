@@ -53,6 +53,7 @@ export const AuthDialogWelcome: FC<
           dispatch({ type: "SET", payload: { values: { email } } })
           dispatch({ type: "MODE", payload: { mode } })
         } catch (error) {
+          dispatch({ type: "SET", payload: { values: { email } } })
           console.error(error)
           dispatch({ type: "FALLBACK" })
         }
