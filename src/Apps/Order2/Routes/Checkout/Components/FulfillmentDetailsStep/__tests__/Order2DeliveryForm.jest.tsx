@@ -1055,13 +1055,21 @@ describe("Order2DeliveryForm", () => {
         expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
-      it("allows OFFER mode orders to proceed with SHIPPING_TBD fulfillment option", async () => {
+      it("allows OFFER mode orders to proceed with SHIPPING_TBD when Arta is not configured", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
             ...baseMeProps,
             order: {
               ...baseOrderProps,
               mode: "OFFER",
+              lineItems: [
+                {
+                  artwork: {
+                    processWithArtsyShippingDomestic: false,
+                    artsyShippingInternational: false,
+                  },
+                },
+              ],
               fulfillmentDetails: {
                 name: "",
                 addressLine1: "",
@@ -1113,6 +1121,7 @@ describe("Order2DeliveryForm", () => {
               orderMutationSuccess(
                 { ...baseOrderProps, mode: "OFFER" },
                 {
+                  shippingRadius: "domestic",
                   fulfillmentDetails: {
                     name: "Jane Smith",
                     addressLine1: "456 Oak Ave",
@@ -1149,7 +1158,7 @@ describe("Order2DeliveryForm", () => {
         })
         await flushPromiseQueue()
 
-        // OFFER mode should NOT show error for missing shipping options
+        // Arta is not configured — OFFER mode proceeds without error
         expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
           {
             error: null,
@@ -1157,6 +1166,109 @@ describe("Order2DeliveryForm", () => {
           },
         )
 
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
+      })
+
+      it("shows error for OFFER mode when Arta is configured but no quotes are returned", async () => {
+        const { mockResolveLastOperation } = renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseOrderProps,
+              mode: "OFFER",
+              lineItems: [
+                {
+                  artwork: {
+                    processWithArtsyShippingDomestic: true,
+                    artsyShippingInternational: false,
+                  },
+                },
+              ],
+              fulfillmentDetails: {
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "US",
+                phoneNumber: {
+                  regionCode: "us",
+                  originalNumber: "",
+                },
+              },
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        await userEvent.type(
+          screen.getByPlaceholderText("Add full name"),
+          "Jane Smith",
+        )
+        await userEvent.type(
+          screen.getByLabelText("Street address"),
+          "456 Oak Ave",
+        )
+        await userEvent.type(screen.getByLabelText("City"), "Los Angeles")
+        await userEvent.type(
+          screen.getByLabelText("State, region or province"),
+          "CA",
+        )
+        await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "90210")
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.phoneNumber"),
+          "5559876543",
+        )
+
+        act(() => {
+          userEvent.click(screen.getByText("Save and Continue"))
+        })
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(
+                { ...baseOrderProps, mode: "OFFER" },
+                {
+                  shippingRadius: "domestic",
+                  fulfillmentDetails: {
+                    name: "Jane Smith",
+                    addressLine1: "456 Oak Ave",
+                    addressLine2: "",
+                    city: "Los Angeles",
+                    region: "CA",
+                    postalCode: "90210",
+                    country: "US",
+                    phoneNumber: {
+                      regionCode: "us",
+                      originalNumber: "5559876543",
+                    },
+                  },
+                  fulfillmentOptions: [
+                    {
+                      type: "SHIPPING_TBD",
+                    },
+                  ],
+                },
+              ),
+          })
+        })
+        await flushPromiseQueue()
+
+        // Error thrown before saveAddressToUser
+        expect(mockSelectDeliveryOption).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            error: expect.objectContaining({
+              title: "Unable to provide shipping quote",
+            }),
+            section: "FULFILLMENT_DETAILS",
+          },
+        )
         expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 

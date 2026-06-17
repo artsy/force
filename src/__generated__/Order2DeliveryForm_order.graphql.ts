@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6fa730caa4121f7deec9fa7bd984a5b>>
+ * @generated SignedSource<<efc94c922f3b5ef31b4a846a0dcaac9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,8 @@ export type Order2DeliveryForm_order$data = {
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
+      readonly artsyShippingInternational: boolean | null | undefined;
+      readonly processWithArtsyShippingDomestic: boolean | null | undefined;
       readonly shippingOriginRegion: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
@@ -204,6 +206,20 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "shippingOriginRegion",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "processWithArtsyShippingDomestic",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "artsyShippingInternational",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -216,6 +232,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "42fee346eabaf8e4af3ee28252066a51";
+(node as any).hash = "31f75ccbf671cf09460745391e5ebd76";
 
 export default node;
