@@ -102,7 +102,7 @@ const ArtistCombinedRoute: React.FC<
 
       <ArtistCombinedNav waitUntil={waitUntil} navigating={navigating} />
 
-      <Spacer y={[2, 4]} />
+      <Spacer y={2} />
 
       <Section id="artistArtworksTop">
         <Text variant="lg-display" as="h2">
