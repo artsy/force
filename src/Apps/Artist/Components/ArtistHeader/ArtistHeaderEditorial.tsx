@@ -1,4 +1,5 @@
 import {
+  Box,
   type BoxProps,
   ProgressDots,
   Stack,
@@ -77,11 +78,15 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         </Swiper>
 
         {articles.length > 1 && (
-          <ProgressDots
-            amount={articles.length}
-            activeIndex={activeIndex}
-            onClick={setActiveIndex}
-          />
+          // This component is primarily whitespace so we can neutralize
+          // the height of the dots to visually balance
+          <Box mb={[0, -25]}>
+            <ProgressDots
+              amount={articles.length}
+              activeIndex={activeIndex}
+              onClick={setActiveIndex}
+            />
+          </Box>
         )}
       </Stack>
     </Stack>

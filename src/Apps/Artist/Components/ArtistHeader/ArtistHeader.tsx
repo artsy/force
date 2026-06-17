@@ -129,12 +129,20 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         >
           <RouterLink
             to={artist.coverArtwork.href}
-            display="block"
+            display="flex"
+            flexDirection="column"
+            gap={1}
             textDecoration="none"
+            width="fit-content"
             maxWidth="100%"
             onClick={trackClickedArtistArtworkImage}
           >
             <ArtistHeaderImageFragmentContainer artwork={artist.coverArtwork} />
+
+            <Text variant="xs" color="mono60" textAlign="left" overflowEllipsis>
+              <em>{artist.coverArtwork.title}</em>
+              {artist.coverArtwork.date && `, ${artist.coverArtwork.date}`}
+            </Text>
           </RouterLink>
         </Column>
       )}
@@ -376,6 +384,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           internalID
           slug
           href
+          title
+          date
           image {
             src: url(version: ["larger", "larger"])
             width
