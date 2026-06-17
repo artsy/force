@@ -859,9 +859,19 @@ describe("ExpressCheckoutUI", () => {
 
     await flushPromiseQueue()
 
+    // resetOrder reads fulfillmentOptions from the fresh unset-payment response,
+    // so return a PICKUP-only order here to exercise the unset fallback.
     const unsetPaymentMutation = await mockResolveLastOperation({
       unsetOrderPaymentMethodPayload: () => ({
-        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
+        orderOrError: {
+          __typename: "OrderMutationSuccess",
+          order: {
+            ...orderData,
+            fulfillmentOptions: [
+              { type: "PICKUP", amount: null, selected: null },
+            ],
+          },
+        },
       }),
     })
 

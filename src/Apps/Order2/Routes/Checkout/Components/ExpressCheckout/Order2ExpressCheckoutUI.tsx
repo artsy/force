@@ -261,7 +261,9 @@ export const Order2ExpressCheckoutUI: React.FC<
           variables: { input: { id: orderData.internalID } },
         })
 
-      validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
+      const orderAfterUnset = validateAndExtractOrderResponse(
+        unsetOrderPaymentMethod?.orderOrError,
+      ).order
 
       // Mimic the standard "landing after address selection" experience:
       // re-use the previously selected option if still available, otherwise
@@ -269,10 +271,16 @@ export const Order2ExpressCheckoutUI: React.FC<
       // ready-to-continue delivery step instead of an empty one. If nothing is
       // selectable (e.g. only PICKUP/SHIPPING_TBD), fall back to unsetting
       // whatever the express flow set.
-      const selectableOptions = orderData.fulfillmentOptions.filter(option =>
+      //
+      // Read fulfillmentOptions from the fresh mutation response rather than the
+      // render closure's `orderData`, which can be stale at cancel time (Stripe
+      // fires onCancel with a closure captured before the wallet populated the
+      // order's shipping options).
+      const fulfillmentOptions = orderAfterUnset?.fulfillmentOptions ?? []
+      const selectableOptions = fulfillmentOptions.filter(option =>
         SELECTABLE_TYPES.includes(option.type),
       )
-      const previouslySelectedType = orderData.fulfillmentOptions.find(
+      const previouslySelectedType = fulfillmentOptions.find(
         option => option.selected,
       )?.type
       const typeToSelect =

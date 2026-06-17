@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e474c75f5b525b9ccd1699a01d77b791>>
+ * @generated SignedSource<<8717648868a88649fef4f46468be576a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
 export type unsetOrderPaymentMethodInput = {
   clientMutationId?: string | null | undefined;
   id: string;
@@ -28,6 +29,10 @@ export type useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation$data = {
     } | {
       readonly __typename: "OrderMutationSuccess";
       readonly order: {
+        readonly fulfillmentOptions: ReadonlyArray<{
+          readonly selected: boolean | null | undefined;
+          readonly type: FulfillmentOptionTypeEnum;
+        }>;
         readonly " $fragmentSpreads": FragmentRefs<"Order2ExpressCheckoutUI_order">;
       };
     } | {
@@ -65,6 +70,20 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "type",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "selected",
+  "storageKey": null
+},
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -96,22 +115,22 @@ v3 = {
   "type": "OrderMutationError",
   "abstractKey": null
 },
-v4 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "minor",
   "storageKey": null
 },
-v6 = [
-  (v5/*: any*/),
+v8 = [
+  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -120,10 +139,10 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = [
-  (v5/*: any*/)
+v9 = [
+  (v7/*: any*/)
 ],
-v8 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -169,6 +188,19 @@ return {
                         "args": null,
                         "kind": "FragmentSpread",
                         "name": "Order2ExpressCheckoutUI_order"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "FulfillmentOption",
+                        "kind": "LinkedField",
+                        "name": "fulfillmentOptions",
+                        "plural": true,
+                        "selections": [
+                          (v3/*: any*/),
+                          (v4/*: any*/)
+                        ],
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -177,7 +209,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v3/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -222,7 +254,7 @@ return {
                     "name": "order",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -244,7 +276,7 @@ return {
                         "kind": "LinkedField",
                         "name": "buyerTotal",
                         "plural": false,
-                        "selections": (v6/*: any*/),
+                        "selections": (v8/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -254,7 +286,7 @@ return {
                         "kind": "LinkedField",
                         "name": "itemsTotal",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v9/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -264,7 +296,7 @@ return {
                         "kind": "LinkedField",
                         "name": "shippingTotal",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v9/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -274,7 +306,7 @@ return {
                         "kind": "LinkedField",
                         "name": "taxTotal",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v9/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -292,13 +324,7 @@ return {
                         "name": "fulfillmentOptions",
                         "plural": true,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "type",
-                            "storageKey": null
-                          },
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -306,16 +332,10 @@ return {
                             "kind": "LinkedField",
                             "name": "amount",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v8/*: any*/),
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "selected",
-                            "storageKey": null
-                          }
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -395,7 +415,7 @@ return {
                             "name": "artwork",
                             "plural": false,
                             "selections": [
-                              (v4/*: any*/),
+                              (v6/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -403,15 +423,15 @@ return {
                                 "name": "slug",
                                 "storageKey": null
                               },
-                              (v8/*: any*/)
+                              (v10/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v8/*: any*/)
+                          (v10/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v8/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -419,7 +439,7 @@ return {
                 "type": "OrderMutationSuccess",
                 "abstractKey": null
               },
-              (v3/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -429,16 +449,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "612532fc7a4fd632907584c2d8c62e7f",
+    "cacheID": "823a7f66ad50ebc453193954b9cd98dd",
     "id": null,
     "metadata": {},
     "name": "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation(\n  $input: unsetOrderPaymentMethodInput!\n) {\n  unsetOrderPaymentMethod(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...Order2ExpressCheckoutUI_order\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "mutation useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation(\n  $input: unsetOrderPaymentMethodInput!\n) {\n  unsetOrderPaymentMethod(input: $input) {\n    orderOrError {\n      __typename\n      ... on OrderMutationSuccess {\n        order {\n          ...Order2ExpressCheckoutUI_order\n          fulfillmentOptions {\n            type\n            selected\n          }\n          id\n        }\n      }\n      ... on OrderMutationError {\n        mutationError {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "61c8704928384952269a7c06e279b6c3";
+(node as any).hash = "90711e397507bdcbc7d6ec4a268a0304";
 
 export default node;
