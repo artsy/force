@@ -264,18 +264,23 @@ export const Order2ExpressCheckoutUI: React.FC<
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
 
       // Mimic the standard "landing after address selection" experience:
-      // default-select the first selectable fulfillment option so the user
-      // returns to a ready-to-continue delivery step instead of an empty one.
-      // If nothing is selectable (e.g. only PICKUP/SHIPPING_TBD), fall back to
-      // unsetting whatever the express flow set.
-      const firstSelectableOption = orderData.fulfillmentOptions.find(option =>
+      // re-use the previously selected option if still available, otherwise
+      // default-select the first selectable one, so the user returns to a
+      // ready-to-continue delivery step instead of an empty one. If nothing is
+      // selectable (e.g. only PICKUP/SHIPPING_TBD), fall back to unsetting
+      // whatever the express flow set.
+      const selectableOptions = orderData.fulfillmentOptions.filter(option =>
         SELECTABLE_TYPES.includes(option.type),
       )
+      const previouslySelectedType = orderData.fulfillmentOptions.find(
+        option => option.selected,
+      )?.type
+      const typeToSelect =
+        selectableOptions.find(option => option.type === previouslySelectedType)
+          ?.type ?? selectableOptions[0]?.type
 
-      if (firstSelectableOption) {
-        await setFulfillmentOption(
-          firstSelectableOption.type as FulfillmentOptionInputEnum,
-        )
+      if (typeToSelect) {
+        await setFulfillmentOption(typeToSelect as FulfillmentOptionInputEnum)
       } else {
         const { unsetOrderFulfillmentOption } =
           await unsetFulfillmentOptionMutation.submitMutation({
@@ -679,8 +684,9 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <SectionHeading>Express checkout (TEST 1)</SectionHeading>
+      <SectionHeading>Express checkout (TEST 2)</SectionHeading>
       <Spacer y={[1, 1, 2]} />
+
       {error && (
         <>
           <CheckoutErrorBanner
