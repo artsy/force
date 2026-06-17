@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6019fede0b5dd6f98a9232ed5234b2e9>>
+ * @generated SignedSource<<0b05b3e64ebb72670d0c8721dfb854cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,10 @@ import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferUpdate_Test_Query$variables = Record<PropertyKey, never>;
 export type ConversationPartnerOfferUpdate_Test_Query$data = {
-  readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferUpdate_artwork">;
+  readonly me: {
+    readonly conversation: {
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferUpdate_conversation">;
+    } | null | undefined;
   } | null | undefined;
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"ConversationsContext_viewer">;
@@ -29,30 +31,49 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "artwork-id"
+    "value": "conversation-id"
   }
 ],
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "__typename",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Me"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -68,6 +89,33 @@ return {
       {
         "alias": null,
         "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "Conversation",
+            "kind": "LinkedField",
+            "name": "conversation",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ConversationPartnerOfferUpdate_conversation"
+              }
+            ],
+            "storageKey": "conversation(id:\"conversation-id\")"
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
         "concreteType": "Viewer",
         "kind": "LinkedField",
         "name": "viewer",
@@ -80,22 +128,6 @@ return {
           }
         ],
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ConversationPartnerOfferUpdate_artwork"
-          }
-        ],
-        "storageKey": "artwork(id:\"artwork-id\")"
       }
     ],
     "type": "Query",
@@ -107,6 +139,122 @@ return {
     "kind": "Operation",
     "name": "ConversationPartnerOfferUpdate_Test_Query",
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "Conversation",
+            "kind": "LinkedField",
+            "name": "conversation",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ConversationItem",
+                "kind": "LinkedField",
+                "name": "items",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "item",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v2/*: any*/)
+                        ],
+                        "type": "Artwork",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v3/*: any*/)
+                        ],
+                        "type": "Node",
+                        "abstractKey": "__isNode"
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": "activeOrders",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 1
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "states",
+                    "value": [
+                      "APPROVED",
+                      "PROCESSING_APPROVAL",
+                      "FULFILLED",
+                      "SUBMITTED",
+                      "REFUNDED"
+                    ]
+                  }
+                ],
+                "concreteType": "CommerceOrderConnectionWithTotalCount",
+                "kind": "LinkedField",
+                "name": "orderConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CommerceOrderEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v1/*: any*/),
+                          (v2/*: any*/),
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+              },
+              (v3/*: any*/)
+            ],
+            "storageKey": "conversation(id:\"conversation-id\")"
+          },
+          (v3/*: any*/)
+        ],
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -174,7 +322,7 @@ return {
                             "name": "endAt",
                             "storageKey": null
                           },
-                          (v1/*: any*/),
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -207,7 +355,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v2/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -217,54 +365,74 @@ return {
                 ],
                 "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
         ],
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
-        "plural": false,
-        "selections": [
-          (v1/*: any*/),
-          (v2/*: any*/)
-        ],
-        "storageKey": "artwork(id:\"artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "ce97bfe4a6a1277538dd1063e1796b50",
+    "cacheID": "543f618500b14cdaefa6bba62ce3173e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "artwork": {
+        "me": (v4/*: any*/),
+        "me.conversation": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Artwork"
+          "type": "Conversation"
         },
-        "artwork.id": (v3/*: any*/),
-        "artwork.internalID": (v3/*: any*/),
+        "me.conversation.activeOrders": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrderConnectionWithTotalCount"
+        },
+        "me.conversation.activeOrders.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CommerceOrderEdge"
+        },
+        "me.conversation.activeOrders.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CommerceOrder"
+        },
+        "me.conversation.activeOrders.edges.node.__typename": (v5/*: any*/),
+        "me.conversation.activeOrders.edges.node.id": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.internalID": (v6/*: any*/),
+        "me.conversation.id": (v6/*: any*/),
+        "me.conversation.items": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ConversationItem"
+        },
+        "me.conversation.items.item": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ConversationItemType"
+        },
+        "me.conversation.items.item.__isNode": (v5/*: any*/),
+        "me.conversation.items.item.__typename": (v5/*: any*/),
+        "me.conversation.items.item.id": (v6/*: any*/),
+        "me.conversation.items.item.internalID": (v6/*: any*/),
+        "me.id": (v6/*: any*/),
         "viewer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Viewer"
         },
-        "viewer.me": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Me"
-        },
-        "viewer.me.id": (v3/*: any*/),
+        "viewer.me": (v4/*: any*/),
+        "viewer.me.id": (v6/*: any*/),
         "viewer.me.partnerOffersConnection": {
           "enumValues": null,
           "nullable": true,
@@ -283,33 +451,33 @@ return {
           "plural": false,
           "type": "PartnerOfferToCollector"
         },
-        "viewer.me.partnerOffersConnection.edges.node.artworkId": (v4/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.endAt": (v4/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.id": (v3/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.internalID": (v3/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.artworkId": (v7/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.endAt": (v7/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.id": (v6/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.internalID": (v6/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.isAvailable": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "viewer.me.partnerOffersConnection.edges.node.note": (v4/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.note": (v7/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v4/*: any*/)
+        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v7/*: any*/)
       }
     },
     "name": "ConversationPartnerOfferUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  viewer {\n    ...ConversationsContext_viewer\n  }\n  artwork(id: \"artwork-id\") {\n    ...ConversationPartnerOfferUpdate_artwork\n    id\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_artwork on Artwork {\n  internalID\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "18102767afe5bd0604bde68fe03466a4";
+(node as any).hash = "22de69482d23cffa9508918578c63c6d";
 
 export default node;

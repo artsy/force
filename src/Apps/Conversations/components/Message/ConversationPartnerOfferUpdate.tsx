@@ -3,55 +3,75 @@ import type { FlexProps } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationEventRow } from "Apps/Conversations/components/Message/ConversationEventRow"
-import { useTimer } from "Utils/Hooks/useTimer"
-import type { ConversationPartnerOfferUpdate_artwork$key } from "__generated__/ConversationPartnerOfferUpdate_artwork.graphql"
+import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
+import { extractNodes } from "Utils/extractNodes"
+import type { ConversationPartnerOfferUpdate_conversation$key } from "__generated__/ConversationPartnerOfferUpdate_conversation.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface ConversationPartnerOfferUpdateProps extends FlexProps {
-  artwork?: ConversationPartnerOfferUpdate_artwork$key | null
+  conversation: ConversationPartnerOfferUpdate_conversation$key
 }
 
 export const ConversationPartnerOfferUpdate: FC<
   React.PropsWithChildren<ConversationPartnerOfferUpdateProps>
-> = ({ artwork, ...flexProps }) => {
+> = ({ conversation, ...flexProps }) => {
   const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
 
-  const data = useFragment(ARTWORK_FRAGMENT, artwork)
+  const data = useFragment(CONVERSATION_FRAGMENT, conversation)
 
   const { findPartnerOffer } = useConversationsContext()
 
-  const partnerOffer = data?.internalID
-    ? findPartnerOffer(data.internalID)
+  const activeOrder = extractNodes(data.activeOrders)[0]
+  const item = data.items?.[0]?.item
+  const artwork = item?.__typename === "Artwork" ? item : null
+  const partnerOffer = artwork?.internalID
+    ? findPartnerOffer(artwork.internalID)
     : null
 
-  const { hasEnded } = useTimer(partnerOffer?.endAt ?? "")
-
-  if (!isPartnerOfferConvoEnabled || !partnerOffer) {
+  if (!isPartnerOfferConvoEnabled || !partnerOffer || activeOrder) {
     return null
   }
 
-  if (hasEnded || !partnerOffer.isAvailable) {
-    return null
-  }
+  const isExpired = !isPartnerOfferActive(partnerOffer)
+  const priceDisplay = partnerOffer.priceWithDiscount?.display
 
-  const message = partnerOffer.priceWithDiscount?.display
-    ? `You received an offer for ${partnerOffer.priceWithDiscount.display}`
+  const offerMessage = priceDisplay
+    ? `You received an offer for ${priceDisplay}`
     : "You received an offer"
+
+  const message = isExpired ? "Offer Expired" : offerMessage
 
   return (
     <ConversationEventRow
       Icon={MoneyFillIcon}
-      iconFill="mono100"
+      iconFill={isExpired ? "red100" : "mono100"}
       message={message}
-      textColor="mono100"
+      textColor={isExpired ? "red100" : "mono100"}
       {...flexProps}
     />
   )
 }
 
-const ARTWORK_FRAGMENT = graphql`
-  fragment ConversationPartnerOfferUpdate_artwork on Artwork {
-    internalID
+const CONVERSATION_FRAGMENT = graphql`
+  fragment ConversationPartnerOfferUpdate_conversation on Conversation {
+    items {
+      item {
+        __typename
+        ... on Artwork {
+          internalID
+        }
+      }
+    }
+    activeOrders: orderConnection(
+      first: 1
+      states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
+    ) {
+      edges {
+        node {
+          internalID
+        }
+      }
+    }
   }
 `

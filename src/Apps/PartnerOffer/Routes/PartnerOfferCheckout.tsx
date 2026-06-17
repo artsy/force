@@ -9,6 +9,9 @@ export const PartnerOfferCheckout: FC<
 > = () => {
   const { match, router } = useRouter()
   const partnerOfferId = match.params.partnerOfferID
+  const conversationId = match.location?.query?.conversation_id
+    ? String(match.location.query.conversation_id)
+    : undefined
   const { submitMutation: partnerCheckoutMutation } =
     usePartnerOfferCheckoutMutation()
 
@@ -19,6 +22,7 @@ export const PartnerOfferCheckout: FC<
           variables: {
             input: {
               partnerOfferId: partnerOfferId,
+              impulseConversationId: conversationId,
             },
           },
         })
@@ -49,7 +53,7 @@ export const PartnerOfferCheckout: FC<
         console.error("Error creating partner offer order", error)
       }
     }
-  }, [partnerCheckoutMutation, partnerOfferId, router])
+  }, [conversationId, partnerCheckoutMutation, partnerOfferId, router])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {

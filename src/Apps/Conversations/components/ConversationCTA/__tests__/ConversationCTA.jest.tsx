@@ -135,6 +135,80 @@ describe("ConversationCTA", () => {
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
   })
 
+  describe("with an active order and an open partner offer", () => {
+    const futureTime = new Date()
+    futureTime.setHours(futureTime.getHours() + 1)
+
+    const mockConversationWithOrderAndOffer = () => ({
+      internalID: "internal-test-id",
+      activeOrders: {
+        edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
+      },
+      activeOrderCTA: {
+        edges: [
+          { node: { internalID: "order-id", buyerAction: "OFFER_RECEIVED" } },
+        ],
+      },
+      items: [
+        {
+          liveArtwork: {
+            __typename: "Artwork",
+            internalID: "artwork-id",
+            isAcquireable: true,
+            published: true,
+          },
+        },
+      ],
+    })
+
+    const activeOfferViewer = () => ({
+      me: {
+        partnerOffersConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "partner-offer-id",
+                artworkId: "artwork-id",
+                endAt: futureTime.toISOString(),
+                isAvailable: true,
+              },
+            },
+          ],
+        },
+      },
+    })
+
+    describe("with the partner-offer-convo flag on", () => {
+      beforeEach(() => {
+        mockUseFlag.mockImplementation(() => true)
+      })
+
+      it("hides the order offer CTA when there is an open partner offer", () => {
+        renderWithRelay({
+          Conversation: mockConversationWithOrderAndOffer,
+          Viewer: activeOfferViewer,
+        })
+
+        expect(screen.queryByText("Offer Received")).not.toBeInTheDocument()
+      })
+    })
+
+    describe("with the partner-offer-convo flag off", () => {
+      beforeEach(() => {
+        mockUseFlag.mockImplementation(() => false)
+      })
+
+      it("shows the order offer CTA when the flag is off", () => {
+        renderWithRelay({
+          Conversation: mockConversationWithOrderAndOffer,
+          Viewer: activeOfferViewer,
+        })
+
+        expect(screen.queryByText("Offer Received")).toBeInTheDocument()
+      })
+    })
+  })
+
   describe("With no active orders", () => {
     const mockConversationWithArtwork = artwork => () => ({
       internalID: "internal-test-id",
@@ -193,6 +267,7 @@ describe("ConversationCTA", () => {
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
       expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     })
+
     const offerViewer = () => {
       const futureTime = new Date()
       futureTime.setHours(futureTime.getHours() + 1)
@@ -206,6 +281,7 @@ describe("ConversationCTA", () => {
                   internalID: "partner-offer-id",
                   artworkId: "artwork-id",
                   endAt: futureTime.toISOString(),
+                  isAvailable: true,
                 },
               },
             ],

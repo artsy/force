@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58fadfa44627be731dbd3298a26510af>>
+ * @generated SignedSource<<0a3cf0c4e14d9914275a83664f6e2298>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type ConversationMessages_conversation$data = {
       readonly internalID?: string;
       readonly isOfferable?: boolean | null | undefined;
       readonly isOfferableFromInquiry?: boolean | null | undefined;
-      readonly " $fragmentSpreads": FragmentRefs<"ConversationMessageArtwork_item" | "ConversationPartnerOfferUpdate_artwork">;
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationMessageArtwork_item">;
     } | null | undefined;
   } | null | undefined> | null | undefined;
   readonly messagesConnection: {
@@ -77,6 +77,7 @@ export type ConversationMessages_conversation$data = {
     readonly name: string;
   };
   readonly unreadByCollector: boolean | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferUpdate_conversation">;
   readonly " $fragmentType": "ConversationMessages_conversation";
 } | null | undefined;
 export type ConversationMessages_conversation$key = {
@@ -325,6 +326,11 @@ return {
       "storageKey": null
     },
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationPartnerOfferUpdate_conversation"
+    },
+    {
       "alias": null,
       "args": null,
       "concreteType": "ConversationItem",
@@ -359,12 +365,7 @@ return {
                   "name": "isOfferableFromInquiry",
                   "storageKey": null
                 },
-                (v0/*: any*/),
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ConversationPartnerOfferUpdate_artwork"
-                }
+                (v0/*: any*/)
               ],
               "type": "Artwork",
               "abstractKey": null
@@ -567,6 +568,6 @@ return {
 };
 })();
 
-(node as any).hash = "cbab7e8ce502bec7866e410977d4ccf2";
+(node as any).hash = "fbb0ff51a77577b34200f8f532c826c4";
 
 export default node;
