@@ -21,6 +21,7 @@ import {
   validateAddressFields,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutImpressionEffect } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutImpressionEffect"
 import { useFulfillmentDetailsError } from "Apps/Order2/Routes/Checkout/Hooks/useFulfillmentDetailsError"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
@@ -100,7 +101,7 @@ export const SavedAddressOptions = ({
   // Track when saved addresses are viewed (only once when step is active)
   const hasTrackedAddressViewRef = useRef(false)
 
-  useEffect(() => {
+  useCheckoutImpressionEffect(() => {
     if (fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE) {
       hasTrackedAddressViewRef.current = false
       return
