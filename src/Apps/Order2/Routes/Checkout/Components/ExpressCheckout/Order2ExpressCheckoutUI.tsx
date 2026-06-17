@@ -692,7 +692,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <SectionHeading>Express checkout (TEST 2)</SectionHeading>
+      <SectionHeading>Express checkout (TEST 3)</SectionHeading>
       <Spacer y={[1, 1, 2]} />
 
       {error && (
