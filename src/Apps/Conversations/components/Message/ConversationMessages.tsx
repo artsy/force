@@ -325,6 +325,13 @@ export const ConversationMessagesPaginationContainer =
               node {
                 internalID
                 updatedAt
+                lineItems {
+                  edges {
+                    node {
+                      partnerOfferId
+                    }
+                  }
+                }
                 ... on CommerceOfferOrder {
                   buyerAction
                 }

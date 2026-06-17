@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b05b3e64ebb72670d0c8721dfb854cc>>
+ * @generated SignedSource<<6668889be4d2b64fc09c15fc63e6807e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,28 +38,27 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Me"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 },
 v5 = {
   "enumValues": null,
@@ -68,12 +67,6 @@ v5 = {
   "type": "String"
 },
 v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -171,11 +164,17 @@ return {
                     "name": "item",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      },
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v2/*: any*/)
+                          (v1/*: any*/)
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -183,7 +182,7 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v3/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "type": "Node",
                         "abstractKey": "__isNode"
@@ -194,64 +193,11 @@ return {
                 ],
                 "storageKey": null
               },
-              {
-                "alias": "activeOrders",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 1
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "states",
-                    "value": [
-                      "APPROVED",
-                      "PROCESSING_APPROVAL",
-                      "FULFILLED",
-                      "SUBMITTED",
-                      "REFUNDED"
-                    ]
-                  }
-                ],
-                "concreteType": "CommerceOrderConnectionWithTotalCount",
-                "kind": "LinkedField",
-                "name": "orderConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "CommerceOrderEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          (v1/*: any*/),
-                          (v2/*: any*/),
-                          (v3/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
-              },
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "conversation(id:\"conversation-id\")"
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       },
@@ -322,7 +268,7 @@ return {
                             "name": "endAt",
                             "storageKey": null
                           },
-                          (v2/*: any*/),
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -355,7 +301,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v3/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -365,7 +311,66 @@ return {
                 ],
                 "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
               },
-              (v3/*: any*/)
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 10
+                  }
+                ],
+                "concreteType": "MeOrdersConnection",
+                "kind": "LinkedField",
+                "name": "ordersConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "MeOrdersEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Order",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "LineItem",
+                            "kind": "LinkedField",
+                            "name": "lineItems",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "partnerOfferId",
+                                "storageKey": null
+                              },
+                              (v2/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "ordersConnection(first:10)"
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
@@ -375,39 +380,18 @@ return {
     ]
   },
   "params": {
-    "cacheID": "543f618500b14cdaefa6bba62ce3173e",
+    "cacheID": "9d76e7bb0954f284168b183ccd89f2cf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "me": (v4/*: any*/),
+        "me": (v3/*: any*/),
         "me.conversation": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Conversation"
         },
-        "me.conversation.activeOrders": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceOrderConnectionWithTotalCount"
-        },
-        "me.conversation.activeOrders.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "CommerceOrderEdge"
-        },
-        "me.conversation.activeOrders.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceOrder"
-        },
-        "me.conversation.activeOrders.edges.node.__typename": (v5/*: any*/),
-        "me.conversation.activeOrders.edges.node.id": (v6/*: any*/),
-        "me.conversation.activeOrders.edges.node.internalID": (v6/*: any*/),
-        "me.conversation.id": (v6/*: any*/),
+        "me.conversation.id": (v4/*: any*/),
         "me.conversation.items": {
           "enumValues": null,
           "nullable": true,
@@ -422,17 +406,44 @@ return {
         },
         "me.conversation.items.item.__isNode": (v5/*: any*/),
         "me.conversation.items.item.__typename": (v5/*: any*/),
-        "me.conversation.items.item.id": (v6/*: any*/),
-        "me.conversation.items.item.internalID": (v6/*: any*/),
-        "me.id": (v6/*: any*/),
+        "me.conversation.items.item.id": (v4/*: any*/),
+        "me.conversation.items.item.internalID": (v4/*: any*/),
+        "me.id": (v4/*: any*/),
         "viewer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Viewer"
         },
-        "viewer.me": (v4/*: any*/),
-        "viewer.me.id": (v6/*: any*/),
+        "viewer.me": (v3/*: any*/),
+        "viewer.me.id": (v4/*: any*/),
+        "viewer.me.ordersConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MeOrdersConnection"
+        },
+        "viewer.me.ordersConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "MeOrdersEdge"
+        },
+        "viewer.me.ordersConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Order"
+        },
+        "viewer.me.ordersConnection.edges.node.id": (v4/*: any*/),
+        "viewer.me.ordersConnection.edges.node.lineItems": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "LineItem"
+        },
+        "viewer.me.ordersConnection.edges.node.lineItems.id": (v4/*: any*/),
+        "viewer.me.ordersConnection.edges.node.lineItems.partnerOfferId": (v6/*: any*/),
         "viewer.me.partnerOffersConnection": {
           "enumValues": null,
           "nullable": true,
@@ -451,29 +462,29 @@ return {
           "plural": false,
           "type": "PartnerOfferToCollector"
         },
-        "viewer.me.partnerOffersConnection.edges.node.artworkId": (v7/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.endAt": (v7/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.id": (v6/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.internalID": (v6/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.artworkId": (v6/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.endAt": (v6/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.id": (v4/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.internalID": (v4/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.isAvailable": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "viewer.me.partnerOffersConnection.edges.node.note": (v7/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.note": (v6/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v7/*: any*/)
+        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v6/*: any*/)
       }
     },
     "name": "ConversationPartnerOfferUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    ordersConnection(first: 10) {\n      edges {\n        node {\n          lineItems {\n            partnerOfferId\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

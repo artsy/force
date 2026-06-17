@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7668db898c3b4dc1837816e38bc0b0c8>>
+ * @generated SignedSource<<9b76fededc1ed9a552d3ea54317a4b90>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,6 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferUpdate_conversation$data = {
-  readonly activeOrders: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
@@ -35,17 +28,7 @@ export type ConversationPartnerOfferUpdate_conversation$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferUpdate_conversation">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -76,7 +59,15 @@ return {
             },
             {
               "kind": "InlineFragment",
-              "selections": (v0/*: any*/),
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                }
+              ],
               "type": "Artwork",
               "abstractKey": null
             }
@@ -85,62 +76,12 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": "activeOrders",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "PROCESSING_APPROVAL",
-            "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED"
-          ]
-        }
-      ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
-      "kind": "LinkedField",
-      "name": "orderConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOrderEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": null,
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": (v0/*: any*/),
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "e06db9614f682d3c5f9e1c6c96974207";
+(node as any).hash = "c1e718b17b27a2bcd3175e34e9a394d4";
 
 export default node;

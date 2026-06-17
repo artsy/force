@@ -4,7 +4,6 @@ import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationEventRow } from "Apps/Conversations/components/Message/ConversationEventRow"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
-import { extractNodes } from "Utils/extractNodes"
 import type { ConversationPartnerOfferUpdate_conversation$key } from "__generated__/ConversationPartnerOfferUpdate_conversation.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -20,17 +19,29 @@ export const ConversationPartnerOfferUpdate: FC<
 
   const data = useFragment(CONVERSATION_FRAGMENT, conversation)
 
-  const { findPartnerOffer } = useConversationsContext()
+  const { findPartnerOffer, hasOrderForPartnerOffer } =
+    useConversationsContext()
 
-  const activeOrder = extractNodes(data.activeOrders)[0]
   const item = data.items?.[0]?.item
   const artwork = item?.__typename === "Artwork" ? item : null
   const partnerOffer = artwork?.internalID
     ? findPartnerOffer(artwork.internalID)
     : null
 
-  if (!isPartnerOfferConvoEnabled || !partnerOffer || activeOrder) {
+  if (!isPartnerOfferConvoEnabled || !partnerOffer) {
     return null
+  }
+
+  if (hasOrderForPartnerOffer(partnerOffer.internalID)) {
+    return (
+      <ConversationEventRow
+        Icon={MoneyFillIcon}
+        iconFill="mono100"
+        message="You purchased this artwork"
+        textColor="mono100"
+        {...flexProps}
+      />
+    )
   }
 
   const isExpired = !isPartnerOfferActive(partnerOffer)
@@ -59,16 +70,6 @@ const CONVERSATION_FRAGMENT = graphql`
       item {
         __typename
         ... on Artwork {
-          internalID
-        }
-      }
-    }
-    activeOrders: orderConnection(
-      first: 1
-      states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
-    ) {
-      edges {
-        node {
           internalID
         }
       }

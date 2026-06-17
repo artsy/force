@@ -12,6 +12,7 @@ interface ConversationsContextProps {
   selectedEditionSetId: string | null
   setSelectedEditionSetId: (editionSetId: string | null) => void
   findPartnerOffer: (artworkID: string) => PartnerOffer | null
+  hasOrderForPartnerOffer: (partnerOfferID: string) => boolean
   showSelectEditionSetModal: (props: {
     isCreatingOfferOrder: boolean
     defaultEditionSetId?: string | null
@@ -28,7 +29,7 @@ interface ConversationsProviderProps {
   viewer: ConversationsContext_viewer$key
 }
 
-type PartnerOffer = NonNullable<
+export type PartnerOffer = NonNullable<
   NonNullable<
     NonNullable<
       NonNullable<
@@ -62,6 +63,17 @@ export const ConversationsProvider: React.FC<
   const findPartnerOffer = (artworkID: string): PartnerOffer | null =>
     partnerOfferMap[artworkID] ?? null
 
+  const partnerOfferIDsWithOrders = new Set(
+    extractNodes(me?.ordersConnection).flatMap(order =>
+      (order.lineItems ?? [])
+        .map(lineItem => lineItem?.partnerOfferId)
+        .filter(Boolean),
+    ),
+  )
+
+  const hasOrderForPartnerOffer = (partnerOfferID: string): boolean =>
+    partnerOfferIDsWithOrders.has(partnerOfferID)
+
   const showSelectEditionSetModal = ({
     isCreatingOfferOrder,
     defaultEditionSetId,
@@ -84,6 +96,7 @@ export const ConversationsProvider: React.FC<
     <ConversationsContext.Provider
       value={{
         findPartnerOffer,
+        hasOrderForPartnerOffer,
         isConfirmModalVisible,
         isCreatingOfferOrder,
         selectedEditionSetId,
@@ -122,6 +135,15 @@ const VIEWER_FRAGMENT = graphql`
             note
             priceWithDiscount {
               display
+            }
+          }
+        }
+      }
+      ordersConnection(first: 10) {
+        edges {
+          node {
+            lineItems {
+              partnerOfferId
             }
           }
         }
