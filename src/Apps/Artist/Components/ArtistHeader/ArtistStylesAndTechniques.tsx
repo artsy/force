@@ -10,12 +10,18 @@ interface ArtistStylesAndTechniquesProps {
   contextModule?: ContextModule
 }
 
+// TODO: Temporarily disabled. Set to `true` to restore the styles and
+// techniques section in the artist header.
+const ENABLED = false
+
 export const useHasArtistStylesAndTechniques = (
   artist: ArtistStylesAndTechniques_artist$key,
 ) => {
   const data = useFragment(FRAGMENT, artist)
 
-  return data.movementGenes.length > 0 || data.mediumGenes.length > 0
+  return (
+    ENABLED && (data.movementGenes.length > 0 || data.mediumGenes.length > 0)
+  )
 }
 
 export const ArtistStylesAndTechniques: FC<ArtistStylesAndTechniquesProps> = ({
