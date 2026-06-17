@@ -25,7 +25,14 @@ import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
-import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import {
+  ArtistStylesAndTechniques,
+  useHasArtistStylesAndTechniques,
+} from "Apps/Artist/Components/ArtistHeader/ArtistStylesAndTechniques"
+import {
+  ArtistCareerHighlightFragmentContainer,
+  isRenderableArtistInsight,
+} from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
@@ -47,6 +54,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
+  const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
@@ -58,11 +66,13 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
       ? `${biographyText} ${biographyCredit}`
       : biographyText
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
-  const hasInsights = artist.insights.length > 0
+  const insights = artist.insights.filter(isRenderableArtistInsight)
+  const hasInsights = insights.length > 0
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
   const hasRightDetails =
     hasVerifiedRepresentatives || hasInsights || hasEditorial
-  const hasSomething = hasImage || hasBio || hasRightDetails
+  const hasSomething =
+    hasImage || hasBio || hasRightDetails || hasStylesAndTechniques
 
   const trackToggledArtistBio = (expand: boolean) => {
     if (!contextPageOwnerId || !contextPageOwnerSlug) return
@@ -225,14 +235,21 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         )}
 
         <Text variant="xs" display={["none", "block"]}>
-          <CV
+          <RouterLink
             to={`/artist/${artist.slug}/cv`}
             color="mono60"
             onClick={trackClickedCV}
           >
             See all past shows and fair booths
-          </CV>
+          </RouterLink>
         </Text>
+
+        {hasStylesAndTechniques && (
+          <ArtistStylesAndTechniques
+            artist={artist}
+            contextModule={ContextModule.artistHeader}
+          />
+        )}
       </Column>
 
       {hasRightDetails && (
@@ -290,7 +307,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
           {hasInsights && (
             <Box display={["none", "block"]}>
-              {artist.insights
+              {insights
                 .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
                 .map((insight, index) => {
                   return (
@@ -329,12 +346,15 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         insights {
           kind
+          entities
+          description(format: HTML)
           ...ArtistCareerHighlight_insight
         }
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
         }
         ...ArtistHeaderEditorial_artist
+        ...ArtistStylesAndTechniques_artist
         verifiedRepresentatives {
           partner {
             internalID
@@ -372,12 +392,6 @@ const Bio = styled(HTML)<HTMLProps>`
   text-align: left;
 
   a:hover {
-    color: currentColor;
-  }
-`
-
-const CV = styled(RouterLink)`
-  &:hover {
     color: currentColor;
   }
 `

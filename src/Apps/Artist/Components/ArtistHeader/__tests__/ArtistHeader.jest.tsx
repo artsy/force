@@ -492,6 +492,95 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(screen.queryByText("Insight 2")).not.toBeInTheDocument()
       expect(screen.queryByText("Insight 3")).not.toBeInTheDocument()
     })
+
+    it("does not let an empty insight consume a display slot", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          articlesConnection: {
+            totalCount: 1,
+            edges: [
+              {
+                node: {
+                  internalID: "article-1",
+                  href: "/article/article-1",
+                  title: "Article 1",
+                  byline: "Artsy Editorial",
+                  publishedAt: "Jan 1, 2026",
+                  thumbnailImage: null,
+                },
+              },
+            ],
+          },
+          insights: [
+            // Not renderable: no description and no entities. It should be
+            // filtered out before slicing rather than occupying a slot.
+            {
+              kind: "COLLECTED",
+              label: "Empty insight",
+              entities: [],
+              description: null,
+            },
+            { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
+            { kind: "SOLO_SHOW", label: "Insight 2", entities: ["MoMA"] },
+          ],
+        }),
+      })
+
+      expect(screen.queryByText("Empty insight")).not.toBeInTheDocument()
+      // With editorial present (2 slots), both renderable insights show
+      // because the empty one no longer takes a slot.
+      expect(screen.getByText("Insight 1")).toBeInTheDocument()
+      expect(screen.getByText("Insight 2")).toBeInTheDocument()
+    })
+
+    it("renders styles and techniques after career highlights", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          insights: [
+            {
+              kind: "COLLECTED",
+              label: "Collected by major museums",
+              entities: ["MoMA"],
+            },
+          ],
+          movementGenes: [
+            {
+              internalID: "gene-id-cubism",
+              name: "Cubism",
+              slug: "cubism",
+            },
+          ],
+          mediumGenes: [],
+        }),
+      })
+
+      expect(screen.getByText("Styles")).toBeInTheDocument()
+      expect(screen.getByText("Cubism")).toBeInTheDocument()
+    })
+
+    it("renders styles and techniques when there are no career highlights", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          insights: [],
+          verifiedRepresentatives: [],
+          movementGenes: [],
+          mediumGenes: [
+            {
+              internalID: "gene-id-oil-paint",
+              name: "Oil Paint",
+              slug: "oil-paint",
+            },
+          ],
+        }),
+      })
+
+      expect(screen.queryByText("Styles")).not.toBeInTheDocument()
+      expect(screen.getByText("Techniques")).toBeInTheDocument()
+      expect(screen.getByText("Oil Paint")).toBeInTheDocument()
+    })
   })
 
   describe("CV link", () => {
