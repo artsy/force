@@ -22,11 +22,11 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { SELECTABLE_TYPES } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
@@ -679,7 +679,7 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <SectionHeading>Express checkout</SectionHeading>
+      <SectionHeading>Express checkout (TEST 1)</SectionHeading>
       <Spacer y={[1, 1, 2]} />
       {error && (
         <>
