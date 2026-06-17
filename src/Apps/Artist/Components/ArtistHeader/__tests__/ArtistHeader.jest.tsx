@@ -534,7 +534,9 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(screen.getByText("Insight 2")).toBeInTheDocument()
     })
 
-    it("renders styles and techniques after career highlights", () => {
+    // TODO: Temporarily skipped while the styles and techniques section is
+    // disabled (see ENABLED in ArtistStylesAndTechniques). Unskip to restore.
+    it.skip("renders styles and techniques after career highlights", () => {
       renderWithRelay({
         Artist: () => ({
           name: "Pablo Picasso",
@@ -560,7 +562,9 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(screen.getByText("Cubism")).toBeInTheDocument()
     })
 
-    it("renders styles and techniques when there are no career highlights", () => {
+    // TODO: Temporarily skipped while the styles and techniques section is
+    // disabled (see ENABLED in ArtistStylesAndTechniques). Unskip to restore.
+    it.skip("renders styles and techniques when there are no career highlights", () => {
       renderWithRelay({
         Artist: () => ({
           name: "Pablo Picasso",
