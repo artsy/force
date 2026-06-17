@@ -26,12 +26,13 @@ import {
 } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutImpressionEffect } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutImpressionEffect"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
 import { SHIPPING_AND_RETURNS_FAQS_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2DeliveryOptionsForm_order$key } from "__generated__/Order2DeliveryOptionsForm_order.graphql"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2DeliveryOptionsFormProps {
@@ -44,7 +45,6 @@ export const Order2DeliveryOptionsForm: React.FC<
 > = ({ order, refreshingOptions = false }) => {
   const orderData = useFragment(FRAGMENT, order)
   const {
-    isLoading,
     checkoutTracking,
     completeStep,
     messages,
@@ -111,16 +111,15 @@ export const Order2DeliveryOptionsForm: React.FC<
           }),
         )
 
-  useEffect(() => {
+  useCheckoutImpressionEffect(() => {
     if (
-      isLoading ||
       deliveryOptionsStep?.state !== CheckoutStepState.ACTIVE ||
       !artaQuotesJson
     ) {
       return
     }
     checkoutTracking.shippingQuoteViewed(JSON.parse(artaQuotesJson))
-  }, [artaQuotesJson, checkoutTracking, deliveryOptionsStep?.state, isLoading])
+  }, [artaQuotesJson, checkoutTracking, deliveryOptionsStep?.state])
 
   const handleContinue = useCallback(async () => {
     checkoutTracking.clickedOrderProgression(

@@ -28,6 +28,7 @@ import {
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import { useCheckoutImpressionEffect } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutImpressionEffect"
 import { useScrollToErrorBanner } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToErrorBanner"
 import { useOrder2SetOrderPaymentMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPaymentMutation"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
@@ -44,7 +45,7 @@ import type {
   Order2PaymentForm_order$key,
 } from "__generated__/Order2PaymentForm_order.graphql"
 import type React from "react"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useMemo, useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { SavedPaymentMethodOption } from "./SavedPaymentMethodOption"
 import { StripePaymentCheckboxes } from "./StripePaymentCheckboxes"
@@ -227,7 +228,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const setPaymentMutation = useOrder2SetOrderPaymentMutation()
 
   const {
-    isLoading,
     setConfirmationToken,
     checkoutTracking,
     completeStep,
@@ -295,9 +295,8 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
   const billingFormRef = useRef<any>(null)
 
   // Default to saved payment method when available and track that it has been viewed
-  useEffect(() => {
+  useCheckoutImpressionEffect(() => {
     if (
-      isLoading ||
       !checkoutTracking ||
       paymentStep?.state !== CheckoutStepState.ACTIVE
     ) {
@@ -339,7 +338,6 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
     paymentStep?.state,
     savedCreditCards,
     allowedSavedBankAccounts,
-    isLoading,
   ])
 
   const resetElementsToInitialParams = useCallback(() => {
