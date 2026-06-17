@@ -28,23 +28,33 @@ const pastDate = () => {
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => (
     <ConversationsProvider viewer={props.viewer}>
-      <ConversationPartnerOfferUpdate artwork={props.artwork} />
+      <ConversationPartnerOfferUpdate conversation={props.me.conversation} />
     </ConversationsProvider>
   ),
   query: graphql`
     query ConversationPartnerOfferUpdate_Test_Query @relay_test_operation {
+      me {
+        conversation(id: "conversation-id") {
+          ...ConversationPartnerOfferUpdate_conversation
+        }
+      }
       viewer {
         ...ConversationsContext_viewer
-      }
-      artwork(id: "artwork-id") {
-        ...ConversationPartnerOfferUpdate_artwork
       }
     }
   `,
 })
 
-const Artwork = () => ({
-  internalID: "artwork-id",
+const Conversation = () => ({
+  items: [
+    {
+      item: {
+        __typename: "Artwork",
+        internalID: "artwork-id",
+      },
+    },
+  ],
+  activeOrders: { edges: [] },
 })
 
 const offerViewer = (offer: Record<string, unknown>) => () => ({
@@ -68,7 +78,7 @@ const offerViewer = (offer: Record<string, unknown>) => () => ({
 
 describe("ConversationPartnerOfferUpdate", () => {
   it("renders the offer message with the discounted price", () => {
-    renderWithRelay({ Artwork, Viewer: offerViewer({}) })
+    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
 
     expect(
       screen.getByText("You received an offer for $450"),
@@ -77,7 +87,7 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("falls back to a generic message when there is no discounted price", () => {
     renderWithRelay({
-      Artwork,
+      Conversation,
       Viewer: offerViewer({ priceWithDiscount: null }),
     })
 
@@ -86,7 +96,7 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("renders nothing when there is no offer for the artwork", () => {
     renderWithRelay({
-      Artwork,
+      Conversation,
       Viewer: () => ({
         me: { partnerOffersConnection: { edges: [] } },
       }),
@@ -96,23 +106,44 @@ describe("ConversationPartnerOfferUpdate", () => {
   })
 
   it("renders an expired message when the offer has expired", () => {
-    renderWithRelay({ Artwork, Viewer: offerViewer({ endAt: pastDate() }) })
+    renderWithRelay({
+      Conversation,
+      Viewer: offerViewer({ endAt: pastDate() }),
+    })
 
     expect(screen.getByText("Offer Expired")).toBeInTheDocument()
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })
 
   it("renders an expired message when the offer is unavailable", () => {
-    renderWithRelay({ Artwork, Viewer: offerViewer({ isAvailable: false }) })
+    renderWithRelay({
+      Conversation,
+      Viewer: offerViewer({ isAvailable: false }),
+    })
 
     expect(screen.getByText("Offer Expired")).toBeInTheDocument()
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })
 
+  it("renders nothing when there is an active order", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        ...Conversation(),
+        activeOrders: {
+          edges: [{ node: { internalID: "order-id" } }],
+        },
+      }),
+      Viewer: offerViewer({}),
+    })
+
+    expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
+    expect(screen.queryByText("Offer Expired")).not.toBeInTheDocument()
+  })
+
   it("renders nothing when the partner-offer-convo flag is off", () => {
     mockUseFlag.mockImplementation(() => false)
 
-    renderWithRelay({ Artwork, Viewer: offerViewer({}) })
+    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
 
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })

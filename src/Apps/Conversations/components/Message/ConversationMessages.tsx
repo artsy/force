@@ -221,7 +221,7 @@ export const ConversationMessages: FC<
         })}
 
         <ConversationPartnerOfferUpdate
-          artwork={conversation?.items?.[0]?.item}
+          conversation={conversation}
           mt={4}
           mb={2}
         />
@@ -296,6 +296,7 @@ export const ConversationMessagesPaginationContainer =
           inquiryRequest {
             formattedFirstMessage
           }
+          ...ConversationPartnerOfferUpdate_conversation
           items {
             item {
               __typename
@@ -304,7 +305,6 @@ export const ConversationMessagesPaginationContainer =
                 isOfferable
                 isOfferableFromInquiry
                 internalID
-                ...ConversationPartnerOfferUpdate_artwork
               }
               ...ConversationMessageArtwork_item
             }

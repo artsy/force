@@ -30,24 +30,34 @@ const pastDate = () => {
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => (
     <ConversationsProvider viewer={props.viewer}>
-      <ConversationPartnerOfferCTA artwork={props.artwork} />
+      <ConversationPartnerOfferCTA conversation={props.me.conversation} />
     </ConversationsProvider>
   ),
   query: graphql`
     query ConversationPartnerOfferCTA_Test_Query @relay_test_operation {
+      me {
+        conversation(id: "conversation-id") {
+          ...ConversationPartnerOfferCTA_conversation
+        }
+      }
       viewer {
         ...ConversationsContext_viewer
-      }
-      artwork(id: "artwork-id") {
-        ...ConversationPartnerOfferCTA_artwork
       }
     }
   `,
 })
 
-const Artwork = () => ({
-  internalID: "artwork-id",
-  href: "/artwork/some-artwork",
+const Conversation = () => ({
+  items: [
+    {
+      item: {
+        __typename: "Artwork",
+        internalID: "artwork-id",
+        href: "/artwork/some-artwork",
+      },
+    },
+  ],
+  activeOrders: { edges: [] },
 })
 
 const offerViewer = (offer: Record<string, unknown>) => () => ({
@@ -71,19 +81,21 @@ const offerViewer = (offer: Record<string, unknown>) => () => ({
 
 describe("ConversationPartnerOfferCTA", () => {
   it("renders the offer bar linking to the artwork with the partner offer id", () => {
-    renderWithRelay({ Artwork, Viewer: offerViewer({}) })
+    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
 
     expect(screen.getByText("Offer received for $450")).toBeInTheDocument()
 
     expect(screen.getByTestId("partnerOfferActionLink")).toHaveAttribute(
       "href",
-      "/artwork/some-artwork?partner_offer_id=partner-offer-id",
+      expect.stringMatching(
+        /^\/artwork\/some-artwork\?partner_offer_id=partner-offer-id&conversation_id=.+$/,
+      ),
     )
   })
 
   it("falls back to a generic message when there is no discounted price", () => {
     renderWithRelay({
-      Artwork,
+      Conversation,
       Viewer: offerViewer({ priceWithDiscount: null }),
     })
 
@@ -92,7 +104,7 @@ describe("ConversationPartnerOfferCTA", () => {
 
   it("renders nothing when there is no offer for the artwork", () => {
     renderWithRelay({
-      Artwork,
+      Conversation,
       Viewer: () => ({
         me: { partnerOffersConnection: { edges: [] } },
       }),
@@ -104,7 +116,10 @@ describe("ConversationPartnerOfferCTA", () => {
   })
 
   it("renders nothing when the offer has expired", () => {
-    renderWithRelay({ Artwork, Viewer: offerViewer({ endAt: pastDate() }) })
+    renderWithRelay({
+      Conversation,
+      Viewer: offerViewer({ endAt: pastDate() }),
+    })
 
     expect(
       screen.queryByTestId("partnerOfferActionLink"),
@@ -112,7 +127,26 @@ describe("ConversationPartnerOfferCTA", () => {
   })
 
   it("renders nothing when the offer is unavailable", () => {
-    renderWithRelay({ Artwork, Viewer: offerViewer({ isAvailable: false }) })
+    renderWithRelay({
+      Conversation,
+      Viewer: offerViewer({ isAvailable: false }),
+    })
+
+    expect(
+      screen.queryByTestId("partnerOfferActionLink"),
+    ).not.toBeInTheDocument()
+  })
+
+  it("renders nothing when there is an active order", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        ...Conversation(),
+        activeOrders: {
+          edges: [{ node: { internalID: "order-id" } }],
+        },
+      }),
+      Viewer: offerViewer({}),
+    })
 
     expect(
       screen.queryByTestId("partnerOfferActionLink"),
@@ -133,7 +167,7 @@ describe("ConversationPartnerOfferCTA", () => {
     it("shows the time remaining when the offer expires in more than a day", () => {
       const endAt = DateTime.fromMillis(NOW).plus({ days: 3 }).toISO() as string
 
-      renderWithRelay({ Artwork, Viewer: offerViewer({ endAt }) })
+      renderWithRelay({ Conversation, Viewer: offerViewer({ endAt }) })
 
       expect(screen.getByText("Expires in 3 days")).toBeInTheDocument()
       expect(screen.getByText("Expires in 3 days")).toHaveStyle({
@@ -146,7 +180,7 @@ describe("ConversationPartnerOfferCTA", () => {
         .plus({ minutes: 30 })
         .toISO() as string
 
-      renderWithRelay({ Artwork, Viewer: offerViewer({ endAt }) })
+      renderWithRelay({ Conversation, Viewer: offerViewer({ endAt }) })
 
       expect(screen.getByText("Expires in 30 minutes")).toBeInTheDocument()
       expect(screen.getByText("Expires in 30 minutes")).toHaveStyle({
@@ -158,7 +192,7 @@ describe("ConversationPartnerOfferCTA", () => {
   it("renders nothing when the partner-offer-convo flag is off", () => {
     mockUseFlag.mockImplementation(() => false)
 
-    renderWithRelay({ Artwork, Viewer: offerViewer({}) })
+    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
 
     expect(
       screen.queryByTestId("partnerOfferActionLink"),
