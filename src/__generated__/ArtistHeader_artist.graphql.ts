@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8ca9f717a89c42e6cfb767c9570739b>>
+ * @generated SignedSource<<2dcb604ad25d0de3d6aa35f848bacb6a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ArtistHeader_artist$data = {
     readonly follows: any | null | undefined;
   } | null | undefined;
   readonly coverArtwork: {
+    readonly date: string | null | undefined;
     readonly href: string | null | undefined;
     readonly image: {
       readonly height: number | null | undefined;
@@ -31,6 +32,7 @@ export type ArtistHeader_artist$data = {
     } | null | undefined;
     readonly internalID: string;
     readonly slug: string;
+    readonly title: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderImage_artwork">;
   } | null | undefined;
   readonly formattedNationalityAndBirthday: string | null | undefined;
@@ -351,6 +353,20 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "date",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
           "name": "image",
@@ -403,6 +419,6 @@ return {
 };
 })();
 
-(node as any).hash = "7d8e7d17a63c0946ca56820ca97c34ea";
+(node as any).hash = "cbd8c3e51f3b6a26b6aa060f49a9ca90";
 
 export default node;
