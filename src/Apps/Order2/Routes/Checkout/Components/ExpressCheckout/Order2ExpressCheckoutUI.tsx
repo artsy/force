@@ -27,6 +27,7 @@ import {
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { SELECTABLE_TYPES } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
@@ -260,13 +261,31 @@ export const Order2ExpressCheckoutUI: React.FC<
           variables: { input: { id: orderData.internalID } },
         })
 
-      const { unsetOrderFulfillmentOption } =
-        await unsetFulfillmentOptionMutation.submitMutation({
-          variables: { input: { id: orderData.internalID } },
-        })
-
       validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
-      validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
+
+      // Mimic the standard "landing after address selection" experience:
+      // default-select the first selectable fulfillment option so the user
+      // returns to a ready-to-continue delivery step instead of an empty one.
+      // If nothing is selectable (e.g. only PICKUP/SHIPPING_TBD), fall back to
+      // unsetting whatever the express flow set.
+      const firstSelectableOption = orderData.fulfillmentOptions.find(option =>
+        SELECTABLE_TYPES.includes(option.type),
+      )
+
+      if (firstSelectableOption) {
+        await setFulfillmentOption(
+          firstSelectableOption.type as FulfillmentOptionInputEnum,
+        )
+      } else {
+        const { unsetOrderFulfillmentOption } =
+          await unsetFulfillmentOptionMutation.submitMutation({
+            variables: { input: { id: orderData.internalID } },
+          })
+
+        validateAndExtractOrderResponse(
+          unsetOrderFulfillmentOption?.orderOrError,
+        )
+      }
     } catch (error) {
       logger.error("Error resetting order", error)
     } finally {

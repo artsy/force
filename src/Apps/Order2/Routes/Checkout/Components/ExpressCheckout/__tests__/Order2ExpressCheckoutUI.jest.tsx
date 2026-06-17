@@ -726,8 +726,11 @@ describe("ExpressCheckoutUI", () => {
       }),
     })
 
-    const unsetFulfillmentMutation = await mockResolveLastOperation({
-      unsetOrderFulfillmentOptionPayload: () => ({
+    // Reset default-selects the first selectable fulfillment option
+    // (DOMESTIC_FLAT) rather than leaving the order without one, mimicking the
+    // standard landing-after-address-selection experience.
+    const setFulfillmentMutation = await mockResolveLastOperation({
+      setOrderFulfillmentOptionPayload: () => ({
         orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
       }),
     })
@@ -735,15 +738,16 @@ describe("ExpressCheckoutUI", () => {
     expect(unsetPaymentMutation.operationName).toBe(
       "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
     )
-    expect(unsetFulfillmentMutation.operationName).toBe(
-      "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation",
+    expect(setFulfillmentMutation.operationName).toBe(
+      "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
     )
 
     expect(unsetPaymentMutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
     })
-    expect(unsetFulfillmentMutation.operationVariables.input).toEqual({
+    expect(setFulfillmentMutation.operationVariables.input).toEqual({
       id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+      fulfillmentOption: { type: "DOMESTIC_FLAT" },
     })
 
     await flushPromiseQueue()
@@ -804,8 +808,11 @@ describe("ExpressCheckoutUI", () => {
         }),
       })
 
-      const unsetFulfillmentMutation = await mockResolveLastOperation({
-        unsetOrderFulfillmentOptionPayload: () => ({
+      // Instead of leaving the order without a fulfillment option, reset
+      // default-selects the first selectable option (DOMESTIC_FLAT here),
+      // mimicking the standard landing-after-address-selection experience.
+      const setFulfillmentMutation = await mockResolveLastOperation({
+        setOrderFulfillmentOptionPayload: () => ({
           orderOrError: {
             __typename: "OrderMutationSuccess",
             order: orderData,
@@ -816,9 +823,13 @@ describe("ExpressCheckoutUI", () => {
       expect(unsetPaymentMutation.operationName).toBe(
         "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
       )
-      expect(unsetFulfillmentMutation.operationName).toBe(
-        "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation",
+      expect(setFulfillmentMutation.operationName).toBe(
+        "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
       )
+      expect(setFulfillmentMutation.operationVariables.input).toEqual({
+        id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+        fulfillmentOption: { type: "DOMESTIC_FLAT" },
+      })
 
       await flushPromiseQueue()
       expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -829,6 +840,49 @@ describe("ExpressCheckoutUI", () => {
       expect(window.location.reload).not.toHaveBeenCalled()
     },
   )
+
+  it("falls back to unsetting the fulfillment option on reset when no option is selectable", async () => {
+    mockUseDeviceDetection.mockReturnValue({
+      device: Device.iPhone,
+      downloadAppUrl: "",
+    })
+
+    const { mockResolveLastOperation, env } = renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        fulfillmentOptions: [{ type: "PICKUP", amount: null, selected: null }],
+      }),
+    })
+
+    fireEvent.click(screen.getByTestId("express-checkout-button"))
+    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
+
+    await flushPromiseQueue()
+
+    const unsetPaymentMutation = await mockResolveLastOperation({
+      unsetOrderPaymentMethodPayload: () => ({
+        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
+      }),
+    })
+
+    // No selectable option exists (only PICKUP), so there is nothing to
+    // default-select — fall back to unsetting whatever express set.
+    const unsetFulfillmentMutation = await mockResolveLastOperation({
+      unsetOrderFulfillmentOptionPayload: () => ({
+        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
+      }),
+    })
+
+    expect(unsetPaymentMutation.operationName).toBe(
+      "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
+    )
+    expect(unsetFulfillmentMutation.operationName).toBe(
+      "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation",
+    )
+
+    await flushPromiseQueue()
+    expect(env.mock.getAllOperations()).toHaveLength(0)
+  })
 
   describe("Error handling", () => {
     describe("handleSubmitError", () => {
