@@ -1,5 +1,4 @@
 import loadable from "@loadable/component"
-import { isInExperimentGroup } from "Apps/Artist/Utils/artistAboveTheFoldExperiment"
 import type { RouteProps } from "System/Router/Route"
 import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
@@ -98,18 +97,13 @@ export const artistRoutes: RouteProps[] = [
 
       return {
         artistID,
-        shouldShowExperiment: isInExperimentGroup(artistID),
       }
     },
     query: graphql`
-      query artistRoutes_ArtistAppQuery(
-        $artistID: String!
-        $shouldShowExperiment: Boolean!
-      ) @cacheable {
+      query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
           slug
           ...ArtistApp_artist
-            @arguments(shouldShowExperiment: $shouldShowExperiment)
           ...ArtistCombinedRoute_artist
         }
       }
