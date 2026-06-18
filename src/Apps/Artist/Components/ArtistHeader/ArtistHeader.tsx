@@ -139,7 +139,14 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           >
             <ArtistHeaderImageFragmentContainer artwork={artist.coverArtwork} />
 
-            <Text variant="xs" color="mono60" textAlign="left" overflowEllipsis>
+            <Text
+              variant="xs"
+              color="mono60"
+              textAlign="left"
+              overflowEllipsis
+              width="0px"
+              minWidth="100%"
+            >
               <em>{artist.coverArtwork.title}</em>
               {artist.coverArtwork.date && `, ${artist.coverArtwork.date}`}
             </Text>
