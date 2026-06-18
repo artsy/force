@@ -22,15 +22,33 @@ export const ConversationPartnerOfferUpdate: FC<
 
   const { findPartnerOffer } = useConversationsContext()
 
-  const activeOrder = extractNodes(data.activeOrders)[0]
   const item = data.items?.[0]?.item
   const artwork = item?.__typename === "Artwork" ? item : null
   const partnerOffer = artwork?.internalID
     ? findPartnerOffer(artwork.internalID)
     : null
 
-  if (!isPartnerOfferConvoEnabled || !partnerOffer || activeOrder) {
+  if (!isPartnerOfferConvoEnabled || !partnerOffer) {
     return null
+  }
+
+  const orders = extractNodes(data.collectorOrdersConnection)
+  const isPurchased = orders.some(order =>
+    order.lineItems?.some(
+      lineItem => lineItem?.partnerOfferId === partnerOffer.internalID,
+    ),
+  )
+
+  if (isPurchased) {
+    return (
+      <ConversationEventRow
+        Icon={MoneyFillIcon}
+        iconFill="mono100"
+        message="You purchased this artwork"
+        textColor="mono100"
+        {...flexProps}
+      />
+    )
   }
 
   const isExpired = !isPartnerOfferActive(partnerOffer)
@@ -63,13 +81,12 @@ const CONVERSATION_FRAGMENT = graphql`
         }
       }
     }
-    activeOrders: orderConnection(
-      first: 1
-      states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
-    ) {
+    collectorOrdersConnection(first: 10) {
       edges {
         node {
-          internalID
+          lineItems {
+            partnerOfferId
+          }
         }
       }
     }

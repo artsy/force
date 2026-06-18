@@ -17,10 +17,6 @@ jest.mock("../Components/ArtistHeader/ArtistHeader", () => ({
   ArtistHeaderFragmentContainer: () => null,
 }))
 
-jest.mock("../Components/Artist2/ArtistAbove", () => ({
-  ArtistAbove: () => null,
-}))
-
 jest.mock("../Components/ArtistBackLink.tsx", () => ({
   ArtistBackLinkFragmentContainer: () => null,
 }))

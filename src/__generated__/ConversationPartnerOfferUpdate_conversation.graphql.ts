@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7668db898c3b4dc1837816e38bc0b0c8>>
+ * @generated SignedSource<<a65ecd59e30b254d8e059c5fb391a7ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,12 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferUpdate_conversation$data = {
-  readonly activeOrders: {
+  readonly collectorOrdersConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
+        readonly lineItems: ReadonlyArray<{
+          readonly partnerOfferId: string | null | undefined;
+        } | null | undefined>;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -35,17 +37,7 @@ export type ConversationPartnerOfferUpdate_conversation$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferUpdate_conversation">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -76,7 +68,15 @@ return {
             },
             {
               "kind": "InlineFragment",
-              "selections": (v0/*: any*/),
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                }
+              ],
               "type": "Artwork",
               "abstractKey": null
             }
@@ -87,34 +87,23 @@ return {
       "storageKey": null
     },
     {
-      "alias": "activeOrders",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "PROCESSING_APPROVAL",
-            "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED"
-          ]
+          "value": 10
         }
       ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "concreteType": "MeOrdersConnection",
       "kind": "LinkedField",
-      "name": "orderConnection",
+      "name": "collectorOrdersConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "CommerceOrderEdge",
+          "concreteType": "MeOrdersEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -122,25 +111,43 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": null,
+              "concreteType": "Order",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "LineItem",
+                  "kind": "LinkedField",
+                  "name": "lineItems",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "partnerOfferId",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "collectorOrdersConnection(first:10)"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "e06db9614f682d3c5f9e1c6c96974207";
+(node as any).hash = "6232dad81b5610f5f0aafe8e797c3f54";
 
 export default node;

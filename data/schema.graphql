@@ -7183,6 +7183,7 @@ type CommerceLineItem {
   ): String
   listPriceCents: Int!
   order: CommerceOrder!
+  partnerOfferId: String
   priceCents: Int! @deprecated(reason: "switch to use listPriceCents")
   quantity: Int!
   selectedShippingQuote: CommerceShippingQuote
@@ -16788,6 +16789,7 @@ type LineItem {
   # A type-specific ID likely used as a database ID.
   internalID: ID!
   listPrice: Money
+  partnerOfferId: String
   quantity: Int!
 }
 

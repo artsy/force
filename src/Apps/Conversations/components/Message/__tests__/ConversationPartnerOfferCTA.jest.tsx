@@ -6,13 +6,22 @@ import { ConversationPartnerOfferCTA } from "Apps/Conversations/components/Messa
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { DateTime, Settings } from "luxon"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 const mockUseFlag = useFlag as jest.Mock
+const mockUseTracking = useTracking as jest.Mock
+const trackingSpy = jest.fn()
 
 beforeEach(() => {
   mockUseFlag.mockImplementation(() => true)
+  mockUseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
+})
+
+afterEach(() => {
+  jest.clearAllMocks()
 })
 
 const futureDate = () => {
@@ -48,6 +57,7 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 const Conversation = () => ({
+  internalID: "conversation-id",
   items: [
     {
       item: {
@@ -91,6 +101,12 @@ describe("ConversationPartnerOfferCTA", () => {
         /^\/artwork\/some-artwork\?partner_offer_id=partner-offer-id&conversation_id=.+$/,
       ),
     )
+
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "partnerOfferInConversationViewed",
+      context_owner_id: "conversation-id",
+      context_owner_type: "conversation",
+    })
   })
 
   it("falls back to a generic message when there is no discounted price", () => {
@@ -113,6 +129,8 @@ describe("ConversationPartnerOfferCTA", () => {
     expect(
       screen.queryByTestId("partnerOfferActionLink"),
     ).not.toBeInTheDocument()
+
+    expect(trackingSpy).not.toHaveBeenCalled()
   })
 
   it("renders nothing when the offer has expired", () => {

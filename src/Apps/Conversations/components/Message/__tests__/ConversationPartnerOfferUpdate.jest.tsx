@@ -54,7 +54,6 @@ const Conversation = () => ({
       },
     },
   ],
-  activeOrders: { edges: [] },
 })
 
 const offerViewer = (offer: Record<string, unknown>) => () => ({
@@ -73,6 +72,32 @@ const offerViewer = (offer: Record<string, unknown>) => () => ({
         },
       ],
     },
+  },
+})
+
+const ConversationWithMatchingOrder = () => ({
+  ...Conversation(),
+  collectorOrdersConnection: {
+    edges: [
+      {
+        node: {
+          lineItems: [{ partnerOfferId: "partner-offer-id" }],
+        },
+      },
+    ],
+  },
+})
+
+const ConversationWithNonMatchingOrder = () => ({
+  ...Conversation(),
+  collectorOrdersConnection: {
+    edges: [
+      {
+        node: {
+          lineItems: [{ partnerOfferId: "some-other-offer-id" }],
+        },
+      },
+    ],
   },
 })
 
@@ -98,7 +123,9 @@ describe("ConversationPartnerOfferUpdate", () => {
     renderWithRelay({
       Conversation,
       Viewer: () => ({
-        me: { partnerOffersConnection: { edges: [] } },
+        me: {
+          partnerOffersConnection: { edges: [] },
+        },
       }),
     })
 
@@ -125,19 +152,28 @@ describe("ConversationPartnerOfferUpdate", () => {
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })
 
-  it("renders nothing when there is an active order", () => {
+  it("still shows the offer when there is an order that does not match the partner offer", () => {
     renderWithRelay({
-      Conversation: () => ({
-        ...Conversation(),
-        activeOrders: {
-          edges: [{ node: { internalID: "order-id" } }],
-        },
-      }),
+      Conversation: ConversationWithNonMatchingOrder,
       Viewer: offerViewer({}),
     })
 
+    expect(
+      screen.getByText("You received an offer for $450"),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByText("You purchased this artwork"),
+    ).not.toBeInTheDocument()
+  })
+
+  it("renders 'You purchased this artwork' when an order's line item matches the partner offer", () => {
+    renderWithRelay({
+      Conversation: ConversationWithMatchingOrder,
+      Viewer: offerViewer({}),
+    })
+
+    expect(screen.getByText("You purchased this artwork")).toBeInTheDocument()
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
-    expect(screen.queryByText("Offer Expired")).not.toBeInTheDocument()
   })
 
   it("renders nothing when the partner-offer-convo flag is off", () => {
