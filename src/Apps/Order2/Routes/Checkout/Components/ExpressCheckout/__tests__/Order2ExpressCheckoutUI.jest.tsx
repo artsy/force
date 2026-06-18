@@ -4,7 +4,6 @@ import { screen } from "@testing-library/react"
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import type { Order2ExpressCheckoutUI_Test_Query } from "__generated__/Order2ExpressCheckoutUI_Test_Query.graphql"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
@@ -26,19 +25,6 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
 jest.mock("System/Hooks/useBrazeSubscription", () => ({
   useBrazeSubscription: jest.fn(),
 }))
-
-jest.mock("Utils/Hooks/useDeviceDetection", () => {
-  const actual = jest.requireActual("Utils/Hooks/useDeviceDetection")
-  return {
-    ...actual,
-    useDeviceDetection: jest.fn(() => ({
-      device: actual.Device.Unknown,
-      downloadAppUrl: "",
-    })),
-  }
-})
-
-const mockUseDeviceDetection = useDeviceDetection as jest.Mock
 
 jest.mock("Apps/Order2/Utils/confirmationTokenUtils", () => ({
   fetchAndSetConfirmationToken: jest.fn(
@@ -218,11 +204,6 @@ describe("ExpressCheckoutUI", () => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
     trackEvent.mockClear()
-    // Default to a desktop device; mobile-specific tests override this.
-    mockUseDeviceDetection.mockReturnValue({
-      device: Device.Unknown,
-      downloadAppUrl: "",
-    })
     // Reset messages
     mockMessages.EXPRESS_CHECKOUT = { error: null }
     mockMessages.FULFILLMENT_DETAILS = { error: null }
@@ -680,45 +661,12 @@ describe("ExpressCheckoutUI", () => {
     })
   })
 
-  it("resets the order without reloading the page when the user changed shipping in the sheet", async () => {
+  it("resets the order without reloading the page", async () => {
     const { mockResolveLastOperation, env } = renderWithRelay({
       Order: () => orderData,
     })
 
-    // Simulate the user changing the shipping address inside the Apple Pay
-    // sheet — this marks the express session as having mutated the order.
-    const elementProps = mockExpressCheckoutElement.mock.calls[0][0]
-    elementProps.onShippingAddressChange({
-      address: {
-        city: "New York",
-        state: "NY",
-        country: "US",
-        postal_code: "10013",
-      },
-      name: "Buyer Name",
-      resolve: jest.fn(),
-      reject: jest.fn(),
-    })
-
-    await flushPromiseQueue()
-
-    await mockResolveLastOperation({
-      updateOrderShippingAddress: () => ({
-        orderOrError: { __typename: "OrderMutationSuccess" },
-      }),
-      Order: () => orderData,
-      FulfillmentOption: () => ({
-        type: "DOMESTIC_FLAT",
-        amount: { minor: 4200, currencyCode: "USD" },
-        selected: null,
-      }),
-    })
-
-    await flushPromiseQueue()
-
     fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-    await flushPromiseQueue()
 
     const unsetPaymentMutation = await mockResolveLastOperation({
       unsetOrderPaymentMethodPayload: () => ({
@@ -726,157 +674,6 @@ describe("ExpressCheckoutUI", () => {
       }),
     })
 
-    // Reset default-selects the first selectable fulfillment option
-    // (DOMESTIC_FLAT) rather than leaving the order without one, mimicking the
-    // standard landing-after-address-selection experience.
-    const setFulfillmentMutation = await mockResolveLastOperation({
-      setOrderFulfillmentOptionPayload: () => ({
-        orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
-      }),
-    })
-
-    expect(unsetPaymentMutation.operationName).toBe(
-      "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
-    )
-    expect(setFulfillmentMutation.operationName).toBe(
-      "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
-    )
-
-    expect(unsetPaymentMutation.operationVariables.input).toEqual({
-      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-    })
-    expect(setFulfillmentMutation.operationVariables.input).toEqual({
-      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-      fulfillmentOption: { type: "DOMESTIC_FLAT" },
-    })
-
-    await flushPromiseQueue()
-    expect(env.mock.getAllOperations()).toHaveLength(0)
-
-    // Verify state is reset without page reload
-    expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
-    expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
-    expect(window.location.reload).not.toHaveBeenCalled()
-  })
-
-  it("on desktop, closes the express UI without unsetting fulfillment when the user cancels without changes", async () => {
-    const { env } = renderWithRelay({
-      Order: () => orderData,
-    })
-
-    fireEvent.click(screen.getByTestId("express-checkout-button"))
-    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-    await flushPromiseQueue()
-
-    // No unset mutations should have been issued
-    expect(env.mock.getAllOperations()).toHaveLength(0)
-
-    // Step should not have been rewound
-    expect(mockEditFulfillmentDetails).not.toHaveBeenCalled()
-
-    // Express UI state is still cleared
-    expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
-    expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
-    expect(window.location.reload).not.toHaveBeenCalled()
-  })
-
-  it.each([
-    ["iPhone", Device.iPhone],
-    ["Android", Device.Android],
-  ])(
-    "on %s, resets the order when the user cancels even without changes",
-    async (_label, device) => {
-      mockUseDeviceDetection.mockReturnValue({ device, downloadAppUrl: "" })
-
-      const { mockResolveLastOperation, env } = renderWithRelay({
-        Order: () => orderData,
-      })
-
-      fireEvent.click(screen.getByTestId("express-checkout-button"))
-      fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-      await flushPromiseQueue()
-
-      // The order is rewound on close, even though nothing changed in the sheet.
-      const unsetPaymentMutation = await mockResolveLastOperation({
-        unsetOrderPaymentMethodPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-
-      // Instead of leaving the order without a fulfillment option, reset
-      // default-selects the first selectable option (DOMESTIC_FLAT here),
-      // mimicking the standard landing-after-address-selection experience.
-      const setFulfillmentMutation = await mockResolveLastOperation({
-        setOrderFulfillmentOptionPayload: () => ({
-          orderOrError: {
-            __typename: "OrderMutationSuccess",
-            order: orderData,
-          },
-        }),
-      })
-
-      expect(unsetPaymentMutation.operationName).toBe(
-        "useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation",
-      )
-      expect(setFulfillmentMutation.operationName).toBe(
-        "useOrder2ExpressCheckoutSetFulfillmentOptionMutation",
-      )
-      expect(setFulfillmentMutation.operationVariables.input).toEqual({
-        id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
-        fulfillmentOption: { type: "DOMESTIC_FLAT" },
-      })
-
-      await flushPromiseQueue()
-      expect(env.mock.getAllOperations()).toHaveLength(0)
-
-      // State is reset without a page reload.
-      expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
-      expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
-      expect(window.location.reload).not.toHaveBeenCalled()
-    },
-  )
-
-  it("falls back to unsetting the fulfillment option on reset when no option is selectable", async () => {
-    mockUseDeviceDetection.mockReturnValue({
-      device: Device.iPhone,
-      downloadAppUrl: "",
-    })
-
-    const { mockResolveLastOperation, env } = renderWithRelay({
-      Order: () => ({
-        ...orderData,
-        fulfillmentOptions: [{ type: "PICKUP", amount: null, selected: null }],
-      }),
-    })
-
-    fireEvent.click(screen.getByTestId("express-checkout-button"))
-    fireEvent.click(screen.getByTestId("express-checkout-cancel"))
-
-    await flushPromiseQueue()
-
-    // resetOrder reads fulfillmentOptions from the fresh unset-payment response,
-    // so return a PICKUP-only order here to exercise the unset fallback.
-    const unsetPaymentMutation = await mockResolveLastOperation({
-      unsetOrderPaymentMethodPayload: () => ({
-        orderOrError: {
-          __typename: "OrderMutationSuccess",
-          order: {
-            ...orderData,
-            fulfillmentOptions: [
-              { type: "PICKUP", amount: null, selected: null },
-            ],
-          },
-        },
-      }),
-    })
-
-    // No selectable option exists (only PICKUP), so there is nothing to
-    // default-select — fall back to unsetting whatever express set.
     const unsetFulfillmentMutation = await mockResolveLastOperation({
       unsetOrderFulfillmentOptionPayload: () => ({
         orderOrError: { __typename: "OrderMutationSuccess", order: orderData },
@@ -890,8 +687,20 @@ describe("ExpressCheckoutUI", () => {
       "useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation",
     )
 
+    expect(unsetPaymentMutation.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+    })
+    expect(unsetFulfillmentMutation.operationVariables.input).toEqual({
+      id: "a5aaa8b0-93ff-4f2a-8bb3-9589f378d229",
+    })
+
     await flushPromiseQueue()
     expect(env.mock.getAllOperations()).toHaveLength(0)
+
+    // Verify state is reset without page reload
+    expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
+    expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
+    expect(window.location.reload).not.toHaveBeenCalled()
   })
 
   describe("Error handling", () => {

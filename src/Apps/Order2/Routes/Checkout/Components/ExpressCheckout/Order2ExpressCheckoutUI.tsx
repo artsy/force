@@ -22,17 +22,15 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { SELECTABLE_TYPES } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import { RouterLink } from "System/Components/RouterLink"
-import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import createLogger from "Utils/logger"
 import type {
   Order2ExpressCheckoutUI_order$data,
@@ -44,7 +42,7 @@ import type {
 } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
@@ -75,13 +73,6 @@ export const Order2ExpressCheckoutUI: React.FC<
   const stripe = useStripe()
   const environment = useRelayEnvironment()
 
-  // On phones (mobile web + the native app webview) the wallet presents a
-  // native payment sheet, so we always rewind the order when it closes. On
-  // desktop the wallet uses a cross-device QR flow where only scanning sends
-  // address/rate data — see handleCancel.
-  const { device } = useDeviceDetection()
-  const isMobileDevice = device === Device.iPhone || device === Device.Android
-
   const setFulfillmentOptionMutation =
     useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
   const setOrderPaymentMutation =
@@ -96,12 +87,6 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
-
-  // Tracks whether the user mutated the order (shipping address or
-  // fulfillment option) inside the open express checkout sheet. If they
-  // didn't, we can skip the resetOrder() rewind on cancel and leave the
-  // user on their current step with their selections intact.
-  const orderMutatedDuringExpressSessionRef = useRef(false)
 
   const {
     setExpressCheckoutLoaded,
@@ -261,44 +246,13 @@ export const Order2ExpressCheckoutUI: React.FC<
           variables: { input: { id: orderData.internalID } },
         })
 
-      const orderAfterUnset = validateAndExtractOrderResponse(
-        unsetOrderPaymentMethod?.orderOrError,
-      ).order
+      const { unsetOrderFulfillmentOption } =
+        await unsetFulfillmentOptionMutation.submitMutation({
+          variables: { input: { id: orderData.internalID } },
+        })
 
-      // Mimic the standard "landing after address selection" experience:
-      // re-use the previously selected option if still available, otherwise
-      // default-select the first selectable one, so the user returns to a
-      // ready-to-continue delivery step instead of an empty one. If nothing is
-      // selectable (e.g. only PICKUP/SHIPPING_TBD), fall back to unsetting
-      // whatever the express flow set.
-      //
-      // Read fulfillmentOptions from the fresh mutation response rather than the
-      // render closure's `orderData`, which can be stale at cancel time (Stripe
-      // fires onCancel with a closure captured before the wallet populated the
-      // order's shipping options).
-      const fulfillmentOptions = orderAfterUnset?.fulfillmentOptions ?? []
-      const selectableOptions = fulfillmentOptions.filter(option =>
-        SELECTABLE_TYPES.includes(option.type),
-      )
-      const previouslySelectedType = fulfillmentOptions.find(
-        option => option.selected,
-      )?.type
-      const typeToSelect =
-        selectableOptions.find(option => option.type === previouslySelectedType)
-          ?.type ?? selectableOptions[0]?.type
-
-      if (typeToSelect) {
-        await setFulfillmentOption(typeToSelect as FulfillmentOptionInputEnum)
-      } else {
-        const { unsetOrderFulfillmentOption } =
-          await unsetFulfillmentOptionMutation.submitMutation({
-            variables: { input: { id: orderData.internalID } },
-          })
-
-        validateAndExtractOrderResponse(
-          unsetOrderFulfillmentOption?.orderOrError,
-        )
-      }
+      validateAndExtractOrderResponse(unsetOrderPaymentMethod?.orderOrError)
+      validateAndExtractOrderResponse(unsetOrderFulfillmentOption?.orderOrError)
     } catch (error) {
       logger.error("Error resetting order", error)
     } finally {
@@ -354,7 +308,6 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
-    orderMutatedDuringExpressSessionRef.current = false
     setCheckoutMode("express")
     setExpressCheckoutState("active")
 
@@ -404,22 +357,7 @@ export const Order2ExpressCheckoutUI: React.FC<
       return
     }
 
-    // Mobile + mobile web: the wallet is a native payment sheet, so closing it
-    // always rewinds the order to a clean state.
-    // Desktop: the wallet uses a cross-device QR flow — only scanning the code
-    // sends address/rate data (flipping the mutated ref). An unscanned
-    // open-and-close mutates nothing, so we preserve the user's progress.
-    if (isMobileDevice || orderMutatedDuringExpressSessionRef.current) {
-      await resetOrder()
-      return
-    }
-
-    // No server-side changes were made during the express session, so
-    // leave the user's step + fulfillment option intact and just close
-    // the express UI.
-    setExpressCheckoutType(null)
-    setCheckoutMode("standard")
-    setExpressCheckoutState(null)
+    await resetOrder()
   }
 
   // User selects a shipping address
@@ -439,8 +377,6 @@ export const Order2ExpressCheckoutUI: React.FC<
         postal_code,
         name,
       })
-
-      orderMutatedDuringExpressSessionRef.current = true
 
       updateStripeElements(result.order)
 
@@ -477,8 +413,6 @@ export const Order2ExpressCheckoutUI: React.FC<
       const result = await setFulfillmentOption(
         shippingRate.id as FulfillmentOptionInputEnum,
       )
-
-      orderMutatedDuringExpressSessionRef.current = true
 
       updateStripeElements(result.order)
 
@@ -692,9 +626,8 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   return (
     <Box backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <SectionHeading>Express checkout (TEST 3)</SectionHeading>
+      <SectionHeading>Express checkout</SectionHeading>
       <Spacer y={[1, 1, 2]} />
-
       {error && (
         <>
           <CheckoutErrorBanner
