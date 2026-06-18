@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b76fededc1ed9a552d3ea54317a4b90>>
+ * @generated SignedSource<<a65ecd59e30b254d8e059c5fb391a7ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,15 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferUpdate_conversation$data = {
+  readonly collectorOrdersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly lineItems: ReadonlyArray<{
+          readonly partnerOfferId: string | null | undefined;
+        } | null | undefined>;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
@@ -76,12 +85,69 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 10
+        }
+      ],
+      "concreteType": "MeOrdersConnection",
+      "kind": "LinkedField",
+      "name": "collectorOrdersConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "MeOrdersEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Order",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "LineItem",
+                  "kind": "LinkedField",
+                  "name": "lineItems",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "partnerOfferId",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "collectorOrdersConnection(first:10)"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
 
-(node as any).hash = "c1e718b17b27a2bcd3175e34e9a394d4";
+(node as any).hash = "6232dad81b5610f5f0aafe8e797c3f54";
 
 export default node;

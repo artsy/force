@@ -72,61 +72,32 @@ const offerViewer = (offer: Record<string, unknown>) => () => ({
         },
       ],
     },
-    ordersConnection: { edges: [] },
   },
 })
 
-const offerViewerWithMatchingOrder = () => ({
-  me: {
-    partnerOffersConnection: {
-      edges: [
-        {
-          node: {
-            internalID: "partner-offer-id",
-            artworkId: "artwork-id",
-            isAvailable: true,
-            priceWithDiscount: { display: "$450" },
-            endAt: futureDate(),
-          },
+const ConversationWithMatchingOrder = () => ({
+  ...Conversation(),
+  collectorOrdersConnection: {
+    edges: [
+      {
+        node: {
+          lineItems: [{ partnerOfferId: "partner-offer-id" }],
         },
-      ],
-    },
-    ordersConnection: {
-      edges: [
-        {
-          node: {
-            lineItems: [{ partnerOfferId: "partner-offer-id" }],
-          },
-        },
-      ],
-    },
+      },
+    ],
   },
 })
 
-const offerViewerWithNonMatchingOrder = () => ({
-  me: {
-    partnerOffersConnection: {
-      edges: [
-        {
-          node: {
-            internalID: "partner-offer-id",
-            artworkId: "artwork-id",
-            isAvailable: true,
-            priceWithDiscount: { display: "$450" },
-            endAt: futureDate(),
-          },
+const ConversationWithNonMatchingOrder = () => ({
+  ...Conversation(),
+  collectorOrdersConnection: {
+    edges: [
+      {
+        node: {
+          lineItems: [{ partnerOfferId: "some-other-offer-id" }],
         },
-      ],
-    },
-    ordersConnection: {
-      edges: [
-        {
-          node: {
-            lineItems: [{ partnerOfferId: "some-other-offer-id" }],
-          },
-        },
-      ],
-    },
+      },
+    ],
   },
 })
 
@@ -154,7 +125,6 @@ describe("ConversationPartnerOfferUpdate", () => {
       Viewer: () => ({
         me: {
           partnerOffersConnection: { edges: [] },
-          ordersConnection: { edges: [] },
         },
       }),
     })
@@ -184,8 +154,8 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("still shows the offer when there is an order that does not match the partner offer", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: offerViewerWithNonMatchingOrder,
+      Conversation: ConversationWithNonMatchingOrder,
+      Viewer: offerViewer({}),
     })
 
     expect(
@@ -198,8 +168,8 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("renders 'You purchased this artwork' when an order's line item matches the partner offer", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: offerViewerWithMatchingOrder,
+      Conversation: ConversationWithMatchingOrder,
+      Viewer: offerViewer({}),
     })
 
     expect(screen.getByText("You purchased this artwork")).toBeInTheDocument()

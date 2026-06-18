@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6668889be4d2b64fc09c15fc63e6807e>>
+ * @generated SignedSource<<8e032f7d9c8148c1c103c19886a500ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -62,13 +62,13 @@ v4 = {
 },
 v5 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
 v6 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 };
@@ -193,6 +193,65 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 10
+                  }
+                ],
+                "concreteType": "MeOrdersConnection",
+                "kind": "LinkedField",
+                "name": "collectorOrdersConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "MeOrdersEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Order",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "LineItem",
+                            "kind": "LinkedField",
+                            "name": "lineItems",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "partnerOfferId",
+                                "storageKey": null
+                              },
+                              (v2/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "collectorOrdersConnection(first:10)"
+              },
               (v2/*: any*/)
             ],
             "storageKey": "conversation(id:\"conversation-id\")"
@@ -311,65 +370,6 @@ return {
                 ],
                 "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
               },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 10
-                  }
-                ],
-                "concreteType": "MeOrdersConnection",
-                "kind": "LinkedField",
-                "name": "ordersConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "MeOrdersEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Order",
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "LineItem",
-                            "kind": "LinkedField",
-                            "name": "lineItems",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "partnerOfferId",
-                                "storageKey": null
-                              },
-                              (v2/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          (v2/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "ordersConnection(first:10)"
-              },
               (v2/*: any*/)
             ],
             "storageKey": null
@@ -380,7 +380,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9d76e7bb0954f284168b183ccd89f2cf",
+    "cacheID": "ab961fab757c13aa27fe5deaf9e5fe2d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -391,6 +391,33 @@ return {
           "plural": false,
           "type": "Conversation"
         },
+        "me.conversation.collectorOrdersConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MeOrdersConnection"
+        },
+        "me.conversation.collectorOrdersConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "MeOrdersEdge"
+        },
+        "me.conversation.collectorOrdersConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Order"
+        },
+        "me.conversation.collectorOrdersConnection.edges.node.id": (v4/*: any*/),
+        "me.conversation.collectorOrdersConnection.edges.node.lineItems": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "LineItem"
+        },
+        "me.conversation.collectorOrdersConnection.edges.node.lineItems.id": (v4/*: any*/),
+        "me.conversation.collectorOrdersConnection.edges.node.lineItems.partnerOfferId": (v5/*: any*/),
         "me.conversation.id": (v4/*: any*/),
         "me.conversation.items": {
           "enumValues": null,
@@ -404,8 +431,8 @@ return {
           "plural": false,
           "type": "ConversationItemType"
         },
-        "me.conversation.items.item.__isNode": (v5/*: any*/),
-        "me.conversation.items.item.__typename": (v5/*: any*/),
+        "me.conversation.items.item.__isNode": (v6/*: any*/),
+        "me.conversation.items.item.__typename": (v6/*: any*/),
         "me.conversation.items.item.id": (v4/*: any*/),
         "me.conversation.items.item.internalID": (v4/*: any*/),
         "me.id": (v4/*: any*/),
@@ -417,33 +444,6 @@ return {
         },
         "viewer.me": (v3/*: any*/),
         "viewer.me.id": (v4/*: any*/),
-        "viewer.me.ordersConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "MeOrdersConnection"
-        },
-        "viewer.me.ordersConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "MeOrdersEdge"
-        },
-        "viewer.me.ordersConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Order"
-        },
-        "viewer.me.ordersConnection.edges.node.id": (v4/*: any*/),
-        "viewer.me.ordersConnection.edges.node.lineItems": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "LineItem"
-        },
-        "viewer.me.ordersConnection.edges.node.lineItems.id": (v4/*: any*/),
-        "viewer.me.ordersConnection.edges.node.lineItems.partnerOfferId": (v6/*: any*/),
         "viewer.me.partnerOffersConnection": {
           "enumValues": null,
           "nullable": true,
@@ -462,8 +462,8 @@ return {
           "plural": false,
           "type": "PartnerOfferToCollector"
         },
-        "viewer.me.partnerOffersConnection.edges.node.artworkId": (v6/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.endAt": (v6/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.artworkId": (v5/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.endAt": (v5/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.id": (v4/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.internalID": (v4/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.isAvailable": {
@@ -472,19 +472,19 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "viewer.me.partnerOffersConnection.edges.node.note": (v6/*: any*/),
+        "viewer.me.partnerOffersConnection.edges.node.note": (v5/*: any*/),
         "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Money"
         },
-        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v6/*: any*/)
+        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v5/*: any*/)
       }
     },
     "name": "ConversationPartnerOfferUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    ordersConnection(first: 10) {\n      edges {\n        node {\n          lineItems {\n            partnerOfferId\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  collectorOrdersConnection(first: 10) {\n    edges {\n      node {\n        lineItems {\n          partnerOfferId\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

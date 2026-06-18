@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<793a645b8f498e9f3ec4a907b5f9f119>>
+ * @generated SignedSource<<6da5200c0a10d430ad6bcc47180b492e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -373,65 +373,6 @@ return {
                 ],
                 "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
               },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 10
-                  }
-                ],
-                "concreteType": "MeOrdersConnection",
-                "kind": "LinkedField",
-                "name": "ordersConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "MeOrdersEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Order",
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "LineItem",
-                            "kind": "LinkedField",
-                            "name": "lineItems",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "partnerOfferId",
-                                "storageKey": null
-                              },
-                              (v3/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          (v3/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "ordersConnection(first:10)"
-              },
               (v3/*: any*/)
             ],
             "storageKey": null
@@ -442,7 +383,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d01ac1503ede0700aaaf1e4308256d07",
+    "cacheID": "dff6501f83333b0ab1057422e9df5ae7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -507,33 +448,6 @@ return {
         },
         "viewer.me": (v4/*: any*/),
         "viewer.me.id": (v6/*: any*/),
-        "viewer.me.ordersConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "MeOrdersConnection"
-        },
-        "viewer.me.ordersConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "MeOrdersEdge"
-        },
-        "viewer.me.ordersConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Order"
-        },
-        "viewer.me.ordersConnection.edges.node.id": (v6/*: any*/),
-        "viewer.me.ordersConnection.edges.node.lineItems": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "LineItem"
-        },
-        "viewer.me.ordersConnection.edges.node.lineItems.id": (v6/*: any*/),
-        "viewer.me.ordersConnection.edges.node.lineItems.partnerOfferId": (v7/*: any*/),
         "viewer.me.partnerOffersConnection": {
           "enumValues": null,
           "nullable": true,
@@ -574,7 +488,7 @@ return {
     },
     "name": "ConversationPartnerOfferCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferCTA_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferCTA_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        href\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    ordersConnection(first: 10) {\n      edges {\n        node {\n          lineItems {\n            partnerOfferId\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationPartnerOfferCTA_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferCTA_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        href\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
