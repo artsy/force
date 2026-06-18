@@ -14,7 +14,6 @@ export const useOrder2SetOrderDeliveryAddressMutation = () => {
             ... on OrderMutationSuccess {
               order {
                 internalID
-                shippingRadius
                 ...Order2CheckoutContext_order
                 ...Order2CheckoutApp_order
                 fulfillmentOptions {

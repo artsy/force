@@ -1056,6 +1056,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       it("allows OFFER mode orders to proceed with SHIPPING_TBD when Arta is not configured", async () => {
+        mockCheckoutContext.isOffer = true
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
             ...baseMeProps,
@@ -1170,6 +1171,7 @@ describe("Order2DeliveryForm", () => {
       })
 
       it("shows error for OFFER mode when Arta is configured but no quotes are returned", async () => {
+        mockCheckoutContext.isOffer = true
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
             ...baseMeProps,

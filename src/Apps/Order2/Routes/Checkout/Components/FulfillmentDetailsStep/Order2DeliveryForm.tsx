@@ -78,6 +78,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
   const {
     isOffer,
+    isInternationalShipping,
     setCheckoutMode,
     checkoutTracking,
     completeStep,
@@ -263,10 +264,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         )
 
         const artwork = orderData.lineItems?.[0]?.artwork
-        const artaConfiguredForShipping =
-          newOrder.shippingRadius === "domestic"
-            ? !!artwork?.processWithArtsyShippingDomestic
-            : !!artwork?.artsyShippingInternational
+        const artaConfiguredForShipping = isInternationalShipping
+          ? !!artwork?.artsyShippingInternational
+          : !!artwork?.processWithArtsyShippingDomestic
 
         if (
           isMissingShippingOption &&
@@ -329,6 +329,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     },
     [
       hasSavedAddresses,
+      isInternationalShipping,
       isOffer,
       orderData.internalID,
       orderData.lineItems,
