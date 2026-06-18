@@ -63,7 +63,6 @@ export const ConversationPurchaseButton: React.FC<
           partnerOfferId: partnerOffer?.internalID,
           editionSetId:
             selectedEditionSetId || data.artwork.editionSets?.[0]?.internalID,
-          impulseConversationId: data.conversation.internalID,
         },
       },
       rejectIf: res => {

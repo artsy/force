@@ -28,7 +28,7 @@ interface ConversationsProviderProps {
   viewer: ConversationsContext_viewer$key
 }
 
-type PartnerOffer = NonNullable<
+export type PartnerOffer = NonNullable<
   NonNullable<
     NonNullable<
       NonNullable<
