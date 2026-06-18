@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11e597d535dd50789ed7dca145b50da1>>
+ * @generated SignedSource<<0a3cf0c4e14d9914275a83664f6e2298>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,13 +51,6 @@ export type ConversationMessages_conversation$data = {
       readonly node: {
         readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
         readonly internalID: string;
-        readonly lineItems: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly partnerOfferId: string | null | undefined;
-            } | null | undefined;
-          } | null | undefined> | null | undefined;
-        } | null | undefined;
         readonly orderHistory: ReadonlyArray<{
           readonly __typename: string;
           readonly createdAt?: string;
@@ -446,46 +439,6 @@ return {
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "CommerceLineItemConnection",
-                    "kind": "LinkedField",
-                    "name": "lineItems",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "CommerceLineItemEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "CommerceLineItem",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "partnerOfferId",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  {
                     "kind": "InlineFragment",
                     "selections": [
                       {
@@ -615,6 +568,6 @@ return {
 };
 })();
 
-(node as any).hash = "c326e5796bcab3496ca4a1ffc6a1429e";
+(node as any).hash = "fbb0ff51a77577b34200f8f532c826c4";
 
 export default node;
