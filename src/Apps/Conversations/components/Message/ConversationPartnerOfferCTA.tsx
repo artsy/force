@@ -2,12 +2,13 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
+import { useConversationsTracking } from "Apps/Conversations/hooks/useConversationsTracking"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import type { ConversationPartnerOfferCTA_conversation$key } from "__generated__/ConversationPartnerOfferCTA_conversation.graphql"
-import type { FC } from "react"
+import { type FC, useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface ConversationPartnerOfferCTAProps {
@@ -20,6 +21,7 @@ export const ConversationPartnerOfferCTA: FC<
   const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
 
   const data = useFragment(CONVERSATION_FRAGMENT, conversation)
+  const { trackPartnerOfferCTAViewed } = useConversationsTracking()
 
   const { findPartnerOffer } = useConversationsContext()
 
@@ -29,17 +31,21 @@ export const ConversationPartnerOfferCTA: FC<
   const partnerOffer = artwork?.internalID
     ? findPartnerOffer(artwork.internalID)
     : null
+  const hasActivePartnerOffer = isPartnerOfferActive(partnerOffer)
+
+  useEffect(() => {
+    if (hasActivePartnerOffer && data?.internalID) {
+      trackPartnerOfferCTAViewed(data.internalID)
+    }
+  }, [hasActivePartnerOffer, data?.internalID, trackPartnerOfferCTAViewed])
 
   if (
     !isPartnerOfferConvoEnabled ||
     !partnerOffer ||
     !artwork?.href ||
-    activeOrder
+    activeOrder ||
+    !hasActivePartnerOffer
   ) {
-    return null
-  }
-
-  if (!isPartnerOfferActive(partnerOffer)) {
     return null
   }
 
