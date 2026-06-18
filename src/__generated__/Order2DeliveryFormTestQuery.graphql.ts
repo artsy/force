@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d09f740bf058760d3cb2bd2000ae29d>>
+ * @generated SignedSource<<37c349159220b0e6f649972f1885bf9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -354,13 +354,6 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "mode",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "availableShippingCountries",
                 "storageKey": null
               },
@@ -458,7 +451,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7232ca40a35ad6cb7895b4d50e5a8eaa",
+    "cacheID": "335dc22943f6557c2bac482115f84171",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -556,15 +549,6 @@ return {
         "me.order.lineItems.artwork.processWithArtsyShippingDomestic": (v16/*: any*/),
         "me.order.lineItems.artwork.shippingOriginRegion": (v13/*: any*/),
         "me.order.lineItems.id": (v14/*: any*/),
-        "me.order.mode": {
-          "enumValues": [
-            "BUY",
-            "OFFER"
-          ],
-          "nullable": false,
-          "plural": false,
-          "type": "OrderModeEnum"
-        },
         "me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
@@ -593,7 +577,7 @@ return {
     },
     "name": "Order2DeliveryFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    ...Order2DeliveryForm_me\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  name\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  mode\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n      countryCode\n    }\n  }\n  lineItems {\n    artwork {\n      shippingOriginRegion\n      processWithArtsyShippingDomestic\n      artsyShippingInternational\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2DeliveryFormTestQuery {\n  me {\n    ...Order2DeliveryForm_me\n    order(id: \"order-id\") {\n      ...Order2DeliveryForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  name\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n      countryCode\n    }\n  }\n  lineItems {\n    artwork {\n      shippingOriginRegion\n      processWithArtsyShippingDomestic\n      artsyShippingInternational\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

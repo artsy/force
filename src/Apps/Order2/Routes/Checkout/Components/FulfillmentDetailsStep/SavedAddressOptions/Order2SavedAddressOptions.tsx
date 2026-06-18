@@ -24,7 +24,6 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useFulfillmentDetailsError } from "Apps/Order2/Routes/Checkout/Hooks/useFulfillmentDetailsError"
 import { useScrollToStep } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToStep"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
-import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 const ADDRESS_ERROR_MESSAGES = {
@@ -71,6 +70,7 @@ export const SavedAddressOptions = ({
   shippingOriginRegion,
 }: SavedAddressOptionsProps) => {
   const {
+    isOffer,
     setUserAddressMode,
     userAddressMode,
     setSectionErrorMessage,
@@ -78,7 +78,6 @@ export const SavedAddressOptions = ({
     isFulfillmentDetailsSaving,
     checkoutTracking,
     steps,
-    orderData,
   } = useCheckoutContext()
 
   const { isMissingPostalCode: hasMissingPostalCodeError } =
@@ -90,8 +89,6 @@ export const SavedAddressOptions = ({
   >(initialSelectedAddress)
 
   const previousUserAddressMode = usePrevious(userAddressMode)
-  const isOfferOrder =
-    (orderData as Order2CheckoutContext_order$data)?.mode === "OFFER"
 
   const fulfillmentDetailsStep = steps?.find(
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
@@ -151,7 +148,7 @@ export const SavedAddressOptions = ({
       savedAddresses.find(a => a.isShippable && a.isValid) || savedAddresses[0]
     if (firstValid) {
       setSelectedAddress(firstValid)
-      if (!firstValid.isValid || (!firstValid.isShippable && !isOfferOrder)) {
+      if (!firstValid.isValid || (!firstValid.isShippable && !isOffer)) {
         onSelectInvalidAddress()
       } else {
         onSelectAddress(firstValid)
@@ -172,12 +169,12 @@ export const SavedAddressOptions = ({
   useEffect(() => {
     if (!selectedAddress || userAddressMode) return
 
-    if (!selectedAddress.isShippable && !isOfferOrder) {
+    if (!selectedAddress.isShippable && !isOffer) {
       setSectionErrorMessage({
         section: CheckoutStepName.FULFILLMENT_DETAILS,
         error: getUnableToShipMessage(
           shippingOriginRegion ?? null,
-          !isOfferOrder,
+          !isOffer,
         ),
       })
       return
@@ -198,7 +195,7 @@ export const SavedAddressOptions = ({
   }, [
     selectedAddress,
     userAddressMode,
-    isOfferOrder,
+    isOffer,
     setSectionErrorMessage,
     shippingOriginRegion,
   ])
@@ -221,7 +218,7 @@ export const SavedAddressOptions = ({
       })
       setUserAddressMode(null)
 
-      if (!isValid || (!isShippable && !isOfferOrder)) {
+      if (!isValid || (!isShippable && !isOffer)) {
         await onSelectInvalidAddress()
       } else {
         await onSelectAddress(values)
@@ -233,7 +230,7 @@ export const SavedAddressOptions = ({
       setUserAddressMode,
       availableShippingCountries,
       savedAddresses,
-      isOfferOrder,
+      isOffer,
     ],
   )
 
@@ -281,7 +278,7 @@ export const SavedAddressOptions = ({
       try {
         if (
           !processedAddress.isValid ||
-          (!processedAddress.isShippable && !isOfferOrder)
+          (!processedAddress.isShippable && !isOffer)
         ) {
           await onSelectInvalidAddress()
           return
@@ -294,7 +291,7 @@ export const SavedAddressOptions = ({
     },
     [
       checkoutTracking,
-      isOfferOrder,
+      isOffer,
       onSelectAddress,
       onSelectInvalidAddress,
       selectedAddress,

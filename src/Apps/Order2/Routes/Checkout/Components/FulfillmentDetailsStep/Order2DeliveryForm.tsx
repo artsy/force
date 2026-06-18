@@ -77,6 +77,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const checkoutContext = useCheckoutContext()
 
   const {
+    isOffer,
     setCheckoutMode,
     checkoutTracking,
     completeStep,
@@ -269,7 +270,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
         if (
           isMissingShippingOption &&
-          (orderData?.mode !== "OFFER" || artaConfiguredForShipping)
+          (!isOffer || artaConfiguredForShipping)
         ) {
           throw new LocalCheckoutError("no_shipping_options")
         }
@@ -328,10 +329,10 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     },
     [
       hasSavedAddresses,
+      isOffer,
       orderData.internalID,
       orderData.lineItems,
       orderData.selectedFulfillmentOption?.type,
-      orderData?.mode,
       saveAddressToUser,
       setCheckoutMode,
       setIsFulfillmentDetailsSaving,
@@ -505,7 +506,6 @@ const ORDER_FRAGMENT = graphql`
     selectedFulfillmentOption {
       type
     }
-    mode
     availableShippingCountries
     fulfillmentDetails {
       addressLine1

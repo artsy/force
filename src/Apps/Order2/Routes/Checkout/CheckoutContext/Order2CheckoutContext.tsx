@@ -340,6 +340,7 @@ const ORDER_FRAGMENT = graphql`
     ...useBuildInitialSteps_order
     internalID
     mode
+    shippingRadius
     source
     stripeConfirmationToken
     selectedFulfillmentOption {

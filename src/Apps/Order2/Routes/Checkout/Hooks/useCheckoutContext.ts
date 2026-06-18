@@ -4,5 +4,9 @@ export const useCheckoutContext = () => {
   const state = Order2CheckoutContext.useStoreState(state => state)
   const actions = Order2CheckoutContext.useStoreActions(actions => actions)
 
-  return { ...state, ...actions }
+  const isOffer = state.orderData?.mode === "OFFER"
+  const isInternationalShipping =
+    state.orderData?.shippingRadius === "international"
+
+  return { ...state, ...actions, isOffer, isInternationalShipping }
 }

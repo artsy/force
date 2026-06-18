@@ -46,6 +46,8 @@ export const Order2DeliveryOptionsForm: React.FC<
   const {
     checkoutTracking,
     completeStep,
+    isInternationalShipping,
+    isOffer,
     messages,
     isFulfillmentDetailsSaving,
     steps,
@@ -58,13 +60,7 @@ export const Order2DeliveryOptionsForm: React.FC<
     CheckoutStepName.DELIVERY_OPTION,
   )
 
-  const {
-    fulfillmentOptions,
-    shippingOrigin,
-    shippingRadius,
-    mode,
-    internalID,
-  } = orderData
+  const { fulfillmentOptions, shippingOrigin, internalID } = orderData
   const deliveryOptions = fulfillmentOptions.filter(
     option => option.type !== "PICKUP",
   )
@@ -74,7 +70,6 @@ export const Order2DeliveryOptionsForm: React.FC<
 
   const onlyShippingTBD =
     deliveryOptions.length > 0 && selectableOptions.length === 0
-  const isOffer = mode === "OFFER"
 
   const hasFulfillmentDetails =
     useCompleteFulfillmentDetailsData(orderData) !== null
@@ -187,7 +182,7 @@ export const Order2DeliveryOptionsForm: React.FC<
           <Text variant="xs">Ships from {shippingOrigin}</Text>
         )}
 
-        {shippingRadius === "international" && (
+        {isInternationalShipping && (
           <Text variant="xs">{INTERNATIONAL_SHIPPING_WARNING}</Text>
         )}
 
@@ -269,7 +264,6 @@ const FRAGMENT = graphql`
   fragment Order2DeliveryOptionsForm_order on Order {
     ...useCompleteFulfillmentDetailsData_order
     internalID
-    mode
     fulfillmentOptions {
       amount {
         display
@@ -284,6 +278,5 @@ const FRAGMENT = graphql`
       type
     }
     shippingOrigin
-    shippingRadius
   }
 `

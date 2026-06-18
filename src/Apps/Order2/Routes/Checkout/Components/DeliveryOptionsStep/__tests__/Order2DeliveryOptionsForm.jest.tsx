@@ -307,6 +307,7 @@ describe("Order2DeliveryOptionsForm", () => {
     })
 
     it("selects SHIPPING_TBD when 'Continue to Payment' is clicked for OFFER orders", async () => {
+      mockCheckoutContext.isOffer = true
       mockSetOrderFulfillmentOption.mockResolvedValue({
         setOrderFulfillmentOption: {
           orderOrError: {

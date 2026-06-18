@@ -42,9 +42,20 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const isOffer = orderData.mode === "OFFER"
   const submitOrderMutation = useOrder2SubmitOrderMutation()
   const stripe = useStripe()
+
+  const {
+    isOffer,
+    steps,
+    savePaymentMethod,
+    redirectToOrderDetails,
+    checkoutTracking,
+    artworkPath,
+    editStep,
+    setSectionErrorMessage,
+    isFulfillmentDetailsSaving,
+  } = useCheckoutContext()
 
   // Get the offer ID for offer orders (only call the hook when needed)
   const offerId = orderData.pendingOffer?.internalID ?? null
@@ -68,17 +79,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
     isOfferOnTopOfPartnerOffer &&
     itemPrice?.__typename === "Money" &&
     timer.hasValidRemainingTime
-
-  const {
-    steps,
-    savePaymentMethod,
-    redirectToOrderDetails,
-    checkoutTracking,
-    artworkPath,
-    editStep,
-    setSectionErrorMessage,
-    isFulfillmentDetailsSaving,
-  } = useCheckoutContext()
 
   const { showCheckoutErrorModal } = useCheckoutModal()
 
@@ -358,7 +358,6 @@ const FRAGMENT = graphql`
   fragment Order2ReviewStep_order on Order {
     ...Order2CheckoutPricingBreakdown_order
     internalID
-    mode
     source
     buyerStateExpiresAt
     stripeConfirmationToken
