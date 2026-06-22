@@ -31,6 +31,7 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
 import { RouterLink } from "System/Components/RouterLink"
+import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import createLogger from "Utils/logger"
 import type {
   Order2ExpressCheckoutUI_order$data,
@@ -42,7 +43,7 @@ import type {
 } from "__generated__/useOrder2ExpressCheckoutSetFulfillmentOptionMutation.graphql"
 import type { OrderCreditCardWalletTypeEnum } from "__generated__/useOrder2ExpressCheckoutSetOrderPaymentMutation.graphql"
 import type React from "react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import { useOrder2ExpressCheckoutSetFulfillmentOptionMutation } from "./Mutations/useOrder2ExpressCheckoutSetFulfillmentOptionMutation"
 import { useOrder2ExpressCheckoutSetOrderPaymentMutation } from "./Mutations/useOrder2ExpressCheckoutSetOrderPaymentMutation"
@@ -73,6 +74,13 @@ export const Order2ExpressCheckoutUI: React.FC<
   const stripe = useStripe()
   const environment = useRelayEnvironment()
 
+  // On phones (mobile web + the native app webview) the wallet presents a
+  // native payment sheet, so we always rewind the order when it closes. On
+  // desktop the wallet uses a cross-device QR flow where only scanning sends
+  // address/rate data — see handleCancel.
+  const { device } = useDeviceDetection()
+  const isMobileDevice = device === Device.iPhone || device === Device.Android
+
   const setFulfillmentOptionMutation =
     useOrder2ExpressCheckoutSetFulfillmentOptionMutation()
   const setOrderPaymentMutation =
@@ -87,6 +95,12 @@ export const Order2ExpressCheckoutUI: React.FC<
 
   const [expressCheckoutType, setExpressCheckoutType] =
     useState<ExpressPaymentType | null>(null)
+
+  // Tracks whether the user mutated the order (shipping address or
+  // fulfillment option) inside the open express checkout sheet. If they
+  // didn't, we can skip the resetOrder() rewind on cancel and leave the
+  // user on their current step with their selections intact.
+  const orderMutatedDuringExpressSessionRef = useRef(false)
 
   const {
     setExpressCheckoutLoaded,
@@ -308,6 +322,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     expressPaymentType,
     resolve,
   }: StripeExpressCheckoutElementClickEvent) => {
+    orderMutatedDuringExpressSessionRef.current = false
     setCheckoutMode("express")
     setExpressCheckoutState("active")
 
@@ -357,7 +372,22 @@ export const Order2ExpressCheckoutUI: React.FC<
       return
     }
 
-    await resetOrder()
+    // Mobile + mobile web: the wallet is a native payment sheet, so closing it
+    // always rewinds the order to a clean state.
+    // Desktop: the wallet uses a cross-device QR flow — only scanning the code
+    // sends address/rate data (flipping the mutated ref). An unscanned
+    // open-and-close mutates nothing, so we preserve the user's progress.
+    if (isMobileDevice || orderMutatedDuringExpressSessionRef.current) {
+      await resetOrder()
+      return
+    }
+
+    // No server-side changes were made during the express session, so
+    // leave the user's step + fulfillment option intact and just close
+    // the express UI.
+    setExpressCheckoutType(null)
+    setCheckoutMode("standard")
+    setExpressCheckoutState(null)
   }
 
   // User selects a shipping address
@@ -377,6 +407,8 @@ export const Order2ExpressCheckoutUI: React.FC<
         postal_code,
         name,
       })
+
+      orderMutatedDuringExpressSessionRef.current = true
 
       updateStripeElements(result.order)
 
@@ -413,6 +445,8 @@ export const Order2ExpressCheckoutUI: React.FC<
       const result = await setFulfillmentOption(
         shippingRate.id as FulfillmentOptionInputEnum,
       )
+
+      orderMutatedDuringExpressSessionRef.current = true
 
       updateStripeElements(result.order)
 
