@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1bc897d4d57d1b7ce668efa70bca7e80>>
+ * @generated SignedSource<<b2f19da90e2c11dbc32b84994b299708>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,6 +95,30 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              }
+            ],
+            "concreteType": "ArticleConnection",
+            "kind": "LinkedField",
+            "name": "articlesConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "articlesConnection(first:1)"
+          },
+          {
+            "alias": null,
             "args": null,
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
@@ -151,12 +175,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6383a5abf9e38d885c4ceb612ac368e4",
+    "cacheID": "a4031d4fa18c977e04f9eeb8a56ededc",
     "id": null,
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
+    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
   }
 };
 })();

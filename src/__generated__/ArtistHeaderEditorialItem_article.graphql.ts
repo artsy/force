@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab0141f864ffd7a072af08bc02d59604>>
+ * @generated SignedSource<<1f02584d46530b70851831aea03035b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistEditorialItem_article$data = {
+export type ArtistHeaderEditorialItem_article$data = {
   readonly byline: string | null | undefined;
   readonly href: string | null | undefined;
   readonly internalID: string;
@@ -22,18 +22,18 @@ export type ArtistEditorialItem_article$data = {
     } | null | undefined;
   } | null | undefined;
   readonly title: string | null | undefined;
-  readonly " $fragmentType": "ArtistEditorialItem_article";
+  readonly " $fragmentType": "ArtistHeaderEditorialItem_article";
 };
-export type ArtistEditorialItem_article$key = {
-  readonly " $data"?: ArtistEditorialItem_article$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistEditorialItem_article">;
+export type ArtistHeaderEditorialItem_article$key = {
+  readonly " $data"?: ArtistHeaderEditorialItem_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorialItem_article">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistEditorialItem_article",
+  "name": "ArtistHeaderEditorialItem_article",
   "selections": [
     {
       "alias": null,
@@ -128,6 +128,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d9b3ae1df4df776ca93a260a68bd2ba1";
+(node as any).hash = "b1980e299d766d96a40b49aa38ef22e1";
 
 export default node;

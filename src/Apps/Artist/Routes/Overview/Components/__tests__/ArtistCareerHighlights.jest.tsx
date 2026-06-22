@@ -10,6 +10,7 @@ jest.mock("react-tracking")
 
 jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader", () => ({
   ARTIST_HEADER_NUMBER_OF_INSIGHTS: 0,
+  getArtistHeaderNumberOfInsights: () => 0,
 }))
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({

@@ -1,6 +1,7 @@
 import { Box, type BoxProps, Flex, Spinner } from "@artsy/palette"
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
+import { ConversationPartnerOfferUpdate } from "Apps/Conversations/components/Message/ConversationPartnerOfferUpdate"
 import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
 import {
@@ -219,6 +220,12 @@ export const ConversationMessages: FC<
           )
         })}
 
+        <ConversationPartnerOfferUpdate
+          conversation={conversation}
+          mt={4}
+          mb={2}
+        />
+
         <LatestMessagesFlyOut
           visible={enableBottomRefreshSentinal && showLatestMessagesFlyOut}
           onClick={() => {
@@ -289,6 +296,7 @@ export const ConversationMessagesPaginationContainer =
           inquiryRequest {
             formattedFirstMessage
           }
+          ...ConversationPartnerOfferUpdate_conversation
           items {
             item {
               __typename

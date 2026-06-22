@@ -1,4 +1,5 @@
 import { act, fireEvent, screen, waitFor } from "@testing-library/react"
+import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations/components/Message/ConversationMessages"
 import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -23,13 +24,20 @@ describe("ConversationMessages", () => {
   const scrollIntoViewMock = jest.fn()
   const { renderWithRelay } = setupTestWrapperTL<ConversationMessagesTestQuery>(
     {
-      Component: ({ conversation }) => (
-        <ConversationMessagesPaginationContainer conversation={conversation!} />
+      Component: ({ conversation, viewer }) => (
+        <ConversationsProvider viewer={viewer!}>
+          <ConversationMessagesPaginationContainer
+            conversation={conversation!}
+          />
+        </ConversationsProvider>
       ),
       query: graphql`
         query ConversationMessagesTestQuery @relay_test_operation {
           conversation(id: "1234") {
             ...ConversationMessages_conversation
+          }
+          viewer {
+            ...ConversationsContext_viewer
           }
         }
       `,
@@ -200,7 +208,11 @@ describe("ConversationMessages", () => {
     fireEvent.click(screen.getByText("Latest Messages"))
 
     expect(screen.getAllByTestId("LoadingSpinner").length).toBe(1)
-    expect(env.mock.getAllOperations().length).toBe(1)
+    expect(
+      env.mock
+        .getAllOperations()
+        .map(operation => operation.request.node.params.name),
+    ).toContain("ConversationMessagesPaginationQuery")
   })
 
   describe("first message", () => {

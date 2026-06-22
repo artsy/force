@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<680e15471477393d79f124137dc08a61>>
+ * @generated SignedSource<<43a3221aa2156d9f0bf65a39a7a05eb3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,13 +17,8 @@ export type ConversationReply_conversation$data = {
   };
   readonly inquiryID: string;
   readonly internalID: string;
-  readonly items: ReadonlyArray<{
-    readonly item: {
-      readonly id?: string;
-    } | null | undefined;
-  } | null | undefined> | null | undefined;
   readonly lastMessageID: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationCTA_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationCTA_conversation" | "ConversationPartnerOfferCTA_conversation">;
   readonly " $fragmentType": "ConversationReply_conversation";
 } | null | undefined;
 export type ConversationReply_conversation$key = {
@@ -31,15 +26,7 @@ export type ConversationReply_conversation$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationReply_conversation">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -49,6 +36,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ConversationCTA_conversation"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationPartnerOfferCTA_conversation"
     },
     {
       "kind": "RequiredField",
@@ -73,7 +65,13 @@ return {
           },
           {
             "kind": "RequiredField",
-            "field": (v0/*: any*/),
+            "field": {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "id",
+              "storageKey": null
+            },
             "action": "NONE"
           }
         ],
@@ -106,36 +104,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "ConversationItem",
-      "kind": "LinkedField",
-      "name": "items",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": null,
-          "kind": "LinkedField",
-          "name": "item",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "InlineFragment",
-              "selections": [
-                (v0/*: any*/)
-              ],
-              "type": "Artwork",
-              "abstractKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
       "name": "lastMessageID",
       "storageKey": null
@@ -144,8 +112,7 @@ return {
   "type": "Conversation",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "0d2f6c610b891b6030defa169a4fced8";
+(node as any).hash = "8627e23744dbc8e70bba18698758ca48";
 
 export default node;

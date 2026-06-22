@@ -1,6 +1,7 @@
 import { sentConversationMessage } from "@artsy/cohesion"
 import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
+import { ConversationPartnerOfferCTA } from "Apps/Conversations/components/Message/ConversationPartnerOfferCTA"
 import { useSendConversationMessage } from "Apps/Conversations/mutations/useSendConversationMessage"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -42,6 +43,7 @@ export const ConversationReply: FC<
     graphql`
       fragment ConversationReply_conversation on Conversation {
         ...ConversationCTA_conversation
+        ...ConversationPartnerOfferCTA_conversation
 
         from @required(action: NONE) {
           email @required(action: NONE)
@@ -49,13 +51,6 @@ export const ConversationReply: FC<
         }
         internalID @required(action: NONE)
         inquiryID @required(action: NONE)
-        items {
-          item {
-            ... on Artwork {
-              id
-            }
-          }
-        }
         # TODO: the suggested field is returning empty edges, we need to take a look
         # Suggested: The field Conversation.lastMessageID is deprecated.
         # Deprecation reason: "Prefer querying messagesConnection(last:1) { edges { node { internalID } } }
@@ -172,6 +167,8 @@ export const ConversationReply: FC<
       backgroundColor="mono5"
       flexDirection="column"
     >
+      <ConversationPartnerOfferCTA conversation={data} />
+
       <ConversationCTA conversation={data} px={1} pt={1} />
 
       <form name="reply" onSubmit={handleSubmit}>

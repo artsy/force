@@ -3051,6 +3051,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Whether a user can make an offer on the work through inquiry
   isOfferableFromInquiry: Boolean
   isOnHold: String
+
+  # Whether a partner can send an offer for this work
+  isPartnerOfferable: Boolean!
   isPartnerPromoted: Boolean
 
   # Whether a work is available for pickup
@@ -7180,6 +7183,7 @@ type CommerceLineItem {
   ): String
   listPriceCents: Int!
   order: CommerceOrder!
+  partnerOfferId: String
   priceCents: Int! @deprecated(reason: "switch to use listPriceCents")
   quantity: Int!
   selectedShippingQuote: CommerceShippingQuote
@@ -9946,6 +9950,19 @@ type Conversation implements Node {
     state: CommerceOrderStateEnum
     states: [CommerceOrderStateEnum!]
   ): CommerceOrderConnectionWithTotalCount
+
+  # Partner offers for this conversation's artwork, scoped to the user who initiated the conversation (from_id).
+  partnerOffersConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # Filter by offer type(s). Gravity defaults to bulk offers when omitted.
+    offerType: [PartnerOfferTypeEnum]
+    page: Int
+    size: Int
+  ): PartnerOfferConnection
 
   # A connection of orders for artworks in this conversation from the partner's perspective.
   partnerOrdersConnection(
@@ -16772,6 +16789,7 @@ type LineItem {
   # A type-specific ID likely used as a database ID.
   internalID: ID!
   listPrice: Money
+  partnerOfferId: String
   quantity: Int!
 }
 
@@ -17895,6 +17913,9 @@ type Me implements Node {
     before: String
     first: Int
     last: Int
+
+    # Filter by offer type(s). Gravity defaults to all a users partner offers when omitted.
+    offerType: [PartnerOfferTypeEnum]
     page: Int
     size: Int
     sort: PartnerOfferToCollectorSorts
@@ -26900,6 +26921,9 @@ input SyncCatalogToArtworkMutationInput {
   # The ID of the artwork to sync.
   artworkID: String!
   clientMutationId: String
+
+  # Edition set ID. When provided, syncs the catalog edition set to the edition set instead of the artwork.
+  editionSetID: String
 
   # Specific fields to sync. Omit to sync all.
   fields: [CatalogSyncableField]

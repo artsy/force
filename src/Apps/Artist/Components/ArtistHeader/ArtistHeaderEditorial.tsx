@@ -1,4 +1,5 @@
 import {
+  Box,
   type BoxProps,
   ProgressDots,
   Stack,
@@ -7,19 +8,18 @@ import {
   SwiperRail,
   Text,
 } from "@artsy/palette"
-import { ArtistEditorialItem } from "Apps/Artist/Components/Artist2/Components/ArtistEditorialItem"
+import { ArtistHeaderEditorialItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderEditorialItem"
 import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
-import type { ArtistEditorial_artist$key } from "__generated__/ArtistEditorial_artist.graphql"
+import type { ArtistHeaderEditorial_artist$key } from "__generated__/ArtistHeaderEditorial_artist.graphql"
 import { type ForwardRefExoticComponent, forwardRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
-interface ArtistEditorialProps {
-  artist: ArtistEditorial_artist$key
+interface ArtistHeaderEditorialProps {
+  artist: ArtistHeaderEditorial_artist$key
 }
 
-export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
+export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
   artist: artistRef,
 }) => {
   const artist = useFragment(fragment, artistRef)
@@ -38,12 +38,15 @@ export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
         flexDirection="row"
         justifyContent="space-between"
         alignItems="top"
+        borderTop="solid 1px"
+        borderColor={["mono10", "mono60"]}
+        pt={2}
       >
-        <Text variant={["sm-display", "xs"]}>
+        <Text variant="sm-display">
           Artsy Editorial Featuring {artist.name}
         </Text>
 
-        {totalCount > 3 && (
+        {totalCount > 1 && (
           <Text
             variant="xs"
             color="mono60"
@@ -56,52 +59,49 @@ export const ArtistEditorial: React.FC<ArtistEditorialProps> = ({
         )}
       </Stack>
 
-      <Media greaterThan="xs">
-        <Stack gap={2}>
+      <Stack gap={1}>
+        <Swiper
+          snap="center"
+          Cell={ArtistHeaderEditorialSwiperCell}
+          Rail={ArtistHeaderEditorialSwiperRail}
+          initialIndex={activeIndex}
+          onChange={setActiveIndex}
+        >
           {articles.map(article => {
             return (
-              <ArtistEditorialItem key={article.internalID} article={article} />
+              <ArtistHeaderEditorialItem
+                key={article.internalID}
+                article={article}
+              />
             )
           })}
-        </Stack>
-      </Media>
+        </Swiper>
 
-      <Media at="xs">
-        <Stack gap={1}>
-          <Swiper
-            snap="center"
-            Cell={ArtistEditorialSwiperCell}
-            Rail={ArtistEditorialSwiperRail}
-            onChange={setActiveIndex}
-          >
-            {articles.map(article => {
-              return (
-                <ArtistEditorialItem
-                  key={article.internalID}
-                  article={article}
-                />
-              )
-            })}
-          </Swiper>
-
-          {articles.length > 1 && (
-            <ProgressDots amount={articles.length} activeIndex={activeIndex} />
-          )}
-        </Stack>
-      </Media>
+        {articles.length > 1 && (
+          // This component is primarily whitespace so we can neutralize
+          // the height of the dots to visually balance
+          <Box mb={[0, -25]}>
+            <ProgressDots
+              amount={articles.length}
+              activeIndex={activeIndex}
+              onClick={setActiveIndex}
+            />
+          </Box>
+        )}
+      </Stack>
     </Stack>
   )
 }
 
 const fragment = graphql`
-  fragment ArtistEditorial_artist on Artist {
+  fragment ArtistHeaderEditorial_artist on Artist {
     name
     href
     articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
       totalCount
       edges {
         node {
-          ...ArtistEditorialItem_article
+          ...ArtistHeaderEditorialItem_article
           internalID
         }
       }
@@ -109,7 +109,7 @@ const fragment = graphql`
   }
 `
 
-const ArtistEditorialSwiperCell: ForwardRefExoticComponent<BoxProps> =
+const ArtistHeaderEditorialSwiperCell: ForwardRefExoticComponent<BoxProps> =
   forwardRef((props, ref) => {
     return (
       <SwiperCell
@@ -122,6 +122,8 @@ const ArtistEditorialSwiperCell: ForwardRefExoticComponent<BoxProps> =
     )
   })
 
-const ArtistEditorialSwiperRail: React.FC<React.PropsWithChildren> = props => {
+const ArtistHeaderEditorialSwiperRail: React.FC<
+  React.PropsWithChildren
+> = props => {
   return <SwiperRail {...props} display="block" style={{ lineHeight: 0 }} />
 }

@@ -101,6 +101,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   )
 
   useEffect(() => {
+    if (isLoading) return
+
     activeStepNames.split(",").forEach(name => {
       switch (name) {
         case CheckoutStepName.CONFIRMATION:
@@ -119,7 +121,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
           break
       }
     })
-  }, [activeStepNames, checkoutTracking])
+  }, [activeStepNames, checkoutTracking, isLoading])
 
   // DELIVERY_OPTION is tracked in a separate effect so its expansion signal
   // (which can flip while FULFILLMENT_DETAILS is still ACTIVE) doesn't cause
@@ -129,12 +131,12 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     isDeliveryOptionExpanded
 
   useEffect(() => {
-    if (isDeliveryOptionVisible) {
+    if (!isLoading && isDeliveryOptionVisible) {
       checkoutTracking.orderProgressionViewed(
         ContextModule.ordersShippingMethods,
       )
     }
-  }, [isDeliveryOptionVisible, checkoutTracking])
+  }, [isDeliveryOptionVisible, checkoutTracking, isLoading])
 
   // Scroll to top when returning to standard checkout mode (and at load time)
   useEffect(() => {

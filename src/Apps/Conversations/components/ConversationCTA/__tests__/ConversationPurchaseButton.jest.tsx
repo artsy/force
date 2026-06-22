@@ -264,7 +264,15 @@ describe("ConversationPurchaseOfferButton", () => {
           context_owner_slug: "<Artwork-mock-id-2>",
           flow: "Partner offer",
         })
-        expect(createPartnerOfferOrderMutationSpy).toHaveBeenCalledTimes(1)
+        expect(createPartnerOfferOrderMutationSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: expect.objectContaining({
+              input: expect.objectContaining({
+                partnerOfferId: "partner-offer-id",
+              }),
+            }),
+          }),
+        )
       })
     })
 

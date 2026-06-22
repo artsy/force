@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2458332ec51309dd839af259480d151>>
+ * @generated SignedSource<<0a3cf0c4e14d9914275a83664f6e2298>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -77,6 +77,7 @@ export type ConversationMessages_conversation$data = {
     readonly name: string;
   };
   readonly unreadByCollector: boolean | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationPartnerOfferUpdate_conversation">;
   readonly " $fragmentType": "ConversationMessages_conversation";
 } | null | undefined;
 export type ConversationMessages_conversation$key = {
@@ -325,6 +326,11 @@ return {
       "storageKey": null
     },
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationPartnerOfferUpdate_conversation"
+    },
+    {
       "alias": null,
       "args": null,
       "concreteType": "ConversationItem",
@@ -562,6 +568,6 @@ return {
 };
 })();
 
-(node as any).hash = "4a137cec946409e933656d832a84af4e";
+(node as any).hash = "fbb0ff51a77577b34200f8f532c826c4";
 
 export default node;

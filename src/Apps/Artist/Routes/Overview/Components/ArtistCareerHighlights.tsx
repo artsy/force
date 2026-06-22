@@ -6,8 +6,11 @@ import {
   GridColumns,
   SkeletonText,
 } from "@artsy/palette"
-import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
-import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import {
+  ArtistCareerHighlightFragmentContainer,
+  isRenderableArtistInsight,
+} from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -34,17 +37,21 @@ const ArtistCareerHighlights: FC<
     return null
   }
 
-  const insights = artist.insights.slice(ARTIST_HEADER_NUMBER_OF_INSIGHTS)
+  const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
+
+  // Filter to renderable insights before slicing so the offset matches the
+  // header's, which filters the same way. Otherwise an empty insight in the
+  // header's window leaves a gap and the remainder is misaligned here.
+  const allInsights = artist.insights.filter(isRenderableArtistInsight)
+  const insights = allInsights.slice(
+    getArtistHeaderNumberOfInsights({ hasEditorial }),
+  )
   const numOfColumns = insights.length > 4 ? 2 : 1
   const mid = Math.ceil(insights.length / 2)
   const columns =
     numOfColumns === 2
       ? [insights.slice(0, mid), insights.slice(mid, insights.length)]
       : [insights]
-
-  const hasEntitiesOrDescription = artist.insights.some(insight => {
-    return insight.entities.length > 0 || insight.description
-  })
 
   const trackClickedCV = () => {
     if (!contextPageOwnerId) return
@@ -61,7 +68,7 @@ const ArtistCareerHighlights: FC<
 
   return (
     <>
-      {artist.insights.length > 0 && (
+      {allInsights.length > 0 && (
         <Media at="xs">
           <Box display="flex" gap={4} flexDirection="column">
             <RailHeader
@@ -72,7 +79,7 @@ const ArtistCareerHighlights: FC<
             />
 
             <Box>
-              {artist.insights.map((insight, index) => {
+              {allInsights.map((insight, index) => {
                 return (
                   <ArtistCareerHighlightFragmentContainer
                     key={insight.kind ?? index}
@@ -86,7 +93,7 @@ const ArtistCareerHighlights: FC<
         </Media>
       )}
 
-      {insights.length > 0 && hasEntitiesOrDescription && (
+      {insights.length > 0 && (
         <Media greaterThan="xs">
           <Box display="flex" gap={4} flexDirection="column">
             <RailHeader
@@ -126,6 +133,9 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
       fragment ArtistCareerHighlights_artist on Artist {
         name
         href
+        articlesConnection(first: 1) {
+          totalCount
+        }
         insights {
           ...ArtistCareerHighlight_insight
           kind

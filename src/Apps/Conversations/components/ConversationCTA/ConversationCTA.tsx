@@ -1,13 +1,14 @@
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
+import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
 import { RouterLink } from "System/Components/RouterLink"
-import { useTimer } from "Utils/Hooks/useTimer"
 import { extractNodes } from "Utils/extractNodes"
 import type { ConversationCTA_conversation$key } from "__generated__/ConversationCTA_conversation.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -26,31 +27,33 @@ export const ConversationCTA: React.FC<
   const liveArtwork = data?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
-  const partnerOffer = artwork && findPartnerOffer(artwork.internalID)
-  const partnerOfferTimer = useTimer(
-    partnerOffer?.endAt ?? new Date(0).toISOString(),
-  )
+  const partnerOffer = artwork ? findPartnerOffer(artwork.internalID) : null
+  const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
+  const hasOpenPartnerOffer =
+    isPartnerOfferConvoEnabled && isPartnerOfferActive(partnerOffer)
 
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
   const activePartnerOffer =
-    !activeOrder && partnerOffer && !partnerOfferTimer.hasEnded
-      ? partnerOffer
-      : null
+    !activeOrder && isPartnerOfferActive(partnerOffer) ? partnerOffer : null
 
   if (!artwork) {
     return null
   }
 
-  // Active order. Shows status of the transaction, with various actions and modal triggers
+  // Active order. Hidden when a partner offer is open — the partner offer CTA takes precedence.
   const showActiveOrderReviewOfferCTA = Boolean(
-    activeOrder && activeOrder.buyerAction,
+    activeOrder && activeOrder.buyerAction && !hasOpenPartnerOffer,
   )
 
-  // Inactive order waiting for commercial actions
+  // Inactive order waiting for commercial actions. Also hidden when a partner offer
+  // is open — the CTA bar shows the offer instead.
   const canPurchase = artwork.isAcquireable || !!activePartnerOffer
   const canMakeOffer = artwork.isOfferable || artwork.isOfferableFromInquiry
   const showTransactionButtons =
-    !activeOrder && artwork.published && (canPurchase || canMakeOffer)
+    !activeOrder &&
+    !hasOpenPartnerOffer &&
+    artwork.published &&
+    (canPurchase || canMakeOffer)
 
   return (
     <>

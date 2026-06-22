@@ -28,7 +28,7 @@ interface ConversationsProviderProps {
   viewer: ConversationsContext_viewer$key
 }
 
-type PartnerOffer = NonNullable<
+export type PartnerOffer = NonNullable<
   NonNullable<
     NonNullable<
       NonNullable<
@@ -112,7 +112,7 @@ export const useConversationsContext = () => {
 const VIEWER_FRAGMENT = graphql`
   fragment ConversationsContext_viewer on Viewer {
     me {
-      partnerOffersConnection(first: 100) {
+      partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {
         edges {
           node {
             artworkId

@@ -7,17 +7,17 @@ import {
 import { Box, Image, ResponsiveBox, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import type { ArtistEditorialItem_article$key } from "__generated__/ArtistEditorialItem_article.graphql"
+import type { ArtistHeaderEditorialItem_article$key } from "__generated__/ArtistHeaderEditorialItem_article.graphql"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface ArtistEditorialItemProps {
-  article: ArtistEditorialItem_article$key
+interface ArtistHeaderEditorialItemProps {
+  article: ArtistHeaderEditorialItem_article$key
 }
 
-export const ArtistEditorialItem: React.FC<ArtistEditorialItemProps> = ({
-  article: articleRef,
-}) => {
+export const ArtistHeaderEditorialItem: React.FC<
+  ArtistHeaderEditorialItemProps
+> = ({ article: articleRef }) => {
   const article = useFragment(fragment, articleRef)
 
   const { trackEvent } = useTracking()
@@ -49,7 +49,7 @@ export const ArtistEditorialItem: React.FC<ArtistEditorialItemProps> = ({
         trackEvent(trackingEvent)
       }}
     >
-      <Box width={[125, "25%"]} flexShrink={0} bg="mono10">
+      <Box width={[125, 100]} flexShrink={0} bg="mono10">
         {thumbnail && (
           <ResponsiveBox
             aspectWidth={1}
@@ -88,7 +88,7 @@ export const ArtistEditorialItem: React.FC<ArtistEditorialItemProps> = ({
 }
 
 const fragment = graphql`
-  fragment ArtistEditorialItem_article on Article {
+  fragment ArtistHeaderEditorialItem_article on Article {
     internalID
     href
     byline

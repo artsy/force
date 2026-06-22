@@ -435,6 +435,156 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       // Only first 4 insights should be rendered (ARTIST_HEADER_NUMBER_OF_INSIGHTS = 4)
     })
+
+    it("shows up to 4 insights when there is no editorial", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          articlesConnection: { totalCount: 0, edges: [] },
+          insights: [
+            { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
+            { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
+            { kind: "SOLO_SHOW", label: "Insight 2", entities: ["MoMA"] },
+            { kind: "GROUP_SHOW", label: "Insight 3", entities: ["MoMA"] },
+            { kind: "TRENDING_NOW", label: "Insight 4", entities: ["MoMA"] },
+          ],
+        }),
+      })
+
+      expect(screen.getByText("Insight 0")).toBeInTheDocument()
+      expect(screen.getByText("Insight 3")).toBeInTheDocument()
+      expect(screen.queryByText("Insight 4")).not.toBeInTheDocument()
+    })
+
+    it("shows only 2 insights when the editorial module is present", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          articlesConnection: {
+            totalCount: 1,
+            edges: [
+              {
+                node: {
+                  internalID: "article-1",
+                  href: "/article/article-1",
+                  title: "Article 1",
+                  byline: "Artsy Editorial",
+                  publishedAt: "Jan 1, 2026",
+                  thumbnailImage: null,
+                },
+              },
+            ],
+          },
+          insights: [
+            { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
+            { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
+            { kind: "SOLO_SHOW", label: "Insight 2", entities: ["MoMA"] },
+            { kind: "GROUP_SHOW", label: "Insight 3", entities: ["MoMA"] },
+          ],
+        }),
+      })
+
+      expect(
+        screen.getByText("Artsy Editorial Featuring Pablo Picasso"),
+      ).toBeInTheDocument()
+      expect(screen.getByText("Insight 0")).toBeInTheDocument()
+      expect(screen.getByText("Insight 1")).toBeInTheDocument()
+      expect(screen.queryByText("Insight 2")).not.toBeInTheDocument()
+      expect(screen.queryByText("Insight 3")).not.toBeInTheDocument()
+    })
+
+    it("does not let an empty insight consume a display slot", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          articlesConnection: {
+            totalCount: 1,
+            edges: [
+              {
+                node: {
+                  internalID: "article-1",
+                  href: "/article/article-1",
+                  title: "Article 1",
+                  byline: "Artsy Editorial",
+                  publishedAt: "Jan 1, 2026",
+                  thumbnailImage: null,
+                },
+              },
+            ],
+          },
+          insights: [
+            // Not renderable: no description and no entities. It should be
+            // filtered out before slicing rather than occupying a slot.
+            {
+              kind: "COLLECTED",
+              label: "Empty insight",
+              entities: [],
+              description: null,
+            },
+            { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
+            { kind: "SOLO_SHOW", label: "Insight 2", entities: ["MoMA"] },
+          ],
+        }),
+      })
+
+      expect(screen.queryByText("Empty insight")).not.toBeInTheDocument()
+      // With editorial present (2 slots), both renderable insights show
+      // because the empty one no longer takes a slot.
+      expect(screen.getByText("Insight 1")).toBeInTheDocument()
+      expect(screen.getByText("Insight 2")).toBeInTheDocument()
+    })
+
+    // TODO: Temporarily skipped while the styles and techniques section is
+    // disabled (see ENABLED in ArtistStylesAndTechniques). Unskip to restore.
+    it.skip("renders styles and techniques after career highlights", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          insights: [
+            {
+              kind: "COLLECTED",
+              label: "Collected by major museums",
+              entities: ["MoMA"],
+            },
+          ],
+          movementGenes: [
+            {
+              internalID: "gene-id-cubism",
+              name: "Cubism",
+              slug: "cubism",
+            },
+          ],
+          mediumGenes: [],
+        }),
+      })
+
+      expect(screen.getByText("Styles")).toBeInTheDocument()
+      expect(screen.getByText("Cubism")).toBeInTheDocument()
+    })
+
+    // TODO: Temporarily skipped while the styles and techniques section is
+    // disabled (see ENABLED in ArtistStylesAndTechniques). Unskip to restore.
+    it.skip("renders styles and techniques when there are no career highlights", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          insights: [],
+          verifiedRepresentatives: [],
+          movementGenes: [],
+          mediumGenes: [
+            {
+              internalID: "gene-id-oil-paint",
+              name: "Oil Paint",
+              slug: "oil-paint",
+            },
+          ],
+        }),
+      })
+
+      expect(screen.queryByText("Styles")).not.toBeInTheDocument()
+      expect(screen.getByText("Techniques")).toBeInTheDocument()
+      expect(screen.getByText("Oil Paint")).toBeInTheDocument()
+    })
   })
 
   describe("CV link", () => {

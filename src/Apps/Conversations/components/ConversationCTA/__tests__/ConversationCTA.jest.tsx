@@ -1,4 +1,5 @@
 import { screen } from "@testing-library/react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -9,6 +10,8 @@ import { useTracking } from "react-tracking"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
+
+const mockUseFlag = useFlag as jest.Mock
 
 describe("ConversationCTA", () => {
   const { renderWithRelay } = setupTestWrapperTL({
@@ -132,6 +135,80 @@ describe("ConversationCTA", () => {
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
   })
 
+  describe("with an active order and an open partner offer", () => {
+    const futureTime = new Date()
+    futureTime.setHours(futureTime.getHours() + 1)
+
+    const mockConversationWithOrderAndOffer = () => ({
+      internalID: "internal-test-id",
+      activeOrders: {
+        edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
+      },
+      activeOrderCTA: {
+        edges: [
+          { node: { internalID: "order-id", buyerAction: "OFFER_RECEIVED" } },
+        ],
+      },
+      items: [
+        {
+          liveArtwork: {
+            __typename: "Artwork",
+            internalID: "artwork-id",
+            isAcquireable: true,
+            published: true,
+          },
+        },
+      ],
+    })
+
+    const activeOfferViewer = () => ({
+      me: {
+        partnerOffersConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "partner-offer-id",
+                artworkId: "artwork-id",
+                endAt: futureTime.toISOString(),
+                isAvailable: true,
+              },
+            },
+          ],
+        },
+      },
+    })
+
+    describe("with the partner-offer-convo flag on", () => {
+      beforeEach(() => {
+        mockUseFlag.mockImplementation(() => true)
+      })
+
+      it("hides the order offer CTA when there is an open partner offer", () => {
+        renderWithRelay({
+          Conversation: mockConversationWithOrderAndOffer,
+          Viewer: activeOfferViewer,
+        })
+
+        expect(screen.queryByText("Offer Received")).not.toBeInTheDocument()
+      })
+    })
+
+    describe("with the partner-offer-convo flag off", () => {
+      beforeEach(() => {
+        mockUseFlag.mockImplementation(() => false)
+      })
+
+      it("shows the order offer CTA when the flag is off", () => {
+        renderWithRelay({
+          Conversation: mockConversationWithOrderAndOffer,
+          Viewer: activeOfferViewer,
+        })
+
+        expect(screen.queryByText("Offer Received")).toBeInTheDocument()
+      })
+    })
+  })
+
   describe("With no active orders", () => {
     const mockConversationWithArtwork = artwork => () => ({
       internalID: "internal-test-id",
@@ -190,34 +267,63 @@ describe("ConversationCTA", () => {
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
       expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     })
-    it("renders purchase button on orders with an active partner offer", () => {
+
+    const offerViewer = () => {
       const futureTime = new Date()
       futureTime.setHours(futureTime.getHours() + 1)
 
-      renderWithRelay({
-        Conversation: mockConversationWithArtwork({
-          internalID: "artwork-id",
-          isAcquireable: false,
-        }),
-        Viewer: () => ({
-          me: {
-            partnerOffersConnection: {
-              edges: [
-                {
-                  node: {
-                    internalID: "partner-offer-id",
-                    artworkId: "artwork-id",
-                    endAt: futureTime.toISOString(),
-                  },
+      return () => ({
+        me: {
+          partnerOffersConnection: {
+            edges: [
+              {
+                node: {
+                  internalID: "partner-offer-id",
+                  artworkId: "artwork-id",
+                  endAt: futureTime.toISOString(),
+                  isAvailable: true,
                 },
-              ],
-            },
+              },
+            ],
           },
-        }),
+        },
+      })
+    }
+
+    describe("with the partner-offer-convo flag on", () => {
+      beforeEach(() => {
+        mockUseFlag.mockImplementation(() => true)
       })
 
-      expect(screen.queryByText("Purchase")).toBeInTheDocument()
-      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      it("hides the transaction buttons when there is an active partner offer", () => {
+        renderWithRelay({
+          Conversation: mockConversationWithArtwork({
+            internalID: "artwork-id",
+            isAcquireable: true,
+          }),
+          Viewer: offerViewer(),
+        })
+
+        expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
+        expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+      })
+    })
+
+    describe("with the partner-offer-convo flag off", () => {
+      beforeEach(() => {
+        mockUseFlag.mockImplementation(() => false)
+      })
+
+      it("ignores the partner offer and shows the normal transaction buttons", () => {
+        renderWithRelay({
+          Conversation: mockConversationWithArtwork({
+            internalID: "artwork-id",
+            isAcquireable: true,
+          }),
+          Viewer: offerViewer(),
+        })
+        expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      })
     })
 
     it("renders Make Offer button on MO-only artworks", () => {

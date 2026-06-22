@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aee852a4d8a90684cfd2b4e10361803c>>
+ * @generated SignedSource<<0a2a1009abe66d80e2d58084bbf9d0ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,30 +10,30 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistEditorial_artist$data = {
+export type ArtistHeaderEditorial_artist$data = {
   readonly articlesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"ArtistEditorialItem_article">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorialItem_article">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
     readonly totalCount: number | null | undefined;
   } | null | undefined;
   readonly href: string | null | undefined;
   readonly name: string | null | undefined;
-  readonly " $fragmentType": "ArtistEditorial_artist";
+  readonly " $fragmentType": "ArtistHeaderEditorial_artist";
 };
-export type ArtistEditorial_artist$key = {
-  readonly " $data"?: ArtistEditorial_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistEditorial_artist">;
+export type ArtistHeaderEditorial_artist$key = {
+  readonly " $data"?: ArtistHeaderEditorial_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistEditorial_artist",
+  "name": "ArtistHeaderEditorial_artist",
   "selections": [
     {
       "alias": null,
@@ -94,7 +94,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ArtistEditorialItem_article"
+                  "name": "ArtistHeaderEditorialItem_article"
                 },
                 {
                   "alias": null,
@@ -117,6 +117,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e799660bf38236cb929d83469fc1bf9b";
+(node as any).hash = "2989a92b71193f16bbd5f873cf16608c";
 
 export default node;
