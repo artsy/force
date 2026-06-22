@@ -140,6 +140,13 @@ export const NavBarMobileMenu: React.FC<
                 Museums
               </NavBarMobileMenuItemLink>
 
+              <NavBarMobileMenuItemLink
+                to="/feature/how-to-buy-art"
+                onClick={handleClick}
+              >
+                Collecting 101
+              </NavBarMobileMenuItemLink>
+
               <Separator my={1} />
 
               <NavBarMobileMenuItemLink
