@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71a8572f7a6e8b004dd51ecbc46b3645>>
+ * @generated SignedSource<<f272c2e37c65dcf7f7a3a20454ecf12d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -195,13 +195,6 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "mode",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
                 "concreteType": "FulfillmentOption",
                 "kind": "LinkedField",
                 "name": "fulfillmentOptions",
@@ -268,7 +261,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c1d5495cf7e67c8670ea9bd835a228bf",
+    "cacheID": "ac28c01d1f6d044ee1e9095564d6ee91",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -304,15 +297,6 @@ return {
         "me.order.fulfillmentOptions.type": (v8/*: any*/),
         "me.order.id": (v5/*: any*/),
         "me.order.internalID": (v5/*: any*/),
-        "me.order.mode": {
-          "enumValues": [
-            "BUY",
-            "OFFER"
-          ],
-          "nullable": false,
-          "plural": false,
-          "type": "OrderModeEnum"
-        },
         "me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
@@ -329,7 +313,7 @@ return {
     },
     "name": "Order2PickupFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2PickupFormTestQuery {\n  me {\n    ...Order2PickupForm_me\n    order(id: \"order-id\") {\n      ...Order2PickupForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PickupForm_me on Me {\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n}\n\nfragment Order2PickupForm_order on Order {\n  internalID\n  mode\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n  }\n  shippingOrigin\n}\n"
+    "text": "query Order2PickupFormTestQuery {\n  me {\n    ...Order2PickupForm_me\n    order(id: \"order-id\") {\n      ...Order2PickupForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PickupForm_me on Me {\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n}\n\nfragment Order2PickupForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n  }\n  shippingOrigin\n}\n"
   }
 };
 })();

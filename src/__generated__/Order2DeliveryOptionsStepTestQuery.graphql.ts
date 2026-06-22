@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c40a8f2e3ecf7de137757a055a037295>>
+ * @generated SignedSource<<9fe57aab4c4a473b5580b2ec22f650c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -365,7 +365,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "68cfc6575dedd9d0ad5ab9b6a906196a",
+    "cacheID": "8bdf9cbf4bdbcd7ef5e517b32a15023e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -459,7 +459,7 @@ return {
     },
     "name": "Order2DeliveryOptionsStepTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsStepTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  mode\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n  shippingRadius\n}\n\nfragment Order2DeliveryOptionsStep_order on Order {\n  ...useCompleteDeliveryOptionData_order\n  ...useIsDeliveryOptionExpanded_order\n  ...Order2DeliveryOptionsForm_order\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n    amount {\n      display\n    }\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useIsDeliveryOptionExpanded_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
+    "text": "query Order2DeliveryOptionsStepTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment Order2DeliveryOptionsStep_order on Order {\n  ...useCompleteDeliveryOptionData_order\n  ...useIsDeliveryOptionExpanded_order\n  ...Order2DeliveryOptionsForm_order\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n    amount {\n      display\n    }\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useIsDeliveryOptionExpanded_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
   }
 };
 })();

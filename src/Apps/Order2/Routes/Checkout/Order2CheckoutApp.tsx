@@ -57,6 +57,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
 
   const {
     isLoading,
+    isOffer,
     setExpressCheckoutLoaded,
     expressCheckoutState,
     steps,
@@ -79,7 +80,6 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
     return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
 
-  const isOffer = orderData.mode === "OFFER"
   const isFixedShipping =
     orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
   const isExpressCheckoutEligible = !isOffer && isFixedShipping
@@ -264,7 +264,6 @@ const ME_FRAGMENT = graphql`
 const ORDER_FRAGMENT = graphql`
   fragment Order2CheckoutApp_order on Order {
     internalID
-    mode
     selectedFulfillmentOption {
       type
     }

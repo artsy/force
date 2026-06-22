@@ -434,7 +434,7 @@ describe("SavedAddressOptions", () => {
     it("does not display error banner when selecting an unshippable address in OFFER mode", async () => {
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
-        orderData: { mode: "OFFER" },
+        isOffer: true,
       })
 
       renderSavedAddressOptions({
@@ -871,8 +871,8 @@ describe("SavedAddressOptions", () => {
     it("calls onSelectAddress when the new address is not shippable in OFFER mode", async () => {
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
+        isOffer: true,
         userAddressMode: { mode: "add" },
-        orderData: { mode: "OFFER" },
       })
       mockAddAddressValues = {
         ...validNewAddress,

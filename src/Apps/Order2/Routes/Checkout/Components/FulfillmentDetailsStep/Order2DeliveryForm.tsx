@@ -77,6 +77,8 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const checkoutContext = useCheckoutContext()
 
   const {
+    isOffer,
+    isInternationalShipping,
     setCheckoutMode,
     checkoutTracking,
     completeStep,
@@ -261,7 +263,15 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           option => ["PICKUP", "SHIPPING_TBD"].includes(option.type),
         )
 
-        if (isMissingShippingOption && orderData?.mode !== "OFFER") {
+        const artwork = orderData.lineItems?.[0]?.artwork
+        const artaConfiguredForShipping = isInternationalShipping
+          ? !!artwork?.artsyShippingInternational
+          : !!artwork?.processWithArtsyShippingDomestic
+
+        if (
+          isMissingShippingOption &&
+          (!isOffer || artaConfiguredForShipping)
+        ) {
           throw new LocalCheckoutError("no_shipping_options")
         }
 
@@ -319,9 +329,11 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     },
     [
       hasSavedAddresses,
+      isInternationalShipping,
+      isOffer,
       orderData.internalID,
+      orderData.lineItems,
       orderData.selectedFulfillmentOption?.type,
-      orderData?.mode,
       saveAddressToUser,
       setCheckoutMode,
       setIsFulfillmentDetailsSaving,
@@ -495,7 +507,6 @@ const ORDER_FRAGMENT = graphql`
     selectedFulfillmentOption {
       type
     }
-    mode
     availableShippingCountries
     fulfillmentDetails {
       addressLine1
@@ -514,6 +525,8 @@ const ORDER_FRAGMENT = graphql`
     lineItems {
       artwork {
         shippingOriginRegion
+        processWithArtsyShippingDomestic
+        artsyShippingInternational
       }
     }
   }
