@@ -21,6 +21,8 @@ import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 const APP_DOWNLOAD_FOOTER_KEY = "AppDownloadFooter"
+const ONE_TAP_SUPPRESS_COOKIE = "g_one_tap_suppress"
+const ONE_TAP_SUPPRESS_DURATION_SECONDS = 30 * 60
 
 type AppDownloadFooterProps = {}
 
@@ -62,13 +64,22 @@ export const AppDownloadFooter: FC<
     Cookies.set(APP_DOWNLOAD_FOOTER_KEY, 1, { expires: 0 })
   }
 
-  if (
-    !isMounted ||
-    Cookies.get(APP_DOWNLOAD_FOOTER_KEY) ||
-    mode === "Dismissed" ||
-    match?.location?.pathname === "/" ||
-    routeChanges.current < 2
-  ) {
+  const shouldShow =
+    isMounted &&
+    !Cookies.get(APP_DOWNLOAD_FOOTER_KEY) &&
+    mode !== "Dismissed" &&
+    match?.location?.pathname !== "/" &&
+    routeChanges.current >= 2
+
+  useEffect(() => {
+    if (shouldShow) {
+      Cookies.set(ONE_TAP_SUPPRESS_COOKIE, "1", {
+        expires: ONE_TAP_SUPPRESS_DURATION_SECONDS,
+      })
+    }
+  }, [shouldShow])
+
+  if (!shouldShow) {
     return null
   }
 
