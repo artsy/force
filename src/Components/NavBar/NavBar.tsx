@@ -33,6 +33,7 @@ import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { Media } from "Utils/Responsive"
 import { track } from "react-tracking"
 import styled from "styled-components"
+import { GALLERY_PARTNERSHIPS_URL } from "./constants"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
@@ -77,9 +78,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && mode !== "More"
-
-  const GALLERY_PARTNERSHIPS_URL =
-    "https://partners.artsy.net/gallery-partnerships/?utm_medium=internal-banner&utm_source=artsy&utm_campaign=b2b-2025-gallery-partnerships-application-banner-link&utm_sfc=701Hu000001jeLjIAI"
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {

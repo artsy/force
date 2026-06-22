@@ -5,6 +5,7 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
 import type * as React from "react"
+import { GALLERY_PARTNERSHIPS_URL } from "Components/NavBar/constants"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
 import { useNavBarTracking } from "../useNavBarTracking"
 import {
@@ -140,6 +141,14 @@ export const NavBarMobileMenu: React.FC<
               </NavBarMobileMenuItemLink>
 
               <Separator my={1} />
+
+              <NavBarMobileMenuItemLink
+                to={GALLERY_PARTNERSHIPS_URL}
+                color="mono100"
+                onClick={handleClick}
+              >
+                Artsy for Galleries
+              </NavBarMobileMenuItemLink>
 
               <NavBarMobileMenuItemLink
                 to="/price-database"
