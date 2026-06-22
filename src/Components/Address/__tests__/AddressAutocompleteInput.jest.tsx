@@ -873,7 +873,7 @@ describe("AddressAutocompleteInput", () => {
       })
     })
 
-    it("tracks the country code when an international address is selected", async () => {
+    it("tracks when an international address is selected", async () => {
       mockFetch
         .mockResolvedValueOnce({
           json: jest.fn().mockResolvedValue({
@@ -888,17 +888,7 @@ describe("AddressAutocompleteInput", () => {
           ok: true,
         })
         .mockResolvedValueOnce({
-          json: jest.fn().mockResolvedValue({
-            candidates: [
-              {
-                country_iso3: "DEU",
-                administrative_area: "Berlin",
-                locality: "Berlin",
-                postal_code: "10117",
-                street: "Unter den Linden 1",
-              },
-            ],
-          }),
+          json: jest.fn().mockResolvedValue({ candidates: [] }),
           ok: true,
         })
 
@@ -913,12 +903,15 @@ describe("AddressAutocompleteInput", () => {
       )
       await flushPromiseQueue()
 
-      expect(mockTrackEvent).toHaveBeenCalledWith(
-        expect.objectContaining({
-          action: "selectedItemFromAddressAutoCompletion",
-          country: "DE",
-        }),
-      )
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "selectedItemFromAddressAutoCompletion",
+        context_module: "ordersShipping",
+        context_owner_id: "1234",
+        context_owner_type: "orders-shipping",
+        input: "Unter den Linden",
+        item: "Unter den Linden 1 10117 Berlin",
+        country: "DE",
+      })
     })
   })
 })
