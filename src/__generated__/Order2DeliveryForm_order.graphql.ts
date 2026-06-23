@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6fa730caa4121f7deec9fa7bd984a5b>>
+ * @generated SignedSource<<a743067bab961aee80618c579970536d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,6 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type FulfillmentOptionTypeEnum = "ARTSY_EXPRESS" | "ARTSY_STANDARD" | "ARTSY_WHITE_GLOVE" | "DOMESTIC_FLAT" | "INTERNATIONAL_FLAT" | "PICKUP" | "SHIPPING_TBD" | "%future added value";
-export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2DeliveryForm_order$data = {
   readonly availableShippingCountries: ReadonlyArray<string>;
@@ -31,10 +30,11 @@ export type Order2DeliveryForm_order$data = {
   readonly internalID: string;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
+      readonly artsyShippingInternational: boolean | null | undefined;
+      readonly processWithArtsyShippingDomestic: boolean | null | undefined;
       readonly shippingOriginRegion: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
-  readonly mode: OrderModeEnum;
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
@@ -74,13 +74,6 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mode",
       "storageKey": null
     },
     {
@@ -204,6 +197,20 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "shippingOriginRegion",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "processWithArtsyShippingDomestic",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "artsyShippingInternational",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -216,6 +223,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "42fee346eabaf8e4af3ee28252066a51";
+(node as any).hash = "f41bebd9f1f2253487e2cca8231b74b0";
 
 export default node;

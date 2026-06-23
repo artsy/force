@@ -27,6 +27,7 @@ jest.mock(
 )
 
 const mockCheckoutContext = {
+  isOffer: false,
   steps: [
     {
       name: "CONFIRMATION",
@@ -141,6 +142,7 @@ describe("Order2ReviewStep", () => {
     jest.clearAllMocks()
     // Reset savePaymentMethod to default
     mockCheckoutContext.savePaymentMethod = false
+    mockCheckoutContext.isOffer = false
     // Reset countdown timer to default
     mockCountdownTimer = {
       remainingTime: "2d 22h",
@@ -153,6 +155,10 @@ describe("Order2ReviewStep", () => {
   })
 
   describe("Submitting an offer order", () => {
+    beforeEach(() => {
+      mockCheckoutContext.isOffer = true
+    })
+
     it("passes setupIntent ID correctly for offer orders requiring action", async () => {
       const mockSetupIntentId = "seti_test123"
 
@@ -615,6 +621,7 @@ describe("Order2ReviewStep", () => {
 
   describe("Gallery offer display", () => {
     it("shows gallery offer line with timer when in offer mode on partner offer", () => {
+      mockCheckoutContext.isOffer = true
       renderWithRelay({
         Me: () => ({
           order: {
@@ -644,6 +651,7 @@ describe("Order2ReviewStep", () => {
     })
 
     it("does not show gallery offer line when not a partner offer", () => {
+      mockCheckoutContext.isOffer = true
       renderWithRelay({
         Me: () => ({
           order: {
@@ -669,6 +677,7 @@ describe("Order2ReviewStep", () => {
     })
 
     it("does not show gallery offer line when timer is invalid", () => {
+      mockCheckoutContext.isOffer = true
       mockCountdownTimer = {
         remainingTime: "NaNh NaNm",
         isImminent: false,

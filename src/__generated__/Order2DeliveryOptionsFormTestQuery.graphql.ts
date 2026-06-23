@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8e0f657c167a8cbc56fcbbe839ea549>>
+ * @generated SignedSource<<d8ea96fd8bf1eb5cce6dbe920635b9dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -306,13 +306,6 @@ return {
                 "name": "shippingOrigin",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "shippingRadius",
-                "storageKey": null
-              },
               (v2/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
@@ -324,7 +317,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7127d5ee7a587ea0595df6f642d0fa9d",
+    "cacheID": "176474748e45fbf5bc73625157d0aca3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -412,13 +405,12 @@ return {
           "type": "FulfillmentOption"
         },
         "me.order.selectedFulfillmentOption.type": (v5/*: any*/),
-        "me.order.shippingOrigin": (v4/*: any*/),
-        "me.order.shippingRadius": (v4/*: any*/)
+        "me.order.shippingOrigin": (v4/*: any*/)
       }
     },
     "name": "Order2DeliveryOptionsFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  mode\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n  shippingRadius\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
+    "text": "query Order2DeliveryOptionsFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2DeliveryOptionsForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
   }
 };
 })();

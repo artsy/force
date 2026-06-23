@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<197c6846b7e474c7384c9d783c73a37a>>
+ * @generated SignedSource<<48cb3e24c70900ab9705f00b2bd1c691>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type Order2CheckoutContext_order$data = {
   readonly selectedFulfillmentOption: {
     readonly type: FulfillmentOptionTypeEnum;
   } | null | undefined;
+  readonly shippingRadius: string | null | undefined;
   readonly source: OrderSourceEnum;
   readonly stripeConfirmationToken: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"useBuildInitialSteps_order">;
@@ -57,6 +58,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "shippingRadius",
       "storageKey": null
     },
     {
@@ -125,6 +133,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "26d1a886d9b04f5f3d3fe1dd32e29238";
+(node as any).hash = "485d7a1d99b983cfe6899a79f764cd09";
 
 export default node;

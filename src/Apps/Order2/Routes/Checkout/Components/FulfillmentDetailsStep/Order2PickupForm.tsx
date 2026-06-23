@@ -47,11 +47,10 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
 
-  const { completeStep, checkoutTracking, setCheckoutMode } =
+  const { completeStep, checkoutTracking, setCheckoutMode, isOffer } =
     useCheckoutContext()
 
-  const { fulfillmentOptions, shippingOrigin, mode } = orderData
-  const isOffer = mode === "OFFER"
+  const { fulfillmentOptions, shippingOrigin } = orderData
   // By the time we get here, this option should be available
   const pickupFulfillmentOption = fulfillmentOptions?.find(
     option => option.type === "PICKUP",
@@ -254,7 +253,6 @@ const ME_FRAGMENT = graphql`
 const ORDER_FRAGMENT = graphql`
   fragment Order2PickupForm_order on Order {
     internalID
-    mode
     fulfillmentOptions {
       type
     }
