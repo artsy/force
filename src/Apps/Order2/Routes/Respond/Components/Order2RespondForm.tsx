@@ -1,14 +1,18 @@
+import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
   BorderedRadio,
   Button,
+  Clickable,
   Flex,
   RadioGroup,
   Spacer,
   Text,
 } from "@artsy/palette"
+import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import type { RespondAction } from "Apps/Order2/Routes/Respond/RespondContext/types"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2RespondFormProps {
@@ -28,27 +32,64 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const { selectedAction, setRespondAction, setRespondComplete } =
     useRespondContext()
 
-  const offerAmount = orderData.pendingOffer?.amount?.display
-  // `currentOfferPrice` mirrors the legacy `order.itemsTotalCents`
-  const currentOfferPrice = orderData.itemsTotal?.display
+  const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
+
+  // Gallery's offer being responded to. Depending on negotiation state the
+  // exchange API may expose it on any of these, so fall back through them
+  // (legacy `order.lastOffer` ≈ `lastSubmittedOffer`).
+  const submittedOffers = orderData.submittedOffers ?? []
+  const galleryOffer =
+    orderData.lastSubmittedOffer ??
+    submittedOffers[submittedOffers.length - 1] ??
+    orderData.pendingOffer
+  // Total the buyer would pay — items + shipping + taxes combined. Legacy:
+  // `TransactionDetailsSummaryItem` Total row uses `offer.buyerTotal`.
+  const totalPrice =
+    galleryOffer?.buyerTotal?.display ?? orderData.buyerTotal?.display
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <Text variant={["md", "lg-display"]}>Respond to gallery offer</Text>
+      <Text variant={["sm", "md"]}>Respond to gallery offer</Text>
 
-      {offerAmount && (
+      {totalPrice && (
         <>
           <Spacer y={1} />
-          <Text variant={["lg-display", "xl"]}>{offerAmount}</Text>
+          <Flex alignItems="flex-end" gap={1}>
+            <Text variant={["md", "lg-display"]} alignItems="flex-end">
+              {totalPrice}
+            </Text>
+            <Clickable
+              display="flex"
+              alignItems="center"
+              color="mono60"
+              onClick={() => {
+                setIsOfferDetailsExpanded(!isOfferDetailsExpanded)
+              }}
+              aria-expanded={isOfferDetailsExpanded}
+              aria-label="Toggle offer details"
+            >
+              <Text variant="xs" color="mono60">
+                including shipping &amp; taxes
+              </Text>
+              <Spacer x={0.5} />
+              <ChevronUpIcon
+                height="18px"
+                style={{
+                  transition: "transform 0.3s ease-in-out",
+                  transform: isOfferDetailsExpanded
+                    ? "scaleY(-1)"
+                    : "scaleY(1)",
+                }}
+              />
+            </Clickable>
+          </Flex>
         </>
       )}
 
-      {currentOfferPrice && (
+      {isOfferDetailsExpanded && (
         <>
-          <Spacer y={1} />
-          <Text variant="sm" color="mono60">
-            {currentOfferPrice}
-          </Text>
+          <Spacer y={2} />
+          <Order2RespondOfferDetails order={orderData} />
         </>
       )}
 
@@ -89,13 +130,24 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2RespondForm_order on Order {
-    itemsTotal {
+    buyerTotal {
       display
     }
-    pendingOffer {
-      amount {
+    lastSubmittedOffer {
+      buyerTotal {
         display
       }
     }
+    submittedOffers {
+      buyerTotal {
+        display
+      }
+    }
+    pendingOffer {
+      buyerTotal {
+        display
+      }
+    }
+    ...Order2RespondOfferDetails_order
   }
 `

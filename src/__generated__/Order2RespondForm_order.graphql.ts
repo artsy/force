@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef6f63f39bfb0ce995a1e12c67475b5c>>
+ * @generated SignedSource<<7237385f30722948e5f995dd189d2f2a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,25 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2RespondForm_order$data = {
-  readonly itemsTotal: {
+  readonly buyerTotal: {
     readonly display: string | null | undefined;
   } | null | undefined;
-  readonly pendingOffer: {
-    readonly amount: {
+  readonly lastSubmittedOffer: {
+    readonly buyerTotal: {
       readonly display: string | null | undefined;
     } | null | undefined;
   } | null | undefined;
+  readonly pendingOffer: {
+    readonly buyerTotal: {
+      readonly display: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly submittedOffers: ReadonlyArray<{
+    readonly buyerTotal: {
+      readonly display: string | null | undefined;
+    } | null | undefined;
+  }>;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2RespondOfferDetails_order">;
   readonly " $fragmentType": "Order2RespondForm_order";
 };
 export type Order2RespondForm_order$key = {
@@ -27,14 +38,26 @@ export type Order2RespondForm_order$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
+var v0 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Money",
+  "kind": "LinkedField",
+  "name": "buyerTotal",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "display",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v1 = [
+  (v0/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -42,14 +65,25 @@ return {
   "metadata": null,
   "name": "Order2RespondForm_order",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
-      "concreteType": "Money",
+      "concreteType": "Offer",
       "kind": "LinkedField",
-      "name": "itemsTotal",
+      "name": "lastSubmittedOffer",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "submittedOffers",
+      "plural": true,
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -59,19 +93,13 @@ return {
       "kind": "LinkedField",
       "name": "pendingOffer",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Money",
-          "kind": "LinkedField",
-          "name": "amount",
-          "plural": false,
-          "selections": (v0/*: any*/),
-          "storageKey": null
-        }
-      ],
+      "selections": (v1/*: any*/),
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2RespondOfferDetails_order"
     }
   ],
   "type": "Order",
@@ -79,6 +107,6 @@ return {
 };
 })();
 
-(node as any).hash = "055befef9556d198fae88150ea47818b";
+(node as any).hash = "d2d2eba8179788bdbd5cf7eb8c9cf4cc";
 
 export default node;
