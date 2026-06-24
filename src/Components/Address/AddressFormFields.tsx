@@ -154,6 +154,7 @@ export const AddressFormFields = <V extends FormikContextWithAddress>(
       context_owner_type: contextPageOwnerType,
       context_owner_id: contextPageOwnerId || "",
       field,
+      country: values.address.country,
     }
     trackEvent(event)
     setAutocompletedNotYetEdited(false)

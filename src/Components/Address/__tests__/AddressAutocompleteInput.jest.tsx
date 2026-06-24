@@ -809,6 +809,7 @@ describe("AddressAutocompleteInput", () => {
         context_owner_type: "orders-shipping",
         input: "401 Broadway",
         suggested_addresses_results: 1,
+        country: "US",
       })
       mockFetch.mockResolvedValue({
         json: jest.fn().mockResolvedValue({
@@ -842,6 +843,7 @@ describe("AddressAutocompleteInput", () => {
           context_owner_type: "orders-shipping",
           input: "156 Quincy",
           suggested_addresses_results: 2,
+          country: "US",
         })
       })
     })
@@ -867,6 +869,48 @@ describe("AddressAutocompleteInput", () => {
         context_owner_type: "orders-shipping",
         input: "401 Broadway",
         item: "401 Broadway, New York NY 10013",
+        country: "US",
+      })
+    })
+
+    it("tracks when an international address is selected", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({
+            candidates: [
+              {
+                address_text: "Unter den Linden 1 10117 Berlin",
+                address_id: "de-addr-id",
+                entries: 1,
+              },
+            ],
+          }),
+          ok: true,
+        })
+        .mockResolvedValueOnce({
+          json: jest.fn().mockResolvedValue({ candidates: [] }),
+          ok: true,
+        })
+
+      render(<TestImplementation initialAddress={{ country: "DE" }} />)
+
+      const line1Input = screen.getByPlaceholderText("Autocomplete input")
+      await userEvent.paste(line1Input, "Unter den Linden")
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      await userEvent.click(
+        within(dropdown).getByText("Unter den Linden 1 10117 Berlin"),
+      )
+      await flushPromiseQueue()
+
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "selectedItemFromAddressAutoCompletion",
+        context_module: "ordersShipping",
+        context_owner_id: "1234",
+        context_owner_type: "orders-shipping",
+        input: "Unter den Linden",
+        item: "Unter den Linden 1 10117 Berlin",
+        country: "DE",
       })
     })
   })

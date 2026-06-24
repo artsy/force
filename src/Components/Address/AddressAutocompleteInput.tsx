@@ -281,6 +281,7 @@ export const AddressAutocompleteInput = ({
       context_owner_id: trackingValues.contextPageOwnerId,
       input,
       suggested_addresses_results: resultCount,
+      country: address.country,
     }
 
     trackEvent(event)
@@ -297,6 +298,7 @@ export const AddressAutocompleteInput = ({
       context_owner_id: trackingValues.contextPageOwnerId,
       input: input,
       item: option.value,
+      country: address.country,
     }
 
     trackEvent(event)
