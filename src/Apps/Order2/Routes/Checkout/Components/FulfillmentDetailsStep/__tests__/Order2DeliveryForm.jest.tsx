@@ -1047,7 +1047,7 @@ describe("Order2DeliveryForm", () => {
         expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
           {
             error: expect.objectContaining({
-              title: "Unable to provide shipping quote",
+              title: "Shipping quote unavailable",
             }),
             section: "FULFILLMENT_DETAILS",
           },
@@ -1266,7 +1266,7 @@ describe("Order2DeliveryForm", () => {
         expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
           {
             error: expect.objectContaining({
-              title: "Unable to provide shipping quote",
+              title: "Shipping quote unavailable",
             }),
             section: "FULFILLMENT_DETAILS",
           },
