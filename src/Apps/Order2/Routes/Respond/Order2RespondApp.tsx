@@ -49,21 +49,17 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
         <Column span={[12, 12, 6]} start={[1, 1, 2]}>
           <Box maxWidth={["100%", breakpoints.sm, "100%"]} mx={[0, "auto", 0]}>
             <Stack gap={1}>
-              <Box>
-                <Order2RespondForm order={orderData} />
+              <Order2RespondForm order={orderData} />
+
+              <Box display={["block", "block", "none"]}>
+                <Order2RespondSummary order={orderData} />
+                <Order2HelpLinksWithInquiry
+                  order={orderData}
+                  artworkID={artworkSlug as string}
+                  contextModule={ContextModule.ordersRespond}
+                />
               </Box>
             </Stack>
-            <Box display={["block", "block", "none"]}>
-              <Spacer y={1} />
-              <Box>
-                <Order2RespondSummary order={orderData} />
-              </Box>
-              <Order2HelpLinksWithInquiry
-                order={orderData}
-                artworkID={artworkSlug as string}
-                contextModule={ContextModule.ordersRespond}
-              />
-            </Box>
           </Box>
         </Column>
 
@@ -71,11 +67,12 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
           span={[12, 12, 4]}
           start={[1, 1, 8]}
           display={["none", "none", "block"]}
+          // Don't stretch to the left column's height — otherwise expanding the
+          // offer breakdown grows the grid row and the sticky summary jumps.
+          alignSelf="start"
         >
           <Box position={["initial", "initial", "sticky"]} top="100px">
-            <Box>
-              <Order2RespondSummary order={orderData} />
-            </Box>
+            <Order2RespondSummary order={orderData} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry
               order={orderData}
