@@ -23,7 +23,12 @@ import {
 } from "./NavBarMobileMenu/NavBarMobileMenu"
 
 import { AppDownloadBanner } from "Components/AppDownloadBanner"
-import { NavBarDropdownPanel } from "Components/NavBar/NavBarDropdownPanel"
+import { NavBarDesktopItem } from "Components/NavBar/NavBarDesktopItem"
+import {
+  DESKTOP_SECOND_TIER,
+  DESKTOP_TOP_TIER,
+  NAV_ITEMS,
+} from "Components/NavBar/navItems"
 import { NavBarMobileMenuProfile } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuProfile"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
@@ -32,7 +37,6 @@ import { SearchBar } from "Components/Search/SearchBar"
 import { usePrefetchRoute } from "System/Hooks/usePrefetchRoute"
 import { Media } from "Utils/Responsive"
 import { track } from "react-tracking"
-import styled from "styled-components"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
@@ -77,9 +81,6 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && mode !== "More"
-
-  const GALLERY_PARTNERSHIPS_URL =
-    "https://partners.artsy.net/gallery-partnerships/?utm_medium=internal-banner&utm_source=artsy&utm_campaign=b2b-2025-gallery-partnerships-application-banner-link&utm_sfc=701Hu000001jeLjIAI"
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -201,48 +202,16 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
               {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
               <Flex display={["none", "flex"]} ml={2} alignItems="stretch">
                 <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
-                  <Flex alignItems="center" display={["none", "flex"]}>
-                    <NavBarItemLink
-                      href="/collect"
-                      onMouseOver={() => prefetch("/collect")}
-                      textDecoration="none"
-                      onClick={handleClick}
-                      data-label="Buy"
-                    >
-                      Buy
-                    </NavBarItemLink>
-                  </Flex>
-
-                  <NavBarItemLink
-                    href={GALLERY_PARTNERSHIPS_URL}
-                    textDecoration="none"
-                    onClick={handleClick}
-                    data-label="Artsy for Galleries"
-                  >
-                    Artsy for Galleries
-                  </NavBarItemLink>
-
-                  <NavBarItemLink
-                    href="/price-database"
-                    onMouseOver={() => prefetch("/price-database")}
-                    textDecoration="none"
-                    onClick={handleClick}
-                    data-label="Price Database"
-                  >
-                    Price Database
-                  </NavBarItemLink>
-
-                  <Flex alignItems="center" display={["none", "flex"]}>
-                    <NavBarItemLink
-                      href="/articles"
-                      onMouseOver={() => prefetch("/articles")}
-                      textDecoration="none"
-                      onClick={handleClick}
-                      data-label="Articles"
-                    >
-                      Editorial
-                    </NavBarItemLink>
-                  </Flex>
+                  {DESKTOP_TOP_TIER.map(id => {
+                    return (
+                      <NavBarDesktopItem
+                        key={id}
+                        item={NAV_ITEMS[id]}
+                        navigationData={navigationData}
+                        handleClick={handleClick}
+                      />
+                    )
+                  })}
                 </Text>
 
                 {isLoggedIn ? (
@@ -346,110 +315,16 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
             >
               <NavBarDropdownProvider>
                 <NavBarDropdownArea>
-                  {navigationData?.whatsNewNavigation && (
-                    <NavBarDropdownPanel
-                      navigationData={navigationData.whatsNewNavigation}
-                      label="What’s New"
-                      href="/collection/new-this-week"
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderWhatsNewDropdown
-                      }
-                      menuType="whatsNew"
-                      handleClick={handleClick}
-                    />
-                  )}
-
-                  {navigationData?.artistsNavigation && (
-                    <NavBarDropdownPanel
-                      navigationData={navigationData.artistsNavigation}
-                      label="Artists"
-                      href="/artists"
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderArtistsDropdown
-                      }
-                      menuType="artists"
-                      handleClick={handleClick}
-                    />
-                  )}
-
-                  {navigationData?.artworksNavigation && (
-                    <NavBarDropdownPanel
-                      navigationData={navigationData.artworksNavigation}
-                      label="Artworks"
-                      href="/collect"
-                      contextModule={
-                        DeprecatedAnalyticsSchema.ContextModule
-                          .HeaderArtworksDropdown
-                      }
-                      menuType="artworks"
-                      handleClick={handleClick}
-                    />
-                  )}
-
-                  <NavBarItemLink
-                    href="/auctions"
-                    onMouseOver={() => prefetch("/auctions")}
-                    onClick={handleClick}
-                    data-label="Auctions"
-                  >
-                    Auctions
-                  </NavBarItemLink>
-
-                  <NavBarItemLink
-                    href="/viewing-rooms"
-                    onMouseOver={() => prefetch("/viewing-rooms")}
-                    onClick={handleClick}
-                    data-label="Viewing Rooms"
-                  >
-                    Viewing Rooms
-                  </NavBarItemLink>
-
-                  <NavBarItemLink
-                    href="/galleries"
-                    onMouseOver={() => prefetch("/galleries")}
-                    onClick={handleClick}
-                    data-label="Galleries"
-                  >
-                    Galleries
-                  </NavBarItemLink>
-
-                  <NavBarItemFairsLink
-                    href="/art-fairs"
-                    onMouseOver={() => prefetch("/art-fairs")}
-                    onClick={handleClick}
-                    data-label="Fairs & Events"
-                  >
-                    Fairs & Events
-                  </NavBarItemFairsLink>
-
-                  <NavBarItemLink
-                    href="/shows"
-                    onMouseOver={() => prefetch("/shows")}
-                    onClick={handleClick}
-                    data-label="Shows"
-                  >
-                    Shows
-                  </NavBarItemLink>
-
-                  <NavBarItemInstitutionsLink
-                    href="/institutions"
-                    onMouseOver={() => prefetch("/institutions")}
-                    onClick={handleClick}
-                    data-label="Institutions"
-                  >
-                    Museums
-                  </NavBarItemInstitutionsLink>
-
-                  <NavBarItemLink
-                    href="/feature/how-to-buy-art"
-                    onMouseOver={() => prefetch("/feature/how-to-buy-art")}
-                    onClick={handleClick}
-                    data-label="Collecting 101"
-                  >
-                    Collecting 101
-                  </NavBarItemLink>
+                  {DESKTOP_SECOND_TIER.map(id => {
+                    return (
+                      <NavBarDesktopItem
+                        key={id}
+                        item={NAV_ITEMS[id]}
+                        navigationData={navigationData}
+                        handleClick={handleClick}
+                      />
+                    )
+                  })}
                 </NavBarDropdownArea>
               </NavBarDropdownProvider>
             </Text>
@@ -487,17 +362,3 @@ const NavBarDropdownArea: React.FC<React.PropsWithChildren> = ({
     </Flex>
   )
 }
-
-// Hide these links earlier to ensure "Collecting 101" has space on smaller widths
-
-const NavBarItemFairsLink = styled(NavBarItemLink)`
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`
-const NavBarItemInstitutionsLink = styled(NavBarItemLink)`
-  // Can no longer fit on screen @ 900px
-  @media (max-width: 900px) {
-    display: none;
-  }
-`

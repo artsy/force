@@ -127,6 +127,11 @@ describe("NavBarMobileMenu", () => {
         ["/art-fairs", "Fairs & Events"],
         ["/shows", "Shows"],
         ["/institutions", "Museums"],
+        ["/feature/how-to-buy-art", "Collecting 101"],
+        [
+          "https://partners.artsy.net/gallery-partnerships/?utm_medium=internal-banner&utm_source=artsy&utm_campaign=b2b-2025-gallery-partnerships-application-banner-link&utm_sfc=701Hu000001jeLjIAI",
+          "Artsy for Galleries",
+        ],
         ["/price-database", "Price Database"],
         ["/articles", "Editorial"],
         ["/login?intent=signup&contextModule=header", "Sign Up"],

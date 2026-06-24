@@ -5,6 +5,8 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { logout } from "Utils/auth"
 import type * as React from "react"
+import { MOBILE_NAV_LAYOUT, SEPARATOR } from "../navItems"
+import { NavBarMobileItem } from "./NavBarMobileItem"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
 import { useNavBarTracking } from "../useNavBarTracking"
 import {
@@ -12,7 +14,6 @@ import {
   NavBarMobileMenuItemLink,
 } from "./NavBarMobileMenuItem"
 import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation"
-import { NavBarMobileSubMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import type { buildAppRoutesQuery } from "__generated__/buildAppRoutesQuery.graphql"
 
@@ -74,88 +75,16 @@ export const NavBarMobileMenu: React.FC<
             </NavBarMobileMenuItemButton>
 
             <NavBarMobileMenuTransition isOpen={isOpen} py={2}>
-              <NavBarMobileMenuItemLink
-                to="/collect"
-                color="mono100"
-                onClick={handleClick}
-              >
-                Buy
-              </NavBarMobileMenuItemLink>
-
-              {navigationData?.whatsNewNavigation && (
-                <NavBarMobileSubMenu
-                  navigationVersion={navigationData.whatsNewNavigation}
-                  menuType="whatsNew"
-                >
-                  What’s New
-                </NavBarMobileSubMenu>
-              )}
-
-              {navigationData?.artistsNavigation && (
-                <NavBarMobileSubMenu
-                  navigationVersion={navigationData.artistsNavigation}
-                  menuType="artists"
-                >
-                  Artists
-                </NavBarMobileSubMenu>
-              )}
-
-              {navigationData?.artworksNavigation && (
-                <NavBarMobileSubMenu
-                  navigationVersion={navigationData.artworksNavigation}
-                  menuType="artworks"
-                >
-                  Artworks
-                </NavBarMobileSubMenu>
-              )}
-
-              <NavBarMobileMenuItemLink to="/auctions" onClick={handleClick}>
-                Auctions
-              </NavBarMobileMenuItemLink>
-
-              <NavBarMobileMenuItemLink
-                to="/viewing-rooms"
-                onClick={handleClick}
-              >
-                Viewing Rooms
-              </NavBarMobileMenuItemLink>
-
-              <NavBarMobileMenuItemLink to="/galleries" onClick={handleClick}>
-                Galleries
-              </NavBarMobileMenuItemLink>
-
-              <NavBarMobileMenuItemLink to="/art-fairs" onClick={handleClick}>
-                Fairs & Events
-              </NavBarMobileMenuItemLink>
-
-              <NavBarMobileMenuItemLink to="/shows" onClick={handleClick}>
-                Shows
-              </NavBarMobileMenuItemLink>
-
-              <NavBarMobileMenuItemLink
-                to="/institutions"
-                onClick={handleClick}
-              >
-                Museums
-              </NavBarMobileMenuItemLink>
-
-              <Separator my={1} />
-
-              <NavBarMobileMenuItemLink
-                to="/price-database"
-                color="mono100"
-                onClick={handleClick}
-              >
-                Price Database
-              </NavBarMobileMenuItemLink>
-
-              <NavBarMobileMenuItemLink
-                to="/articles"
-                color="mono100"
-                onClick={handleClick}
-              >
-                Editorial
-              </NavBarMobileMenuItemLink>
+              {MOBILE_NAV_LAYOUT.map((entry, index) => {
+                return (
+                  <NavBarMobileItem
+                    key={entry === SEPARATOR ? `separator-${index}` : entry}
+                    entry={entry}
+                    navigationData={navigationData}
+                    handleClick={handleClick}
+                  />
+                )
+              })}
 
               <Separator my={1} />
 
