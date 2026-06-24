@@ -4,6 +4,7 @@ import {
   Button,
   Clickable,
   Flex,
+  Input,
   RadioGroup,
   Spacer,
   Text,
@@ -33,6 +34,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
+  const [counterofferAmount, setCounterofferAmount] = useState("")
 
   // Gallery's offer being responded to. Depending on negotiation state the
   // exchange API may expose it on any of these, so fall back through them
@@ -105,7 +107,26 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
               key={option.value}
               value={option.value}
               label={option.label}
-            />
+            >
+              {option.value === "COUNTEROFFER" &&
+                selectedAction === "COUNTEROFFER" && (
+                  <>
+                    <Spacer y={1} />
+                    <Input
+                      title="Your offer ($)"
+                      placeholder="Enter amount excluding shipping & tax"
+                      inputMode="numeric"
+                      value={counterofferAmount}
+                      onChange={event => {
+                        // Keep digits only, mirroring the legacy OfferInput.
+                        setCounterofferAmount(
+                          event.currentTarget.value.replace(/[^\d]/g, ""),
+                        )
+                      }}
+                    />
+                  </>
+                )}
+            </BorderedRadio>
           )
         })}
       </RadioGroup>
