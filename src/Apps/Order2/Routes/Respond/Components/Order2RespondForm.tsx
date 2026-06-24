@@ -1,6 +1,7 @@
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
   BorderedRadio,
+  Box,
   Button,
   Clickable,
   Flex,
@@ -86,12 +87,16 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
         </>
       )}
 
-      {isOfferDetailsExpanded && (
-        <>
-          <Spacer y={2} />
-          <Order2RespondOfferDetails order={orderData} />
-        </>
-      )}
+      <Box
+        overflow="hidden"
+        maxHeight={isOfferDetailsExpanded ? "500px" : "0px"}
+        style={{
+          transition: "max-height 0.3s ease-out",
+        }}
+      >
+        <Spacer y={2} />
+        <Order2RespondOfferDetails order={orderData} />
+      </Box>
 
       <Spacer y={2} />
 
