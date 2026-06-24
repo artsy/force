@@ -79,6 +79,7 @@ describe("AddressFormFields — editedAutocompletedAddress tracking", () => {
       context_owner_type: undefined,
       context_owner_id: "",
       field: "city",
+      country: "US",
     })
   })
 

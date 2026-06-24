@@ -576,6 +576,7 @@ describe("FulfillmentDetailsForm", () => {
         context_owner_type: "orders-shipping",
         input: "401 Broadway",
         suggested_addresses_results: 1,
+        country: "US",
       })
       expect(mockTrackEvent).toHaveBeenNthCalledWith(2, {
         action: "selectedItemFromAddressAutoCompletion",
@@ -584,6 +585,7 @@ describe("FulfillmentDetailsForm", () => {
         context_owner_type: "orders-shipping",
         input: "401 Broadway",
         item: "401 Broadway, New York NY 10013",
+        country: "US",
       })
     })
   })
