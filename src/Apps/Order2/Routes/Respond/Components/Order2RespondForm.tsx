@@ -55,9 +55,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
         <>
           <Spacer y={1} />
           <Flex alignItems="flex-end" gap={1}>
-            <Text variant={["md", "lg-display"]} alignItems="flex-end">
-              {totalPrice}
-            </Text>
+            <Text variant={["md", "lg-display"]}>{totalPrice}</Text>
             <Clickable
               display="flex"
               alignItems="center"
