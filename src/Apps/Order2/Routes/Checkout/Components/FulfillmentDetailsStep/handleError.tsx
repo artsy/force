@@ -43,14 +43,13 @@ export const handleError = (
     }),
     no_shipping_options: code => ({
       errorBanner: {
-        title: "Unable to provide shipping quote",
+        title: "Shipping quote unavailable",
         message: (
           <>
-            Please contact <MailtoOrderSupport /> so we can assist you with your
-            purchase.
+            Try a different address, or contact the gallery or <MailtoOrderSupport /> to arrange shipping.
           </>
         ),
-        displayText: `Please contact ${ORDER_SUPPORT_EMAIL} so we can assist you with your purchase.`,
+        displayText: `Try a different address, or contact the gallery or ${ORDER_SUPPORT_EMAIL} to arrange shipping.`,
         code,
       },
     }),

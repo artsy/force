@@ -21,12 +21,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/cohesion@npm:4.363.0":
-  version: 4.363.0
-  resolution: "@artsy/cohesion@npm:4.363.0"
+"@artsy/cohesion@npm:4.365.0":
+  version: 4.365.0
+  resolution: "@artsy/cohesion@npm:4.365.0"
   dependencies:
     core-js: "npm:3"
-  checksum: 10c0/844aac236669faec5d56b7e3c038f8c8ea987d7640ce20a817f52dce3347199a3ee113f310639c5a343f83825e1155514dddcd0c832e79a26358b20587a3ddc8
+  checksum: 10c0/a2bcaa5fdd05d99f0a3e93ab5668e0552403539367abb6ebf8aeb7d0723bac9e44310c9202158cc750f0854764ff80bba19348d3dc3f4ce2429267262e31b69b
   languageName: node
   linkType: hard
 
@@ -103,9 +103,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette-charts@npm:45.9.2":
-  version: 45.9.2
-  resolution: "@artsy/palette-charts@npm:45.9.2"
+"@artsy/palette-charts@npm:45.9.3":
+  version: 45.9.3
+  resolution: "@artsy/palette-charts@npm:45.9.3"
   dependencies:
     "@seznam/compose-react-refs": "npm:^1.0.6"
     d3-interpolate: "npm:^1.3.2"
@@ -117,7 +117,7 @@ __metadata:
     react-dom: ^18
     styled-components: ^6
     styled-system: ^5
-  checksum: 10c0/d9750353d3b0bb2cca6766911de035f55f7787982f2f73b11123fe1f2c060b277df2c6446df24591a189dbbaf1f8a1f025bd67fb0b655bb4d71ab4c174dc7925
+  checksum: 10c0/67cca833ee787fb848aa837e3697137cb98d854cba4b829a3c40140366d7020db45580b2432472f99f7c0a3f6ec49a0346fffe1d25cd923c2300c9835ad568ca
   languageName: node
   linkType: hard
 
@@ -9324,7 +9324,7 @@ __metadata:
   resolution: "force@workspace:."
   dependencies:
     "@artaio/arta-browser": "npm:^2.16.1"
-    "@artsy/cohesion": "npm:4.363.0"
+    "@artsy/cohesion": "npm:4.365.0"
     "@artsy/detect-responsive-traits": "npm:^0.2.0"
     "@artsy/dismissible": "npm:^0.8.1"
     "@artsy/express-reloadable": "npm:^1.7.0"
@@ -9333,7 +9333,7 @@ __metadata:
     "@artsy/img": "npm:1.1.2"
     "@artsy/multienv": "npm:^1.2.0"
     "@artsy/palette": "npm:46.9.1"
-    "@artsy/palette-charts": "npm:45.9.2"
+    "@artsy/palette-charts": "npm:45.9.3"
     "@artsy/palette-tokens": "npm:7.3.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
     "@artsy/xapp": "npm:2.0.0"
