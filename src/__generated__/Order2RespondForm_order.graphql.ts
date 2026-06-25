@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7237385f30722948e5f995dd189d2f2a>>
+ * @generated SignedSource<<5003898b8b36821d62d202a68c6ecd7f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,16 +18,19 @@ export type Order2RespondForm_order$data = {
     readonly buyerTotal: {
       readonly display: string | null | undefined;
     } | null | undefined;
+    readonly internalID: string;
   } | null | undefined;
   readonly pendingOffer: {
     readonly buyerTotal: {
       readonly display: string | null | undefined;
     } | null | undefined;
+    readonly internalID: string;
   } | null | undefined;
   readonly submittedOffers: ReadonlyArray<{
     readonly buyerTotal: {
       readonly display: string | null | undefined;
     } | null | undefined;
+    readonly internalID: string;
   }>;
   readonly " $fragmentSpreads": FragmentRefs<"Order2RespondOfferDetails_order">;
   readonly " $fragmentType": "Order2RespondForm_order";
@@ -57,6 +60,13 @@ var v0 = {
   "storageKey": null
 },
 v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
+    "storageKey": null
+  },
   (v0/*: any*/)
 ];
 return {
@@ -107,6 +117,6 @@ return {
 };
 })();
 
-(node as any).hash = "d2d2eba8179788bdbd5cf7eb8c9cf4cc";
+(node as any).hash = "009a9a3f2150ed948170e40f3fed2792";
 
 export default node;

@@ -11,15 +11,19 @@ import {
   Text,
 } from "@artsy/palette"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
+import { useRespondToOffer } from "Apps/Order2/Routes/Respond/Mutations/useRespondToOffer"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import {
   type RespondAction,
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2RespondForm.tsx")
 
 interface Order2RespondFormProps {
   order: Order2RespondForm_order$key
@@ -49,28 +53,11 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     editRespond,
     steps,
   } = useRespondContext()
+  const { respondToOffer } = useRespondToOffer()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [counterofferAmount, setCounterofferAmount] = useState("")
-
-  const isRespondCompleted =
-    steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
-    RespondStepState.COMPLETED
-
-  // Require a counteroffer amount before the request can be sent.
-  const isCounterofferValid =
-    selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
-
-  const handleSaveAndReview = () => {
-    if (!selectedAction || !isCounterofferValid) {
-      return
-    }
-    // TODO: send the response to the exchange API before collapsing. There is
-    // no new-flow (Order type) accept/counteroffer/decline mutation yet — the
-    // legacy flow used CommerceBuyerAcceptOffer / CommerceBuyerCounterOffer on
-    // CommerceOrder. Wire this once the mutation is available.
-    setRespondComplete()
-  }
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Gallery's offer being responded to. Depending on negotiation state the
   // exchange API may expose it on any of these, so fall back through them
@@ -84,6 +71,44 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   // `TransactionDetailsSummaryItem` Total row uses `offer.buyerTotal`.
   const totalPrice =
     galleryOffer?.buyerTotal?.display ?? orderData.buyerTotal?.display
+
+  const isRespondCompleted =
+    steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
+    RespondStepState.COMPLETED
+
+  // Require a counteroffer amount before the request can be sent.
+  const isCounterofferValid =
+    selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
+
+  const handleSaveAndReview = async () => {
+    const offerId = galleryOffer?.internalID
+
+    if (!selectedAction || !isCounterofferValid || !offerId) {
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      // Backend is shared with the legacy flow, so this reuses the legacy
+      // CommerceBuyer{Accept,Counter,Reject}Offer mutations.
+      await respondToOffer({
+        action: selectedAction,
+        offerId,
+        amountCents:
+          selectedAction === "COUNTEROFFER"
+            ? Number(counterofferAmount) * 100
+            : undefined,
+      })
+
+      setRespondComplete()
+    } catch (error) {
+      // TODO: surface this to the user (toast/banner).
+      logger.error("Failed to respond to offer", error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   // In the collapsed state show the resulting amount. For COUNTEROFFER the
   // total (incl. taxes & shipping) isn't computed yet — placeholder for now.
@@ -226,6 +251,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       <Button
         variant="primaryBlack"
         width="100%"
+        loading={isSubmitting}
         disabled={!selectedAction || !isCounterofferValid}
         onClick={handleSaveAndReview}
       >
@@ -241,16 +267,19 @@ const FRAGMENT = graphql`
       display
     }
     lastSubmittedOffer {
+      internalID
       buyerTotal {
         display
       }
     }
     submittedOffers {
+      internalID
       buyerTotal {
         display
       }
     }
     pendingOffer {
+      internalID
       buyerTotal {
         display
       }
