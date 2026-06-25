@@ -78,7 +78,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
 
   const {
     isOffer,
-    isInternationalShipping,
     setCheckoutMode,
     checkoutTracking,
     completeStep,
@@ -254,19 +253,21 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
             },
           })
 
-        const newOrder = validateAndExtractOrderResponse(
+        const updatedOrder = validateAndExtractOrderResponse(
           setOrderDeliveryAddressResult.updateOrderShippingAddress
             ?.orderOrError,
         ).order
 
-        const isMissingShippingOption = newOrder.fulfillmentOptions.every(
+        const isMissingShippingOption = updatedOrder.fulfillmentOptions.every(
           option => ["PICKUP", "SHIPPING_TBD"].includes(option.type),
         )
 
         const artwork = orderData.lineItems?.[0]?.artwork
-        const artaConfiguredForShipping = isInternationalShipping
-          ? !!artwork?.artsyShippingInternational
-          : !!artwork?.processWithArtsyShippingDomestic
+        const artaConfiguredForShipping =
+          !!updatedOrder.shippingRadius &&
+          (updatedOrder.shippingRadius === "domestic"
+            ? !!artwork?.processWithArtsyShippingDomestic
+            : !!artwork?.artsyShippingInternational)
 
         if (
           isMissingShippingOption &&
@@ -294,7 +295,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
         // Always select a delivery option after saving the address — re-using the
         // previously selected type if still available, otherwise the first option.
         // For new-address users with a single option, also auto-advance.
-        const selectable = newOrder.fulfillmentOptions.filter(o =>
+        const selectable = updatedOrder.fulfillmentOptions.filter(o =>
           SELECTABLE_TYPES.includes(o.type),
         )
         if (selectable.length > 0) {
@@ -329,7 +330,6 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
     },
     [
       hasSavedAddresses,
-      isInternationalShipping,
       isOffer,
       orderData.internalID,
       orderData.lineItems,
