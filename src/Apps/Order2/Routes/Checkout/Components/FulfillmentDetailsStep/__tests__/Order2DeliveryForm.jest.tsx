@@ -1274,6 +1274,312 @@ describe("Order2DeliveryForm", () => {
         expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
       })
 
+      it("allows OFFER mode with international address to proceed when Arta international is not configured", async () => {
+        mockCheckoutContext.isOffer = true
+        const { mockResolveLastOperation } = renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseOrderProps,
+              mode: "OFFER",
+              lineItems: [
+                {
+                  artwork: {
+                    processWithArtsyShippingDomestic: false,
+                    artsyShippingInternational: false,
+                  },
+                },
+              ],
+              fulfillmentDetails: {
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "DE",
+                phoneNumber: {
+                  regionCode: "de",
+                  originalNumber: "",
+                },
+              },
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        await userEvent.type(
+          screen.getByPlaceholderText("Add full name"),
+          "Jane Smith",
+        )
+        await userEvent.type(
+          screen.getByLabelText("Street address"),
+          "456 Oak Ave",
+        )
+        await userEvent.type(screen.getByLabelText("City"), "Berlin")
+        await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "10115")
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.phoneNumber"),
+          "5559876543",
+        )
+
+        act(() => {
+          userEvent.click(screen.getByText("Save and Continue"))
+        })
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(
+                { ...baseOrderProps, mode: "OFFER" },
+                {
+                  shippingRadius: "international",
+                  fulfillmentDetails: {
+                    name: "Jane Smith",
+                    addressLine1: "456 Oak Ave",
+                    addressLine2: "",
+                    city: "Berlin",
+                    region: "",
+                    postalCode: "10115",
+                    country: "DE",
+                    phoneNumber: {
+                      regionCode: "de",
+                      originalNumber: "5559876543",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "SHIPPING_TBD" }],
+                },
+              ),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+
+        // Arta international not configured — OFFER mode proceeds without error
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            error: null,
+            section: "FULFILLMENT_DETAILS",
+          },
+        )
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
+      })
+
+      it("shows error for OFFER mode with international address when Arta international is configured but no quotes are returned", async () => {
+        mockCheckoutContext.isOffer = true
+        const { mockResolveLastOperation } = renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseOrderProps,
+              mode: "OFFER",
+              lineItems: [
+                {
+                  artwork: {
+                    processWithArtsyShippingDomestic: false,
+                    artsyShippingInternational: true,
+                  },
+                },
+              ],
+              fulfillmentDetails: {
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "DE",
+                phoneNumber: {
+                  regionCode: "de",
+                  originalNumber: "",
+                },
+              },
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        await userEvent.type(
+          screen.getByPlaceholderText("Add full name"),
+          "Jane Smith",
+        )
+        await userEvent.type(
+          screen.getByLabelText("Street address"),
+          "456 Oak Ave",
+        )
+        await userEvent.type(screen.getByLabelText("City"), "Berlin")
+        await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "10115")
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.phoneNumber"),
+          "5559876543",
+        )
+
+        act(() => {
+          userEvent.click(screen.getByText("Save and Continue"))
+        })
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(
+                { ...baseOrderProps, mode: "OFFER" },
+                {
+                  shippingRadius: "international",
+                  fulfillmentDetails: {
+                    name: "Jane Smith",
+                    addressLine1: "456 Oak Ave",
+                    addressLine2: "",
+                    city: "Berlin",
+                    region: "",
+                    postalCode: "10115",
+                    country: "DE",
+                    phoneNumber: {
+                      regionCode: "de",
+                      originalNumber: "5559876543",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "SHIPPING_TBD" }],
+                },
+              ),
+          })
+        })
+        await flushPromiseQueue()
+
+        // Arta international configured — OFFER mode shows error
+        expect(mockSelectDeliveryOption).not.toHaveBeenCalled()
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            error: expect.objectContaining({
+              title: "Shipping quote unavailable",
+            }),
+            section: "FULFILLMENT_DETAILS",
+          },
+        )
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
+      })
+
+      it("allows OFFER mode to proceed when shippingRadius is null", async () => {
+        mockCheckoutContext.isOffer = true
+        const { mockResolveLastOperation } = renderWithRelay({
+          Me: () => ({
+            ...baseMeProps,
+            order: {
+              ...baseOrderProps,
+              mode: "OFFER",
+              lineItems: [
+                {
+                  artwork: {
+                    processWithArtsyShippingDomestic: true,
+                    artsyShippingInternational: true,
+                  },
+                },
+              ],
+              fulfillmentDetails: {
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "DE",
+                phoneNumber: {
+                  regionCode: "de",
+                  originalNumber: "",
+                },
+              },
+            },
+          }),
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Delivery address")).toBeInTheDocument()
+        })
+
+        await userEvent.type(
+          screen.getByPlaceholderText("Add full name"),
+          "Jane Smith",
+        )
+        await userEvent.type(
+          screen.getByLabelText("Street address"),
+          "456 Oak Ave",
+        )
+        await userEvent.type(screen.getByLabelText("City"), "Berlin")
+        await userEvent.type(screen.getByLabelText("ZIP/Postal code"), "10115")
+        await userEvent.type(
+          screen.getByTestId("addressFormFields.phoneNumber"),
+          "5559876543",
+        )
+
+        act(() => {
+          userEvent.click(screen.getByText("Save and Continue"))
+        })
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            updateOrderShippingAddressPayload: () =>
+              orderMutationSuccess(
+                { ...baseOrderProps, mode: "OFFER" },
+                {
+                  shippingRadius: null,
+                  fulfillmentDetails: {
+                    name: "Jane Smith",
+                    addressLine1: "456 Oak Ave",
+                    addressLine2: "",
+                    city: "Berlin",
+                    region: "",
+                    postalCode: "10115",
+                    country: "DE",
+                    phoneNumber: {
+                      regionCode: "de",
+                      originalNumber: "5559876543",
+                    },
+                  },
+                  fulfillmentOptions: [{ type: "SHIPPING_TBD" }],
+                },
+              ),
+          })
+        })
+        await flushPromiseQueue()
+
+        await waitFor(() => {
+          mockResolveLastOperation({
+            CreateUserAddressPayload: () => ({
+              userAddressOrErrors: {
+                __typename: "UserAddress",
+                internalID: "new-address-id",
+              },
+            }),
+          })
+        })
+        await flushPromiseQueue()
+
+        // shippingRadius null — artaConfiguredForShipping is false, OFFER proceeds without error
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            error: null,
+            section: "FULFILLMENT_DETAILS",
+          },
+        )
+        expect(mockCheckoutContext.completeStep).not.toHaveBeenCalled()
+      })
+
       it("saves address to user profile when user has no saved addresses", async () => {
         const { mockResolveLastOperation } = renderWithRelay({
           Me: () => ({
