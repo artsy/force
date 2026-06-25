@@ -117,6 +117,28 @@ describe("useCheckoutTracking", () => {
     })
   })
 
+  describe("clickedTermsAndConditions", () => {
+    it("tracks click", () => {
+      const { result } = renderHook(() =>
+        useCheckoutTracking({
+          source: "artwork",
+          mode: "BUY",
+        }),
+      )
+
+      act(() => {
+        result.current.clickedTermsAndConditions()
+      })
+
+      assertTracked({
+        action: "clickedTermsAndConditions",
+        context_module: "ordersReview",
+        context_page_owner_type: "orders-checkout",
+        context_page_owner_id: "order-id",
+      })
+    })
+  })
+
   describe("clickedPaymentMethod", () => {
     it("tracks clicked payment method passing amountMinor and currency values through", () => {
       const { result } = renderHook(() =>
