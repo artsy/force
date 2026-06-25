@@ -11,6 +11,8 @@ import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import { Order2RespondDeliveryAddress } from "Apps/Order2/Routes/Respond/Components/Order2RespondDeliveryAddress"
 import { Order2RespondForm } from "Apps/Order2/Routes/Respond/Components/Order2RespondForm"
+import { Order2RespondPaymentMethod } from "Apps/Order2/Routes/Respond/Components/Order2RespondPaymentMethod"
+import { Order2RespondShippingMethod } from "Apps/Order2/Routes/Respond/Components/Order2RespondShippingMethod"
 import { Order2RespondSummary } from "Apps/Order2/Routes/Respond/Components/Order2RespondSummary"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -52,6 +54,10 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
               <Order2RespondForm order={orderData} />
 
               <Order2RespondDeliveryAddress order={orderData} />
+
+              <Order2RespondShippingMethod order={orderData} />
+
+              <Order2RespondPaymentMethod order={orderData} />
 
               <Box display={["block", "block", "none"]}>
                 <Order2RespondSummary order={orderData} />
@@ -100,6 +106,8 @@ const ORDER_FRAGMENT = graphql`
     ...Order2RespondSummary_order
     ...Order2RespondForm_order
     ...Order2RespondDeliveryAddress_order
+    ...Order2RespondShippingMethod_order
+    ...Order2RespondPaymentMethod_order
     ...Order2HelpLinks_order
   }
 `
