@@ -12,7 +12,11 @@ import {
 } from "@artsy/palette"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
-import type { RespondAction } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import {
+  type RespondAction,
+  RespondStepName,
+  RespondStepState,
+} from "Apps/Order2/Routes/Respond/RespondContext/types"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -27,15 +31,46 @@ const RESPOND_OPTIONS: Array<{ value: RespondAction; label: string }> = [
   { value: "DECLINE", label: "Decline gallery offer" },
 ]
 
+// Past-tense titles shown once the step is completed/collapsed.
+const COMPLETED_TITLE: Record<RespondAction, string> = {
+  APPROVE: "Accepted gallery offer",
+  COUNTEROFFER: "Sent counteroffer",
+  DECLINE: "Declined gallery offer",
+}
+
 export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { selectedAction, setRespondAction, setRespondComplete } =
-    useRespondContext()
+  const {
+    selectedAction,
+    setRespondAction,
+    setRespondComplete,
+    editRespond,
+    steps,
+  } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [counterofferAmount, setCounterofferAmount] = useState("")
+
+  const isRespondCompleted =
+    steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
+    RespondStepState.COMPLETED
+
+  // Require a counteroffer amount before the request can be sent.
+  const isCounterofferValid =
+    selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
+
+  const handleSaveAndReview = () => {
+    if (!selectedAction || !isCounterofferValid) {
+      return
+    }
+    // TODO: send the response to the exchange API before collapsing. There is
+    // no new-flow (Order type) accept/counteroffer/decline mutation yet — the
+    // legacy flow used CommerceBuyerAcceptOffer / CommerceBuyerCounterOffer on
+    // CommerceOrder. Wire this once the mutation is available.
+    setRespondComplete()
+  }
 
   // Gallery's offer being responded to. Depending on negotiation state the
   // exchange API may expose it on any of these, so fall back through them
@@ -49,6 +84,56 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   // `TransactionDetailsSummaryItem` Total row uses `offer.buyerTotal`.
   const totalPrice =
     galleryOffer?.buyerTotal?.display ?? orderData.buyerTotal?.display
+
+  // In the collapsed state show the resulting amount. For COUNTEROFFER the
+  // total (incl. taxes & shipping) isn't computed yet — placeholder for now.
+  // TODO: replace with the counteroffer's buyerTotal once it's available.
+  const collapsedAmount =
+    selectedAction === "COUNTEROFFER"
+      ? "TODO: counteroffer total (incl. taxes & shipping)"
+      : totalPrice
+
+  if (isRespondCompleted) {
+    return (
+      <Flex
+        flexDirection="column"
+        backgroundColor="mono0"
+        py={2}
+        px={[2, 2, 4]}
+      >
+        <Flex justifyContent="space-between" alignItems="flex-start">
+          <Text variant={["sm", "md"]}>
+            {selectedAction
+              ? COMPLETED_TITLE[selectedAction]
+              : "Response submitted"}
+          </Text>
+          <Clickable
+            textDecoration="underline"
+            cursor="pointer"
+            type="button"
+            aria-label="Edit response"
+            onClick={() => {
+              editRespond()
+            }}
+          >
+            <Text variant="sm" fontWeight="normal" color="mono100">
+              Edit
+            </Text>
+          </Clickable>
+        </Flex>
+
+        {collapsedAmount && (
+          <>
+            <Spacer y={1} />
+            <Text variant={["sm", "md"]}>{collapsedAmount}</Text>
+            <Text variant="xs" color="mono60">
+              Including shipping and taxes
+            </Text>
+          </>
+        )}
+      </Flex>
+    )
+  }
 
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
@@ -141,10 +226,8 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       <Button
         variant="primaryBlack"
         width="100%"
-        disabled={!selectedAction}
-        onClick={() => {
-          setRespondComplete()
-        }}
+        disabled={!selectedAction || !isCounterofferValid}
+        onClick={handleSaveAndReview}
       >
         Save and Review
       </Button>
