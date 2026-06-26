@@ -51,6 +51,7 @@
     "test": "scripts/jest.sh",
     "test:smoke": "npx playwright test",
     "type-check": "tsc",
+    "type-check:native": "tsgo --noEmit -p tsconfig.native.json",
     "storybook": "storybook dev -p 6006"
   },
   "resolutions": {
@@ -232,6 +233,7 @@
     "@types/styled-system__theme-get": "5.0.0",
     "@types/underscore.string": "0.0.32",
     "@types/yup": "^0.29.13",
+    "@typescript/native-preview": "beta",
     "chai": "4.0.0",
     "chai-passport-strategy": "^3.0.0",
     "concurrently": "^6.2.0",

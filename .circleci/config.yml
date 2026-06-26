@@ -285,6 +285,14 @@ workflows:
           yarn-run: type-check
           version: 22.14.0
 
+      # Type-check (TypeScript 7 beta / tsgo) — informational, does not block deploys
+      - node/run:
+          <<: *not_staging_or_release
+          name: type-check-native
+          pkg-manager: yarn
+          yarn-run: type-check:native
+          version: 22.14.0
+
       # Jest Tests
       - test:
           <<: *not_staging_or_release
