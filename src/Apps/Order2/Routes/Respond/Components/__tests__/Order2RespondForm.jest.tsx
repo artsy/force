@@ -1,0 +1,147 @@
+import { fireEvent, screen } from "@testing-library/react"
+import { Order2RespondForm } from "Apps/Order2/Routes/Respond/Components/Order2RespondForm"
+import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import type { Order2RespondFormTestQuery } from "__generated__/Order2RespondFormTestQuery.graphql"
+import { graphql } from "react-relay"
+
+jest.unmock("react-relay")
+
+const COUNTEROFFER_PLACEHOLDER = "Enter amount excluding shipping & tax"
+
+const { renderWithRelay } = setupTestWrapperTL<Order2RespondFormTestQuery>({
+  Component: (props: any) => {
+    const order = props.me?.order
+
+    if (!order) {
+      return null
+    }
+
+    return (
+      <Order2RespondContextProvider order={order}>
+        <Order2RespondForm order={order} />
+      </Order2RespondContextProvider>
+    )
+  },
+  query: graphql`
+    query Order2RespondFormTestQuery @relay_test_operation {
+      me {
+        order(id: "order-id") {
+          ...Order2RespondContext_order
+          ...Order2RespondForm_order
+        }
+      }
+    }
+  `,
+})
+
+const defaultResolvers = {
+  Order: () => ({ mode: "OFFER" }),
+  Money: () => ({ display: "$1,000.00" }),
+}
+
+const saveButton = () => screen.getByRole("button", { name: "Save and Review" })
+
+describe("Order2RespondForm", () => {
+  it("renders the three response options", () => {
+    renderWithRelay(defaultResolvers)
+
+    expect(screen.getByText("Accept gallery offer")).toBeInTheDocument()
+    expect(screen.getByText("Send counteroffer")).toBeInTheDocument()
+    expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
+  })
+
+  it("disables Save and Review until an option is selected", () => {
+    renderWithRelay(defaultResolvers)
+
+    expect(saveButton()).toBeDisabled()
+
+    fireEvent.click(screen.getByText("Accept gallery offer"))
+
+    expect(saveButton()).toBeEnabled()
+  })
+
+  it("reveals the counteroffer input only when Send counteroffer is selected", () => {
+    renderWithRelay(defaultResolvers)
+
+    expect(
+      screen.queryByPlaceholderText(COUNTEROFFER_PLACEHOLDER),
+    ).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+
+    expect(
+      screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER),
+    ).toBeInTheDocument()
+  })
+
+  it("keeps Save and Review disabled for a counteroffer until an amount is entered", () => {
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+    expect(saveButton()).toBeDisabled()
+
+    fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+      target: { value: "500" },
+    })
+
+    expect(saveButton()).toBeEnabled()
+  })
+
+  it("collapses to the completed state after accepting, without submitting a request", () => {
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Accept gallery offer"))
+    fireEvent.click(saveButton())
+
+    // Collapsed title (past tense) and the not-submitted notice
+    expect(screen.getByText("Accepted gallery offer")).toBeInTheDocument()
+    expect(
+      screen.getByText(/submitting the response will be implemented in/i),
+    ).toBeInTheDocument()
+
+    // The expanded form (options + CTA) is no longer shown
+    expect(screen.queryByText("Accept gallery offer")).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole("button", { name: "Save and Review" }),
+    ).not.toBeInTheDocument()
+  })
+
+  it("shows a placeholder total for a counteroffer in the collapsed state", () => {
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+    fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+      target: { value: "500" },
+    })
+    fireEvent.click(saveButton())
+
+    expect(screen.getByText("Sent counteroffer")).toBeInTheDocument()
+    expect(screen.getByText(/counteroffer total/i)).toBeInTheDocument()
+  })
+
+  it("toggles the offer-details breakdown", () => {
+    renderWithRelay(defaultResolvers)
+
+    const toggle = screen.getByRole("button", { name: "Toggle offer details" })
+    expect(toggle).toHaveAttribute("aria-expanded", "false")
+
+    fireEvent.click(toggle)
+
+    expect(toggle).toHaveAttribute("aria-expanded", "true")
+  })
+
+  it("returns to the editable form when Edit is clicked", () => {
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Decline gallery offer"))
+    fireEvent.click(saveButton())
+
+    expect(screen.getByText("Declined gallery offer")).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Edit response" }))
+
+    expect(screen.getByText("Respond to gallery offer")).toBeInTheDocument()
+    expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
+  })
+})
