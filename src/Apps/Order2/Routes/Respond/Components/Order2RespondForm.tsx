@@ -6,24 +6,21 @@ import {
   Clickable,
   Flex,
   Input,
+  Message,
   RadioGroup,
   Spacer,
   Text,
 } from "@artsy/palette"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
-import { useRespondToOffer } from "Apps/Order2/Routes/Respond/Mutations/useRespondToOffer"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import {
   type RespondAction,
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
-import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
-
-const logger = createLogger("Order2RespondForm.tsx")
 
 interface Order2RespondFormProps {
   order: Order2RespondForm_order$key
@@ -53,11 +50,9 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     editRespond,
     steps,
   } = useRespondContext()
-  const { respondToOffer } = useRespondToOffer()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [counterofferAmount, setCounterofferAmount] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Gallery's offer being responded to. Depending on negotiation state the
   // exchange API may expose it on any of these, so fall back through them
@@ -76,38 +71,19 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
     RespondStepState.COMPLETED
 
-  // Require a counteroffer amount before the request can be sent.
+  // Require a counteroffer amount before continuing.
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
 
-  const handleSaveAndReview = async () => {
-    const offerId = galleryOffer?.internalID
-
-    if (!selectedAction || !isCounterofferValid || !offerId) {
+  const handleSaveAndReview = () => {
+    if (!selectedAction || !isCounterofferValid) {
       return
     }
-
-    setIsSubmitting(true)
-
-    try {
-      // Backend is shared with the legacy flow, so this reuses the legacy
-      // CommerceBuyer{Accept,Counter,Reject}Offer mutations.
-      await respondToOffer({
-        action: selectedAction,
-        offerId,
-        amountCents:
-          selectedAction === "COUNTEROFFER"
-            ? Number(counterofferAmount) * 100
-            : undefined,
-      })
-
-      setRespondComplete()
-    } catch (error) {
-      // TODO: surface this to the user (toast/banner).
-      logger.error("Failed to respond to offer", error)
-    } finally {
-      setIsSubmitting(false)
-    }
+    // NOTE: actually submitting the response (accept/counteroffer/decline) is
+    // out of scope for this ticket — it's handled in EMI-3288
+    // (https://artsyproduct.atlassian.net/browse/EMI-3288). Here we only
+    // advance/collapse the step.
+    setRespondComplete()
   }
 
   // In the collapsed state show the resulting amount. For COUNTEROFFER the
@@ -156,6 +132,14 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
             </Text>
           </>
         )}
+
+        <Spacer y={1} />
+        <Message variant="default" p={1}>
+          <Text variant="xs">
+            No request was sent — submitting the response will be implemented in
+            EMI-3288.
+          </Text>
+        </Message>
       </Flex>
     )
   }
@@ -251,7 +235,6 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       <Button
         variant="primaryBlack"
         width="100%"
-        loading={isSubmitting}
         disabled={!selectedAction || !isCounterofferValid}
         onClick={handleSaveAndReview}
       >
@@ -267,19 +250,16 @@ const FRAGMENT = graphql`
       display
     }
     lastSubmittedOffer {
-      internalID
       buyerTotal {
         display
       }
     }
     submittedOffers {
-      internalID
       buyerTotal {
         display
       }
     }
     pendingOffer {
-      internalID
       buyerTotal {
         display
       }

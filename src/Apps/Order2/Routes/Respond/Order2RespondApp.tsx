@@ -62,12 +62,11 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
           </Box>
         </Column>
 
+        {/* desktop */}
         <Column
           span={[12, 12, 4]}
           start={[1, 1, 8]}
           display={["none", "none", "block"]}
-          // Don't stretch to the left column's height — otherwise expanding the
-          // offer breakdown grows the grid row and the sticky summary jumps.
           alignSelf="start"
         >
           <Box position={["initial", "initial", "sticky"]} top="100px">
