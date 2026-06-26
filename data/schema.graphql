@@ -466,6 +466,15 @@ type Alert {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -516,6 +525,9 @@ type Alert {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -1904,6 +1916,15 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -1954,6 +1975,9 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -2380,6 +2404,15 @@ type ArtistPartnerEdge {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -2430,6 +2463,9 @@ type ArtistPartnerEdge {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -2557,6 +2593,15 @@ type ArtistSeries implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -2607,6 +2652,9 @@ type ArtistSeries implements Node {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -3586,6 +3634,15 @@ type ArtworkFilterNode {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -3636,6 +3693,9 @@ type ArtworkFilterNode {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -13520,6 +13580,15 @@ interface EntityWithFilterArtworksConnectionInterface {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -13569,6 +13638,9 @@ interface EntityWithFilterArtworksConnectionInterface {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -13858,6 +13930,15 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -13908,6 +13989,9 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -14412,6 +14496,15 @@ input FilterArtworksInput {
   geneID: String
   geneIDs: [String]
   height: String
+
+  # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+  hybridNeuralK: Int
+
+  # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+  hybridPaginationDepth: Int
+
+  # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+  hybridWeights: [Float!]
   importSources: [String]
   includeAllJSON: Boolean
   includeArtworksByFollowedArtists: Boolean
@@ -14461,6 +14554,9 @@ input FilterArtworksInput {
   sold: Boolean
   sort: String
   tagID: String
+
+  # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+  variant: String
   viewingRoomID: ID
   visibilityLevel: String
   width: String
@@ -14989,6 +15085,15 @@ type Gene implements Node & Searchable {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -15039,6 +15144,9 @@ type Gene implements Node & Searchable {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -17274,6 +17382,15 @@ type MarketingCollection implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -17324,6 +17441,9 @@ type MarketingCollection implements Node {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -21081,6 +21201,15 @@ type Partner implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -21131,6 +21260,9 @@ type Partner implements Node {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -21484,6 +21616,15 @@ type PartnerArtist {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -21534,6 +21675,9 @@ type PartnerArtist {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -21694,6 +21838,15 @@ type PartnerArtistEdge {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -21744,6 +21897,9 @@ type PartnerArtistEdge {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -23205,6 +23361,15 @@ type Query {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -23255,6 +23420,9 @@ type Query {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -23619,6 +23787,15 @@ type Query {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -23669,6 +23846,9 @@ type Query {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -26413,6 +26593,15 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -26463,6 +26652,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -27029,6 +27221,15 @@ type Tag implements Node {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -27079,6 +27280,9 @@ type Tag implements Node {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -30409,6 +30613,15 @@ type Viewer {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -30459,6 +30672,9 @@ type Viewer {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
@@ -30697,6 +30913,15 @@ type Viewer {
     geneID: String
     geneIDs: [String]
     height: String
+
+    # Hybrid only: how many candidates the semantic arm retrieves. Higher = wider semantic net.
+    hybridNeuralK: Int
+
+    # Hybrid only: results each arm contributes to the blend; must be ≥ from + page size. Caps pagination depth.
+    hybridPaginationDepth: Int
+
+    # Hybrid only: [lexical, neural] balance when blending scores, e.g. [0.5,0.5] equal, [0.3,0.7] favors semantic.
+    hybridWeights: [Float!]
     importSources: [String]
     includeAllJSON: Boolean
     includeArtworksByFollowedArtists: Boolean
@@ -30747,6 +30972,9 @@ type Viewer {
     sold: Boolean
     sort: String
     tagID: String
+
+    # Search strategy. 'hybrid' blends semantic (meaning-based) results into the keyword search. Requires a keyword; team-only.
+    variant: String
     viewingRoomID: ID
     visibilityLevel: String
     width: String
