@@ -32,11 +32,15 @@ export const ConversationPartnerOfferUpdate: FC<
     return null
   }
 
+  const PURCHASED_BUYER_STATES = new Set(["SUBMITTED", "APPROVED", "COMPLETED"])
+
   const orders = extractNodes(data.collectorOrdersConnection)
-  const isPurchased = orders.some(order =>
-    order.lineItems?.some(
-      lineItem => lineItem?.partnerOfferId === partnerOffer.internalID,
-    ),
+  const isPurchased = orders.some(
+    order =>
+      PURCHASED_BUYER_STATES.has(order.buyerState ?? "") &&
+      order.lineItems?.some(
+        lineItem => lineItem?.partnerOfferId === partnerOffer.internalID,
+      ),
   )
 
   if (isPurchased) {
@@ -84,6 +88,7 @@ const CONVERSATION_FRAGMENT = graphql`
     collectorOrdersConnection(first: 10) {
       edges {
         node {
+          buyerState
           lineItems {
             partnerOfferId
           }
