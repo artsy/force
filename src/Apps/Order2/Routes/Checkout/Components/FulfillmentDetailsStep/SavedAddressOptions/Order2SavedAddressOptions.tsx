@@ -40,8 +40,8 @@ const getUnableToShipMessage = (
 ): CheckoutErrorBannerMessage => {
   if (region && isBuyNow) {
     return {
-      title: `Ships within ${region} only`,
-      message: "Try a different address or contact the gallery for help.",
+      title: `Ships within ${region}`,
+      message: "Try a different address or contact the gallery for international shipping.",
     }
   }
   return {
