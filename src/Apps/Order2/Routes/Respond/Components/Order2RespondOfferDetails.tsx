@@ -1,4 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
@@ -36,29 +37,23 @@ export const Order2RespondOfferDetails: React.FC<
 
   return (
     <Flex flexDirection="column" backgroundColor="mono5" px={[1, 1, 2]} py={1}>
-      <Flex justifyContent="space-between" alignItems="baseline">
-        <Text variant="sm" color="mono100" fontWeight="bold">
-          Gallery offer
-        </Text>
-        {timer.hasValidRemainingTime && (
-          <Text variant="sm" color="mono60">
-            Exp. {timer.remainingTime}
-          </Text>
-        )}
-      </Flex>
-
       {offerAmount && (
-        <Flex justifyContent="space-between" alignItems="baseline">
-          <Text variant="sm" color="mono60">
-            Offer amount
-          </Text>
-          <Text variant="sm" color="mono60">
-            {offerAmount}
-          </Text>
+        <Flex justifyContent="space-between">
+          <Flex flexWrap="nowrap">
+            <Text variant="sm">Gallery offer</Text>
+            <Spacer x={1} />
+
+            {timer.hasValidRemainingTime && (
+              <Flex flexDirection="row" alignItems="center">
+                <StopwatchIcon height={18} />
+                <Spacer x={0.5} />
+                <Text variant="xs">Exp. {timer.remainingTime}</Text>
+              </Flex>
+            )}
+          </Flex>
+          <Text variant="sm">{offerAmount}</Text>
         </Flex>
       )}
-
-      <Spacer y={1} />
 
       {/* Renders price / shipping / taxes* / total + import-duties footnote
           (legacy `TransactionDetailsSummaryItem` equivalent on the new Order) */}
