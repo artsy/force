@@ -1,8 +1,10 @@
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Text } from "@artsy/palette"
 import ArtworkGrid, {
-  ArtworkGridLayout,
+  type ArtworkGridLayout,
 } from "Components/ArtworkGrid/ArtworkGrid"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
+import { ArtworkItemImpression } from "Components/RailImpression/ArtworkItemImpression"
 import { useRouter } from "System/Hooks/useRouter"
 import type { ArtworkRecommendationsArtworksGrid_me$key } from "__generated__/ArtworkRecommendationsArtworksGrid_me.graphql"
 import type { FC } from "react"
@@ -50,6 +52,19 @@ export const ArtworkRecommendationsArtworksGrid: FC<
         artworks={data.artworkRecommendations}
         columnCount={[2, 3, 4]}
         layout={layout}
+        renderItemWrapper={({ artwork, artworkIndex, children }) => {
+          return (
+            <ArtworkItemImpression
+              artworkID={artwork.internalID}
+              contextModule={ContextModule.artworkGrid}
+              contextScreen={OwnerType.artworkRecommendations}
+              position={artworkIndex}
+              width="100%"
+            >
+              {children}
+            </ArtworkItemImpression>
+          )
+        }}
       />
 
       {hasNext && <InfiniteScrollSentinel onNext={handleNext} />}

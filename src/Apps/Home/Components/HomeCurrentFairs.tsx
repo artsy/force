@@ -5,6 +5,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import {
+  Box,
   Column,
   Flex,
   GridColumns,
@@ -16,6 +17,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -25,75 +28,81 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeCurrentFairsProps {
+interface HomeCurrentFairsProps extends HomeRailTrackingProps {
   viewer: HomeCurrentFairs_viewer$data
 }
 
 const HomeCurrentFairs: React.FC<
   React.PropsWithChildren<HomeCurrentFairsProps>
-> = ({ viewer }) => {
+> = ({ viewer, railPositionY }) => {
   const { trackEvent } = useTracking()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.fairRail,
+    positionY: railPositionY,
+  })
 
   if (!viewer.fairs?.length) {
     return null
   }
 
   return (
-    <HomeCurrentFairsContainer>
-      <GridColumns gridRowGap={4}>
-        {viewer.fairs.map((fair, index) => {
-          if (!fair) return null
+    <Box ref={railImpressionRef} width="100%">
+      <HomeCurrentFairsContainer>
+        <GridColumns gridRowGap={4}>
+          {viewer.fairs.map((fair, index) => {
+            if (!fair) return null
 
-          return (
-            <Column key={index} span={[6, 4]}>
-              <RouterLink
-                to={fair.href}
-                textDecoration="none"
-                display="block"
-                onClick={() => {
-                  const trackingEvent: ClickedFairGroup = {
-                    action: ActionType.clickedFairGroup,
-                    context_module: ContextModule.fairRail,
-                    context_page_owner_type: OwnerType.home,
-                    destination_page_owner_id: fair.internalID,
-                    destination_page_owner_slug: fair.slug,
-                    destination_page_owner_type: OwnerType.fair,
-                    type: "thumbnail",
-                  }
-                  trackEvent(trackingEvent)
-                }}
-              >
-                {fair.image?.cropped?.src && (
-                  <ResponsiveBox
-                    aspectWidth={fair.image.cropped.width}
-                    aspectHeight={fair.image.cropped.height}
-                    maxWidth="100%"
-                  >
-                    <Image
-                      width="100%"
-                      height="100%"
-                      src={fair.image.cropped.src}
-                      srcSet={fair.image.cropped.srcSet}
-                      style={{ display: "block" }}
-                      alt=""
-                      lazyLoad
-                    />
-                  </ResponsiveBox>
-                )}
+            return (
+              <Column key={index} span={[6, 4]}>
+                <RouterLink
+                  to={fair.href}
+                  textDecoration="none"
+                  display="block"
+                  onClick={() => {
+                    const trackingEvent: ClickedFairGroup = {
+                      action: ActionType.clickedFairGroup,
+                      context_module: ContextModule.fairRail,
+                      context_page_owner_type: OwnerType.home,
+                      destination_page_owner_id: fair.internalID,
+                      destination_page_owner_slug: fair.slug,
+                      destination_page_owner_type: OwnerType.fair,
+                      type: "thumbnail",
+                    }
+                    trackEvent(trackingEvent)
+                  }}
+                >
+                  {fair.image?.cropped?.src && (
+                    <ResponsiveBox
+                      aspectWidth={fair.image.cropped.width}
+                      aspectHeight={fair.image.cropped.height}
+                      maxWidth="100%"
+                    >
+                      <Image
+                        width="100%"
+                        height="100%"
+                        src={fair.image.cropped.src}
+                        srcSet={fair.image.cropped.srcSet}
+                        style={{ display: "block" }}
+                        alt=""
+                        lazyLoad
+                      />
+                    </ResponsiveBox>
+                  )}
 
-                <Text variant="lg-display" overflowEllipsis mt={1}>
-                  {fair.name}
-                </Text>
+                  <Text variant="lg-display" overflowEllipsis mt={1}>
+                    {fair.name}
+                  </Text>
 
-                <Text variant="sm-display" color="mono60">
-                  {fair.exhibitionPeriod}
-                </Text>
-              </RouterLink>
-            </Column>
-          )
-        })}
-      </GridColumns>
-    </HomeCurrentFairsContainer>
+                  <Text variant="sm-display" color="mono60">
+                    {fair.exhibitionPeriod}
+                  </Text>
+                </RouterLink>
+              </Column>
+            )
+          })}
+        </GridColumns>
+      </HomeCurrentFairsContainer>
+    </Box>
   )
 }
 
@@ -205,8 +214,8 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
 )
 
 export const HomeCurrentFairsQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -232,7 +241,12 @@ export const HomeCurrentFairsQueryRenderer: React.FC<
         }
 
         if (props.viewer) {
-          return <HomeCurrentFairsFragmentContainer viewer={props.viewer} />
+          return (
+            <HomeCurrentFairsFragmentContainer
+              viewer={props.viewer}
+              railPositionY={railPositionY}
+            />
+          )
         }
 
         return null
