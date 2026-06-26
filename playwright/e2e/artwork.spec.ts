@@ -5,7 +5,7 @@ test.describe("/artwork/:id", () => {
     await page.goto("/artwork/pablo-picasso-guernica")
 
     await expect(page).toHaveTitle(
-      /Pablo Picasso \| Guernica \(1937\) \| Art & Prints \| Artsy/,
+      /Guernica \(1937\) by Pablo Picasso \| Artsy/,
     )
 
     const metaDescription = page.locator('meta[name="description"]')
