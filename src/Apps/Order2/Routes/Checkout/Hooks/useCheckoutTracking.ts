@@ -15,6 +15,7 @@ import {
   type ClickedPaymentMethod,
   type ClickedSelectShippingOption,
   type ClickedShippingAddress,
+  type ClickedTermsAndConditions,
   ContextModule,
   type ErrorMessageViewed,
   type ExpressCheckoutViewed,
@@ -237,6 +238,16 @@ export const useCheckoutTracking = ({
         const payload: ClickedChangeShippingMethod = {
           action: ActionType.clickedChangeShippingMethod,
           context_module: ContextModule.ordersCheckout,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+        }
+        trackEvent(payload)
+      },
+
+      clickedTermsAndConditions: () => {
+        const payload: ClickedTermsAndConditions = {
+          action: ActionType.clickedTermsAndConditions,
+          context_module: ContextModule.ordersReview,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
         }

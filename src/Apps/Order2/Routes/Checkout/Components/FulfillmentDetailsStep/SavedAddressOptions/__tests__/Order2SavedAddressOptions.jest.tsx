@@ -419,9 +419,9 @@ describe("SavedAddressOptions", () => {
           {
             section: CheckoutStepName.FULFILLMENT_DETAILS,
             error: {
-              title: "Ships within Continental US only",
+              title: "Ships within Continental US",
               message:
-                "Try a different address or contact the gallery for help.",
+                "Try a different address or contact the gallery for international shipping.",
             },
           },
         )

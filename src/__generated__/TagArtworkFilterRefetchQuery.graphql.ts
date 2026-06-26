@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f17f6def7917bce4880d5492ff7f8c8>>
+ * @generated SignedSource<<70a3d4c0992a84fa8320fddc95c3b0e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,9 @@ export type FilterArtworksInput = {
   geneID?: string | null | undefined;
   geneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   height?: string | null | undefined;
+  hybridNeuralK?: number | null | undefined;
+  hybridPaginationDepth?: number | null | undefined;
+  hybridWeights?: ReadonlyArray<number> | null | undefined;
   importSources?: ReadonlyArray<string | null | undefined> | null | undefined;
   includeAllJSON?: boolean | null | undefined;
   includeArtworksByFollowedArtists?: boolean | null | undefined;
@@ -79,6 +82,7 @@ export type FilterArtworksInput = {
   sold?: boolean | null | undefined;
   sort?: string | null | undefined;
   tagID?: string | null | undefined;
+  variant?: string | null | undefined;
   viewingRoomID?: string | null | undefined;
   visibilityLevel?: string | null | undefined;
   width?: string | null | undefined;
