@@ -28,6 +28,8 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
   forSale?: boolean
   framed?: boolean
   height?: string
+  hybrid?: boolean
+  hybridWeights?: string
   includeArtworksByFollowedArtists?: boolean
   inquireableOnly?: boolean
   keyword?: string

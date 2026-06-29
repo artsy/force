@@ -1,9 +1,13 @@
+import {
+  DEFAULT_HYBRID_WEIGHTS,
+  parseHybridWeights,
+} from "Components/HybridWeights/constants"
 import { string as yupString } from "yup"
 
 export const allowedFilters = (
   filterParams: Record<string, any> = {},
 ): Record<string, any> => {
-  return Object.keys(filterParams).reduce((obj, key) => {
+  const allowed = Object.keys(filterParams).reduce((obj, key) => {
     // Filter out unsupported arguments
     if (!SUPPORTED_INPUT_ARGS.includes(key)) {
       return obj
@@ -35,6 +39,31 @@ export const allowedFilters = (
     obj[key] = filterParams[key]
     return obj
   }, {})
+
+  return applyHybridStrategy(allowed)
+}
+
+/**
+ * The `hybrid` toggle has no dedicated connection arg; it maps to `variant: "hybrid"`.
+ * `hybridWeights` is only meaningful (and only passed) while hybrid is enabled, and the
+ * connection expects a `[Float!]` array rather than the stored `"0.3-0.7"` string.
+ */
+const applyHybridStrategy = (
+  filters: Record<string, any>,
+): Record<string, any> => {
+  const { hybrid, hybridWeights, ...rest } = filters
+
+  if (hybrid !== true) {
+    return rest
+  }
+
+  return {
+    ...rest,
+    variant: "hybrid",
+    hybridWeights: parseHybridWeights(
+      typeof hybridWeights === "string" ? hybridWeights : DEFAULT_HYBRID_WEIGHTS,
+    ),
+  }
 }
 
 const INTEGER_INPUT_ARGS = ["first", "last", "page", "size"]
@@ -44,6 +73,7 @@ const BOOLEAN_INPUT_ARGS = [
   "atAuction",
   "forSale",
   "framed",
+  "hybrid",
   "includeArtworksByFollowedArtists",
   "includeMediumFilterInAggregation",
   "inquireableOnly",
@@ -82,6 +112,8 @@ const SUPPORTED_INPUT_ARGS = [
   "geneID",
   "geneIDs",
   "height",
+  "hybrid",
+  "hybridWeights",
   "includeArtworksByFollowedArtists",
   "includeMediumFilterInAggregation",
   "inquireableOnly",

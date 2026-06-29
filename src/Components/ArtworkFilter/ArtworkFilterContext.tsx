@@ -1,6 +1,7 @@
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { DEFAULT_HYBRID_WEIGHTS } from "Components/HybridWeights/constants"
 import type { SortOptions } from "Components/SortFilter"
 import { DEFAULT_METRIC, type Metric, getSupportedMetric } from "Utils/metrics"
 import { isArray, omit } from "lodash"
@@ -22,6 +23,8 @@ export const initialArtworkFilterState: ArtworkFilters = {
   attributionClass: [],
   colors: [],
   height: "*-*",
+  hybrid: false,
+  hybridWeights: DEFAULT_HYBRID_WEIGHTS,
   keyword: undefined,
   locationCities: [],
   majorPeriods: [],
@@ -49,6 +52,8 @@ export enum FilterParamName {
   forSale = "forSale",
   framed = "framed",
   height = "height",
+  hybrid = "hybrid",
+  hybridWeights = "hybridWeights",
   keyword = "keyword",
   locationCities = "locationCities",
   materialsTerms = "materialsTerms",
@@ -465,6 +470,7 @@ const artworkFilterReducer = (
       const stringFilterTypes: Array<keyof ArtworkFilters> = [
         "color",
         "height",
+        "hybridWeights",
         "keyword",
         "medium",
         "partnerID",
@@ -484,6 +490,7 @@ const artworkFilterReducer = (
         "atAuction",
         "forSale",
         "framed",
+        "hybrid",
         "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
@@ -564,6 +571,12 @@ export const getSelectedFiltersCounts = (
         }
         break
       }
+      case paramName === FilterParamName.hybridWeights: {
+        if (paramValue !== defaultFilters.hybridWeights) {
+          counts[paramName] = 1
+        }
+        break
+      }
       case paramName === FilterParamName.artistsIFollow: {
         if (paramValue) {
           counts.artistIDs = (counts.artistIDs ?? 0) + 1
@@ -602,6 +615,7 @@ export const getSelectedFiltersCounts = (
       }
 
       case paramName === FilterParamName.framed:
+      case paramName === FilterParamName.hybrid:
       case paramName === FilterParamName.signed: {
         if (paramValue) {
           counts[paramName] = 1

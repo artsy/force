@@ -75,6 +75,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayVariables?: object
   viewer
   featuredKeywords?: readonly string[] | null | undefined
+  enableHybridFilters?: boolean
   layout?: ArtworkGridLayout
 }
 
@@ -130,6 +131,7 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   viewer,
   featuredKeywords,
+  enableHybridFilters,
   layout,
   ...rest
 }) => {
@@ -435,6 +437,7 @@ export const BaseArtworkFilter: React.FC<
 
                           <ArtworkFiltersQuick
                             featuredKeywords={featuredKeywords}
+                            enableHybridFilters={enableHybridFilters}
                           />
                         </Flex>
                       </HorizontalOverflow>
