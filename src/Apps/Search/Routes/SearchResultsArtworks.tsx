@@ -48,6 +48,7 @@ export const SearchResultsArtworksRoute: React.FC<
         mt={4}
         viewer={viewer}
         filters={match.location.query}
+        enableHybridFilters
         onChange={updateUrl}
         ZeroState={ZeroState}
         aggregations={
