@@ -43,7 +43,7 @@ const SearchApp = loadable(
   },
 )
 
-const prepareVariables = (_params, { location }) => {
+export const prepareVariables = (_params, { location }) => {
   const aggregations = [
     "TOTAL",
     "ARTIST_NATIONALITY",
@@ -52,9 +52,14 @@ const prepareVariables = (_params, { location }) => {
     "PARTNER",
   ]
 
+  const { term } = location.query
+
   return {
     ...paramsToCamelCase(omit(location.query, "term")),
-    keyword: location.query.term ?? "",
+    // `term` can be coerced to a number by the router's query-string parser
+    // (e.g. `?term=1954`), so force it back to a string for the `String!` query
+    // variable. The nullish fallback guards against navigation without a term.
+    keyword: term != null ? String(term) : "",
     aggregations,
   }
 }
