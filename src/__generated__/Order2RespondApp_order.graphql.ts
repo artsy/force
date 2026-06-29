@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a21f8b6dffd0edeb6f473767cc4595eb>>
+ * @generated SignedSource<<085cd1d2fd55b2b6367acb3eb33361b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type OrderPaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2RespondApp_order$data = {
   readonly internalID: string;
@@ -19,7 +20,8 @@ export type Order2RespondApp_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2HelpLinks_order" | "Order2RespondSummary_order">;
+  readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2HelpLinks_order" | "Order2PaymentCompletedView_order" | "Order2RespondSummary_order" | "useCompleteDeliveryOptionData_order" | "useCompleteFulfillmentDetailsData_order">;
   readonly " $fragmentType": "Order2RespondApp_order";
 };
 export type Order2RespondApp_order$key = {
@@ -45,6 +47,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentMethod",
       "storageKey": null
     },
     {
@@ -89,6 +98,21 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "useCompleteFulfillmentDetailsData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useCompleteDeliveryOptionData_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Order2PaymentCompletedView_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "Order2HelpLinks_order"
     }
   ],
@@ -96,6 +120,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "aafa6d84f4f57897a358341ab8b34908";
+(node as any).hash = "fc2293b027b11f2f1dfe7fc77f5d7f09";
 
 export default node;

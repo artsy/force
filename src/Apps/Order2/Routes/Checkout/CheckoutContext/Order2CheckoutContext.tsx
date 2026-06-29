@@ -32,7 +32,7 @@ const LAST_USED_PAYMENT_ID_KEY = "order2_last_used_payment_id"
 
 type CheckoutMode = "standard" | "express"
 
-type ConfirmationTokenState = {
+export type ConfirmationTokenState = {
   id: string
   paymentMethodPreview?:
     | {
