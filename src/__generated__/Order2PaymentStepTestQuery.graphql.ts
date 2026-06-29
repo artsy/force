@@ -1,0 +1,874 @@
+/**
+ * @generated SignedSource<<1fae8f02b8c11ca943791965774b99af>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
+/* tslint:disable */
+/* eslint-disable */
+// @ts-nocheck
+
+import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
+export type Order2PaymentStepTestQuery$variables = Record<PropertyKey, never>;
+export type Order2PaymentStepTestQuery$data = {
+  readonly me: {
+    readonly order: {
+      readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentStep_order">;
+    } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"Order2PaymentStep_me">;
+  } | null | undefined;
+};
+export type Order2PaymentStepTestQuery = {
+  response: Order2PaymentStepTestQuery$data;
+  variables: Order2PaymentStepTestQuery$variables;
+};
+
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "id",
+    "value": "order-id"
+  }
+],
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 10
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "brand",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "lastDigits",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "expirationYear",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "expirationMonth",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "last4",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "bankName",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "currencyCode",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "minor",
+  "storageKey": null
+},
+v13 = [
+  (v12/*: any*/),
+  (v11/*: any*/)
+],
+v14 = [
+  (v12/*: any*/)
+],
+v15 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v16 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v17 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v18 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v19 = [
+  "CREDIT_CARD",
+  "SEPA_DEBIT",
+  "US_BANK_ACCOUNT",
+  "WIRE_TRANSFER"
+],
+v20 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v21 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Long"
+};
+return {
+  "fragment": {
+    "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "Order2PaymentStepTestQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "Order2PaymentStep_me"
+          },
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "Order",
+            "kind": "LinkedField",
+            "name": "order",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2PaymentStep_order"
+              }
+            ],
+            "storageKey": "order(id:\"order-id\")"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": [],
+    "kind": "Operation",
+    "name": "Order2PaymentStepTestQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "CreditCardConnection",
+            "kind": "LinkedField",
+            "name": "creditCards",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CreditCardEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CreditCard",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      (v8/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "creditCards(first:10)"
+          },
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "BankAccountConnection",
+            "kind": "LinkedField",
+            "name": "bankAccounts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "BankAccountEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "BankAccount",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "type",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
+                      (v9/*: any*/),
+                      (v10/*: any*/),
+                      (v8/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "bankAccounts(first:10)"
+          },
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "Order",
+            "kind": "LinkedField",
+            "name": "order",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "paymentMethod",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "paymentMethodDetails",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v3/*: any*/),
+                      (v8/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      (v7/*: any*/)
+                    ],
+                    "type": "CreditCard",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v3/*: any*/),
+                      (v8/*: any*/),
+                      (v9/*: any*/),
+                      (v10/*: any*/)
+                    ],
+                    "type": "BankAccount",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isManualPayment",
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "WireTransfer",
+                    "abstractKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "code",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LineItem",
+                "kind": "LinkedField",
+                "name": "lineItems",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkMeta",
+                        "kind": "LinkedField",
+                        "name": "meta",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "share",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v8/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v8/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "source",
+                "storageKey": null
+              },
+              (v3/*: any*/),
+              (v11/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "availablePaymentMethods",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "availableStripePaymentMethodTypes",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "BankAccountBalanceCheck",
+                "kind": "LinkedField",
+                "name": "bankAccountBalanceCheck",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "result",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "message",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "buyerTotal",
+                "plural": false,
+                "selections": (v13/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "seller",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "PartnerMerchantAccount",
+                        "kind": "LinkedField",
+                        "name": "merchantAccount",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "externalId",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "Partner",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v8/*: any*/)
+                    ],
+                    "type": "Node",
+                    "abstractKey": "__isNode"
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FulfillmentDetails",
+                "kind": "LinkedField",
+                "name": "fulfillmentDetails",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine1",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressLine2",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "city",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "region",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "postalCode",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "country",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "itemsTotal",
+                "plural": false,
+                "selections": (v13/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "shippingTotal",
+                "plural": false,
+                "selections": (v14/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Money",
+                "kind": "LinkedField",
+                "name": "taxTotal",
+                "plural": false,
+                "selections": (v14/*: any*/),
+                "storageKey": null
+              },
+              (v8/*: any*/)
+            ],
+            "storageKey": "order(id:\"order-id\")"
+          },
+          (v8/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ]
+  },
+  "params": {
+    "cacheID": "ebc641f070149df47e6799e33bd9dd53",
+    "id": null,
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.bankAccounts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BankAccountConnection"
+        },
+        "me.bankAccounts.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "BankAccountEdge"
+        },
+        "me.bankAccounts.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BankAccount"
+        },
+        "me.bankAccounts.edges.node.__typename": (v15/*: any*/),
+        "me.bankAccounts.edges.node.bankName": (v16/*: any*/),
+        "me.bankAccounts.edges.node.id": (v17/*: any*/),
+        "me.bankAccounts.edges.node.internalID": (v17/*: any*/),
+        "me.bankAccounts.edges.node.last4": (v15/*: any*/),
+        "me.bankAccounts.edges.node.type": {
+          "enumValues": [
+            "SEPA_DEBIT",
+            "US_BANK_ACCOUNT"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "BankAccountTypes"
+        },
+        "me.creditCards": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CreditCardConnection"
+        },
+        "me.creditCards.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "CreditCardEdge"
+        },
+        "me.creditCards.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CreditCard"
+        },
+        "me.creditCards.edges.node.__typename": (v15/*: any*/),
+        "me.creditCards.edges.node.brand": (v15/*: any*/),
+        "me.creditCards.edges.node.expirationMonth": (v18/*: any*/),
+        "me.creditCards.edges.node.expirationYear": (v18/*: any*/),
+        "me.creditCards.edges.node.id": (v17/*: any*/),
+        "me.creditCards.edges.node.internalID": (v17/*: any*/),
+        "me.creditCards.edges.node.lastDigits": (v15/*: any*/),
+        "me.id": (v17/*: any*/),
+        "me.order": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Order"
+        },
+        "me.order.availablePaymentMethods": {
+          "enumValues": (v19/*: any*/),
+          "nullable": false,
+          "plural": true,
+          "type": "OrderPaymentMethodEnum"
+        },
+        "me.order.availableStripePaymentMethodTypes": {
+          "enumValues": [
+            "card",
+            "sepa_debit",
+            "us_bank_account"
+          ],
+          "nullable": false,
+          "plural": true,
+          "type": "OrderStripePaymentMethodTypeEnum"
+        },
+        "me.order.bankAccountBalanceCheck": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "BankAccountBalanceCheck"
+        },
+        "me.order.bankAccountBalanceCheck.message": (v16/*: any*/),
+        "me.order.bankAccountBalanceCheck.result": {
+          "enumValues": [
+            "INSUFFICIENT",
+            "INVALID",
+            "NOT_SUPPORTED",
+            "PENDING",
+            "SUFFICIENT"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "BankAccountBalanceCheckResult"
+        },
+        "me.order.buyerTotal": (v20/*: any*/),
+        "me.order.buyerTotal.currencyCode": (v15/*: any*/),
+        "me.order.buyerTotal.minor": (v21/*: any*/),
+        "me.order.code": (v15/*: any*/),
+        "me.order.currencyCode": (v15/*: any*/),
+        "me.order.fulfillmentDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FulfillmentDetails"
+        },
+        "me.order.fulfillmentDetails.addressLine1": (v16/*: any*/),
+        "me.order.fulfillmentDetails.addressLine2": (v16/*: any*/),
+        "me.order.fulfillmentDetails.city": (v16/*: any*/),
+        "me.order.fulfillmentDetails.country": (v16/*: any*/),
+        "me.order.fulfillmentDetails.name": (v16/*: any*/),
+        "me.order.fulfillmentDetails.postalCode": (v16/*: any*/),
+        "me.order.fulfillmentDetails.region": (v16/*: any*/),
+        "me.order.id": (v17/*: any*/),
+        "me.order.internalID": (v17/*: any*/),
+        "me.order.itemsTotal": (v20/*: any*/),
+        "me.order.itemsTotal.currencyCode": (v15/*: any*/),
+        "me.order.itemsTotal.minor": (v21/*: any*/),
+        "me.order.lineItems": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "LineItem"
+        },
+        "me.order.lineItems.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.order.lineItems.artwork.href": (v16/*: any*/),
+        "me.order.lineItems.artwork.id": (v17/*: any*/),
+        "me.order.lineItems.artwork.meta": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMeta"
+        },
+        "me.order.lineItems.artwork.meta.share": (v16/*: any*/),
+        "me.order.lineItems.id": (v17/*: any*/),
+        "me.order.mode": {
+          "enumValues": [
+            "BUY",
+            "OFFER"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderModeEnum"
+        },
+        "me.order.paymentMethod": {
+          "enumValues": (v19/*: any*/),
+          "nullable": true,
+          "plural": false,
+          "type": "OrderPaymentMethodEnum"
+        },
+        "me.order.paymentMethodDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PaymentMethodUnion"
+        },
+        "me.order.paymentMethodDetails.__typename": (v15/*: any*/),
+        "me.order.paymentMethodDetails.bankName": (v16/*: any*/),
+        "me.order.paymentMethodDetails.brand": (v15/*: any*/),
+        "me.order.paymentMethodDetails.expirationMonth": (v18/*: any*/),
+        "me.order.paymentMethodDetails.expirationYear": (v18/*: any*/),
+        "me.order.paymentMethodDetails.id": (v17/*: any*/),
+        "me.order.paymentMethodDetails.internalID": (v17/*: any*/),
+        "me.order.paymentMethodDetails.isManualPayment": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.order.paymentMethodDetails.last4": (v15/*: any*/),
+        "me.order.paymentMethodDetails.lastDigits": (v15/*: any*/),
+        "me.order.seller": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SellerType"
+        },
+        "me.order.seller.__isNode": (v15/*: any*/),
+        "me.order.seller.__typename": (v15/*: any*/),
+        "me.order.seller.id": (v17/*: any*/),
+        "me.order.seller.merchantAccount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerMerchantAccount"
+        },
+        "me.order.seller.merchantAccount.externalId": (v15/*: any*/),
+        "me.order.shippingTotal": (v20/*: any*/),
+        "me.order.shippingTotal.minor": (v21/*: any*/),
+        "me.order.source": {
+          "enumValues": [
+            "ARTWORK_PAGE",
+            "INQUIRY",
+            "PARTNER_OFFER",
+            "PRIVATE_SALE"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderSourceEnum"
+        },
+        "me.order.taxTotal": (v20/*: any*/),
+        "me.order.taxTotal.minor": (v21/*: any*/)
+      }
+    },
+    "name": "Order2PaymentStepTestQuery",
+    "operationKind": "query",
+    "text": "query Order2PaymentStepTestQuery {\n  me {\n    ...Order2PaymentStep_me\n    order(id: \"order-id\") {\n      ...Order2PaymentStep_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PaymentCompletedView_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        bankName\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  ...WireTransferOption_order\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  availableStripePaymentMethodTypes\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n}\n\nfragment Order2PaymentStep_me on Me {\n  ...Order2PaymentForm_me\n}\n\nfragment Order2PaymentStep_order on Order {\n  ...useCompletePaymentData_order\n  ...Order2PaymentForm_order\n  ...Order2PaymentCompletedView_order\n  internalID\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment WireTransferOption_order on Order {\n  code\n  lineItems {\n    artwork {\n      href\n      meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+  }
+};
+})();
+
+(node as any).hash = "96d02e772218b1189c7bfd5efd94db8b";
+
+export default node;
