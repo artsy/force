@@ -433,10 +433,15 @@ export const completeLinking = async (
           oauth_token: "",
           access_token: req.user.accessToken,
         }
-      : {
-          oauth_token: token.oauth_token,
-          access_token: req.user.accessToken,
-        }
+      : "jwt" in token
+        ? {
+            jwt: token.jwt,
+            access_token: req.user.accessToken,
+          }
+        : {
+            oauth_token: token.oauth_token,
+            access_token: req.user.accessToken,
+          }
 
   try {
     await requestGravity({

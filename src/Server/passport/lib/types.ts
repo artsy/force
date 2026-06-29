@@ -42,6 +42,7 @@ export interface PassportUser {
 
 export type LinkingTokenData =
   | { provider: "google" | "facebook"; oauth_token: string }
+  | { provider: "google"; jwt: string }
   | {
       provider: "apple"
       apple_uid: string

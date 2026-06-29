@@ -224,6 +224,8 @@ export const googleOneTap = (
     req.socialProfileEmail = profile.emails[0].value
   }
 
+  req.socialOAuthToken = { provider: "google", jwt: req.body.credential }
+
   requestGravity({
     body: {
       client_id: opts.ARTSY_ID,
