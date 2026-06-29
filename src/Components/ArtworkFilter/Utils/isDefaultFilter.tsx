@@ -1,4 +1,5 @@
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { DEFAULT_HYBRID_WEIGHTS } from "Components/HybridWeights/constants"
 
 export const isDefaultFilter: (
   name: keyof ArtworkFilters,
@@ -7,6 +8,10 @@ export const isDefaultFilter: (
 ) => boolean = (name, value, defaultValues = {}) => {
   if (name === "keyword" && !value) {
     return true
+  }
+
+  if (name === "hybrid") {
+    return !value
   }
 
   if (!value) {
@@ -36,6 +41,8 @@ export const isDefaultFilter: (
       return value === "*" || !value
     case name === "priceRange" || name === "height" || name === "width":
       return value === "*-*"
+    case name === "hybridWeights":
+      return value === DEFAULT_HYBRID_WEIGHTS
     case name === "page":
       return value === 1
     case name === "metric":

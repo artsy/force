@@ -4,6 +4,8 @@ import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFi
 import { ArtistSeriesFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/ArtistSeriesFilterQuick"
 import { FeaturedKeywordsFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/FeaturedKeywordsFilterQuick"
 import { FilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
+import { HybridFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/HybridFilterQuick"
+import { HybridWeightsFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/HybridWeightsFilterQuick"
 import { PriceRangeFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/PriceRangeFilterQuick"
 import type { FC } from "react"
 
@@ -12,16 +14,19 @@ export const ARTWORK_FILTERS_QUICK_FIELDS = [
   "attributionClass",
   "additionalGeneIDs",
   "priceRange",
+  "hybrid",
+  "hybridWeights",
 ]
 
 interface ArtworkFiltersQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {
   featuredKeywords: readonly string[] | null | undefined
+  enableHybridFilters?: boolean
 }
 
 export const ArtworkFiltersQuick: FC<
   React.PropsWithChildren<ArtworkFiltersQuickProps>
-> = props => {
+> = ({ enableHybridFilters, ...props }) => {
   return (
     <>
       <FilterQuick
@@ -40,6 +45,14 @@ export const ArtworkFiltersQuick: FC<
       />
 
       <PriceRangeFilterQuick {...props} />
+
+      {enableHybridFilters && (
+        <>
+          <HybridFilterQuick {...props} />
+
+          <HybridWeightsFilterQuick {...props} />
+        </>
+      )}
 
       <ArtistSeriesFilterQuick {...props} />
 
