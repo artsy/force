@@ -91,7 +91,7 @@ export interface PassportRequest extends ArtsyRequest {
   params: Record<string, any>
   query: Record<string, any>
   session: PassportSession
-  socialOAuthToken?: LinkingTokenData
+  socialTokenData?: LinkingTokenData
   socialProfileEmail?: string
   user?: PassportUser | null
   xhr: boolean

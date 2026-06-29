@@ -21,7 +21,7 @@ import redirectBack from "./redirectBack"
 
 interface Req extends ArtsyRequest {
   artsyPassportSignedUp?: boolean
-  socialOAuthToken?: LinkingTokenData
+  socialTokenData?: LinkingTokenData
   socialProfileEmail?: string
 }
 
@@ -282,7 +282,7 @@ export const afterSocialAuth =
         req.socialProfileEmail
       ) {
         if (isFeatureFlagEnabled("diamond_inline-account-linking")) {
-          req.session.linkingToken = req.socialOAuthToken
+          req.session.linkingToken = req.socialTokenData
 
           const gravityProviders = (
             (err.response.body.providers as string[] | undefined) ?? []
