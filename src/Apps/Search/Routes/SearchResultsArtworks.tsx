@@ -48,6 +48,7 @@ export const SearchResultsArtworksRoute: React.FC<
         mt={4}
         viewer={viewer}
         filters={match.location.query}
+        enableHybridFilters
         onChange={updateUrl}
         relayRefetchInputVariables={{
           // Lets the backend retry the search with typo tolerance (fuzzy
