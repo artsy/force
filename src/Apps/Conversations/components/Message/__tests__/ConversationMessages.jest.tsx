@@ -24,8 +24,8 @@ describe("ConversationMessages", () => {
   const scrollIntoViewMock = jest.fn()
   const { renderWithRelay } = setupTestWrapperTL<ConversationMessagesTestQuery>(
     {
-      Component: ({ conversation, viewer }) => (
-        <ConversationsProvider viewer={viewer!}>
+      Component: ({ conversation }) => (
+        <ConversationsProvider>
           <ConversationMessagesPaginationContainer
             conversation={conversation!}
           />
@@ -35,9 +35,6 @@ describe("ConversationMessages", () => {
         query ConversationMessagesTestQuery @relay_test_operation {
           conversation(id: "1234") {
             ...ConversationMessages_conversation
-          }
-          viewer {
-            ...ConversationsContext_viewer
           }
         }
       `,

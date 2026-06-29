@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8460f627345fead1264121c838bcb9e>>
+ * @generated SignedSource<<7c8e0329975f83994cc51f1cda307e8b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,6 @@ export type ConversationMessagesTestQuery$variables = Record<PropertyKey, never>
 export type ConversationMessagesTestQuery$data = {
   readonly conversation: {
     readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_conversation">;
-  } | null | undefined;
-  readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"ConversationsContext_viewer">;
   } | null | undefined;
 };
 export type ConversationMessagesTestQuery = {
@@ -79,7 +76,12 @@ v6 = {
   "name": "__typename",
   "storageKey": null
 },
-v7 = [
+v7 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 10
+},
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -88,11 +90,6 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 10
-},
 v9 = {
   "alias": null,
   "args": null,
@@ -173,22 +170,6 @@ return {
           }
         ],
         "storageKey": "conversation(id:\"1234\")"
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ConversationsContext_viewer"
-          }
-        ],
-        "storageKey": null
       }
     ],
     "type": "Query",
@@ -485,6 +466,140 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              (v7/*: any*/)
+            ],
+            "concreteType": "MeOrdersConnection",
+            "kind": "LinkedField",
+            "name": "collectorOrdersConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MeOrdersEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Order",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "buyerState",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "LineItem",
+                        "kind": "LinkedField",
+                        "name": "lineItems",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "partnerOfferId",
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "collectorOrdersConnection(first:10)"
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              },
+              {
+                "kind": "Literal",
+                "name": "offerType",
+                "value": [
+                  "PERSONALIZED"
+                ]
+              }
+            ],
+            "concreteType": "PartnerOfferConnection",
+            "kind": "LinkedField",
+            "name": "partnerOffersConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PartnerOfferEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PartnerOffer",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isAvailable",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Money",
+                        "kind": "LinkedField",
+                        "name": "priceWithDiscount",
+                        "plural": false,
+                        "selections": (v8/*: any*/),
+                        "storageKey": null
+                      },
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "partnerOffersConnection(first:1,offerType:[\"PERSONALIZED\"])"
+          },
+          {
+            "alias": null,
             "args": null,
             "concreteType": "ConversationItem",
             "kind": "LinkedField",
@@ -503,7 +618,6 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v1/*: any*/),
                       (v3/*: any*/),
                       {
                         "alias": null,
@@ -519,6 +633,7 @@ return {
                         "name": "isOfferableFromInquiry",
                         "storageKey": null
                       },
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -614,13 +729,13 @@ return {
                           (v6/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v7/*: any*/),
+                            "selections": (v8/*: any*/),
                             "type": "Money",
                             "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v7/*: any*/),
+                            "selections": (v8/*: any*/),
                             "type": "PriceRange",
                             "abstractKey": null
                           }
@@ -632,16 +747,16 @@ return {
                     "abstractKey": null
                   },
                   {
+                    "kind": "TypeDiscriminator",
+                    "abstractKey": "__isConversationItemType"
+                  },
+                  {
                     "kind": "InlineFragment",
                     "selections": [
                       (v3/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
-                  },
-                  {
-                    "kind": "TypeDiscriminator",
-                    "abstractKey": "__isConversationItemType"
                   }
                 ],
                 "storageKey": null
@@ -650,71 +765,9 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": [
-              (v8/*: any*/)
-            ],
-            "concreteType": "MeOrdersConnection",
-            "kind": "LinkedField",
-            "name": "collectorOrdersConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "MeOrdersEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Order",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "buyerState",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "LineItem",
-                        "kind": "LinkedField",
-                        "name": "lineItems",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "partnerOfferId",
-                            "storageKey": null
-                          },
-                          (v3/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      (v3/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": "collectorOrdersConnection(first:10)"
-          },
-          {
             "alias": "orderEvents",
             "args": [
-              (v8/*: any*/),
+              (v7/*: any*/),
               {
                 "kind": "Literal",
                 "name": "participantType",
@@ -890,120 +943,11 @@ return {
           (v3/*: any*/)
         ],
         "storageKey": "conversation(id:\"1234\")"
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Me",
-            "kind": "LinkedField",
-            "name": "me",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 100
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "offerType",
-                    "value": [
-                      "PERSONALIZED"
-                    ]
-                  }
-                ],
-                "concreteType": "PartnerOfferToCollectorConnection",
-                "kind": "LinkedField",
-                "name": "partnerOffersConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PartnerOfferToCollectorEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "PartnerOfferToCollector",
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "artworkId",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "endAt",
-                            "storageKey": null
-                          },
-                          (v1/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isAvailable",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "note",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Money",
-                            "kind": "LinkedField",
-                            "name": "priceWithDiscount",
-                            "plural": false,
-                            "selections": (v7/*: any*/),
-                            "storageKey": null
-                          },
-                          (v3/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
-              },
-              (v3/*: any*/)
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "27ac450459ad7a17bbf39672d8648e41",
+    "cacheID": "bc603df9b4ade60d993855cdb62d71f5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1278,6 +1222,35 @@ return {
         },
         "conversation.orderEvents.edges.node.orderHistory.stateReason": (v11/*: any*/),
         "conversation.orderEvents.edges.node.updatedAt": (v12/*: any*/),
+        "conversation.partnerOffersConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerOfferConnection"
+        },
+        "conversation.partnerOffersConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "PartnerOfferEdge"
+        },
+        "conversation.partnerOffersConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PartnerOffer"
+        },
+        "conversation.partnerOffersConnection.edges.node.endAt": (v11/*: any*/),
+        "conversation.partnerOffersConnection.edges.node.id": (v10/*: any*/),
+        "conversation.partnerOffersConnection.edges.node.internalID": (v10/*: any*/),
+        "conversation.partnerOffersConnection.edges.node.isAvailable": (v14/*: any*/),
+        "conversation.partnerOffersConnection.edges.node.priceWithDiscount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Money"
+        },
+        "conversation.partnerOffersConnection.edges.node.priceWithDiscount.display": (v11/*: any*/),
         "conversation.to": {
           "enumValues": null,
           "nullable": false,
@@ -1287,60 +1260,16 @@ return {
         "conversation.to.id": (v10/*: any*/),
         "conversation.to.initials": (v11/*: any*/),
         "conversation.to.name": (v12/*: any*/),
-        "conversation.unreadByCollector": (v14/*: any*/),
-        "viewer": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Viewer"
-        },
-        "viewer.me": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Me"
-        },
-        "viewer.me.id": (v10/*: any*/),
-        "viewer.me.partnerOffersConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerOfferToCollectorConnection"
-        },
-        "viewer.me.partnerOffersConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "PartnerOfferToCollectorEdge"
-        },
-        "viewer.me.partnerOffersConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerOfferToCollector"
-        },
-        "viewer.me.partnerOffersConnection.edges.node.artworkId": (v11/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.endAt": (v11/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.id": (v10/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.internalID": (v10/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.isAvailable": (v14/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.note": (v11/*: any*/),
-        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Money"
-        },
-        "viewer.me.partnerOffersConnection.edges.node.priceWithDiscount.display": (v11/*: any*/)
+        "conversation.unreadByCollector": (v14/*: any*/)
       }
     },
     "name": "ConversationMessagesTestQuery",
     "operationKind": "query",
-    "text": "query ConversationMessagesTestQuery {\n  conversation(id: \"1234\") {\n    ...ConversationMessages_conversation\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationMessageArtwork_item on ConversationItemType {\n  __isConversationItemType: __typename\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      resized(width: 1350) {\n        url\n        width\n        height\n      }\n      aspectRatio\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  isMessageSentOnPlatform\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation on Conversation {\n  internalID\n  fromLastViewedMessageID\n  unreadByCollector\n  to {\n    name\n    initials(length: 2)\n    id\n  }\n  messagesConnection(first: 15, sort: DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n  ...ConversationPartnerOfferUpdate_conversation\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        isOfferable\n        isOfferableFromInquiry\n        internalID\n      }\n      ...ConversationMessageArtwork_item\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderEvents: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED, PROCESSING_APPROVAL], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        orderHistory {\n          ...ConversationOrderUpdate_event\n          __typename\n          ... on CommerceOrderStateChangedEvent {\n            createdAt\n            orderUpdateState\n            state\n            stateReason\n          }\n          ... on CommerceOfferSubmittedEvent {\n            createdAt\n            offer {\n              amount\n              fromParticipant\n              definesTotal\n              offerAmountChanged\n              respondsTo {\n                fromParticipant\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationOrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n    state\n    stateReason\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  collectorOrdersConnection(first: 10) {\n    edges {\n      node {\n        buyerState\n        lineItems {\n          partnerOfferId\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationMessagesTestQuery {\n  conversation(id: \"1234\") {\n    ...ConversationMessages_conversation\n    id\n  }\n}\n\nfragment ConversationMessageArtwork_item on ConversationItemType {\n  __isConversationItemType: __typename\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      resized(width: 1350) {\n        url\n        width\n        height\n      }\n      aspectRatio\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  isMessageSentOnPlatform\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation on Conversation {\n  internalID\n  fromLastViewedMessageID\n  unreadByCollector\n  to {\n    name\n    initials(length: 2)\n    id\n  }\n  messagesConnection(first: 15, sort: DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n  ...ConversationPartnerOfferUpdate_conversation\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        isOfferable\n        isOfferableFromInquiry\n        internalID\n      }\n      ...ConversationMessageArtwork_item\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderEvents: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED, PROCESSING_APPROVAL], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        orderHistory {\n          ...ConversationOrderUpdate_event\n          __typename\n          ... on CommerceOrderStateChangedEvent {\n            createdAt\n            orderUpdateState\n            state\n            stateReason\n          }\n          ... on CommerceOfferSubmittedEvent {\n            createdAt\n            offer {\n              amount\n              fromParticipant\n              definesTotal\n              offerAmountChanged\n              respondsTo {\n                fromParticipant\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationOrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n    state\n    stateReason\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  collectorOrdersConnection(first: 10) {\n    edges {\n      node {\n        buyerState\n        lineItems {\n          partnerOfferId\n          id\n        }\n        id\n      }\n    }\n  }\n  partnerOffersConnection(first: 1, offerType: [PERSONALIZED]) {\n    edges {\n      node {\n        internalID\n        endAt\n        isAvailable\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d84d4004f9feac2db0de24cf09396b91";
+(node as any).hash = "69eea783b2bbc854c3cba3be7b379791";
 
 export default node;

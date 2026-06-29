@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cd7731d4e363351a3e0a9e30fb317c9>>
+ * @generated SignedSource<<8e112df336bef9347dda1fcbd6aec9ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,6 +55,15 @@ export type ConversationCTA_conversation$data = {
       readonly __typename: "%other";
     } | null | undefined;
   } | null | undefined> | null | undefined;
+  readonly partnerOffersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly endAt: string | null | undefined;
+        readonly internalID: string;
+        readonly isAvailable: boolean | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationReviewOfferCTA_conversation" | "useConversationPurchaseButtonData_conversation">;
   readonly " $fragmentType": "ConversationCTA_conversation";
 };
@@ -303,6 +312,67 @@ return {
         }
       ],
       "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "offerType",
+          "value": [
+            "PERSONALIZED"
+          ]
+        }
+      ],
+      "concreteType": "PartnerOfferConnection",
+      "kind": "LinkedField",
+      "name": "partnerOffersConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PartnerOffer",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "endAt",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAvailable",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "partnerOffersConnection(first:1,offerType:[\"PERSONALIZED\"])"
     }
   ],
   "type": "Conversation",
@@ -310,6 +380,6 @@ return {
 };
 })();
 
-(node as any).hash = "d6908cebbd5ab73c78ee55b3b08e836b";
+(node as any).hash = "576de4a9dc8692b775c68a3c2de08c50";
 
 export default node;

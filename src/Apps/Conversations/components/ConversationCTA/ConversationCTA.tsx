@@ -2,7 +2,6 @@ import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
-import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
@@ -22,13 +21,12 @@ export const ConversationCTA: React.FC<
   React.PropsWithChildren<ConversationCTAProps>
 > = ({ conversation, ...flexProps }) => {
   const data = useFragment(FRAGMENT, conversation)
-  const { findPartnerOffer } = useConversationsContext()
   const { flagsReady } = useFlagsStatus()
 
   const liveArtwork = data?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
-  const partnerOffer = artwork ? findPartnerOffer(artwork.internalID) : null
+  const partnerOffer = extractNodes(data.partnerOffersConnection)[0] ?? null
   const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
   const hasOpenPartnerOffer =
     flagsReady &&
@@ -164,6 +162,15 @@ const FRAGMENT = graphql`
               }
             }
           }
+        }
+      }
+    }
+    partnerOffersConnection(first: 1, offerType: [PERSONALIZED]) {
+      edges {
+        node {
+          internalID
+          endAt
+          isAvailable
         }
       }
     }

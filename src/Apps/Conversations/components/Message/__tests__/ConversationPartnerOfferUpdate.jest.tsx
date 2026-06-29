@@ -27,7 +27,7 @@ const pastDate = () => {
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => (
-    <ConversationsProvider viewer={props.viewer}>
+    <ConversationsProvider>
       <ConversationPartnerOfferUpdate conversation={props.me.conversation} />
     </ConversationsProvider>
   ),
@@ -38,32 +38,18 @@ const { renderWithRelay } = setupTestWrapperTL({
           ...ConversationPartnerOfferUpdate_conversation
         }
       }
-      viewer {
-        ...ConversationsContext_viewer
-      }
     }
   `,
 })
 
-const Conversation = () => ({
-  items: [
-    {
-      item: {
-        __typename: "Artwork",
-        internalID: "artwork-id",
-      },
-    },
-  ],
-})
-
-const offerViewer = (offer: Record<string, unknown>) => () => ({
-  me: {
+const conversationWithOffer =
+  (offer: Record<string, unknown> = {}) =>
+  () => ({
     partnerOffersConnection: {
       edges: [
         {
           node: {
             internalID: "partner-offer-id",
-            artworkId: "artwork-id",
             isAvailable: true,
             priceWithDiscount: { display: "$450" },
             endAt: futureDate(),
@@ -72,13 +58,12 @@ const offerViewer = (offer: Record<string, unknown>) => () => ({
         },
       ],
     },
-  },
-})
+  })
 
 const ConversationWithMatchingOrder =
   (buyerState = "SUBMITTED") =>
   () => ({
-    ...Conversation(),
+    ...conversationWithOffer()(),
     collectorOrdersConnection: {
       edges: [
         {
@@ -92,7 +77,7 @@ const ConversationWithMatchingOrder =
   })
 
 const ConversationWithNonMatchingOrder = () => ({
-  ...Conversation(),
+  ...conversationWithOffer()(),
   collectorOrdersConnection: {
     edges: [
       {
@@ -107,7 +92,7 @@ const ConversationWithNonMatchingOrder = () => ({
 
 describe("ConversationPartnerOfferUpdate", () => {
   it("renders the offer message with the discounted price", () => {
-    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
+    renderWithRelay({ Conversation: conversationWithOffer() })
 
     expect(
       screen.getByText("You received an offer for $450"),
@@ -116,8 +101,7 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("falls back to a generic message when there is no discounted price", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: offerViewer({ priceWithDiscount: null }),
+      Conversation: conversationWithOffer({ priceWithDiscount: null }),
     })
 
     expect(screen.getByText("You received an offer")).toBeInTheDocument()
@@ -125,11 +109,8 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("renders nothing when there is no offer for the artwork", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: () => ({
-        me: {
-          partnerOffersConnection: { edges: [] },
-        },
+      Conversation: () => ({
+        partnerOffersConnection: { edges: [] },
       }),
     })
 
@@ -138,8 +119,7 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("renders an expired message when the offer has expired", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: offerViewer({ endAt: pastDate() }),
+      Conversation: conversationWithOffer({ endAt: pastDate() }),
     })
 
     expect(screen.getByText("Offer Expired")).toBeInTheDocument()
@@ -148,8 +128,7 @@ describe("ConversationPartnerOfferUpdate", () => {
 
   it("renders an expired message when the offer is unavailable", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: offerViewer({ isAvailable: false }),
+      Conversation: conversationWithOffer({ isAvailable: false }),
     })
 
     expect(screen.getByText("Offer Expired")).toBeInTheDocument()
@@ -159,7 +138,6 @@ describe("ConversationPartnerOfferUpdate", () => {
   it("still shows the offer when there is an order that does not match the partner offer", () => {
     renderWithRelay({
       Conversation: ConversationWithNonMatchingOrder,
-      Viewer: offerViewer({}),
     })
 
     expect(
@@ -173,7 +151,6 @@ describe("ConversationPartnerOfferUpdate", () => {
   it("renders 'You purchased this artwork' when an order's line item matches the partner offer", () => {
     renderWithRelay({
       Conversation: ConversationWithMatchingOrder(),
-      Viewer: offerViewer({}),
     })
 
     expect(screen.getByText("You purchased this artwork")).toBeInTheDocument()
@@ -185,7 +162,6 @@ describe("ConversationPartnerOfferUpdate", () => {
     buyerState => {
       renderWithRelay({
         Conversation: ConversationWithMatchingOrder(buyerState),
-        Viewer: offerViewer({}),
       })
 
       expect(
@@ -200,7 +176,7 @@ describe("ConversationPartnerOfferUpdate", () => {
   it("renders nothing when the partner-offer-convo flag is off", () => {
     mockUseFlag.mockImplementation(() => false)
 
-    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
+    renderWithRelay({ Conversation: conversationWithOffer() })
 
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })

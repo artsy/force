@@ -16,7 +16,7 @@ const mockUseFlag = useFlag as jest.Mock
 describe("ConversationCTA", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
-      <ConversationsProvider viewer={props.viewer}>
+      <ConversationsProvider>
         <ConversationCTA conversation={props.me.conversation} />
       </ConversationsProvider>
     ),
@@ -26,9 +26,6 @@ describe("ConversationCTA", () => {
           conversation(id: "1234") {
             ...ConversationCTA_conversation
           }
-        }
-        viewer {
-          ...ConversationsContext_viewer
         }
       }
     `,
@@ -159,22 +156,16 @@ describe("ConversationCTA", () => {
           },
         },
       ],
-    })
-
-    const activeOfferViewer = () => ({
-      me: {
-        partnerOffersConnection: {
-          edges: [
-            {
-              node: {
-                internalID: "partner-offer-id",
-                artworkId: "artwork-id",
-                endAt: futureTime.toISOString(),
-                isAvailable: true,
-              },
+      partnerOffersConnection: {
+        edges: [
+          {
+            node: {
+              internalID: "partner-offer-id",
+              endAt: futureTime.toISOString(),
+              isAvailable: true,
             },
-          ],
-        },
+          },
+        ],
       },
     })
 
@@ -186,7 +177,6 @@ describe("ConversationCTA", () => {
       it("hides the order offer CTA when there is an open partner offer", () => {
         renderWithRelay({
           Conversation: mockConversationWithOrderAndOffer,
-          Viewer: activeOfferViewer,
         })
 
         expect(screen.queryByText("Offer Received")).not.toBeInTheDocument()
@@ -201,7 +191,6 @@ describe("ConversationCTA", () => {
       it("shows the order offer CTA when the flag is off", () => {
         renderWithRelay({
           Conversation: mockConversationWithOrderAndOffer,
-          Viewer: activeOfferViewer,
         })
 
         expect(screen.queryByText("Offer Received")).toBeInTheDocument()
@@ -238,56 +227,51 @@ describe("ConversationCTA", () => {
     })
 
     it("does not purchase button on orders with an expired partner offer", () => {
-      const pastTime = new Date()
-      pastTime.setSeconds(pastTime.getSeconds() + 1)
+      const expiredTime = new Date()
+      expiredTime.setHours(expiredTime.getHours() - 1)
 
       renderWithRelay({
-        Conversation: mockConversationWithArtwork({
-          internalID: "artwork-id",
-          isAcquireable: false,
-        }),
-        Viewer: () => ({
-          me: {
-            partnerOffersConnection: {
-              edges: [
-                {
-                  node: {
-                    internalID: "partner-offer-id",
-                    artworkId: "artwork-id",
-                    endAt: pastTime.toISOString(),
-                  },
-                },
-              ],
-            },
-          },
-        }),
-      })
-      jest.advanceTimersByTime(1010)
-
-      expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
-      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
-    })
-
-    const offerViewer = () => {
-      const futureTime = new Date()
-      futureTime.setHours(futureTime.getHours() + 1)
-
-      return () => ({
-        me: {
+        Conversation: () => ({
+          ...mockConversationWithArtwork({
+            internalID: "artwork-id",
+            isAcquireable: false,
+          })(),
           partnerOffersConnection: {
             edges: [
               {
                 node: {
                   internalID: "partner-offer-id",
-                  artworkId: "artwork-id",
-                  endAt: futureTime.toISOString(),
+                  endAt: expiredTime.toISOString(),
                   isAvailable: true,
                 },
               },
             ],
           },
-        },
+        }),
       })
+
+      expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+    })
+
+    const conversationWithActiveOffer = artwork => () => {
+      const futureTime = new Date()
+      futureTime.setHours(futureTime.getHours() + 1)
+
+      return {
+        ...mockConversationWithArtwork(artwork)(),
+        partnerOffersConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "partner-offer-id",
+                endAt: futureTime.toISOString(),
+                isAvailable: true,
+              },
+            },
+          ],
+        },
+      }
     }
 
     describe("with the partner-offer-convo flag on", () => {
@@ -297,11 +281,10 @@ describe("ConversationCTA", () => {
 
       it("hides the transaction buttons when there is an active partner offer", () => {
         renderWithRelay({
-          Conversation: mockConversationWithArtwork({
+          Conversation: conversationWithActiveOffer({
             internalID: "artwork-id",
             isAcquireable: true,
           }),
-          Viewer: offerViewer(),
         })
 
         expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
@@ -316,11 +299,10 @@ describe("ConversationCTA", () => {
 
       it("ignores the partner offer and shows the normal transaction buttons", () => {
         renderWithRelay({
-          Conversation: mockConversationWithArtwork({
+          Conversation: conversationWithActiveOffer({
             internalID: "artwork-id",
             isAcquireable: true,
           }),
-          Viewer: offerViewer(),
         })
         expect(screen.queryByText("Purchase")).toBeInTheDocument()
       })

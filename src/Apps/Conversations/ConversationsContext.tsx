@@ -1,17 +1,10 @@
-import { extractNodes } from "Utils/extractNodes"
-import type {
-  ConversationsContext_viewer$data,
-  ConversationsContext_viewer$key,
-} from "__generated__/ConversationsContext_viewer.graphql"
 import { createContext, useContext, useState } from "react"
-import { graphql, useFragment } from "react-relay"
 
 interface ConversationsContextProps {
   isConfirmModalVisible: boolean
   isCreatingOfferOrder: boolean
   selectedEditionSetId: string | null
   setSelectedEditionSetId: (editionSetId: string | null) => void
-  findPartnerOffer: (artworkID: string) => PartnerOffer | null
   showSelectEditionSetModal: (props: {
     isCreatingOfferOrder: boolean
     defaultEditionSetId?: string | null
@@ -24,43 +17,14 @@ const ConversationsContext = createContext<ConversationsContextProps>({
   isCreatingOfferOrder: false,
 } as unknown as ConversationsContextProps)
 
-interface ConversationsProviderProps {
-  viewer: ConversationsContext_viewer$key
-}
-
-export type PartnerOffer = NonNullable<
-  NonNullable<
-    NonNullable<
-      NonNullable<
-        NonNullable<
-          ConversationsContext_viewer$data["me"]
-        >["partnerOffersConnection"]
-      >["edges"]
-    >[number]
-  >["node"]
->
-
-export const ConversationsProvider: React.FC<
-  React.PropsWithChildren<ConversationsProviderProps>
-> = ({ children, viewer }) => {
+export const ConversationsProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false)
   const [isCreatingOfferOrder, setCreatingOfferOrder] = useState(false)
   const [selectedEditionSetId, setSelectedEditionSetId] = useState<
     string | null
   >(null)
-  const { me } = useFragment(VIEWER_FRAGMENT, viewer)
-
-  const partnerOfferMap: Record<string, PartnerOffer> = extractNodes(
-    me?.partnerOffersConnection,
-  ).reduce((acc, offer) => {
-    if (offer.artworkId) {
-      acc[offer.artworkId] = offer
-    }
-    return acc
-  }, {})
-
-  const findPartnerOffer = (artworkID: string): PartnerOffer | null =>
-    partnerOfferMap[artworkID] ?? null
 
   const showSelectEditionSetModal = ({
     isCreatingOfferOrder,
@@ -83,7 +47,6 @@ export const ConversationsProvider: React.FC<
   return (
     <ConversationsContext.Provider
       value={{
-        findPartnerOffer,
         isConfirmModalVisible,
         isCreatingOfferOrder,
         selectedEditionSetId,
@@ -108,24 +71,3 @@ export const useConversationsContext = () => {
 
   return context
 }
-
-const VIEWER_FRAGMENT = graphql`
-  fragment ConversationsContext_viewer on Viewer {
-    me {
-      partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {
-        edges {
-          node {
-            artworkId
-            endAt
-            internalID
-            isAvailable
-            note
-            priceWithDiscount {
-              display
-            }
-          }
-        }
-      }
-    }
-  }
-`

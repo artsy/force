@@ -68,8 +68,8 @@ describe("ConversationReply", () => {
   }
 
   const { renderWithRelay } = setupTestWrapperTL<ConversationReplyTestQuery>({
-    Component: ({ conversation, viewer }) => (
-      <ConversationsProvider viewer={viewer!}>
+    Component: ({ conversation }) => (
+      <ConversationsProvider>
         <ConversationReply conversation={conversation!} />
       </ConversationsProvider>
     ),
@@ -77,9 +77,6 @@ describe("ConversationReply", () => {
       query ConversationReplyTestQuery @relay_test_operation {
         conversation(id: "conversation-id") {
           ...ConversationReply_conversation
-        }
-        viewer {
-          ...ConversationsContext_viewer
         }
       }
     `,

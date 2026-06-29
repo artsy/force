@@ -1,7 +1,6 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
-import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationsTracking } from "Apps/Conversations/hooks/useConversationsTracking"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
@@ -23,14 +22,10 @@ export const ConversationPartnerOfferCTA: FC<
   const data = useFragment(CONVERSATION_FRAGMENT, conversation)
   const { trackPartnerOfferCTAViewed } = useConversationsTracking()
 
-  const { findPartnerOffer } = useConversationsContext()
-
   const activeOrder = extractNodes(data.activeOrders)[0]
   const item = data.items?.[0]?.item
   const artwork = item?.__typename === "Artwork" ? item : null
-  const partnerOffer = artwork?.internalID
-    ? findPartnerOffer(artwork.internalID)
-    : null
+  const partnerOffer = extractNodes(data.partnerOffersConnection)[0] ?? null
   const hasActivePartnerOffer = isPartnerOfferActive(partnerOffer)
 
   useEffect(() => {
@@ -111,6 +106,18 @@ const CONVERSATION_FRAGMENT = graphql`
       edges {
         node {
           internalID
+        }
+      }
+    }
+    partnerOffersConnection(first: 1, offerType: [PERSONALIZED]) {
+      edges {
+        node {
+          internalID
+          endAt
+          isAvailable
+          priceWithDiscount {
+            display
+          }
         }
       }
     }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b7853d918bd4923ab8ce3346049f8d7>>
+ * @generated SignedSource<<85e89181108dd1f4bb6e71a964da6b10>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,16 +22,18 @@ export type ConversationPartnerOfferUpdate_conversation$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly items: ReadonlyArray<{
-    readonly item: {
-      readonly __typename: "Artwork";
-      readonly internalID: string;
-    } | {
-      // This will never be '%other', but we need some
-      // value in case none of the concrete values match.
-      readonly __typename: "%other";
-    } | null | undefined;
-  } | null | undefined> | null | undefined;
+  readonly partnerOffersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly endAt: string | null | undefined;
+        readonly internalID: string;
+        readonly isAvailable: boolean | null | undefined;
+        readonly priceWithDiscount: {
+          readonly display: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ConversationPartnerOfferUpdate_conversation";
 };
 export type ConversationPartnerOfferUpdate_conversation$key = {
@@ -45,49 +47,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ConversationPartnerOfferUpdate_conversation",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ConversationItem",
-      "kind": "LinkedField",
-      "name": "items",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": null,
-          "kind": "LinkedField",
-          "name": "item",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            },
-            {
-              "kind": "InlineFragment",
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                }
-              ],
-              "type": "Artwork",
-              "abstractKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -151,12 +110,97 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "collectorOrdersConnection(first:10)"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "offerType",
+          "value": [
+            "PERSONALIZED"
+          ]
+        }
+      ],
+      "concreteType": "PartnerOfferConnection",
+      "kind": "LinkedField",
+      "name": "partnerOffersConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PartnerOfferEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PartnerOffer",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "endAt",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAvailable",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Money",
+                  "kind": "LinkedField",
+                  "name": "priceWithDiscount",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "display",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "partnerOffersConnection(first:1,offerType:[\"PERSONALIZED\"])"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
 
-(node as any).hash = "ef4497b595c41ef15443f264d5c8f967";
+(node as any).hash = "4b1b00a55e036743cb89f8a4fd7855e8";
 
 export default node;

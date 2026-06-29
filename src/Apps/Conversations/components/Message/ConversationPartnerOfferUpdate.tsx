@@ -1,7 +1,6 @@
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 import type { FlexProps } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
-import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationEventRow } from "Apps/Conversations/components/Message/ConversationEventRow"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
 import { extractNodes } from "Utils/extractNodes"
@@ -20,13 +19,7 @@ export const ConversationPartnerOfferUpdate: FC<
 
   const data = useFragment(CONVERSATION_FRAGMENT, conversation)
 
-  const { findPartnerOffer } = useConversationsContext()
-
-  const item = data.items?.[0]?.item
-  const artwork = item?.__typename === "Artwork" ? item : null
-  const partnerOffer = artwork?.internalID
-    ? findPartnerOffer(artwork.internalID)
-    : null
+  const partnerOffer = extractNodes(data.partnerOffersConnection)[0] ?? null
 
   if (!isPartnerOfferConvoEnabled || !partnerOffer) {
     return null
@@ -77,20 +70,24 @@ export const ConversationPartnerOfferUpdate: FC<
 
 const CONVERSATION_FRAGMENT = graphql`
   fragment ConversationPartnerOfferUpdate_conversation on Conversation {
-    items {
-      item {
-        __typename
-        ... on Artwork {
-          internalID
-        }
-      }
-    }
     collectorOrdersConnection(first: 10) {
       edges {
         node {
           buyerState
           lineItems {
             partnerOfferId
+          }
+        }
+      }
+    }
+    partnerOffersConnection(first: 1, offerType: [PERSONALIZED]) {
+      edges {
+        node {
+          internalID
+          endAt
+          isAvailable
+          priceWithDiscount {
+            display
           }
         }
       }
