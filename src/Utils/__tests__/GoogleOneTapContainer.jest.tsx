@@ -196,6 +196,46 @@ describe("GoogleOneTapContainer", () => {
     })
   })
 
+  describe("experiment tracking", () => {
+    let mockTrack: jest.Mock
+
+    beforeEach(() => {
+      mockTrack = jest.fn()
+      ;(window as any).analytics = { track: mockTrack }
+    })
+
+    afterEach(() => {
+      delete (window as any).analytics
+    })
+
+    it("fires experiment_viewed with variant_name: experiment when flag is enabled", () => {
+      enableOneTap()
+      render(<GoogleOneTapContainer />)
+
+      expect(mockTrack).toHaveBeenCalledWith(
+        "experiment_viewed",
+        expect.objectContaining({
+          service: "unleash",
+          experiment_name: "diamond_google-one-tap",
+          variant_name: "experiment",
+        }),
+      )
+    })
+
+    it("fires experiment_viewed with variant_name: control when flag is disabled", () => {
+      render(<GoogleOneTapContainer />)
+
+      expect(mockTrack).toHaveBeenCalledWith(
+        "experiment_viewed",
+        expect.objectContaining({
+          service: "unleash",
+          experiment_name: "diamond_google-one-tap",
+          variant_name: "control",
+        }),
+      )
+    })
+  })
+
   describe("auth dialog interaction", () => {
     it("cancels One Tap when the auth dialog opens", () => {
       const mockCancel = jest.fn()
