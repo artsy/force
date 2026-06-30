@@ -39,7 +39,7 @@ describe("ArtworkVideoPlayer", () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
   it("renders with video figure", () => {

@@ -1,6 +1,8 @@
+import { ActionType } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { pathToOwnerType } from "System/Contexts/AnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { AUTH_ERROR_CODES } from "Utils/authConstants"
 import { getENV } from "Utils/getENV"
@@ -32,6 +34,7 @@ const isInputFocused = () => {
 export const GoogleOneTapContainer = () => {
   const { isLoggedIn } = useSystemContext()
   const isGoogleOneTapEnabled = !!useFlag("diamond_google-one-tap")
+  const { flagsReady } = useFlagsStatus()
   const googleClientId = getENV("GOOGLE_CLIENT_ID")
   const { sendToast } = useToasts()
   const { state: authDialogState } = useAuthDialogContext()
@@ -58,6 +61,22 @@ export const GoogleOneTapContainer = () => {
     cleanUrl.searchParams.delete("g_one_tap_error")
     window.history.replaceState({}, "", cleanUrl.toString())
   }, [sendToast])
+
+  useEffect(() => {
+    if (!flagsReady) return
+
+    const path = window.location.pathname
+    const pageParts = path.split("/")
+
+    // We don't use hook since we don't have access to router here
+    window?.analytics?.track(ActionType.experimentViewed, {
+      service: "unleash",
+      experiment_name: "diamond_google-one-tap",
+      variant_name: isGoogleOneTapEnabled ? "experiment" : "control",
+      context_owner_type: pathToOwnerType(path),
+      context_owner_slug: pageParts[2],
+    })
+  }, [isGoogleOneTapEnabled, flagsReady])
 
   useEffect(() => {
     if (!authDialogState.isVisible)

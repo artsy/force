@@ -20,6 +20,7 @@ jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn(
     flag => flag === "my-collection-web-phase-7-median-sale-price-graph",
   ),
+  useFlagsStatus: jest.fn().mockReturnValue({ flagsReady: true }),
 }))
 
 describe("InsightsMedianSalePrice", () => {
