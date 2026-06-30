@@ -10,6 +10,7 @@ import {
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
 import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
+import { Order2OfferHistory } from "Apps/Order2/Routes/Respond/Components/Order2OfferHistory"
 import { Order2RespondSummary } from "Apps/Order2/Routes/Respond/Components/Order2RespondSummary"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
@@ -59,6 +60,8 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
             </Box>
             <Spacer y={2} />
             <Box>{/* Respond form will go here */}</Box>
+            <Spacer y={2} />
+            <Order2OfferHistory order={orderData} />
           </Box>
         </Column>
 
@@ -95,6 +98,7 @@ const ORDER_FRAGMENT = graphql`
     }
     ...Order2CollapsibleOrderSummary_order
     ...Order2RespondSummary_order
+    ...Order2OfferHistory_order
     ...Order2HelpLinks_order
   }
 `
