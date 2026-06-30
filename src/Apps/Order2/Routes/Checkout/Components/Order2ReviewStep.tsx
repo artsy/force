@@ -11,6 +11,7 @@ import {
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
 import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
+import { TermsAndConditions } from "Apps/Order2/Routes/Checkout/Components/TermsAndConditions"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
@@ -311,6 +312,9 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           >
             Submit
           </Button>
+          <Spacer y={2} />
+          <TermsAndConditions />
+          <Spacer y={2} />
         </>
       )}
     </Flex>

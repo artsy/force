@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e032f7d9c8148c1c103c19886a500ce>>
+ * @generated SignedSource<<b817a0bb57782e149d7e282955fc0c6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -226,6 +226,13 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "buyerState",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "LineItem",
                             "kind": "LinkedField",
                             "name": "lineItems",
@@ -380,7 +387,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ab961fab757c13aa27fe5deaf9e5fe2d",
+    "cacheID": "7f27c4c48f8ac49ed6f999f1583d5ae7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -408,6 +415,28 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Order"
+        },
+        "me.conversation.collectorOrdersConnection.edges.node.buyerState": {
+          "enumValues": [
+            "APPROVED",
+            "CANCELED",
+            "COMPLETED",
+            "COUNTEROFFER_SENT",
+            "DECLINED_BY_BUYER",
+            "DECLINED_BY_SELLER",
+            "INCOMPLETE",
+            "OFFER_RECEIVED",
+            "PAYMENT_FAILED",
+            "PROCESSING_OFFLINE_PAYMENT",
+            "PROCESSING_PAYMENT",
+            "REFUNDED",
+            "SHIPPED",
+            "SUBMITTED",
+            "UNKNOWN"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderBuyerStateEnum"
         },
         "me.conversation.collectorOrdersConnection.edges.node.id": (v4/*: any*/),
         "me.conversation.collectorOrdersConnection.edges.node.lineItems": {
@@ -484,7 +513,7 @@ return {
     },
     "name": "ConversationPartnerOfferUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  collectorOrdersConnection(first: 10) {\n    edges {\n      node {\n        lineItems {\n          partnerOfferId\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  collectorOrdersConnection(first: 10) {\n    edges {\n      node {\n        buyerState\n        lineItems {\n          partnerOfferId\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
