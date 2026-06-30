@@ -1,5 +1,6 @@
 import { useToasts } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { AUTH_ERROR_CODES } from "Utils/authConstants"
 import { getENV } from "Utils/getENV"
@@ -18,17 +19,29 @@ const AUTH_PATHS = [
 const isAuthPath = (pathname: string) =>
   AUTH_PATHS.some(path => pathname.startsWith(path))
 
+const isInputFocused = () => {
+  const el = document.activeElement
+  return (
+    el instanceof HTMLInputElement ||
+    el instanceof HTMLTextAreaElement ||
+    el instanceof HTMLSelectElement ||
+    (el instanceof HTMLElement && el.isContentEditable)
+  )
+}
+
 export const GoogleOneTapContainer = () => {
   const { isLoggedIn } = useSystemContext()
   const isGoogleOneTapEnabled = !!useFlag("diamond_google-one-tap")
   const googleClientId = getENV("GOOGLE_CLIENT_ID")
   const { sendToast } = useToasts()
+  const { state: authDialogState } = useAuthDialogContext()
 
   const enabled =
     !isLoggedIn &&
     isGoogleOneTapEnabled &&
     !!googleClientId &&
-    !isAuthPath(window.location.pathname)
+    !isAuthPath(window.location.pathname) &&
+    !authDialogState.isVisible
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -47,6 +60,12 @@ export const GoogleOneTapContainer = () => {
   }, [sendToast])
 
   useEffect(() => {
+    if (!authDialogState.isVisible)
+      return // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(window as any).google?.accounts?.id?.cancel?.()
+  }, [authDialogState.isVisible])
+
+  useEffect(() => {
     if (!enabled) {
       return
     }
@@ -55,12 +74,25 @@ export const GoogleOneTapContainer = () => {
       return
     }
 
-    const script = document.createElement("script")
-    script.id = "google-one-tap-script"
-    script.src = "https://accounts.google.com/gsi/client"
-    script.async = true
-    script.defer = true
-    document.body.appendChild(script)
+    const appendScript = () => {
+      const script = document.createElement("script")
+      script.id = "google-one-tap-script"
+      script.src = "https://accounts.google.com/gsi/client"
+      script.async = true
+      script.defer = true
+      document.body.appendChild(script)
+    }
+
+    if (isInputFocused()) {
+      const handleFocusOut = () => {
+        document.removeEventListener("focusout", handleFocusOut)
+        appendScript()
+      }
+      document.addEventListener("focusout", handleFocusOut)
+      return () => document.removeEventListener("focusout", handleFocusOut)
+    }
+
+    appendScript()
   }, [enabled])
 
   if (!enabled) {
