@@ -1,6 +1,6 @@
 import { act, render } from "@testing-library/react"
 import { useToasts } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
+import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { GoogleOneTapContainer } from "Utils/GoogleOneTapContainer"
@@ -23,6 +23,7 @@ jest.mock("Utils/getENV", () => ({
 
 jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn(),
+  useFlagsStatus: jest.fn(),
 }))
 
 jest.mock("System/Hooks/useSystemContext", () => ({
@@ -35,6 +36,7 @@ jest.mock("Components/AuthDialog/AuthDialogContext", () => ({
 
 describe("GoogleOneTapContainer", () => {
   const mockUseFlag = useFlag as jest.Mock
+  const mockUseFlagsStatus = useFlagsStatus as jest.Mock
   const mockGetENV = getENV as jest.Mock
   const mockUseSystemContext = useSystemContext as jest.Mock
   const mockUseToasts = useToasts as jest.Mock
@@ -42,6 +44,7 @@ describe("GoogleOneTapContainer", () => {
 
   const enableOneTap = () => {
     mockUseFlag.mockReturnValue(true)
+    mockUseFlagsStatus.mockReturnValue({ flagsReady: true })
     mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
     mockUseAuthDialogContext.mockReturnValue({ state: { isVisible: false } })
     mockGetENV.mockImplementation((key: string) => {
@@ -53,6 +56,7 @@ describe("GoogleOneTapContainer", () => {
 
   beforeEach(() => {
     mockUseFlag.mockReturnValue(false)
+    mockUseFlagsStatus.mockReturnValue({ flagsReady: true })
     mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
     mockUseAuthDialogContext.mockReturnValue({ state: { isVisible: false } })
     mockGetENV.mockReturnValue(null)
