@@ -11,7 +11,14 @@ interface Order2OfferHistoryProps {
 const COLUMNS = [1, 1, 2, 1]
 
 const sourceLabel = (fromParticipant: string) => {
-  return fromParticipant === "SELLER" ? "Gallery" : "You"
+  switch (fromParticipant) {
+    case "SELLER":
+      return "Gallery"
+    case "BUYER":
+      return "You"
+    default:
+      return "Unknown"
+  }
 }
 
 export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
