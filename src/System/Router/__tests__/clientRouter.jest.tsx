@@ -23,7 +23,7 @@ describe("clientRouter", () => {
   const mockCreateRelaySSREnvironment = createRelaySSREnvironment as jest.Mock
 
   beforeEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
   it("resolves with a <ClientRouter /> component", async () => {
