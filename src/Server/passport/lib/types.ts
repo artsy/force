@@ -42,6 +42,7 @@ export interface PassportUser {
 
 export type LinkingTokenData =
   | { provider: "google" | "facebook"; oauth_token: string }
+  | { provider: "google"; jwt: string }
   | {
       provider: "apple"
       apple_uid: string
@@ -90,7 +91,7 @@ export interface PassportRequest extends ArtsyRequest {
   params: Record<string, any>
   query: Record<string, any>
   session: PassportSession
-  socialOAuthToken?: LinkingTokenData
+  socialTokenData?: LinkingTokenData
   socialProfileEmail?: string
   user?: PassportUser | null
   xhr: boolean
