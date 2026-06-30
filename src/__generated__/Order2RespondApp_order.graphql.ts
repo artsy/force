@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a21f8b6dffd0edeb6f473767cc4595eb>>
+ * @generated SignedSource<<0c6cc7095430a28b74046e9bd11ab044>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type Order2RespondApp_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly mode: OrderModeEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2HelpLinks_order" | "Order2RespondSummary_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2CollapsibleOrderSummary_order" | "Order2HelpLinks_order" | "Order2OfferHistory_order" | "Order2RespondSummary_order">;
   readonly " $fragmentType": "Order2RespondApp_order";
 };
 export type Order2RespondApp_order$key = {
@@ -89,6 +89,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "Order2OfferHistory_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "Order2HelpLinks_order"
     }
   ],
@@ -96,6 +101,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "aafa6d84f4f57897a358341ab8b34908";
+(node as any).hash = "8257003f6e8f057d99e01ef621243f17";
 
 export default node;
