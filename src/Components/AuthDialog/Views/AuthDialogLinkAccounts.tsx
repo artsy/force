@@ -11,14 +11,15 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useRouter } from "System/Hooks/useRouter"
-import { AUTH_PROVIDERS } from "Utils/authConstants"
 import { login } from "Utils/auth"
+import { AUTH_ERROR_CODES, AUTH_PROVIDERS } from "Utils/authConstants"
 import { getENV } from "Utils/getENV"
-import { stringify } from "qs"
 import { Form, Formik } from "formik"
+import { stringify } from "qs"
 import { type FC, useState } from "react"
 import * as Yup from "yup"
 
@@ -158,6 +159,7 @@ const PasswordForm: FC<PasswordFormProps> = ({
   onBack,
 }) => {
   const { runAfterAuthentication } = useAfterAuthentication()
+  const { dispatch } = useAuthDialogContext()
 
   return (
     <Formik
@@ -186,6 +188,17 @@ const PasswordForm: FC<PasswordFormProps> = ({
             runAfterAuthentication({ accessToken: res.user?.accessToken })
           }, 1500)
         } catch (err) {
+          if (
+            err.message === "missing two-factor authentication code" ||
+            err.message === "missing on-demand authentication code"
+          ) {
+            setFieldValue("mode", "TwoFactorBlocked")
+            setStatus({
+              error: AUTH_ERROR_CODES.TWO_FACTOR_AUTHENTICATION_ENABLED,
+            })
+            return
+          }
+
           setFieldValue("mode", "Error")
           setStatus({ error: formatErrorMessage(err) })
         }
@@ -240,16 +253,29 @@ const PasswordForm: FC<PasswordFormProps> = ({
               )}
 
               <Stack gap={1}>
-                <Button
-                  type="submit"
-                  width="100%"
-                  loading={values.mode === "Loading"}
-                  disabled={!isValid || !dirty || values.mode === "Success"}
-                >
-                  {emailOnly ? "Yes, Link Accounts" : "Link Accounts"}
-                </Button>
+                {values.mode === "TwoFactorBlocked" ? (
+                  <Button
+                    variant="secondaryBlack"
+                    width="100%"
+                    type="button"
+                    onClick={() => {
+                      dispatch({ type: "MODE", payload: { mode: "Login" } })
+                    }}
+                  >
+                    Go Back
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    width="100%"
+                    loading={values.mode === "Loading"}
+                    disabled={!isValid || !dirty || values.mode === "Success"}
+                  >
+                    {emailOnly ? "Yes, Link Accounts" : "Link Accounts"}
+                  </Button>
+                )}
 
-                {onBack && (
+                {onBack && values.mode !== "TwoFactorBlocked" && (
                   <Button
                     variant="secondaryBlack"
                     width="100%"
@@ -279,7 +305,13 @@ const PasswordForm: FC<PasswordFormProps> = ({
   )
 }
 
-type FormMode = "Pending" | "Loading" | "Success" | "Error" | "LinkError"
+type FormMode =
+  | "Pending"
+  | "Loading"
+  | "Success"
+  | "Error"
+  | "LinkError"
+  | "TwoFactorBlocked"
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   password: Yup.string().required("Password required"),
