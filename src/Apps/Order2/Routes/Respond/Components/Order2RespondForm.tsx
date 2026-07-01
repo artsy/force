@@ -1,12 +1,12 @@
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
-  BorderedRadio,
   Box,
   Button,
   Clickable,
   Flex,
   Input,
   Message,
+  Radio,
   RadioGroup,
   Spacer,
   Text,
@@ -191,13 +191,18 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
           setRespondAction(value as RespondAction)
         }}
         defaultValue={selectedAction ?? undefined}
+        gap={1}
       >
         {RESPOND_OPTIONS.map(option => {
           return (
-            <BorderedRadio
+            <Radio
               key={option.value}
               value={option.value}
               label={option.label}
+              backgroundColor={
+                selectedAction === option.value ? "mono5" : undefined
+              }
+              p={1}
             >
               {option.value === "COUNTEROFFER" &&
                 selectedAction === "COUNTEROFFER" && (
@@ -217,7 +222,15 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
                     />
                   </>
                 )}
-            </BorderedRadio>
+              {option.value === "DECLINE" && selectedAction === "DECLINE" && (
+                <>
+                  <Spacer y={1} />
+                  <Text variant="xs">
+                    Declining this offer ends this negotiation.
+                  </Text>
+                </>
+              )}
+            </Radio>
           )
         })}
       </RadioGroup>
