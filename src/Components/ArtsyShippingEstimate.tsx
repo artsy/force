@@ -319,6 +319,9 @@ const ARTWORK_FRAGMENT = graphql`
     framedMetric
     heightCm
     isFramed
+    publicLocation {
+      postalCode
+    }
     listPrice {
       ... on Money {
         major
@@ -549,11 +552,13 @@ const artaLocation = (
   const city = shippingOrigin[0]
   const state = shippingOrigin.length === 3 ? shippingOrigin[1] : ""
   const country = shippingOrigin[shippingOrigin.length - 1]
+  const postalCode = artwork.publicLocation?.postalCode
   return shippingOrigin.length > 1 && !!city && !!country
     ? {
         city,
         region: state,
         country,
+        postal_code: postalCode,
       }
     : null
 }
