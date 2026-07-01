@@ -75,6 +75,20 @@ describe("Order2RespondForm", () => {
     ).toBeInTheDocument()
   })
 
+  it("reveals the decline warning only when Decline gallery offer is selected", () => {
+    renderWithRelay(defaultResolvers)
+
+    expect(
+      screen.queryByText("Declining this offer ends this negotiation."),
+    ).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByText("Decline gallery offer"))
+
+    expect(
+      screen.getByText("Declining this offer ends this negotiation."),
+    ).toBeInTheDocument()
+  })
+
   it("keeps Save and Review disabled for a counteroffer until an amount is entered", () => {
     renderWithRelay(defaultResolvers)
 
