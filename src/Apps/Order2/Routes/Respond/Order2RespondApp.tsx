@@ -4,7 +4,6 @@ import {
   Column,
   GridColumns,
   Separator,
-  Spacer,
   Stack,
   breakpoints,
 } from "@artsy/palette"
