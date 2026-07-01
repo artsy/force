@@ -39,9 +39,13 @@ export const GoogleOneTapContainer = () => {
   const { sendToast } = useToasts()
   const { state: authDialogState } = useAuthDialogContext()
 
+  const forceEnabled =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).has("force_one_tap")
+
   const enabled =
     !isLoggedIn &&
-    isGoogleOneTapEnabled &&
+    (isGoogleOneTapEnabled || forceEnabled) &&
     !!googleClientId &&
     !isAuthPath(window.location.pathname) &&
     !authDialogState.isVisible
