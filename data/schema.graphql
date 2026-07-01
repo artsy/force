@@ -5876,6 +5876,7 @@ type BulkUpdateMetadataPreviewCounts {
 enum BulkUpdateSourceEnum {
   ADMIN
   ARTWORKS_LIST
+  INVENTORY
   PARTNER_ARTIST_ARTWORKS_LIST
   PARTNER_LIST
   SHOW_ARTWORKS_LIST
