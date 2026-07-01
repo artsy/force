@@ -155,9 +155,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
               aria-expanded={isOfferDetailsExpanded}
               aria-label="Toggle offer details"
             >
-              <Text variant="xs" color="mono60">
-                including shipping &amp; taxes
-              </Text>
+              <Text variant="xs">including shipping &amp; taxes</Text>
               <Spacer x={0.5} />
               <ChevronUpIcon
                 height="18px"
