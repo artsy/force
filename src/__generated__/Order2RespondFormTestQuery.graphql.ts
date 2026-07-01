@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<091282114a6795640429db6e237e75ee>>
+ * @generated SignedSource<<8a58cd5c721c7d4e390dbcbf80458ad2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,7 @@ v3 = {
   "args": null,
   "concreteType": "Money",
   "kind": "LinkedField",
-  "name": "buyerTotal",
+  "name": "amount",
   "plural": false,
   "selections": (v2/*: any*/),
   "storageKey": null
@@ -61,40 +61,17 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Money",
-  "kind": "LinkedField",
-  "name": "amount",
-  "plural": false,
-  "selections": (v2/*: any*/),
-  "storageKey": null
-},
-v6 = [
-  (v3/*: any*/),
-  (v1/*: any*/),
-  (v4/*: any*/),
-  (v5/*: any*/)
-],
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "displayName",
   "storageKey": null
 },
-v8 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "amountFallbackText",
   "storageKey": null
 },
-v9 = {
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
@@ -119,12 +96,12 @@ v9 = {
   ],
   "storageKey": null
 },
-v10 = [
-  (v7/*: any*/),
-  (v8/*: any*/),
-  (v9/*: any*/)
+v7 = [
+  (v4/*: any*/),
+  (v5/*: any*/),
+  (v6/*: any*/)
 ],
-v11 = {
+v8 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -141,21 +118,21 @@ v11 = {
     },
     {
       "kind": "InlineFragment",
-      "selections": (v10/*: any*/),
+      "selections": (v7/*: any*/),
       "type": "ShippingLine",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v10/*: any*/),
+      "selections": (v7/*: any*/),
       "type": "TaxLine",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": [
-        (v7/*: any*/),
-        (v9/*: any*/)
+        (v4/*: any*/),
+        (v6/*: any*/)
       ],
       "type": "SubtotalLine",
       "abstractKey": null
@@ -163,9 +140,9 @@ v11 = {
     {
       "kind": "InlineFragment",
       "selections": [
-        (v7/*: any*/),
-        (v8/*: any*/),
-        (v5/*: any*/)
+        (v4/*: any*/),
+        (v5/*: any*/),
+        (v3/*: any*/)
       ],
       "type": "TotalLine",
       "abstractKey": null
@@ -173,37 +150,37 @@ v11 = {
   ],
   "storageKey": null
 },
-v12 = {
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v13 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v14 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Money"
-},
-v15 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Offer"
 },
-v16 = {
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Money"
+},
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": true,
   "type": "PricingBreakdownLineUnion"
 },
-v17 = {
+v14 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -326,7 +303,6 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -334,32 +310,26 @@ return {
                 "kind": "LinkedField",
                 "name": "lastSubmittedOffer",
                 "plural": false,
-                "selections": (v6/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Offer",
-                "kind": "LinkedField",
-                "name": "submittedOffers",
-                "plural": true,
-                "selections": (v6/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Offer",
-                "kind": "LinkedField",
-                "name": "pendingOffer",
-                "plural": false,
                 "selections": [
-                  (v3/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Money",
+                    "kind": "LinkedField",
+                    "name": "buyerTotal",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": null
+                  },
                   (v1/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v11/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -370,7 +340,20 @@ return {
                 "name": "buyerStateExpiresAt",
                 "storageKey": null
               },
-              (v11/*: any*/),
+              (v8/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Offer",
+                "kind": "LinkedField",
+                "name": "pendingOffer",
+                "plural": false,
+                "selections": [
+                  (v8/*: any*/),
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": "order(id:\"order-id\")"
@@ -382,7 +365,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8e538d50c4f269f12a4a329ba4239131",
+    "cacheID": "509c2384fef0e4ef4c77f95bde89a328",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -392,25 +375,23 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v12/*: any*/),
+        "me.id": (v9/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Order"
         },
-        "me.order.buyerStateExpiresAt": (v13/*: any*/),
-        "me.order.buyerTotal": (v14/*: any*/),
-        "me.order.buyerTotal.display": (v13/*: any*/),
-        "me.order.id": (v12/*: any*/),
-        "me.order.internalID": (v12/*: any*/),
-        "me.order.lastSubmittedOffer": (v15/*: any*/),
-        "me.order.lastSubmittedOffer.amount": (v14/*: any*/),
-        "me.order.lastSubmittedOffer.amount.display": (v13/*: any*/),
-        "me.order.lastSubmittedOffer.buyerTotal": (v14/*: any*/),
-        "me.order.lastSubmittedOffer.buyerTotal.display": (v13/*: any*/),
-        "me.order.lastSubmittedOffer.createdAt": (v13/*: any*/),
-        "me.order.lastSubmittedOffer.id": (v12/*: any*/),
+        "me.order.buyerStateExpiresAt": (v10/*: any*/),
+        "me.order.id": (v9/*: any*/),
+        "me.order.internalID": (v9/*: any*/),
+        "me.order.lastSubmittedOffer": (v11/*: any*/),
+        "me.order.lastSubmittedOffer.amount": (v12/*: any*/),
+        "me.order.lastSubmittedOffer.amount.display": (v10/*: any*/),
+        "me.order.lastSubmittedOffer.buyerTotal": (v12/*: any*/),
+        "me.order.lastSubmittedOffer.buyerTotal.display": (v10/*: any*/),
+        "me.order.lastSubmittedOffer.createdAt": (v10/*: any*/),
+        "me.order.lastSubmittedOffer.id": (v9/*: any*/),
         "me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -423,9 +404,9 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "me.order.lineItems.artwork.id": (v12/*: any*/),
-        "me.order.lineItems.artwork.slug": (v12/*: any*/),
-        "me.order.lineItems.id": (v12/*: any*/),
+        "me.order.lineItems.artwork.id": (v9/*: any*/),
+        "me.order.lineItems.artwork.slug": (v9/*: any*/),
+        "me.order.lineItems.id": (v9/*: any*/),
         "me.order.mode": {
           "enumValues": [
             "BUY",
@@ -435,29 +416,24 @@ return {
           "plural": false,
           "type": "OrderModeEnum"
         },
-        "me.order.pendingOffer": (v15/*: any*/),
-        "me.order.pendingOffer.amount": (v14/*: any*/),
-        "me.order.pendingOffer.amount.display": (v13/*: any*/),
-        "me.order.pendingOffer.buyerTotal": (v14/*: any*/),
-        "me.order.pendingOffer.buyerTotal.display": (v13/*: any*/),
-        "me.order.pendingOffer.createdAt": (v13/*: any*/),
-        "me.order.pendingOffer.id": (v12/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines": (v16/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.__typename": (v17/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount": (v14/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v13/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.currencySymbol": (v13/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amount.display": (v13/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.amountFallbackText": (v13/*: any*/),
-        "me.order.pendingOffer.pricingBreakdownLines.displayName": (v17/*: any*/),
-        "me.order.pricingBreakdownLines": (v16/*: any*/),
-        "me.order.pricingBreakdownLines.__typename": (v17/*: any*/),
-        "me.order.pricingBreakdownLines.amount": (v14/*: any*/),
-        "me.order.pricingBreakdownLines.amount.amount": (v13/*: any*/),
-        "me.order.pricingBreakdownLines.amount.currencySymbol": (v13/*: any*/),
-        "me.order.pricingBreakdownLines.amount.display": (v13/*: any*/),
-        "me.order.pricingBreakdownLines.amountFallbackText": (v13/*: any*/),
-        "me.order.pricingBreakdownLines.displayName": (v17/*: any*/),
+        "me.order.pendingOffer": (v11/*: any*/),
+        "me.order.pendingOffer.id": (v9/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines": (v13/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.__typename": (v14/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount": (v12/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v10/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.currencySymbol": (v10/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amount.display": (v10/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.amountFallbackText": (v10/*: any*/),
+        "me.order.pendingOffer.pricingBreakdownLines.displayName": (v14/*: any*/),
+        "me.order.pricingBreakdownLines": (v13/*: any*/),
+        "me.order.pricingBreakdownLines.__typename": (v14/*: any*/),
+        "me.order.pricingBreakdownLines.amount": (v12/*: any*/),
+        "me.order.pricingBreakdownLines.amount.amount": (v10/*: any*/),
+        "me.order.pricingBreakdownLines.amount.currencySymbol": (v10/*: any*/),
+        "me.order.pricingBreakdownLines.amount.display": (v10/*: any*/),
+        "me.order.pricingBreakdownLines.amountFallbackText": (v10/*: any*/),
+        "me.order.pricingBreakdownLines.displayName": (v14/*: any*/),
         "me.order.source": {
           "enumValues": [
             "ARTWORK_PAGE",
@@ -468,24 +444,12 @@ return {
           "nullable": false,
           "plural": false,
           "type": "OrderSourceEnum"
-        },
-        "me.order.submittedOffers": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "Offer"
-        },
-        "me.order.submittedOffers.amount": (v14/*: any*/),
-        "me.order.submittedOffers.amount.display": (v13/*: any*/),
-        "me.order.submittedOffers.buyerTotal": (v14/*: any*/),
-        "me.order.submittedOffers.buyerTotal.display": (v13/*: any*/),
-        "me.order.submittedOffers.createdAt": (v13/*: any*/),
-        "me.order.submittedOffers.id": (v12/*: any*/)
+        }
       }
     },
     "name": "Order2RespondFormTestQuery",
     "operationKind": "query",
-    "text": "query Order2RespondFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2RespondForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  buyerTotal {\n    display\n  }\n  lastSubmittedOffer {\n    buyerTotal {\n      display\n    }\n    id\n  }\n  submittedOffers {\n    buyerTotal {\n      display\n    }\n    id\n  }\n  pendingOffer {\n    buyerTotal {\n      display\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  buyerStateExpiresAt\n  lastSubmittedOffer {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  submittedOffers {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  pendingOffer {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  ...Order2CheckoutPricingBreakdown_order\n}\n"
+    "text": "query Order2RespondFormTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2RespondForm_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  lastSubmittedOffer {\n    buyerTotal {\n      display\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  buyerStateExpiresAt\n  lastSubmittedOffer {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  ...Order2CheckoutPricingBreakdown_order\n}\n"
   }
 };
 })();

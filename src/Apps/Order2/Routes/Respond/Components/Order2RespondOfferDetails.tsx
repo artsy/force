@@ -17,18 +17,11 @@ export const Order2RespondOfferDetails: React.FC<
   const orderData = useFragment(FRAGMENT, order)
   const { checkoutTracking } = useRespondContext()
 
-  // Gallery's offer being responded to — fall back through the fields the
-  // exchange API may use (legacy `order.lastOffer` ≈ `lastSubmittedOffer`).
-  const submittedOffers = orderData.submittedOffers ?? []
-  const galleryOffer =
-    orderData.lastSubmittedOffer ??
-    submittedOffers[submittedOffers.length - 1] ??
-    orderData.pendingOffer
+  // The gallery's offer being responded to. By the time we're on this step the
+  // gallery has submitted an offer, so `lastSubmittedOffer` is always present.
+  const galleryOffer = orderData.lastSubmittedOffer
   const offerAmount = galleryOffer?.amount?.display
 
-  // Countdown to when the gallery's offer expires. Matches the partner-offer
-  // timer pattern in `Order2CheckoutPricingBreakdown` / `Order2ReviewStep`.
-  // Legacy: `CountdownTimer` from `lastOffer.createdAt` to `stateExpiresAt`.
   const timer = useCountdownTimer({
     startTime: galleryOffer?.createdAt ?? "",
     endTime: orderData.buyerStateExpiresAt ?? "",
@@ -55,8 +48,6 @@ export const Order2RespondOfferDetails: React.FC<
         </Flex>
       )}
 
-      {/* Renders price / shipping / taxes* / total + import-duties footnote
-          (legacy `TransactionDetailsSummaryItem` equivalent on the new Order) */}
       <Order2CheckoutPricingBreakdown
         order={orderData}
         contextModule={ContextModule.ordersRespond}
@@ -70,18 +61,6 @@ const FRAGMENT = graphql`
   fragment Order2RespondOfferDetails_order on Order {
     buyerStateExpiresAt
     lastSubmittedOffer {
-      createdAt
-      amount {
-        display
-      }
-    }
-    submittedOffers {
-      createdAt
-      amount {
-        display
-      }
-    }
-    pendingOffer {
       createdAt
       amount {
         display

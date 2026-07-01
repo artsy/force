@@ -54,18 +54,10 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [counterofferAmount, setCounterofferAmount] = useState("")
 
-  // Gallery's offer being responded to. Depending on negotiation state the
-  // exchange API may expose it on any of these, so fall back through them
-  // (legacy `order.lastOffer` ≈ `lastSubmittedOffer`).
-  const submittedOffers = orderData.submittedOffers ?? []
-  const galleryOffer =
-    orderData.lastSubmittedOffer ??
-    submittedOffers[submittedOffers.length - 1] ??
-    orderData.pendingOffer
-  // Total the buyer would pay — items + shipping + taxes combined. Legacy:
-  // `TransactionDetailsSummaryItem` Total row uses `offer.buyerTotal`.
-  const totalPrice =
-    galleryOffer?.buyerTotal?.display ?? orderData.buyerTotal?.display
+  const galleryOffer = orderData.lastSubmittedOffer
+
+  // Total the buyer would pay — items + shipping + taxes combined.
+  const totalPrice = galleryOffer?.buyerTotal?.display
 
   const isRespondCompleted =
     steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
@@ -217,7 +209,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
                       inputMode="numeric"
                       value={counterofferAmount}
                       onChange={event => {
-                        // Keep digits only, mirroring the legacy OfferInput.
+                        // Keep digits only.
                         setCounterofferAmount(
                           event.currentTarget.value.replace(/[^\d]/g, ""),
                         )
@@ -246,20 +238,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2RespondForm_order on Order {
-    buyerTotal {
-      display
-    }
     lastSubmittedOffer {
-      buyerTotal {
-        display
-      }
-    }
-    submittedOffers {
-      buyerTotal {
-        display
-      }
-    }
-    pendingOffer {
       buyerTotal {
         display
       }
