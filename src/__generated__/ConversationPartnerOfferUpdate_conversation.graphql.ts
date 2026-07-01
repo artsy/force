@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a65ecd59e30b254d8e059c5fb391a7ff>>
+ * @generated SignedSource<<0b7853d918bd4923ab8ce3346049f8d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,13 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderBuyerStateEnum = "APPROVED" | "CANCELED" | "COMPLETED" | "COUNTEROFFER_SENT" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "INCOMPLETE" | "OFFER_RECEIVED" | "PAYMENT_FAILED" | "PROCESSING_OFFLINE_PAYMENT" | "PROCESSING_PAYMENT" | "REFUNDED" | "SHIPPED" | "SUBMITTED" | "UNKNOWN" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferUpdate_conversation$data = {
   readonly collectorOrdersConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly buyerState: OrderBuyerStateEnum | null | undefined;
         readonly lineItems: ReadonlyArray<{
           readonly partnerOfferId: string | null | undefined;
         } | null | undefined>;
@@ -119,6 +121,13 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "buyerState",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "LineItem",
                   "kind": "LinkedField",
                   "name": "lineItems",
@@ -148,6 +157,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6232dad81b5610f5f0aafe8e797c3f54";
+(node as any).hash = "ef4497b595c41ef15443f264d5c8f967";
 
 export default node;
