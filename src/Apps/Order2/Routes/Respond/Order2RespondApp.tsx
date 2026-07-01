@@ -4,14 +4,13 @@ import {
   Column,
   GridColumns,
   Separator,
-  Spacer,
+  Stack,
   breakpoints,
 } from "@artsy/palette"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
-import { Order2CollapsibleOrderSummary } from "Apps/Order2/Routes/Checkout/Components/Order2CollapsibleOrderSummary"
+import { Order2RespondForm } from "Apps/Order2/Routes/Respond/Components/Order2RespondForm"
 import { Order2RespondSummary } from "Apps/Order2/Routes/Respond/Components/Order2RespondSummary"
-import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { Order2RespondApp_order$key } from "__generated__/Order2RespondApp_order.graphql"
@@ -26,7 +25,6 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
   order,
 }) => {
   const { isEigen } = useSystemContext()
-  const { checkoutTracking, artworkPath } = useRespondContext()
 
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const artworkSlug = orderData?.lineItems[0]?.artwork?.slug
@@ -49,28 +47,30 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
       <GridColumns px={[0, 0, 4]} py={[0, 4]}>
         <Column span={[12, 12, 6]} start={[1, 1, 2]}>
           <Box maxWidth={["100%", breakpoints.sm, "100%"]} mx={[0, "auto", 0]}>
-            <Box display={["block", "block", "none"]}>
-              <Order2CollapsibleOrderSummary
-                order={orderData}
-                checkoutTracking={checkoutTracking}
-                artworkPath={artworkPath}
-                contextModule={ContextModule.ordersRespond}
-              />
-            </Box>
-            <Spacer y={2} />
-            <Box>{/* Respond form will go here */}</Box>
+            <Stack gap={1}>
+              <Order2RespondForm order={orderData} />
+
+              <Box display={["block", "block", "none"]}>
+                <Order2RespondSummary order={orderData} />
+                <Order2HelpLinksWithInquiry
+                  order={orderData}
+                  artworkID={artworkSlug as string}
+                  contextModule={ContextModule.ordersRespond}
+                />
+              </Box>
+            </Stack>
           </Box>
         </Column>
 
+        {/* desktop */}
         <Column
           span={[12, 12, 4]}
           start={[1, 1, 8]}
           display={["none", "none", "block"]}
+          alignSelf="start"
         >
           <Box position={["initial", "initial", "sticky"]} top="100px">
-            <Box>
-              <Order2RespondSummary order={orderData} />
-            </Box>
+            <Order2RespondSummary order={orderData} />
             <Separator as="hr" />
             <Order2HelpLinksWithInquiry
               order={orderData}
@@ -93,8 +93,8 @@ const ORDER_FRAGMENT = graphql`
         slug
       }
     }
-    ...Order2CollapsibleOrderSummary_order
     ...Order2RespondSummary_order
+    ...Order2RespondForm_order
     ...Order2HelpLinks_order
   }
 `
