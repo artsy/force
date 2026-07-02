@@ -1,17 +1,16 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { INTERNATIONAL_SHIPPING_WARNING } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
-import { useCallback } from "react"
 
 export interface Order2DeliveryOptionsCompletedViewProps {
   label: string
   timeEstimatePrefix: string | null
   timeEstimateRange: string | null
   price?: string | null
-  allowEdit?: boolean
+  // When provided, an Edit affordance is shown that invokes this callback.
+  // Omit it for a locked, view-only rendering.
+  onEdit?: () => void
   shippingOrigin?: string | null
   shippingRadius?: string | null
 }
@@ -25,16 +24,8 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
   shippingOrigin,
   shippingRadius,
   price,
-  allowEdit = true,
+  onEdit,
 }) => {
-  const { editStep, checkoutTracking } = useCheckoutContext()
-
-  const onClickEdit = useCallback(() => {
-    checkoutTracking.clickedChangeDeliveryOptions()
-
-    editStep(CheckoutStepName.DELIVERY_OPTION)
-  }, [checkoutTracking, editStep])
-
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
       <Flex justifyContent="space-between">
@@ -44,13 +35,13 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
           <SectionHeading>Shipping method</SectionHeading>
         </Flex>
 
-        {allowEdit && (
+        {onEdit && (
           <Clickable
             textDecoration="underline"
             cursor="pointer"
             type="button"
             aria-label="Edit shipping method"
-            onClick={onClickEdit}
+            onClick={onEdit}
           >
             <Text variant="sm" fontWeight="normal" color="mono100">
               Edit

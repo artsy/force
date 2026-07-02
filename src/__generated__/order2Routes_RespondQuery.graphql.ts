@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de0141c0ae21875651f2630db772ba30>>
+ * @generated SignedSource<<05241a704b395cea75f8669b894fda6d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -121,17 +121,31 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "displayName",
+  "name": "__typename",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "amountFallbackText",
+  "name": "displayName",
   "storageKey": null
 },
 v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "amountFallbackText",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "currencySymbol",
+  "storageKey": null
+},
+v12 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
@@ -146,41 +160,36 @@ v10 = {
       "name": "amount",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "currencySymbol",
-      "storageKey": null
-    }
+    (v11/*: any*/)
   ],
   "storageKey": null
 },
-v11 = [
-  (v8/*: any*/),
+v13 = [
   (v9/*: any*/),
-  (v10/*: any*/)
+  (v10/*: any*/),
+  (v12/*: any*/)
 ],
-v12 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
+  "storageKey": null
+},
+v15 = [
+  (v14/*: any*/)
 ],
-v13 = {
+v16 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
   "kind": "LinkedField",
   "name": "amount",
   "plural": false,
-  "selections": (v12/*: any*/),
+  "selections": (v15/*: any*/),
   "storageKey": null
 },
-v14 = {
+v17 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -188,30 +197,24 @@ v14 = {
   "name": "pricingBreakdownLines",
   "plural": true,
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "__typename",
-      "storageKey": null
-    },
+    (v8/*: any*/),
     {
       "kind": "InlineFragment",
-      "selections": (v11/*: any*/),
+      "selections": (v13/*: any*/),
       "type": "ShippingLine",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v11/*: any*/),
+      "selections": (v13/*: any*/),
       "type": "TaxLine",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": [
-        (v8/*: any*/),
-        (v10/*: any*/)
+        (v9/*: any*/),
+        (v12/*: any*/)
       ],
       "type": "SubtotalLine",
       "abstractKey": null
@@ -219,9 +222,9 @@ v14 = {
     {
       "kind": "InlineFragment",
       "selections": [
-        (v8/*: any*/),
         (v9/*: any*/),
-        (v13/*: any*/)
+        (v10/*: any*/),
+        (v16/*: any*/)
       ],
       "type": "TotalLine",
       "abstractKey": null
@@ -469,10 +472,17 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "paymentMethod",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "buyerStateExpiresAt",
                     "storageKey": null
                   },
-                  (v14/*: any*/),
+                  (v17/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -481,8 +491,235 @@ return {
                     "name": "pendingOffer",
                     "plural": false,
                     "selections": [
-                      (v14/*: any*/),
+                      (v17/*: any*/),
                       (v5/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "FulfillmentDetails",
+                    "kind": "LinkedField",
+                    "name": "fulfillmentDetails",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine1",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine2",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "city",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "country",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "postalCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "region",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "PhoneNumberType",
+                        "kind": "LinkedField",
+                        "name": "phoneNumber",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "format",
+                                "value": "INTERNATIONAL"
+                              }
+                            ],
+                            "kind": "ScalarField",
+                            "name": "display",
+                            "storageKey": "display(format:\"INTERNATIONAL\")"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "FulfillmentOption",
+                    "kind": "LinkedField",
+                    "name": "selectedFulfillmentOption",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "type",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Money",
+                        "kind": "LinkedField",
+                        "name": "amount",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "minor",
+                            "storageKey": null
+                          },
+                          (v14/*: any*/),
+                          (v11/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "major",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "shippingOrigin",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "shippingRadius",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "paymentMethodDetails",
+                    "plural": false,
+                    "selections": [
+                      (v8/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "brand",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "lastDigits",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "expirationYear",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "expirationMonth",
+                            "storageKey": null
+                          },
+                          (v5/*: any*/)
+                        ],
+                        "type": "CreditCard",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "last4",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "bankName",
+                            "storageKey": null
+                          },
+                          (v5/*: any*/)
+                        ],
+                        "type": "BankAccount",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isManualPayment",
+                            "storageKey": null
+                          }
+                        ],
+                        "type": "WireTransfer",
+                        "abstractKey": null
+                      }
                     ],
                     "storageKey": null
                   },
@@ -501,7 +738,7 @@ return {
                         "kind": "LinkedField",
                         "name": "buyerTotal",
                         "plural": false,
-                        "selections": (v12/*: any*/),
+                        "selections": (v15/*: any*/),
                         "storageKey": null
                       },
                       (v5/*: any*/),
@@ -512,7 +749,7 @@ return {
                         "name": "createdAt",
                         "storageKey": null
                       },
-                      (v13/*: any*/)
+                      (v16/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -529,12 +766,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "340cc58a3f644685c8c2092040fd3c94",
+    "cacheID": "d25fc3c350eff57fe33620cf4de82ded",
     "id": null,
     "metadata": {},
     "name": "order2Routes_RespondQuery",
     "operationKind": "query",
-    "text": "query order2Routes_RespondQuery(\n  $orderID: ID!\n) {\n  viewer {\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        buyerState\n        id\n      }\n      id\n    }\n    ...Order2RespondRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2RespondApp_order on Order {\n  internalID\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  ...Order2RespondSummary_order\n  ...Order2RespondForm_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  lastSubmittedOffer {\n    buyerTotal {\n      display\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  buyerStateExpiresAt\n  lastSubmittedOffer {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  ...Order2CheckoutPricingBreakdown_order\n}\n\nfragment Order2RespondRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      ...Order2RespondContext_order\n      ...Order2RespondApp_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  lineItems {\n    artworkVersion {\n      artistNames\n      title\n      date\n      image {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      price\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      images(includeAll: false) {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query order2Routes_RespondQuery(\n  $orderID: ID!\n) {\n  viewer {\n    me {\n      order(id: $orderID) {\n        internalID\n        mode\n        buyerState\n        id\n      }\n      id\n    }\n    ...Order2RespondRoute_viewer_3HPek8\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2PaymentCompletedView_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2RespondApp_order on Order {\n  internalID\n  mode\n  paymentMethod\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  ...Order2RespondSummary_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...Order2PaymentCompletedView_order\n  ...Order2RespondForm_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  lastSubmittedOffer {\n    buyerTotal {\n      display\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  buyerStateExpiresAt\n  lastSubmittedOffer {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  ...Order2CheckoutPricingBreakdown_order\n}\n\nfragment Order2RespondRoute_viewer_3HPek8 on Viewer {\n  me {\n    order(id: $orderID) {\n      internalID\n      ...Order2RespondContext_order\n      ...Order2RespondApp_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  lineItems {\n    artworkVersion {\n      artistNames\n      title\n      date\n      image {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      price\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      images(includeAll: false) {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n"
   }
 };
 })();
