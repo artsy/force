@@ -52,24 +52,26 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
                 backgroundColor={isSeller ? "mono0" : "mono5"}
               >
                 <Box flex={COLUMNS[0]}>
-                  <Text variant="sm" justifySelf="flex-start">
+                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
                     {offer.createdAt}
                   </Text>
                 </Box>
                 <Box flex={COLUMNS[1]}>
-                  <Text variant="sm">{sourceLabel(offer.fromParticipant)}</Text>
+                  <Text variant={["xs", "sm"]}>
+                    {sourceLabel(offer.fromParticipant)}
+                  </Text>
                 </Box>
                 <Box flex={COLUMNS[2]}>
-                  <Text variant="sm" justifySelf="flex-start">
+                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
                     {offer.amount?.display}
                   </Text>
                 </Box>
-<Box flex={COLUMNS[3]} textAlign="right">
-  {/* buyerTotal is undefined for incomplete (original) offers */}
-  <Text variant="sm">
-    {offer.buyerTotal?.display ?? "INCOMPLETE ORDER"}
-  </Text>
-</Box>
+                <Box flex={COLUMNS[3]} textAlign="right">
+                  {/* buyerTotal is undefined for incomplete (original) offers */}
+                  <Text variant={["xs", "sm"]}>
+                    {offer.buyerTotal?.display ?? "INCOMPLETE ORDER"}
+                  </Text>
+                </Box>
               </Flex>
             )
           })}
