@@ -46,6 +46,17 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
 }) => {
   const orderData = useFragment(FRAGMENT, order)
 
+  const {
+    artworkInternalID,
+    artistNames,
+    title: artworkTitle,
+    date,
+    listPriceDisplay,
+    attributionClassLabel,
+    dimensionsLabel,
+    imageURL,
+  } = artwork
+
   return (
     <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
       <Text
@@ -56,15 +67,15 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
         {title}
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
-        {artwork.imageURL && (
+        {imageURL && (
           <RouterLink
             flex={0}
             to={artworkPath}
             target="_blank"
             onClick={() => {
-              if (artwork.artworkInternalID) {
+              if (artworkInternalID) {
                 checkoutTracking.clickedOrderArtworkImage({
-                  destinationPageOwnerId: artwork.artworkInternalID,
+                  destinationPageOwnerId: artworkInternalID,
                   contextModule,
                 })
               }
@@ -72,31 +83,31 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           >
             <Image
               mr={1}
-              src={artwork.imageURL}
-              alt={artwork.title || ""}
+              src={imageURL}
+              alt={artworkTitle || ""}
               width={["65px", "85px"]}
             />
           </RouterLink>
         )}
         <Box overflow="hidden" flex={1}>
           <Text overflowEllipsis variant="sm" color="mono100">
-            {artwork.artistNames}
+            {artistNames}
           </Text>
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            {[artwork.title, artwork.date].join(", ")}
+            {[artworkTitle, date].join(", ")}
           </Text>
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            List price: {artwork.listPriceDisplay}
+            List price: {listPriceDisplay}
           </Text>
           {artworkExtraContent}
-          {artwork.attributionClassLabel && (
+          {attributionClassLabel && (
             <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {artwork.attributionClassLabel}
+              {attributionClassLabel}
             </Text>
           )}
-          {artwork.dimensionsLabel && (
+          {dimensionsLabel && (
             <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {artwork.dimensionsLabel}
+              {dimensionsLabel}
             </Text>
           )}
         </Box>
