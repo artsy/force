@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7005bf80a5fa49b5001220e655fa5aeb>>
+ * @generated SignedSource<<fb43d802690a6d89440b08dedfde6628>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,7 +29,14 @@ var v0 = [
     "value": "example"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -38,25 +45,31 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = {
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Float"
 },
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Float"
 },
-v5 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -169,6 +182,25 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Location",
+            "kind": "LinkedField",
+            "name": "publicLocation",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "postalCode",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
             "name": "listPrice",
@@ -183,7 +215,7 @@ return {
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v1/*: any*/),
+                "selections": (v2/*: any*/),
                 "type": "Money",
                 "abstractKey": null
               },
@@ -197,7 +229,7 @@ return {
                     "kind": "LinkedField",
                     "name": "maxPrice",
                     "plural": false,
-                    "selections": (v1/*: any*/),
+                    "selections": (v2/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -207,7 +239,7 @@ return {
                     "kind": "LinkedField",
                     "name": "minPrice",
                     "plural": false,
-                    "selections": (v1/*: any*/),
+                    "selections": (v2/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -270,20 +302,14 @@ return {
             "name": "widthCm",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "55e4608d74bf395909b4868ea6d19bff",
+    "cacheID": "8c97d5096fc07f8c38a0d9064bf78ef1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -293,20 +319,15 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.depthCm": (v2/*: any*/),
-        "artwork.diameterCm": (v2/*: any*/),
-        "artwork.framedDepth": (v3/*: any*/),
-        "artwork.framedDiameter": (v3/*: any*/),
-        "artwork.framedHeight": (v3/*: any*/),
-        "artwork.framedMetric": (v3/*: any*/),
-        "artwork.framedWidth": (v3/*: any*/),
-        "artwork.heightCm": (v2/*: any*/),
-        "artwork.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
+        "artwork.depthCm": (v3/*: any*/),
+        "artwork.diameterCm": (v3/*: any*/),
+        "artwork.framedDepth": (v4/*: any*/),
+        "artwork.framedDiameter": (v4/*: any*/),
+        "artwork.framedHeight": (v4/*: any*/),
+        "artwork.framedMetric": (v4/*: any*/),
+        "artwork.framedWidth": (v4/*: any*/),
+        "artwork.heightCm": (v3/*: any*/),
+        "artwork.id": (v5/*: any*/),
         "artwork.isFramed": {
           "enumValues": null,
           "nullable": true,
@@ -325,28 +346,36 @@ return {
           "plural": false,
           "type": "String"
         },
-        "artwork.listPrice.major": (v4/*: any*/),
-        "artwork.listPrice.maxPrice": (v5/*: any*/),
-        "artwork.listPrice.maxPrice.major": (v4/*: any*/),
-        "artwork.listPrice.minPrice": (v5/*: any*/),
-        "artwork.listPrice.minPrice.major": (v4/*: any*/),
+        "artwork.listPrice.major": (v6/*: any*/),
+        "artwork.listPrice.maxPrice": (v7/*: any*/),
+        "artwork.listPrice.maxPrice.major": (v6/*: any*/),
+        "artwork.listPrice.minPrice": (v7/*: any*/),
+        "artwork.listPrice.minPrice.major": (v6/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMedium"
         },
-        "artwork.mediumType.name": (v3/*: any*/),
-        "artwork.priceCurrency": (v3/*: any*/),
-        "artwork.shippingOrigin": (v3/*: any*/),
-        "artwork.shippingWeight": (v2/*: any*/),
-        "artwork.shippingWeightMetric": (v3/*: any*/),
-        "artwork.widthCm": (v2/*: any*/)
+        "artwork.mediumType.name": (v4/*: any*/),
+        "artwork.priceCurrency": (v4/*: any*/),
+        "artwork.publicLocation": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "artwork.publicLocation.id": (v5/*: any*/),
+        "artwork.publicLocation.postalCode": (v4/*: any*/),
+        "artwork.shippingOrigin": (v4/*: any*/),
+        "artwork.shippingWeight": (v3/*: any*/),
+        "artwork.shippingWeightMetric": (v4/*: any*/),
+        "artwork.widthCm": (v3/*: any*/)
       }
     },
     "name": "ArtsyShippingEstimate_Test_Query",
     "operationKind": "query",
-    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  depthCm\n  diameterCm\n  framedHeight\n  framedWidth\n  framedDepth\n  framedDiameter\n  framedMetric\n  heightCm\n  isFramed\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n  mediumType {\n    name\n  }\n  priceCurrency\n  shippingOrigin\n  shippingWeight\n  shippingWeightMetric\n  widthCm\n}\n"
+    "text": "query ArtsyShippingEstimate_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtsyShippingEstimate_artwork\n    id\n  }\n}\n\nfragment ArtsyShippingEstimate_artwork on Artwork {\n  depthCm\n  diameterCm\n  framedHeight\n  framedWidth\n  framedDepth\n  framedDiameter\n  framedMetric\n  heightCm\n  isFramed\n  publicLocation {\n    postalCode\n    id\n  }\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n  mediumType {\n    name\n  }\n  priceCurrency\n  shippingOrigin\n  shippingWeight\n  shippingWeightMetric\n  widthCm\n}\n"
   }
 };
 })();
