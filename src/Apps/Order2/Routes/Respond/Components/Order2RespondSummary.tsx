@@ -1,11 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
-import ShieldIcon from "@artsy/icons/ShieldIcon"
-import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
-import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
+import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
-import { RouterLink } from "System/Components/RouterLink"
 import type { Order2RespondSummary_order$key } from "__generated__/Order2RespondSummary_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -13,19 +9,7 @@ interface Order2RespondSummaryProps {
   order: Order2RespondSummary_order$key
 }
 
-interface ArtworkData {
-  artworkInternalID: string
-  artistNames: string
-  title: string
-  date: string
-  price: string
-  attributionClass: { shortDescription: string } | null
-  image: { resized: { url: string } | null } | null
-  dimensions: any
-  framedDimensions: any
-}
-
-const extractLineItemMetadata = (lineItem: any): ArtworkData => {
+const extractLineItemMetadata = (lineItem: any) => {
   const artworkVersion = lineItem?.artworkVersion
   const artwork = lineItem?.artwork
 
@@ -56,96 +40,29 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     })
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <Text
-        color="mono100"
-        fontWeight="bold"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        Offer summary
-      </Text>
-      <Flex py={1} justifyContent="space-between" alignItems="flex-start">
-        {artworkData?.image?.resized?.url && (
-          <RouterLink
-            flex={0}
-            to={artworkPath}
-            target="_blank"
-            onClick={() => {
-              if (artworkData.artworkInternalID) {
-                checkoutTracking.clickedOrderArtworkImage({
-                  destinationPageOwnerId: artworkData.artworkInternalID,
-                  contextModule: ContextModule.ordersRespond,
-                })
-              }
-            }}
-          >
-            <Image
-              mr={1}
-              src={artworkData?.image?.resized?.url}
-              alt={artworkData.title || ""}
-              width={["65px", "85px"]}
-            />
-          </RouterLink>
-        )}
-        <Box overflow="hidden" flex={1}>
-          <Text overflowEllipsis variant="sm" color="mono100">
-            {artworkData.artistNames}
-          </Text>
-          <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            {[artworkData.title, artworkData.date].join(", ")}
-          </Text>
-          <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            List price: {artworkData.price}
-          </Text>
-          {artworkData.attributionClass?.shortDescription && (
-            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {artworkData.attributionClass.shortDescription}
-            </Text>
-          )}
-          {dimensionsLabel && (
-            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {dimensionsLabel}
-            </Text>
-          )}
-        </Box>
-      </Flex>
-      <Box>
-        <Order2CheckoutPricingBreakdown
-          order={orderData}
-          contextModule={ContextModule.ordersRespond}
-          checkoutTracking={checkoutTracking}
-        />
-      </Box>
-      <Spacer y={2} />
-      <Message variant="default" p={1}>
-        <Flex>
-          <ShieldIcon fill="mono100" />
-          <Spacer x={1} />
-          <Text variant="xs" color="mono100">
-            Your purchase is protected with{" "}
-            <RouterLink
-              onClick={() =>
-                checkoutTracking.clickedBuyerProtection(
-                  ContextModule.ordersRespond,
-                )
-              }
-              inline
-              target="_blank"
-              to={BUYER_GUARANTEE_URL}
-            >
-              Artsy&rsquo;s Buyer Guarantee
-            </RouterLink>
-            .
-          </Text>
-        </Flex>
-      </Message>
-    </Flex>
+    <Order2OrderSummary
+      order={orderData}
+      title="Offer summary"
+      contextModule={ContextModule.ordersRespond}
+      checkoutTracking={checkoutTracking}
+      artworkPath={artworkPath}
+      artwork={{
+        artworkInternalID: artworkData.artworkInternalID,
+        artistNames: artworkData.artistNames,
+        title: artworkData.title,
+        date: artworkData.date,
+        listPriceDisplay: artworkData.price,
+        attributionClassLabel: artworkData.attributionClass?.shortDescription,
+        dimensionsLabel,
+        imageURL: artworkData.image?.resized?.url,
+      }}
+    />
   )
 }
 
 const FRAGMENT = graphql`
   fragment Order2RespondSummary_order on Order {
-    ...Order2CheckoutPricingBreakdown_order
+    ...Order2OrderSummary_order
     lineItems {
       artworkVersion {
         artistNames

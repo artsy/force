@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3de546186af39599524a932e94f8fed5>>
+ * @generated SignedSource<<24939d79340cda9087d45828e3d2f65d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,7 +43,7 @@ export type Order2RespondSummary_order$data = {
       readonly title: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutPricingBreakdown_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2OrderSummary_order">;
   readonly " $fragmentType": "Order2RespondSummary_order";
 };
 export type Order2RespondSummary_order$key = {
@@ -103,7 +103,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Order2CheckoutPricingBreakdown_order"
+      "name": "Order2OrderSummary_order"
     },
     {
       "alias": null,
@@ -243,6 +243,6 @@ return {
 };
 })();
 
-(node as any).hash = "6d5cdee50cb71c8de38b5d22707c6d80";
+(node as any).hash = "c2832658f4c9aec20192fc8a0c87c670";
 
 export default node;
