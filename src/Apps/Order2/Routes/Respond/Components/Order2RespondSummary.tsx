@@ -42,7 +42,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   return (
     <Order2OrderSummary
       order={orderData}
-      title="Offer summary"
+      header="Offer summary"
       contextModule={ContextModule.ordersRespond}
       checkoutTracking={checkoutTracking}
       artworkPath={artworkPath}

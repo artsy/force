@@ -35,7 +35,7 @@ const { renderWithRelay } = setupTestWrapperTL<Order2OrderSummaryTestQuery>({
     return (
       <Order2OrderSummary
         order={order}
-        title="Offer summary"
+        header="Offer summary"
         contextModule={ContextModule.ordersRespond}
         checkoutTracking={checkoutTracking}
         artworkPath="/artwork/guernica"

@@ -21,7 +21,7 @@ export interface Order2OrderSummaryArtwork {
 
 interface Order2OrderSummaryProps {
   order: Order2OrderSummary_order$key
-  title: string
+  header: string
   contextModule: ContextModule
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
   artworkPath: string
@@ -35,7 +35,7 @@ interface Order2OrderSummaryProps {
 
 export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
   order,
-  title,
+  header,
   contextModule,
   checkoutTracking,
   artworkPath,
@@ -64,7 +64,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
         fontWeight="bold"
         variant={["sm-display", "sm-display", "md"]}
       >
-        {title}
+        {header}
       </Text>
       <Flex py={1} justifyContent="space-between" alignItems="flex-start">
         {imageURL && (

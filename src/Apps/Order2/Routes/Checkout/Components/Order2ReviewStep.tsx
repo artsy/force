@@ -200,7 +200,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   return (
     <Order2OrderSummary
       order={orderData}
-      title={`${isOffer ? "Offer" : "Order"} summary`}
+      header={`${isOffer ? "Offer" : "Order"} summary`}
       contextModule={ContextModule.ordersReview}
       checkoutTracking={checkoutTracking}
       artworkPath={artworkPath}
