@@ -122,7 +122,7 @@ export const useAuthDialogTracking = () => {
         const payload: ErrorMessageViewed = {
           action: ActionType.errorMessageViewed,
           context_owner_type: OwnerType.authModal,
-          context_owner_id: "",
+          context_owner_id: "", // required by schema but auth modal has no entity ID
           title,
           message,
           error_code,
