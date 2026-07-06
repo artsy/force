@@ -256,7 +256,8 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
           aria-label="Edit response"
           onClick={onEdit}
         >
-          <Text variant="sm" fontWeight="normal" color="mono100">
+          {/*TODO: maybe refactor to reuse across order/ofer */}
+          <Text variant="xs" fontWeight="normal" color="mono100">
             Edit
           </Text>
         </Clickable>
