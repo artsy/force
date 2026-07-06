@@ -14,6 +14,7 @@ import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Compo
 import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsCompletedView"
 import { useCompleteFulfillmentDetailsData } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/useCompleteFulfillmentDetailsData"
 import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentCompletedView"
+import { Order2OfferHistory } from "Apps/Order2/Routes/Respond/Components/Order2OfferHistory"
 import { Order2RespondForm } from "Apps/Order2/Routes/Respond/Components/Order2RespondForm"
 import { Order2RespondSummary } from "Apps/Order2/Routes/Respond/Components/Order2RespondSummary"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
@@ -59,6 +60,8 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
           <Box maxWidth={["100%", breakpoints.sm, "100%"]} mx={[0, "auto", 0]}>
             <Stack gap={1}>
               <Order2RespondForm order={orderData} />
+
+              <Order2OfferHistory order={orderData} />
 
               {/* Respond form (EMI-3172) renders above these summaries. */}
               {fulfillmentDetailsProps && (
@@ -128,6 +131,7 @@ const ORDER_FRAGMENT = graphql`
     ...useCompleteDeliveryOptionData_order
     ...Order2PaymentCompletedView_order
     ...Order2RespondForm_order
+    ...Order2OfferHistory_order
     ...Order2HelpLinks_order
   }
 `

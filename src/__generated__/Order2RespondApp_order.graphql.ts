@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2544d0f0066bb5fbf12755238da41c56>>
+ * @generated SignedSource<<b33dfb0bff21d62fc605b74266a5748e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type Order2RespondApp_order$data = {
   } | null | undefined>;
   readonly mode: OrderModeEnum;
   readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2HelpLinks_order" | "Order2PaymentCompletedView_order" | "Order2RespondForm_order" | "Order2RespondSummary_order" | "useCompleteDeliveryOptionData_order" | "useCompleteFulfillmentDetailsData_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2HelpLinks_order" | "Order2OfferHistory_order" | "Order2PaymentCompletedView_order" | "Order2RespondForm_order" | "Order2RespondSummary_order" | "useCompleteDeliveryOptionData_order" | "useCompleteFulfillmentDetailsData_order">;
   readonly " $fragmentType": "Order2RespondApp_order";
 };
 export type Order2RespondApp_order$key = {
@@ -113,6 +113,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "Order2OfferHistory_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "Order2HelpLinks_order"
     }
   ],
@@ -120,6 +125,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "98afba0ec5f281abbf7aec9850ba53f7";
+(node as any).hash = "f1d2204178bf7e6b353684eaa1334996";
 
 export default node;
