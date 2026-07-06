@@ -2,6 +2,7 @@
 .artifacts
 .cache
 .cache-loader
+tsconfig.tsbuildinfo
 .claude/settings.local.json
 .DS_Store
 .env
