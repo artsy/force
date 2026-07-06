@@ -37,6 +37,7 @@ jest.mock("System/Hooks/useSystemContext", () => ({
 jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn(() => false),
   useVariant: jest.fn(() => ({ enabled: false, name: "control" })),
+  useFlagsStatus: jest.fn(() => ({ flagsReady: true })),
 }))
 
 jest.mock("System/Hooks/useTrackFeatureVariant", () => ({

@@ -58,6 +58,9 @@ const validArtworkData = {
   widthCm: 100,
   heightCm: 100,
   isFramed: false,
+  publicLocation: {
+    postalCode: "10013",
+  },
   listPrice: {
     major: 1000,
   },
@@ -203,6 +206,7 @@ describe("ArtsyShippingEstimate", () => {
             city: "New York",
             country: "USA",
             region: "",
+            postal_code: "10013",
           },
         }),
       )
@@ -221,6 +225,26 @@ describe("ArtsyShippingEstimate", () => {
               city: "New York",
               country: "USA",
               region: "NY",
+              postal_code: "10013",
+            },
+          }),
+        )
+      })
+    })
+
+    describe("with an artwork without a postal code", () => {
+      it("omits the postal code from the origin", () => {
+        expect(
+          estimateRequestBodyForArtwork({
+            ...validArtworkData,
+            publicLocation: null,
+          }),
+        ).toEqual(
+          expect.objectContaining({
+            origin: {
+              city: "New York",
+              country: "USA",
+              region: "",
             },
           }),
         )

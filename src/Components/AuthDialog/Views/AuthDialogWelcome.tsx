@@ -54,7 +54,7 @@ export const AuthDialogWelcome: FC<
           dispatch({ type: "MODE", payload: { mode } })
         } catch (error) {
           console.error(error)
-          dispatch({ type: "FALLBACK" })
+          dispatch({ type: "FALLBACK", payload: { email } })
         }
       }}
     >
