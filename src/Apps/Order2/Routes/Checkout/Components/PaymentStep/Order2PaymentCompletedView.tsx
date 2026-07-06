@@ -2,8 +2,7 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { ConfirmationTokenState } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 import type {
   Order2PaymentCompletedView_order$data,
@@ -11,28 +10,35 @@ import type {
 } from "__generated__/Order2PaymentCompletedView_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
+type PaymentMethodPreview =
+  NonNullable<ConfirmationTokenState>["paymentMethodPreview"]
+
 interface Order2PaymentCompletedViewProps {
   order: Order2PaymentCompletedView_order$key
+  // Preview of an in-session (newly entered) payment method; checkout supplies
+  // this from its confirmation token. When absent, the saved payment method on
+  // the order is shown instead.
+  paymentMethodPreview?: PaymentMethodPreview
+  // When provided, an Edit affordance is shown that invokes this callback.
+  // Omit it for a locked, view-only rendering.
+  onEdit?: () => void
 }
 
 export const Order2PaymentCompletedView: React.FC<
   Order2PaymentCompletedViewProps
-> = ({ order }) => {
+> = ({ order, paymentMethodPreview, onEdit }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
-  const { editStep, checkoutTracking, confirmationToken } = useCheckoutContext()
-
-  const onClickEdit = () => {
-    checkoutTracking.clickedChangePaymentMethod()
-    editStep(CheckoutStepName.PAYMENT)
-  }
 
   const savedPaymentMethod = orderData.paymentMethodDetails
-  const paymentPreview = confirmationToken?.paymentMethodPreview
   const paymentMethod = orderData.paymentMethod
+
+  if (!paymentMethod) {
+    return null
+  }
 
   const details = getDisplayDetails(
     paymentMethod,
-    paymentPreview,
+    paymentMethodPreview,
     savedPaymentMethod,
   )
 
@@ -44,17 +50,19 @@ export const Order2PaymentCompletedView: React.FC<
           <Spacer x={1} />
           <SectionHeading>Payment</SectionHeading>
         </Flex>
-        <Clickable
-          textDecoration="underline"
-          cursor="pointer"
-          type="button"
-          aria-label="Edit payment method"
-          onClick={onClickEdit}
-        >
-          <Text variant="sm" fontWeight="normal" color="mono100">
-            Edit
-          </Text>
-        </Clickable>
+        {onEdit && (
+          <Clickable
+            textDecoration="underline"
+            cursor="pointer"
+            type="button"
+            aria-label="Edit payment method"
+            onClick={onEdit}
+          >
+            <Text variant="sm" fontWeight="normal" color="mono100">
+              Edit
+            </Text>
+          </Clickable>
+        )}
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
         {/* Bank Account (ACH or SEPA) */}
@@ -107,9 +115,7 @@ export const Order2PaymentCompletedView: React.FC<
 
 const getDisplayDetails = (
   paymentMethod: Order2PaymentCompletedView_order$data["paymentMethod"],
-  paymentPreview: NonNullable<
-    ReturnType<typeof useCheckoutContext>["confirmationToken"]
-  >["paymentMethodPreview"],
+  paymentPreview: PaymentMethodPreview,
   savedPaymentMethod: Order2PaymentCompletedView_order$data["paymentMethodDetails"],
 ) => {
   switch (paymentMethod) {

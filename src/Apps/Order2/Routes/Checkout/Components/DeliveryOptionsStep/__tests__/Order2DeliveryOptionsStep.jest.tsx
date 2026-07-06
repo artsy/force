@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 import { Order2DeliveryOptionsStep } from "../Order2DeliveryOptionsStep"
@@ -63,8 +63,10 @@ beforeEach(() => {
       clickedOrderProgression: jest.fn(),
       clickedBuyerProtection: jest.fn(),
       clickedSelectShippingOption: jest.fn(),
+      clickedChangeDeliveryOptions: jest.fn(),
     },
     completeStep: jest.fn(),
+    editStep: jest.fn(),
     setSectionErrorMessage: jest.fn(),
     messages: {},
   }
@@ -174,6 +176,62 @@ describe("Order2DeliveryOptionsStep", () => {
         screen.getByText("Methods vary based on location and artwork size"),
       ).toBeInTheDocument()
       expect(screen.queryByRole("button")).not.toBeInTheDocument()
+    })
+  })
+
+  describe("COMPLETED", () => {
+    const completedSteps = [
+      makeStep(CheckoutStepName.DELIVERY_OPTION, CheckoutStepState.COMPLETED),
+    ]
+
+    const orderWithTwoOptions = {
+      ...orderWithFulfillmentDetails,
+      fulfillmentOptions: [
+        {
+          type: "DOMESTIC_FLAT",
+          amount: { display: "$25.00" },
+          selected: true,
+        },
+        {
+          type: "ARTSY_STANDARD",
+          amount: { display: "$30.00" },
+          selected: false,
+        },
+      ],
+    }
+
+    it("renders the completed view with an Edit affordance when multiple options exist", () => {
+      mockCheckoutContext.steps = completedSteps
+      renderWithRelay({ Me: () => ({ order: orderWithTwoOptions }) })
+
+      expect(
+        screen.getByRole("button", { name: "Edit shipping method" }),
+      ).toBeInTheDocument()
+    })
+
+    it("wires Edit to tracking + editStep", () => {
+      mockCheckoutContext.steps = completedSteps
+      renderWithRelay({ Me: () => ({ order: orderWithTwoOptions }) })
+
+      fireEvent.click(
+        screen.getByRole("button", { name: "Edit shipping method" }),
+      )
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedChangeDeliveryOptions,
+      ).toHaveBeenCalled()
+      expect(mockCheckoutContext.editStep).toHaveBeenCalledWith(
+        CheckoutStepName.DELIVERY_OPTION,
+      )
+    })
+
+    it("does not render an Edit affordance when only one option exists", () => {
+      mockCheckoutContext.steps = completedSteps
+      renderWithRelay({ Me: () => ({ order: orderWithFulfillmentDetails }) })
+
+      expect(
+        screen.queryByRole("button", { name: "Edit shipping method" }),
+      ).not.toBeInTheDocument()
     })
   })
 })

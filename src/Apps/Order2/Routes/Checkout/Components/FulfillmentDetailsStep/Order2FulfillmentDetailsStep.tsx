@@ -37,6 +37,7 @@ export const Order2FulfillmentDetailsStep: React.FC<
     checkoutTracking,
     setUserAddressMode,
     setIsFulfillmentDetailsSaving,
+    editStep,
   } = useCheckoutContext()
 
   const unsetOrderFulfillmentOption =
@@ -112,7 +113,13 @@ export const Order2FulfillmentDetailsStep: React.FC<
       </Box>
       {stepState === CheckoutStepState.COMPLETED && completedViewProps && (
         <Box px={[2, 2, 4]}>
-          <Order2FulfillmentDetailsCompletedView {...completedViewProps} />
+          <Order2FulfillmentDetailsCompletedView
+            {...completedViewProps}
+            onEdit={() => {
+              checkoutTracking.clickedChangeShippingAddress()
+              editStep(CheckoutStepName.FULFILLMENT_DETAILS)
+            }}
+          />
         </Box>
       )}
       <Box hidden={stepState !== CheckoutStepState.ACTIVE}>

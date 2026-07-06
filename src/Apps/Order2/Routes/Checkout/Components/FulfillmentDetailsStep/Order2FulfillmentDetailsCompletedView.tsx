@@ -2,8 +2,6 @@ import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 
 export interface FulfillmentDetails {
   name?: string | null
@@ -20,18 +18,14 @@ export interface Order2FulfillmentDetailsCompletedViewProps {
   isPickup: boolean
   fulfillmentDetails: FulfillmentDetails
   isOffer?: boolean
+  // When provided, an Edit affordance is shown that invokes this callback.
+  // Omit it for a locked, view-only rendering.
+  onEdit?: () => void
 }
 
 export const Order2FulfillmentDetailsCompletedView: React.FC<
   Order2FulfillmentDetailsCompletedViewProps
-> = ({ isPickup, fulfillmentDetails, isOffer = false }) => {
-  const { editStep, checkoutTracking } = useCheckoutContext()
-
-  const onClickEdit = () => {
-    checkoutTracking.clickedChangeShippingAddress()
-    editStep(CheckoutStepName.FULFILLMENT_DETAILS)
-  }
-
+> = ({ isPickup, fulfillmentDetails, isOffer = false, onEdit }) => {
   if (isPickup) {
     return (
       <Flex flexDirection="column" backgroundColor="mono0">
@@ -41,17 +35,19 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             <Spacer x={1} />
             <SectionHeading>Pickup</SectionHeading>
           </Flex>
-          <Clickable
-            textDecoration="underline"
-            cursor="pointer"
-            type="button"
-            aria-label="Edit pickup details"
-            onClick={onClickEdit}
-          >
-            <Text variant="sm" fontWeight="normal" color="mono100">
-              Edit
-            </Text>
-          </Clickable>
+          {onEdit && (
+            <Clickable
+              textDecoration="underline"
+              cursor="pointer"
+              type="button"
+              aria-label="Edit pickup details"
+              onClick={onEdit}
+            >
+              <Text variant="sm" fontWeight="normal" color="mono100">
+                Edit
+              </Text>
+            </Clickable>
+          )}
         </Flex>
         <Flex alignItems="center" ml="30px" mt={1}>
           <Text variant="sm" fontWeight="normal" color="mono100">
@@ -74,17 +70,19 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           <Box flexGrow={1} mx={0.5} />
           <SectionHeading>Delivery</SectionHeading>
         </Flex>
-        <Clickable
-          textDecoration="underline"
-          cursor="pointer"
-          type="button"
-          aria-label="Edit delivery address"
-          onClick={onClickEdit}
-        >
-          <Text variant="sm" fontWeight="normal" color="mono100">
-            Edit
-          </Text>
-        </Clickable>
+        {onEdit && (
+          <Clickable
+            textDecoration="underline"
+            cursor="pointer"
+            type="button"
+            aria-label="Edit delivery address"
+            onClick={onEdit}
+          >
+            <Text variant="sm" fontWeight="normal" color="mono100">
+              Edit
+            </Text>
+          </Clickable>
+        )}
       </Flex>
 
       <Box ml="30px" mt={1}>

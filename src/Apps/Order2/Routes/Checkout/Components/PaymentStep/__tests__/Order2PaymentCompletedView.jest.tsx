@@ -1,157 +1,127 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
+import { Order2PaymentCompletedView } from "Apps/Order2/Routes/Checkout/Components/PaymentStep/Order2PaymentCompletedView"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2PaymentCompletedViewTestQuery } from "__generated__/Order2PaymentCompletedViewTestQuery.graphql"
 import { graphql } from "react-relay"
-import { Order2CheckoutRoute } from "../../../Order2CheckoutRoute"
 
 jest.unmock("react-relay")
 
-const mockElements = {
-  getElement: () => ({
-    collapse: jest.fn(),
-  }),
-  submit: jest.fn(),
-  update: jest.fn(),
-}
-
-jest.mock("@stripe/react-stripe-js", () => {
-  const originalModule = jest.requireActual("@stripe/react-stripe-js")
-  const mockPaymentElement = jest.fn(() => {
-    return <div data-testid="payment-element">Mock Payment Element</div>
-  })
-  return {
-    ...originalModule,
-    useStripe: jest.fn(() => ({})),
-    useElements: jest.fn(() => mockElements),
-    PaymentElement: mockPaymentElement,
-    Elements: jest.fn(({ children }) => <div>{children}</div>),
-  }
-})
+// The view is context-free (props only), so it's rendered directly. `onEditProp`
+// is toggled per-test to cover the Edit affordance in both directions.
+let onEditProp: (() => void) | undefined
 
 const { renderWithRelay } =
   setupTestWrapperTL<Order2PaymentCompletedViewTestQuery>({
-    Component: (props: any) => <Order2CheckoutRoute {...props} />,
+    Component: (props: any) => {
+      return (
+        <Order2PaymentCompletedView
+          order={props.me.order}
+          onEdit={onEditProp}
+        />
+      )
+    },
     query: graphql`
       query Order2PaymentCompletedViewTestQuery @relay_test_operation {
-        viewer {
-          ...Order2CheckoutRoute_viewer @arguments(orderID: "order-id")
+        me {
+          order(id: "order-id") {
+            ...Order2PaymentCompletedView_order
+          }
         }
       }
     `,
   })
 
+beforeEach(() => {
+  onEditProp = undefined
+})
+
+const creditCard = {
+  Order: () => ({
+    paymentMethod: "CREDIT_CARD",
+    paymentMethodDetails: {
+      __typename: "CreditCard",
+      brand: "Visa",
+      lastDigits: "4242",
+      expirationMonth: 12,
+      expirationYear: 2025,
+    },
+  }),
+}
+
+const usBankAccount = {
+  Order: () => ({
+    paymentMethod: "US_BANK_ACCOUNT",
+    paymentMethodDetails: {
+      __typename: "BankAccount",
+      last4: "6789",
+      bankName: "Chase Bank",
+    },
+  }),
+}
+
+const sepaDebit = {
+  Order: () => ({
+    paymentMethod: "SEPA_DEBIT",
+    paymentMethodDetails: {
+      __typename: "BankAccount",
+      last4: "1234",
+      bankName: "Deutsche Bank",
+    },
+  }),
+}
+
+const wireTransfer = {
+  Order: () => ({
+    paymentMethod: "WIRE_TRANSFER",
+    paymentMethodDetails: {
+      __typename: "WireTransfer",
+      isManualPayment: true,
+    },
+  }),
+}
+
 describe("Order2PaymentCompletedView", () => {
-  describe("credit card payment method", () => {
-    it("displays credit card details with last 4 digits and expiration date", async () => {
-      const props = {
-        ...baseProps,
-        me: {
-          ...baseProps.me,
-          order: {
-            ...baseProps.me.order,
-            paymentMethod: "CREDIT_CARD",
-            paymentMethodDetails: {
-              __typename: "CreditCard",
-              brand: "Visa",
-              lastDigits: "4242",
-              expirationMonth: 12,
-              expirationYear: 2025,
-            },
-          },
-        },
-      }
-
-      renderWithRelay({
-        Viewer: () => props,
-      })
-
+  describe("payment method details", () => {
+    it("displays credit card details with last 4 digits and expiration date", () => {
+      renderWithRelay(creditCard)
       expect(screen.getByText("•••• 4242 Exp 12/25")).toBeInTheDocument()
-      expect(screen.getAllByText("Payment").length).toBeGreaterThan(0)
     })
-  })
 
-  describe("bank account payment method", () => {
-    it("displays US bank account details with bank name and last 4 digits", async () => {
-      const props = {
-        ...baseProps,
-        me: {
-          ...baseProps.me,
-          order: {
-            ...baseProps.me.order,
-            paymentMethod: "US_BANK_ACCOUNT",
-            paymentMethodDetails: {
-              __typename: "BankAccount",
-              last4: "6789",
-              bankName: "Chase Bank",
-            },
-          },
-        },
-      }
-
-      renderWithRelay({
-        Viewer: () => props,
-      })
-
+    it("displays US bank account details with bank name and last 4 digits", () => {
+      renderWithRelay(usBankAccount)
       expect(screen.getByText(/Chase Bank •••• 6789/)).toBeInTheDocument()
     })
 
-    it("displays SEPA debit details with bank name and last 4 digits", async () => {
-      const props = {
-        ...baseProps,
-        me: {
-          ...baseProps.me,
-          order: {
-            ...baseProps.me.order,
-            paymentMethod: "SEPA_DEBIT",
-            paymentMethodDetails: {
-              __typename: "BankAccount",
-              last4: "1234",
-              bankName: "Deutsche Bank",
-            },
-          },
-        },
-      }
-
-      renderWithRelay({
-        Viewer: () => props,
-      })
-
+    it("displays SEPA debit details with last 4 digits", () => {
+      renderWithRelay(sepaDebit)
       expect(screen.getByText(/•••• 1234/)).toBeInTheDocument()
+    })
+
+    it("displays wire transfer text", () => {
+      renderWithRelay(wireTransfer)
+      expect(screen.getByText("Wire transfer")).toBeInTheDocument()
     })
   })
 
-  describe("wire transfer payment method", () => {
-    it("displays wire transfer text", async () => {
-      const props = {
-        ...baseProps,
-        me: {
-          ...baseProps.me,
-          order: {
-            ...baseProps.me.order,
-            paymentMethod: "WIRE_TRANSFER",
-            paymentMethodDetails: {
-              __typename: "WireTransfer",
-              isManualPayment: true,
-            },
-          },
-        },
-      }
+  describe("Edit affordance", () => {
+    it("renders Edit and calls onEdit when clicked", () => {
+      const onEdit = jest.fn()
+      onEditProp = onEdit
+      renderWithRelay(creditCard)
 
-      renderWithRelay({
-        Viewer: () => props,
-      })
+      fireEvent.click(
+        screen.getByRole("button", { name: "Edit payment method" }),
+      )
 
-      expect(screen.getAllByText("Wire transfer").length).toBeGreaterThan(0)
+      expect(onEdit).toHaveBeenCalledTimes(1)
+    })
+
+    it("does not render Edit when onEdit is omitted (view-only)", () => {
+      renderWithRelay(creditCard)
+
+      expect(
+        screen.queryByRole("button", { name: "Edit payment method" }),
+      ).not.toBeInTheDocument()
     })
   })
 })
-
-const baseProps = {
-  me: {
-    order: {
-      internalID: "order-id",
-      paymentMethod: null,
-      paymentMethodDetails: null,
-    },
-  },
-}
