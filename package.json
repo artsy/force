@@ -50,7 +50,7 @@
     "sync-schema-local": "scripts/sync-schema-local.sh",
     "test": "scripts/jest.sh",
     "test:smoke": "npx playwright test",
-    "type-check": "tsc --noEmit --incremental",
+    "type-check": "tsc --noEmit",
     "storybook": "storybook dev -p 6006"
   },
   "resolutions": {
