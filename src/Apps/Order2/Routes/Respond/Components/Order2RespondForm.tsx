@@ -5,7 +5,6 @@ import {
   Clickable,
   Flex,
   Input,
-  Message,
   Radio,
   RadioGroup,
   Spacer,
@@ -67,14 +66,12 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
 
-  const handleSaveAndReview = () => {
+  const handleContinueToReview = () => {
     if (!selectedAction || !isCounterofferValid) {
       return
     }
-    // NOTE: actually submitting the response (accept/counteroffer/decline) is
-    // out of scope for this ticket — it's handled in EMI-3288
-    // (https://artsyproduct.atlassian.net/browse/EMI-3288). Here we only
-    // advance/collapse the step.
+    // Advancing to the review step is navigation-only — no mutation runs here.
+    // The response is submitted from the summary’s Submit CTA (EMI-3288).
     setRespondComplete()
   }
 
@@ -124,14 +121,6 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
             </Text>
           </>
         )}
-
-        <Spacer y={1} />
-        <Message variant="default" p={1}>
-          <Text variant="xs">
-            No request was sent — submitting the response will be implemented in
-            EMI-3288.
-          </Text>
-        </Message>
       </Flex>
     )
   }
@@ -239,9 +228,9 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
         variant="primaryBlack"
         width="100%"
         disabled={!selectedAction || !isCounterofferValid}
-        onClick={handleSaveAndReview}
+        onClick={handleContinueToReview}
       >
-        Save and Review
+        Continue to Review
       </Button>
     </Flex>
   )

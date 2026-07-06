@@ -40,7 +40,8 @@ const defaultResolvers = {
   Money: () => ({ display: "$1,000.00" }),
 }
 
-const saveButton = () => screen.getByRole("button", { name: "Save and Review" })
+const continueButton = () =>
+  screen.getByRole("button", { name: "Continue to Review" })
 
 describe("Order2RespondForm", () => {
   it("renders the three response options", () => {
@@ -51,14 +52,14 @@ describe("Order2RespondForm", () => {
     expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
   })
 
-  it("disables Save and Review until an option is selected", () => {
+  it("disables Continue to Review until an option is selected", () => {
     renderWithRelay(defaultResolvers)
 
-    expect(saveButton()).toBeDisabled()
+    expect(continueButton()).toBeDisabled()
 
     fireEvent.click(screen.getByText("Accept gallery offer"))
 
-    expect(saveButton()).toBeEnabled()
+    expect(continueButton()).toBeEnabled()
   })
 
   it("reveals the counteroffer input only when Send counteroffer is selected", () => {
@@ -89,35 +90,32 @@ describe("Order2RespondForm", () => {
     ).toBeInTheDocument()
   })
 
-  it("keeps Save and Review disabled for a counteroffer until an amount is entered", () => {
+  it("keeps Continue to Review disabled for a counteroffer until an amount is entered", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Send counteroffer"))
-    expect(saveButton()).toBeDisabled()
+    expect(continueButton()).toBeDisabled()
 
     fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
       target: { value: "500" },
     })
 
-    expect(saveButton()).toBeEnabled()
+    expect(continueButton()).toBeEnabled()
   })
 
-  it("collapses to the completed state after accepting, without submitting a request", () => {
+  it("collapses to the completed state after accepting", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Accept gallery offer"))
-    fireEvent.click(saveButton())
+    fireEvent.click(continueButton())
 
-    // Collapsed title (past tense) and the not-submitted notice
+    // Collapsed title (past tense) is shown
     expect(screen.getByText("Accepted gallery offer")).toBeInTheDocument()
-    expect(
-      screen.getByText(/submitting the response will be implemented in/i),
-    ).toBeInTheDocument()
 
     // The expanded form (options + CTA) is no longer shown
     expect(screen.queryByText("Accept gallery offer")).not.toBeInTheDocument()
     expect(
-      screen.queryByRole("button", { name: "Save and Review" }),
+      screen.queryByRole("button", { name: "Continue to Review" }),
     ).not.toBeInTheDocument()
   })
 
@@ -128,7 +126,7 @@ describe("Order2RespondForm", () => {
     fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
       target: { value: "500" },
     })
-    fireEvent.click(saveButton())
+    fireEvent.click(continueButton())
 
     expect(screen.getByText("Sent counteroffer")).toBeInTheDocument()
     expect(screen.getByText(/counteroffer total/i)).toBeInTheDocument()
@@ -149,7 +147,7 @@ describe("Order2RespondForm", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Decline gallery offer"))
-    fireEvent.click(saveButton())
+    fireEvent.click(continueButton())
 
     expect(screen.getByText("Declined gallery offer")).toBeInTheDocument()
 
