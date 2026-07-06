@@ -1,22 +1,19 @@
 import { ContextModule } from "@artsy/cohesion"
-import ShieldIcon from "@artsy/icons/ShieldIcon"
-import { Box, Button, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import { Button, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import {
   CheckoutStepName,
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
-import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
 import { TermsAndConditions } from "Apps/Order2/Routes/Checkout/Components/TermsAndConditions"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
-import { RouterLink } from "System/Components/RouterLink"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
 import type {
@@ -201,99 +198,34 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <Text
-        color="mono100"
-        fontWeight="bold"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        {isOffer ? "Offer" : "Order"} summary
-      </Text>
-      <Flex py={1} justifyContent="space-between" alignItems="flex-start">
-        {artworkData?.image?.resized?.url && (
-          <RouterLink
-            flex={0}
-            to={artworkPath}
-            target="_blank"
-            onClick={() => {
-              if (artworkData.artworkInternalID) {
-                checkoutTracking.clickedOrderArtworkImage({
-                  destinationPageOwnerId: artworkData.artworkInternalID,
-                  contextModule: ContextModule.ordersReview,
-                })
-              }
-            }}
-          >
-            <Image
-              mr={1}
-              src={artworkData?.image?.resized?.url}
-              alt={artworkData.title || ""}
-              // starting at small, allow a larger image
-              width={["65px", "85px"]}
-            />
-          </RouterLink>
-        )}
-        <Box overflow="hidden" flex={1}>
-          <Text overflowEllipsis variant="sm" color="mono100">
-            {artworkData.artistNames}
+    <Order2OrderSummary
+      order={orderData}
+      header={`${isOffer ? "Offer" : "Order"} summary`}
+      contextModule={ContextModule.ordersReview}
+      checkoutTracking={checkoutTracking}
+      artworkPath={artworkPath}
+      isPricingLoading={isFulfillmentDetailsSaving}
+      artwork={{
+        artworkInternalID: artworkData.artworkInternalID,
+        artistNames: artworkData.artistNames,
+        title: artworkData.title,
+        date: artworkData.date,
+        listPriceDisplay: artworkData.price || "Not publicly listed",
+        attributionClassLabel: artworkData.attributionClass?.shortDescription,
+        dimensionsLabel,
+        imageURL: artworkData.image?.resized?.url,
+      }}
+      limitedTimeOffer={
+        displayLimitedOfferLine && (
+          <Text variant="sm" color="blue100" textAlign="left">
+            Gallery offer: {itemPrice.display}{" "}
+            <span style={{ whiteSpace: "nowrap" }}>
+              (Exp. {timer.remainingTime})
+            </span>
           </Text>
-          <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            {[artworkData.title, artworkData.date].join(", ")}
-          </Text>
-          <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            List price: {artworkData.price || "Not publicly listed"}
-          </Text>
-          {displayLimitedOfferLine && (
-            <Text variant="sm" color="blue100" textAlign="left">
-              Gallery offer: {itemPrice.display}{" "}
-              <span style={{ whiteSpace: "nowrap" }}>
-                (Exp. {timer.remainingTime})
-              </span>
-            </Text>
-          )}
-          {artworkData.attributionClass?.shortDescription && (
-            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {artworkData.attributionClass.shortDescription}
-            </Text>
-          )}
-          {dimensionsLabel && (
-            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {dimensionsLabel}
-            </Text>
-          )}
-        </Box>
-      </Flex>
-      <Box>
-        <Order2CheckoutPricingBreakdown
-          order={orderData}
-          contextModule={ContextModule.ordersReview}
-          isLoading={isFulfillmentDetailsSaving}
-          checkoutTracking={checkoutTracking}
-        />
-      </Box>
-      <Spacer y={2} />
-      <Message variant="default" p={1}>
-        <Flex>
-          <ShieldIcon fill="mono100" />
-          <Spacer x={1} />
-          <Text variant="xs" color="mono100">
-            Your purchase is protected with{" "}
-            <RouterLink
-              onClick={() =>
-                checkoutTracking.clickedBuyerProtection(
-                  ContextModule.ordersReview,
-                )
-              }
-              inline
-              target="_blank"
-              to={BUYER_GUARANTEE_URL}
-            >
-              Artsy&rsquo;s Buyer Guarantee
-            </RouterLink>
-            .
-          </Text>
-        </Flex>
-      </Message>
+        )
+      }
+    >
       <Spacer y={2} />
       {stepState === CheckoutStepState.ACTIVE && (
         <>
@@ -317,7 +249,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Spacer y={2} />
         </>
       )}
-    </Flex>
+    </Order2OrderSummary>
   )
 }
 
@@ -360,7 +292,7 @@ const extractLineItemMetadata = (
 
 const FRAGMENT = graphql`
   fragment Order2ReviewStep_order on Order {
-    ...Order2CheckoutPricingBreakdown_order
+    ...Order2OrderSummary_order
     internalID
     source
     buyerStateExpiresAt
