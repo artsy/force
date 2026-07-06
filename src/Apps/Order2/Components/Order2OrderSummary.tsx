@@ -27,8 +27,8 @@ interface Order2OrderSummaryProps {
   artworkPath: string
   artwork: Order2OrderSummaryArtwork
   isPricingLoading?: boolean
-  /** Extra line rendered within the artwork block, below the list price. */
-  artworkExtraContent?: React.ReactNode
+  /** Limited-time offer line rendered within the artwork block, below the list price. */
+  limitedTimeOffer?: React.ReactNode
   /** Content rendered below the buyer-guarantee message (e.g. submit + terms). */
   children?: React.ReactNode
 }
@@ -41,7 +41,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
   artworkPath,
   artwork,
   isPricingLoading,
-  artworkExtraContent,
+  limitedTimeOffer,
   children,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
@@ -99,7 +99,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
             List price: {listPriceDisplay}
           </Text>
-          {artworkExtraContent}
+          {limitedTimeOffer}
           {attributionClassLabel && (
             <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
               {attributionClassLabel}

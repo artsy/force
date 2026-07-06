@@ -215,7 +215,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         dimensionsLabel,
         imageURL: artworkData.image?.resized?.url,
       }}
-      artworkExtraContent={
+      limitedTimeOffer={
         displayLimitedOfferLine && (
           <Text variant="sm" color="blue100" textAlign="left">
             Gallery offer: {itemPrice.display}{" "}

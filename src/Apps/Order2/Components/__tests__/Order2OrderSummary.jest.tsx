@@ -40,7 +40,7 @@ const { renderWithRelay } = setupTestWrapperTL<Order2OrderSummaryTestQuery>({
         checkoutTracking={checkoutTracking}
         artworkPath="/artwork/guernica"
         artwork={artwork}
-        artworkExtraContent={<Text>Gallery offer line</Text>}
+        limitedTimeOffer={<Text>Gallery offer line</Text>}
       >
         <Text>Submit button slot</Text>
       </Order2OrderSummary>
@@ -77,7 +77,7 @@ describe("Order2OrderSummary", () => {
     ).toBeInTheDocument()
   })
 
-  it("renders the artworkExtraContent slot", () => {
+  it("renders the limitedTimeOffer slot", () => {
     renderWithRelay()
 
     expect(screen.getByText("Gallery offer line")).toBeInTheDocument()
