@@ -3,7 +3,9 @@ import {
   type AuthImpression,
   AuthModalType,
   type CreatedAccount,
+  type ErrorMessageViewed,
   Intent,
+  OwnerType,
   type ResetYourPassword,
   type SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
@@ -104,6 +106,30 @@ export const useAuthDialogTracking = () => {
         }
 
         return trackEvent(payload)
+      },
+
+      errorMessageViewed: ({
+        error_code,
+        title,
+        message,
+        flow,
+      }: {
+        error_code?: string
+        title: string
+        message: string
+        flow: string
+      }) => {
+        const payload: ErrorMessageViewed = {
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.authModal,
+          context_owner_id: "", // required by schema but auth modal has no entity ID
+          title,
+          message,
+          error_code,
+          flow,
+        }
+
+        trackEvent(payload)
       },
 
       resetPassword: () => {

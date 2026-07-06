@@ -117,7 +117,7 @@ type Action =
   | { type: "SET"; payload: Partial<State> }
   | { type: "SHOW" }
   | { type: "HIDE" }
-  | { type: "FALLBACK" }
+  | { type: "FALLBACK"; payload: { email: string } }
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -139,7 +139,12 @@ export const reducer = (state: State, action: Action): State => {
     }
 
     case "FALLBACK": {
-      return { ...state, mode: "Login", isFallback: true }
+      return {
+        ...state,
+        mode: "Login",
+        isFallback: true,
+        values: { ...state.values, email: action.payload.email },
+      }
     }
 
     default: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1bb342638a9f81d4a82ff6aca380ae92>>
+ * @generated SignedSource<<5295fea0cd431845ca91112b9c4b3fa1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type createBuyerOfferInput = {
   clientMutationId?: string | null | undefined;
   note?: string | null | undefined;
   orderID: string;
+  respondsToID?: string | null | undefined;
 };
 export type useOrder2AddInitialOfferMutation$variables = {
   input: createBuyerOfferInput;

@@ -11,14 +11,16 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { useRouter } from "System/Hooks/useRouter"
-import { AUTH_PROVIDERS } from "Utils/authConstants"
 import { login } from "Utils/auth"
+import { AUTH_ERROR_CODES, AUTH_PROVIDERS } from "Utils/authConstants"
 import { getENV } from "Utils/getENV"
-import { stringify } from "qs"
 import { Form, Formik } from "formik"
+import { stringify } from "qs"
 import { type FC, useState } from "react"
 import * as Yup from "yup"
 
@@ -158,6 +160,8 @@ const PasswordForm: FC<PasswordFormProps> = ({
   onBack,
 }) => {
   const { runAfterAuthentication } = useAfterAuthentication()
+  const { dispatch } = useAuthDialogContext()
+  const track = useAuthDialogTracking()
 
   return (
     <Formik
@@ -177,6 +181,14 @@ const PasswordForm: FC<PasswordFormProps> = ({
 
           if (res.linkingError) {
             setFieldValue("mode", "LinkError")
+
+            track.errorMessageViewed({
+              error_code: "link_accounts_error",
+              title: "Account linking failed",
+              message: LINK_ERROR_MESSAGE(providerName),
+              flow: "Link Accounts",
+            })
+
             return
           }
 
@@ -186,8 +198,35 @@ const PasswordForm: FC<PasswordFormProps> = ({
             runAfterAuthentication({ accessToken: res.user?.accessToken })
           }, 1500)
         } catch (err) {
+          if (
+            err.message === "missing two-factor authentication code" ||
+            err.message === "missing on-demand authentication code"
+          ) {
+            setFieldValue("mode", "TwoFactorBlocked")
+            setStatus({
+              error: AUTH_ERROR_CODES.TWO_FACTOR_AUTHENTICATION_ENABLED,
+            })
+
+            track.errorMessageViewed({
+              error_code: "two_factor_authentication_enabled",
+              title: "Two-factor authentication enabled",
+              message: AUTH_ERROR_CODES.TWO_FACTOR_AUTHENTICATION_ENABLED,
+              flow: "Link Accounts",
+            })
+
+            return
+          }
+
+          const errorMessage = formatErrorMessage(err)
           setFieldValue("mode", "Error")
-          setStatus({ error: formatErrorMessage(err) })
+          setStatus({ error: errorMessage })
+
+          track.errorMessageViewed({
+            error_code: err.message,
+            title: "Account linking failed",
+            message: errorMessage,
+            flow: "Link Accounts",
+          })
         }
       }}
     >
@@ -234,22 +273,34 @@ const PasswordForm: FC<PasswordFormProps> = ({
 
               {values.mode === "LinkError" && (
                 <Message variant="error">
-                  Your account was signed in, but we couldn't link your{" "}
-                  {providerName} account. Please try again from Settings.
+                  {LINK_ERROR_MESSAGE(providerName)}
                 </Message>
               )}
 
               <Stack gap={1}>
-                <Button
-                  type="submit"
-                  width="100%"
-                  loading={values.mode === "Loading"}
-                  disabled={!isValid || !dirty || values.mode === "Success"}
-                >
-                  {emailOnly ? "Yes, Link Accounts" : "Link Accounts"}
-                </Button>
+                {values.mode === "TwoFactorBlocked" ? (
+                  <Button
+                    variant="secondaryBlack"
+                    width="100%"
+                    type="button"
+                    onClick={() => {
+                      dispatch({ type: "MODE", payload: { mode: "Login" } })
+                    }}
+                  >
+                    Go Back
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    width="100%"
+                    loading={values.mode === "Loading"}
+                    disabled={!isValid || !dirty || values.mode === "Success"}
+                  >
+                    {emailOnly ? "Yes, Link Accounts" : "Link Accounts"}
+                  </Button>
+                )}
 
-                {onBack && (
+                {onBack && values.mode !== "TwoFactorBlocked" && (
                   <Button
                     variant="secondaryBlack"
                     width="100%"
@@ -279,7 +330,16 @@ const PasswordForm: FC<PasswordFormProps> = ({
   )
 }
 
-type FormMode = "Pending" | "Loading" | "Success" | "Error" | "LinkError"
+type FormMode =
+  | "Pending"
+  | "Loading"
+  | "Success"
+  | "Error"
+  | "LinkError"
+  | "TwoFactorBlocked"
+
+const LINK_ERROR_MESSAGE = (providerName: string) =>
+  `Your account was signed in, but we couldn't link your ${providerName} account. Please try again from Settings.`
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   password: Yup.string().required("Password required"),
