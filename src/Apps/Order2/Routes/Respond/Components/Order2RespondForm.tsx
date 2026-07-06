@@ -1,3 +1,4 @@
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
   Box,
@@ -10,6 +11,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import {
@@ -38,6 +40,39 @@ const COMPLETED_TITLE: Record<RespondAction, string> = {
   DECLINE: "Declined gallery offer",
 }
 
+const DECLINE_WARNING = "Declining this offer ends this negotiation."
+
+// The detail shown below the title in the collapsed/completed state: a primary
+// line plus an optional grey note.
+interface CompletedCaption {
+  detail?: string
+  note?: string
+}
+
+const getCompletedCaption = (
+  action: RespondAction,
+  totalPrice?: string | null,
+): CompletedCaption => {
+  if (action === "DECLINE") {
+    return { detail: DECLINE_WARNING }
+  }
+
+  if (action === "COUNTEROFFER") {
+    // TODO: replace with the counteroffer's buyerTotal once it's available.
+    return {
+      detail: "TODO: counteroffer total (incl. taxes & shipping)",
+      note: "Excluding shipping and taxes",
+    }
+  }
+
+  // APPROVE
+  if (!totalPrice) {
+    return {}
+  }
+
+  return { detail: totalPrice, note: "Including shipping and taxes" }
+}
+
 export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   order,
 }) => {
@@ -53,10 +88,8 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [counterofferAmount, setCounterofferAmount] = useState("")
 
-  const galleryOffer = orderData.lastSubmittedOffer
-
   // Total the buyer would pay — items + shipping + taxes combined.
-  const totalPrice = galleryOffer?.buyerTotal?.display
+  const totalPrice = orderData.lastSubmittedOffer?.buyerTotal?.display
 
   const isRespondCompleted =
     steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
@@ -75,58 +108,18 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     setRespondComplete()
   }
 
-  // In the collapsed state show the resulting amount. For COUNTEROFFER the
-  // total (incl. taxes & shipping) isn't computed yet — placeholder for now.
-  // TODO: replace with the counteroffer's buyerTotal once it's available.
-  const collapsedAmount =
-    selectedAction === "COUNTEROFFER"
-      ? "TODO: counteroffer total (incl. taxes & shipping)"
-      : totalPrice
-
-  if (isRespondCompleted) {
+  if (isRespondCompleted && selectedAction) {
     return (
-      <Flex
-        flexDirection="column"
-        backgroundColor="mono0"
-        py={2}
-        px={[2, 2, 4]}
-      >
-        <Flex justifyContent="space-between" alignItems="flex-start">
-          <Text variant={["sm", "md"]}>
-            {selectedAction
-              ? COMPLETED_TITLE[selectedAction]
-              : "Response submitted"}
-          </Text>
-          <Clickable
-            textDecoration="underline"
-            cursor="pointer"
-            type="button"
-            aria-label="Edit response"
-            onClick={() => {
-              editRespond()
-            }}
-          >
-            <Text variant="sm" fontWeight="normal" color="mono100">
-              Edit
-            </Text>
-          </Clickable>
-        </Flex>
-
-        {collapsedAmount && (
-          <>
-            <Spacer y={1} />
-            <Text variant={["sm", "md"]}>{collapsedAmount}</Text>
-            <Text variant="xs" color="mono60">
-              Including shipping and taxes
-            </Text>
-          </>
-        )}
-      </Flex>
+      <RespondCompletedView
+        action={selectedAction}
+        totalPrice={totalPrice}
+        onEdit={editRespond}
+      />
     )
   }
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
+    <RespondCard>
       <Text variant={["sm", "md"]}>Respond to gallery offer</Text>
 
       {totalPrice && (
@@ -212,9 +205,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
               {option.value === "DECLINE" && selectedAction === "DECLINE" && (
                 <>
                   <Spacer y={1} />
-                  <Text variant="xs">
-                    Declining this offer ends this negotiation.
-                  </Text>
+                  <Text variant="xs">{DECLINE_WARNING}</Text>
                 </>
               )}
             </Radio>
@@ -232,6 +223,64 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       >
         Continue to Review
       </Button>
+    </RespondCard>
+  )
+}
+
+interface RespondCompletedViewProps {
+  action: RespondAction
+  totalPrice?: string | null
+  onEdit: () => void
+}
+
+const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
+  action,
+  totalPrice,
+  onEdit,
+}) => {
+  const caption = getCompletedCaption(action, totalPrice)
+
+  return (
+    <RespondCard>
+      <Flex justifyContent="space-between">
+        <Flex alignItems="center">
+          <CheckmarkIcon fill="mono100" />
+          <Spacer x={1} />
+          <SectionHeading>{COMPLETED_TITLE[action]}</SectionHeading>
+        </Flex>
+
+        <Clickable
+          textDecoration="underline"
+          cursor="pointer"
+          type="button"
+          aria-label="Edit response"
+          onClick={onEdit}
+        >
+          <Text variant="sm" fontWeight="normal" color="mono100">
+            Edit
+          </Text>
+        </Clickable>
+      </Flex>
+
+      {(caption.detail || caption.note) && (
+        <Box ml="30px" mt={1}>
+          {caption.detail && <Text variant="sm-display">{caption.detail}</Text>}
+          {caption.note && (
+            <Text variant="sm-display" color="mono60">
+              {caption.note}
+            </Text>
+          )}
+        </Box>
+      )}
+    </RespondCard>
+  )
+}
+
+// Shared padded white card wrapping both the editable and completed states.
+const RespondCard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
+      {children}
     </Flex>
   )
 }
