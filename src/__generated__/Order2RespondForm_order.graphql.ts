@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<024e76297cc19713c356bf19c4a55c9d>>
+ * @generated SignedSource<<99359da6d792075ff7fe9d8717c5d0ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,12 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2RespondForm_order$data = {
+  readonly internalID: string;
   readonly lastSubmittedOffer: {
     readonly buyerTotal: {
       readonly display: string | null | undefined;
     } | null | undefined;
+    readonly internalID: string;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Order2RespondOfferDetails_order">;
   readonly " $fragmentType": "Order2RespondForm_order";
@@ -24,12 +26,21 @@ export type Order2RespondForm_order$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Order2RespondForm_order">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Order2RespondForm_order",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -38,6 +49,7 @@ const node: ReaderFragment = {
       "name": "lastSubmittedOffer",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -68,7 +80,8 @@ const node: ReaderFragment = {
   "type": "Order",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "baf10b0930731caa607919a68078833e";
+(node as any).hash = "0e26f7624d16a78f0c17919bec42ee5e";
 
 export default node;

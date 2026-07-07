@@ -1,5 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { Order2RespondForm } from "Apps/Order2/Routes/Respond/Components/Order2RespondForm"
+import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2RespondFormTestQuery } from "__generated__/Order2RespondFormTestQuery.graphql"
@@ -7,7 +8,28 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
+jest.mock(
+  "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation",
+)
+
 const COUNTEROFFER_PLACEHOLDER = "Enter amount excluding shipping & tax"
+
+const mockCreateCounterOffer = jest.fn()
+
+beforeEach(() => {
+  mockCreateCounterOffer.mockReset()
+  mockCreateCounterOffer.mockResolvedValue({
+    createBuyerOffer: {
+      offerOrError: {
+        __typename: "OfferMutationSuccess",
+        offer: { internalID: "counteroffer-id" },
+      },
+    },
+  })
+  ;(useOrder2CreateCounterOfferMutation as jest.Mock).mockReturnValue({
+    submitMutation: mockCreateCounterOffer,
+  })
+})
 
 const { renderWithRelay } = setupTestWrapperTL<Order2RespondFormTestQuery>({
   Component: (props: any) => {
@@ -119,7 +141,7 @@ describe("Order2RespondForm", () => {
     ).not.toBeInTheDocument()
   })
 
-  it("shows the entered offer amount for a counteroffer in the collapsed state", () => {
+  it("creates a counteroffer and shows the entered amount in the collapsed state", async () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Send counteroffer"))
@@ -128,8 +150,55 @@ describe("Order2RespondForm", () => {
     })
     fireEvent.click(continueButton())
 
-    expect(screen.getByText("Your counteroffer")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("Your counteroffer")).toBeInTheDocument()
+    })
     expect(screen.getByText("$500")).toBeInTheDocument()
+
+    // The counteroffer is created against the gallery's offer, in minor units.
+    expect(mockCreateCounterOffer).toHaveBeenCalledWith({
+      variables: {
+        input: expect.objectContaining({
+          amountMinor: 50000,
+          respondsToID: expect.any(String),
+        }),
+      },
+    })
+  })
+
+  it("keeps the form open and surfaces an error when the counteroffer fails", async () => {
+    mockCreateCounterOffer.mockResolvedValue({
+      createBuyerOffer: {
+        offerOrError: {
+          __typename: "OfferMutationError",
+          mutationError: { code: "invalid", message: "Offer too low" },
+        },
+      },
+    })
+
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+    fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+      target: { value: "500" },
+    })
+    fireEvent.click(continueButton())
+
+    await waitFor(() => {
+      expect(screen.getByText("Offer too low")).toBeInTheDocument()
+    })
+    // Still on the editable form — not collapsed.
+    expect(screen.queryByText("Your counteroffer")).not.toBeInTheDocument()
+  })
+
+  it("does not create an offer for accept or decline", () => {
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Accept gallery offer"))
+    fireEvent.click(continueButton())
+
+    expect(screen.getByText("Accepted gallery offer")).toBeInTheDocument()
+    expect(mockCreateCounterOffer).not.toHaveBeenCalled()
   })
 
   it("toggles the offer-details breakdown", () => {

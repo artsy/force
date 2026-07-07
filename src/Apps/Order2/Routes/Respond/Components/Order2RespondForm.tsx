@@ -6,6 +6,7 @@ import {
   Clickable,
   Flex,
   Input,
+  Message,
   Radio,
   RadioGroup,
   Spacer,
@@ -13,15 +14,21 @@ import {
 } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
+import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import {
   type RespondAction,
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2RespondForm")
+
+const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondFormProps {
   order: Order2RespondForm_order$key
@@ -93,6 +100,11 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [counterofferAmount, setCounterofferAmount] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const { submitMutation: createCounterOffer } =
+    useOrder2CreateCounterOfferMutation()
 
   // Total the buyer would pay — items + shipping + taxes combined.
   const totalPrice = orderData.lastSubmittedOffer?.buyerTotal?.display
@@ -105,13 +117,55 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
 
-  const handleContinueToReview = () => {
+  const handleContinueToReview = async () => {
     if (!selectedAction || !isCounterofferValid) {
       return
     }
-    // Advancing to the review step is navigation-only — no mutation runs here.
-    // The response is submitted from the summary’s Submit CTA (EMI-3288).
-    setRespondComplete()
+
+    // Accept/decline are navigation-only here — the response is submitted from
+    // the summary’s Submit CTA (EMI-3288).
+    if (selectedAction !== "COUNTEROFFER") {
+      setRespondComplete()
+      return
+    }
+
+    // A counteroffer creates a pending buyer offer responding to the gallery’s
+    // offer. The buyer submits it from the review step’s Submit CTA (EMI-3288).
+    const respondsToID = orderData.lastSubmittedOffer?.internalID
+    if (!respondsToID) {
+      return
+    }
+
+    try {
+      setErrorMessage(null)
+      setIsSubmitting(true)
+
+      const response = await createCounterOffer({
+        variables: {
+          input: {
+            orderID: orderData.internalID,
+            amountMinor: Number(counterofferAmount) * 100,
+            respondsToID,
+          },
+        },
+      })
+
+      const offerOrError = response.createBuyerOffer?.offerOrError
+
+      if (offerOrError && "mutationError" in offerOrError) {
+        // TODO: proper error handling is tracked in EMI-3175.
+        setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+        return
+      }
+
+      setRespondComplete()
+    } catch (error) {
+      // TODO: proper error handling is tracked in EMI-3175.
+      logger.error(error)
+      setErrorMessage(GENERIC_ERROR)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isRespondCompleted && selectedAction) {
@@ -220,11 +274,21 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
         })}
       </RadioGroup>
 
+      {errorMessage && (
+        <>
+          <Spacer y={2} />
+          <Message variant="error" p={1}>
+            <Text variant="xs">{errorMessage}</Text>
+          </Message>
+        </>
+      )}
+
       <Spacer y={2} />
 
       <Button
         variant="primaryBlack"
         width="100%"
+        loading={isSubmitting}
         disabled={!selectedAction || !isCounterofferValid}
         onClick={handleContinueToReview}
       >
@@ -298,7 +362,9 @@ const RespondCard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const FRAGMENT = graphql`
   fragment Order2RespondForm_order on Order {
+    internalID
     lastSubmittedOffer {
+      internalID
       buyerTotal {
         display
       }
