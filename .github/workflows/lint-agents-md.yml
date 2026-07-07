@@ -1,0 +1,12 @@
+name: Lint AGENTS.md (via artsy/duchamp)
+
+on:
+  pull_request:
+    paths:
+      - AGENTS.md
+      - .cursorrules
+      - .github/copilot-instructions.md
+
+jobs:
+  lint:
+    uses: artsy/duchamp/.github/workflows/lint-agents-md.yml@main
