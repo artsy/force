@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b9981f144410dd149d4ef8f600ddd0c>>
+ * @generated SignedSource<<75f0b88dd5d9e8ddc0a6ece34ef087ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -296,6 +296,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "buyerState",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "buyerStateExpiresAt",
                 "storageKey": null
               },
@@ -475,7 +482,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "97686e643b61591f08b5d855d157c6cc",
+    "cacheID": "2b5ee88e6e607ff7efafb59cdb16f8e9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -491,6 +498,28 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Order"
+        },
+        "me.order.buyerState": {
+          "enumValues": [
+            "APPROVED",
+            "CANCELED",
+            "COMPLETED",
+            "COUNTEROFFER_SENT",
+            "DECLINED_BY_BUYER",
+            "DECLINED_BY_SELLER",
+            "INCOMPLETE",
+            "OFFER_RECEIVED",
+            "PAYMENT_FAILED",
+            "PROCESSING_OFFLINE_PAYMENT",
+            "PROCESSING_PAYMENT",
+            "REFUNDED",
+            "SHIPPED",
+            "SUBMITTED",
+            "UNKNOWN"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderBuyerStateEnum"
         },
         "me.order.buyerStateExpiresAt": (v12/*: any*/),
         "me.order.buyerTotal": (v13/*: any*/),
@@ -593,7 +622,7 @@ return {
     },
     "name": "Order2CollapsibleOrderSummaryTestQuery",
     "operationKind": "query",
-    "text": "query Order2CollapsibleOrderSummaryTestQuery {\n  me {\n    order(id: \"123\") {\n      ...Order2CollapsibleOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        url\n        resizedSquare: resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      figures(includeAll: false) {\n        __typename\n        ... on Image {\n          resizedSquare: resized(height: 200, version: [\"square\"]) {\n            url\n          }\n        }\n        ... on Video {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2CollapsibleOrderSummaryTestQuery {\n  me {\n    order(id: \"123\") {\n      ...Order2CollapsibleOrderSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        url\n        resizedSquare: resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      figures(includeAll: false) {\n        __typename\n        ... on Image {\n          resizedSquare: resized(height: 200, version: [\"square\"]) {\n            url\n          }\n        }\n        ... on Video {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

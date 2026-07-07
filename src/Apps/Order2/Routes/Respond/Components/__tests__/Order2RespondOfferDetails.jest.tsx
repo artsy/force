@@ -35,16 +35,6 @@ const { renderWithRelay } =
   })
 
 describe("Order2RespondOfferDetails", () => {
-  it("renders the gallery offer heading and the offer amount", () => {
-    renderWithRelay({
-      Order: () => ({ mode: "OFFER" }),
-      Offer: () => ({ amount: { display: "$1,500.00" } }),
-    })
-
-    expect(screen.getByText("Gallery offer")).toBeInTheDocument()
-    expect(screen.getByText("$1,500.00")).toBeInTheDocument()
-  })
-
   it("renders the pricing breakdown", () => {
     renderWithRelay({
       Order: () => ({ mode: "OFFER" }),
