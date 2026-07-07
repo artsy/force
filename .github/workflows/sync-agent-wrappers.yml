@@ -1,0 +1,17 @@
+name: Sync agent wrappers
+
+# After AGENTS.md is merged to main, regenerate the agent wrapper files
+# (.cursorrules, .github/copilot-instructions.md) and open an auto-merging
+# PR with the changes (handled by the duchamp reusable workflow). This
+# keeps AGENTS.md PRs free of generated-file churn.
+on:
+  push:
+    branches: [main]
+    paths:
+      - AGENTS.md
+
+jobs:
+  sync:
+    uses: artsy/duchamp/.github/workflows/open-agent-wrappers-pr.yml@main
+    secrets:
+      sync-token: ${{ secrets.CONVENTIONS_SYNC_TOKEN }}
