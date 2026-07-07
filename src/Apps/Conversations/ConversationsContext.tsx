@@ -112,7 +112,7 @@ export const useConversationsContext = () => {
 const VIEWER_FRAGMENT = graphql`
   fragment ConversationsContext_viewer on Viewer {
     me {
-      partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {
+      partnerOffersConnection(first: 100, offerType: [BULK, PERSONALIZED]) {
         edges {
           node {
             artworkId

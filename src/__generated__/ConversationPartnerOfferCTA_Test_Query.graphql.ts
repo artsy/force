@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6da5200c0a10d430ad6bcc47180b492e>>
+ * @generated SignedSource<<93fec1c81d9bdc0a0c775d9bb7fdc010>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -291,6 +291,7 @@ return {
                     "kind": "Literal",
                     "name": "offerType",
                     "value": [
+                      "BULK",
                       "PERSONALIZED"
                     ]
                   }
@@ -371,7 +372,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
+                "storageKey": "partnerOffersConnection(first:100,offerType:[\"BULK\",\"PERSONALIZED\"])"
               },
               (v3/*: any*/)
             ],
@@ -383,7 +384,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dff6501f83333b0ab1057422e9df5ae7",
+    "cacheID": "8bfa15d76fdab43fb23d0add8839c55a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -488,7 +489,7 @@ return {
     },
     "name": "ConversationPartnerOfferCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferCTA_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferCTA_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        href\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationPartnerOfferCTA_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferCTA_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        href\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [BULK, PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

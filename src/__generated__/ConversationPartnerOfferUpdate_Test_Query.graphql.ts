@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b817a0bb57782e149d7e282955fc0c6c>>
+ * @generated SignedSource<<7bd619e5e233e8bc487342d66e108c74>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -295,6 +295,7 @@ return {
                     "kind": "Literal",
                     "name": "offerType",
                     "value": [
+                      "BULK",
                       "PERSONALIZED"
                     ]
                   }
@@ -375,7 +376,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "partnerOffersConnection(first:100,offerType:[\"PERSONALIZED\"])"
+                "storageKey": "partnerOffersConnection(first:100,offerType:[\"BULK\",\"PERSONALIZED\"])"
               },
               (v2/*: any*/)
             ],
@@ -387,7 +388,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7f27c4c48f8ac49ed6f999f1583d5ae7",
+    "cacheID": "a040c6fb6e251d33f5e1bba016ca2434",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -513,7 +514,7 @@ return {
     },
     "name": "ConversationPartnerOfferUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  collectorOrdersConnection(first: 10) {\n    edges {\n      node {\n        buyerState\n        lineItems {\n          partnerOfferId\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationPartnerOfferUpdate_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationPartnerOfferUpdate_conversation\n      id\n    }\n    id\n  }\n  viewer {\n    ...ConversationsContext_viewer\n  }\n}\n\nfragment ConversationPartnerOfferUpdate_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  collectorOrdersConnection(first: 10) {\n    edges {\n      node {\n        buyerState\n        lineItems {\n          partnerOfferId\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_viewer on Viewer {\n  me {\n    partnerOffersConnection(first: 100, offerType: [BULK, PERSONALIZED]) {\n      edges {\n        node {\n          artworkId\n          endAt\n          internalID\n          isAvailable\n          note\n          priceWithDiscount {\n            display\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -90,22 +90,42 @@ const offerViewer = (offer: Record<string, unknown>) => () => ({
 })
 
 describe("ConversationPartnerOfferCTA", () => {
-  it("renders the offer bar linking to the artwork with the partner offer id", () => {
-    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
+  // The `partnerOffersConnection` query fetches both `BULK` (sent via the
+  // partner dashboard's send-offer tool) and `PERSONALIZED` offer types.
+  // Force can't distinguish between the two once fetched, so the banner
+  // should render identically for both.
+  describe.each([
+    ["a personalized partner offer"],
+    ["a bulk offer (send offer)"],
+  ])("with %s", () => {
+    it("renders the offer bar linking to the artwork with the partner offer id", () => {
+      renderWithRelay({ Conversation, Viewer: offerViewer({}) })
 
-    expect(screen.getByText("Offer received for $450")).toBeInTheDocument()
+      expect(screen.getByText("Offer received for $450")).toBeInTheDocument()
 
-    expect(screen.getByTestId("partnerOfferActionLink")).toHaveAttribute(
-      "href",
-      expect.stringMatching(
-        /^\/artwork\/some-artwork\?partner_offer_id=partner-offer-id&conversation_id=.+$/,
-      ),
-    )
+      expect(screen.getByTestId("partnerOfferActionLink")).toHaveAttribute(
+        "href",
+        expect.stringMatching(
+          /^\/artwork\/some-artwork\?partner_offer_id=partner-offer-id&conversation_id=.+$/,
+        ),
+      )
 
-    expect(trackingSpy).toHaveBeenCalledWith({
-      action: "partnerOfferInConversationViewed",
-      context_owner_id: "conversation-id",
-      context_owner_type: "conversation",
+      expect(trackingSpy).toHaveBeenCalledWith({
+        action: "partnerOfferInConversationViewed",
+        context_owner_id: "conversation-id",
+        context_owner_type: "conversation",
+      })
+    })
+
+    it("renders nothing when the offer has expired", () => {
+      renderWithRelay({
+        Conversation,
+        Viewer: offerViewer({ endAt: pastDate() }),
+      })
+
+      expect(
+        screen.queryByTestId("partnerOfferActionLink"),
+      ).not.toBeInTheDocument()
     })
   })
 
@@ -131,17 +151,6 @@ describe("ConversationPartnerOfferCTA", () => {
     ).not.toBeInTheDocument()
 
     expect(trackingSpy).not.toHaveBeenCalled()
-  })
-
-  it("renders nothing when the offer has expired", () => {
-    renderWithRelay({
-      Conversation,
-      Viewer: offerViewer({ endAt: pastDate() }),
-    })
-
-    expect(
-      screen.queryByTestId("partnerOfferActionLink"),
-    ).not.toBeInTheDocument()
   })
 
   it("renders nothing when the offer is unavailable", () => {

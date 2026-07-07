@@ -76,24 +76,6 @@ describe("PartnerOfferCreatedNotification", () => {
     })
   })
 
-  describe("when offer comes from an abandoned order", () => {
-    it("renders an appropriate subtitle", () => {
-      renderWithRelay({
-        Notification: () =>
-          notification(
-            "2099-01-01T00:00:00+00:00",
-            true,
-            "Please buy this!",
-            "ABANDONED_ORDER",
-          ),
-      })
-
-      expect(
-        screen.getByText("Review the offer before it expires"),
-      ).toBeInTheDocument()
-    })
-  })
-
   describe("button states", () => {
     describe("when offer is expired", () => {
       it("renders View Work button", () => {

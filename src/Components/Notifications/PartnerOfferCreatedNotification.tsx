@@ -30,9 +30,7 @@ export const PartnerOfferCreatedNotification: FC<
   const { hasEnded } = useTimer(partnerOffer?.endAt || "")
   const isOfferFromSaves = partnerOffer?.source === "SAVE"
 
-  let subtitle: string | null = isOfferFromSaves
-    ? null
-    : "Review the offer before it expires"
+  let subtitle: string | null = null
 
   if (hasEnded)
     subtitle =
