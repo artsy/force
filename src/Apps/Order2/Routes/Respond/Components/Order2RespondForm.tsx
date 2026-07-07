@@ -36,8 +36,8 @@ const RESPOND_OPTIONS: Array<{ value: RespondAction; label: string }> = [
 // Past-tense titles shown once the step is completed/collapsed.
 const COMPLETED_TITLE: Record<RespondAction, string> = {
   APPROVE: "Accepted gallery offer",
-  COUNTEROFFER: "Sent counteroffer",
-  DECLINE: "Declined gallery offer",
+  COUNTEROFFER: "Your counteroffer",
+  DECLINE: "Decline gallery offer",
 }
 
 const DECLINE_WARNING = "Declining this offer ends this negotiation."
@@ -51,16 +51,16 @@ interface CompletedCaption {
 
 const getCompletedCaption = (
   action: RespondAction,
-  totalPrice?: string | null,
+  totalPrice: string | null | undefined,
+  counterofferAmount: string,
 ): CompletedCaption => {
   if (action === "DECLINE") {
     return { detail: DECLINE_WARNING }
   }
 
   if (action === "COUNTEROFFER") {
-    // TODO: replace with the counteroffer's buyerTotal once it's available.
     return {
-      detail: "TODO: counteroffer total (incl. taxes & shipping)",
+      detail: `$${counterofferAmount}`,
       note: "Excluding shipping and taxes",
     }
   }
@@ -113,6 +113,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       <RespondCompletedView
         action={selectedAction}
         totalPrice={totalPrice}
+        counterofferAmount={counterofferAmount}
         onEdit={editRespond}
       />
     )
@@ -230,15 +231,17 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 interface RespondCompletedViewProps {
   action: RespondAction
   totalPrice?: string | null
+  counterofferAmount: string
   onEdit: () => void
 }
 
 const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
   action,
   totalPrice,
+  counterofferAmount,
   onEdit,
 }) => {
-  const caption = getCompletedCaption(action, totalPrice)
+  const caption = getCompletedCaption(action, totalPrice, counterofferAmount)
 
   return (
     <RespondCard>
