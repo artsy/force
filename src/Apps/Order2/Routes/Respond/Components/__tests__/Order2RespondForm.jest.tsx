@@ -58,7 +58,7 @@ const { renderWithRelay } = setupTestWrapperTL<Order2RespondFormTestQuery>({
 })
 
 const defaultResolvers = {
-  Order: () => ({ mode: "OFFER" }),
+  Order: () => ({ mode: "OFFER", pendingOffer: null }),
   Money: () => ({ display: "$1,000.00" }),
 }
 
@@ -82,6 +82,21 @@ describe("Order2RespondForm", () => {
     fireEvent.click(screen.getByText("Accept gallery offer"))
 
     expect(continueButton()).toBeEnabled()
+  })
+
+  it("pre-fills the counteroffer input from an existing draft", () => {
+    renderWithRelay({
+      Order: () => ({
+        mode: "OFFER",
+        pendingOffer: { amount: { major: 500 } },
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+
+    expect(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER)).toHaveValue(
+      "500",
+    )
   })
 
   it("reveals the counteroffer input only when Send counteroffer is selected", () => {

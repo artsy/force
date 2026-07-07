@@ -99,7 +99,12 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
-  const [counterofferAmount, setCounterofferAmount] = useState("")
+  // Pre-fill from an existing draft counteroffer (e.g. after a refresh) so the
+  // buyer can edit it rather than starting from a blank field.
+  const draftCounterofferAmount = orderData.pendingOffer?.amount?.major
+  const [counterofferAmount, setCounterofferAmount] = useState(
+    draftCounterofferAmount ? String(draftCounterofferAmount) : "",
+  )
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
@@ -367,6 +372,11 @@ const FRAGMENT = graphql`
       internalID
       buyerTotal {
         display
+      }
+    }
+    pendingOffer {
+      amount {
+        major
       }
     }
     ...Order2RespondOfferDetails_order

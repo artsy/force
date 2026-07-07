@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<99359da6d792075ff7fe9d8717c5d0ad>>
+ * @generated SignedSource<<e844cd25078af3dbbb6480ffb62d95b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,11 @@ export type Order2RespondForm_order$data = {
       readonly display: string | null | undefined;
     } | null | undefined;
     readonly internalID: string;
+  } | null | undefined;
+  readonly pendingOffer: {
+    readonly amount: {
+      readonly major: number;
+    } | null | undefined;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Order2RespondOfferDetails_order">;
   readonly " $fragmentType": "Order2RespondForm_order";
@@ -72,6 +77,35 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "pendingOffer",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Money",
+          "kind": "LinkedField",
+          "name": "amount",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "major",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Order2RespondOfferDetails_order"
@@ -82,6 +116,6 @@ return {
 };
 })();
 
-(node as any).hash = "0e26f7624d16a78f0c17919bec42ee5e";
+(node as any).hash = "b1db3f7a1dfb721220fbbcffbcd9d457";
 
 export default node;
