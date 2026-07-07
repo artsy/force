@@ -35,7 +35,8 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { checkoutTracking, artworkPath, steps } = useRespondContext()
+  const { checkoutTracking, artworkPath, steps, selectedAction } =
+    useRespondContext()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
   const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
@@ -61,6 +62,9 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       contextModule={ContextModule.ordersRespond}
       checkoutTracking={checkoutTracking}
       artworkPath={artworkPath}
+      // Only price from the counteroffer when that's the buyer's choice —
+      // accept/decline revert to the gallery's offer.
+      usePendingOffer={selectedAction === "COUNTEROFFER"}
       artwork={{
         artworkInternalID: artworkData.artworkInternalID,
         artistNames: artworkData.artistNames,

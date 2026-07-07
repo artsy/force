@@ -17,6 +17,8 @@ interface Order2CheckoutPricingBreakdownProps {
   contextModule: ContextModule
   isLoading?: boolean
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
+  // Opt in to pricing from the buyer's pending offer.
+  usePendingOffer?: boolean
 }
 
 const TAX_CALCULATION_ARTICLE_URL =
@@ -24,7 +26,13 @@ const TAX_CALCULATION_ARTICLE_URL =
 
 export const Order2CheckoutPricingBreakdown: React.FC<
   Order2CheckoutPricingBreakdownProps
-> = ({ order, contextModule, isLoading, checkoutTracking }) => {
+> = ({
+  order,
+  contextModule,
+  isLoading,
+  checkoutTracking,
+  usePendingOffer,
+}) => {
   const orderData = useFragment(FRAGMENT, order)
   const { mode, pendingOffer, source, buyerStateExpiresAt } = orderData
 
@@ -44,9 +52,10 @@ export const Order2CheckoutPricingBreakdown: React.FC<
     imminentTime: 1,
   })
 
-  // Use pendingOffer.pricingBreakdownLines for OFFER mode, otherwise use order.pricingBreakdownLines
+  // Price from the buyer's pending offer when opted in (e.g. a counteroffer);
+  // otherwise from the order.
   const pricingBreakdownLines =
-    isOffer && pendingOffer?.pricingBreakdownLines
+    usePendingOffer && isOffer && pendingOffer?.pricingBreakdownLines
       ? pendingOffer.pricingBreakdownLines
       : orderData.pricingBreakdownLines
 

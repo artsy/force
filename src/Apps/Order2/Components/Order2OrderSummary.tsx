@@ -27,6 +27,8 @@ interface Order2OrderSummaryProps {
   artworkPath: string
   artwork: Order2OrderSummaryArtwork
   isPricingLoading?: boolean
+  /** Passed through to the pricing breakdown; see its prop for details. */
+  usePendingOffer?: boolean
   /** Limited-time offer line rendered within the artwork block, below the list price. */
   limitedTimeOffer?: React.ReactNode
   /** Content rendered below the buyer-guarantee message (e.g. submit + terms). */
@@ -41,6 +43,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
   artworkPath,
   artwork,
   isPricingLoading,
+  usePendingOffer,
   limitedTimeOffer,
   children,
 }) => {
@@ -118,6 +121,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           contextModule={contextModule}
           isLoading={isPricingLoading}
           checkoutTracking={checkoutTracking}
+          usePendingOffer={usePendingOffer}
         />
       </Box>
       <Spacer y={2} />

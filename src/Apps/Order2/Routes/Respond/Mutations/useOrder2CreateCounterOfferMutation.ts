@@ -14,8 +14,48 @@ export const useOrder2CreateCounterOfferMutation = () => {
               __typename
               offer {
                 internalID
+                # The counteroffer's recalculated totals (incl. shipping & tax)
+                # come through the pending offer's own breakdown below. We only
+                # surface that — refetching the order's pricing would overwrite
+                # the gallery-offer totals with the counteroffer's, so the buyer
+                # still sees the gallery offer if they switch to accept/decline.
                 order {
-                  ...Order2RespondApp_order
+                  id
+                  pendingOffer {
+                    pricingBreakdownLines {
+                      __typename
+                      ... on ShippingLine {
+                        displayName
+                        amountFallbackText
+                        amount {
+                          amount
+                          currencySymbol
+                        }
+                      }
+                      ... on TaxLine {
+                        displayName
+                        amountFallbackText
+                        amount {
+                          amount
+                          currencySymbol
+                        }
+                      }
+                      ... on SubtotalLine {
+                        displayName
+                        amount {
+                          amount
+                          currencySymbol
+                        }
+                      }
+                      ... on TotalLine {
+                        displayName
+                        amountFallbackText
+                        amount {
+                          display
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

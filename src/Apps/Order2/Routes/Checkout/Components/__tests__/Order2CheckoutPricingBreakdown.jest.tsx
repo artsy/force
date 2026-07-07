@@ -11,6 +11,7 @@ import { Order2CheckoutPricingBreakdown } from "../Order2CheckoutPricingBreakdow
 jest.unmock("react-relay")
 
 let mockIsLoading = false
+let mockUsePendingOffer: boolean | undefined
 let mockCheckoutContext: DeepPartial<ReturnType<typeof useCheckoutContext>>
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => {
@@ -40,6 +41,7 @@ jest.mock("Utils/Hooks/useCountdownTimer", () => ({
 
 beforeEach(() => {
   mockIsLoading = false
+  mockUsePendingOffer = undefined
   mockCheckoutContext = {}
   mockCountdownTimer = {
     remainingTime: "Calculating time",
@@ -65,6 +67,7 @@ const { renderWithRelay } =
           contextModule={ContextModule.ordersCheckout}
           isLoading={mockIsLoading}
           checkoutTracking={checkoutTracking}
+          usePendingOffer={mockUsePendingOffer}
         />
       )
     },
@@ -359,6 +362,47 @@ describe("Order2PricingBreakdown", () => {
 
     const totalRow = screen.getByText("Total").parentElement
     expect(totalRow).toHaveTextContent("Waiting for final totals")
+  })
+
+  describe("pending offer vs order pricing", () => {
+    const order = {
+      mode: "OFFER",
+      pendingOffer: {
+        pricingBreakdownLines: [
+          {
+            __typename: "TotalLine",
+            displayName: "Total",
+            amount: { display: "Counteroffer $200" },
+          },
+        ],
+      },
+      pricingBreakdownLines: [
+        {
+          __typename: "TotalLine",
+          displayName: "Total",
+          amount: { display: "Order $100" },
+        },
+      ],
+    }
+
+    it("prices from the order when the pending offer is not opted into", () => {
+      // usePendingOffer omitted (undefined) — e.g. respond accept/decline.
+      renderWithRelay({ Me: () => ({ order }) })
+
+      expect(screen.getByText("Total").parentElement).toHaveTextContent(
+        "Order $100",
+      )
+    })
+
+    it("prices from the pending offer when opted in", () => {
+      mockUsePendingOffer = true
+
+      renderWithRelay({ Me: () => ({ order }) })
+
+      expect(screen.getByText("Total").parentElement).toHaveTextContent(
+        "Counteroffer $200",
+      )
+    })
   })
 
   describe("skeleton", () => {
