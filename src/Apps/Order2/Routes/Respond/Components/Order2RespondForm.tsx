@@ -42,6 +42,12 @@ const COMPLETED_TITLE: Record<RespondAction, string> = {
 
 const DECLINE_WARNING = "Declining this offer ends this negotiation."
 
+interface CompletedResponse {
+  action: RespondAction
+  totalPrice?: string | null
+  counterofferAmount: string
+}
+
 // The detail shown below the title in the collapsed/completed state: a primary
 // line plus an optional grey note.
 interface CompletedCaption {
@@ -49,11 +55,11 @@ interface CompletedCaption {
   note?: string
 }
 
-const getCompletedCaption = (
-  action: RespondAction,
-  totalPrice: string | null | undefined,
-  counterofferAmount: string,
-): CompletedCaption => {
+const getCompletedCaption = ({
+  action,
+  totalPrice,
+  counterofferAmount,
+}: CompletedResponse): CompletedCaption => {
   if (action === "DECLINE") {
     return { detail: DECLINE_WARNING }
   }
@@ -228,10 +234,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   )
 }
 
-interface RespondCompletedViewProps {
-  action: RespondAction
-  totalPrice?: string | null
-  counterofferAmount: string
+interface RespondCompletedViewProps extends CompletedResponse {
   onEdit: () => void
 }
 
@@ -241,7 +244,11 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
   counterofferAmount,
   onEdit,
 }) => {
-  const caption = getCompletedCaption(action, totalPrice, counterofferAmount)
+  const caption = getCompletedCaption({
+    action,
+    totalPrice,
+    counterofferAmount,
+  })
 
   return (
     <RespondCard>

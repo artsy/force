@@ -119,7 +119,7 @@ describe("Order2RespondForm", () => {
     ).not.toBeInTheDocument()
   })
 
-  it("shows a placeholder total for a counteroffer in the collapsed state", () => {
+  it("shows the entered offer amount for a counteroffer in the collapsed state", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Send counteroffer"))
@@ -128,8 +128,8 @@ describe("Order2RespondForm", () => {
     })
     fireEvent.click(continueButton())
 
-    expect(screen.getByText("Sent counteroffer")).toBeInTheDocument()
-    expect(screen.getByText(/counteroffer total/i)).toBeInTheDocument()
+    expect(screen.getByText("Your counteroffer")).toBeInTheDocument()
+    expect(screen.getByText("$500")).toBeInTheDocument()
   })
 
   it("toggles the offer-details breakdown", () => {
@@ -149,7 +149,8 @@ describe("Order2RespondForm", () => {
     fireEvent.click(screen.getByText("Decline gallery offer"))
     fireEvent.click(continueButton())
 
-    expect(screen.getByText("Declined gallery offer")).toBeInTheDocument()
+    // Collapsed completed title for a decline (radios are no longer rendered)
+    expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole("button", { name: "Edit response" }))
 
