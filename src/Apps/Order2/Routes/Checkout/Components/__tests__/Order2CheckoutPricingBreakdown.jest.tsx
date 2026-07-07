@@ -11,7 +11,7 @@ import { Order2CheckoutPricingBreakdown } from "../Order2CheckoutPricingBreakdow
 jest.unmock("react-relay")
 
 let mockIsLoading = false
-let mockUsePendingOffer: boolean | undefined
+let mockPriceFromPendingOffer: boolean | undefined
 let mockCheckoutContext: DeepPartial<ReturnType<typeof useCheckoutContext>>
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => {
@@ -41,7 +41,7 @@ jest.mock("Utils/Hooks/useCountdownTimer", () => ({
 
 beforeEach(() => {
   mockIsLoading = false
-  mockUsePendingOffer = undefined
+  mockPriceFromPendingOffer = undefined
   mockCheckoutContext = {}
   mockCountdownTimer = {
     remainingTime: "Calculating time",
@@ -67,7 +67,7 @@ const { renderWithRelay } =
           contextModule={ContextModule.ordersCheckout}
           isLoading={mockIsLoading}
           checkoutTracking={checkoutTracking}
-          usePendingOffer={mockUsePendingOffer}
+          priceFromPendingOffer={mockPriceFromPendingOffer}
         />
       )
     },
@@ -385,8 +385,9 @@ describe("Order2PricingBreakdown", () => {
       ],
     }
 
-    it("prices from the order when the pending offer is not opted into", () => {
-      // usePendingOffer omitted (undefined) — e.g. respond accept/decline.
+    it("prices from the order when priceFromPendingOffer is false", () => {
+      mockPriceFromPendingOffer = false
+
       renderWithRelay({ Me: () => ({ order }) })
 
       expect(screen.getByText("Total").parentElement).toHaveTextContent(
@@ -394,9 +395,8 @@ describe("Order2PricingBreakdown", () => {
       )
     })
 
-    it("prices from the pending offer when opted in", () => {
-      mockUsePendingOffer = true
-
+    it("prices from the pending offer by default", () => {
+      // priceFromPendingOffer omitted — defaults on.
       renderWithRelay({ Me: () => ({ order }) })
 
       expect(screen.getByText("Total").parentElement).toHaveTextContent(

@@ -14,11 +14,10 @@ export const useOrder2CreateCounterOfferMutation = () => {
               __typename
               offer {
                 internalID
-                # The counteroffer's recalculated totals (incl. shipping & tax)
-                # come through the pending offer's own breakdown below. We only
-                # surface that — refetching the order's pricing would overwrite
-                # the gallery-offer totals with the counteroffer's, so the buyer
-                # still sees the gallery offer if they switch to accept/decline.
+                # Surface only the new pending offer's pricing (its recalculated
+                # shipping & tax). We deliberately avoid refetching the order's
+                # own pricing, which would overwrite the gallery-offer totals —
+                # so accept/decline still shows the gallery offer.
                 order {
                   id
                   pendingOffer {

@@ -62,9 +62,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       contextModule={ContextModule.ordersRespond}
       checkoutTracking={checkoutTracking}
       artworkPath={artworkPath}
-      // Only price from the counteroffer when that's the buyer's choice —
-      // accept/decline revert to the gallery's offer.
-      usePendingOffer={selectedAction === "COUNTEROFFER"}
+      priceFromPendingOffer={selectedAction === "COUNTEROFFER"}
       artwork={{
         artworkInternalID: artworkData.artworkInternalID,
         artistNames: artworkData.artistNames,

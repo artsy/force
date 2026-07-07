@@ -205,7 +205,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       checkoutTracking={checkoutTracking}
       artworkPath={artworkPath}
       isPricingLoading={isFulfillmentDetailsSaving}
-      usePendingOffer
       artwork={{
         artworkInternalID: artworkData.artworkInternalID,
         artistNames: artworkData.artistNames,

@@ -131,7 +131,6 @@ export const Order2CollapsibleOrderSummary: React.FC<
             contextModule={contextModule}
             isLoading={isFulfillmentDetailsSaving}
             checkoutTracking={checkoutTracking}
-            usePendingOffer
           />
         </Box>
         <Spacer y={1} />
