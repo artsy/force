@@ -148,7 +148,6 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
             <Clickable
               display="flex"
               alignItems="center"
-              color="mono60"
               onClick={() => {
                 setIsOfferDetailsExpanded(!isOfferDetailsExpanded)
               }}
