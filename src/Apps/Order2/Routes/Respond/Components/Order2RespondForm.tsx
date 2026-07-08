@@ -14,6 +14,7 @@ import {
 } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
+import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import {
@@ -100,8 +101,15 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   // Pre-fill from an existing draft counteroffer (e.g. after a refresh) so the
-  // buyer can edit it rather than starting from a blank field.
-  const draftCounterofferAmount = orderData.pendingOffer?.amount?.major
+  // buyer can edit it rather than starting from a blank field. Only restore a
+  // draft that belongs to the current round — a pending offer from an earlier
+  // round (buyer countered, gallery countered back) must not leak in.
+  const draftCounterofferAmount = hasCurrentCounterofferDraft({
+    pendingOffer: orderData.pendingOffer,
+    galleryOffer: orderData.lastSubmittedOffer,
+  })
+    ? orderData.pendingOffer?.amount?.major
+    : null
   const [counterofferAmount, setCounterofferAmount] = useState(
     draftCounterofferAmount ? String(draftCounterofferAmount) : "",
   )
@@ -370,11 +378,13 @@ const FRAGMENT = graphql`
     internalID
     lastSubmittedOffer {
       internalID
+      createdAt
       buyerTotal {
         display
       }
     }
     pendingOffer {
+      createdAt
       amount {
         major
       }

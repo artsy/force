@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e844cd25078af3dbbb6480ffb62d95b7>>
+ * @generated SignedSource<<1f81e8a90693ab52b2517b2d20550842>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,12 +16,14 @@ export type Order2RespondForm_order$data = {
     readonly buyerTotal: {
       readonly display: string | null | undefined;
     } | null | undefined;
+    readonly createdAt: string | null | undefined;
     readonly internalID: string;
   } | null | undefined;
   readonly pendingOffer: {
     readonly amount: {
       readonly major: number;
     } | null | undefined;
+    readonly createdAt: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Order2RespondOfferDetails_order">;
   readonly " $fragmentType": "Order2RespondForm_order";
@@ -37,6 +39,13 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
   "storageKey": null
 };
 return {
@@ -55,6 +64,7 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -84,6 +94,7 @@ return {
       "name": "pendingOffer",
       "plural": false,
       "selections": [
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -116,6 +127,6 @@ return {
 };
 })();
 
-(node as any).hash = "b1db3f7a1dfb721220fbbcffbcd9d457";
+(node as any).hash = "9ee923489734863bf591f5195b166137";
 
 export default node;

@@ -7,6 +7,7 @@ import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondCo
 import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
 import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
 import { useOrder2SubmitCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2SubmitCounterOfferMutation"
+import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import {
   RespondStepName,
   RespondStepState,
@@ -76,6 +77,14 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   // counteroffer submits the pending draft created at "Continue to Review".
   const galleryOfferID = orderData.lastSubmittedOffer?.internalID
   const pendingOfferID = orderData.pendingOffer?.internalID
+
+  // Only price the summary from the pending offer when it is the buyer’s draft
+  // for the current round; a stale draft from an earlier round would otherwise
+  // show an outdated breakdown.
+  const isCurrentCounterofferDraft = hasCurrentCounterofferDraft({
+    pendingOffer: orderData.pendingOffer,
+    galleryOffer: orderData.lastSubmittedOffer,
+  })
 
   const redirectToOrderDetails = () => {
     router.replace(`/orders/${orderID}/details`)
@@ -186,7 +195,9 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       contextModule={ContextModule.ordersRespond}
       checkoutTracking={checkoutTracking}
       artworkPath={artworkPath}
-      priceFromPendingOffer={selectedAction === "COUNTEROFFER"}
+      priceFromPendingOffer={
+        selectedAction === "COUNTEROFFER" && isCurrentCounterofferDraft
+      }
       artwork={{
         artworkInternalID: artworkData.artworkInternalID,
         artistNames: artworkData.artistNames,
@@ -230,9 +241,11 @@ const FRAGMENT = graphql`
     internalID
     lastSubmittedOffer {
       internalID
+      createdAt
     }
     pendingOffer {
       internalID
+      createdAt
     }
     lineItems {
       artworkVersion {

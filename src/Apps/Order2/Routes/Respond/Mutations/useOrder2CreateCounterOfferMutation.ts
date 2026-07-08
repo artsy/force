@@ -21,6 +21,15 @@ export const useOrder2CreateCounterOfferMutation = () => {
                 order {
                   id
                   pendingOffer {
+                    id
+                    internalID
+                    # Identify the freshly created draft so the store replaces
+                    # any stale pending offer from an earlier round; createdAt
+                    # drives whether the summary prices from this counteroffer.
+                    createdAt
+                    amount {
+                      major
+                    }
                     pricingBreakdownLines {
                       __typename
                       ... on ShippingLine {

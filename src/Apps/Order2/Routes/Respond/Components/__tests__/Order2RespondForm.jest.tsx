@@ -84,11 +84,16 @@ describe("Order2RespondForm", () => {
     expect(continueButton()).toBeEnabled()
   })
 
-  it("pre-fills the counteroffer input from an existing draft", () => {
+  it("pre-fills the counteroffer input from a current-round draft", () => {
     renderWithRelay({
       Order: () => ({
         mode: "OFFER",
-        pendingOffer: { amount: { major: 500 } },
+        // Draft created after the gallery offer it responds to.
+        lastSubmittedOffer: { createdAt: "2024-01-01T00:00:00Z" },
+        pendingOffer: {
+          createdAt: "2024-01-02T00:00:00Z",
+          amount: { major: 500 },
+        },
       }),
     })
 
@@ -96,6 +101,27 @@ describe("Order2RespondForm", () => {
 
     expect(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER)).toHaveValue(
       "500",
+    )
+  })
+
+  it("does not pre-fill from a stale draft left over from an earlier round", () => {
+    renderWithRelay({
+      Order: () => ({
+        mode: "OFFER",
+        // Pending offer predates the gallery’s latest counteroffer, so it is a
+        // stale draft from a previous round and must be ignored.
+        lastSubmittedOffer: { createdAt: "2024-01-02T00:00:00Z" },
+        pendingOffer: {
+          createdAt: "2024-01-01T00:00:00Z",
+          amount: { major: 500 },
+        },
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+
+    expect(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER)).toHaveValue(
+      "",
     )
   })
 

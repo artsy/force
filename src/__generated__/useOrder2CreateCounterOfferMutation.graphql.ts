@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed21ff381a0807eb7ff4a32d22d4b27d>>
+ * @generated SignedSource<<243168003fcb5766fbd2701f98c2c753>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,12 @@ export type useOrder2CreateCounterOfferMutation$data = {
         readonly order: {
           readonly id: string;
           readonly pendingOffer: {
+            readonly amount: {
+              readonly major: number;
+            } | null | undefined;
+            readonly createdAt: string | null | undefined;
+            readonly id: string;
+            readonly internalID: string;
             readonly pricingBreakdownLines: ReadonlyArray<{
               readonly __typename: "ShippingLine";
               readonly amount: {
@@ -161,38 +167,29 @@ v8 = [
 v9 = {
   "alias": null,
   "args": null,
-  "concreteType": null,
+  "concreteType": "Order",
   "kind": "LinkedField",
-  "name": "pricingBreakdownLines",
-  "plural": true,
+  "name": "order",
+  "plural": false,
   "selections": [
-    (v2/*: any*/),
+    (v4/*: any*/),
     {
-      "kind": "InlineFragment",
-      "selections": (v8/*: any*/),
-      "type": "ShippingLine",
-      "abstractKey": null
-    },
-    {
-      "kind": "InlineFragment",
-      "selections": (v8/*: any*/),
-      "type": "TaxLine",
-      "abstractKey": null
-    },
-    {
-      "kind": "InlineFragment",
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "pendingOffer",
+      "plural": false,
       "selections": [
-        (v5/*: any*/),
-        (v7/*: any*/)
-      ],
-      "type": "SubtotalLine",
-      "abstractKey": null
-    },
-    {
-      "kind": "InlineFragment",
-      "selections": [
-        (v5/*: any*/),
-        (v6/*: any*/),
+        (v4/*: any*/),
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "createdAt",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -205,15 +202,74 @@ v9 = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "display",
+              "name": "major",
               "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "pricingBreakdownLines",
+          "plural": true,
+          "selections": [
+            (v2/*: any*/),
+            {
+              "kind": "InlineFragment",
+              "selections": (v8/*: any*/),
+              "type": "ShippingLine",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v8/*: any*/),
+              "type": "TaxLine",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": [
+                (v5/*: any*/),
+                (v7/*: any*/)
+              ],
+              "type": "SubtotalLine",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": [
+                (v5/*: any*/),
+                (v6/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Money",
+                  "kind": "LinkedField",
+                  "name": "amount",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "display",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "type": "TotalLine",
+              "abstractKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "type": "TotalLine",
-      "abstractKey": null
+      "storageKey": null
     }
   ],
   "storageKey": null
@@ -286,30 +342,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Order",
-                        "kind": "LinkedField",
-                        "name": "order",
-                        "plural": false,
-                        "selections": [
-                          (v4/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Offer",
-                            "kind": "LinkedField",
-                            "name": "pendingOffer",
-                            "plural": false,
-                            "selections": [
-                              (v9/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -363,31 +396,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Order",
-                        "kind": "LinkedField",
-                        "name": "order",
-                        "plural": false,
-                        "selections": [
-                          (v4/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Offer",
-                            "kind": "LinkedField",
-                            "name": "pendingOffer",
-                            "plural": false,
-                            "selections": [
-                              (v9/*: any*/),
-                              (v4/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
+                      (v9/*: any*/),
                       (v4/*: any*/)
                     ],
                     "storageKey": null
@@ -406,16 +415,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5b959bed35938e67a55cd176e0ca4dfe",
+    "cacheID": "fb9a53a46a605f8e8cbe100fe4207dc8",
     "id": null,
     "metadata": {},
     "name": "useOrder2CreateCounterOfferMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2CreateCounterOfferMutation(\n  $input: createBuyerOfferInput!\n) {\n  createBuyerOffer(input: $input) {\n    offerOrError {\n      __typename\n      ... on OfferMutationSuccess {\n        __typename\n        offer {\n          internalID\n          order {\n            id\n            pendingOffer {\n              pricingBreakdownLines {\n                __typename\n                ... on ShippingLine {\n                  displayName\n                  amountFallbackText\n                  amount {\n                    amount\n                    currencySymbol\n                  }\n                }\n                ... on TaxLine {\n                  displayName\n                  amountFallbackText\n                  amount {\n                    amount\n                    currencySymbol\n                  }\n                }\n                ... on SubtotalLine {\n                  displayName\n                  amount {\n                    amount\n                    currencySymbol\n                  }\n                }\n                ... on TotalLine {\n                  displayName\n                  amountFallbackText\n                  amount {\n                    display\n                  }\n                }\n              }\n              id\n            }\n          }\n          id\n        }\n      }\n      ... on OfferMutationError {\n        mutationError {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useOrder2CreateCounterOfferMutation(\n  $input: createBuyerOfferInput!\n) {\n  createBuyerOffer(input: $input) {\n    offerOrError {\n      __typename\n      ... on OfferMutationSuccess {\n        __typename\n        offer {\n          internalID\n          order {\n            id\n            pendingOffer {\n              id\n              internalID\n              createdAt\n              amount {\n                major\n              }\n              pricingBreakdownLines {\n                __typename\n                ... on ShippingLine {\n                  displayName\n                  amountFallbackText\n                  amount {\n                    amount\n                    currencySymbol\n                  }\n                }\n                ... on TaxLine {\n                  displayName\n                  amountFallbackText\n                  amount {\n                    amount\n                    currencySymbol\n                  }\n                }\n                ... on SubtotalLine {\n                  displayName\n                  amount {\n                    amount\n                    currencySymbol\n                  }\n                }\n                ... on TotalLine {\n                  displayName\n                  amountFallbackText\n                  amount {\n                    display\n                  }\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on OfferMutationError {\n        mutationError {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c8d78aeb189715ebd5ea04d9c6abb181";
+(node as any).hash = "f5bf6d73de5607c6bda1b4c8a33703cf";
 
 export default node;
