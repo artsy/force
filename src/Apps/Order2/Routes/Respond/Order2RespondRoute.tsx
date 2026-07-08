@@ -1,14 +1,19 @@
-import { Analytics } from "System/Contexts/AnalyticsContext"
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
-import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
 import { Order2RespondApp } from "Apps/Order2/Routes/Respond/Order2RespondApp"
 import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
+import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
+import { Analytics } from "System/Contexts/AnalyticsContext"
+import { getENV } from "Utils/getENV"
 import type { Order2RespondRoute_viewer$key } from "__generated__/Order2RespondRoute_viewer.graphql"
 import { graphql, useFragment } from "react-relay"
 
 interface Order2RespondRouteProps {
   viewer: Order2RespondRoute_viewer$key
 }
+
+const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
 export const Order2RespondRoute: React.FC<Order2RespondRouteProps> = ({
   viewer,
@@ -23,9 +28,11 @@ export const Order2RespondRoute: React.FC<Order2RespondRouteProps> = ({
 
   return (
     <Analytics contextPageOwnerId={order.internalID}>
-      <Order2RespondContextProvider order={order}>
-        <Order2RespondApp order={order} />
-      </Order2RespondContextProvider>
+      <Elements stripe={stripePromise}>
+        <Order2RespondContextProvider order={order}>
+          <Order2RespondApp order={order} />
+        </Order2RespondContextProvider>
+      </Elements>
     </Analytics>
   )
 }

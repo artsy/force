@@ -1,3 +1,4 @@
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
   Box,
@@ -11,16 +12,24 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
+import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import {
   type RespondAction,
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
+import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2RespondForm")
+
+const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondFormProps {
   order: Order2RespondForm_order$key
@@ -32,11 +41,44 @@ const RESPOND_OPTIONS: Array<{ value: RespondAction; label: string }> = [
   { value: "DECLINE", label: "Decline gallery offer" },
 ]
 
-// Past-tense titles shown once the step is completed/collapsed.
-const COMPLETED_TITLE: Record<RespondAction, string> = {
-  APPROVE: "Accepted gallery offer",
-  COUNTEROFFER: "Sent counteroffer",
-  DECLINE: "Declined gallery offer",
+const DECLINE_WARNING = "Declining this offer ends this negotiation."
+
+interface CompletedResponse {
+  title: string
+  detail?: string
+  note?: string
+}
+
+interface GetCompletedResponseParams {
+  action: RespondAction
+  totalPrice?: string | null
+  counterofferAmount: string
+}
+
+const getCompletedResponse = ({
+  action,
+  totalPrice,
+  counterofferAmount,
+}: GetCompletedResponseParams): CompletedResponse => {
+  if (action === "DECLINE") {
+    return { title: "Decline gallery offer", detail: DECLINE_WARNING }
+  }
+
+  if (action === "COUNTEROFFER") {
+    return {
+      title: "Your counteroffer",
+      detail: `$${counterofferAmount}`,
+      note: "Excluding shipping and taxes",
+    }
+  }
+
+  return {
+    title: "Accepted gallery offer",
+    ...(totalPrice && {
+      detail: totalPrice,
+      note: "Including shipping and taxes",
+    }),
+  }
 }
 
 export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
@@ -52,12 +94,29 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
-  const [counterofferAmount, setCounterofferAmount] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const galleryOffer = orderData.lastSubmittedOffer
+  // Pre-fill the input from the buyer’s draft counteroffer (e.g. after a
+  // refresh) so they can edit it rather than start from a blank field. Only use
+  // a draft that belongs to the current round — a pending offer from an earlier
+  // round (buyer countered, gallery countered back) is stale and must be
+  // ignored.
+  const draftCounterofferAmount = hasCurrentCounterofferDraft({
+    pendingOffer: orderData.pendingOffer,
+    galleryOffer: orderData.lastSubmittedOffer,
+  })
+    ? orderData.pendingOffer?.amount?.major
+    : null
+  const [counterofferAmount, setCounterofferAmount] = useState(
+    draftCounterofferAmount ? String(draftCounterofferAmount) : "",
+  )
+
+  const { submitMutation: createCounterOffer } =
+    useOrder2CreateCounterOfferMutation()
 
   // Total the buyer would pay — items + shipping + taxes combined.
-  const totalPrice = galleryOffer?.buyerTotal?.display
+  const totalPrice = orderData.lastSubmittedOffer?.buyerTotal?.display
 
   const isRespondCompleted =
     steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
@@ -67,77 +126,70 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
 
-  const handleSaveAndReview = () => {
+  const handleContinueToReview = async () => {
     if (!selectedAction || !isCounterofferValid) {
       return
     }
-    // NOTE: actually submitting the response (accept/counteroffer/decline) is
-    // out of scope for this ticket — it's handled in EMI-3288
-    // (https://artsyproduct.atlassian.net/browse/EMI-3288). Here we only
-    // advance/collapse the step.
-    setRespondComplete()
+
+    // No response is submitted here — every response is submitted from the
+    // summary’s Submit CTA. Accept/decline just advance to that step.
+    if (selectedAction !== "COUNTEROFFER") {
+      setRespondComplete()
+      return
+    }
+
+    // A counteroffer additionally creates a pending buyer offer (responding to
+    // the gallery’s offer) before advancing to the summary’s Submit CTA.
+    const respondsToID = orderData.lastSubmittedOffer?.internalID
+    if (!respondsToID) {
+      return
+    }
+
+    try {
+      setErrorMessage(null)
+      setIsSubmitting(true)
+
+      const response = await createCounterOffer({
+        variables: {
+          input: {
+            orderID: orderData.internalID,
+            amountMinor: Number(counterofferAmount) * 100,
+            respondsToID,
+          },
+        },
+      })
+
+      const offerOrError = response.createBuyerOffer?.offerOrError
+
+      if (offerOrError && "mutationError" in offerOrError) {
+        // TODO: proper error handling is tracked in EMI-3175.
+        setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+        return
+      }
+
+      setRespondComplete()
+    } catch (error) {
+      // TODO: proper error handling is tracked in EMI-3175.
+      logger.error(error)
+      setErrorMessage(GENERIC_ERROR)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
-  // In the collapsed state show the resulting amount. For COUNTEROFFER the
-  // total (incl. taxes & shipping) isn't computed yet — placeholder for now.
-  // TODO: replace with the counteroffer's buyerTotal once it's available.
-  const collapsedAmount =
-    selectedAction === "COUNTEROFFER"
-      ? "TODO: counteroffer total (incl. taxes & shipping)"
-      : totalPrice
-
-  if (isRespondCompleted) {
+  if (isRespondCompleted && selectedAction) {
     return (
-      <Flex
-        flexDirection="column"
-        backgroundColor="mono0"
-        py={2}
-        px={[2, 2, 4]}
-      >
-        <Flex justifyContent="space-between" alignItems="flex-start">
-          <Text variant={["sm", "md"]}>
-            {selectedAction
-              ? COMPLETED_TITLE[selectedAction]
-              : "Response submitted"}
-          </Text>
-          <Clickable
-            textDecoration="underline"
-            cursor="pointer"
-            type="button"
-            aria-label="Edit response"
-            onClick={() => {
-              editRespond()
-            }}
-          >
-            <Text variant="sm" fontWeight="normal" color="mono100">
-              Edit
-            </Text>
-          </Clickable>
-        </Flex>
-
-        {collapsedAmount && (
-          <>
-            <Spacer y={1} />
-            <Text variant={["sm", "md"]}>{collapsedAmount}</Text>
-            <Text variant="xs" color="mono60">
-              Including shipping and taxes
-            </Text>
-          </>
-        )}
-
-        <Spacer y={1} />
-        <Message variant="default" p={1}>
-          <Text variant="xs">
-            No request was sent — submitting the response will be implemented in
-            EMI-3288.
-          </Text>
-        </Message>
-      </Flex>
+      <RespondCompletedView
+        action={selectedAction}
+        totalPrice={totalPrice}
+        counterofferAmount={counterofferAmount}
+        onEdit={editRespond}
+      />
     )
   }
 
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
+    <RespondCard>
       <Text variant={["sm", "md"]}>Respond to gallery offer</Text>
 
       {totalPrice && (
@@ -222,9 +274,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
               {option.value === "DECLINE" && selectedAction === "DECLINE" && (
                 <>
                   <Spacer y={1} />
-                  <Text variant="xs">
-                    Declining this offer ends this negotiation.
-                  </Text>
+                  <Text variant="xs">{DECLINE_WARNING}</Text>
                 </>
               )}
             </Radio>
@@ -232,25 +282,106 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
         })}
       </RadioGroup>
 
+      {errorMessage && (
+        <>
+          <Spacer y={2} />
+          <Message variant="error" p={1}>
+            <Text variant="xs">{errorMessage}</Text>
+          </Message>
+        </>
+      )}
+
       <Spacer y={2} />
 
       <Button
         variant="primaryBlack"
         width="100%"
+        loading={isSubmitting}
         disabled={!selectedAction || !isCounterofferValid}
-        onClick={handleSaveAndReview}
+        onClick={handleContinueToReview}
       >
-        Save and Review
+        Continue to Review
       </Button>
+    </RespondCard>
+  )
+}
+
+interface RespondCompletedViewProps extends GetCompletedResponseParams {
+  onEdit: () => void
+}
+
+const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
+  action,
+  totalPrice,
+  counterofferAmount,
+  onEdit,
+}) => {
+  const { title, detail, note } = getCompletedResponse({
+    action,
+    totalPrice,
+    counterofferAmount,
+  })
+
+  return (
+    <RespondCard>
+      <Flex justifyContent="space-between">
+        <Flex alignItems="center">
+          <CheckmarkIcon fill="mono100" />
+          <Spacer x={1} />
+          <SectionHeading>{title}</SectionHeading>
+        </Flex>
+
+        <Clickable
+          textDecoration="underline"
+          cursor="pointer"
+          type="button"
+          aria-label="Edit response"
+          onClick={onEdit}
+        >
+          {/*TODO: maybe refactor to reuse across order/ofer */}
+          <Text variant="xs" fontWeight="normal" color="mono100">
+            Edit
+          </Text>
+        </Clickable>
+      </Flex>
+
+      {(detail || note) && (
+        <Box ml="30px" mt={1}>
+          {detail && <Text variant="sm-display">{detail}</Text>}
+          {note && (
+            <Text variant="sm-display" color="mono60">
+              {note}
+            </Text>
+          )}
+        </Box>
+      )}
+    </RespondCard>
+  )
+}
+
+// Shared padded white card wrapping both the editable and completed states.
+const RespondCard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
+      {children}
     </Flex>
   )
 }
 
 const FRAGMENT = graphql`
   fragment Order2RespondForm_order on Order {
+    internalID
     lastSubmittedOffer {
+      internalID
+      createdAt
       buyerTotal {
         display
+      }
+    }
+    pendingOffer {
+      createdAt
+      amount {
+        major
       }
     }
     ...Order2RespondOfferDetails_order

@@ -21,6 +21,7 @@ export const Order2RespondOfferDetails: React.FC<
         order={orderData}
         contextModule={ContextModule.ordersRespond}
         checkoutTracking={checkoutTracking}
+        priceFromPendingOffer={false}
       />
     </Flex>
   )

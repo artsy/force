@@ -1,5 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { Order2RespondForm } from "Apps/Order2/Routes/Respond/Components/Order2RespondForm"
+import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2RespondFormTestQuery } from "__generated__/Order2RespondFormTestQuery.graphql"
@@ -7,7 +8,28 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
+jest.mock(
+  "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation",
+)
+
 const COUNTEROFFER_PLACEHOLDER = "Enter amount excluding shipping & tax"
+
+const mockCreateCounterOffer = jest.fn()
+
+beforeEach(() => {
+  mockCreateCounterOffer.mockReset()
+  mockCreateCounterOffer.mockResolvedValue({
+    createBuyerOffer: {
+      offerOrError: {
+        __typename: "OfferMutationSuccess",
+        offer: { internalID: "counteroffer-id" },
+      },
+    },
+  })
+  ;(useOrder2CreateCounterOfferMutation as jest.Mock).mockReturnValue({
+    submitMutation: mockCreateCounterOffer,
+  })
+})
 
 const { renderWithRelay } = setupTestWrapperTL<Order2RespondFormTestQuery>({
   Component: (props: any) => {
@@ -36,11 +58,12 @@ const { renderWithRelay } = setupTestWrapperTL<Order2RespondFormTestQuery>({
 })
 
 const defaultResolvers = {
-  Order: () => ({ mode: "OFFER" }),
+  Order: () => ({ mode: "OFFER", pendingOffer: null }),
   Money: () => ({ display: "$1,000.00" }),
 }
 
-const saveButton = () => screen.getByRole("button", { name: "Save and Review" })
+const continueButton = () =>
+  screen.getByRole("button", { name: "Continue to Review" })
 
 describe("Order2RespondForm", () => {
   it("renders the three response options", () => {
@@ -51,14 +74,55 @@ describe("Order2RespondForm", () => {
     expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
   })
 
-  it("disables Save and Review until an option is selected", () => {
+  it("disables Continue to Review until an option is selected", () => {
     renderWithRelay(defaultResolvers)
 
-    expect(saveButton()).toBeDisabled()
+    expect(continueButton()).toBeDisabled()
 
     fireEvent.click(screen.getByText("Accept gallery offer"))
 
-    expect(saveButton()).toBeEnabled()
+    expect(continueButton()).toBeEnabled()
+  })
+
+  it("pre-fills the counteroffer input from a current-round draft", () => {
+    renderWithRelay({
+      Order: () => ({
+        mode: "OFFER",
+        // Draft created after the gallery offer it responds to.
+        lastSubmittedOffer: { createdAt: "2024-01-01T00:00:00Z" },
+        pendingOffer: {
+          createdAt: "2024-01-02T00:00:00Z",
+          amount: { major: 500 },
+        },
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+
+    expect(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER)).toHaveValue(
+      "500",
+    )
+  })
+
+  it("does not pre-fill from a stale draft left over from an earlier round", () => {
+    renderWithRelay({
+      Order: () => ({
+        mode: "OFFER",
+        // Pending offer predates the gallery’s latest counteroffer, so it is a
+        // stale draft from a previous round and must be ignored.
+        lastSubmittedOffer: { createdAt: "2024-01-02T00:00:00Z" },
+        pendingOffer: {
+          createdAt: "2024-01-01T00:00:00Z",
+          amount: { major: 500 },
+        },
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+
+    expect(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER)).toHaveValue(
+      "",
+    )
   })
 
   it("reveals the counteroffer input only when Send counteroffer is selected", () => {
@@ -89,49 +153,93 @@ describe("Order2RespondForm", () => {
     ).toBeInTheDocument()
   })
 
-  it("keeps Save and Review disabled for a counteroffer until an amount is entered", () => {
+  it("keeps Continue to Review disabled for a counteroffer until an amount is entered", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Send counteroffer"))
-    expect(saveButton()).toBeDisabled()
+    expect(continueButton()).toBeDisabled()
 
     fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
       target: { value: "500" },
     })
 
-    expect(saveButton()).toBeEnabled()
+    expect(continueButton()).toBeEnabled()
   })
 
-  it("collapses to the completed state after accepting, without submitting a request", () => {
+  it("collapses to the completed state after accepting", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Accept gallery offer"))
-    fireEvent.click(saveButton())
+    fireEvent.click(continueButton())
 
-    // Collapsed title (past tense) and the not-submitted notice
+    // Collapsed title (past tense) is shown
     expect(screen.getByText("Accepted gallery offer")).toBeInTheDocument()
-    expect(
-      screen.getByText(/submitting the response will be implemented in/i),
-    ).toBeInTheDocument()
 
     // The expanded form (options + CTA) is no longer shown
     expect(screen.queryByText("Accept gallery offer")).not.toBeInTheDocument()
     expect(
-      screen.queryByRole("button", { name: "Save and Review" }),
+      screen.queryByRole("button", { name: "Continue to Review" }),
     ).not.toBeInTheDocument()
   })
 
-  it("shows a placeholder total for a counteroffer in the collapsed state", () => {
+  it("creates a counteroffer and shows the entered amount in the collapsed state", async () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Send counteroffer"))
     fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
       target: { value: "500" },
     })
-    fireEvent.click(saveButton())
+    fireEvent.click(continueButton())
 
-    expect(screen.getByText("Sent counteroffer")).toBeInTheDocument()
-    expect(screen.getByText(/counteroffer total/i)).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("Your counteroffer")).toBeInTheDocument()
+    })
+    expect(screen.getByText("$500")).toBeInTheDocument()
+
+    // The counteroffer is created against the gallery's offer, in minor units.
+    expect(mockCreateCounterOffer).toHaveBeenCalledWith({
+      variables: {
+        input: expect.objectContaining({
+          amountMinor: 50000,
+          respondsToID: expect.any(String),
+        }),
+      },
+    })
+  })
+
+  it("keeps the form open and surfaces an error when the counteroffer fails", async () => {
+    mockCreateCounterOffer.mockResolvedValue({
+      createBuyerOffer: {
+        offerOrError: {
+          __typename: "OfferMutationError",
+          mutationError: { code: "invalid", message: "Offer too low" },
+        },
+      },
+    })
+
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+    fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+      target: { value: "500" },
+    })
+    fireEvent.click(continueButton())
+
+    await waitFor(() => {
+      expect(screen.getByText("Offer too low")).toBeInTheDocument()
+    })
+    // Still on the editable form — not collapsed.
+    expect(screen.queryByText("Your counteroffer")).not.toBeInTheDocument()
+  })
+
+  it("does not create an offer for accept or decline", () => {
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Accept gallery offer"))
+    fireEvent.click(continueButton())
+
+    expect(screen.getByText("Accepted gallery offer")).toBeInTheDocument()
+    expect(mockCreateCounterOffer).not.toHaveBeenCalled()
   })
 
   it("toggles the offer-details breakdown", () => {
@@ -149,9 +257,10 @@ describe("Order2RespondForm", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Decline gallery offer"))
-    fireEvent.click(saveButton())
+    fireEvent.click(continueButton())
 
-    expect(screen.getByText("Declined gallery offer")).toBeInTheDocument()
+    // Collapsed completed title for a decline (radios are no longer rendered)
+    expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole("button", { name: "Edit response" }))
 
