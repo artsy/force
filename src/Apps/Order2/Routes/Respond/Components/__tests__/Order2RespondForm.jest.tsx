@@ -319,7 +319,7 @@ describe("Order2RespondForm", () => {
       fireEvent.click(screen.getByText("Accept gallery offer"))
       mockTrackEvent.mockClear()
 
-      fireEvent.click(saveButton())
+      fireEvent.click(continueButton())
 
       expect(mockTrackEvent).toHaveBeenCalledWith({
         action: "clickedOrderProgression",

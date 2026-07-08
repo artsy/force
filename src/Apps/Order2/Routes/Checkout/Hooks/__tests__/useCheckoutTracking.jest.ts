@@ -353,6 +353,23 @@ describe("useCheckoutTracking", () => {
       })
     })
 
+    it("tracks submittedCounterOffer", () => {
+      const { result } = renderHook(() =>
+        useCheckoutTracking({ source: "artwork", mode: "OFFER" }),
+      )
+
+      act(() => {
+        result.current.submittedCounterOffer()
+      })
+
+      assertTracked({
+        action: "submittedCounterOffer",
+        context_module: "ordersReview",
+        context_page_owner_type: "orders-checkout",
+        context_page_owner_id: "order-id",
+      })
+    })
+
     it.each([true, false])(
       "tracks toggledOfferHistory when expanded is %s",
       expanded => {

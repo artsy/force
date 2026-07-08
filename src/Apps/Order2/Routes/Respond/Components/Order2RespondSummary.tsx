@@ -7,11 +7,11 @@ import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondCo
 import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
 import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
 import { useOrder2SubmitCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2SubmitCounterOfferMutation"
-import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import {
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type { Order2RespondSummary_order$key } from "__generated__/Order2RespondSummary_order.graphql"
@@ -106,6 +106,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       return
     }
 
+    checkoutTracking.submittedCounterOffer()
     redirectToOrderDetails()
   }
 
@@ -216,7 +217,12 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
             variant="primaryBlack"
             width="100%"
             loading={isSubmitting}
-            onClick={handleSubmit}
+            onClick={() => {
+              checkoutTracking.clickedOrderProgression(
+                ContextModule.ordersReview,
+              )
+              handleSubmit()
+            }}
           >
             Submit
           </Button>

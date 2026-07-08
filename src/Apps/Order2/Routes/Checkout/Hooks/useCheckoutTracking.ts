@@ -26,6 +26,7 @@ import {
   type SavedAddressViewed,
   type SavedPaymentMethodViewed,
   type ShippingQuoteViewed,
+  type SubmittedCounterOffer,
   type SubmittedOffer,
   type SubmittedOrder,
   type ToggledCollapsibleOrderSummary,
@@ -410,6 +411,17 @@ export const useCheckoutTracking = ({
           option,
           amount,
           currency,
+        }
+
+        trackEvent(payload)
+      },
+
+      submittedCounterOffer: () => {
+        const payload: SubmittedCounterOffer = {
+          action: ActionType.submittedCounterOffer,
+          context_module: ContextModule.ordersReview,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
         }
 
         trackEvent(payload)
