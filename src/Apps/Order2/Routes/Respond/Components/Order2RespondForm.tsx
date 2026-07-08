@@ -137,6 +137,20 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
 
+  const handleSelectAction = (value: string) => {
+    const action = value as RespondAction
+    setRespondAction(action)
+
+    // Amount/currency describe the gallery offer being acted on and
+    // only apply to accept/counter — decline carries no amount.
+    const isDecline = action === "DECLINE"
+    checkoutTracking.clickedCounterOfferOption({
+      option: TRACKING_OPTION_BY_ACTION[action],
+      amount: isDecline ? undefined : galleryOffer?.amount?.major,
+      currency: isDecline ? undefined : galleryOffer?.amount?.currencyCode,
+    })
+  }
+
   const handleContinueToReview = async () => {
     if (!selectedAction || !isCounterofferValid) {
       return
@@ -249,21 +263,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       <Spacer y={2} />
 
       <RadioGroup
-        onSelect={value => {
-          const action = value as RespondAction
-          setRespondAction(action)
-
-          // Amount/currency describe the gallery offer being acted on and
-          // only apply to accept/counter — decline carries no amount.
-          const isDecline = action === "DECLINE"
-          checkoutTracking.clickedCounterOfferOption({
-            option: TRACKING_OPTION_BY_ACTION[action],
-            amount: isDecline ? undefined : galleryOffer?.amount?.major,
-            currency: isDecline
-              ? undefined
-              : galleryOffer?.amount?.currencyCode,
-          })
-        }}
+        onSelect={handleSelectAction}
         defaultValue={selectedAction ?? undefined}
         gap={1}
       >
