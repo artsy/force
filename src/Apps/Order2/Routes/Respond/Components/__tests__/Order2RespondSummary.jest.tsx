@@ -9,11 +9,20 @@ import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/Respond
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2RespondSummaryTestQuery } from "__generated__/Order2RespondSummaryTestQuery.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 
 jest.mock("@stripe/react-stripe-js", () => ({
   useStripe: () => ({ handleNextAction: jest.fn().mockResolvedValue({}) }),
+}))
+
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "order-id",
+    contextPageOwnerSlug: "page-owner-slug",
+    contextPageOwnerType: "orders-respond",
+  })),
 }))
 
 jest.mock(
@@ -200,6 +209,77 @@ describe("Order2RespondSummary", () => {
         variables: {
           input: { orderID: "order-id", offerID: "pending-offer-id" },
         },
+      })
+    })
+  })
+
+  describe("analytics", () => {
+    const mockTrackEvent = jest.fn()
+
+    beforeAll(() => {
+      ;(useTracking as jest.Mock).mockImplementation(() => ({
+        trackEvent: mockTrackEvent,
+      }))
+    })
+
+    afterEach(() => {
+      mockTrackEvent.mockReset()
+    })
+
+    it("tracks clickedOrderProgression when Submit is clicked", async () => {
+      renderWithRelay({
+        Order: () => ({
+          mode: "OFFER",
+          internalID: "order-id",
+          lastSubmittedOffer: { internalID: "gallery-offer-id" },
+        }),
+        Money: () => ({ display: "$1,000.00" }),
+      })
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+      mockTrackEvent.mockClear()
+
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "clickedOrderProgression",
+        context_module: "ordersReview",
+        context_page_owner_id: "order-id",
+        context_page_owner_type: "orders-respond",
+        flow: "Make offer",
+      })
+    })
+
+    it("tracks submittedCounterOffer when the counteroffer is submitted", async () => {
+      const COUNTEROFFER_PLACEHOLDER = "Enter amount excluding shipping & tax"
+
+      renderWithRelay({
+        Order: () => ({
+          mode: "OFFER",
+          internalID: "order-id",
+          pendingOffer: {
+            internalID: "pending-offer-id",
+            amount: { major: 500 },
+          },
+        }),
+        Money: () => ({ display: "$1,000.00" }),
+      })
+
+      fireEvent.click(screen.getByText("Send counteroffer"))
+      fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+        target: { value: "500" },
+      })
+      fireEvent.click(continueButton())
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+      await waitFor(() => {
+        expect(mockTrackEvent).toHaveBeenCalledWith({
+          action: "submittedCounterOffer",
+          context_module: "ordersReview",
+          context_page_owner_id: "order-id",
+          context_page_owner_type: "orders-respond",
+        })
       })
     })
   })

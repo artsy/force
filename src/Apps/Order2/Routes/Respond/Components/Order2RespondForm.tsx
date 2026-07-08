@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
@@ -40,6 +41,15 @@ const RESPOND_OPTIONS: Array<{ value: RespondAction; label: string }> = [
   { value: "COUNTEROFFER", label: "Send counteroffer" },
   { value: "DECLINE", label: "Decline gallery offer" },
 ]
+
+const TRACKING_OPTION_BY_ACTION: Record<
+  RespondAction,
+  "accept" | "counter" | "decline"
+> = {
+  APPROVE: "accept",
+  COUNTEROFFER: "counter",
+  DECLINE: "decline",
+}
 
 const DECLINE_WARNING = "Declining this offer ends this negotiation."
 
@@ -91,6 +101,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     setRespondComplete,
     editRespond,
     steps,
+    checkoutTracking,
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
@@ -126,10 +137,29 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
 
+  const handleSelectAction = (value: string) => {
+    const action = value as RespondAction
+    setRespondAction(action)
+
+    const amount = orderData.lastSubmittedOffer?.amount?.major
+    const currency = orderData.lastSubmittedOffer?.amount?.currencyCode
+
+    // Amount/currency describe the gallery offer being acted on and
+    // only apply to accept/counter — decline carries no amount.
+    const isDecline = action === "DECLINE"
+    checkoutTracking.clickedCounterOfferOption({
+      option: TRACKING_OPTION_BY_ACTION[action],
+      amount: isDecline ? undefined : amount,
+      currency: isDecline ? undefined : currency,
+    })
+  }
+
   const handleContinueToReview = async () => {
     if (!selectedAction || !isCounterofferValid) {
       return
     }
+
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersCounter)
 
     // No response is submitted here — every response is submitted from the
     // summary’s Submit CTA. Accept/decline just advance to that step.
@@ -236,9 +266,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       <Spacer y={2} />
 
       <RadioGroup
-        onSelect={value => {
-          setRespondAction(value as RespondAction)
-        }}
+        onSelect={handleSelectAction}
         defaultValue={selectedAction ?? undefined}
         gap={1}
       >
@@ -374,6 +402,10 @@ const FRAGMENT = graphql`
     lastSubmittedOffer {
       internalID
       createdAt
+      amount {
+        major
+        currencyCode
+      }
       buyerTotal {
         display
       }

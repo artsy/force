@@ -1,5 +1,6 @@
 import { Box, Expandable, Flex, Text } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import type { Order2OfferHistory_order$key } from "__generated__/Order2OfferHistory_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -25,6 +26,7 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
   order,
 }) => {
   const { submittedOffers } = useFragment(FRAGMENT, order)
+  const { checkoutTracking } = useRespondContext()
 
   if (!submittedOffers || submittedOffers.length === 0) {
     return null
@@ -37,6 +39,9 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
         borderColor="transparent"
         backgroundColor="mono0"
         pb={1}
+        onToggle={isExpanded => {
+          checkoutTracking.toggledOfferHistory(isExpanded)
+        }}
       >
         <Flex justifyContent="flex-end" mb={1}>
           <Text variant="xs">Incl. shipping &amp; taxes</Text>
