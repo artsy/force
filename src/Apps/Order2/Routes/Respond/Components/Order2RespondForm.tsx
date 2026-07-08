@@ -41,6 +41,15 @@ const RESPOND_OPTIONS: Array<{ value: RespondAction; label: string }> = [
   { value: "DECLINE", label: "Decline gallery offer" },
 ]
 
+const TRACKING_OPTION_BY_ACTION: Record<
+  RespondAction,
+  "accept" | "counter" | "decline"
+> = {
+  APPROVE: "accept",
+  COUNTEROFFER: "counter",
+  DECLINE: "decline",
+}
+
 const DECLINE_WARNING = "Declining this offer ends this negotiation."
 
 interface CompletedResponse {
@@ -91,6 +100,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     setRespondComplete,
     editRespond,
     steps,
+    checkoutTracking,
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
@@ -237,7 +247,19 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
       <RadioGroup
         onSelect={value => {
-          setRespondAction(value as RespondAction)
+          const action = value as RespondAction
+          setRespondAction(action)
+
+          // Amount/currency describe the gallery offer being acted on and
+          // only apply to accept/counter — decline carries no amount.
+          const isDecline = action === "DECLINE"
+          checkoutTracking.clickedCounterOfferOption({
+            option: TRACKING_OPTION_BY_ACTION[action],
+            amount: isDecline ? undefined : galleryOffer?.amount?.major,
+            currency: isDecline
+              ? undefined
+              : galleryOffer?.amount?.currencyCode,
+          })
         }}
         defaultValue={selectedAction ?? undefined}
         gap={1}
@@ -374,6 +396,10 @@ const FRAGMENT = graphql`
     lastSubmittedOffer {
       internalID
       createdAt
+      amount {
+        major
+        currencyCode
+      }
       buyerTotal {
         display
       }

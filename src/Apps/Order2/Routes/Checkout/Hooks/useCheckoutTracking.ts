@@ -6,6 +6,7 @@ import {
   type ClickedChangePaymentMethod,
   type ClickedChangeShippingAddress,
   type ClickedChangeShippingMethod,
+  type ClickedCounterOfferOption,
   type ClickedEditShippingAddress,
   type ClickedExpressCheckout,
   type ClickedFulfillmentTab,
@@ -28,6 +29,7 @@ import {
   type SubmittedOffer,
   type SubmittedOrder,
   type ToggledCollapsibleOrderSummary,
+  type ToggledOfferHistory,
 } from "@artsy/cohesion"
 import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import type { ProcessedUserAddress } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
@@ -385,6 +387,41 @@ export const useCheckoutTracking = ({
           context_module: ContextModule.ordersCheckout,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
+        }
+
+        trackEvent(payload)
+      },
+
+      clickedCounterOfferOption: ({
+        option,
+        amount,
+        currency,
+      }: {
+        option: "accept" | "counter" | "decline"
+        // Amount/currency only apply to accept/counter; null for decline.
+        amount?: number
+        currency?: string
+      }) => {
+        const payload: ClickedCounterOfferOption = {
+          action: ActionType.clickedCounterOfferOption,
+          context_module: ContextModule.ordersCounter,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          option,
+          amount,
+          currency,
+        }
+
+        trackEvent(payload)
+      },
+
+      toggledOfferHistory: (expanded: boolean) => {
+        const payload: ToggledOfferHistory = {
+          action: ActionType.toggledOfferHistory,
+          context_module: ContextModule.ordersCounter,
+          context_page_owner_type: contextPageOwnerType,
+          context_page_owner_id: contextPageOwnerId,
+          expanded,
         }
 
         trackEvent(payload)

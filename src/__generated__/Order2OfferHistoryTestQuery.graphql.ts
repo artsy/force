@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61c89ffcdb7ba5663e3df9ad28968dff>>
+ * @generated SignedSource<<2813451c4c61c599c5cf45e8bae58d5b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type Order2OfferHistoryTestQuery$variables = Record<PropertyKey, never>;
 export type Order2OfferHistoryTestQuery$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2OfferHistory_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2OfferHistory_order" | "Order2RespondContext_order">;
     } | null | undefined;
   } | null | undefined;
 };
@@ -31,7 +31,21 @@ var v0 = [
     "value": "order-id"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -40,26 +54,19 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Money"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -88,6 +95,11 @@ return {
             "name": "order",
             "plural": false,
             "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "Order2RespondContext_order"
+              },
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -125,6 +137,52 @@ return {
             "name": "order",
             "plural": false,
             "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "source",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "mode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LineItem",
+                "kind": "LinkedField",
+                "name": "lineItems",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "artwork",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "slug",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -133,13 +191,7 @@ return {
                 "name": "submittedOffers",
                 "plural": true,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "internalID",
-                    "storageKey": null
-                  },
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": [
@@ -167,7 +219,7 @@ return {
                     "kind": "LinkedField",
                     "name": "amount",
                     "plural": false,
-                    "selections": (v1/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -177,7 +229,7 @@ return {
                     "kind": "LinkedField",
                     "name": "buyerTotal",
                     "plural": false,
-                    "selections": (v1/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   (v2/*: any*/)
@@ -195,7 +247,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2eb87e7f2857c3fbf15a149ea5a44f41",
+    "cacheID": "6a16f530290dea18f9524af5a7c9715a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -205,25 +257,61 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v3/*: any*/),
+        "me.id": (v4/*: any*/),
         "me.order": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Order"
         },
-        "me.order.id": (v3/*: any*/),
+        "me.order.id": (v4/*: any*/),
+        "me.order.internalID": (v4/*: any*/),
+        "me.order.lineItems": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "LineItem"
+        },
+        "me.order.lineItems.artwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.order.lineItems.artwork.id": (v4/*: any*/),
+        "me.order.lineItems.artwork.slug": (v4/*: any*/),
+        "me.order.lineItems.id": (v4/*: any*/),
+        "me.order.mode": {
+          "enumValues": [
+            "BUY",
+            "OFFER"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderModeEnum"
+        },
+        "me.order.source": {
+          "enumValues": [
+            "ARTWORK_PAGE",
+            "INQUIRY",
+            "PARTNER_OFFER",
+            "PRIVATE_SALE"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "OrderSourceEnum"
+        },
         "me.order.submittedOffers": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "Offer"
         },
-        "me.order.submittedOffers.amount": (v4/*: any*/),
-        "me.order.submittedOffers.amount.display": (v5/*: any*/),
-        "me.order.submittedOffers.buyerTotal": (v4/*: any*/),
-        "me.order.submittedOffers.buyerTotal.display": (v5/*: any*/),
-        "me.order.submittedOffers.createdAt": (v5/*: any*/),
+        "me.order.submittedOffers.amount": (v5/*: any*/),
+        "me.order.submittedOffers.amount.display": (v6/*: any*/),
+        "me.order.submittedOffers.buyerTotal": (v5/*: any*/),
+        "me.order.submittedOffers.buyerTotal.display": (v6/*: any*/),
+        "me.order.submittedOffers.createdAt": (v6/*: any*/),
         "me.order.submittedOffers.fromParticipant": {
           "enumValues": [
             "BUYER",
@@ -233,17 +321,17 @@ return {
           "plural": false,
           "type": "FromParticipantEnum"
         },
-        "me.order.submittedOffers.id": (v3/*: any*/),
-        "me.order.submittedOffers.internalID": (v3/*: any*/)
+        "me.order.submittedOffers.id": (v4/*: any*/),
+        "me.order.submittedOffers.internalID": (v4/*: any*/)
       }
     },
     "name": "Order2OfferHistoryTestQuery",
     "operationKind": "query",
-    "text": "query Order2OfferHistoryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2OfferHistory_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OfferHistory_order on Order {\n  submittedOffers {\n    internalID\n    createdAt(format: \"MMMM D, YYYY\")\n    fromParticipant\n    amount {\n      display\n    }\n    buyerTotal {\n      display\n    }\n    id\n  }\n}\n"
+    "text": "query Order2OfferHistoryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2OfferHistory_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OfferHistory_order on Order {\n  submittedOffers {\n    internalID\n    createdAt(format: \"MMMM D, YYYY\")\n    fromParticipant\n    amount {\n      display\n    }\n    buyerTotal {\n      display\n    }\n    id\n  }\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e85acb333009d768358f35137f91b547";
+(node as any).hash = "8f13cea31f567aa58ccae44b359ea308";
 
 export default node;

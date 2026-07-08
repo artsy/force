@@ -5,12 +5,21 @@ import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/Respond
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2RespondFormTestQuery } from "__generated__/Order2RespondFormTestQuery.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 
 jest.mock(
   "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation",
 )
+
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "order-id",
+    contextPageOwnerSlug: "page-owner-slug",
+    contextPageOwnerType: "orders-respond",
+  })),
+}))
 
 const COUNTEROFFER_PLACEHOLDER = "Enter amount excluding shipping & tax"
 
@@ -59,7 +68,7 @@ const { renderWithRelay } = setupTestWrapperTL<Order2RespondFormTestQuery>({
 
 const defaultResolvers = {
   Order: () => ({ mode: "OFFER", pendingOffer: null }),
-  Money: () => ({ display: "$1,000.00" }),
+  Money: () => ({ display: "$1,000.00", major: 1000, currencyCode: "USD" }),
 }
 
 const continueButton = () =>
@@ -266,5 +275,42 @@ describe("Order2RespondForm", () => {
 
     expect(screen.getByText("Respond to gallery offer")).toBeInTheDocument()
     expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
+  })
+
+  describe("analytics", () => {
+    const mockTrackEvent = jest.fn()
+
+    beforeAll(() => {
+      ;(useTracking as jest.Mock).mockImplementation(() => ({
+        trackEvent: mockTrackEvent,
+      }))
+    })
+
+    afterEach(() => {
+      mockTrackEvent.mockReset()
+    })
+
+    it.each([
+      // accept/counter carry the gallery offer amount; decline carries none.
+      ["Accept gallery offer", "accept", { amount: 1000, currency: "USD" }],
+      ["Send counteroffer", "counter", { amount: 1000, currency: "USD" }],
+      ["Decline gallery offer", "decline", {}],
+    ])(
+      "tracks clickedCounterOfferOption when %s is selected",
+      (label, option, amountFields) => {
+        renderWithRelay(defaultResolvers)
+
+        fireEvent.click(screen.getByText(label))
+
+        expect(mockTrackEvent).toHaveBeenCalledWith({
+          action: "clickedCounterOfferOption",
+          context_module: "ordersCounter",
+          context_page_owner_id: "order-id",
+          context_page_owner_type: "orders-respond",
+          option,
+          ...amountFields,
+        })
+      },
+    )
   })
 })

@@ -304,4 +304,74 @@ describe("useCheckoutTracking", () => {
       })
     })
   })
+
+  describe("counteroffer events", () => {
+    it.each(["accept", "counter"] as const)(
+      "tracks clickedCounterOfferOption with the %s option and amount",
+      option => {
+        const { result } = renderHook(() =>
+          useCheckoutTracking({ source: "artwork", mode: "OFFER" }),
+        )
+
+        act(() => {
+          result.current.clickedCounterOfferOption({
+            option,
+            amount: 1000,
+            currency: "USD",
+          })
+        })
+
+        assertTracked({
+          action: "clickedCounterOfferOption",
+          context_module: "ordersCounter",
+          context_page_owner_type: "orders-checkout",
+          context_page_owner_id: "order-id",
+          option,
+          amount: 1000,
+          currency: "USD",
+        })
+      },
+    )
+
+    it("tracks clickedCounterOfferOption for decline without an amount", () => {
+      const { result } = renderHook(() =>
+        useCheckoutTracking({ source: "artwork", mode: "OFFER" }),
+      )
+
+      act(() => {
+        result.current.clickedCounterOfferOption({ option: "decline" })
+      })
+
+      assertTracked({
+        action: "clickedCounterOfferOption",
+        context_module: "ordersCounter",
+        context_page_owner_type: "orders-checkout",
+        context_page_owner_id: "order-id",
+        option: "decline",
+        amount: undefined,
+        currency: undefined,
+      })
+    })
+
+    it.each([true, false])(
+      "tracks toggledOfferHistory when expanded is %s",
+      expanded => {
+        const { result } = renderHook(() =>
+          useCheckoutTracking({ source: "artwork", mode: "OFFER" }),
+        )
+
+        act(() => {
+          result.current.toggledOfferHistory(expanded)
+        })
+
+        assertTracked({
+          action: "toggledOfferHistory",
+          context_module: "ordersCounter",
+          context_page_owner_type: "orders-checkout",
+          context_page_owner_id: "order-id",
+          expanded,
+        })
+      },
+    )
+  })
 })
