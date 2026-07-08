@@ -78,9 +78,9 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   const galleryOfferID = orderData.lastSubmittedOffer?.internalID
   const pendingOfferID = orderData.pendingOffer?.internalID
 
-  // Only price the summary from the pending offer when it is the buyer’s draft
-  // for the current round; a stale draft from an earlier round would otherwise
-  // show an outdated breakdown.
+  // Price the summary from the buyer’s draft counteroffer. Only use a draft
+  // that belongs to the current round — a pending offer from an earlier round
+  // (buyer countered, gallery countered back) is stale and must be ignored.
   const isCurrentCounterofferDraft = hasCurrentCounterofferDraft({
     pendingOffer: orderData.pendingOffer,
     galleryOffer: orderData.lastSubmittedOffer,

@@ -100,10 +100,11 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
-  // Pre-fill from an existing draft counteroffer (e.g. after a refresh) so the
-  // buyer can edit it rather than starting from a blank field. Only restore a
-  // draft that belongs to the current round — a pending offer from an earlier
-  // round (buyer countered, gallery countered back) must not leak in.
+  // Pre-fill the input from the buyer’s draft counteroffer (e.g. after a
+  // refresh) so they can edit it rather than start from a blank field. Only use
+  // a draft that belongs to the current round — a pending offer from an earlier
+  // round (buyer countered, gallery countered back) is stale and must be
+  // ignored.
   const draftCounterofferAmount = hasCurrentCounterofferDraft({
     pendingOffer: orderData.pendingOffer,
     galleryOffer: orderData.lastSubmittedOffer,
