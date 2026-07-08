@@ -76,11 +76,101 @@ describe("useCheckoutAutoScroll", () => {
 
     mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
 
-    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
     expect(mockJumpTo).not.toHaveBeenCalled()
 
     mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
+
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).toHaveBeenCalledWith("fulfillment-details-step", {
+      behavior: "smooth",
+      offset: 30,
+    })
+  })
+
+  it("does not autoscroll on load when express checkout is eligible", () => {
+    const steps = createSteps(CheckoutStepName.PAYMENT)
+
+    mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
+
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: true }),
+    )
+
+    mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
+
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).not.toHaveBeenCalled()
+  })
+
+  it("autoscrolls on load when express checkout is not eligible", () => {
+    const steps = createSteps(CheckoutStepName.PAYMENT)
+
+    mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
+
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
+
+    mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
+
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).toHaveBeenCalledWith("payment-step", {
+      behavior: "smooth",
+      offset: 30,
+    })
+  })
+
+  it("does not autoscroll on an automatic on-load advance (express)", () => {
+    // Returning-user scenario: fulfillment auto-completes just after load,
+    // advancing the active step before the user has interacted.
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: createSteps(CheckoutStepName.FULFILLMENT_DETAILS),
+    })
+
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: true }),
+    )
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: createSteps(CheckoutStepName.PAYMENT),
+    })
+
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).not.toHaveBeenCalled()
+  })
+
+  it("autoscrolls when the order advances after the user interacts (express)", () => {
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: createSteps(CheckoutStepName.FULFILLMENT_DETAILS),
+    })
+
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: true }),
+    )
+
+    // User interacts with the page
+    window.dispatchEvent(new Event("pointerdown"))
+
+    // Order advances
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps: createSteps(CheckoutStepName.PAYMENT),
+    })
 
     rerender()
     jest.runAllTimers()
@@ -96,7 +186,9 @@ describe("useCheckoutAutoScroll", () => {
 
     mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
 
-    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
     mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
 
@@ -115,7 +207,9 @@ describe("useCheckoutAutoScroll", () => {
       steps: createSteps(CheckoutStepName.PAYMENT),
     })
 
-    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
@@ -137,7 +231,9 @@ describe("useCheckoutAutoScroll", () => {
       steps: createSteps(CheckoutStepName.FULFILLMENT_DETAILS),
     })
 
-    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
@@ -159,7 +255,9 @@ describe("useCheckoutAutoScroll", () => {
       steps: createSteps(CheckoutStepName.DELIVERY_OPTION),
     })
 
-    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+    const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
@@ -184,7 +282,9 @@ describe("useCheckoutAutoScroll", () => {
 
       mockUseCheckoutContext.mockReturnValue({ isLoading: true, steps })
 
-      const { rerender } = renderHook(() => useCheckoutAutoScroll())
+      const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
       mockUseCheckoutContext.mockReturnValue({ isLoading: false, steps })
 
@@ -206,7 +306,9 @@ describe("useCheckoutAutoScroll", () => {
         ]),
       })
 
-      const { rerender } = renderHook(() => useCheckoutAutoScroll())
+      const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
       mockUseCheckoutContext.mockReturnValue({
         isLoading: false,
@@ -228,7 +330,9 @@ describe("useCheckoutAutoScroll", () => {
         steps: createSteps(CheckoutStepName.PAYMENT),
       })
 
-      const { rerender } = renderHook(() => useCheckoutAutoScroll())
+      const { rerender } = renderHook(() =>
+      useCheckoutAutoScroll({ isExpressCheckoutEligible: false }),
+    )
 
       mockUseCheckoutContext.mockReturnValue({
         isLoading: false,

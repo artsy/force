@@ -72,17 +72,17 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
   const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
     useCheckoutModal()
 
+  const isFixedShipping =
+    orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
+  const isExpressCheckoutEligible = !isOffer && !!isFixedShipping
+
   // Load checkout and manage window side effects
   useLoadCheckout(orderData)
-  useCheckoutAutoScroll()
+  useCheckoutAutoScroll({ isExpressCheckoutEligible })
 
   if (!order) {
     return <OrderErrorApp code={404} message={NOT_FOUND_ERROR} />
   }
-
-  const isFixedShipping =
-    orderData.lineItems[0]?.artwork?.isFixedShippingFeeOnly
-  const isExpressCheckoutEligible = !isOffer && isFixedShipping
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Mount effect
   useEffect(() => {

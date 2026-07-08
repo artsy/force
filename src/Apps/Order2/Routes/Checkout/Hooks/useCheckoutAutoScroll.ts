@@ -20,7 +20,13 @@ const stepWithIndex = (
   return stepOrder.indexOf(step.name)
 }
 
-export const useCheckoutAutoScroll = () => {
+interface UseCheckoutAutoScrollProps {
+  isExpressCheckoutEligible: boolean
+}
+
+export const useCheckoutAutoScroll = ({
+  isExpressCheckoutEligible,
+}: UseCheckoutAutoScrollProps) => {
   const { isLoading, steps } = useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
 
@@ -41,8 +47,25 @@ export const useCheckoutAutoScroll = () => {
 
   const initialScrollComplete = useRef(false)
 
+  const hasUserInteracted = useRef(false)
+
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      hasUserInteracted.current = true
+    }
+    window.addEventListener("pointerdown", handleUserInteraction)
+    window.addEventListener("keydown", handleUserInteraction)
+    return () => {
+      window.removeEventListener("pointerdown", handleUserInteraction)
+      window.removeEventListener("keydown", handleUserInteraction)
+    }
+  }, [])
+
   // Scroll to active step when loading completes
   useEffect(() => {
+    if (isExpressCheckoutEligible) {
+      return
+    }
     if (initialScrollComplete.current) {
       return
     }
@@ -52,11 +75,21 @@ export const useCheckoutAutoScroll = () => {
       }
       initialScrollComplete.current = true
     }
-  }, [justLoaded, activeStep, scrollToStep, activeStepIndex])
+  }, [
+    justLoaded,
+    activeStep,
+    scrollToStep,
+    activeStepIndex,
+    isExpressCheckoutEligible,
+  ])
 
   // Auto-scroll as user advances through steps
   useEffect(() => {
     if (!activeStep || isLoading) {
+      return
+    }
+
+    if (isExpressCheckoutEligible && !hasUserInteracted.current) {
       return
     }
 
@@ -96,5 +129,6 @@ export const useCheckoutAutoScroll = () => {
     activeStepIndex,
     isLoading,
     previousStepIndex,
+    isExpressCheckoutEligible,
   ])
 }
