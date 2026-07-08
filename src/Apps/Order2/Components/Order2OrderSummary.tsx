@@ -29,9 +29,7 @@ interface Order2OrderSummaryProps {
   isPricingLoading?: boolean
   /** Forwarded to the pricing breakdown. */
   priceFromPendingOffer?: boolean
-  /** Limited-time offer line rendered within the artwork block, below the list price. */
   limitedTimeOffer?: React.ReactNode
-  /** Content rendered below the buyer-guarantee message (e.g. submit + terms). */
   children?: React.ReactNode
 }
 

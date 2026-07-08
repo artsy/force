@@ -14,14 +14,14 @@ import {
 } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
-import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
-import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
+import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import {
   type RespondAction,
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
@@ -41,50 +41,44 @@ const RESPOND_OPTIONS: Array<{ value: RespondAction; label: string }> = [
   { value: "DECLINE", label: "Decline gallery offer" },
 ]
 
-// Past-tense titles shown once the step is completed/collapsed.
-const COMPLETED_TITLE: Record<RespondAction, string> = {
-  APPROVE: "Accepted gallery offer",
-  COUNTEROFFER: "Your counteroffer",
-  DECLINE: "Decline gallery offer",
-}
-
 const DECLINE_WARNING = "Declining this offer ends this negotiation."
 
 interface CompletedResponse {
+  title: string
+  detail?: string
+  note?: string
+}
+
+interface GetCompletedResponseParams {
   action: RespondAction
   totalPrice?: string | null
   counterofferAmount: string
 }
 
-// The detail shown below the title in the collapsed/completed state: a primary
-// line plus an optional grey note.
-interface CompletedCaption {
-  detail?: string
-  note?: string
-}
-
-const getCompletedCaption = ({
+const getCompletedResponse = ({
   action,
   totalPrice,
   counterofferAmount,
-}: CompletedResponse): CompletedCaption => {
+}: GetCompletedResponseParams): CompletedResponse => {
   if (action === "DECLINE") {
-    return { detail: DECLINE_WARNING }
+    return { title: "Decline gallery offer", detail: DECLINE_WARNING }
   }
 
   if (action === "COUNTEROFFER") {
     return {
+      title: "Your counteroffer",
       detail: `$${counterofferAmount}`,
       note: "Excluding shipping and taxes",
     }
   }
 
-  // APPROVE
-  if (!totalPrice) {
-    return {}
+  return {
+    title: "Accepted gallery offer",
+    ...(totalPrice && {
+      detail: totalPrice,
+      note: "Including shipping and taxes",
+    }),
   }
-
-  return { detail: totalPrice, note: "Including shipping and taxes" }
 }
 
 export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
@@ -100,6 +94,9 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
   // Pre-fill the input from the buyer’s draft counteroffer (e.g. after a
   // refresh) so they can edit it rather than start from a blank field. Only use
   // a draft that belongs to the current round — a pending offer from an earlier
@@ -114,8 +111,6 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const [counterofferAmount, setCounterofferAmount] = useState(
     draftCounterofferAmount ? String(draftCounterofferAmount) : "",
   )
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const { submitMutation: createCounterOffer } =
     useOrder2CreateCounterOfferMutation()
@@ -136,15 +131,15 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       return
     }
 
-    // Accept/decline are navigation-only here — the response is submitted from
-    // the summary’s Submit CTA (EMI-3288).
+    // No response is submitted here — every response is submitted from the
+    // summary’s Submit CTA. Accept/decline just advance to that step.
     if (selectedAction !== "COUNTEROFFER") {
       setRespondComplete()
       return
     }
 
-    // A counteroffer creates a pending buyer offer responding to the gallery’s
-    // offer. The buyer submits it from the review step’s Submit CTA (EMI-3288).
+    // A counteroffer additionally creates a pending buyer offer (responding to
+    // the gallery’s offer) before advancing to the summary’s Submit CTA.
     const respondsToID = orderData.lastSubmittedOffer?.internalID
     if (!respondsToID) {
       return
@@ -312,7 +307,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   )
 }
 
-interface RespondCompletedViewProps extends CompletedResponse {
+interface RespondCompletedViewProps extends GetCompletedResponseParams {
   onEdit: () => void
 }
 
@@ -322,7 +317,7 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
   counterofferAmount,
   onEdit,
 }) => {
-  const caption = getCompletedCaption({
+  const { title, detail, note } = getCompletedResponse({
     action,
     totalPrice,
     counterofferAmount,
@@ -334,7 +329,7 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
         <Flex alignItems="center">
           <CheckmarkIcon fill="mono100" />
           <Spacer x={1} />
-          <SectionHeading>{COMPLETED_TITLE[action]}</SectionHeading>
+          <SectionHeading>{title}</SectionHeading>
         </Flex>
 
         <Clickable
@@ -351,12 +346,12 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
         </Clickable>
       </Flex>
 
-      {(caption.detail || caption.note) && (
+      {(detail || note) && (
         <Box ml="30px" mt={1}>
-          {caption.detail && <Text variant="sm-display">{caption.detail}</Text>}
-          {caption.note && (
+          {detail && <Text variant="sm-display">{detail}</Text>}
+          {note && (
             <Text variant="sm-display" color="mono60">
-              {caption.note}
+              {note}
             </Text>
           )}
         </Box>

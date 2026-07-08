@@ -17,7 +17,7 @@ interface Order2CheckoutPricingBreakdownProps {
   contextModule: ContextModule
   isLoading?: boolean
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
-  // Defaults on. Pass false to price from the order rather than the buyer's pending offer (e.g. respond showing the gallery offer).
+  // Defaults on. Pass false to price from the order rather than the buyer's pending offer
   priceFromPendingOffer?: boolean
 }
 
