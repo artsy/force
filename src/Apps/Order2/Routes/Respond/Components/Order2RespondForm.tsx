@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import {
@@ -140,6 +141,8 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     if (!selectedAction || !isCounterofferValid) {
       return
     }
+
+    checkoutTracking.clickedOrderProgression(ContextModule.ordersCounter)
 
     // No response is submitted here — every response is submitted from the
     // summary’s Submit CTA. Accept/decline just advance to that step.

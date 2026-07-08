@@ -312,5 +312,22 @@ describe("Order2RespondForm", () => {
         })
       },
     )
+
+    it("tracks clickedOrderProgression when Save and Review is clicked", () => {
+      renderWithRelay(defaultResolvers)
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      mockTrackEvent.mockClear()
+
+      fireEvent.click(saveButton())
+
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "clickedOrderProgression",
+        context_module: "ordersCounter",
+        context_page_owner_id: "order-id",
+        context_page_owner_type: "orders-respond",
+        flow: "Make offer",
+      })
+    })
   })
 })
