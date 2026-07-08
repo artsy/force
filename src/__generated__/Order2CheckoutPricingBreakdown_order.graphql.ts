@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d50254f3a2db210346d058fbf79fc97>>
+ * @generated SignedSource<<6339b7be8abeb4fc4eb9bdc9b89c5aaf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,12 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderBuyerStateEnum = "APPROVED" | "CANCELED" | "COMPLETED" | "COUNTEROFFER_SENT" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "INCOMPLETE" | "OFFER_RECEIVED" | "PAYMENT_FAILED" | "PROCESSING_OFFLINE_PAYMENT" | "PROCESSING_PAYMENT" | "REFUNDED" | "SHIPPED" | "SUBMITTED" | "UNKNOWN" | "%future added value";
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2CheckoutPricingBreakdown_order$data = {
+  readonly buyerState: OrderBuyerStateEnum | null | undefined;
   readonly buyerStateExpiresAt: string | null | undefined;
   readonly mode: OrderModeEnum;
   readonly pendingOffer: {
@@ -230,6 +232,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "buyerState",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "buyerStateExpiresAt",
       "storageKey": null
     },
@@ -252,6 +261,6 @@ return {
 };
 })();
 
-(node as any).hash = "e5a999380639b2f226d9dfcbcd03672d";
+(node as any).hash = "b67f428ee349b7de0d3264d66bf45bec";
 
 export default node;

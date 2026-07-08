@@ -34,21 +34,28 @@ export const Order2CheckoutPricingBreakdown: React.FC<
   priceFromPendingOffer = true,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { mode, pendingOffer, source, buyerStateExpiresAt } = orderData
+  const { mode, pendingOffer, source, buyerState, buyerStateExpiresAt } =
+    orderData
 
   const isOffer = mode === "OFFER"
   const accountForPartnerOffer = !isOffer && source === "PARTNER_OFFER"
 
-  // Calculate timer directly in this component to ensure re-renders
-  const partnerOfferEndTime =
-    (accountForPartnerOffer && buyerStateExpiresAt) || ""
-  const partnerOfferStartTime = accountForPartnerOffer
-    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
-    : ""
+  // Show the expiry countdown for partner offers (buy-now) or when a gallery
+  // offer is awaiting the buyer's response (the respond flow).
+  const isAwaitingBuyerResponse = buyerState === "OFFER_RECEIVED"
+  const showOfferCountdown = accountForPartnerOffer || isAwaitingBuyerResponse
+
+  // Calculate timer directly in this component to ensure re-renders. Only the
+  // end time drives the countdown display; startTime feeds percentComplete
+  // (unused here), so partner offers assume a 3-day window.
+  const offerEndTime = (showOfferCountdown && buyerStateExpiresAt) || ""
+  const offerStartTime = accountForPartnerOffer
+    ? DateTime.fromISO(offerEndTime).minus({ days: 3 }).toString()
+    : offerEndTime
 
   const timer = useCountdownTimer({
-    startTime: partnerOfferStartTime,
-    endTime: partnerOfferEndTime,
+    startTime: offerStartTime,
+    endTime: offerEndTime,
     imminentTime: 1,
   })
 
@@ -81,8 +88,8 @@ export const Order2CheckoutPricingBreakdown: React.FC<
               amountText = "Waiting for your offer"
             }
 
-            // Show timer if we have a valid partner offer with time remaining
-            if (accountForPartnerOffer && timer.hasValidRemainingTime) {
+            // Show timer if we have a valid offer with time remaining
+            if (showOfferCountdown && timer.hasValidRemainingTime) {
               color = "blue100"
 
               secondLine = (
@@ -175,6 +182,7 @@ const FRAGMENT = graphql`
   fragment Order2CheckoutPricingBreakdown_order on Order {
     source
     mode
+    buyerState
     buyerStateExpiresAt
     pricingBreakdownLines {
       __typename
