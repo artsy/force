@@ -1,4 +1,7 @@
 import loadable from "@loadable/component"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/paramsCasing"
 import type { RouteProps } from "System/Router/Route"
 import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
 import { RedirectException } from "found"
@@ -10,6 +13,35 @@ const geneWithCanonicalSlugRedirect = canonicalSlugRedirect({
   paramName: "slug",
   basePath: "/gene",
 })
+
+const GENE_ARTWORK_AGGREGATIONS = [
+  "TOTAL",
+  "ARTIST",
+  "MEDIUM",
+  "LOCATION_CITY",
+  "MATERIALS_TERMS",
+  "PARTNER",
+  "ARTIST_NATIONALITY",
+]
+
+/**
+ * Derives artwork-filter variables from the URL so that the artwork grid
+ * is fetched as part of the route-level query and server-side rendered.
+ */
+const prepareGeneArtworkFilterVariables = (params, props) => {
+  const urlFilterState = props.location?.query ?? {}
+
+  const filters = {
+    ...initialArtworkFilterState,
+    ...paramsToCamelCase(urlFilterState),
+  }
+
+  return {
+    slug: params.slug,
+    input: allowedFilters(filters),
+    aggregations: GENE_ARTWORK_AGGREGATIONS,
+  }
+}
 
 const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
@@ -51,11 +83,17 @@ export const geneRoutes: RouteProps[] = [
           GeneShowRoute.preload()
         },
         render: geneWithCanonicalSlugRedirect,
+        prepareVariables: prepareGeneArtworkFilterVariables,
         query: graphql`
-          query geneRoutes_GeneShowQuery($slug: String!) @cacheable {
+          query geneRoutes_GeneShowQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+          ) @cacheable {
             gene(id: $slug) @principalField {
               slug
               ...GeneShow_gene
+                @arguments(input: $input, aggregations: $aggregations)
             }
           }
         `,

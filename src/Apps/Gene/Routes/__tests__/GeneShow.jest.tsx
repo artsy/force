@@ -7,7 +7,7 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("../../Components/GeneArtworkFilter", () => ({
-  GeneArtworkFilterQueryRenderer: () => <div />,
+  GeneArtworkFilterSSR: () => <div />,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<GeneShowTestQuery>({

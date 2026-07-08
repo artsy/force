@@ -1,5 +1,5 @@
 import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
-import { GeneArtworkFilterQueryRenderer } from "Apps/Gene/Components/GeneArtworkFilter"
+import { GeneArtworkFilterSSR } from "Apps/Gene/Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "Apps/Gene/Components/GeneMeta"
 import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
 import { RouterLink } from "System/Components/RouterLink"
@@ -82,14 +82,20 @@ export const GeneShow: React.FC<React.PropsWithChildren<GeneShowProps>> = ({
 
       <Spacer y={12} />
 
-      <GeneArtworkFilterQueryRenderer />
+      <GeneArtworkFilterSSR gene={gene} />
     </>
   )
 }
 export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
   gene: graphql`
-    fragment GeneShow_gene on Gene {
+    fragment GeneShow_gene on Gene
+    @argumentDefinitions(
+      input: { type: "FilterArtworksInput" }
+      aggregations: { type: "[ArtworkAggregation]" }
+    ) {
       ...GeneMeta_gene
+      ...GeneArtworkFilter_gene
+        @arguments(input: $input, aggregations: $aggregations)
       internalID
       name
       displayName
