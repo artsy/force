@@ -15,6 +15,7 @@ import {
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
+import { useRespondError } from "Apps/Order2/Routes/Respond/Hooks/useRespondError"
 import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import {
   type RespondAction,
@@ -22,14 +23,9 @@ import {
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
 import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
-import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
-
-const logger = createLogger("Order2RespondForm")
-
-const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondFormProps {
   order: Order2RespondForm_order$key
@@ -95,7 +91,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { errorMessage, handleSubmitError, clearError } = useRespondError()
 
   // Pre-fill the input from the buyer’s draft counteroffer (e.g. after a
   // refresh) so they can edit it rather than start from a blank field. Only use
@@ -146,7 +142,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     }
 
     try {
-      setErrorMessage(null)
+      clearError()
       setIsSubmitting(true)
 
       const response = await createCounterOffer({
@@ -162,16 +158,16 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       const offerOrError = response.createBuyerOffer?.offerOrError
 
       if (offerOrError && "mutationError" in offerOrError) {
-        // TODO: proper error handling is tracked in EMI-3175.
-        setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+        handleSubmitError(
+          offerOrError.mutationError,
+          offerOrError.mutationError?.message,
+        )
         return
       }
 
       setRespondComplete()
     } catch (error) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      logger.error(error)
-      setErrorMessage(GENERIC_ERROR)
+      handleSubmitError(error)
     } finally {
       setIsSubmitting(false)
     }

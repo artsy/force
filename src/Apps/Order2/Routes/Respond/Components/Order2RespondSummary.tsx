@@ -4,6 +4,7 @@ import { useStripe } from "@stripe/react-stripe-js"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
+import { useRespondError } from "Apps/Order2/Routes/Respond/Hooks/useRespondError"
 import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
 import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
 import { useOrder2SubmitCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2SubmitCounterOfferMutation"
@@ -13,14 +14,9 @@ import {
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
 import { useRouter } from "System/Hooks/useRouter"
-import createLogger from "Utils/logger"
 import type { Order2RespondSummary_order$key } from "__generated__/Order2RespondSummary_order.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
-
-const logger = createLogger("Order2RespondSummary")
-
-const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondSummaryProps {
   order: Order2RespondSummary_order$key
@@ -57,7 +53,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   const { submitMutation: acceptOffer } = useOrder2AcceptOfferMutation()
   const { submitMutation: declineOffer } = useOrder2DeclineOfferMutation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { errorMessage, handleSubmitError, clearError } = useRespondError()
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
   const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
@@ -101,8 +97,10 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     const offerOrError = response.submitBuyerOffer?.offerOrError
 
     if (offerOrError && "mutationError" in offerOrError) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+      handleSubmitError(
+        offerOrError.mutationError,
+        offerOrError.mutationError?.message,
+      )
       return
     }
 
@@ -120,8 +118,10 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     const orderOrError = response.rejectSellerOffer?.orderOrError
 
     if (orderOrError && "mutationError" in orderOrError) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      handleSubmitError(
+        orderOrError.mutationError,
+        orderOrError.mutationError?.message,
+      )
       return
     }
 
@@ -145,8 +145,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       })
 
       if (error) {
-        // TODO: proper error handling is tracked in EMI-3175.
-        setErrorMessage(error.message ?? GENERIC_ERROR)
+        handleSubmitError(error, error.message)
         return
       }
 
@@ -155,8 +154,10 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     }
 
     if (orderOrError?.__typename === "OrderMutationError") {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      handleSubmitError(
+        orderOrError.mutationError,
+        orderOrError.mutationError?.message,
+      )
       return
     }
 
@@ -169,7 +170,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     }
 
     try {
-      setErrorMessage(null)
+      clearError()
       setIsSubmitting(true)
 
       if (selectedAction === "COUNTEROFFER") {
@@ -180,9 +181,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
         await accept()
       }
     } catch (error) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      logger.error(error)
-      setErrorMessage(GENERIC_ERROR)
+      handleSubmitError(error)
     } finally {
       setIsSubmitting(false)
     }
