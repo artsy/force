@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a9200b63a7c87bea4f2df847084e1daf>>
+ * @generated SignedSource<<4df3c319a3124f3831a5f1f5936acaca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -527,7 +527,8 @@ return {
                     "storageKey": null
                   },
                   (v2/*: any*/),
-                  (v11/*: any*/)
+                  (v11/*: any*/),
+                  (v1/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -550,7 +551,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b37fd2dcddb30abc71dcb1021f2e0b25",
+    "cacheID": "206b72076580fd3ca53a3b41f5b9594e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -653,6 +654,7 @@ return {
           "type": "Float"
         },
         "me.order.pendingOffer.id": (v12/*: any*/),
+        "me.order.pendingOffer.internalID": (v12/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines": (v19/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines.__typename": (v18/*: any*/),
         "me.order.pendingOffer.pricingBreakdownLines.amount": (v15/*: any*/),
@@ -684,7 +686,7 @@ return {
     },
     "name": "Order2RespondSummaryTestQuery",
     "operationKind": "query",
-    "text": "query Order2RespondSummaryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2RespondForm_order\n      ...Order2RespondSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  internalID\n  lastSubmittedOffer {\n    internalID\n    buyerTotal {\n      display\n    }\n    id\n  }\n  pendingOffer {\n    amount {\n      major\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  buyerStateExpiresAt\n  lastSubmittedOffer {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  ...Order2CheckoutPricingBreakdown_order\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2OrderSummary_order\n  lineItems {\n    artworkVersion {\n      artistNames\n      title\n      date\n      image {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      price\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      images(includeAll: false) {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2RespondSummaryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2RespondForm_order\n      ...Order2RespondSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2CheckoutPricingBreakdown_order\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  internalID\n  lastSubmittedOffer {\n    internalID\n    buyerTotal {\n      display\n    }\n    id\n  }\n  pendingOffer {\n    amount {\n      major\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  buyerStateExpiresAt\n  lastSubmittedOffer {\n    createdAt\n    amount {\n      display\n    }\n    id\n  }\n  ...Order2CheckoutPricingBreakdown_order\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2OrderSummary_order\n  internalID\n  lastSubmittedOffer {\n    internalID\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n  lineItems {\n    artworkVersion {\n      artistNames\n      title\n      date\n      image {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      price\n      attributionClass {\n        shortDescription\n        id\n      }\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      images(includeAll: false) {\n        resized(height: 200) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
