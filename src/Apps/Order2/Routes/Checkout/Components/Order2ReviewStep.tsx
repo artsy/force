@@ -245,7 +245,11 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
             Submit
           </Button>
           <Spacer y={2} />
-          <TermsAndConditions />
+          <TermsAndConditions
+            onClickTermsAndConditions={() =>
+              checkoutTracking.clickedTermsAndConditions()
+            }
+          />
           <Spacer y={2} />
         </>
       )}
