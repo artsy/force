@@ -32,12 +32,21 @@ export const allowedFilters = (
       return obj
     }
 
+    // Coerce strings (query-string parsing may turn numeric-looking values
+    // like "2010" into numbers, so ensure string-typed inputs stay strings)
+    if (STRING_INPUT_ARGS.includes(key)) {
+      obj[key] = String(filterParams[key])
+      return obj
+    }
+
     obj[key] = filterParams[key]
     return obj
   }, {})
 }
 
 const INTEGER_INPUT_ARGS = ["first", "last", "page", "size"]
+
+const STRING_INPUT_ARGS = ["keyword", "period"]
 
 const BOOLEAN_INPUT_ARGS = [
   "acquireable",
