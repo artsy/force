@@ -253,7 +253,7 @@
     "storybook": "^8.6.17",
     "storybook-react-rsbuild": "^0.1.8",
     "storybook-states": "1.2.0",
-    "typescript": "^5.6.3",
+    "typescript": "^7.0.2",
     "typescript-styled-plugin": "0.15.0",
     "webpack": "^5.106.2",
     "webpack-node-externals": "3.0.0"
