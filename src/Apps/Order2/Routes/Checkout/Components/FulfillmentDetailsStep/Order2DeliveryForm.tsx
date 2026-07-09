@@ -381,7 +381,9 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
       validationSchema={deliveryAddressValidationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, setValues, status, submitForm }) => {
+      {({ isSubmitting, setValues, status, submitForm, errors }) => {
+        if (Object.values(errors).length > 0)
+          console.log("Formik errors:", errors)
         return (
           <Flex flexDirection={"column"} mb={2}>
             {fulfillmentDetailsError && (
