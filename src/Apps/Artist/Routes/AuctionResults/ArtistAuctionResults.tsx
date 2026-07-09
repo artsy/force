@@ -347,9 +347,16 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
 
     const { match } = useRouter()
     const { userPreferences } = useSystemContext()
-    const filters = paramsToCamelCase(
-      // Expect auction results params to be nested under `auction`
-      (match?.location.query?.auction as any) ?? {},
+    // Coerce string URL params (e.g. "true", "2020") to their proper Boolean/Int
+    // types before seeding the filter context, mirroring the query renderer
+    // above. Without this, the refetch query sends string values for Boolean/Int
+    // variables and metaphysics rejects them (e.g. `Boolean cannot represent a
+    // non boolean value: "true"`).
+    const filters = allowedAuctionResultFilters(
+      paramsToCamelCase(
+        // Expect auction results params to be nested under `auction`
+        (match?.location.query?.auction as any) ?? {},
+      ),
     )
 
     return (
