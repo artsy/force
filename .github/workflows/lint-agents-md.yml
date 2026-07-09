@@ -4,8 +4,6 @@ on:
   pull_request:
     paths:
       - AGENTS.md
-      - .cursorrules
-      - .github/copilot-instructions.md
 
 jobs:
   lint:

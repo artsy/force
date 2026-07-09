@@ -268,7 +268,7 @@ describe("ConversationCTA", () => {
       expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     })
 
-    const offerViewer = () => {
+    const offerViewer = (offerOverrides: Record<string, unknown> = {}) => {
       const futureTime = new Date()
       futureTime.setHours(futureTime.getHours() + 1)
 
@@ -282,6 +282,7 @@ describe("ConversationCTA", () => {
                   artworkId: "artwork-id",
                   endAt: futureTime.toISOString(),
                   isAvailable: true,
+                  ...offerOverrides,
                 },
               },
             ],
@@ -290,39 +291,66 @@ describe("ConversationCTA", () => {
       })
     }
 
-    describe("with the partner-offer-convo flag on", () => {
-      beforeEach(() => {
-        mockUseFlag.mockImplementation(() => true)
-      })
-
-      it("hides the transaction buttons when there is an active partner offer", () => {
-        renderWithRelay({
-          Conversation: mockConversationWithArtwork({
-            internalID: "artwork-id",
-            isAcquireable: true,
-          }),
-          Viewer: offerViewer(),
+    // The `partnerOffersConnection` query fetches both `BULK` (sent via the
+    // partner dashboard's send-offer tool) and `PERSONALIZED` offer types.
+    // Force can't distinguish between the two once fetched, so both should
+    // behave identically here.
+    describe.each([
+      ["a personalized partner offer"],
+      ["a bulk offer (send offer)"],
+    ])("with %s", () => {
+      describe("with the partner-offer-convo flag on", () => {
+        beforeEach(() => {
+          mockUseFlag.mockImplementation(() => true)
         })
 
-        expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
-        expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
-      })
-    })
+        it("hides the transaction buttons when there is an active offer", () => {
+          renderWithRelay({
+            Conversation: mockConversationWithArtwork({
+              internalID: "artwork-id",
+              isAcquireable: true,
+              isOfferable: true,
+            }),
+            Viewer: offerViewer(),
+          })
 
-    describe("with the partner-offer-convo flag off", () => {
-      beforeEach(() => {
-        mockUseFlag.mockImplementation(() => false)
-      })
-
-      it("ignores the partner offer and shows the normal transaction buttons", () => {
-        renderWithRelay({
-          Conversation: mockConversationWithArtwork({
-            internalID: "artwork-id",
-            isAcquireable: true,
-          }),
-          Viewer: offerViewer(),
+          expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
+          expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
         })
-        expect(screen.queryByText("Purchase")).toBeInTheDocument()
+
+        it("falls back to showing the transaction buttons once the offer expires", () => {
+          const pastTime = new Date()
+          pastTime.setHours(pastTime.getHours() - 1)
+
+          renderWithRelay({
+            Conversation: mockConversationWithArtwork({
+              internalID: "artwork-id",
+              isAcquireable: true,
+              isOfferable: true,
+            }),
+            Viewer: offerViewer({ endAt: pastTime.toISOString() }),
+          })
+
+          expect(screen.queryByText("Purchase")).toBeInTheDocument()
+          expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
+        })
+      })
+
+      describe("with the partner-offer-convo flag off", () => {
+        beforeEach(() => {
+          mockUseFlag.mockImplementation(() => false)
+        })
+
+        it("ignores the offer and shows the normal transaction buttons", () => {
+          renderWithRelay({
+            Conversation: mockConversationWithArtwork({
+              internalID: "artwork-id",
+              isAcquireable: true,
+            }),
+            Viewer: offerViewer(),
+          })
+          expect(screen.queryByText("Purchase")).toBeInTheDocument()
+        })
       })
     })
 
