@@ -11,8 +11,9 @@ export const CategoriesIntro: React.FC<
           The Art Genome Project
         </Text>
       </Column>
+
       <Column span={6}>
-        <Text variant="sm-display">
+        <Text variant="sm">
           The Art Genome Project is the classification system and technological
           framework that powers Artsy. It maps the characteristics (we call them
           "genes") that connect artists, artworks, architecture, and design
