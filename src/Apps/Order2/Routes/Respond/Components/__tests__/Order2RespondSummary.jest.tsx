@@ -282,6 +282,25 @@ describe("Order2RespondSummary", () => {
         })
       })
     })
+
+    it("tracks clickedTermsAndConditions when the terms link is clicked", async () => {
+      renderWithRelay(defaultResolvers)
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+      mockTrackEvent.mockClear()
+
+      fireEvent.click(
+        await screen.findByText("General Terms and Conditions of Sale."),
+      )
+
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "clickedTermsAndConditions",
+        context_module: "ordersReview",
+        context_page_owner_id: "order-id",
+        context_page_owner_type: "orders-respond",
+      })
+    })
   })
 
   it("hides the Submit CTA again when the response is edited", () => {

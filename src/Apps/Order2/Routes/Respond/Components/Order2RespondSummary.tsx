@@ -3,6 +3,7 @@ import { Button, Message, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
+import { TermsAndConditions } from "Apps/Order2/Routes/Checkout/Components/TermsAndConditions"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
 import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
@@ -226,6 +227,16 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
           >
             Submit
           </Button>
+
+          <Spacer y={2} />
+
+          <TermsAndConditions
+            onClickTermsAndConditions={() =>
+              checkoutTracking.clickedTermsAndConditions()
+            }
+          />
+
+          <Spacer y={2} />
 
           {errorMessage && (
             <>

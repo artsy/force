@@ -1,11 +1,14 @@
 import { Text } from "@artsy/palette"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { RouterLink } from "System/Components/RouterLink"
 import type React from "react"
 
-export const TermsAndConditions: React.FC = () => {
-  const { checkoutTracking } = useCheckoutContext()
+interface TermsAndConditionsProps {
+  onClickTermsAndConditions?: () => void
+}
 
+export const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
+  onClickTermsAndConditions,
+}) => {
   return (
     <Text variant="xs" color="mono60">
       By clicking Submit, I agree to Artsy’s{" "}
@@ -13,7 +16,7 @@ export const TermsAndConditions: React.FC = () => {
         inline
         to="/terms"
         target="_blank"
-        onClick={() => checkoutTracking.clickedTermsAndConditions()}
+        onClick={onClickTermsAndConditions}
       >
         General Terms and Conditions of Sale.
       </RouterLink>
