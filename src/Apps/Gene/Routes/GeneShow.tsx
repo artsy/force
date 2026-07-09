@@ -32,12 +32,14 @@ export const GeneShow: React.FC<React.PropsWithChildren<GeneShowProps>> = ({
         </Column>
 
         <Column span={6}>
-          <Text as="h2" variant="xs" mb={1}>
-            About
-          </Text>
-
           {gene.formattedDescription && (
-            <HTML variant="sm" mb={2} html={gene.formattedDescription} />
+            <>
+              <Text as="h2" variant="xs" mb={1}>
+                About
+              </Text>
+
+              <HTML variant="sm" mb={2} html={gene.formattedDescription} />
+            </>
           )}
 
           {similar.length > 0 && (
