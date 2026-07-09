@@ -33,9 +33,13 @@ export const allowedFilters = (
     }
 
     // Coerce strings (query-string parsing may turn numeric-looking values
-    // like "2010" into numbers, so ensure string-typed inputs stay strings)
+    // like "2010" into numbers, so ensure string-typed inputs stay strings).
+    // Skip absent values — String(undefined) === "undefined" would otherwise
+    // filter by the literal keyword "undefined" and return no results.
     if (STRING_INPUT_ARGS.includes(key)) {
-      obj[key] = String(filterParams[key])
+      const value = filterParams[key]
+      if (value == null) return obj
+      obj[key] = String(value)
       return obj
     }
 
