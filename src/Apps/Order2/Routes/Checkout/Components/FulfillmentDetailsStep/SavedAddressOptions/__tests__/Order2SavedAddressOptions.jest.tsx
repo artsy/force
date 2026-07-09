@@ -474,6 +474,64 @@ describe("SavedAddressOptions", () => {
         )
       })
     })
+
+    // Regression: in an offer flow the fulfillment-details step is UPCOMING
+    // while the buyer completes the offer step. A pre-selected invalid address
+    // must not surface its error banner (which would fire errorMessageViewed)
+    // until the step actually becomes active and visible.
+    it("defers the error banner for an invalid address until the step becomes active", async () => {
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        isOffer: true,
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: CheckoutStepState.UPCOMING,
+          },
+        ],
+      })
+
+      const { rerender } = renderSavedAddressOptions({
+        savedAddresses: [mockUSAddress1, mockInvalidAddress],
+        initialSelectedAddress: mockInvalidAddress,
+      })
+
+      // While the step is inactive, no error is set — so no banner, no event.
+      await new Promise(resolve => setTimeout(resolve, 50))
+      expect(mockCheckoutContext.setSectionErrorMessage).not.toHaveBeenCalled()
+
+      // Completing the offer step activates fulfillment details...
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        isOffer: true,
+        steps: [
+          {
+            name: CheckoutStepName.FULFILLMENT_DETAILS,
+            state: CheckoutStepState.ACTIVE,
+          },
+        ],
+      })
+
+      rerender(
+        buildSavedAddressOptions({
+          savedAddresses: [mockUSAddress1, mockInvalidAddress],
+          initialSelectedAddress: mockInvalidAddress,
+        }),
+      )
+
+      // ...and only then is the error surfaced.
+      await waitFor(() => {
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
+          },
+        )
+      })
+    })
   })
 
   describe("Address editing validation", () => {
