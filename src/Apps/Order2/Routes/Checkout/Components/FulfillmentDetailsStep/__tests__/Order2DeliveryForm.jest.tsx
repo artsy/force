@@ -27,6 +27,27 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => mockCheckoutContext,
 }))
 
+// The rich phone validators run an async, debounced Relay query against a real
+// SSR environment. Under fake timers that never resolves, which hangs Formik's
+// submit-time validation. Replace them with synchronous yup validators.
+jest.mock("Components/Address/utils", () => {
+  const Yup = require("yup")
+  return {
+    ...jest.requireActual("Components/Address/utils"),
+    validatePhoneNumber: jest.fn().mockResolvedValue(true),
+    richPhoneValidators: {
+      phoneNumber: Yup.string(),
+      phoneNumberCountryCode: Yup.string(),
+    },
+    richRequiredPhoneValidators: {
+      phoneNumber: Yup.string().required("Phone number is required"),
+      phoneNumberCountryCode: Yup.string().required(
+        "Phone number country code is required",
+      ),
+    },
+  }
+})
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.runAllTimers()
