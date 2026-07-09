@@ -67,9 +67,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/icons@npm:3.73.0":
-  version: 3.73.0
-  resolution: "@artsy/icons@npm:3.73.0"
+"@artsy/icons@npm:3.74.0":
+  version: 3.74.0
+  resolution: "@artsy/icons@npm:3.74.0"
   peerDependencies:
     react: ">=16.2.0"
     react-native: ">=0.70.15"
@@ -81,7 +81,7 @@ __metadata:
       optional: true
     react-native-svg:
       optional: true
-  checksum: 10c0/3229b5cbc4f4c047168995d12b109098b8686b66dcc1f3dd10a7d0dd8f5bdaf0d8bcd94439ce0a27cb040cb37f31b169781e49a6e9b9a8c23206b05865b836f5
+  checksum: 10c0/9921e2fd0b3f48db99e5ec9155c87d19024f8951f0b7519db649712c352558eb7d6c6abe56021d9343d46d90ee53b3dbb8e5a21a5c0dd5072257cefc1ddbfd08
   languageName: node
   linkType: hard
 
@@ -9329,7 +9329,7 @@ __metadata:
     "@artsy/dismissible": "npm:^0.9.0"
     "@artsy/express-reloadable": "npm:^1.7.0"
     "@artsy/fresnel": "npm:^8.1.0"
-    "@artsy/icons": "npm:3.73.0"
+    "@artsy/icons": "npm:3.74.0"
     "@artsy/img": "npm:1.1.3"
     "@artsy/multienv": "npm:^1.2.0"
     "@artsy/palette": "npm:46.9.1"
