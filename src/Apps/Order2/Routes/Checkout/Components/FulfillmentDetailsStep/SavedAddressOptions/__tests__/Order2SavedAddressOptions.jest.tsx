@@ -475,10 +475,6 @@ describe("SavedAddressOptions", () => {
       })
     })
 
-    // Regression: in an offer flow the fulfillment-details step is UPCOMING
-    // while the buyer completes the offer step. A pre-selected invalid address
-    // must not surface its error banner (which would fire errorMessageViewed)
-    // until the step actually becomes active and visible.
     it("defers the error banner for an invalid address until the step becomes active", async () => {
       mockUseCheckoutContext.mockReturnValue({
         ...mockCheckoutContext,
