@@ -20,7 +20,7 @@
     "check-npm-vulnerabilities": "yarn npm audit --severity critical --recursive",
     "clean": "scripts/clean.sh",
     "clean:relay": "rm -rf '$TMPDIR'/RelayFindGraphQLTags-*",
-    "danger:ci": "yarn danger ci --verbose",
+    "danger:ci": "NODE_OPTIONS=\"--require ./scripts/swcNodeTypescript5.js\" yarn danger ci --verbose",
     "dead-code": "./scripts/check-dead-code.sh",
     "dead-code:production": "./scripts/check-dead-code.sh production",
     "delete-review-app": "~/.local/bin/kubectl --context staging delete namespace",

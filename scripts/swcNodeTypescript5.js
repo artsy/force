@@ -1,12 +1,12 @@
-// @swc-node/register reads the legacy TypeScript compiler API (ts.Extension,
-// ts.parseJsonConfigFileContent, ...) at load time, which typescript@7's
-// native compiler package no longer exposes — requiring it crashes the server
-// boot. Until @swc-node ships TS 7 support, preload this file (node -r) before
-// @swc-node/register so that require("typescript") resolves to the TS 5
-// compiler API (installed as the "typescript5" alias package). @swc-node only
-// uses it to parse tsconfig.json and map options for SWC — the actual
-// transpilation is done by SWC itself, and type-checking (yarn type-check)
-// still runs on typescript@7.
+// Some tools read the legacy TypeScript compiler API (ts.Extension,
+// ts.parseJsonConfigFileContent, ts.transpileModule, ...), which
+// typescript@7's native compiler package no longer exposes — requiring it
+// crashes them. Known cases: @swc-node/register (boots the dev/prod server;
+// only parses tsconfig.json for SWC) and danger (transpiles dangerfile.ts).
+// Until they ship TS 7 support, preload this file (node -r / NODE_OPTIONS)
+// so that require("typescript") resolves to the TS 5 compiler API, installed
+// as the "typescript5" alias package. Type-checking (yarn type-check) still
+// runs on typescript@7.
 const Module = require("module")
 
 const ts5 = require("typescript5")
