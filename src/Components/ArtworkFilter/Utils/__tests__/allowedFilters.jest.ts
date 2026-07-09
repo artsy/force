@@ -56,6 +56,18 @@ describe("allowedFilters", () => {
     })
   })
 
+  it("keeps string inputs as strings but omits absent ones", () => {
+    // Numeric-looking values are coerced back to strings...
+    expect(allowedFilters({ keyword: 2010, period: 1990 })).toEqual({
+      keyword: "2010",
+      period: "1990",
+    })
+
+    // ...but undefined/null are omitted entirely, so we never send the literal
+    // string "undefined"/"null" (which would filter to zero results).
+    expect(allowedFilters({ keyword: undefined, period: null })).toEqual({})
+  })
+
   it("allows auction-specific sort values", () => {
     expect(
       allowedFilters({
