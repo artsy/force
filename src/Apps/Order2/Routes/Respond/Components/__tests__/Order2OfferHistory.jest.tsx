@@ -81,11 +81,11 @@ describe("Order2OfferHistory", () => {
     expect(screen.getByText("$900")).toBeInTheDocument()
   })
 
-  it("shows INCOMPLETE ORDER when an offer has no buyerTotal", () => {
+  it("shows N/A when an offer has no buyerTotal", () => {
     renderWithRelay(withOffers)
     fireEvent.click(screen.getByText("Offer history"))
 
-    expect(screen.getByText("INCOMPLETE ORDER")).toBeInTheDocument()
+    expect(screen.getByText("N/A")).toBeInTheDocument()
   })
 
   it("renders nothing when there are no submitted offers", () => {
