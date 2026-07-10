@@ -74,7 +74,7 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
                 <Box flex={COLUMNS[3]} textAlign="right">
                   {/* buyerTotal is undefined for incomplete (original) offers */}
                   <Text variant={["xs", "sm"]}>
-                    {offer.buyerTotal?.display ?? "INCOMPLETE ORDER"}
+                    {offer.buyerTotal?.display ?? "N/A"}
                   </Text>
                 </Box>
               </Flex>
