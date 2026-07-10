@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b9539880f0cd841e999bf61901df29a>>
+ * @generated SignedSource<<80ae2010f25e6be5395bfaedcbfd9066>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type GeneShow_gene$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"GeneMeta_gene">;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneArtworkFilter_gene" | "GeneMeta_gene">;
   readonly " $fragmentType": "GeneShow_gene";
 };
 export type GeneShow_gene$key = {
@@ -75,7 +75,18 @@ v3 = [
   }
 ];
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "aggregations"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "input"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "GeneShow_gene",
@@ -84,6 +95,22 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "GeneMeta_gene"
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "aggregations",
+          "variableName": "aggregations"
+        },
+        {
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "GeneArtworkFilter_gene"
     },
     (v0/*: any*/),
     (v1/*: any*/),
@@ -177,6 +204,6 @@ return {
 };
 })();
 
-(node as any).hash = "9f82e516e605dea8561c809cad284284";
+(node as any).hash = "52a0d479e70ae818234e0543dd2ba06b";
 
 export default node;
