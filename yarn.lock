@@ -9432,6 +9432,7 @@ __metadata:
     fsevents: "npm:*"
     glob: "npm:7.1.3"
     graphql: "npm:15.8.0"
+    gsplat: "npm:^1.2.9"
     helmet: "npm:2.3.0"
     http-proxy: "npm:1.18.1"
     http-shutdown: "npm:1.2.1"
@@ -10151,6 +10152,13 @@ __metadata:
   dependencies:
     iterall: "npm:^1.2.2"
   checksum: 10c0/0d0c6011b5e6ce17a2302b2d862f9351b27b2de9995ad03075ba82e0d87eb59ba893adf5e9a29e2141fe9dd6f2f267268c8b6f35a8b842eb66dbf0f7ef8d79f3
+  languageName: node
+  linkType: hard
+
+"gsplat@npm:^1.2.9":
+  version: 1.2.9
+  resolution: "gsplat@npm:1.2.9"
+  checksum: 10c0/78cab96d76c106f04452a9c1aff9faa9483ec3ae892453e912b578ab0da30772da022feeafe47d22766715c22478d3185257bd3b9b53d5e7935b5ff09fc8a423
   languageName: node
   linkType: hard
 

@@ -30,6 +30,7 @@ interface UtilButtonProps {
     | "inspectImages"
     | "more"
     | "share"
+    | "viewIn3D"
     | "viewInRoom"
   href?: string
   download?: string
@@ -80,6 +81,8 @@ export const UtilButton = React.forwardRef(
           return MoreIcon
         case "share":
           return ShareIcon
+        case "viewIn3D":
+          return ShowIcon
         case "viewInRoom":
           return ShowIcon
       }
