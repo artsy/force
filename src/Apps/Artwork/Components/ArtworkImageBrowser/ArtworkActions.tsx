@@ -2,6 +2,14 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
 import { ArtworkActionsSaveButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButton"
 import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
+import {
+  Artwork3DViewer,
+  use3DViewer,
+} from "Apps/Artwork/Components/Artwork3DViewer/Artwork3DViewer"
+import {
+  get3DAssetUrl,
+  has3DAsset,
+} from "Apps/Artwork/Components/Artwork3DViewer/demoSplats"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import {
   ViewInRoomFragmentContainer,
@@ -45,6 +53,8 @@ export const ArtworkActions: React.FC<
   const { showViewInRoom, hideViewInRoom, isViewInRoomVisible } =
     useViewInRoom()
 
+  const { show3DViewer, hide3DViewer, is3DViewerVisible } = use3DViewer()
+
   const ViewInRoomButton = (
     <UtilButton
       name="viewInRoom"
@@ -54,6 +64,10 @@ export const ArtworkActions: React.FC<
         showViewInRoom()
       }}
     />
+  )
+
+  const ViewIn3DButton = (
+    <UtilButton name="viewIn3D" label="View in 3D" onClick={show3DViewer} />
   )
 
   const ShareButton = (
@@ -119,6 +133,11 @@ export const ArtworkActions: React.FC<
       content: ViewInRoomButton,
     },
     {
+      name: "viewIn3D",
+      condition: !artwork.isHangable && has3DAsset(artwork.slug),
+      content: ViewIn3DButton,
+    },
+    {
       name: "share",
       condition: !artwork.isUnlisted,
       content: ShareButton,
@@ -150,6 +169,13 @@ export const ArtworkActions: React.FC<
         <ViewInRoomFragmentContainer
           artwork={artwork}
           onClose={hideViewInRoom}
+        />
+      )}
+
+      {is3DViewerVisible && get3DAssetUrl(artwork.slug) && (
+        <Artwork3DViewer
+          splatUrl={get3DAssetUrl(artwork.slug)!}
+          onClose={hide3DViewer}
         />
       )}
 

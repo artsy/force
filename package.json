@@ -118,6 +118,7 @@
     "found-scroll": "^1.1.1",
     "glob": "7.1.3",
     "graphql": "15.8.0",
+    "gsplat": "^1.2.9",
     "helmet": "2.3.0",
     "http-proxy": "1.18.1",
     "http-shutdown": "1.2.1",

@@ -8,6 +8,14 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
+jest.mock("Apps/Artwork/Components/Artwork3DViewer/demoSplats", () => ({
+  has3DAsset: (slug: string) => slug === "a-3d-scanned-sculpture",
+  get3DAssetUrl: (slug: string) =>
+    slug === "a-3d-scanned-sculpture"
+      ? "https://files.artsy.net/demo/sculpture.splat"
+      : null,
+}))
+
 jest.mock("System/Contexts/SystemContext", () => ({
   SystemContextProvider: ({ children }) => children,
   useSystemContext: jest.fn().mockReturnValue({ user: {} }),
@@ -141,6 +149,41 @@ describe("ArtworkActions", () => {
         })
 
         expect(screen.queryByText("View in room")).not.toBeInTheDocument()
+      })
+    })
+
+    describe("view in 3D", () => {
+      it("is available for non-hangable artworks with a configured splat asset", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isHangable: false,
+            slug: "a-3d-scanned-sculpture",
+          }),
+        })
+
+        expect(screen.getByText("View in 3D")).toBeInTheDocument()
+      })
+
+      it("is not available for hangable artworks, even with a configured splat asset", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isHangable: true,
+            slug: "a-3d-scanned-sculpture",
+          }),
+        })
+
+        expect(screen.queryByText("View in 3D")).not.toBeInTheDocument()
+      })
+
+      it("is not available for non-hangable artworks without a configured splat asset", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isHangable: false,
+            slug: "some-other-artwork",
+          }),
+        })
+
+        expect(screen.queryByText("View in 3D")).not.toBeInTheDocument()
       })
     })
 
