@@ -1,31 +1,33 @@
 import { ContextModule } from "@artsy/cohesion"
-import ShieldIcon from "@artsy/icons/ShieldIcon"
-import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
+import { Button, Message, Spacer, Text } from "@artsy/palette"
+import { useStripe } from "@stripe/react-stripe-js"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
-import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
+import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
+import { TermsAndConditions } from "Apps/Order2/Routes/Checkout/Components/TermsAndConditions"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
-import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
-import { RouterLink } from "System/Components/RouterLink"
+import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
+import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
+import { useOrder2SubmitCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2SubmitCounterOfferMutation"
+import {
+  RespondStepName,
+  RespondStepState,
+} from "Apps/Order2/Routes/Respond/RespondContext/types"
+import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
+import { useRouter } from "System/Hooks/useRouter"
+import createLogger from "Utils/logger"
 import type { Order2RespondSummary_order$key } from "__generated__/Order2RespondSummary_order.graphql"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+
+const logger = createLogger("Order2RespondSummary")
+
+const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondSummaryProps {
   order: Order2RespondSummary_order$key
 }
 
-interface ArtworkData {
-  artworkInternalID: string
-  artistNames: string
-  title: string
-  date: string
-  price: string
-  attributionClass: { shortDescription: string } | null
-  image: { resized: { url: string } | null } | null
-  dimensions: any
-  framedDimensions: any
-}
-
-const extractLineItemMetadata = (lineItem: any): ArtworkData => {
+const extractLineItemMetadata = (lineItem: any) => {
   const artworkVersion = lineItem?.artworkVersion
   const artwork = lineItem?.artwork
 
@@ -46,7 +48,17 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   order,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { checkoutTracking, artworkPath } = useRespondContext()
+  const { checkoutTracking, artworkPath, steps, selectedAction } =
+    useRespondContext()
+  const { router } = useRouter()
+  const stripe = useStripe()
+
+  const { submitMutation: submitCounterOffer } =
+    useOrder2SubmitCounterOfferMutation()
+  const { submitMutation: acceptOffer } = useOrder2AcceptOfferMutation()
+  const { submitMutation: declineOffer } = useOrder2DeclineOfferMutation()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
   const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
@@ -55,97 +67,203 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       framedDimensions: artworkData.framedDimensions,
     })
 
+  // The Submit CTA appears once the respond step is completed and the
+  // confirmation step becomes active — mirroring the checkout review step.
+  const isConfirmationActive =
+    steps.find(step => step.name === RespondStepName.CONFIRMATION)?.state ===
+    RespondStepState.ACTIVE
+
+  const orderID = orderData.internalID
+  // The gallery's offer being responded to (accept/decline act on it); the
+  // counteroffer submits the pending draft created at "Continue to Review".
+  const galleryOfferID = orderData.lastSubmittedOffer?.internalID
+  const pendingOfferID = orderData.pendingOffer?.internalID
+
+  // Price the summary from the buyer’s draft counteroffer. Only use a draft
+  // that belongs to the current round — a pending offer from an earlier round
+  // (buyer countered, gallery countered back) is stale and must be ignored.
+  const isCurrentCounterofferDraft = hasCurrentCounterofferDraft({
+    pendingOffer: orderData.pendingOffer,
+    galleryOffer: orderData.lastSubmittedOffer,
+  })
+
+  const redirectToOrderDetails = () => {
+    router.replace(`/orders/${orderID}/details`)
+  }
+
+  const submitCounter = async () => {
+    if (!pendingOfferID) {
+      return
+    }
+
+    const response = await submitCounterOffer({
+      variables: { input: { orderID, offerID: pendingOfferID } },
+    })
+    const offerOrError = response.submitBuyerOffer?.offerOrError
+
+    if (offerOrError && "mutationError" in offerOrError) {
+      // TODO: proper error handling is tracked in EMI-3175.
+      setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+      return
+    }
+
+    checkoutTracking.submittedCounterOffer()
+    redirectToOrderDetails()
+  }
+
+  const decline = async () => {
+    if (!galleryOfferID) {
+      return
+    }
+
+    const response = await declineOffer({
+      variables: { input: { orderID, offerID: galleryOfferID } },
+    })
+    const orderOrError = response.rejectSellerOffer?.orderOrError
+
+    if (orderOrError && "mutationError" in orderOrError) {
+      // TODO: proper error handling is tracked in EMI-3175.
+      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      return
+    }
+
+    redirectToOrderDetails()
+  }
+
+  const accept = async () => {
+    if (!stripe || !galleryOfferID) {
+      return
+    }
+
+    const response = await acceptOffer({
+      variables: { input: { orderID, offerID: galleryOfferID } },
+    })
+    const orderOrError = response.acceptSellerOffer?.orderOrError
+
+    // Accepting may require a payment action (3DS); handle it, then re-submit.
+    if (orderOrError?.__typename === "OrderMutationActionRequired") {
+      const { error } = await stripe.handleNextAction({
+        clientSecret: orderOrError.actionData?.clientSecret ?? "",
+      })
+
+      if (error) {
+        // TODO: proper error handling is tracked in EMI-3175.
+        setErrorMessage(error.message ?? GENERIC_ERROR)
+        return
+      }
+
+      await accept()
+      return
+    }
+
+    if (orderOrError?.__typename === "OrderMutationError") {
+      // TODO: proper error handling is tracked in EMI-3175.
+      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      return
+    }
+
+    redirectToOrderDetails()
+  }
+
+  const handleSubmit = async () => {
+    if (!selectedAction) {
+      return
+    }
+
+    try {
+      setErrorMessage(null)
+      setIsSubmitting(true)
+
+      if (selectedAction === "COUNTEROFFER") {
+        await submitCounter()
+      } else if (selectedAction === "DECLINE") {
+        await decline()
+      } else {
+        await accept()
+      }
+    } catch (error) {
+      // TODO: proper error handling is tracked in EMI-3175.
+      logger.error(error)
+      setErrorMessage(GENERIC_ERROR)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
-    <Flex flexDirection="column" backgroundColor="mono0" py={2} px={[2, 2, 4]}>
-      <Text
-        color="mono100"
-        fontWeight="bold"
-        variant={["sm-display", "sm-display", "md"]}
-      >
-        Offer summary
-      </Text>
-      <Flex py={1} justifyContent="space-between" alignItems="flex-start">
-        {artworkData?.image?.resized?.url && (
-          <RouterLink
-            flex={0}
-            to={artworkPath}
-            target="_blank"
+    <Order2OrderSummary
+      order={orderData}
+      header="Offer summary"
+      contextModule={ContextModule.ordersRespond}
+      checkoutTracking={checkoutTracking}
+      artworkPath={artworkPath}
+      priceFromPendingOffer={
+        selectedAction === "COUNTEROFFER" && isCurrentCounterofferDraft
+      }
+      artwork={{
+        artworkInternalID: artworkData.artworkInternalID,
+        artistNames: artworkData.artistNames,
+        title: artworkData.title,
+        date: artworkData.date,
+        listPriceDisplay: artworkData.price,
+        attributionClassLabel: artworkData.attributionClass?.shortDescription,
+        dimensionsLabel,
+        imageURL: artworkData.image?.resized?.url,
+      }}
+    >
+      {isConfirmationActive && (
+        <>
+          <Spacer y={2} />
+          <Button
+            variant="primaryBlack"
+            width="100%"
+            loading={isSubmitting}
             onClick={() => {
-              if (artworkData.artworkInternalID) {
-                checkoutTracking.clickedOrderArtworkImage({
-                  destinationPageOwnerId: artworkData.artworkInternalID,
-                  contextModule: ContextModule.ordersRespond,
-                })
-              }
+              checkoutTracking.clickedOrderProgression(
+                ContextModule.ordersReview,
+              )
+              handleSubmit()
             }}
           >
-            <Image
-              mr={1}
-              src={artworkData?.image?.resized?.url}
-              alt={artworkData.title || ""}
-              width={["65px", "85px"]}
-            />
-          </RouterLink>
-        )}
-        <Box overflow="hidden" flex={1}>
-          <Text overflowEllipsis variant="sm" color="mono100">
-            {artworkData.artistNames}
-          </Text>
-          <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            {[artworkData.title, artworkData.date].join(", ")}
-          </Text>
-          <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-            List price: {artworkData.price}
-          </Text>
-          {artworkData.attributionClass?.shortDescription && (
-            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {artworkData.attributionClass.shortDescription}
-            </Text>
+            Submit
+          </Button>
+
+          <Spacer y={2} />
+
+          <TermsAndConditions
+            onClickTermsAndConditions={() =>
+              checkoutTracking.clickedTermsAndConditions()
+            }
+          />
+
+          <Spacer y={2} />
+
+          {errorMessage && (
+            <>
+              <Spacer y={1} />
+              <Message variant="error" p={1}>
+                <Text variant="xs">{errorMessage}</Text>
+              </Message>
+            </>
           )}
-          {dimensionsLabel && (
-            <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
-              {dimensionsLabel}
-            </Text>
-          )}
-        </Box>
-      </Flex>
-      <Box>
-        <Order2CheckoutPricingBreakdown
-          order={orderData}
-          contextModule={ContextModule.ordersRespond}
-          checkoutTracking={checkoutTracking}
-        />
-      </Box>
-      <Spacer y={2} />
-      <Message variant="default" p={1}>
-        <Flex>
-          <ShieldIcon fill="mono100" />
-          <Spacer x={1} />
-          <Text variant="xs" color="mono100">
-            Your purchase is protected with{" "}
-            <RouterLink
-              onClick={() =>
-                checkoutTracking.clickedBuyerProtection(
-                  ContextModule.ordersRespond,
-                )
-              }
-              inline
-              target="_blank"
-              to={BUYER_GUARANTEE_URL}
-            >
-              Artsy&rsquo;s Buyer Guarantee
-            </RouterLink>
-            .
-          </Text>
-        </Flex>
-      </Message>
-    </Flex>
+        </>
+      )}
+    </Order2OrderSummary>
   )
 }
 
 const FRAGMENT = graphql`
   fragment Order2RespondSummary_order on Order {
-    ...Order2CheckoutPricingBreakdown_order
+    ...Order2OrderSummary_order
+    internalID
+    lastSubmittedOffer {
+      internalID
+      createdAt
+    }
+    pendingOffer {
+      internalID
+      createdAt
+    }
     lineItems {
       artworkVersion {
         artistNames
