@@ -16,10 +16,10 @@ import { AddressAutocompleteInput } from "Components/Address/AddressAutocomplete
 import {
   type Address,
   basicPhoneValidator,
+  getRichRequiredPhoneValidators,
   handlePhoneNumberChange,
   isPostalCodeRequired,
   isRegionRequired,
-  richRequiredPhoneValidators,
   yupAddressValidator,
 } from "Components/Address/utils"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
@@ -27,6 +27,7 @@ import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { useFormikContext } from "formik"
 import { type ChangeEvent, useMemo, useState } from "react"
+import type { Environment } from "relay-runtime"
 import { useTracking } from "react-tracking"
 
 export interface FormikContextWithAddress {
@@ -58,27 +59,40 @@ interface Props {
  * Validation schema for address form fields. Arguments match the
  * <AddressFormFields/> component - e.g. to include phone number validation
  *
+ * When `withPhoneNumber` is used, pass the Relay `relayEnvironment` (from
+ * `useRelayEnvironment()`) so the async phone-number validation can run; build
+ * the schema in-component (typically memoized on the environment).
+ *
  * @example
  * ```tsx
- * const validationSchema = yup.object().shape({
- *  ...addressFormFieldsValidator({ withLegacyPhoneInput: true }),
- *  saveAddress: boolean
- * })
+ * const relayEnvironment = useRelayEnvironment()
+ * const validationSchema = useMemo(
+ *   () =>
+ *     yup.object().shape({
+ *       ...addressFormFieldsValidator({ withPhoneNumber: true, relayEnvironment }),
+ *       saveAddress: boolean,
+ *     }),
+ *   [relayEnvironment],
+ * )
  * // later...
  *
  * <Formik
  *  validationSchema={validationSchema}
  *  {...otherFormikProps}
  * >
- *   <AddressFormFields<AddressFormValues> withLegacyPhoneInput />
+ *   <AddressFormFields<AddressFormValues> withPhoneNumber />
  * ```
  */
 export const addressFormFieldsValidator = (
-  args: Pick<Props, "withLegacyPhoneInput" | "withPhoneNumber"> = {},
+  args: Pick<Props, "withLegacyPhoneInput" | "withPhoneNumber"> & {
+    relayEnvironment?: Environment
+  } = {},
 ) => ({
   address: yupAddressValidator,
   ...(args.withLegacyPhoneInput && basicPhoneValidator),
-  ...(args.withPhoneNumber && richRequiredPhoneValidators),
+  ...(args.withPhoneNumber &&
+    args.relayEnvironment &&
+    getRichRequiredPhoneValidators(args.relayEnvironment)),
 })
 
 /**
