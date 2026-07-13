@@ -1,4 +1,4 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -31,7 +31,6 @@ import { TermsAndConditions } from "Apps/Order2/Routes/Checkout/Components/Terms
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
-import { RouterLink } from "System/Components/RouterLink"
 import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import createLogger from "Utils/logger"
 import type {
