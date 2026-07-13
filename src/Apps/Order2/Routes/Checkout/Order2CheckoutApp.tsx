@@ -215,6 +215,7 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
               <Spacer y={1} />
               <Box>
                 <Jump id={STEP_JUMP_MAP.CONFIRMATION} />
+                <>{/* //here */}</>
                 <Order2ReviewStep order={orderData} />
               </Box>
               <Order2HelpLinksWithInquiry

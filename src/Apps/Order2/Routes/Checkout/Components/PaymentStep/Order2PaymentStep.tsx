@@ -25,7 +25,8 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
   const meData = useFragment(ME_FRAGMENT, me)
   useCompletePaymentData(orderData)
 
-  const { steps } = useCheckoutContext()
+  const { steps, editStep, checkoutTracking, confirmationToken } =
+    useCheckoutContext()
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.PAYMENT,
@@ -51,7 +52,14 @@ export const Order2PaymentStep: React.FC<Order2PaymentStepProps> = ({
         px={[2, 2, 4]}
         hidden={stepState !== CheckoutStepState.COMPLETED}
       >
-        <Order2PaymentCompletedView order={orderData} />
+        <Order2PaymentCompletedView
+          order={orderData}
+          paymentMethodPreview={confirmationToken?.paymentMethodPreview}
+          onEdit={() => {
+            checkoutTracking.clickedChangePaymentMethod()
+            editStep(CheckoutStepName.PAYMENT)
+          }}
+        />
       </Box>
 
       <Box

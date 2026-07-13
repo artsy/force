@@ -36,7 +36,8 @@ const DeliveryOptionsPlaceholder = () => {
 export const Order2DeliveryOptionsStep: React.FC<
   Order2DeliveryOptionsStepProps
 > = ({ order }) => {
-  const { steps, isFulfillmentDetailsSaving } = useCheckoutContext()
+  const { steps, isFulfillmentDetailsSaving, editStep, checkoutTracking } =
+    useCheckoutContext()
   const orderData = useFragment(FRAGMENT, order)
   const completedViewProps = useCompleteDeliveryOptionData(orderData)
   const isExpanded = useIsDeliveryOptionExpanded(orderData)
@@ -89,7 +90,14 @@ export const Order2DeliveryOptionsStep: React.FC<
         <Jump id={STEP_JUMP_MAP.DELIVERY_OPTION} />
         <Order2DeliveryOptionsCompletedView
           {...completedViewProps}
-          allowEdit={allowEdit}
+          onEdit={
+            allowEdit
+              ? () => {
+                  checkoutTracking.clickedChangeDeliveryOptions()
+                  editStep(CheckoutStepName.DELIVERY_OPTION)
+                }
+              : undefined
+          }
         />
       </Box>
     )

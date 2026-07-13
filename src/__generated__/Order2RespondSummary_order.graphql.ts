@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3de546186af39599524a932e94f8fed5>>
+ * @generated SignedSource<<8eedc2551d809f00d4318ccae860062e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Order2RespondSummary_order$data = {
+  readonly internalID: string;
+  readonly lastSubmittedOffer: {
+    readonly createdAt: string | null | undefined;
+    readonly internalID: string;
+  } | null | undefined;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
       readonly attributionClass: {
@@ -43,7 +48,11 @@ export type Order2RespondSummary_order$data = {
       readonly title: string | null | undefined;
     } | null | undefined;
   } | null | undefined>;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutPricingBreakdown_order">;
+  readonly pendingOffer: {
+    readonly createdAt: string | null | undefined;
+    readonly internalID: string;
+  } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2OrderSummary_order">;
   readonly " $fragmentType": "Order2RespondSummary_order";
 };
 export type Order2RespondSummary_order$key = {
@@ -52,7 +61,24 @@ export type Order2RespondSummary_order$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = [
+  (v0/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "createdAt",
+    "storageKey": null
+  }
+],
+v2 = [
   {
     "alias": null,
     "args": [
@@ -78,7 +104,7 @@ var v0 = [
     "storageKey": "resized(height:200)"
   }
 ],
-v1 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -103,7 +129,28 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Order2CheckoutPricingBreakdown_order"
+      "name": "Order2OrderSummary_order"
+    },
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "lastSubmittedOffer",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
+      "name": "pendingOffer",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": null
     },
     {
       "alias": null,
@@ -149,7 +196,7 @@ return {
               "kind": "LinkedField",
               "name": "image",
               "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             }
           ],
@@ -163,13 +210,7 @@ return {
           "name": "artwork",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "internalID",
-              "storageKey": null
-            },
+            (v0/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -202,7 +243,7 @@ return {
               "kind": "LinkedField",
               "name": "dimensions",
               "plural": false,
-              "selections": (v1/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             },
             {
@@ -212,7 +253,7 @@ return {
               "kind": "LinkedField",
               "name": "framedDimensions",
               "plural": false,
-              "selections": (v1/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             },
             {
@@ -228,7 +269,7 @@ return {
               "kind": "LinkedField",
               "name": "images",
               "plural": true,
-              "selections": (v0/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": "images(includeAll:false)"
             }
           ],
@@ -243,6 +284,6 @@ return {
 };
 })();
 
-(node as any).hash = "6d5cdee50cb71c8de38b5d22707c6d80";
+(node as any).hash = "14d60c6570544bcb10c71ecd7ca27598";
 
 export default node;

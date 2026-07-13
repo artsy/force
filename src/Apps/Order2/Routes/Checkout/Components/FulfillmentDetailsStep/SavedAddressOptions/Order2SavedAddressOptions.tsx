@@ -41,7 +41,8 @@ const getUnableToShipMessage = (
   if (region && isBuyNow) {
     return {
       title: `Ships within ${region}`,
-      message: "Try a different address or contact the gallery for international shipping.",
+      message:
+        "Try a different address or contact the gallery for international shipping.",
     }
   }
   return {
@@ -95,11 +96,14 @@ export const SavedAddressOptions = ({
     step => step.name === CheckoutStepName.FULFILLMENT_DETAILS,
   )
 
+  const isStepActive =
+    fulfillmentDetailsStep?.state === CheckoutStepState.ACTIVE
+
   // Track when saved addresses are viewed (only once when step is active)
   const hasTrackedAddressViewRef = useRef(false)
 
   useCheckoutImpressionEffect(() => {
-    if (fulfillmentDetailsStep?.state !== CheckoutStepState.ACTIVE) {
+    if (!isStepActive) {
       hasTrackedAddressViewRef.current = false
       return
     }
@@ -116,12 +120,7 @@ export const SavedAddressOptions = ({
       checkoutTracking.savedAddressViewed(savedAddresses)
       hasTrackedAddressViewRef.current = true
     }
-  }, [
-    savedAddresses,
-    checkoutTracking,
-    fulfillmentDetailsStep?.state,
-    userAddressMode,
-  ])
+  }, [savedAddresses, checkoutTracking, isStepActive, userAddressMode])
 
   // Scroll to top of step whenever userAddressMode changes
   // This covers: beginning edit, completing edit, canceling edit,
@@ -131,9 +130,6 @@ export const SavedAddressOptions = ({
       scrollToStep(CheckoutStepName.FULFILLMENT_DETAILS)
     }
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
-
-  const isStepActive =
-    fulfillmentDetailsStep?.state === CheckoutStepState.ACTIVE
 
   // Auto-submit the first valid address when no delivery address is confirmed.
   // This covers two cases:
@@ -168,15 +164,12 @@ export const SavedAddressOptions = ({
 
   // Reactively set/clear error banner based on selected address validity and shippability
   useEffect(() => {
-    if (!selectedAddress || userAddressMode) return
+    if (!selectedAddress || userAddressMode || !isStepActive) return
 
     if (!selectedAddress.isShippable && !isOffer) {
       setSectionErrorMessage({
         section: CheckoutStepName.FULFILLMENT_DETAILS,
-        error: getUnableToShipMessage(
-          shippingOriginRegion ?? null,
-          !isOffer,
-        ),
+        error: getUnableToShipMessage(shippingOriginRegion ?? null, !isOffer),
       })
       return
     }
@@ -199,6 +192,7 @@ export const SavedAddressOptions = ({
     isOffer,
     setSectionErrorMessage,
     shippingOriginRegion,
+    isStepActive,
   ])
 
   const onSaveAddress = useCallback(

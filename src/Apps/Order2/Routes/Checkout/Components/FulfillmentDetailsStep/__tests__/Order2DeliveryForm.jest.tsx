@@ -27,6 +27,13 @@ jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext", () => ({
   useCheckoutContext: () => mockCheckoutContext,
 }))
 
+// Swap the async, debounced, network-backed phone validators for synchronous
+// ones — see mockPhoneValidation for why (otherwise submit-time validation
+// hangs under fake timers).
+jest.mock("Components/Address/utils", () =>
+  require("Components/Address/utils/mockPhoneValidation").mockPhoneValidation(),
+)
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.runAllTimers()
@@ -43,6 +50,8 @@ beforeEach(() => {
       clickedShippingAddress: jest.fn(),
       clickedAddNewShippingAddress: jest.fn(),
       clickedEditShippingAddress: jest.fn(),
+      errorMessageViewed: jest.fn(),
+      savedAddressViewed: jest.fn(),
     },
     completeStep: jest.fn(),
     setUserAddressMode: jest.fn(),
@@ -50,7 +59,12 @@ beforeEach(() => {
     setIsFulfillmentDetailsSaving: jest.fn(),
     userAddressMode: null,
     messages: {},
-    steps: [],
+    steps: [
+      {
+        name: CheckoutStepName.FULFILLMENT_DETAILS,
+        state: CheckoutStepState.ACTIVE,
+      },
+    ],
   }
 })
 
@@ -240,7 +254,6 @@ describe("Order2DeliveryForm", () => {
             error: { title: "Title", message: "Message", code },
           },
         }
-        mockCheckoutContext.checkoutTracking.errorMessageViewed = jest.fn()
       }
 
       it("renders the section error banner for a non-postal-code error", async () => {
