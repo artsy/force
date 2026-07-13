@@ -13,6 +13,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { ErrorBanner } from "Apps/Order2/Components/ErrorBanner"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
@@ -275,9 +276,9 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
       {hasValidationError && (
         <>
-          <Message variant="error" title={RESPONSE_REQUIRED_TITLE}>
+          <ErrorBanner title={RESPONSE_REQUIRED_TITLE}>
             {RESPONSE_REQUIRED_MESSAGE}
-          </Message>
+          </ErrorBanner>
           <Spacer y={2} />
         </>
       )}
