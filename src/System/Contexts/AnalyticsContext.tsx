@@ -109,16 +109,20 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
 
   switch (true) {
     // Handle special cases
+    // New Checkout
+    case type === "orders" && tab === "checkout":
+      return OwnerType.ordersCheckout
+    case type === "orders" && tab === "respond":
+      return OwnerType.ordersRespond
+    case type === "orders" && tab === "details":
+      return OwnerType.ordersDetail
+    // Legacy checkout routes
     case type === "orders" && tab === "shipping":
       return OwnerType.ordersShipping
     case type === "orders" && tab === "payment":
       return OwnerType.ordersPayment
     case type === "orders" && tab === "review":
       return OwnerType.ordersReview
-    case type === "orders" && tab === "checkout":
-      return OwnerType.ordersCheckout
-    case type === "orders" && tab === "details":
-      return OwnerType.ordersDetail
     case type === "collectorProfile" && slug === "saves":
       // Why is this somehow different from OwnerType.savesAndFollows?
       // Why aren't there other cases for collector-profile routes?

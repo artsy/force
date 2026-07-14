@@ -1,11 +1,3 @@
-import type {
-  RespondAction,
-  RespondStep,
-} from "Apps/Order2/Routes/Respond/RespondContext/types"
-import {
-  RespondStepName,
-  RespondStepState,
-} from "Apps/Order2/Routes/Respond/RespondContext/types"
 // TODO: This pulls in useCheckoutTracking (Checkout-specific) only for the
 // handful of Respond-only methods it exposes (clickedTermsAndConditions,
 // submittedCounterOffer, toggledOfferHistory, clickedCounterOfferOption,
@@ -14,6 +6,14 @@ import {
 // Respond-scoped tracking hook that wraps useOrder2Tracking directly instead
 // of depending on Checkout's hook.
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
+import type {
+  RespondAction,
+  RespondStep,
+} from "Apps/Order2/Routes/Respond/RespondContext/types"
+import {
+  RespondStepName,
+  RespondStepState,
+} from "Apps/Order2/Routes/Respond/RespondContext/types"
 import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import type { Order2RespondContext_order$key } from "__generated__/Order2RespondContext_order.graphql"
 import type React from "react"
