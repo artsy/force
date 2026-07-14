@@ -6,7 +6,15 @@ import {
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+// TODO: This pulls in useCheckoutTracking (Checkout-specific) only for the
+// handful of Respond-only methods it exposes (clickedTermsAndConditions,
+// submittedCounterOffer, toggledOfferHistory, clickedCounterOfferOption,
+// clickedOrderProgression) — useCheckoutTracking itself just wraps the more
+// generic Apps/Order2/Hooks/useOrder2Tracking. Consider extracting a
+// Respond-scoped tracking hook that wraps useOrder2Tracking directly instead
+// of depending on Checkout's hook.
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
+import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import type { Order2RespondContext_order$key } from "__generated__/Order2RespondContext_order.graphql"
 import type React from "react"
 import { createContext, useContext, useMemo, useState } from "react"
@@ -20,6 +28,9 @@ interface Order2RespondContextValue {
   setRespondAction: (action: RespondAction) => void
   setRespondComplete: () => void
   editRespond: () => void
+  // Whether the order's pending offer is the buyer's counteroffer draft for the
+  // current round (vs. a stale draft left over from an earlier round).
+  isCurrentCounterofferDraft: boolean
 }
 
 const Order2RespondContext = createContext<Order2RespondContextValue | null>(
@@ -36,6 +47,14 @@ export const Order2RespondContextProvider: React.FC<
 > = ({ order, children }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const checkoutTracking = useCheckoutTracking(orderData)
+
+  // Only a pending offer from the current round should price the summary or
+  // pre-fill the form — one left over from an earlier round (buyer countered,
+  // gallery countered back) is stale and must be ignored.
+  const isCurrentCounterofferDraft = hasCurrentCounterofferDraft({
+    pendingOffer: orderData.pendingOffer,
+    galleryOffer: orderData.lastSubmittedOffer,
+  })
 
   // Calculate artworkPath from orderData
   const artworkPath = useMemo(() => {
@@ -99,6 +118,7 @@ export const Order2RespondContextProvider: React.FC<
     setRespondAction,
     setRespondComplete,
     editRespond,
+    isCurrentCounterofferDraft,
   }
 
   return (
@@ -120,9 +140,14 @@ export const useRespondContext = () => {
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2RespondContext_order on Order {
-    internalID
     source
     mode
+    lastSubmittedOffer {
+      createdAt
+    }
+    pendingOffer {
+      createdAt
+    }
     lineItems {
       artwork {
         slug

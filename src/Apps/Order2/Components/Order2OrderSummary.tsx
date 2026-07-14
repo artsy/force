@@ -1,7 +1,7 @@
 import type { ContextModule } from "@artsy/cohesion"
 import ShieldIcon from "@artsy/icons/ShieldIcon"
 import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
-import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
+import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { RouterLink } from "System/Components/RouterLink"
@@ -114,7 +114,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
         </Box>
       </Flex>
       <Box>
-        <Order2CheckoutPricingBreakdown
+        <Order2PricingBreakdown
           order={orderData}
           contextModule={contextModule}
           isLoading={isPricingLoading}
@@ -150,6 +150,6 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2OrderSummary_order on Order {
-    ...Order2CheckoutPricingBreakdown_order
+    ...Order2PricingBreakdown_order
   }
 `

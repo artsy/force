@@ -9,6 +9,7 @@ import {
 } from "@artsy/palette"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
+// TODO: These imports from the checkout route should either be hoisted up to the general Apps/Order2/Components folder or copied into the respond route.
 import { Order2DeliveryOptionsCompletedView } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsCompletedView"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
 import { Order2FulfillmentDetailsCompletedView } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/Order2FulfillmentDetailsCompletedView"
@@ -118,8 +119,6 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
 
 const ORDER_FRAGMENT = graphql`
   fragment Order2RespondApp_order on Order {
-    internalID
-    mode
     paymentMethod
     lineItems {
       artwork {

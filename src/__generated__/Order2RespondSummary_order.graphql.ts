@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8eedc2551d809f00d4318ccae860062e>>
+ * @generated SignedSource<<c6f2d8b53a6028ba2e8791f44b07184d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2RespondSummary_order$data = {
   readonly internalID: string;
   readonly lastSubmittedOffer: {
-    readonly createdAt: string | null | undefined;
     readonly internalID: string;
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
@@ -49,7 +48,6 @@ export type Order2RespondSummary_order$data = {
     } | null | undefined;
   } | null | undefined>;
   readonly pendingOffer: {
-    readonly createdAt: string | null | undefined;
     readonly internalID: string;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Order2OrderSummary_order">;
@@ -69,14 +67,7 @@ var v0 = {
   "storageKey": null
 },
 v1 = [
-  (v0/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "createdAt",
-    "storageKey": null
-  }
+  (v0/*: any*/)
 ],
 v2 = [
   {
@@ -284,6 +275,6 @@ return {
 };
 })();
 
-(node as any).hash = "14d60c6570544bcb10c71ecd7ca27598";
+(node as any).hash = "8707314e86ba41134b1e5a0f48d3e7c7";
 
 export default node;

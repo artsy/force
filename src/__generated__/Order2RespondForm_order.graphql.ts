@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b0251018c14c5b3f2120e89f607d2f1>>
+ * @generated SignedSource<<b907103dd87ffdd8dba0223def8c2680>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,14 +20,12 @@ export type Order2RespondForm_order$data = {
     readonly buyerTotal: {
       readonly display: string | null | undefined;
     } | null | undefined;
-    readonly createdAt: string | null | undefined;
     readonly internalID: string;
   } | null | undefined;
   readonly pendingOffer: {
     readonly amount: {
       readonly major: number;
     } | null | undefined;
-    readonly createdAt: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Order2RespondOfferDetails_order">;
   readonly " $fragmentType": "Order2RespondForm_order";
@@ -46,13 +44,6 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -75,7 +66,6 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -84,7 +74,7 @@ return {
           "name": "amount",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -124,7 +114,6 @@ return {
       "name": "pendingOffer",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -133,7 +122,7 @@ return {
           "name": "amount",
           "plural": false,
           "selections": [
-            (v2/*: any*/)
+            (v1/*: any*/)
           ],
           "storageKey": null
         }
@@ -151,6 +140,6 @@ return {
 };
 })();
 
-(node as any).hash = "5d1ed91a4c62506b84d80d5673eee887";
+(node as any).hash = "05cc5edda9300079248f07e0733f8724";
 
 export default node;

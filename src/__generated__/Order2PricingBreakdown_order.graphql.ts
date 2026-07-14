@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6339b7be8abeb4fc4eb9bdc9b89c5aaf>>
+ * @generated SignedSource<<921d6765e52dcdc13d7b679705f36211>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ export type OrderBuyerStateEnum = "APPROVED" | "CANCELED" | "COMPLETED" | "COUNT
 export type OrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderSourceEnum = "ARTWORK_PAGE" | "INQUIRY" | "PARTNER_OFFER" | "PRIVATE_SALE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Order2CheckoutPricingBreakdown_order$data = {
+export type Order2PricingBreakdown_order$data = {
   readonly buyerState: OrderBuyerStateEnum | null | undefined;
   readonly buyerStateExpiresAt: string | null | undefined;
   readonly mode: OrderModeEnum;
@@ -90,11 +90,11 @@ export type Order2CheckoutPricingBreakdown_order$data = {
     readonly __typename: "%other";
   } | null | undefined>;
   readonly source: OrderSourceEnum;
-  readonly " $fragmentType": "Order2CheckoutPricingBreakdown_order";
+  readonly " $fragmentType": "Order2PricingBreakdown_order";
 };
-export type Order2CheckoutPricingBreakdown_order$key = {
-  readonly " $data"?: Order2CheckoutPricingBreakdown_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutPricingBreakdown_order">;
+export type Order2PricingBreakdown_order$key = {
+  readonly " $data"?: Order2PricingBreakdown_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -212,7 +212,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Order2CheckoutPricingBreakdown_order",
+  "name": "Order2PricingBreakdown_order",
   "selections": [
     {
       "alias": null,
@@ -261,6 +261,6 @@ return {
 };
 })();
 
-(node as any).hash = "b67f428ee349b7de0d3264d66bf45bec";
+(node as any).hash = "679f98fb383225d87109897f8fb02195";
 
 export default node;

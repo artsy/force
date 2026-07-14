@@ -23,7 +23,6 @@ import {
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
-import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
@@ -107,6 +106,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     editRespond,
     steps,
     checkoutTracking,
+    isCurrentCounterofferDraft,
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
@@ -119,10 +119,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   // a draft that belongs to the current round — a pending offer from an earlier
   // round (buyer countered, gallery countered back) is stale and must be
   // ignored.
-  const draftCounterofferAmount = hasCurrentCounterofferDraft({
-    pendingOffer: orderData.pendingOffer,
-    galleryOffer: orderData.lastSubmittedOffer,
-  })
+  const draftCounterofferAmount = isCurrentCounterofferDraft
     ? orderData.pendingOffer?.amount?.major
     : null
   const [counterofferAmount, setCounterofferAmount] = useState(
@@ -384,7 +381,7 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
           aria-label="Edit response"
           onClick={onEdit}
         >
-          {/*TODO: maybe refactor to reuse across order/ofer */}
+          {/*TODO: maybe refactor to reuse across order/offer */}
           <Text variant="xs" fontWeight="normal" color="mono100">
             Edit
           </Text>
@@ -419,7 +416,6 @@ const FRAGMENT = graphql`
     internalID
     lastSubmittedOffer {
       internalID
-      createdAt
       amount {
         major
         currencyCode
@@ -429,7 +425,6 @@ const FRAGMENT = graphql`
       }
     }
     pendingOffer {
-      createdAt
       amount {
         major
       }

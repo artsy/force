@@ -10,7 +10,7 @@ import {
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import type { CheckoutErrorBannerMessage } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
-import { TermsAndConditions } from "Apps/Order2/Routes/Checkout/Components/TermsAndConditions"
+import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
