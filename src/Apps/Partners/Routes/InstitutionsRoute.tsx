@@ -54,7 +54,7 @@ const InstitutionsRoute: React.FC<
             // @ts-ignore
             to="/institution-partnerships"
           >
-            Partner with Artsy
+            Partner with us
           </Text>
         </Flex>
 
