@@ -1,8 +1,7 @@
-import { Shelf, Skeleton } from "@artsy/palette"
 import {
-  CellArticleFragmentContainer,
-  CellArticlePlaceholder,
-} from "Components/Cells/CellArticle"
+  ArticleRelatedArticlesShelf,
+  ArticleRelatedArticlesShelfPlaceholder,
+} from "Apps/Article/Components/ArticleRelatedArticlesShelf"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArticleNewsRelatedArticlesQuery } from "__generated__/ArticleNewsRelatedArticlesQuery.graphql"
 import type { ArticleNewsRelatedArticles_article$data } from "__generated__/ArticleNewsRelatedArticles_article.graphql"
@@ -16,20 +15,7 @@ interface ArticleNewsRelatedArticlesProps {
 const ArticleNewsRelatedArticles: FC<
   React.PropsWithChildren<ArticleNewsRelatedArticlesProps>
 > = ({ article }) => {
-  if (article.newsRelatedArticles.length === 0) return null
-
-  return (
-    <Shelf alignItems="flex-start">
-      {article.newsRelatedArticles.map(article => {
-        return (
-          <CellArticleFragmentContainer
-            key={article.internalID}
-            article={article}
-          />
-        )
-      })}
-    </Shelf>
-  )
+  return <ArticleRelatedArticlesShelf articles={article.newsRelatedArticles} />
 }
 
 export const ArticleNewsRelatedArticlesFragmentContainer =
@@ -86,13 +72,5 @@ export const ArticleNewsRelatedArticlesQueryRenderer: FC<
 const ArticleNewsRelatedArticlesPlaceholder: FC<
   React.PropsWithChildren<unknown>
 > = () => {
-  return (
-    <Skeleton>
-      <Shelf alignItems="flex-start">
-        {[...new Array(8)].map((_, index) => {
-          return <CellArticlePlaceholder key={index} />
-        })}
-      </Shelf>
-    </Skeleton>
-  )
+  return <ArticleRelatedArticlesShelfPlaceholder />
 }

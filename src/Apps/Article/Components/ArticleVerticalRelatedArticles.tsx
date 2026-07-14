@@ -1,8 +1,7 @@
-import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
 import {
-  CellArticleFragmentContainer,
-  CellArticlePlaceholder,
-} from "Components/Cells/CellArticle"
+  ArticleRelatedArticlesShelf,
+  ArticleRelatedArticlesShelfPlaceholder,
+} from "Apps/Article/Components/ArticleRelatedArticlesShelf"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArticleVerticalRelatedArticlesQuery } from "__generated__/ArticleVerticalRelatedArticlesQuery.graphql"
 import type { ArticleVerticalRelatedArticles_article$data } from "__generated__/ArticleVerticalRelatedArticles_article.graphql"
@@ -16,25 +15,11 @@ interface ArticleVerticalRelatedArticlesProps {
 const ArticleVerticalRelatedArticles: FC<
   React.PropsWithChildren<ArticleVerticalRelatedArticlesProps>
 > = ({ article }) => {
-  if (article.verticalRelatedArticles.length === 0) return null
-
   return (
-    <>
-      <Text variant="lg-display" mb={4}>
-        Further Reading in {article.vertical}
-      </Text>
-
-      <Shelf alignItems="flex-start">
-        {article.verticalRelatedArticles.map(article => {
-          return (
-            <CellArticleFragmentContainer
-              key={article.internalID}
-              article={article}
-            />
-          )
-        })}
-      </Shelf>
-    </>
+    <ArticleRelatedArticlesShelf
+      articles={article.verticalRelatedArticles}
+      heading={`Further Reading in ${article.vertical}`}
+    />
   )
 }
 
@@ -94,16 +79,6 @@ const ArticleVerticalRelatedArticlesPlaceholder: FC<
   React.PropsWithChildren<unknown>
 > = () => {
   return (
-    <Skeleton>
-      <SkeletonText variant="lg-display" mb={4}>
-        Further Reading in Vertical
-      </SkeletonText>
-
-      <Shelf alignItems="flex-start">
-        {[...new Array(8)].map((_, index) => {
-          return <CellArticlePlaceholder key={index} />
-        })}
-      </Shelf>
-    </Skeleton>
+    <ArticleRelatedArticlesShelfPlaceholder heading="Further Reading in Vertical" />
   )
 }
