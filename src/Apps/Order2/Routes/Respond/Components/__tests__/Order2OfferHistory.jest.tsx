@@ -44,14 +44,14 @@ const withOffers = {
         internalID: "offer-1",
         createdAt: "January 1, 2026",
         fromParticipant: "SELLER",
-        amount: { display: "$1,000" },
-        buyerTotal: { display: "$1,100" },
+        amount: { amount: "1,000.00", currencySymbol: "$" },
+        buyerTotal: { amount: "1,100.00", currencySymbol: "$" },
       },
       {
         internalID: "offer-2",
         createdAt: "January 2, 2026",
         fromParticipant: "BUYER",
-        amount: { display: "$900" },
+        amount: { amount: "900.00", currencySymbol: "$" },
         buyerTotal: null,
       },
     ],
@@ -72,13 +72,13 @@ describe("Order2OfferHistory", () => {
     // Gallery (seller) offer
     expect(screen.getByText("January 1, 2026")).toBeInTheDocument()
     expect(screen.getByText("Gallery")).toBeInTheDocument()
-    expect(screen.getByText("$1,000")).toBeInTheDocument()
-    expect(screen.getByText("$1,100")).toBeInTheDocument()
+    expect(screen.getByText("$1,000.00")).toBeInTheDocument()
+    expect(screen.getByText("$1,100.00")).toBeInTheDocument()
 
     // Buyer ("You") offer
     expect(screen.getByText("January 2, 2026")).toBeInTheDocument()
     expect(screen.getByText("You")).toBeInTheDocument()
-    expect(screen.getByText("$900")).toBeInTheDocument()
+    expect(screen.getByText("$900.00")).toBeInTheDocument()
   })
 
   it("shows N/A when an offer has no buyerTotal", () => {

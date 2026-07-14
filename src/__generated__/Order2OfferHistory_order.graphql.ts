@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b813b3add881acc57525872e59cf295>>
+ * @generated SignedSource<<b7f275bafdb703a9b811d20661156777>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,12 @@ import { FragmentRefs } from "relay-runtime";
 export type Order2OfferHistory_order$data = {
   readonly submittedOffers: ReadonlyArray<{
     readonly amount: {
-      readonly display: string | null | undefined;
+      readonly amount: string | null | undefined;
+      readonly currencySymbol: string | null | undefined;
     } | null | undefined;
     readonly buyerTotal: {
-      readonly display: string | null | undefined;
+      readonly amount: string | null | undefined;
+      readonly currencySymbol: string | null | undefined;
     } | null | undefined;
     readonly createdAt: string | null | undefined;
     readonly fromParticipant: FromParticipantEnum;
@@ -36,7 +38,14 @@ var v0 = [
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "display",
+    "name": "amount",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencySymbol",
     "storageKey": null
   }
 ];
@@ -110,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "11143a85ed0421ef17cdbe210c8c99ae";
+(node as any).hash = "868aa1b5c17140452c4905f51a7c5714";
 
 export default node;
