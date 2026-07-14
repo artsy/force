@@ -13,12 +13,10 @@ export const useOrder2CreateCounterOfferMutation = () => {
             ... on OfferMutationSuccess {
               __typename
               offer {
-                internalID
                 order {
                   id
-                  ...Order2RespondSummary_order
-                  ...Order2RespondForm_order
                   ...Order2RespondContext_order
+                  ...Order2RespondApp_order
                 }
               }
             }
