@@ -83,14 +83,31 @@ describe("Order2RespondForm", () => {
     expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
   })
 
-  it("disables Continue to Review until an option is selected", () => {
+  it("shows the response-required banner when submitting without a selection", () => {
     renderWithRelay(defaultResolvers)
 
-    expect(continueButton()).toBeDisabled()
+    expect(continueButton()).toBeEnabled()
+    expect(screen.queryByText("Response required")).not.toBeInTheDocument()
+
+    fireEvent.click(continueButton())
+
+    expect(screen.getByText("Response required")).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        "Please accept, counter, or decline the gallery’s offer to continue.",
+      ),
+    ).toBeInTheDocument()
+  })
+
+  it("clears the response-required banner once an option is selected", () => {
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(continueButton())
+    expect(screen.getByText("Response required")).toBeInTheDocument()
 
     fireEvent.click(screen.getByText("Accept gallery offer"))
 
-    expect(continueButton()).toBeEnabled()
+    expect(screen.queryByText("Response required")).not.toBeInTheDocument()
   })
 
   it("pre-fills the counteroffer input from a current-round draft", () => {
@@ -162,17 +179,20 @@ describe("Order2RespondForm", () => {
     ).toBeInTheDocument()
   })
 
-  it("keeps Continue to Review disabled for a counteroffer until an amount is entered", () => {
+  it("shows the response-required banner when submitting a counteroffer without an amount", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Send counteroffer"))
-    expect(continueButton()).toBeDisabled()
+    fireEvent.click(continueButton())
 
+    expect(screen.getByText("Response required")).toBeInTheDocument()
+
+    // Entering an amount clears the banner.
     fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
       target: { value: "500" },
     })
 
-    expect(continueButton()).toBeEnabled()
+    expect(screen.queryByText("Response required")).not.toBeInTheDocument()
   })
 
   it("collapses to the completed state after accepting", () => {
