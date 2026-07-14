@@ -36,7 +36,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
 
   return (
     <Rail
-      title="Curators’ Picks"
+      title="Curators’ Favorites"
       subTitle="Fresh standout works handpicked by our chief curator."
       viewAllLabel="View All Works"
       viewAllHref="/collection/curators-picks-emerging"
@@ -156,7 +156,7 @@ export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC<
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Curators’ Picks"
+      title="Curators’ Favorites"
       subTitle="Fresh standout works handpicked by our chief curator."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
