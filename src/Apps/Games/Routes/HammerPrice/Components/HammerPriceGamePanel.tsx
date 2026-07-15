@@ -1,16 +1,25 @@
-import { Box, Button, Flex, Stack, Text, VisuallyHidden } from "@artsy/palette"
-import { HammerPriceGuessForm } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceGuessForm"
-import { HammerPriceGuessGrid } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceGuessGrid"
+import HelpIcon from "@artsy/icons/HelpIcon"
+import ShareIcon from "@artsy/icons/ShareIcon"
+import {
+  Box,
+  Button,
+  Flex,
+  Stack,
+  Text,
+  Tooltip,
+  VisuallyHidden,
+} from "@artsy/palette"
+import { HammerPriceGuessBoard } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceGuessBoard"
 import { HammerPriceResultModal } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceResultModal"
 import { useHammerPriceGame } from "Apps/Games/Routes/HammerPrice/Hooks/useHammerPriceGame"
+import { describeGuessFeedback } from "Apps/Games/Routes/HammerPrice/Utils/describeGuessFeedback"
+import { isWinningFeedback } from "Apps/Games/Routes/HammerPrice/Utils/scoreGuess"
 import {
+  HAMMER_PRICE_DIGIT_COUNT,
   HAMMER_PRICE_MAX_GUESSES,
   type HammerPricePuzzle,
 } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
-import { describeGuessFeedback } from "Apps/Games/Routes/HammerPrice/Utils/describeGuessFeedback"
-import { formatPrice } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
-import { isWinningFeedback } from "Apps/Games/Routes/HammerPrice/Utils/scoreGuess"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useTracking } from "react-tracking"
 
 export interface HammerPriceGamePanelProps {
@@ -18,34 +27,47 @@ export interface HammerPriceGamePanelProps {
   auctionResultHref: string
 }
 
+interface PendingCompletion {
+  won: boolean
+  guessNumber: number
+}
+
 export const HammerPriceGamePanel: React.FC<
   React.PropsWithChildren<HammerPriceGamePanelProps>
 > = ({ puzzle, auctionResultHref }) => {
   const { trackEvent } = useTracking()
 
-  const { guesses, status, guessesRemaining, submitGuess } = useHammerPriceGame(
-    { puzzle },
-  )
+  const { guesses, status, submitGuess } = useHammerPriceGame({
+    puzzle,
+  })
 
-  const [currentEntry, setCurrentEntry] = useState("")
   const [announcement, setAnnouncement] = useState("")
+  const [revealingRowIndex, setRevealingRowIndex] = useState(-1)
   const [isResultModalOpen, setIsResultModalOpen] = useState(false)
+
+  // Set at submit time, consumed when the row’s reveal animation finishes.
+  const pendingCompletion = useRef<PendingCompletion | null>(null)
 
   const isPlaying = status === "notStarted" || status === "inProgress"
   const isOver = status === "won" || status === "lost"
+  const isRevealing = revealingRowIndex !== -1
 
-  const handleSubmit = () => {
-    const result = submitGuess(currentEntry)
+  const handleSubmit = (digits: string) => {
+    const result = submitGuess(digits)
 
     if (!result) {
       return
     }
 
     const guessNumber = guesses.length + 1
+    const rowIndex = guesses.length
     const won = isWinningFeedback(result.feedback)
     const isFinalGuess = guessNumber >= HAMMER_PRICE_MAX_GUESSES
 
-    setCurrentEntry("")
+    pendingCompletion.current =
+      won || isFinalGuess ? { won, guessNumber } : null
+
+    setRevealingRowIndex(rowIndex)
 
     trackEvent({
       action: "submittedHammerPriceGuess",
@@ -53,28 +75,6 @@ export const HammerPriceGamePanel: React.FC<
       puzzle_id: puzzle.id,
       guess_number: guessNumber,
     })
-
-    if (won || isFinalGuess) {
-      trackEvent({
-        action: "completedHammerPriceGame",
-        context_module: "hammerPrice",
-        puzzle_id: puzzle.id,
-        won,
-        guess_count: guessNumber,
-      })
-
-      setIsResultModalOpen(true)
-
-      setAnnouncement(
-        `${describeGuessFeedback({
-          digits: result.digits,
-          feedback: result.feedback,
-          guessNumber,
-        })} ${won ? "You solved the puzzle!" : "Game over."}`,
-      )
-
-      return
-    }
 
     setAnnouncement(
       describeGuessFeedback({
@@ -85,59 +85,52 @@ export const HammerPriceGamePanel: React.FC<
     )
   }
 
+  const handleRevealComplete = () => {
+    setRevealingRowIndex(-1)
+
+    const completion = pendingCompletion.current
+    pendingCompletion.current = null
+
+    if (!completion) {
+      return
+    }
+
+    trackEvent({
+      action: "completedHammerPriceGame",
+      context_module: "hammerPrice",
+      puzzle_id: puzzle.id,
+      won: completion.won,
+      guess_count: completion.guessNumber,
+    })
+
+    setIsResultModalOpen(true)
+
+    setAnnouncement(
+      completion.won ? "You solved the puzzle!" : "Game over. Out of guesses.",
+    )
+  }
+
   return (
     <Stack gap={2}>
-      <Flex justifyContent="space-between" alignItems="baseline">
-        <Text variant={["sm-display", "md"]}>Guess the hammer price</Text>
-
-        {isPlaying && (
-          <Text variant="xs" color="mono60">
-            {guessesRemaining} {guessesRemaining === 1 ? "guess" : "guesses"}{" "}
-            left
-          </Text>
-        )}
-      </Flex>
-
-      <HammerPriceGuessGrid
-        puzzle={puzzle}
+      <HammerPriceGuessBoard
         guesses={guesses}
-        currentEntry={currentEntry}
-        isPlaying={isPlaying}
+        activeRowIndex={isPlaying ? guesses.length : null}
+        revealingRowIndex={revealingRowIndex}
+        disabled={isRevealing || isOver}
+        onSubmit={handleSubmit}
+        onRevealComplete={handleRevealComplete}
       />
 
       <Legend />
 
-      {isPlaying && (
-        <HammerPriceGuessForm
-          digitCount={puzzle.digitCount}
-          currency={puzzle.currency}
-          value={currentEntry}
-          onChange={setCurrentEntry}
-          onSubmit={handleSubmit}
-        />
-      )}
-
-      {isOver && (
+      {isOver && !isRevealing && (
         <Box>
-          <Text variant="sm" mb={1}>
-            {status === "won"
-              ? `Solved in ${guesses.length} ${guesses.length === 1 ? "guess" : "guesses"}. The realized price was`
-              : "Out of guesses. The realized price was"}{" "}
-            <Text as="span" variant="sm" fontWeight="bold">
-              {formatPrice({
-                price: puzzle.priceRealized,
-                currency: puzzle.currency,
-              })}
-            </Text>
-            .
-          </Text>
-
           <Button
             variant="secondaryBlack"
-            width="100%"
             onClick={() => setIsResultModalOpen(true)}
           >
-            View results
+            <ShareIcon mr={1} />
+            Share results
           </Button>
         </Box>
       )}
@@ -162,6 +155,13 @@ export const HammerPriceGamePanel: React.FC<
 const Legend: React.FC = () => {
   return (
     <Flex gap={2} flexWrap="wrap">
+      <Tooltip
+        content={`Enter your guess in US dollars — all ${HAMMER_PRICE_DIGIT_COUNT} digits, leading zeroes included. Press Enter to submit.`}
+      >
+        <Box as="span" position="relative" top="1px">
+          <HelpIcon ml={0.5} />
+        </Box>
+      </Tooltip>
       <LegendItem color="green100" label="Correct digit" />
       <LegendItem color="yellow100" label="Within 2" />
       <LegendItem color="mono10" label="Off by 3 or more" />

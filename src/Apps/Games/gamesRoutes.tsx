@@ -46,6 +46,7 @@ export const gamesRoutes: RouteProps[] = [
   {
     // Today’s puzzle
     path: "/games/hammer-price",
+    layout: "ContainerOnly",
     getComponent: () => HammerPriceApp,
     onPreloadJS: () => {
       HammerPriceApp.preload()
@@ -73,6 +74,7 @@ export const gamesRoutes: RouteProps[] = [
   {
     // Browse available puzzles
     path: "/games/hammer-price/puzzles",
+    layout: "ContainerOnly",
     getComponent: () => HammerPriceIndexApp,
     onPreloadJS: () => {
       HammerPriceIndexApp.preload()
@@ -82,6 +84,7 @@ export const gamesRoutes: RouteProps[] = [
     // A specific puzzle by slug; also how players return to a previously
     // started or completed puzzle
     path: "/games/hammer-price/puzzles/:slug",
+    layout: "ContainerOnly",
     getComponent: () => HammerPriceApp,
     onPreloadJS: () => {
       HammerPriceApp.preload()

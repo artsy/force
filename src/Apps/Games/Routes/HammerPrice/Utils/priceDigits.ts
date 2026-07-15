@@ -100,3 +100,35 @@ export interface FormatPriceParams {
 export const formatPrice = ({ price, currency }: FormatPriceParams): string => {
   return `${currencyPrefix(currency)}${price.toLocaleString("en-US")}`
 }
+
+export interface FormatRealizedPriceParams {
+  priceRealizedUSD: number
+  priceRealized: number
+  currency: string
+}
+
+export interface RealizedPriceDisplay {
+  /** The USD figure the player was guessing, e.g. “US$279,563” */
+  usd: string
+  /** The native-currency figure, present only when the sale was not in USD, e.g. “£212,500” */
+  native: string | null
+}
+
+/**
+ * The realized price for the end-of-game reveal. USD is primary (it is what
+ * was guessed); the native price is included only when the sale currency
+ * differs, matching how the auction-result page shows both.
+ */
+export const formatRealizedPrice = ({
+  priceRealizedUSD,
+  priceRealized,
+  currency,
+}: FormatRealizedPriceParams): RealizedPriceDisplay => {
+  return {
+    usd: formatPrice({ price: priceRealizedUSD, currency: "USD" }),
+    native:
+      currency === "USD"
+        ? null
+        : formatPrice({ price: priceRealized, currency }),
+  }
+}

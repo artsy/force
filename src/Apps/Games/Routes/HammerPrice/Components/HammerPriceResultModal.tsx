@@ -1,10 +1,10 @@
-import { Button, ModalDialog, Stack, Text } from "@artsy/palette"
+import { Box, Button, ModalDialog, Stack, Text } from "@artsy/palette"
 import type { SubmittedGuess } from "Apps/Games/Routes/HammerPrice/Hooks/useHammerPriceGame"
 import {
   HAMMER_PRICE_MAX_GUESSES,
   type HammerPricePuzzle,
 } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
-import { formatPrice } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
+import { formatRealizedPrice } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
 import { getPuzzleNumber } from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
 import {
   buildShareText,
@@ -31,6 +31,7 @@ export const HammerPriceResultModal: React.FC<
 
   const won = status === "won"
   const puzzleNumber = getPuzzleNumber({ puzzle })
+  const prices = formatRealizedPrice(puzzle)
 
   const shareText = buildShareText({
     puzzleNumber,
@@ -75,12 +76,15 @@ export const HammerPriceResultModal: React.FC<
           {puzzle.artistName}, <i>{puzzle.title}</i> realized
         </Text>
 
-        <Text variant="xl">
-          {formatPrice({
-            price: puzzle.priceRealized,
-            currency: puzzle.currency,
-          })}
-        </Text>
+        <Box>
+          <Text variant="xl">{prices.usd}</Text>
+
+          {prices.native && (
+            <Text variant="sm" color="mono60">
+              {prices.native} at auction
+            </Text>
+          )}
+        </Box>
 
         <Text
           variant="sm"

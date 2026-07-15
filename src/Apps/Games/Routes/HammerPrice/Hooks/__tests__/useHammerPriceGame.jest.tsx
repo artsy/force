@@ -11,9 +11,9 @@ const PUZZLE: HammerPricePuzzle = {
   slug: "test-puzzle",
   auctionResultId: "123",
   date: "2026-07-14",
+  priceRealizedUSD: 985000,
   priceRealized: 985000,
   currency: "USD",
-  digitCount: 7,
   isActive: true,
   artistName: "Artist",
   title: "Title",
@@ -47,7 +47,7 @@ describe("useHammerPriceGame", () => {
     expect(result.current.status).toBe("notStarted")
     expect(result.current.guesses).toEqual([])
     expect(result.current.guessesRemaining).toBe(6)
-    expect(result.current.targetDigits).toBe("0985000")
+    expect(result.current.targetDigits).toBe("00985000")
   })
 
   it("scores and records a submitted guess", () => {
@@ -58,7 +58,7 @@ describe("useHammerPriceGame", () => {
     )
 
     act(() => {
-      result.current.submitGuess("1985000")
+      result.current.submitGuess("10985000")
     })
 
     expect(result.current.status).toBe("inProgress")
@@ -71,8 +71,9 @@ describe("useHammerPriceGame", () => {
       "exact",
       "exact",
       "exact",
+      "exact",
     ])
-    expect(store.getProgress("hp-test")?.guesses).toEqual(["1985000"])
+    expect(store.getProgress("hp-test")?.guesses).toEqual(["10985000"])
   })
 
   it("rejects incomplete or invalid guesses", () => {
@@ -99,13 +100,13 @@ describe("useHammerPriceGame", () => {
     )
 
     act(() => {
-      result.current.submitGuess("0985000")
+      result.current.submitGuess("00985000")
     })
 
     expect(result.current.status).toBe("won")
 
     act(() => {
-      expect(result.current.submitGuess("1111111")).toBeNull()
+      expect(result.current.submitGuess("11111111")).toBeNull()
     })
 
     expect(result.current.guesses).toHaveLength(1)
@@ -120,7 +121,7 @@ describe("useHammerPriceGame", () => {
 
     Array.from({ length: 6 }).forEach(() => {
       act(() => {
-        result.current.submitGuess("1111111")
+        result.current.submitGuess("11111111")
       })
     })
 
@@ -132,7 +133,7 @@ describe("useHammerPriceGame", () => {
     const store = createInMemoryStore([
       {
         puzzleId: "hp-test",
-        guesses: ["1111111", "0985000"],
+        guesses: ["11111111", "00985000"],
         updatedAt: "2026-07-14T00:00:00.000Z",
       },
     ])
@@ -150,7 +151,7 @@ describe("useHammerPriceGame", () => {
     const store = createInMemoryStore([
       {
         puzzleId: "hp-test",
-        guesses: ["123", "abcdefg", "1111111"],
+        guesses: ["123", "abcdefg", "11111111"],
         updatedAt: "2026-07-14T00:00:00.000Z",
       },
     ])
@@ -160,6 +161,6 @@ describe("useHammerPriceGame", () => {
     )
 
     expect(result.current.guesses).toHaveLength(1)
-    expect(result.current.guesses[0].digits).toBe("1111111")
+    expect(result.current.guesses[0].digits).toBe("11111111")
   })
 })

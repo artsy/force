@@ -8,8 +8,7 @@ import {
   getTodayDateString,
 } from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
 import { MetaTags } from "Components/MetaTags"
-import { RouterLink } from "System/Components/RouterLink"
-import { Analytics } from "System/Contexts/AnalyticsContext"
+import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Hooks/useRouter"
 import type { HammerPriceApp_auctionResult$data } from "__generated__/HammerPriceApp_auctionResult.graphql"
 import { HttpError } from "found"
@@ -46,36 +45,41 @@ const HammerPriceApp: React.FC<
     : "/games/hammer-price"
 
   return (
-    <Analytics contextPageOwnerId={auctionResult.internalID}>
+    <>
       <MetaTags
         title={`Hammer Price #${puzzleNumber} | Artsy`}
         description="Guess the hammer price of a real auction result, digit by digit, in six tries. A new puzzle every day."
         pathname={pathname}
       />
 
-      <Box mt={4}>
-        <Text as="h1" variant="xl">
-          Hammer Price
-        </Text>
+      <TopContextBar displayBackArrow href="/games/hammer-price/puzzles">
+        Browse all puzzles
+      </TopContextBar>
 
-        <Text variant="sm" color="mono60">
-          Puzzle #{puzzleNumber} • {formattedPuzzleDate} •{" "}
-          <RouterLink to="/games/hammer-price/puzzles">
-            Browse all puzzles
-          </RouterLink>
-        </Text>
+      <Spacer y={2} />
+
+      <Box pb={12}>
+        <Box as="header" textAlign="center">
+          <Text as="h1" variant="lg">
+            Hammer Price
+          </Text>
+
+          <Text variant="sm-display" color="mono60">
+            Puzzle #{puzzleNumber} / {formattedPuzzleDate}
+          </Text>
+        </Box>
 
         <Spacer y={4} />
 
         <GridColumns gridRowGap={4}>
-          <Column span={5}>
+          <Column span={6}>
             <HammerPriceLotDetails
               auctionResult={auctionResult}
               puzzle={puzzle}
             />
           </Column>
 
-          <Column span={6} start={7}>
+          <Column span={6}>
             <HammerPriceGamePanel
               puzzle={puzzle}
               auctionResultHref={`/auction-result/${auctionResult.internalID}`}
@@ -83,7 +87,7 @@ const HammerPriceApp: React.FC<
           </Column>
         </GridColumns>
       </Box>
-    </Analytics>
+    </>
   )
 }
 

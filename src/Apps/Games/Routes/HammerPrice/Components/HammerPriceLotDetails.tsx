@@ -8,8 +8,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
-import type { HammerPricePuzzle } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import { selectGameSafeLotFields } from "Apps/Games/Routes/HammerPrice/Utils/selectGameSafeLotFields"
+import type { HammerPricePuzzle } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import { RouterLink } from "System/Components/RouterLink"
 import type { HammerPriceLotDetails_auctionResult$key } from "__generated__/HammerPriceLotDetails_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -35,8 +35,6 @@ export const HammerPriceLotDetails: React.FC<
     overrides.artistName ?? data.artist?.name ?? puzzle.artistName
   const title = overrides.title ?? data.title ?? puzzle.title
   const dateText = overrides.dateText ?? data.dateText
-  const organization = overrides.organization ?? data.organization
-  const formattedSaleDate = overrides.saleDate ?? data.formattedSaleDate
 
   const fields = selectGameSafeLotFields({ lot: data, puzzle })
 
@@ -63,20 +61,20 @@ export const HammerPriceLotDetails: React.FC<
         <AuctionResultImage auctionResult={data} />
       )}
 
+      <Separator my={4} />
+
       <Box mt={2}>
         <Text as="h2" variant={["sm-display", "lg-display"]}>
           {artistName}
 
           <br />
 
-          {title?.trim()}
-          {dateText &&
-            dateText.replace(/\s+/g, "").length > 0 &&
-            `, ${dateText}`}
-        </Text>
-
-        <Text variant="xs" color="mono60">
-          {[formattedSaleDate, organization].filter(Boolean).join(" • ")}
+          <Box as="span" color="mono60">
+            {title?.trim()}
+            {dateText &&
+              dateText.replace(/\s+/g, "").length > 0 &&
+              `, ${dateText}`}
+          </Box>
         </Text>
       </Box>
 
@@ -95,17 +93,17 @@ export const HammerPriceLotDetails: React.FC<
       </Box>
 
       {puzzle.attribution && (
-        <Text variant="xs" color="mono60" mt={2}>
+        <Text
+          variant="xs"
+          color="mono60"
+          mt={2}
+          display="block"
+          as={RouterLink}
+          to={`/auction-result/${data.internalID}`}
+        >
           {puzzle.attribution}
         </Text>
       )}
-
-      <Text variant="xs" color="mono60" mt={1}>
-        <RouterLink to={`/auction-result/${data.internalID}`}>
-          View the full auction record
-        </RouterLink>{" "}
-        — careful, it reveals the answer.
-      </Text>
     </Box>
   )
 }
@@ -126,7 +124,7 @@ const Field: React.FC<React.PropsWithChildren<FieldProps>> = ({
       </Text>
 
       <Text color={value ? "mono100" : "mono60"} variant="xs" textAlign="right">
-        {value || "----"}
+        {value || "—"}
       </Text>
     </Flex>
   )

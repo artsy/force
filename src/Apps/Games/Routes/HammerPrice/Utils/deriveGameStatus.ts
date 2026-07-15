@@ -2,7 +2,7 @@ import {
   HAMMER_PRICE_MAX_GUESSES,
   type HammerPricePuzzle,
 } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
-import { priceToDigits } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
+import { puzzleTargetDigits } from "Apps/Games/Routes/HammerPrice/Utils/puzzleTargetDigits"
 import {
   isWinningFeedback,
   scoreGuess,
@@ -24,10 +24,7 @@ export const deriveGameStatus = ({
     return "notStarted"
   }
 
-  const target = priceToDigits({
-    price: puzzle.priceRealized,
-    digitCount: puzzle.digitCount,
-  })
+  const target = puzzleTargetDigits(puzzle)
 
   const isWon = guesses.some(guess => {
     return isWinningFeedback(scoreGuess({ guess, target }))

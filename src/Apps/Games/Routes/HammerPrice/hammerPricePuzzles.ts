@@ -10,6 +10,22 @@
 
 export const HAMMER_PRICE_MAX_GUESSES = 6
 
+/**
+ * Every puzzle is guessed and displayed at this fixed width, zero-padded on
+ * the left, so the grid always reads as “00,000,000” regardless of the
+ * answer’s magnitude. A price that does not fit is rejected at build time by
+ * priceToDigits.
+ */
+export const HAMMER_PRICE_DIGIT_COUNT = 8
+
+/**
+ * All guesses are made in USD. Auctions happen in many currencies, but a
+ * single guessing currency keeps every puzzle the same width and avoids
+ * asking players to reason about unfamiliar denominations. The sale’s native
+ * price is still shown once the game is over.
+ */
+export const HAMMER_PRICE_GUESS_CURRENCY = "USD"
+
 export interface HammerPricePuzzleOverrides {
   artistName?: string
   title?: string
@@ -32,14 +48,14 @@ export interface HammerPricePuzzle {
   /** YYYY-MM-DD — the day this puzzle is the daily puzzle */
   date: string
   /**
-   * The answer: the realized price as an integer in major units of
-   * `currency`, e.g. 98385000 for US$98,385,000
+   * The answer: the realized price converted to USD, as an integer. This is
+   * what the player guesses.
    */
+  priceRealizedUSD: number
+  /** The realized price in the sale’s native currency, as an integer (for the reveal) */
   priceRealized: number
-  /** ISO 4217 code of the sale currency; guesses are made in this currency */
+  /** ISO 4217 code of the sale’s native currency (for the reveal) */
   currency: string
-  /** Fixed guess width; leading zeroes are allowed and visible */
-  digitCount: number
   isActive: boolean
   /** Display info for browsing and sharing, which render without a GraphQL query */
   artistName: string
@@ -56,9 +72,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "seth-price-vintage-bomber",
     auctionResultId: "41823",
     date: "2026-07-07",
+    priceRealizedUSD: 785000,
     priceRealized: 785000,
     currency: "USD",
-    digitCount: 6,
     isActive: true,
     artistName: "Seth Price",
     title: "Vintage Bomber",
@@ -69,9 +85,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "joseph-kosuth-five-words-in-yellow-neon",
     auctionResultId: "4159662",
     date: "2026-07-08",
+    priceRealizedUSD: 337000,
     priceRealized: 337000,
     currency: "USD",
-    digitCount: 6,
     isActive: true,
     artistName: "Joseph Kosuth",
     title: "Five Words In Yellow Neon",
@@ -82,9 +98,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "imi-knoebel-schief-und-schrag-3",
     auctionResultId: "5410641",
     date: "2026-07-09",
+    priceRealizedUSD: 279563,
     priceRealized: 212500,
     currency: "GBP",
-    digitCount: 6,
     isActive: true,
     artistName: "Imi Knoebel",
     title: "SCHIEF UND SCHRÄG 3",
@@ -95,9 +111,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "robert-morris-untitled-898",
     auctionResultId: "503667",
     date: "2026-07-10",
+    priceRealizedUSD: 300000,
     priceRealized: 300000,
     currency: "USD",
-    digitCount: 6,
     isActive: true,
     artistName: "Robert Morris",
     title: "Untitled",
@@ -108,9 +124,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "daniel-buren-peinture-aux-formes-indefinies",
     auctionResultId: "587153",
     date: "2026-07-11",
+    priceRealizedUSD: 2175000,
     priceRealized: 2175000,
     currency: "USD",
-    digitCount: 7,
     isActive: true,
     artistName: "Daniel Buren",
     title: "Peinture aux formes indéfinies",
@@ -121,9 +137,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "robert-smithson-alogon-number-3",
     auctionResultId: "2614035",
     date: "2026-07-12",
+    priceRealizedUSD: 4297000,
     priceRealized: 4297000,
     currency: "USD",
-    digitCount: 7,
     isActive: true,
     artistName: "Robert Smithson",
     title: "Alogon #3",
@@ -134,9 +150,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "roni-horn-untitled-the-yes-without-the-no",
     auctionResultId: "7231067",
     date: "2026-07-13",
+    priceRealizedUSD: 1804500,
     priceRealized: 1804500,
     currency: "USD",
-    digitCount: 7,
     isActive: true,
     artistName: "Roni Horn",
     title: "Untitled (“The yes without the no.”)",
@@ -147,9 +163,9 @@ export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
     slug: "mark-rothko-no-15-two-greens-and-red-stripe",
     auctionResultId: "7318095",
     date: "2026-07-14",
+    priceRealizedUSD: 98385000,
     priceRealized: 98385000,
     currency: "USD",
-    digitCount: 8,
     isActive: true,
     artistName: "Mark Rothko",
     title: "No. 15 (Two Greens and Red Stripe)",

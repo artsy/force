@@ -1,4 +1,5 @@
 import {
+  HAMMER_PRICE_DIGIT_COUNT,
   HAMMER_PRICE_MAX_GUESSES,
   type HammerPricePuzzle,
 } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
@@ -10,7 +11,7 @@ import {
   type GameProgressStore,
   hammerPriceProgressStore,
 } from "Apps/Games/Routes/HammerPrice/Utils/gameProgressStore"
-import { priceToDigits } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
+import { puzzleTargetDigits } from "Apps/Games/Routes/HammerPrice/Utils/puzzleTargetDigits"
 import {
   type DigitFeedback,
   scoreGuess,
@@ -49,11 +50,8 @@ export const useHammerPriceGame = ({
   const [isRestored, setIsRestored] = useState(false)
 
   const targetDigits = useMemo(() => {
-    return priceToDigits({
-      price: puzzle.priceRealized,
-      digitCount: puzzle.digitCount,
-    })
-  }, [puzzle.priceRealized, puzzle.digitCount])
+    return puzzleTargetDigits(puzzle)
+  }, [puzzle])
 
   // Restore persisted progress after mount (localStorage is unavailable
   // during server-side rendering).
@@ -62,13 +60,13 @@ export const useHammerPriceGame = ({
 
     const restored = (progress?.guesses ?? [])
       .filter(guess => {
-        return guess.length === puzzle.digitCount && /^\d+$/.test(guess)
+        return guess.length === HAMMER_PRICE_DIGIT_COUNT && /^\d+$/.test(guess)
       })
       .slice(0, HAMMER_PRICE_MAX_GUESSES)
 
     setGuesses(restored)
     setIsRestored(true)
-  }, [puzzle.id, puzzle.digitCount, store])
+  }, [puzzle.id, store])
 
   const submittedGuesses: SubmittedGuess[] = useMemo(() => {
     return guesses.map(digits => {
@@ -86,7 +84,7 @@ export const useHammerPriceGame = ({
       return null
     }
 
-    if (digits.length !== puzzle.digitCount || !/^\d+$/.test(digits)) {
+    if (digits.length !== HAMMER_PRICE_DIGIT_COUNT || !/^\d+$/.test(digits)) {
       return null
     }
 

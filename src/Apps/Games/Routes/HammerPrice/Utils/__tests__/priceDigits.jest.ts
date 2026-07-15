@@ -2,6 +2,7 @@ import {
   currencyPrefix,
   formatDigitsWithSeparators,
   formatPrice,
+  formatRealizedPrice,
   hasSeparatorBefore,
   priceToDigits,
 } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
@@ -79,5 +80,27 @@ describe("formatPrice", () => {
       "US$98,385,000",
     )
     expect(formatPrice({ price: 212500, currency: "GBP" })).toBe("£212,500")
+  })
+})
+
+describe("formatRealizedPrice", () => {
+  it("shows only USD when the sale was in USD", () => {
+    expect(
+      formatRealizedPrice({
+        priceRealizedUSD: 98385000,
+        priceRealized: 98385000,
+        currency: "USD",
+      }),
+    ).toEqual({ usd: "US$98,385,000", native: null })
+  })
+
+  it("shows both currencies when the sale was not in USD", () => {
+    expect(
+      formatRealizedPrice({
+        priceRealizedUSD: 279563,
+        priceRealized: 212500,
+        currency: "GBP",
+      }),
+    ).toEqual({ usd: "US$279,563", native: "£212,500" })
   })
 })
