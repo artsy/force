@@ -179,20 +179,24 @@ describe("Order2RespondForm", () => {
     ).toBeInTheDocument()
   })
 
-  it("shows the response-required banner when submitting a counteroffer without an amount", () => {
+  it("shows the amount-too-low banner when submitting a counteroffer without an amount", () => {
     renderWithRelay(defaultResolvers)
 
     fireEvent.click(screen.getByText("Send counteroffer"))
     fireEvent.click(continueButton())
 
-    expect(screen.getByText("Response required")).toBeInTheDocument()
+    expect(screen.getByText("Counteroffer amount too low")).toBeInTheDocument()
+    expect(screen.getByText("Please increase amount")).toBeInTheDocument()
+    expect(screen.queryByText("Response required")).not.toBeInTheDocument()
 
     // Entering an amount clears the banner.
     fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
       target: { value: "500" },
     })
 
-    expect(screen.queryByText("Response required")).not.toBeInTheDocument()
+    expect(
+      screen.queryByText("Counteroffer amount too low"),
+    ).not.toBeInTheDocument()
   })
 
   it("collapses to the completed state after accepting", () => {

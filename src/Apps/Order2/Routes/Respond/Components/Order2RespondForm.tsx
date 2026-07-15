@@ -58,6 +58,9 @@ const RESPONSE_REQUIRED_TITLE = "Response required"
 const RESPONSE_REQUIRED_MESSAGE =
   "Please accept, counter, or decline the gallery’s offer to continue."
 
+const COUNTEROFFER_TOO_LOW_TITLE = "Counteroffer amount too low"
+const COUNTEROFFER_TOO_LOW_MESSAGE = "Please increase amount"
+
 interface CompletedResponse {
   title: string
   detail?: string
@@ -142,6 +145,22 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   // Require a counteroffer amount before continuing.
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
+
+  const getValidationError = () => {
+    if (selectedAction === "COUNTEROFFER" && !isCounterofferValid) {
+      return {
+        title: COUNTEROFFER_TOO_LOW_TITLE,
+        message: COUNTEROFFER_TOO_LOW_MESSAGE,
+        code: "counteroffer_amount_too_low",
+      }
+    }
+
+    return {
+      title: RESPONSE_REQUIRED_TITLE,
+      message: RESPONSE_REQUIRED_MESSAGE,
+      code: "response_required",
+    }
+  }
 
   const handleSelectAction = (value: string) => {
     const action = value as RespondAction
@@ -277,11 +296,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       {hasValidationError && (
         <>
           <CheckoutErrorBanner
-            error={{
-              title: RESPONSE_REQUIRED_TITLE,
-              message: RESPONSE_REQUIRED_MESSAGE,
-              code: "response_required",
-            }}
+            error={getValidationError()}
             checkoutTracking={checkoutTracking}
             analytics={{ flow: "User responding to offer" }}
           />
