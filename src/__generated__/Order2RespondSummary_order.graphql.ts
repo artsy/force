@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8eedc2551d809f00d4318ccae860062e>>
+ * @generated SignedSource<<6141f6e287e186e0c4ad2a30c968948e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,9 +18,15 @@ export type Order2RespondSummary_order$data = {
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
     readonly artwork: {
-      readonly attributionClass: {
-        readonly shortDescription: string | null | undefined;
-      } | null | undefined;
+      readonly images: ReadonlyArray<{
+        readonly resized: {
+          readonly url: string;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly internalID: string;
+    } | null | undefined;
+    readonly artworkOrEditionSet: {
+      readonly __typename: "Artwork";
       readonly dimensions: {
         readonly cm: string | null | undefined;
         readonly in: string | null | undefined;
@@ -29,16 +35,28 @@ export type Order2RespondSummary_order$data = {
         readonly cm: string | null | undefined;
         readonly in: string | null | undefined;
       } | null | undefined;
-      readonly images: ReadonlyArray<{
-        readonly resized: {
-          readonly url: string;
-        } | null | undefined;
-      } | null | undefined> | null | undefined;
-      readonly internalID: string;
       readonly price: string | null | undefined;
+    } | {
+      readonly __typename: "EditionSet";
+      readonly dimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly framedDimensions: {
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
+      readonly price: string | null | undefined;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
     } | null | undefined;
     readonly artworkVersion: {
       readonly artistNames: string | null | undefined;
+      readonly attributionClass: {
+        readonly shortDescription: string | null | undefined;
+      } | null | undefined;
       readonly date: string | null | undefined;
       readonly image: {
         readonly resized: {
@@ -81,6 +99,51 @@ v1 = [
 v2 = [
   {
     "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "in",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "cm",
+    "storageKey": null
+  }
+],
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "dimensions",
+    "plural": false,
+    "selections": (v2/*: any*/),
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "dimensions",
+    "kind": "LinkedField",
+    "name": "framedDimensions",
+    "plural": false,
+    "selections": (v2/*: any*/),
+    "storageKey": null
+  }
+],
+v4 = [
+  {
+    "alias": null,
     "args": [
       {
         "kind": "Literal",
@@ -102,22 +165,6 @@ v2 = [
       }
     ],
     "storageKey": "resized(height:200)"
-  }
-],
-v3 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "in",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "cm",
-    "storageKey": null
   }
 ];
 return {
@@ -163,18 +210,41 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArtworkVersion",
+          "concreteType": null,
           "kind": "LinkedField",
-          "name": "artworkVersion",
+          "name": "artworkOrEditionSet",
           "plural": false,
           "selections": [
             {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "artistNames",
+              "name": "__typename",
               "storageKey": null
             },
+            {
+              "kind": "InlineFragment",
+              "selections": (v3/*: any*/),
+              "type": "Artwork",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": (v3/*: any*/),
+              "type": "EditionSet",
+              "abstractKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworkVersion",
+          "kind": "LinkedField",
+          "name": "artworkVersion",
+          "plural": false,
+          "selections": [
             {
               "alias": null,
               "args": null,
@@ -186,36 +256,14 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "date",
+              "name": "artistNames",
               "storageKey": null
             },
             {
               "alias": null,
               "args": null,
-              "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "image",
-              "plural": false,
-              "selections": (v2/*: any*/),
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "artwork",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
-              "name": "price",
+              "name": "date",
               "storageKey": null
             },
             {
@@ -239,23 +287,25 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "dimensions",
+              "concreteType": "Image",
               "kind": "LinkedField",
-              "name": "dimensions",
+              "name": "image",
               "plural": false,
-              "selections": (v3/*: any*/),
+              "selections": (v4/*: any*/),
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "dimensions",
-              "kind": "LinkedField",
-              "name": "framedDimensions",
-              "plural": false,
-              "selections": (v3/*: any*/),
-              "storageKey": null
-            },
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "artwork",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/),
             {
               "alias": null,
               "args": [
@@ -269,7 +319,7 @@ return {
               "kind": "LinkedField",
               "name": "images",
               "plural": true,
-              "selections": (v2/*: any*/),
+              "selections": (v4/*: any*/),
               "storageKey": "images(includeAll:false)"
             }
           ],
@@ -284,6 +334,6 @@ return {
 };
 })();
 
-(node as any).hash = "14d60c6570544bcb10c71ecd7ca27598";
+(node as any).hash = "434c9f3df03b9328c9a72ece5b2ddccf";
 
 export default node;

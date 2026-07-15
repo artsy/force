@@ -229,7 +229,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   return (
     <RespondCard>
-      <Text variant={["sm", "md"]}>Respond to gallery offer</Text>
+      <Text variant={["sm", "md"]} fontWeight="bold">Respond to gallery offer</Text>
 
       {totalPrice && (
         <>

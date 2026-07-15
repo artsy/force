@@ -13,6 +13,7 @@ import {
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
 import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
+import { extractLineItemArtworkData } from "Apps/Order2/Utils/lineItemArtworkData"
 import { useRouter } from "System/Hooks/useRouter"
 import createLogger from "Utils/logger"
 import type { Order2RespondSummary_order$key } from "__generated__/Order2RespondSummary_order.graphql"
@@ -25,23 +26,6 @@ const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondSummaryProps {
   order: Order2RespondSummary_order$key
-}
-
-const extractLineItemMetadata = (lineItem: any) => {
-  const artworkVersion = lineItem?.artworkVersion
-  const artwork = lineItem?.artwork
-
-  return {
-    artworkInternalID: artwork?.internalID ?? "",
-    artistNames: artworkVersion?.artistNames ?? "",
-    title: artworkVersion?.title ?? "",
-    date: artworkVersion?.date ?? "",
-    price: artwork?.price ?? "",
-    attributionClass: artwork?.attributionClass ?? null,
-    image: artworkVersion?.image ?? artwork?.images?.[0] ?? null,
-    dimensions: artwork?.dimensions ?? null,
-    framedDimensions: artwork?.framedDimensions ?? null,
-  }
 }
 
 export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
@@ -60,7 +44,11 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
+  const lineItem = orderData.lineItems[0]
+  const artworkData = lineItem ? extractLineItemArtworkData(lineItem) : null
+
+  if (!artworkData) return null
+
   const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
     useArtworkDimensions({
       dimensions: artworkData.dimensions,
@@ -210,6 +198,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
         dimensionsLabel,
         imageURL: artworkData.image?.resized?.url,
       }}
+
     >
       {isConfirmationActive && (
         <>
@@ -265,10 +254,38 @@ const FRAGMENT = graphql`
       createdAt
     }
     lineItems {
+      artworkOrEditionSet {
+        __typename
+        ... on Artwork {
+          price
+          dimensions {
+            in
+            cm
+          }
+          framedDimensions {
+            in
+            cm
+          }
+        }
+        ... on EditionSet {
+          price
+          dimensions {
+            in
+            cm
+          }
+          framedDimensions {
+            in
+            cm
+          }
+        }
+      }
       artworkVersion {
-        artistNames
         title
+        artistNames
         date
+        attributionClass {
+          shortDescription
+        }
         image {
           resized(height: 200) {
             url
@@ -277,18 +294,6 @@ const FRAGMENT = graphql`
       }
       artwork {
         internalID
-        price
-        attributionClass {
-          shortDescription
-        }
-        dimensions {
-          in
-          cm
-        }
-        framedDimensions {
-          in
-          cm
-        }
         images(includeAll: false) {
           resized(height: 200) {
             url
