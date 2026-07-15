@@ -5,15 +5,15 @@ import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useC
 import { RouterLink } from "System/Components/RouterLink"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import type {
-  Order2CheckoutPricingBreakdown_order$data,
-  Order2CheckoutPricingBreakdown_order$key,
-} from "__generated__/Order2CheckoutPricingBreakdown_order.graphql"
+  Order2PricingBreakdown_order$data,
+  Order2PricingBreakdown_order$key,
+} from "__generated__/Order2PricingBreakdown_order.graphql"
 import { DateTime } from "luxon"
 import { Fragment } from "react"
 import { graphql, useFragment } from "react-relay"
 
-interface Order2CheckoutPricingBreakdownProps {
-  order: Order2CheckoutPricingBreakdown_order$key
+interface Order2PricingBreakdownProps {
+  order: Order2PricingBreakdown_order$key
   contextModule: ContextModule
   isLoading?: boolean
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
@@ -24,9 +24,7 @@ interface Order2CheckoutPricingBreakdownProps {
 const TAX_CALCULATION_ARTICLE_URL =
   "https://support.artsy.net/s/article/How-are-taxes-and-customs-fees-calculated"
 
-export const Order2CheckoutPricingBreakdown: React.FC<
-  Order2CheckoutPricingBreakdownProps
-> = ({
+export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
   order,
   contextModule,
   isLoading,
@@ -34,8 +32,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
   priceFromPendingOffer = true,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
-  const { mode, pendingOffer, source, buyerState, buyerStateExpiresAt } =
-    orderData
+  const { mode, source, buyerState, buyerStateExpiresAt } = orderData
 
   const isOffer = mode === "OFFER"
   const accountForPartnerOffer = !isOffer && source === "PARTNER_OFFER"
@@ -60,8 +57,10 @@ export const Order2CheckoutPricingBreakdown: React.FC<
   })
 
   const pricingBreakdownLines =
-    priceFromPendingOffer && isOffer && pendingOffer?.pricingBreakdownLines
-      ? pendingOffer.pricingBreakdownLines
+    priceFromPendingOffer &&
+    isOffer &&
+    orderData.pendingOffer?.pricingBreakdownLines
+      ? orderData.pendingOffer.pricingBreakdownLines
       : orderData.pricingBreakdownLines
 
   return (
@@ -179,7 +178,7 @@ export const Order2CheckoutPricingBreakdown: React.FC<
 }
 
 const FRAGMENT = graphql`
-  fragment Order2CheckoutPricingBreakdown_order on Order {
+  fragment Order2PricingBreakdown_order on Order {
     source
     mode
     buyerState
@@ -269,12 +268,12 @@ const knownLineTypes = [
 ] as const
 
 type KnownLineType = Extract<
-  Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
+  Order2PricingBreakdown_order$data["pricingBreakdownLines"][number],
   { __typename: (typeof knownLineTypes)[number] }
 >
 
 const isKnownLineType = (
-  line: Order2CheckoutPricingBreakdown_order$data["pricingBreakdownLines"][number],
+  line: Order2PricingBreakdown_order$data["pricingBreakdownLines"][number],
 ): line is KnownLineType => {
   return !!line && knownLineTypes.includes(line.__typename as any)
 }

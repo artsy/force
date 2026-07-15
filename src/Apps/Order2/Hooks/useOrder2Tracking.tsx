@@ -55,6 +55,7 @@ export const useOrder2Tracking = (
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_type: contextPageOwnerType,
           destination_page_owner_type: OwnerType.articles,
+          // FIXME: Magic string should be a constant
           destination_page_owner_slug: "0TO3b000000UessGAC/buy",
           flow,
         }
@@ -68,6 +69,7 @@ export const useOrder2Tracking = (
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_type: contextPageOwnerType,
           destination_page_owner_type: OwnerType.articles,
+          // FIXME: Magic string should be a constant
           destination_page_owner_slug: "The-Artsy-Guarantee",
         }
 
@@ -81,6 +83,7 @@ export const useOrder2Tracking = (
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_type: contextPageOwnerType,
           destination_page_owner_type: OwnerType.articles,
+          // FIXME: Magic string should be a constant
           destination_page_owner_slug:
             "How-are-taxes-and-customs-fees-calculated",
           flow,
