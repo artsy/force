@@ -51,6 +51,7 @@ import { HttpError } from "found"
 import { artQuizRoutes } from "./Apps/ArtQuiz/artQuizRoutes"
 import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
 import { categoriesRoutes } from "./Apps/Categories/categoriesRoutes"
+import { cityGuideRoutes } from "./Apps/CityGuide/cityGuideRoutes"
 import { contactRoutes } from "./Apps/Contact/contactRoutes"
 import { fairOrganizerRoutes } from "./Apps/FairOrginizer/fairOrganizerRoutes"
 import { notificationsRoutes } from "./Apps/Notifications/notificationsRoutes"
@@ -82,6 +83,7 @@ const ROUTES = buildAppRoutes([
   authenticationRoutes,
   buyerGuaranteeRoutes,
   categoriesRoutes,
+  cityGuideRoutes,
   collectRoutes,
   collectorProfileRoutes,
   contactRoutes,
