@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18feb67552c71e3ab8418c92d658fb00>>
+ * @generated SignedSource<<21d228b3a4be6378d93e798b7bdf45b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,64 +22,11 @@ export type Order2ReviewStep_order$data = {
     readonly display: string | null | undefined;
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
-    readonly artwork: {
-      readonly figures: ReadonlyArray<{
-        readonly __typename: "Image";
-        readonly resized: {
-          readonly url: string;
-        } | null | undefined;
-      } | {
-        // This will never be '%other', but we need some
-        // value in case none of the concrete values match.
-        readonly __typename: "%other";
-      }>;
-      readonly internalID: string;
-    } | null | undefined;
-    readonly artworkOrEditionSet: {
-      readonly __typename: "Artwork";
-      readonly dimensions: {
-        readonly cm: string | null | undefined;
-        readonly in: string | null | undefined;
-      } | null | undefined;
-      readonly framedDimensions: {
-        readonly cm: string | null | undefined;
-        readonly in: string | null | undefined;
-      } | null | undefined;
-      readonly price: string | null | undefined;
-    } | {
-      readonly __typename: "EditionSet";
-      readonly dimensions: {
-        readonly cm: string | null | undefined;
-        readonly in: string | null | undefined;
-      } | null | undefined;
-      readonly framedDimensions: {
-        readonly cm: string | null | undefined;
-        readonly in: string | null | undefined;
-      } | null | undefined;
-      readonly price: string | null | undefined;
-    } | {
-      // This will never be '%other', but we need some
-      // value in case none of the concrete values match.
-      readonly __typename: "%other";
-    } | null | undefined;
-    readonly artworkVersion: {
-      readonly artistNames: string | null | undefined;
-      readonly attributionClass: {
-        readonly shortDescription: string | null | undefined;
-      } | null | undefined;
-      readonly date: string | null | undefined;
-      readonly image: {
-        readonly resized: {
-          readonly url: string;
-        } | null | undefined;
-        readonly url: string | null | undefined;
-      } | null | undefined;
-      readonly title: string | null | undefined;
-    } | null | undefined;
     readonly listPrice: {
       readonly __typename: "Money";
       readonly display: string | null | undefined;
     } | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"useLineItemData_lineItem">;
   } | null | undefined>;
   readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
   readonly pendingOffer: {
@@ -118,89 +65,7 @@ v1 = {
 },
 v2 = [
   (v1/*: any*/)
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v4 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "in",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "cm",
-    "storageKey": null
-  }
-],
-v5 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "price",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "dimensions",
-    "kind": "LinkedField",
-    "name": "dimensions",
-    "plural": false,
-    "selections": (v4/*: any*/),
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "dimensions",
-    "kind": "LinkedField",
-    "name": "framedDimensions",
-    "plural": false,
-    "selections": (v4/*: any*/),
-    "storageKey": null
-  }
-],
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "url",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": [
-    {
-      "kind": "Literal",
-      "name": "height",
-      "value": 138
-    },
-    {
-      "kind": "Literal",
-      "name": "width",
-      "value": 185
-    }
-  ],
-  "concreteType": "ResizedImageUrl",
-  "kind": "LinkedField",
-  "name": "resized",
-  "plural": false,
-  "selections": [
-    (v6/*: any*/)
-  ],
-  "storageKey": "resized(height:138,width:185)"
-};
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -297,135 +162,21 @@ return {
           "name": "listPrice",
           "plural": false,
           "selections": [
-            (v3/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
+              "storageKey": null
+            },
             (v1/*: any*/)
           ],
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "concreteType": null,
-          "kind": "LinkedField",
-          "name": "artworkOrEditionSet",
-          "plural": false,
-          "selections": [
-            (v3/*: any*/),
-            {
-              "kind": "InlineFragment",
-              "selections": (v5/*: any*/),
-              "type": "Artwork",
-              "abstractKey": null
-            },
-            {
-              "kind": "InlineFragment",
-              "selections": (v5/*: any*/),
-              "type": "EditionSet",
-              "abstractKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtworkVersion",
-          "kind": "LinkedField",
-          "name": "artworkVersion",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "title",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "artistNames",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "date",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "AttributionClass",
-              "kind": "LinkedField",
-              "name": "attributionClass",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "shortDescription",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "image",
-              "plural": false,
-              "selections": [
-                (v6/*: any*/),
-                (v7/*: any*/)
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "artwork",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "includeAll",
-                  "value": false
-                }
-              ],
-              "concreteType": null,
-              "kind": "LinkedField",
-              "name": "figures",
-              "plural": true,
-              "selections": [
-                (v3/*: any*/),
-                {
-                  "kind": "InlineFragment",
-                  "selections": [
-                    (v7/*: any*/)
-                  ],
-                  "type": "Image",
-                  "abstractKey": null
-                }
-              ],
-              "storageKey": "figures(includeAll:false)"
-            }
-          ],
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "useLineItemData_lineItem"
         }
       ],
       "storageKey": null
@@ -448,6 +199,6 @@ return {
 };
 })();
 
-(node as any).hash = "6549597a6aaed17cf0b60a05d24e45a7";
+(node as any).hash = "de9dcb7dc7581b6c023e9566a0b1f9ee";
 
 export default node;

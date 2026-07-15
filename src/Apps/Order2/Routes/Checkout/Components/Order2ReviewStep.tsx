@@ -1,7 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
-import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import {
@@ -14,12 +13,10 @@ import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
+import { useLineItemData } from "Apps/Order2/Hooks/useLineItemData"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
-import type {
-  Order2ReviewStep_order$data,
-  Order2ReviewStep_order$key,
-} from "__generated__/Order2ReviewStep_order.graphql"
+import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
 import { DateTime } from "luxon"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -80,12 +77,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   const { showCheckoutErrorModal } = useCheckoutModal()
 
-  const artworkData = extractLineItemMetadata(orderData.lineItems[0]!)
-  const { dimensionsLabelWithoutFrameText: dimensionsLabel } =
-    useArtworkDimensions({
-      dimensions: artworkData.dimensions,
-      framedDimensions: artworkData.framedDimensions,
-    })
+  const artwork = useLineItemData(orderData.lineItems[0]!)
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
@@ -205,16 +197,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
       checkoutTracking={checkoutTracking}
       artworkPath={artworkPath}
       isPricingLoading={isFulfillmentDetailsSaving}
-      artwork={{
-        artworkInternalID: artworkData.artworkInternalID,
-        artistNames: artworkData.artistNames,
-        title: artworkData.title,
-        date: artworkData.date,
-        listPriceDisplay: artworkData.price || "Not publicly listed",
-        attributionClassLabel: artworkData.attributionClass?.shortDescription,
-        dimensionsLabel,
-        imageURL: artworkData.image?.resized?.url,
-      }}
+      artwork={artwork}
       limitedTimeOffer={
         displayLimitedOfferLine && (
           <Text variant="sm" color="blue100" textAlign="left">
@@ -257,43 +240,6 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   )
 }
 
-const extractLineItemMetadata = (
-  lineItem: NonNullable<Order2ReviewStep_order$data["lineItems"][number]>,
-) => {
-  const { artworkVersion, artworkOrEditionSet, artwork } = lineItem
-
-  const isArtworkOrEdition =
-    artworkOrEditionSet &&
-    (artworkOrEditionSet.__typename === "Artwork" ||
-      artworkOrEditionSet.__typename === "EditionSet")
-  const dimensions = isArtworkOrEdition
-    ? artworkOrEditionSet.dimensions
-    : undefined
-  const framedDimensions = isArtworkOrEdition
-    ? artworkOrEditionSet.framedDimensions
-    : undefined
-  const price = isArtworkOrEdition ? artworkOrEditionSet.price : undefined
-  const attributionClass = artworkVersion?.attributionClass
-
-  const fallbackImage =
-    artwork?.figures?.[0]?.__typename === "Image" ? artwork?.figures?.[0] : null
-  const image = artworkVersion?.image?.url
-    ? artworkVersion?.image
-    : fallbackImage
-
-  return {
-    image,
-    title: artworkVersion?.title,
-    artistNames: artworkVersion?.artistNames,
-    date: artworkVersion?.date,
-    price,
-    dimensions,
-    framedDimensions,
-    attributionClass,
-    artworkInternalID: artwork?.internalID,
-  }
-}
-
 const FRAGMENT = graphql`
   fragment Order2ReviewStep_order on Order {
     ...Order2OrderSummary_order
@@ -321,56 +267,7 @@ const FRAGMENT = graphql`
           display
         }
       }
-      artworkOrEditionSet {
-        __typename
-        ... on Artwork {
-          price
-          dimensions {
-            in
-            cm
-          }
-          framedDimensions {
-            in
-            cm
-          }
-        }
-        ... on EditionSet {
-          price
-          dimensions {
-            in
-            cm
-          }
-          framedDimensions {
-            in
-            cm
-          }
-        }
-      }
-      artworkVersion {
-        title
-        artistNames
-        date
-        attributionClass {
-          shortDescription
-        }
-        image {
-          url
-          resized(width: 185, height: 138) {
-            url
-          }
-        }
-      }
-      artwork {
-        internalID
-        figures(includeAll: false) {
-          __typename
-          ... on Image {
-            resized(width: 185, height: 138) {
-              url
-            }
-          }
-        }
-      }
+      ...useLineItemData_lineItem
     }
     pendingOffer {
       internalID
