@@ -104,7 +104,7 @@
     "cookies-js": "1.2.3",
     "csurf": "^1.9.0",
     "date-fns": "^2.30.0",
-    "dd-trace": "2.31.0",
+    "dd-trace": "5.100.0",
     "dotenv": "4.0.0",
     "easy-peasy": "^6.1.0",
     "ejs": "3.1.10",
