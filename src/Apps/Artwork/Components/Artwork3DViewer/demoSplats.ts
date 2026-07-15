@@ -14,6 +14,8 @@
 export const DEMO_SPLATS: Record<string, string> = {
   "jon-allured-mask":
     "https://s3.amazonaws.com/artsy-vanity-files-staging/other/mask.ply",
+  "chris-wolston-plant-chair":
+    "https://s3.amazonaws.com/artsy-vanity-files-staging/other/chair-smaller-sphere-float-cc.ply",
 }
 
 export const has3DAsset = (slug: string): boolean => {
