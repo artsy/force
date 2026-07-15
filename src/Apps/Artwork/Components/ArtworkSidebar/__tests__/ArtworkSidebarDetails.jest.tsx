@@ -244,6 +244,30 @@ describe("ArtworkSidebarDetails", () => {
       expect(screen.queryByText(/Art Basel/)).toBeInTheDocument()
     })
 
+    it("renders showing now info without an end date when the fair is evergreen (no end date)", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          collectorSignals: {
+            primaryLabel: null,
+            runningShow: {
+              name: "Evergreen Fair",
+              href: "/fair/evergreen-fair",
+              startAt: "2021-06-17T00:00:00+00:00",
+              endAt: null,
+            },
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/Showing now/)).toBeInTheDocument()
+      // Note: Date formatting depends on timezone, so we just check that a
+      // single start date is present with no dangling dash or "Invalid Date"
+      expect(screen.queryByText(/Jun \d+$/)).toBeInTheDocument()
+      expect(screen.queryByText(/–/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/Invalid Date/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/Evergreen Fair/)).toBeInTheDocument()
+    })
+
     it("doesn't render showing now info when the artwork is not in a show", () => {
       renderWithRelay({
         Artwork: () => ({
