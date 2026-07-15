@@ -666,6 +666,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         <>
           <CheckoutErrorBanner
             error={error}
+            checkoutTracking={checkoutTracking}
             analytics={{
               flow: "Express checkout",
             }}

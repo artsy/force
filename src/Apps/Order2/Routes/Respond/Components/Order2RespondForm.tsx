@@ -13,8 +13,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ErrorBanner } from "Apps/Order2/Components/ErrorBanner"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
@@ -276,9 +276,15 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
       {hasValidationError && (
         <>
-          <ErrorBanner title={RESPONSE_REQUIRED_TITLE}>
-            {RESPONSE_REQUIRED_MESSAGE}
-          </ErrorBanner>
+          <CheckoutErrorBanner
+            error={{
+              title: RESPONSE_REQUIRED_TITLE,
+              message: RESPONSE_REQUIRED_MESSAGE,
+              code: "response_required",
+            }}
+            checkoutTracking={checkoutTracking}
+            analytics={{ flow: "User responding to offer" }}
+          />
           <Spacer y={2} />
         </>
       )}

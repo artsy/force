@@ -389,6 +389,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
                 <CheckoutErrorBanner
                   ref={errorBannerRef}
                   error={fulfillmentDetailsError}
+                  checkoutTracking={checkoutTracking}
                   analytics={{ flow: "User setting shipping address" }}
                 />
                 <Spacer y={2} />

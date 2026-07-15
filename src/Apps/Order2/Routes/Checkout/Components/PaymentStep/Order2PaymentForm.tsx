@@ -829,6 +829,7 @@ const PaymentFormContent: React.FC<PaymentFormContentProps> = ({
           <CheckoutErrorBanner
             ref={errorBannerRef}
             error={paymentError}
+            checkoutTracking={checkoutTracking}
             analytics={{ flow: "User setting payment" }}
           />
           <Spacer y={4} />

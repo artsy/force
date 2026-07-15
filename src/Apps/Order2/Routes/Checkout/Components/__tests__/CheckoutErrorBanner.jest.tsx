@@ -3,13 +3,7 @@ import { CheckoutErrorBanner } from "../CheckoutErrorBanner"
 
 const mockCheckoutTracking = {
   errorMessageViewed: jest.fn(),
-}
-
-jest.mock("../../Hooks/useCheckoutContext", () => ({
-  useCheckoutContext: () => ({
-    checkoutTracking: mockCheckoutTracking,
-  }),
-}))
+} as any
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -22,14 +16,18 @@ describe("CheckoutErrorBanner", () => {
       message: "This is a test error message",
     }
 
-    render(<CheckoutErrorBanner error={error} />)
+    render(
+      <CheckoutErrorBanner error={error} checkoutTracking={mockCheckoutTracking} />,
+    )
 
     expect(screen.getByText("Test Error")).toBeInTheDocument()
     expect(screen.getByText("This is a test error message")).toBeInTheDocument()
   })
 
   it("renders nothing when error is null", () => {
-    const { container } = render(<CheckoutErrorBanner error={null} />)
+    const { container } = render(
+      <CheckoutErrorBanner error={null} checkoutTracking={mockCheckoutTracking} />,
+    )
 
     expect(container.firstChild).toBeNull()
   })
@@ -45,7 +43,13 @@ describe("CheckoutErrorBanner", () => {
       flow: "User setting payment",
     }
 
-    render(<CheckoutErrorBanner error={error} analytics={analytics} />)
+    render(
+      <CheckoutErrorBanner
+        error={error}
+        checkoutTracking={mockCheckoutTracking}
+        analytics={analytics}
+      />,
+    )
 
     expect(mockCheckoutTracking.errorMessageViewed).toHaveBeenCalledWith({
       error_code: "payment_failed",
@@ -71,7 +75,13 @@ describe("CheckoutErrorBanner", () => {
       flow: "User setting delivery",
     }
 
-    render(<CheckoutErrorBanner error={error} analytics={analytics} />)
+    render(
+      <CheckoutErrorBanner
+        error={error}
+        checkoutTracking={mockCheckoutTracking}
+        analytics={analytics}
+      />,
+    )
 
     expect(mockCheckoutTracking.errorMessageViewed).toHaveBeenCalledWith({
       error_code: "complex_error",
@@ -91,7 +101,13 @@ describe("CheckoutErrorBanner", () => {
       flow: "User setting offer",
     }
 
-    render(<CheckoutErrorBanner error={error} analytics={analytics} />)
+    render(
+      <CheckoutErrorBanner
+        error={error}
+        checkoutTracking={mockCheckoutTracking}
+        analytics={analytics}
+      />,
+    )
 
     expect(mockCheckoutTracking.errorMessageViewed).toHaveBeenCalledWith({
       error_code: "unknown",
@@ -107,7 +123,9 @@ describe("CheckoutErrorBanner", () => {
       message: "This should not be tracked",
     }
 
-    render(<CheckoutErrorBanner error={error} />)
+    render(
+      <CheckoutErrorBanner error={error} checkoutTracking={mockCheckoutTracking} />,
+    )
 
     expect(mockCheckoutTracking.errorMessageViewed).not.toHaveBeenCalled()
   })
