@@ -13,7 +13,7 @@ import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
-import { useLineItemData } from "Apps/Order2/Hooks/useLineItemData"
+import { useOrder2LineItemData } from "Apps/Order2/Hooks/useOrder2LineItemData"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
@@ -77,7 +77,7 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
 
   const { showCheckoutErrorModal } = useCheckoutModal()
 
-  const artwork = useLineItemData(orderData.lineItems[0]!)
+  const artwork = useOrder2LineItemData(orderData.lineItems[0]!)
 
   const stepState = steps?.find(
     step => step.name === CheckoutStepName.CONFIRMATION,
@@ -267,7 +267,7 @@ const FRAGMENT = graphql`
           display
         }
       }
-      ...useLineItemData_lineItem
+      ...useOrder2LineItemData_lineItem
     }
     pendingOffer {
       internalID

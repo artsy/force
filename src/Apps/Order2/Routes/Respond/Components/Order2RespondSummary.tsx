@@ -3,7 +3,7 @@ import { Button, Message, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
-import { useLineItemData } from "Apps/Order2/Hooks/useLineItemData"
+import { useOrder2LineItemData } from "Apps/Order2/Hooks/useOrder2LineItemData"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
 import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
@@ -47,7 +47,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const artwork = useLineItemData(orderData.lineItems[0]!)
+  const artwork = useOrder2LineItemData(orderData.lineItems[0]!)
 
   // The Submit CTA appears once the respond step is completed and the
   // confirmation step becomes active — mirroring the checkout review step.
@@ -228,7 +228,7 @@ const FRAGMENT = graphql`
       internalID
     }
     lineItems {
-      ...useLineItemData_lineItem
+      ...useOrder2LineItemData_lineItem
     }
   }
 `

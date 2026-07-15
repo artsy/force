@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aec51cdc070198d77ec2020d54385ca4>>
+ * @generated SignedSource<<598cffae74a2a17db77dfd162711fc34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,19 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useLineItemDataTestQuery$variables = Record<PropertyKey, never>;
-export type useLineItemDataTestQuery$data = {
+export type useOrder2LineItemDataTestQuery$variables = Record<PropertyKey, never>;
+export type useOrder2LineItemDataTestQuery$data = {
   readonly me: {
     readonly order: {
       readonly lineItems: ReadonlyArray<{
-        readonly " $fragmentSpreads": FragmentRefs<"useLineItemData_lineItem">;
+        readonly " $fragmentSpreads": FragmentRefs<"useOrder2LineItemData_lineItem">;
       } | null | undefined>;
     } | null | undefined;
   } | null | undefined;
 };
-export type useLineItemDataTestQuery = {
-  response: useLineItemDataTestQuery$data;
-  variables: useLineItemDataTestQuery$variables;
+export type useOrder2LineItemDataTestQuery = {
+  response: useOrder2LineItemDataTestQuery$data;
+  variables: useOrder2LineItemDataTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -158,7 +158,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "useLineItemDataTestQuery",
+    "name": "useOrder2LineItemDataTestQuery",
     "selections": [
       {
         "alias": null,
@@ -187,7 +187,7 @@ return {
                   {
                     "args": null,
                     "kind": "FragmentSpread",
-                    "name": "useLineItemData_lineItem"
+                    "name": "useOrder2LineItemData_lineItem"
                   }
                 ],
                 "storageKey": null
@@ -206,7 +206,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "useLineItemDataTestQuery",
+    "name": "useOrder2LineItemDataTestQuery",
     "selections": [
       {
         "alias": null,
@@ -402,7 +402,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2222624062494cf457935c7eae7c719e",
+    "cacheID": "a0eadf00e02fbac8277326b4913edc0e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -490,13 +490,13 @@ return {
         "me.order.lineItems.id": (v10/*: any*/)
       }
     },
-    "name": "useLineItemDataTestQuery",
+    "name": "useOrder2LineItemDataTestQuery",
     "operationKind": "query",
-    "text": "query useLineItemDataTestQuery {\n  me {\n    order(id: \"order-id\") {\n      lineItems {\n        ...useLineItemData_lineItem\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useLineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query useOrder2LineItemDataTestQuery {\n  me {\n    order(id: \"order-id\") {\n      lineItems {\n        ...useOrder2LineItemData_lineItem\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e2b82c9906f88a0024eb74893a3ce545";
+(node as any).hash = "3c5a050d4177edf6da13729f216d2f7c";
 
 export default node;

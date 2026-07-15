@@ -1,7 +1,7 @@
 import type { Order2OrderSummaryArtwork } from "Apps/Order2/Components/Order2OrderSummary"
-import { useLineItemData } from "Apps/Order2/Hooks/useLineItemData"
+import { useOrder2LineItemData } from "Apps/Order2/Hooks/useOrder2LineItemData"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { useLineItemDataTestQuery } from "__generated__/useLineItemDataTestQuery.graphql"
+import type { useOrder2LineItemDataTestQuery } from "__generated__/useOrder2LineItemDataTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
@@ -9,30 +9,32 @@ jest.unmock("react-relay")
 let result: Order2OrderSummaryArtwork | undefined
 
 const TestComponent = (props: any) => {
-  result = useLineItemData(props.me.order.lineItems[0])
+  result = useOrder2LineItemData(props.me.order.lineItems[0])
   return null
 }
 
-const { renderWithRelay } = setupTestWrapperTL<useLineItemDataTestQuery>({
-  Component: TestComponent,
-  query: graphql`
-    query useLineItemDataTestQuery @relay_test_operation {
-      me {
-        order(id: "order-id") {
-          lineItems {
-            ...useLineItemData_lineItem
+const { renderWithRelay } = setupTestWrapperTL<useOrder2LineItemDataTestQuery>(
+  {
+    Component: TestComponent,
+    query: graphql`
+      query useOrder2LineItemDataTestQuery @relay_test_operation {
+        me {
+          order(id: "order-id") {
+            lineItems {
+              ...useOrder2LineItemData_lineItem
+            }
           }
         }
       }
-    }
-  `,
-})
+    `,
+  },
+)
 
 beforeEach(() => {
   result = undefined
 })
 
-describe("useLineItemData", () => {
+describe("useOrder2LineItemData", () => {
   it("sources price and dimensions from the line item's EditionSet, not the parent Artwork", () => {
     renderWithRelay({
       LineItem: () => ({

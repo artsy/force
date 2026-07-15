@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3eeeddf5e89ec65c66da1294ff57dba>>
+ * @generated SignedSource<<6287dbfdd74a018b96ad586180a7f5f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useLineItemData_lineItem$data = {
+export type useOrder2LineItemData_lineItem$data = {
   readonly artwork: {
     readonly figures: ReadonlyArray<{
       readonly __typename: "Image";
@@ -65,11 +65,11 @@ export type useLineItemData_lineItem$data = {
     } | null | undefined;
     readonly title: string | null | undefined;
   } | null | undefined;
-  readonly " $fragmentType": "useLineItemData_lineItem";
+  readonly " $fragmentType": "useOrder2LineItemData_lineItem";
 };
-export type useLineItemData_lineItem$key = {
-  readonly " $data"?: useLineItemData_lineItem$data;
-  readonly " $fragmentSpreads": FragmentRefs<"useLineItemData_lineItem">;
+export type useOrder2LineItemData_lineItem$key = {
+  readonly " $data"?: useOrder2LineItemData_lineItem$data;
+  readonly " $fragmentSpreads": FragmentRefs<"useOrder2LineItemData_lineItem">;
 };
 
 const node: ReaderFragment = (function(){
@@ -159,7 +159,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "useLineItemData_lineItem",
+  "name": "useOrder2LineItemData_lineItem",
   "selections": [
     {
       "alias": null,
@@ -298,6 +298,6 @@ return {
 };
 })();
 
-(node as any).hash = "8921bc34341ef9388de7944c2af3fd79";
+(node as any).hash = "190eae3829041a31350960a00d561018";
 
 export default node;

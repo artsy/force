@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dd61094dcc823b5e0d42da8d76ac4d4>>
+ * @generated SignedSource<<ff1bec33fd98eb858a87a29da7890cd1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type Order2RespondSummary_order$data = {
     readonly internalID: string;
   } | null | undefined;
   readonly lineItems: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"useLineItemData_lineItem">;
+    readonly " $fragmentSpreads": FragmentRefs<"useOrder2LineItemData_lineItem">;
   } | null | undefined>;
   readonly pendingOffer: {
     readonly internalID: string;
@@ -83,7 +83,7 @@ return {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "useLineItemData_lineItem"
+          "name": "useOrder2LineItemData_lineItem"
         }
       ],
       "storageKey": null
@@ -94,6 +94,6 @@ return {
 };
 })();
 
-(node as any).hash = "5deb4434bccd6e7d479953ba26faaf43";
+(node as any).hash = "c4ac1ddbdf32ade735b55708ecb4ef38";
 
 export default node;

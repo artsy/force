@@ -1,10 +1,10 @@
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
 import type { Order2OrderSummaryArtwork } from "Apps/Order2/Components/Order2OrderSummary"
-import type { useLineItemData_lineItem$key } from "__generated__/useLineItemData_lineItem.graphql"
+import type { useOrder2LineItemData_lineItem$key } from "__generated__/useOrder2LineItemData_lineItem.graphql"
 import { graphql, useFragment } from "react-relay"
 
-export const useLineItemData = (
-  lineItem: useLineItemData_lineItem$key,
+export const useOrder2LineItemData = (
+  lineItem: useOrder2LineItemData_lineItem$key,
 ): Order2OrderSummaryArtwork => {
   const { artworkVersion, artworkOrEditionSet, artwork } = useFragment(
     FRAGMENT,
@@ -45,7 +45,7 @@ export const useLineItemData = (
 }
 
 const FRAGMENT = graphql`
-  fragment useLineItemData_lineItem on LineItem {
+  fragment useOrder2LineItemData_lineItem on LineItem {
     artworkOrEditionSet {
       __typename
       ... on Artwork {

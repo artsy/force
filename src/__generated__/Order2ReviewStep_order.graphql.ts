@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21d228b3a4be6378d93e798b7bdf45b1>>
+ * @generated SignedSource<<b90590638314e6b2c591add1381e1496>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type Order2ReviewStep_order$data = {
       readonly __typename: "Money";
       readonly display: string | null | undefined;
     } | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"useLineItemData_lineItem">;
+    readonly " $fragmentSpreads": FragmentRefs<"useOrder2LineItemData_lineItem">;
   } | null | undefined>;
   readonly paymentMethod: OrderPaymentMethodEnum | null | undefined;
   readonly pendingOffer: {
@@ -176,7 +176,7 @@ return {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "useLineItemData_lineItem"
+          "name": "useOrder2LineItemData_lineItem"
         }
       ],
       "storageKey": null
@@ -199,6 +199,6 @@ return {
 };
 })();
 
-(node as any).hash = "de9dcb7dc7581b6c023e9566a0b1f9ee";
+(node as any).hash = "a24a619584d8e89c86b5ce789391d571";
 
 export default node;
