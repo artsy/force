@@ -13,6 +13,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { ErrorBanner } from "Apps/Order2/Components/ErrorBanner"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
@@ -52,6 +53,10 @@ const TRACKING_OPTION_BY_ACTION: Record<
 }
 
 const DECLINE_WARNING = "Declining this offer ends this negotiation."
+
+const RESPONSE_REQUIRED_TITLE = "Response required"
+const RESPONSE_REQUIRED_MESSAGE =
+  "Please accept, counter, or decline the gallery’s offer to continue."
 
 interface CompletedResponse {
   title: string
@@ -107,6 +112,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [hasValidationError, setHasValidationError] = useState(false)
 
   // Pre-fill the input from the buyer’s draft counteroffer (e.g. after a
   // refresh) so they can edit it rather than start from a blank field. Only use
@@ -139,6 +145,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const handleSelectAction = (value: string) => {
     const action = value as RespondAction
+    setHasValidationError(false)
     setRespondAction(action)
 
     const amount = orderData.lastSubmittedOffer?.amount?.major
@@ -156,10 +163,12 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const handleContinueToReview = async () => {
     if (!selectedAction || !isCounterofferValid) {
+      setHasValidationError(true)
       return
     }
 
     checkoutTracking.clickedOrderProgression(ContextModule.ordersCounter)
+    setHasValidationError(false)
 
     // No response is submitted here — every response is submitted from the
     // summary’s Submit CTA. Accept/decline just advance to that step.
@@ -168,7 +177,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       return
     }
 
-    // A counteroffer additionally creates a pending buyer offer (responding to
+    // A counteroffer creates a pending buyer offer (responding to
     // the gallery’s offer) before advancing to the summary’s Submit CTA.
     const respondsToID = orderData.lastSubmittedOffer?.internalID
     if (!respondsToID) {
@@ -265,6 +274,15 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
       <Spacer y={2} />
 
+      {hasValidationError && (
+        <>
+          <ErrorBanner title={RESPONSE_REQUIRED_TITLE}>
+            {RESPONSE_REQUIRED_MESSAGE}
+          </ErrorBanner>
+          <Spacer y={2} />
+        </>
+      )}
+
       <RadioGroup
         onSelect={handleSelectAction}
         defaultValue={selectedAction ?? undefined}
@@ -291,6 +309,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
                       inputMode="numeric"
                       value={counterofferAmount}
                       onChange={event => {
+                        setHasValidationError(false)
                         // Keep digits only.
                         setCounterofferAmount(
                           event.currentTarget.value.replace(/[^\d]/g, ""),
@@ -325,7 +344,6 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
         variant="primaryBlack"
         width="100%"
         loading={isSubmitting}
-        disabled={!selectedAction || !isCounterofferValid}
         onClick={handleContinueToReview}
       >
         Continue to Review

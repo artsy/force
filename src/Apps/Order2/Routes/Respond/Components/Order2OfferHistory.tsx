@@ -68,13 +68,16 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
                 </Box>
                 <Box flex={COLUMNS[2]}>
                   <Text variant={["xs", "sm"]} justifySelf="flex-start">
-                    {offer.amount?.display}
+                    {offer.amount &&
+                      `${offer.amount.currencySymbol}${offer.amount.amount}`}
                   </Text>
                 </Box>
                 <Box flex={COLUMNS[3]} textAlign="right">
                   {/* buyerTotal is undefined for incomplete (original) offers */}
                   <Text variant={["xs", "sm"]}>
-                    {offer.buyerTotal?.display ?? "N/A"}
+                    {offer.buyerTotal
+                      ? `${offer.buyerTotal.currencySymbol}${offer.buyerTotal.amount}`
+                      : "N/A"}
                   </Text>
                 </Box>
               </Flex>
@@ -93,10 +96,12 @@ const FRAGMENT = graphql`
       createdAt(format: "MMMM D, YYYY")
       fromParticipant
       amount {
-        display
+        amount
+        currencySymbol
       }
       buyerTotal {
-        display
+        amount
+        currencySymbol
       }
     }
   }

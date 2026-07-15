@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2813451c4c61c599c5cf45e8bae58d5b>>
+ * @generated SignedSource<<08c6938c5f23b501b691de8dccd38a4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,7 +50,14 @@ v3 = [
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "display",
+    "name": "amount",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencySymbol",
     "storageKey": null
   }
 ],
@@ -247,7 +254,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6a16f530290dea18f9524af5a7c9715a",
+    "cacheID": "d628ef8a4a42e56cc81d98a8207a6154",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -308,9 +315,11 @@ return {
           "type": "Offer"
         },
         "me.order.submittedOffers.amount": (v5/*: any*/),
-        "me.order.submittedOffers.amount.display": (v6/*: any*/),
+        "me.order.submittedOffers.amount.amount": (v6/*: any*/),
+        "me.order.submittedOffers.amount.currencySymbol": (v6/*: any*/),
         "me.order.submittedOffers.buyerTotal": (v5/*: any*/),
-        "me.order.submittedOffers.buyerTotal.display": (v6/*: any*/),
+        "me.order.submittedOffers.buyerTotal.amount": (v6/*: any*/),
+        "me.order.submittedOffers.buyerTotal.currencySymbol": (v6/*: any*/),
         "me.order.submittedOffers.createdAt": (v6/*: any*/),
         "me.order.submittedOffers.fromParticipant": {
           "enumValues": [
@@ -327,7 +336,7 @@ return {
     },
     "name": "Order2OfferHistoryTestQuery",
     "operationKind": "query",
-    "text": "query Order2OfferHistoryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2OfferHistory_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OfferHistory_order on Order {\n  submittedOffers {\n    internalID\n    createdAt(format: \"MMMM D, YYYY\")\n    fromParticipant\n    amount {\n      display\n    }\n    buyerTotal {\n      display\n    }\n    id\n  }\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query Order2OfferHistoryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2OfferHistory_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OfferHistory_order on Order {\n  submittedOffers {\n    internalID\n    createdAt(format: \"MMMM D, YYYY\")\n    fromParticipant\n    amount {\n      amount\n      currencySymbol\n    }\n    buyerTotal {\n      amount\n      currencySymbol\n    }\n    id\n  }\n}\n\nfragment Order2RespondContext_order on Order {\n  internalID\n  source\n  mode\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

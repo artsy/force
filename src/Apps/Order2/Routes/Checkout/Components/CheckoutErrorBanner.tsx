@@ -1,4 +1,4 @@
-import { Message } from "@artsy/palette"
+import { ErrorBanner } from "Apps/Order2/Components/ErrorBanner"
 import { forwardRef, useEffect } from "react"
 import { useCheckoutContext } from "../Hooks/useCheckoutContext"
 
@@ -77,14 +77,9 @@ export const CheckoutErrorBanner = forwardRef<
 
   if (!error) return null
 
-  const title = error.title
-  const message = error.message
-
   return (
-    <div ref={ref} tabIndex={-1} data-error-banner="true" role="alert">
-      <Message variant="error" title={title}>
-        {message}
-      </Message>
-    </div>
+    <ErrorBanner ref={ref} title={error.title}>
+      {error.message}
+    </ErrorBanner>
   )
 })
