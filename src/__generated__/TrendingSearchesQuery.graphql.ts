@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb6e8756411f033af3d40705413cc59f>>
+ * @generated SignedSource<<9266c13577760c5335f04ac2e004e8d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -240,7 +240,7 @@ v16 = {
         {
           "kind": "Literal",
           "name": "height",
-          "value": 230
+          "value": 280
         },
         {
           "kind": "Literal",
@@ -279,7 +279,7 @@ v16 = {
           "storageKey": null
         }
       ],
-      "storageKey": "resized(height:230,version:[\"larger\",\"large\",\"medium\"],width:240)"
+      "storageKey": "resized(height:280,version:[\"larger\",\"large\",\"medium\"],width:240)"
     }
   ],
   "storageKey": null
@@ -525,16 +525,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "61f7c2be5310566766f91d81b92088b6",
+    "cacheID": "d97506b994ffa59de67bc058983510bf",
     "id": null,
     "metadata": {},
     "name": "TrendingSearchesQuery",
     "operationKind": "query",
-    "text": "query TrendingSearchesQuery(\n  $artistIds: [String]\n  $artworkIds: [String]\n) {\n  artists(ids: $artistIds) {\n    internalID\n    slug\n    name\n    href\n    initials\n    coverArtwork {\n      image {\n        cropped(width: 96, height: 96, version: [\"square\", \"small\", \"large\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  artworks(ids: $artworkIds, first: 50, respectParamsOrder: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        title\n        date\n        artistNames\n        saleMessage\n        partner(shallow: true) {\n          name\n          id\n        }\n        image {\n          resized(width: 240, height: 230, version: [\"larger\", \"large\", \"medium\"]) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...SaveButton_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query TrendingSearchesQuery(\n  $artistIds: [String]\n  $artworkIds: [String]\n) {\n  artists(ids: $artistIds) {\n    internalID\n    slug\n    name\n    href\n    initials\n    coverArtwork {\n      image {\n        cropped(width: 96, height: 96, version: [\"square\", \"small\", \"large\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  artworks(ids: $artworkIds, first: 50, respectParamsOrder: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        title\n        date\n        artistNames\n        saleMessage\n        partner(shallow: true) {\n          name\n          id\n        }\n        image {\n          resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...SaveButton_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "39f319951144cc2111505ab123a12152";
+(node as any).hash = "88b2cddbc11d0795e8023d82e1e2dac0";
 
 export default node;

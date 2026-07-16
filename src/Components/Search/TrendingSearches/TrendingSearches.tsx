@@ -102,9 +102,9 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
         </Flex>
       </Flex>
 
-      <Flex flexDirection={["column", "row"]} px={2} pb={2} gap={4}>
+      <Flex flexDirection={["column", "row"]} px={2} pb={2} gap={3}>
         {/* Artists */}
-        <Box width={["auto", 280]} flexShrink={0}>
+        <Box width={["auto", 240]} flexShrink={0}>
           <SectionLabel>Artists</SectionLabel>
 
           {loading
@@ -211,7 +211,7 @@ const ArtistRow: FC<{
   )
 }
 
-const ARTWORK_IMAGE_HEIGHT = 230
+const ARTWORK_IMAGE_HEIGHT = 200
 
 const ArtworkCard: FC<{
   item: TrendingArtwork
@@ -228,7 +228,7 @@ const ArtworkCard: FC<{
   return (
     <Box flex={1} minWidth={0}>
       <RouterLink to={href} onClick={onNavigate} display="block">
-        <Flex height={ARTWORK_IMAGE_HEIGHT} alignItems="flex-end">
+        <Box width="100%" height={ARTWORK_IMAGE_HEIGHT}>
           <Image
             src={image.src}
             srcSet={image.srcSet}
@@ -237,25 +237,30 @@ const ArtworkCard: FC<{
             alt={hydrated.title ?? ""}
             style={{
               display: "block",
-              maxWidth: "100%",
-              maxHeight: "100%",
-              width: "auto",
-              height: "auto",
+              width: "100%",
+              height: "100%",
               objectFit: "contain",
+              objectPosition: "bottom left",
             }}
           />
-        </Flex>
+        </Box>
       </RouterLink>
 
-      <Flex mt={1} alignItems="flex-start" justifyContent="space-between">
+      <Box position="relative" mt={1}>
+        <Box position="absolute" top={0} right={0}>
+          <SaveButtonFragmentContainer
+            artwork={hydrated}
+            contextModule={ContextModule.header}
+          />
+        </Box>
+
         <RouterLink
           to={href}
           onClick={onNavigate}
           display="block"
           textDecoration="none"
-          overflow="hidden"
         >
-          <Text variant="sm-display" overflowEllipsis>
+          <Text variant="sm-display" overflowEllipsis pr={4}>
             {hydrated.artistNames ?? item.artistName}
           </Text>
           <Text variant="xs" color="mono60">
@@ -273,14 +278,7 @@ const ArtworkCard: FC<{
             </Text>
           )}
         </RouterLink>
-
-        <Box flexShrink={0} ml={1}>
-          <SaveButtonFragmentContainer
-            artwork={hydrated}
-            contextModule={ContextModule.header}
-          />
-        </Box>
-      </Flex>
+      </Box>
     </Box>
   )
 }
@@ -379,7 +377,7 @@ const QUERY = graphql`
           image {
             resized(
               width: 240
-              height: 230
+              height: 280
               version: ["larger", "large", "medium"]
             ) {
               src
