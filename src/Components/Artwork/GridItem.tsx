@@ -21,6 +21,8 @@ export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork$data
   contextModule?: AuthContextModule
+  /** Curator's note for this artwork within a marketing collection (edge-level field) */
+  curatorNote?: string | null
   disableRouterLinking?: boolean
   hideSaleInfo?: boolean
   lazyLoad?: boolean
@@ -41,6 +43,7 @@ export const ArtworkGridItem: React.FC<
 > = ({
   artwork,
   contextModule,
+  curatorNote,
   disableRouterLinking,
   hideSaleInfo,
   lazyLoad = true,
@@ -119,6 +122,7 @@ export const ArtworkGridItem: React.FC<
         </Box>
         <Metadata
           artwork={artwork}
+          curatorNote={curatorNote}
           isHovered={isHovered}
           contextModule={contextModule ?? ContextModule.artworkGrid}
           showSaveButton={showSaveButton}

@@ -31,6 +31,15 @@ const MarketingFeaturedArtworksRail: FC<
     return null
   }
 
+  // `note` is an edge-level field on the marketing collection's artworksConnection,
+  // so build a lookup keyed by artwork internalID and thread each note into its card.
+  const curatorNotesByArtworkId: Record<string, string | null> = {}
+  collection.artworksConnection?.edges?.forEach(edge => {
+    if (edge?.node?.internalID && edge?.note) {
+      curatorNotesByArtworkId[edge.node.internalID] = edge.note
+    }
+  })
+
   return (
     <Rail
       title="Featured artworks"
@@ -42,6 +51,7 @@ const MarketingFeaturedArtworksRail: FC<
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               artwork={artwork}
+              curatorNote={curatorNotesByArtworkId[artwork.internalID]}
             />
           )
         })
@@ -72,6 +82,7 @@ export const MarketingFeaturedArtworksRailFragmentContainer =
         marketingCollections(slugs: ["new-this-week"]) {
           artworksConnection(first: 25) {
             edges {
+              note
               node {
                 ...ShelfArtwork_artwork
                 internalID

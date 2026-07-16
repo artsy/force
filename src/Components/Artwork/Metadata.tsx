@@ -15,6 +15,8 @@ export interface MetadataProps
     React.AnchorHTMLAttributes<HTMLAnchorElement> {
   artwork: Metadata_artwork$data
   contextModule?: AuthContextModule
+  /** Curator's note for this artwork within a marketing collection (edge-level field) */
+  curatorNote?: string | null
   disableRouterLinking?: boolean
   hidePartnerName?: boolean
   hideArtistName?: boolean
@@ -31,6 +33,7 @@ export interface MetadataProps
 export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
   artwork,
   contextModule,
+  curatorNote,
   disableRouterLinking,
   hidePartnerName,
   hideArtistName,
@@ -54,6 +57,7 @@ export const Metadata: React.FC<React.PropsWithChildren<MetadataProps>> = ({
       <DetailsFragmentContainer
         includeLinks={false}
         artwork={artwork}
+        curatorNote={curatorNote}
         hideSaleInfo={hideSaleInfo}
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
