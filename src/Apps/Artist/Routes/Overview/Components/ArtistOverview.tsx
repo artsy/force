@@ -1,5 +1,6 @@
 import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import { Stack } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import {
   ArtistSeriesRailPlaceholder,
@@ -20,6 +21,7 @@ import {
   ArtistCareerHighlightsQueryRenderer,
 } from "./ArtistCareerHighlights"
 import { ArtistCurrentShowsRailQueryRenderer } from "./ArtistCurrentShowsRail"
+import { ArtistInstagramRailQueryRenderer } from "./ArtistInstagramRail"
 import { ArtistOverviewEmpty } from "./ArtistOverviewEmpty"
 import { ArtistRelatedArtistsRailQueryRenderer } from "./ArtistRelatedArtistsRail"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "./ArtistRelatedGeneCategories"
@@ -89,6 +91,10 @@ export const ArtistOverview: React.FC<
     Array.isArray(artist.related?.genes?.edges) &&
     artist.related.genes.edges.length > 0
 
+  const isInstagramFeedEnabled = useFlag(
+    "hack16_connect-instagram-feed-artist-pages",
+  )
+
   const trackClickedCV = () => {
     if (!contextPageOwnerId) return
 
@@ -138,6 +144,10 @@ export const ArtistOverview: React.FC<
 
       {hasCurrentShows && (
         <ArtistCurrentShowsRailQueryRenderer id={artist.internalID} />
+      )}
+
+      {isInstagramFeedEnabled && (
+        <ArtistInstagramRailQueryRenderer id={artist.internalID} />
       )}
 
       {hasRelatedArtists && (
