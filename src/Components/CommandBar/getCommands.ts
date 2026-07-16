@@ -82,7 +82,11 @@ const getContextualCommands = ({
       group: "On this page",
       keywords: ["alert", "notify", "search alert"],
       run: () => {
-        actions.navigate("/favorites/alerts")
+        const artistID = pathname.match(ARTIST_PATH)?.[1]
+
+        if (!artistID) return
+
+        actions.navigate(`/artist/${artistID}?createAlert=true`)
       },
     })
   }

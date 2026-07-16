@@ -41,6 +41,7 @@ jest.mock("System/Relay/SystemQueryRenderer", () => ({
 }))
 ;(fetchQuery as jest.Mock).mockImplementation(() => ({
   toPromise: jest.fn().mockResolvedValue({}),
+  subscribe: jest.fn().mockReturnValue({ unsubscribe: jest.fn() }),
 }))
 
 const getWrapper = (props: Props = {}) => {
@@ -98,6 +99,33 @@ describe("ArtistArtworkFilter", () => {
     renderWithRelay()
 
     expect(screen.getByText("Sort: Recommended")).toBeInTheDocument()
+  })
+
+  it("auto-opens the create-alert modal and strips the query param when ?createAlert=true", () => {
+    const replace = jest.fn()
+
+    mockUseRouter.mockReturnValue({
+      match: {
+        params: { artistID: "example-artist" },
+        location: {
+          pathname: "/artist/example-artist",
+          query: { createAlert: "true" },
+        },
+      },
+      router: { replace },
+    })
+
+    const { renderWithRelay } = getWrapper({
+      context: { user: { id: "user-id" } },
+    })
+
+    renderWithRelay()
+
+    expect(screen.getByText("We'll send you alerts for")).toBeInTheDocument()
+    expect(replace).toHaveBeenCalledWith({
+      pathname: "/artist/example-artist",
+      query: {},
+    })
   })
 
   it("renders empty-state filter shell when filtered_artworks is missing", () => {

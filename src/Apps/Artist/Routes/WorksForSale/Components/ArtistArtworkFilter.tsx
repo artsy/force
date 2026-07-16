@@ -11,6 +11,7 @@ import {
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import type { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -20,6 +21,8 @@ import type { ArtistArtworkFilterQueryRendererQuery } from "__generated__/Artist
 import type { ArtistArtworkFilter_artist$data } from "__generated__/ArtistArtworkFilter_artist.graphql"
 import type { Match } from "found"
 import type { FC } from "react"
+import { useEffect, useRef } from "react"
+import { omit } from "lodash"
 import {
   type RelayRefetchProp,
   createRefetchContainer,
@@ -27,6 +30,34 @@ import {
 } from "react-relay"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
 import { ZeroState } from "./ZeroState"
+
+/**
+ * Auto-opens the create-alert modal when the page is loaded with
+ * `?createAlert=true` (used by the command bar, which can't dispatch into
+ * `AlertContext` directly since it's mounted only within this route tree).
+ * Strips the param immediately so refreshing or navigating back doesn't
+ * reopen the modal.
+ */
+const ArtistArtworkFilterAlertAutoOpen: FC = () => {
+  const { dispatch } = useAlertContext()
+  const { match, router } = useRouter()
+  const initialized = useRef(false)
+
+  useEffect(() => {
+    if (!match.location.query.createAlert || initialized.current) return
+
+    dispatch({ type: "SHOW" })
+
+    router.replace({
+      ...match.location,
+      query: omit(match.location.query, "createAlert"),
+    })
+
+    initialized.current = true
+  }, [dispatch, match.location, router])
+
+  return null
+}
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -99,6 +130,8 @@ export const ArtistArtworkFilter: React.FC<
           initialCriteria={{ artistIDs: [artist.internalID] }}
           nodeId={artist.id}
         >
+          <ArtistArtworkFilterAlertAutoOpen />
+
           <ArtworkFilterSavedSearchAlertContextProvider
             entity={savedSearchEntity}
           >

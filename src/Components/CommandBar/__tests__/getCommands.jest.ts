@@ -65,6 +65,25 @@ describe("getCommands", () => {
     expect(ids).not.toContain("save-current-artwork")
   })
 
+  it("navigates to the artist page with a createAlert param instead of the alerts tab", () => {
+    const commands = getCommands({
+      isLoggedIn: true,
+      pathname: "/artist/andy-warhol",
+      query: "",
+      actions,
+    })
+
+    const command = commands.find(command => {
+      return command.id === "create-alert-current-artist"
+    })
+
+    command?.run()
+
+    expect(actions.navigate).toHaveBeenCalledWith(
+      "/artist/andy-warhol?createAlert=true",
+    )
+  })
+
   it("adds the save action on an artwork route", () => {
     const commands = getCommands({
       isLoggedIn: true,
