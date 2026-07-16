@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80aa4ad506594a3544454b7b8ee3d529>>
+ * @generated SignedSource<<f084dbdcd5c72fef5d662b944bcc5d65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,6 +101,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "dateText",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AuctionLotImages",
             "kind": "LinkedField",
             "name": "images",
@@ -190,13 +197,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "dateText",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -275,12 +275,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9dcaaad20280f0e8388df61a54110d6a",
+    "cacheID": "66be52ccbea168afc02c087696d1733d",
     "id": null,
     "metadata": {},
     "name": "gamesRoutes_HammerPriceQuery",
     "operationKind": "query",
-    "text": "query gamesRoutes_HammerPriceQuery(\n  $auctionResultId: String!\n) @cacheable {\n  auctionResult(id: $auctionResultId) @principalField {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  images {\n    larger {\n      url(version: \"larger\")\n    }\n  }\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
+    "text": "query gamesRoutes_HammerPriceQuery(\n  $auctionResultId: String!\n) @cacheable {\n  auctionResult(id: $auctionResultId) @principalField {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  dateText\n  images {\n    larger {\n      url(version: \"larger\")\n    }\n  }\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
   }
 };
 })();

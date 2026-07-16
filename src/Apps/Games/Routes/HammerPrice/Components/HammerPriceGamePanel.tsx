@@ -24,7 +24,7 @@ import { useTracking } from "react-tracking"
 
 export interface HammerPriceGamePanelProps {
   puzzle: HammerPricePuzzle
-  auctionResultHref: string
+  dateText: string | null | undefined
 }
 
 interface PendingCompletion {
@@ -34,7 +34,7 @@ interface PendingCompletion {
 
 export const HammerPriceGamePanel: React.FC<
   React.PropsWithChildren<HammerPriceGamePanelProps>
-> = ({ puzzle, auctionResultHref }) => {
+> = ({ puzzle, dateText }) => {
   const { trackEvent } = useTracking()
 
   const { guesses, status, submitGuess } = useHammerPriceGame({
@@ -130,7 +130,7 @@ export const HammerPriceGamePanel: React.FC<
             onClick={() => setIsResultModalOpen(true)}
           >
             <ShareIcon mr={1} />
-            Share results
+            Share your results
           </Button>
         </Box>
       )}
@@ -142,9 +142,9 @@ export const HammerPriceGamePanel: React.FC<
       {isResultModalOpen && isOver && (
         <HammerPriceResultModal
           puzzle={puzzle}
+          dateText={dateText}
           guesses={guesses}
           status={status}
-          auctionResultHref={auctionResultHref}
           onClose={() => setIsResultModalOpen(false)}
         />
       )}

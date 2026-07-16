@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2582f83c4e4a731f10f7aa8cca5dd39d>>
+ * @generated SignedSource<<5c213b288c2b8292d120c49f84e8bcc7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HammerPriceApp_auctionResult$data = {
+  readonly dateText: string | null | undefined;
   readonly images: {
     readonly larger: {
       readonly url: string | null | undefined;
@@ -36,6 +37,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "dateText",
       "storageKey": null
     },
     {
@@ -83,6 +91,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e6ccf24eb4ddea78fab717f9dc61760c";
+(node as any).hash = "21551631902e5eb2cb1fafd3fdd5c840";
 
 export default node;

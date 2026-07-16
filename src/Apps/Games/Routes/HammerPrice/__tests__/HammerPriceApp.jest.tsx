@@ -154,7 +154,7 @@ describe("HammerPriceApp", () => {
     fireEvent.click(getSubmit())
 
     expect(
-      await screen.findByText("Sold — on your first guess!"),
+      await screen.findByText("Sold, on your first guess!"),
     ).toBeInTheDocument()
     expect(screen.getAllByText("US$1,804,500").length).toBeGreaterThan(0)
   })

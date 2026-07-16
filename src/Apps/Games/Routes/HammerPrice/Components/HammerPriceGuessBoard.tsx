@@ -1,4 +1,4 @@
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import GavelIcon from "@artsy/icons/GavelIcon"
 import { Box, Button, Flex, Stack } from "@artsy/palette"
 import { HammerPriceGuessRow } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceGuessRow"
 import type { SubmittedGuess } from "Apps/Games/Routes/HammerPrice/Hooks/useHammerPriceGame"
@@ -168,7 +168,7 @@ export const HammerPriceGuessBoard: React.FC<
                     disabled={disabled}
                     aria-label="Submit guess"
                   >
-                    <ChevronRightIcon fill="mono0" />
+                    <GavelIcon fill="mono0" />
                   </Button>
                 )}
               </Flex>

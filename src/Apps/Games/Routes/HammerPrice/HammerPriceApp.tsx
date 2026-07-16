@@ -47,6 +47,7 @@ const HammerPriceApp: React.FC<
   const overrides = puzzle.overrides ?? {}
   const artistName = overrides.artistName ?? puzzle.artistName
   const title = overrides.title ?? puzzle.title
+  const dateText = overrides.dateText ?? auctionResult.dateText
   const metaImageURL = overrides.imageUrl ?? auctionResult.images?.larger?.url
 
   return (
@@ -87,10 +88,7 @@ const HammerPriceApp: React.FC<
           </Column>
 
           <Column span={6}>
-            <HammerPriceGamePanel
-              puzzle={puzzle}
-              auctionResultHref={`/auction-result/${auctionResult.internalID}`}
-            />
+            <HammerPriceGamePanel puzzle={puzzle} dateText={dateText} />
           </Column>
         </GridColumns>
       </Box>
@@ -104,6 +102,7 @@ export const HammerPriceAppFragmentContainer = createFragmentContainer(
     auctionResult: graphql`
       fragment HammerPriceApp_auctionResult on AuctionResult {
         internalID
+        dateText
         images {
           larger {
             url(version: "larger")

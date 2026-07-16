@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<765cdb639b557bc107849a263bac44e2>>
+ * @generated SignedSource<<6326175bc479de5f58803edf1f5ec8b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -116,6 +116,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "dateText",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AuctionLotImages",
             "kind": "LinkedField",
             "name": "images",
@@ -205,13 +212,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "dateText",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artist",
@@ -290,7 +290,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8d132917d07edf924929067365296e5d",
+    "cacheID": "911949cf9a2223727943341604111ad9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -346,7 +346,7 @@ return {
     },
     "name": "HammerPriceApp_Test_Query",
     "operationKind": "query",
-    "text": "query HammerPriceApp_Test_Query {\n  auctionResult(id: \"7231067\") {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  images {\n    larger {\n      url(version: \"larger\")\n    }\n  }\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
+    "text": "query HammerPriceApp_Test_Query {\n  auctionResult(id: \"7231067\") {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  dateText\n  images {\n    larger {\n      url(version: \"larger\")\n    }\n  }\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
   }
 };
 })();
