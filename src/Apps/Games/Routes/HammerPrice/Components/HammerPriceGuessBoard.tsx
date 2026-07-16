@@ -5,7 +5,6 @@ import type { SubmittedGuess } from "Apps/Games/Routes/HammerPrice/Hooks/useHamm
 import { formatDigitsWithSeparators } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
 import type { DigitFeedback } from "Apps/Games/Routes/HammerPrice/Utils/scoreGuess"
 import {
-  HAMMER_PRICE_DIGIT_COUNT,
   HAMMER_PRICE_GUESS_CURRENCY,
   HAMMER_PRICE_MAX_GUESSES,
 } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
@@ -13,6 +12,8 @@ import { useEffect, useRef, useState } from "react"
 
 export interface HammerPriceGuessBoardProps {
   guesses: SubmittedGuess[]
+  /** The grid width for this puzzle */
+  digitCount: number
   /** The row currently accepting input, or null when the game is over */
   activeRowIndex: number | null
   /** The row currently playing its flipboard reveal, or -1 when none */
@@ -35,6 +36,7 @@ export const HammerPriceGuessBoard: React.FC<
   React.PropsWithChildren<HammerPriceGuessBoardProps>
 > = ({
   guesses,
+  digitCount,
   activeRowIndex,
   revealingRowIndex,
   disabled,
@@ -45,7 +47,7 @@ export const HammerPriceGuessBoard: React.FC<
   const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const isComplete = currentEntry.length === HAMMER_PRICE_DIGIT_COUNT
+  const isComplete = currentEntry.length === digitCount
 
   // Autofocus the active row on load, and refocus it once it becomes
   // interactive again after a reveal. preventScroll keeps the artwork in view.
@@ -60,7 +62,7 @@ export const HammerPriceGuessBoard: React.FC<
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const digits = event.currentTarget.value
       .replace(/\D/g, "")
-      .slice(0, HAMMER_PRICE_DIGIT_COUNT)
+      .slice(0, digitCount)
 
     setCurrentEntry(digits)
   }
@@ -97,7 +99,7 @@ export const HammerPriceGuessBoard: React.FC<
             return (
               <Box key={index} as="li" style={{ listStyle: "none" }}>
                 <HammerPriceGuessRow
-                  digitCount={HAMMER_PRICE_DIGIT_COUNT}
+                  digitCount={digitCount}
                   currency={HAMMER_PRICE_GUESS_CURRENCY}
                   digits={submitted.digits}
                   feedback={submitted.feedback}
@@ -122,7 +124,7 @@ export const HammerPriceGuessBoard: React.FC<
               >
                 <Box position="relative">
                   <HammerPriceGuessRow
-                    digitCount={HAMMER_PRICE_DIGIT_COUNT}
+                    digitCount={digitCount}
                     currency={HAMMER_PRICE_GUESS_CURRENCY}
                     digits={currentEntry}
                     isActive
@@ -132,7 +134,7 @@ export const HammerPriceGuessBoard: React.FC<
 
                   <input
                     ref={inputRef}
-                    aria-label={`Your guess in US dollars, ${HAMMER_PRICE_DIGIT_COUNT} digits`}
+                    aria-label={`Your guess in US dollars, ${digitCount} digits`}
                     inputMode="numeric"
                     autoComplete="off"
                     spellCheck={false}
@@ -178,7 +180,7 @@ export const HammerPriceGuessBoard: React.FC<
           return (
             <Box key={index} as="li" style={{ listStyle: "none" }}>
               <HammerPriceGuessRow
-                digitCount={HAMMER_PRICE_DIGIT_COUNT}
+                digitCount={digitCount}
                 currency={HAMMER_PRICE_GUESS_CURRENCY}
                 digits=""
                 label={`Guess ${index + 1}, empty`}

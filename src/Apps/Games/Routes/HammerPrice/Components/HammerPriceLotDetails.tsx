@@ -1,22 +1,14 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Join,
-  ResponsiveBox,
-  Separator,
-  Text,
-} from "@artsy/palette"
+import { Box, Flex, Join, Separator, Text } from "@artsy/palette"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
 import { selectGameSafeLotFields } from "Apps/Games/Routes/HammerPrice/Utils/selectGameSafeLotFields"
-import type { HammerPricePuzzle } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import { RouterLink } from "System/Components/RouterLink"
 import type { HammerPriceLotDetails_auctionResult$key } from "__generated__/HammerPriceLotDetails_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
 
+const HAMMER_PRICE_ATTRIBUTION = "Source: Artsy Price Database"
+
 export interface HammerPriceLotDetailsProps {
   auctionResult: HammerPriceLotDetails_auctionResult$key
-  puzzle: HammerPricePuzzle
 }
 
 /**
@@ -26,40 +18,18 @@ export interface HammerPriceLotDetailsProps {
  */
 export const HammerPriceLotDetails: React.FC<
   React.PropsWithChildren<HammerPriceLotDetailsProps>
-> = ({ auctionResult, puzzle }) => {
-  const data = useFragment(hammerPriceLotDetailsFragment, auctionResult)
+> = ({ auctionResult }) => {
+  const data = useFragment(FRAGMENT, auctionResult)
 
-  const overrides = puzzle.overrides ?? {}
+  const artistName = data.artist?.name
+  const title = data.title
+  const dateText = data.dateText
 
-  const artistName =
-    overrides.artistName ?? data.artist?.name ?? puzzle.artistName
-  const title = overrides.title ?? data.title ?? puzzle.title
-  const dateText = overrides.dateText ?? data.dateText
-
-  const fields = selectGameSafeLotFields({ lot: data, puzzle })
+  const fields = selectGameSafeLotFields({ lot: data })
 
   return (
     <Box>
-      {overrides.imageUrl ? (
-        <ResponsiveBox
-          bg="mono10"
-          mx="auto"
-          maxWidth={400}
-          aspectWidth={1}
-          aspectHeight={1}
-        >
-          <Image
-            lazyLoad
-            width="100%"
-            height="100%"
-            src={overrides.imageUrl}
-            alt={title ?? ""}
-            style={{ position: "relative", objectFit: "contain" }}
-          />
-        </ResponsiveBox>
-      ) : (
-        <AuctionResultImage auctionResult={data} />
-      )}
+      <AuctionResultImage auctionResult={data} />
 
       <Separator my={4} />
 
@@ -92,18 +62,16 @@ export const HammerPriceLotDetails: React.FC<
         </Join>
       </Box>
 
-      {puzzle.attribution && (
-        <Text
-          variant="xs"
-          color="mono60"
-          mt={2}
-          display="block"
-          as={RouterLink}
-          to={`/auction-result/${data.internalID}`}
-        >
-          {puzzle.attribution}
-        </Text>
-      )}
+      <Text
+        variant="xs"
+        color="mono60"
+        mt={2}
+        display="block"
+        as={RouterLink}
+        to={`/auction-result/${data.internalID}`}
+      >
+        {HAMMER_PRICE_ATTRIBUTION}
+      </Text>
     </Box>
   )
 }
@@ -130,7 +98,7 @@ const Field: React.FC<React.PropsWithChildren<FieldProps>> = ({
   )
 }
 
-const hammerPriceLotDetailsFragment = graphql`
+const FRAGMENT = graphql`
   fragment HammerPriceLotDetails_auctionResult on AuctionResult {
     internalID
     title
@@ -145,6 +113,7 @@ const hammerPriceLotDetailsFragment = graphql`
     location
     saleTitle
     lotNumber
+    currency
     ...AuctionResultImage_auctionResult
   }
 `

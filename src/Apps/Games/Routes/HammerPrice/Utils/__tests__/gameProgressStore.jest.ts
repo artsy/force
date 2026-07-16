@@ -13,7 +13,7 @@ describe("createLocalStorageGameProgressStore", () => {
 
   it("round-trips progress", () => {
     const progress = {
-      puzzleId: "hp-1",
+      auctionResultId: "hp-1",
       guesses: ["0985000"],
       updatedAt: "2026-07-14T00:00:00.000Z",
     }
@@ -25,13 +25,13 @@ describe("createLocalStorageGameProgressStore", () => {
 
   it("lists progress for its own keys only", () => {
     store.saveProgress({
-      puzzleId: "hp-1",
+      auctionResultId: "hp-1",
       guesses: ["0985000"],
       updatedAt: "2026-07-14T00:00:00.000Z",
     })
 
     store.saveProgress({
-      puzzleId: "hp-2",
+      auctionResultId: "hp-2",
       guesses: [],
       updatedAt: "2026-07-14T00:00:00.000Z",
     })
@@ -43,7 +43,7 @@ describe("createLocalStorageGameProgressStore", () => {
 
   it("clears progress", () => {
     store.saveProgress({
-      puzzleId: "hp-1",
+      auctionResultId: "hp-1",
       guesses: ["0985000"],
       updatedAt: "2026-07-14T00:00:00.000Z",
     })

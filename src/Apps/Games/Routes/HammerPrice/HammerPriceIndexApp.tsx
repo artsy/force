@@ -1,12 +1,13 @@
-import { Box, Flex, Spacer, Stack, Text } from "@artsy/palette"
+import { Box, Flex, SkeletonText, Spacer, Stack, Text } from "@artsy/palette"
 import {
-  type HammerPriceGameStatus,
   deriveGameStatus,
+  type HammerPriceGameStatus,
 } from "Apps/Games/Routes/HammerPrice/Utils/deriveGameStatus"
 import {
   type HammerPriceGameProgress,
   hammerPriceProgressStore,
 } from "Apps/Games/Routes/HammerPrice/Utils/gameProgressStore"
+import { realizedPriceToTargetDigits } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
 import {
   getBrowsablePuzzles,
   getPuzzleNumber,
@@ -18,8 +19,11 @@ import {
 } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import type { HammerPriceIndexAppPuzzleRowQuery } from "__generated__/HammerPriceIndexAppPuzzleRowQuery.graphql"
 import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
+import { graphql } from "react-relay"
 
 export const HammerPriceIndexApp: React.FC = () => {
   const today = getTodayDateString()
@@ -27,16 +31,16 @@ export const HammerPriceIndexApp: React.FC = () => {
 
   // Progress lives in localStorage, so it is only read after mount to keep
   // server and client renders identical.
-  const [progressByPuzzleId, setProgressByPuzzleId] = useState<
+  const [progressByAuctionResultId, setProgressByAuctionResultId] = useState<
     Record<string, HammerPriceGameProgress>
   >({})
 
   useEffect(() => {
     const entries = hammerPriceProgressStore
       .listProgress()
-      .map(progress => [progress.puzzleId, progress] as const)
+      .map(progress => [progress.auctionResultId, progress] as const)
 
-    setProgressByPuzzleId(Object.fromEntries(entries))
+    setProgressByAuctionResultId(Object.fromEntries(entries))
   }, [])
 
   return (
@@ -63,10 +67,10 @@ export const HammerPriceIndexApp: React.FC = () => {
           {puzzles.map(puzzle => {
             return (
               <PuzzleRow
-                key={puzzle.id}
+                key={puzzle.auctionResultId}
                 puzzle={puzzle}
                 isToday={puzzle.date === today}
-                progress={progressByPuzzleId[puzzle.id]}
+                progress={progressByAuctionResultId[puzzle.auctionResultId]}
               />
             )
           })}
@@ -87,16 +91,31 @@ const PuzzleRow: React.FC<React.PropsWithChildren<PuzzleRowProps>> = ({
   isToday,
   progress,
 }) => {
-  const status = deriveGameStatus({
-    puzzle,
-    guesses: progress?.guesses ?? [],
+  const { data, loading, error } =
+    useClientQuery<HammerPriceIndexAppPuzzleRowQuery>({
+      query: PUZZLE_ROW_QUERY,
+      variables: { auctionResultId: puzzle.auctionResultId },
+    })
+
+  const auctionResult = data?.auctionResult
+
+  const puzzleNumber = getPuzzleNumber({
+    auctionResultId: puzzle.auctionResultId,
   })
 
   const formattedDate = DateTime.fromISO(puzzle.date).toFormat("MMM d, yyyy")
 
+  const targetDigits = realizedPriceToTargetDigits(
+    auctionResult?.priceRealized?.centsUSD,
+  )
+
+  const status: HammerPriceGameStatus = targetDigits
+    ? deriveGameStatus({ targetDigits, guesses: progress?.guesses ?? [] })
+    : "notStarted"
+
   return (
     <RouterLink
-      to={`/games/hammer-price/puzzles/${puzzle.slug}`}
+      to={`/games/hammer-price/puzzles/${puzzle.auctionResultId}`}
       textDecoration="none"
       display="block"
     >
@@ -109,14 +128,29 @@ const PuzzleRow: React.FC<React.PropsWithChildren<PuzzleRowProps>> = ({
         gap={2}
       >
         <Box>
-          <Text variant="sm-display">
-            #{getPuzzleNumber({ puzzle })} — {puzzle.artistName}
-          </Text>
+          {loading ? (
+            <>
+              <SkeletonText variant="sm-display">#0 — Artist Name</SkeletonText>
 
-          <Text variant="xs" color="mono60">
-            {puzzle.title} • {formattedDate}
-            {isToday && " • Today’s puzzle"}
-          </Text>
+              <SkeletonText variant="xs">
+                Artwork title • {formattedDate}
+              </SkeletonText>
+            </>
+          ) : (
+            <>
+              <Text variant="sm-display">
+                {puzzleNumber && `#${puzzleNumber} — `}
+                {error || !auctionResult
+                  ? "Unavailable"
+                  : (auctionResult.artist?.name ?? "Unknown artist")}
+              </Text>
+
+              <Text variant="xs" color="mono60">
+                {auctionResult?.title ?? "—"} • {formattedDate}
+                {isToday && " • Today’s puzzle"}
+              </Text>
+            </>
+          )}
         </Box>
 
         <StatusLabel
@@ -167,3 +201,18 @@ const StatusLabel: React.FC<React.PropsWithChildren<StatusLabelProps>> = ({
     </Text>
   )
 }
+
+const PUZZLE_ROW_QUERY = graphql`
+  query HammerPriceIndexAppPuzzleRowQuery($auctionResultId: String!) {
+    auctionResult(id: $auctionResultId) {
+      internalID
+      title
+      artist {
+        name
+      }
+      priceRealized {
+        centsUSD
+      }
+    }
+  }
+`

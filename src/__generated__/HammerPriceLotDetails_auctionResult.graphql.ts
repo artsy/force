@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9161a4c7055d74a925818c148bc1155>>
+ * @generated SignedSource<<36a0311f891a8c5a39452e68e091c9f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type HammerPriceLotDetails_auctionResult$data = {
   readonly artist: {
     readonly name: string | null | undefined;
   } | null | undefined;
+  readonly currency: string | null | undefined;
   readonly dateText: string | null | undefined;
   readonly dimensionText: string | null | undefined;
   readonly formattedSaleDate: string | null | undefined;
@@ -133,6 +134,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currency",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AuctionResultImage_auctionResult"
@@ -142,6 +150,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c0b8ea6baab65addfbcf06ef4b52c697";
+(node as any).hash = "b85f675286ad2c6e97c42fa56f2b2159";
 
 export default node;

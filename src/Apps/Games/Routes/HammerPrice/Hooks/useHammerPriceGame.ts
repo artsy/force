@@ -1,7 +1,6 @@
 import {
   HAMMER_PRICE_DIGIT_COUNT,
   HAMMER_PRICE_MAX_GUESSES,
-  type HammerPricePuzzle,
 } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import {
   deriveGameStatus,
@@ -11,12 +10,14 @@ import {
   type GameProgressStore,
   hammerPriceProgressStore,
 } from "Apps/Games/Routes/HammerPrice/Utils/gameProgressStore"
-import { puzzleTargetDigits } from "Apps/Games/Routes/HammerPrice/Utils/puzzleTargetDigits"
+import { realizedPriceToTargetDigits } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
 import {
   type DigitFeedback,
   scoreGuess,
 } from "Apps/Games/Routes/HammerPrice/Utils/scoreGuess"
+import type { useHammerPriceGame_auctionResult$key } from "__generated__/useHammerPriceGame_auctionResult.graphql"
 import { useEffect, useMemo, useState } from "react"
+import { graphql, useFragment } from "react-relay"
 
 export interface SubmittedGuess {
   digits: string
@@ -24,7 +25,7 @@ export interface SubmittedGuess {
 }
 
 export interface UseHammerPriceGameParams {
-  puzzle: HammerPricePuzzle
+  auctionResult: useHammerPriceGame_auctionResult$key
   store?: GameProgressStore
 }
 
@@ -32,7 +33,11 @@ export interface UseHammerPriceGame {
   guesses: SubmittedGuess[]
   status: HammerPriceGameStatus
   guessesRemaining: number
-  targetDigits: string
+  /** Null when the lot has no realized price to guess (e.g. bought in) */
+  targetDigits: string | null
+  /** The grid width for this puzzle */
+  digitCount: number
+  isPlayable: boolean
   /** True once persisted progress has been restored (client-side only) */
   isRestored: boolean
   /**
@@ -43,32 +48,41 @@ export interface UseHammerPriceGame {
 }
 
 export const useHammerPriceGame = ({
-  puzzle,
+  auctionResult,
   store = hammerPriceProgressStore,
 }: UseHammerPriceGameParams): UseHammerPriceGame => {
+  const data = useFragment(FRAGMENT, auctionResult)
+
   const [guesses, setGuesses] = useState<string[]>([])
   const [isRestored, setIsRestored] = useState(false)
 
   const targetDigits = useMemo(() => {
-    return puzzleTargetDigits(puzzle)
-  }, [puzzle])
+    return realizedPriceToTargetDigits(data.priceRealized?.centsUSD)
+  }, [data.priceRealized?.centsUSD])
+
+  const digitCount = targetDigits?.length ?? HAMMER_PRICE_DIGIT_COUNT
+  const isPlayable = targetDigits !== null
 
   // Restore persisted progress after mount (localStorage is unavailable
   // during server-side rendering).
   useEffect(() => {
-    const progress = store.getProgress(puzzle.id)
+    const progress = store.getProgress(data.internalID)
 
     const restored = (progress?.guesses ?? [])
       .filter(guess => {
-        return guess.length === HAMMER_PRICE_DIGIT_COUNT && /^\d+$/.test(guess)
+        return guess.length === digitCount && /^\d+$/.test(guess)
       })
       .slice(0, HAMMER_PRICE_MAX_GUESSES)
 
     setGuesses(restored)
     setIsRestored(true)
-  }, [puzzle.id, store])
+  }, [data.internalID, digitCount, store])
 
   const submittedGuesses: SubmittedGuess[] = useMemo(() => {
+    if (!targetDigits) {
+      return []
+    }
+
     return guesses.map(digits => {
       return {
         digits,
@@ -77,14 +91,16 @@ export const useHammerPriceGame = ({
     })
   }, [guesses, targetDigits])
 
-  const status = deriveGameStatus({ puzzle, guesses })
+  const status: HammerPriceGameStatus = targetDigits
+    ? deriveGameStatus({ targetDigits, guesses })
+    : "notStarted"
 
   const submitGuess = (digits: string): SubmittedGuess | null => {
-    if (status === "won" || status === "lost") {
+    if (!targetDigits || status === "won" || status === "lost") {
       return null
     }
 
-    if (digits.length !== HAMMER_PRICE_DIGIT_COUNT || !/^\d+$/.test(digits)) {
+    if (digits.length !== digitCount || !/^\d+$/.test(digits)) {
       return null
     }
 
@@ -93,7 +109,7 @@ export const useHammerPriceGame = ({
     setGuesses(next)
 
     store.saveProgress({
-      puzzleId: puzzle.id,
+      auctionResultId: data.internalID,
       guesses: next,
       updatedAt: new Date().toISOString(),
     })
@@ -109,7 +125,18 @@ export const useHammerPriceGame = ({
     status,
     guessesRemaining: HAMMER_PRICE_MAX_GUESSES - guesses.length,
     targetDigits,
+    digitCount,
+    isPlayable,
     isRestored,
     submitGuess,
   }
 }
+
+const FRAGMENT = graphql`
+  fragment useHammerPriceGame_auctionResult on AuctionResult {
+    internalID
+    priceRealized {
+      centsUSD
+    }
+  }
+`

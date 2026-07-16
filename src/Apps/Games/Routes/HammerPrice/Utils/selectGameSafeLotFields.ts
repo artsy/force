@@ -1,14 +1,4 @@
-import type { HammerPricePuzzle } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
-
-export interface GameSafeLot {
-  mediumText: string | null | undefined
-  dimensionText: string | null | undefined
-  formattedSaleDate: string | null | undefined
-  organization: string | null | undefined
-  location: string | null | undefined
-  saleTitle: string | null | undefined
-  lotNumber: string | null | undefined
-}
+import type { HammerPriceLotDetails_auctionResult$data } from "__generated__/HammerPriceLotDetails_auctionResult.graphql"
 
 export interface GameSafeLotField {
   label: string
@@ -16,8 +6,7 @@ export interface GameSafeLotField {
 }
 
 export interface SelectGameSafeLotFieldsParams {
-  lot: GameSafeLot
-  puzzle: HammerPricePuzzle
+  lot: HammerPriceLotDetails_auctionResult$data
 }
 
 const presentable = (value: string | null | undefined): string | null => {
@@ -39,40 +28,22 @@ const presentable = (value: string | null | undefined): string | null => {
  * - `boughtIn` / `isUpcoming` sale-outcome state
  * - `comparableAuctionResults` (each row displays realized prices)
  *
- * These fields are not merely hidden: the game’s GraphQL fragments never
- * request them, so the answer is not present in the page payload either.
- * Puzzle `overrides` from the configuration take precedence over the
- * fetched record.
+ * Note: the lot details never *render* price data, but the page payload does
+ * carry `priceRealized` for scoring and the end-of-game reveal (see
+ * useHammerPriceGame / HammerPriceResultModal) — a determined player can
+ * always read the answer from the network tab.
  */
 export const selectGameSafeLotFields = ({
   lot,
-  puzzle,
 }: SelectGameSafeLotFieldsParams): GameSafeLotField[] => {
-  const overrides = puzzle.overrides ?? {}
-
   return [
-    {
-      label: "Medium",
-      value: presentable(overrides.mediumText ?? lot.mediumText),
-    },
-    {
-      label: "Dimensions",
-      value: presentable(overrides.dimensionText ?? lot.dimensionText),
-    },
-    {
-      label: "Auction house",
-      value: presentable(overrides.organization ?? lot.organization),
-    },
-    {
-      label: "Sale name",
-      value: presentable(overrides.saleTitle ?? lot.saleTitle),
-    },
+    { label: "Medium", value: presentable(lot.mediumText) },
+    { label: "Dimensions", value: presentable(lot.dimensionText) },
+    { label: "Auction house", value: presentable(lot.organization) },
+    { label: "Sale name", value: presentable(lot.saleTitle) },
     { label: "Sale location", value: presentable(lot.location) },
-    {
-      label: "Sale date",
-      value: presentable(overrides.saleDate ?? lot.formattedSaleDate),
-    },
-    { label: "Lot", value: presentable(overrides.lotNumber ?? lot.lotNumber) },
-    { label: "Currency", value: puzzle.currency },
+    { label: "Sale date", value: presentable(lot.formattedSaleDate) },
+    { label: "Lot", value: presentable(lot.lotNumber) },
+    { label: "Currency", value: presentable(lot.currency) },
   ]
 }

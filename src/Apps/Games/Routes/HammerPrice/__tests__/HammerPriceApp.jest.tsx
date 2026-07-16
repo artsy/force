@@ -6,19 +6,7 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
-jest.mock("System/Hooks/useRouter", () => ({
-  useRouter: () => ({
-    match: {
-      params: { slug: "roni-horn-untitled-the-yes-without-the-no" },
-      location: {
-        pathname:
-          "/games/hammer-price/puzzles/roni-horn-untitled-the-yes-without-the-no",
-      },
-    },
-  }),
-}))
-
-// The Roni Horn puzzle: US$1,804,500, padded to the standard 8 digits
+// The Roni Horn lot: US$1,804,500, padded to the standard 8 digits
 const TARGET_DIGITS = "01804500"
 
 const { renderWithRelay } = setupTestWrapperTL<HammerPriceApp_Test_Query>({
@@ -43,6 +31,12 @@ const mockAuctionResult = () => ({
   location: "New York",
   saleTitle: "21st Century Evening Sale",
   lotNumber: "14",
+  currency: "USD",
+  priceRealized: {
+    centsUSD: 180450000,
+    display: "US$1,804,500",
+    displayUSD: "US$1,804,500",
+  },
 })
 
 const getInput = () => {
@@ -87,6 +81,41 @@ describe("HammerPriceApp", () => {
     // Never renders the answer before the game is complete
     expect(screen.queryByText(/1,804,500/)).not.toBeInTheDocument()
     expect(screen.queryByText(/estimate/i)).not.toBeInTheDocument()
+  })
+
+  it("shows the puzzle number for configured puzzles", () => {
+    renderWithRelay({ AuctionResult: mockAuctionResult })
+
+    // 7231067 is the 7th configured puzzle
+    expect(screen.getByText(/Puzzle #7/)).toBeInTheDocument()
+  })
+
+  it("plays ad-hoc auction results without a puzzle number", () => {
+    renderWithRelay({
+      AuctionResult: () => ({
+        ...mockAuctionResult(),
+        internalID: "999999",
+      }),
+    })
+
+    expect(screen.queryByText(/Puzzle #/)).not.toBeInTheDocument()
+    expect(getInput()).toBeInTheDocument()
+  })
+
+  it("shows an unplayable message for lots with no realized price", () => {
+    renderWithRelay({
+      AuctionResult: () => ({
+        ...mockAuctionResult(),
+        priceRealized: { centsUSD: null, display: null, displayUSD: null },
+      }),
+    })
+
+    expect(
+      screen.getByText(/This lot has no realized price to guess/),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole("textbox", { name: /Your guess/ }),
+    ).not.toBeInTheDocument()
   })
 
   it("links the attribution to the full auction record", () => {
@@ -156,7 +185,7 @@ describe("HammerPriceApp", () => {
     expect(
       await screen.findByText("Sold, on your first guess!"),
     ).toBeInTheDocument()
-    expect(screen.getAllByText("US$1,804,500").length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/US\$1,804,500/).length).toBeGreaterThan(0)
   })
 
   it("ends the game and reveals the price after six failed guesses", async () => {
@@ -175,7 +204,7 @@ describe("HammerPriceApp", () => {
     fireEvent.click(getSubmit())
 
     expect(await screen.findByText("Better luck tomorrow")).toBeInTheDocument()
-    expect(screen.getAllByText("US$1,804,500").length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/US\$1,804,500/).length).toBeGreaterThan(0)
 
     expect(
       screen.queryByRole("button", { name: "Submit guess" }),
@@ -198,12 +227,12 @@ describe("HammerPriceApp", () => {
   })
 
   it("shows feedback colors for every restored row, not just the first", async () => {
-    // Two prior guesses for the Roni Horn puzzle (hp-2026-07-13), the second
-    // of which wins — simulates reloading a solved puzzle.
+    // Two prior guesses, the second of which wins — simulates reloading a
+    // solved puzzle.
     localStorage.setItem(
-      "hammerPrice:v1:progress:hp-2026-07-13",
+      "hammerPrice:v1:progress:7231067",
       JSON.stringify({
-        puzzleId: "hp-2026-07-13",
+        auctionResultId: "7231067",
         guesses: ["99999999", TARGET_DIGITS],
         updatedAt: "2026-07-13T00:00:00.000Z",
       }),

@@ -1,8 +1,4 @@
-import {
-  HAMMER_PRICE_MAX_GUESSES,
-  type HammerPricePuzzle,
-} from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
-import { puzzleTargetDigits } from "Apps/Games/Routes/HammerPrice/Utils/puzzleTargetDigits"
+import { HAMMER_PRICE_MAX_GUESSES } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import {
   isWinningFeedback,
   scoreGuess,
@@ -11,23 +7,27 @@ import {
 export type HammerPriceGameStatus = "notStarted" | "inProgress" | "won" | "lost"
 
 export interface DeriveGameStatusParams {
-  puzzle: HammerPricePuzzle
+  /** The fixed-width digit string guesses are scored against */
+  targetDigits: string
   /** Submitted guesses as fixed-width digit strings, in order */
   guesses: string[]
 }
 
 export const deriveGameStatus = ({
-  puzzle,
+  targetDigits,
   guesses,
 }: DeriveGameStatusParams): HammerPriceGameStatus => {
   if (guesses.length === 0) {
     return "notStarted"
   }
 
-  const target = puzzleTargetDigits(puzzle)
-
+  // Guesses come from localStorage; ignore any whose width no longer matches
+  // the target (e.g. the realized price was corrected upstream).
   const isWon = guesses.some(guess => {
-    return isWinningFeedback(scoreGuess({ guess, target }))
+    return (
+      guess.length === targetDigits.length &&
+      isWinningFeedback(scoreGuess({ guess, target: targetDigits }))
+    )
   })
 
   if (isWon) {

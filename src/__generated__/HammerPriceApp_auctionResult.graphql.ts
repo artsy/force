@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c213b288c2b8292d120c49f84e8bcc7>>
+ * @generated SignedSource<<64f78c6e92efdc9c23a70d7f20c2a51a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,8 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HammerPriceApp_auctionResult$data = {
-  readonly dateText: string | null | undefined;
-  readonly images: {
-    readonly larger: {
-      readonly url: string | null | undefined;
-    } | null | undefined;
-  } | null | undefined;
   readonly internalID: string;
-  readonly " $fragmentSpreads": FragmentRefs<"HammerPriceLotDetails_auctionResult">;
+  readonly " $fragmentSpreads": FragmentRefs<"HammerPriceGamePanel_auctionResult" | "HammerPriceLotDetails_auctionResult" | "HammerPriceMeta_auctionResult">;
   readonly " $fragmentType": "HammerPriceApp_auctionResult";
 };
 export type HammerPriceApp_auctionResult$key = {
@@ -40,57 +34,25 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "dateText",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "AuctionLotImages",
-      "kind": "LinkedField",
-      "name": "images",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "larger",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "larger"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"larger\")"
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "HammerPriceMeta_auctionResult"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "HammerPriceLotDetails_auctionResult"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "HammerPriceGamePanel_auctionResult"
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "21551631902e5eb2cb1fafd3fdd5c840";
+(node as any).hash = "f91c97c047ceea03ac78beaf3befc353";
 
 export default node;

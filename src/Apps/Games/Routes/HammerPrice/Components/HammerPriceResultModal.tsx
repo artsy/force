@@ -1,20 +1,19 @@
-import { Box, Button, ModalDialog, Stack, Text } from "@artsy/palette"
+import { Button, ModalDialog, Stack, Text } from "@artsy/palette"
 import type { SubmittedGuess } from "Apps/Games/Routes/HammerPrice/Hooks/useHammerPriceGame"
-import { formatRealizedPrice } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
 import {
   buildShareText,
   feedbackToEmojiRow,
 } from "Apps/Games/Routes/HammerPrice/Utils/shareText"
-import type { HammerPricePuzzle } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import { getENV } from "Utils/getENV"
+import type { HammerPriceResultModal_auctionResult$key } from "__generated__/HammerPriceResultModal_auctionResult.graphql"
 import { useMemo, useState } from "react"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 type ShareTarget = "result" | "resultWithLink"
 
 export interface HammerPriceResultModalProps {
-  puzzle: HammerPricePuzzle
-  dateText: string | null | undefined
+  auctionResult: HammerPriceResultModal_auctionResult$key
   guesses: SubmittedGuess[]
   status: "won" | "lost"
   onClose: () => void
@@ -22,22 +21,29 @@ export interface HammerPriceResultModalProps {
 
 export const HammerPriceResultModal: React.FC<
   React.PropsWithChildren<HammerPriceResultModalProps>
-> = ({ puzzle, dateText, guesses, status, onClose }) => {
+> = ({ auctionResult, guesses, status, onClose }) => {
+  const data = useFragment(FRAGMENT, auctionResult)
+
   const { trackEvent } = useTracking()
   const [copied, setCopied] = useState<ShareTarget | null>(null)
 
   const won = status === "won"
-  const prices = formatRealizedPrice(puzzle)
+
+  const displayUSD = data.priceRealized?.displayUSD
+  const displayNative =
+    data.currency && data.currency !== "USD"
+      ? data.priceRealized?.display
+      : null
 
   const handleShare = (target: ShareTarget) => async () => {
     const includeLink = target === "resultWithLink"
 
     const shareText = buildShareText({
-      artistName: puzzle.artistName,
-      title: puzzle.title,
-      dateText,
+      artistName: data.artist?.name ?? "Unknown artist",
+      title: data.title ?? "Untitled",
+      dateText: data.dateText,
       feedbacks: guesses.map(guess => guess.feedback),
-      url: `${getENV("APP_URL")}/games/hammer-price/puzzles/${puzzle.slug}`,
+      url: `${getENV("APP_URL")}/games/hammer-price/puzzles/${data.internalID}`,
       includeLink,
     })
 
@@ -50,7 +56,7 @@ export const HammerPriceResultModal: React.FC<
       trackEvent({
         action: "copiedHammerPriceShareText",
         context_module: "hammerPrice",
-        puzzle_id: puzzle.id,
+        puzzle_id: data.internalID,
         with_link: includeLink,
       })
     } catch (error) {
@@ -74,9 +80,9 @@ export const HammerPriceResultModal: React.FC<
     <ModalDialog onClose={onClose} title={headline} width={420}>
       <Stack gap={2}>
         <Text variant="sm-display" color="mono60">
-          {puzzle.artistName}, <i>{puzzle.title}</i> realized{" "}
-          <strong>{prices.usd}</strong>
-          {prices.native && <>{prices.native} at auction</>}
+          {data.artist?.name}, <i>{data.title}</i> realized{" "}
+          <strong>{displayUSD}</strong>
+          {displayNative && <> ({displayNative})</>} at auction
         </Text>
 
         <Text
@@ -112,3 +118,19 @@ export const HammerPriceResultModal: React.FC<
     </ModalDialog>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment HammerPriceResultModal_auctionResult on AuctionResult {
+    internalID
+    title
+    dateText
+    currency
+    artist {
+      name
+    }
+    priceRealized {
+      display
+      displayUSD
+    }
+  }
+`

@@ -1,3 +1,5 @@
+import { HAMMER_PRICE_DIGIT_COUNT } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
+
 export interface PriceToDigitsParams {
   price: number
   digitCount: number
@@ -91,44 +93,27 @@ export const currencyPrefix = (currency: string): string => {
   return CURRENCY_PREFIXES[currency] ?? `${currency} `
 }
 
-export interface FormatPriceParams {
-  price: number
-  currency: string
-}
-
-/** Formats an integer price for display, e.g. { price: 212500, currency: "GBP" } → "£212,500" */
-export const formatPrice = ({ price, currency }: FormatPriceParams): string => {
-  return `${currencyPrefix(currency)}${price.toLocaleString("en-US")}`
-}
-
-export interface FormatRealizedPriceParams {
-  priceRealizedUSD: number
-  priceRealized: number
-  currency: string
-}
-
-export interface RealizedPriceDisplay {
-  /** The USD figure the player was guessing, e.g. “US$279,563” */
-  usd: string
-  /** The native-currency figure, present only when the sale was not in USD, e.g. “£212,500” */
-  native: string | null
-}
-
 /**
- * The realized price for the end-of-game reveal. USD is primary (it is what
- * was guessed); the native price is included only when the sale currency
- * differs, matching how the auction-result page shows both.
+ * The fixed-width digit string a puzzle’s guesses are scored against: the
+ * realized price in USD cents (as fetched from Metaphysics), rounded to
+ * whole dollars and zero-padded to at least HAMMER_PRICE_DIGIT_COUNT digits.
+ * Returns null when the lot has no positive realized price (e.g. bought in),
+ * which makes the puzzle unplayable.
  */
-export const formatRealizedPrice = ({
-  priceRealizedUSD,
-  priceRealized,
-  currency,
-}: FormatRealizedPriceParams): RealizedPriceDisplay => {
-  return {
-    usd: formatPrice({ price: priceRealizedUSD, currency: "USD" }),
-    native:
-      currency === "USD"
-        ? null
-        : formatPrice({ price: priceRealized, currency }),
+export const realizedPriceToTargetDigits = (
+  centsUSD: number | null | undefined,
+): string | null => {
+  if (centsUSD == null || !Number.isFinite(centsUSD)) {
+    return null
   }
+
+  const price = Math.round(centsUSD / 100)
+
+  if (price <= 0) {
+    return null
+  }
+
+  const digitCount = Math.max(HAMMER_PRICE_DIGIT_COUNT, String(price).length)
+
+  return priceToDigits({ price, digitCount })
 }

@@ -7,7 +7,8 @@
  */
 
 export interface HammerPriceGameProgress {
-  puzzleId: string
+  /** The auction result the puzzle is played against */
+  auctionResultId: string
   /** Submitted guesses as fixed-width digit strings, in order */
   guesses: string[]
   /** ISO 8601 timestamp of the last update */
@@ -15,10 +16,10 @@ export interface HammerPriceGameProgress {
 }
 
 export interface GameProgressStore {
-  getProgress(puzzleId: string): HammerPriceGameProgress | null
+  getProgress(auctionResultId: string): HammerPriceGameProgress | null
   saveProgress(progress: HammerPriceGameProgress): void
   listProgress(): HammerPriceGameProgress[]
-  clearProgress(puzzleId: string): void
+  clearProgress(auctionResultId: string): void
 }
 
 const DEFAULT_KEY_PREFIX = "hammerPrice:v1:progress:"
@@ -31,7 +32,7 @@ const isValidProgress = (value: unknown): value is HammerPriceGameProgress => {
   const progress = value as Partial<HammerPriceGameProgress>
 
   return (
-    typeof progress.puzzleId === "string" &&
+    typeof progress.auctionResultId === "string" &&
     typeof progress.updatedAt === "string" &&
     Array.isArray(progress.guesses) &&
     progress.guesses.every(guess => typeof guess === "string")
@@ -77,8 +78,8 @@ export const createLocalStorageGameProgressStore = (
   }
 
   return {
-    getProgress: puzzleId => {
-      return read(`${keyPrefix}${puzzleId}`)
+    getProgress: auctionResultId => {
+      return read(`${keyPrefix}${auctionResultId}`)
     },
 
     saveProgress: progress => {
@@ -90,7 +91,7 @@ export const createLocalStorageGameProgressStore = (
 
       try {
         storage.setItem(
-          `${keyPrefix}${progress.puzzleId}`,
+          `${keyPrefix}${progress.auctionResultId}`,
           JSON.stringify(progress),
         )
       } catch {
@@ -117,7 +118,7 @@ export const createLocalStorageGameProgressStore = (
         })
     },
 
-    clearProgress: puzzleId => {
+    clearProgress: auctionResultId => {
       const storage = getStorage()
 
       if (!storage) {
@@ -125,7 +126,7 @@ export const createLocalStorageGameProgressStore = (
       }
 
       try {
-        storage.removeItem(`${keyPrefix}${puzzleId}`)
+        storage.removeItem(`${keyPrefix}${auctionResultId}`)
       } catch {
         // Ignore availability errors
       }

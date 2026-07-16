@@ -1,11 +1,10 @@
 import loadable from "@loadable/component"
 import {
   getDailyPuzzle,
-  getPuzzleBySlug,
   getTodayDateString,
 } from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
 import type { RouteProps } from "System/Router/Route"
-import { HttpError, RedirectException } from "found"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
 const HammerPriceApp = loadable(
@@ -56,19 +55,6 @@ export const gamesRoutes: RouteProps[] = [
 
       return { auctionResultId: puzzle?.auctionResultId ?? "" }
     },
-    render: ({ Component, props }) => {
-      const puzzle = getDailyPuzzle({ today: getTodayDateString() })
-
-      if (!puzzle) {
-        throw new HttpError(404)
-      }
-
-      if (!(Component && props)) {
-        return undefined
-      }
-
-      return <Component {...props} />
-    },
     query: HAMMER_PRICE_QUERY,
   },
   {
@@ -81,31 +67,14 @@ export const gamesRoutes: RouteProps[] = [
     },
   },
   {
-    // A specific puzzle by slug; also how players return to a previously
-    // started or completed puzzle
-    path: "/games/hammer-price/puzzles/:slug",
+    // Any auction result plays as a puzzle — configured or ad-hoc. The param
+    // maps straight onto $auctionResultId; unknown ids 404 automatically via
+    // @principalField error handling.
+    path: "/games/hammer-price/puzzles/:auctionResultId",
     layout: "ContainerOnly",
     getComponent: () => HammerPriceApp,
     onPreloadJS: () => {
       HammerPriceApp.preload()
-    },
-    prepareVariables: ({ slug }) => {
-      const puzzle = getPuzzleBySlug({ slug })
-
-      return { auctionResultId: puzzle?.auctionResultId ?? "" }
-    },
-    render: ({ Component, props, match }) => {
-      const puzzle = getPuzzleBySlug({ slug: match.params.slug })
-
-      if (!puzzle) {
-        throw new HttpError(404)
-      }
-
-      if (!(Component && props)) {
-        return undefined
-      }
-
-      return <Component {...props} />
     },
     query: HAMMER_PRICE_QUERY,
   },

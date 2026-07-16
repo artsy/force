@@ -47,16 +47,21 @@ export const getDailyPuzzle = ({
   return past[past.length - 1] ?? active[0] ?? null
 }
 
-export interface GetPuzzleBySlugParams {
-  slug: string
+export interface GetPuzzleByAuctionResultIdParams {
+  auctionResultId: string
   puzzles?: HammerPricePuzzle[]
 }
 
-export const getPuzzleBySlug = ({
-  slug,
+/** The configured puzzle for an auction result, or null for ad-hoc puzzles */
+export const getPuzzleByAuctionResultId = ({
+  auctionResultId,
   puzzles = HAMMER_PRICE_PUZZLES,
-}: GetPuzzleBySlugParams): HammerPricePuzzle | null => {
-  return getActivePuzzles(puzzles).find(puzzle => puzzle.slug === slug) ?? null
+}: GetPuzzleByAuctionResultIdParams): HammerPricePuzzle | null => {
+  return (
+    getActivePuzzles(puzzles).find(puzzle => {
+      return puzzle.auctionResultId === auctionResultId
+    }) ?? null
+  )
 }
 
 export interface GetBrowsablePuzzlesParams {
@@ -78,14 +83,21 @@ export const getBrowsablePuzzles = ({
 }
 
 export interface GetPuzzleNumberParams {
-  puzzle: HammerPricePuzzle
+  auctionResultId: string
   puzzles?: HammerPricePuzzle[]
 }
 
-/** 1-based puzzle number in chronological order, used for titles and sharing */
+/**
+ * 1-based puzzle number in chronological order, used for titles and sharing.
+ * Null for auction results that aren’t configured puzzles (ad-hoc play).
+ */
 export const getPuzzleNumber = ({
-  puzzle,
+  auctionResultId,
   puzzles = HAMMER_PRICE_PUZZLES,
-}: GetPuzzleNumberParams): number => {
-  return getActivePuzzles(puzzles).findIndex(({ id }) => id === puzzle.id) + 1
+}: GetPuzzleNumberParams): number | null => {
+  const index = getActivePuzzles(puzzles).findIndex(puzzle => {
+    return puzzle.auctionResultId === auctionResultId
+  })
+
+  return index === -1 ? null : index + 1
 }

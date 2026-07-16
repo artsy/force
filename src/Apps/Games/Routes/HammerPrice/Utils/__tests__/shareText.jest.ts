@@ -103,7 +103,7 @@ describe("buildShareText", () => {
       title: "Untitled",
       dateText: "1996",
       feedbacks: [["exact", "close", "miss"]],
-      url: "https://example.com/puzzles/slug",
+      url: "https://example.com/puzzles/503667",
       includeLink: false,
     })
 
