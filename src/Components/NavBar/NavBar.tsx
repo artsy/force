@@ -5,6 +5,7 @@ import PersonIcon from "@artsy/icons/PersonIcon"
 import { Box, Clickable, Flex, Spacer, THEME, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useCommandBar } from "Components/CommandBar/CommandBarContext"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
 import { useNavigationData } from "System/Contexts/NavigationDataContext"
 import { useRouter } from "System/Hooks/useRouter"
@@ -67,6 +68,8 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
   const tracking = useNavBarTracking()
 
   const { router } = useRouter()
+
+  const { open: openCommandBar } = useCommandBar()
 
   // Get navigation data from context (provided by buildAppRoutes query)
   const navigationData = useNavigationData()
@@ -213,6 +216,20 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                     )
                   })}
                 </Text>
+
+                <NavBarItemButton
+                  onClick={openCommandBar}
+                  aria-label="Open command bar"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Text variant="xs" color="mono60">
+                    Search{" "}
+                    <Box as="span" color="mono40">
+                      ⌘K
+                    </Box>
+                  </Text>
+                </NavBarItemButton>
 
                 {isLoggedIn ? (
                   <NavBarLoggedInActionsQueryRenderer />

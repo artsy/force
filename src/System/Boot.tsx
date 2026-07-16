@@ -6,6 +6,7 @@ import {
   useAppPreferences,
 } from "Apps/AppPreferences/useAppPreferences"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
+import { CommandBarProvider } from "Components/CommandBar/CommandBarContext"
 import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
 import { DeveloperBreakpointOverlay } from "Components/DeveloperBreakpointOverlay"
 import { HydrationErrorOverlay } from "Components/HydrationErrorOverlay"
@@ -86,22 +87,24 @@ export const Boot: React.FC<
                       <StickyProvider>
                         <AuthIntentProvider>
                           <AuthDialogProvider>
-                            <DismissibleProvider
-                              userID={props.user?.id}
-                              keys={PROGRESSIVE_ONBOARDING_KEYS}
-                            >
-                              <CookieConsentManager>
-                                <SiftContainer />
-                                <GoogleOneTapContainer />
-                                {isDevelopment && (
-                                  <>
-                                    <DeveloperBreakpointOverlay />
-                                    <HydrationErrorOverlay />
-                                  </>
-                                )}
-                                {children}
-                              </CookieConsentManager>
-                            </DismissibleProvider>
+                            <CommandBarProvider>
+                              <DismissibleProvider
+                                userID={props.user?.id}
+                                keys={PROGRESSIVE_ONBOARDING_KEYS}
+                              >
+                                <CookieConsentManager>
+                                  <SiftContainer />
+                                  <GoogleOneTapContainer />
+                                  {isDevelopment && (
+                                    <>
+                                      <DeveloperBreakpointOverlay />
+                                      <HydrationErrorOverlay />
+                                    </>
+                                  )}
+                                  {children}
+                                </CookieConsentManager>
+                              </DismissibleProvider>
+                            </CommandBarProvider>
                           </AuthDialogProvider>
                         </AuthIntentProvider>
                       </StickyProvider>

@@ -1,3 +1,4 @@
+import { CommandBar } from "Components/CommandBar/CommandBar"
 import { Layout } from "Apps/Components/Layouts"
 import { ContentErrorBoundary } from "System/Components/ContentErrorBoundary"
 import { PageLoadingBar } from "System/Components/PageLoadingBar"
@@ -74,6 +75,7 @@ export const AppShell: React.FC<
           </Layout>
 
           {onboardingComponent}
+          <CommandBar />
         </AnalyticsContextProvider>
       </NavigationHistoryProvider>
     </>
