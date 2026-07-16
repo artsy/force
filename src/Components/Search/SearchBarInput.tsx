@@ -380,7 +380,10 @@ export const SearchBarInput: FC<
           position="absolute"
           top="calc(100% + 8px)"
           left={0}
-          right={0}
+          // Extend the panel past the input to span the nav container's width
+          // (like the mega-menu), rather than being limited to the input width.
+          width="calc(100vw - 120px)"
+          maxWidth={1760}
           zIndex={Z.dropdown}
           bg="mono0"
           border="1px solid"
