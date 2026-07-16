@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab9e506108c75d4d58812c5cfa55b047>>
+ * @generated SignedSource<<765cdb639b557bc107849a263bac44e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,31 +30,36 @@ var v0 = [
   }
 ],
 v1 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "larger"
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -111,6 +116,88 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "AuctionLotImages",
+            "kind": "LinkedField",
+            "name": "images",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "larger",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      (v1/*: any*/)
+                    ],
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"larger\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 400
+                      },
+                      (v1/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 400
+                      }
+                    ],
+                    "concreteType": "ResizedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "resized",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "height",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "width",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "resized(height:400,version:\"larger\",width:400)"
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "title",
             "storageKey": null
@@ -137,7 +224,7 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -196,91 +283,14 @@ return {
             "name": "lotNumber",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "AuctionLotImages",
-            "kind": "LinkedField",
-            "name": "images",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "larger",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 400
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "version",
-                        "value": "larger"
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 400
-                      }
-                    ],
-                    "concreteType": "ResizedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "resized",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "src",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "srcSet",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "height",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "width",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "resized(height:400,version:\"larger\",width:400)"
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "auctionResult(id:\"7231067\")"
       }
     ]
   },
   "params": {
-    "cacheID": "127fb79b0bca31ca6e2249c4926dadeb",
+    "cacheID": "8d132917d07edf924929067365296e5d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -296,12 +306,12 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "auctionResult.artist.id": (v2/*: any*/),
-        "auctionResult.artist.name": (v3/*: any*/),
-        "auctionResult.dateText": (v3/*: any*/),
-        "auctionResult.dimensionText": (v3/*: any*/),
-        "auctionResult.formattedSaleDate": (v3/*: any*/),
-        "auctionResult.id": (v2/*: any*/),
+        "auctionResult.artist.id": (v3/*: any*/),
+        "auctionResult.artist.name": (v4/*: any*/),
+        "auctionResult.dateText": (v4/*: any*/),
+        "auctionResult.dimensionText": (v4/*: any*/),
+        "auctionResult.formattedSaleDate": (v4/*: any*/),
+        "auctionResult.id": (v3/*: any*/),
         "auctionResult.images": {
           "enumValues": null,
           "nullable": true,
@@ -320,22 +330,23 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "auctionResult.images.larger.resized.height": (v4/*: any*/),
-        "auctionResult.images.larger.resized.src": (v5/*: any*/),
-        "auctionResult.images.larger.resized.srcSet": (v5/*: any*/),
-        "auctionResult.images.larger.resized.width": (v4/*: any*/),
-        "auctionResult.internalID": (v2/*: any*/),
-        "auctionResult.location": (v3/*: any*/),
-        "auctionResult.lotNumber": (v3/*: any*/),
-        "auctionResult.mediumText": (v3/*: any*/),
-        "auctionResult.organization": (v3/*: any*/),
-        "auctionResult.saleTitle": (v3/*: any*/),
-        "auctionResult.title": (v3/*: any*/)
+        "auctionResult.images.larger.resized.height": (v5/*: any*/),
+        "auctionResult.images.larger.resized.src": (v6/*: any*/),
+        "auctionResult.images.larger.resized.srcSet": (v6/*: any*/),
+        "auctionResult.images.larger.resized.width": (v5/*: any*/),
+        "auctionResult.images.larger.url": (v4/*: any*/),
+        "auctionResult.internalID": (v3/*: any*/),
+        "auctionResult.location": (v4/*: any*/),
+        "auctionResult.lotNumber": (v4/*: any*/),
+        "auctionResult.mediumText": (v4/*: any*/),
+        "auctionResult.organization": (v4/*: any*/),
+        "auctionResult.saleTitle": (v4/*: any*/),
+        "auctionResult.title": (v4/*: any*/)
       }
     },
     "name": "HammerPriceApp_Test_Query",
     "operationKind": "query",
-    "text": "query HammerPriceApp_Test_Query {\n  auctionResult(id: \"7231067\") {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
+    "text": "query HammerPriceApp_Test_Query {\n  auctionResult(id: \"7231067\") {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  images {\n    larger {\n      url(version: \"larger\")\n    }\n  }\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
   }
 };
 })();

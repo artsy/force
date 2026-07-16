@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbb3a05e2406fc400f5064815b96f3e3>>
+ * @generated SignedSource<<2582f83c4e4a731f10f7aa8cca5dd39d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HammerPriceApp_auctionResult$data = {
+  readonly images: {
+    readonly larger: {
+      readonly url: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"HammerPriceLotDetails_auctionResult">;
   readonly " $fragmentType": "HammerPriceApp_auctionResult";
@@ -34,6 +39,41 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "AuctionLotImages",
+      "kind": "LinkedField",
+      "name": "images",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "larger",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "larger"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:\"larger\")"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "HammerPriceLotDetails_auctionResult"
@@ -43,6 +83,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e98b5c00148ef1a447e968e2c5265a41";
+(node as any).hash = "e6ccf24eb4ddea78fab717f9dc61760c";
 
 export default node;

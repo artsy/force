@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<959d8ca56f62a74d9efc51f626e18337>>
+ * @generated SignedSource<<80aa4ad506594a3544454b7b8ee3d529>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,6 +39,11 @@ v1 = [
   }
 ],
 v2 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "larger"
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -96,6 +101,88 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "AuctionLotImages",
+            "kind": "LinkedField",
+            "name": "images",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "larger",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      (v2/*: any*/)
+                    ],
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"larger\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 400
+                      },
+                      (v2/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 400
+                      }
+                    ],
+                    "concreteType": "ResizedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "resized",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "height",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "width",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "resized(height:400,version:\"larger\",width:400)"
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "title",
             "storageKey": null
@@ -122,7 +209,7 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -181,96 +268,19 @@ return {
             "name": "lotNumber",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "AuctionLotImages",
-            "kind": "LinkedField",
-            "name": "images",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "larger",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 400
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "version",
-                        "value": "larger"
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 400
-                      }
-                    ],
-                    "concreteType": "ResizedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "resized",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "src",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "srcSet",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "height",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "width",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "resized(height:400,version:\"larger\",width:400)"
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "bd01ef5863c8ee2d264c20659f8164b0",
+    "cacheID": "9dcaaad20280f0e8388df61a54110d6a",
     "id": null,
     "metadata": {},
     "name": "gamesRoutes_HammerPriceQuery",
     "operationKind": "query",
-    "text": "query gamesRoutes_HammerPriceQuery(\n  $auctionResultId: String!\n) @cacheable {\n  auctionResult(id: $auctionResultId) @principalField {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
+    "text": "query gamesRoutes_HammerPriceQuery(\n  $auctionResultId: String!\n) @cacheable {\n  auctionResult(id: $auctionResultId) @principalField {\n    ...HammerPriceApp_auctionResult\n    id\n  }\n}\n\nfragment AuctionResultImage_auctionResult on AuctionResult {\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment HammerPriceApp_auctionResult on AuctionResult {\n  internalID\n  images {\n    larger {\n      url(version: \"larger\")\n    }\n  }\n  ...HammerPriceLotDetails_auctionResult\n}\n\nfragment HammerPriceLotDetails_auctionResult on AuctionResult {\n  internalID\n  title\n  dateText\n  artist {\n    name\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  mediumText\n  dimensionText\n  organization\n  location\n  saleTitle\n  lotNumber\n  ...AuctionResultImage_auctionResult\n}\n"
   }
 };
 })();

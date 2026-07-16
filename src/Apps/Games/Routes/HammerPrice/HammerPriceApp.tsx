@@ -44,11 +44,18 @@ const HammerPriceApp: React.FC<
     ? `/games/hammer-price/puzzles/${slug}`
     : "/games/hammer-price"
 
+  const overrides = puzzle.overrides ?? {}
+  const artistName = overrides.artistName ?? puzzle.artistName
+  const title = overrides.title ?? puzzle.title
+  const metaImageURL = overrides.imageUrl ?? auctionResult.images?.larger?.url
+
   return (
     <>
       <MetaTags
-        title={`Hammer Price #${puzzleNumber} | Artsy`}
-        description="Guess the hammer price of a real auction result, digit by digit, in six tries. A new puzzle every day."
+        title={`${artistName}, ${title} | Hammer Price #${puzzleNumber} | Artsy`}
+        socialTitle={`Guess the hammer price: ${artistName}, ${title} | Artsy`}
+        description={`Can you guess what ${artistName}’s “${title}” sold for at auction? Six guesses, a new puzzle every day.`}
+        imageURL={metaImageURL}
         pathname={pathname}
       />
 
@@ -97,6 +104,11 @@ export const HammerPriceAppFragmentContainer = createFragmentContainer(
     auctionResult: graphql`
       fragment HammerPriceApp_auctionResult on AuctionResult {
         internalID
+        images {
+          larger {
+            url(version: "larger")
+          }
+        }
         ...HammerPriceLotDetails_auctionResult
       }
     `,
