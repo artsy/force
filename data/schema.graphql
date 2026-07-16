@@ -4955,6 +4955,50 @@ type ArtworkFilterNode {
   title: String!
 }
 
+type ArtworkFilterSuggestion {
+  """
+  Values the parser rejected as invalid.
+  """
+  dropped: [ArtworkFilterSuggestionDropped!]!
+
+  """
+  True when parsing failed and the query fell back to a plain keyword search.
+  """
+  fellOpen: Boolean
+
+  """
+  Validated hard filters to pass to artworksConnection.
+  """
+  filters: ArtworkFilterSuggestionFilters
+
+  """
+  Leftover 'vibe' text to use as a keyword search.
+  """
+  keyword: String
+}
+
+type ArtworkFilterSuggestionDropped {
+  field: String
+  value: String
+}
+
+type ArtworkFilterSuggestionFilters {
+  acquireable: Boolean
+  artistNationalities: [String]
+  atAuction: Boolean
+  attributionClass: [String]
+  colors: [String]
+  forSale: Boolean
+  framed: Boolean
+  geneIDs: [String]
+  inquireable: Boolean
+  majorPeriods: [String]
+  offerable: Boolean
+  priceRange: String
+  signed: Boolean
+  sizes: [ArtworkSizes]
+}
+
 union ArtworkHighlight = Article | Show
 
 type ArtworkImport implements Node {
@@ -31277,6 +31321,16 @@ type PurchasesEdge {
 }
 
 type Query {
+  """
+  Interpret a natural-language search query into validated artwork filters.
+  """
+  artworkFilterSuggestions(
+    """
+    The natural-language search query.
+    """
+    query: String!
+  ): ArtworkFilterSuggestion
+
   """
   Do not use (only used internally for stitching)
   """

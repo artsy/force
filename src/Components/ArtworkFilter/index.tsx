@@ -27,6 +27,7 @@ import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilt
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
 import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
+import { AskBar } from "Components/ArtworkFilter/ArtworkFilters/AskBar"
 import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
 import {
   ARTWORK_FILTERS_QUICK_FIELDS,
@@ -359,6 +360,10 @@ export const BaseArtworkFilter: React.FC<
           }}
         </Sticky>
 
+        <Spacer y={2} />
+
+        <AskBar total={Number(total)} />
+
         <Spacer y={4} />
 
         <Text variant="sm" fontWeight="bold">
@@ -474,6 +479,10 @@ export const BaseArtworkFilter: React.FC<
             onClose={() => setIsImmersed(false)}
           />
         )}
+
+        <Spacer y={2} />
+
+        <AskBar total={Number(total)} />
 
         <Spacer y={2} />
 
