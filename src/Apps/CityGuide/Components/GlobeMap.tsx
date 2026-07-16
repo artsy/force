@@ -4,11 +4,21 @@ import { Map as MapView, Marker } from "@vis.gl/react-maplibre"
 import maplibregl from "maplibre-gl"
 import type { CityGuidesAppQuery$data } from "__generated__/CityGuidesAppQuery.graphql"
 
+interface PartnerLocation {
+  partnerName: string
+  partnerSlug: string
+  latitude: number
+  longitude: number
+  locationId: string
+}
+
 interface City {
   name: string
+  country: string
   latitude: number
   longitude: number
   galleryCount: number
+  locations: PartnerLocation[]
 }
 
 interface GlobeMapProps {
@@ -97,14 +107,25 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
         const cityKey = `${location.city}, ${location.country}`
         const existing = cityMap.get(cityKey)
 
+        const partnerLocation: PartnerLocation = {
+          partnerName: partner.name || "",
+          partnerSlug: partner.slug || "",
+          latitude: location.coordinates.lat,
+          longitude: location.coordinates.lng,
+          locationId: location.internalID || "",
+        }
+
         if (existing) {
           existing.galleryCount++
+          existing.locations.push(partnerLocation)
         } else {
           cityMap.set(cityKey, {
             name: location.city,
+            country: location.country || "",
             latitude: location.coordinates.lat,
             longitude: location.coordinates.lng,
             galleryCount: 1,
+            locations: [partnerLocation],
           })
         }
       })
