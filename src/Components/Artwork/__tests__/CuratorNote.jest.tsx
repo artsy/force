@@ -33,4 +33,16 @@ describe("CuratorNote", () => {
     // The dialog title is unique to the opened dialog.
     expect(screen.getByText("Curator’s note")).toBeInTheDocument()
   })
+
+  it("shows a Read more cue for long notes but not short ones", () => {
+    const { rerender } = renderComponent("A short note.")
+    expect(screen.queryByText("Read more")).not.toBeInTheDocument()
+
+    rerender(
+      <Theme>
+        <CuratorNote note={"A much longer curator note ".repeat(6)} />
+      </Theme>,
+    )
+    expect(screen.getByText("Read more")).toBeInTheDocument()
+  })
 })

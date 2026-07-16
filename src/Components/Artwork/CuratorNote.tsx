@@ -5,6 +5,12 @@ interface CuratorNoteProps {
   note: string
 }
 
+// The inline badge shows at most 2 lines. Notes longer than this are very likely
+// truncated in the artwork metadata column, so surface a "Read more" cue. A length
+// heuristic keeps this simple and avoids a measuring pass; it's good enough for a
+// fixed-width card.
+const READ_MORE_THRESHOLD = 80
+
 /**
  * Renders a curator's note for an artwork within a marketing collection.
  *
@@ -30,18 +36,31 @@ export const CuratorNote: React.FC<CuratorNoteProps> = ({ note }) => {
     setOpen(true)
   }
 
+  const showReadMore = note.length > READ_MORE_THRESHOLD
+
   return (
     <>
       <Clickable onClick={handleClick} alignSelf="flex-start" textAlign="left">
         <Text
           variant="xs"
           color="mono60"
-          overflowEllipsis
           my="1px"
-          style={{ fontStyle: "italic", whiteSpace: "nowrap" }}
+          style={{
+            fontStyle: "italic",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
         >
           “{note}”
         </Text>
+
+        {showReadMore && (
+          <Text variant="xs" color="blue100" style={{ textDecoration: "underline" }}>
+            Read more
+          </Text>
+        )}
       </Clickable>
 
       {open && (
