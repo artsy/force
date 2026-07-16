@@ -1,8 +1,5 @@
 import loadable from "@loadable/component"
-import {
-  getDailyPuzzle,
-  getTodayDateString,
-} from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
+import { getDefaultPuzzleId } from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
 import type { RouteProps } from "System/Router/Route"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
@@ -43,7 +40,7 @@ export const gamesRoutes: RouteProps[] = [
     },
   },
   {
-    // Today’s puzzle
+    // The default puzzle (first in the list)
     path: "/games/hammer-price",
     layout: "ContainerOnly",
     getComponent: () => HammerPriceApp,
@@ -51,9 +48,7 @@ export const gamesRoutes: RouteProps[] = [
       HammerPriceApp.preload()
     },
     prepareVariables: () => {
-      const puzzle = getDailyPuzzle({ today: getTodayDateString() })
-
-      return { auctionResultId: puzzle?.auctionResultId ?? "" }
+      return { auctionResultId: getDefaultPuzzleId() ?? "" }
     },
     query: HAMMER_PRICE_QUERY,
   },

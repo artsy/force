@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78b6f15155d444ba43f23482f6eae9d6>>
+ * @generated SignedSource<<c41321a1e760c24ea9f254910322908b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,14 @@ export type HammerPriceIndexAppPuzzleRowQuery$data = {
   readonly auctionResult: {
     readonly artist: {
       readonly name: string | null | undefined;
+    } | null | undefined;
+    readonly images: {
+      readonly larger: {
+        readonly cropped: {
+          readonly src: string;
+          readonly srcSet: string;
+        } | null | undefined;
+      } | null | undefined;
     } | null | undefined;
     readonly internalID: string;
     readonly priceRealized: {
@@ -68,6 +76,69 @@ v4 = {
 v5 = {
   "alias": null,
   "args": null,
+  "concreteType": "AuctionLotImages",
+  "kind": "LinkedField",
+  "name": "images",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "larger",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 300
+            },
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "larger"
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 300
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "cropped(height:300,version:\"larger\",width:300)"
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
   "concreteType": "AuctionResultPriceRealized",
   "kind": "LinkedField",
   "name": "priceRealized",
@@ -83,7 +154,7 @@ v5 = {
   ],
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -119,7 +190,8 @@ return {
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -152,28 +224,29 @@ return {
             "plural": false,
             "selections": [
               (v4/*: any*/),
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
           (v5/*: any*/),
-          (v6/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4f0586d60f11cee9df0e1b43db33a5b0",
+    "cacheID": "1d44847ad7b98c244da93e7f75e90e1d",
     "id": null,
     "metadata": {},
     "name": "HammerPriceIndexAppPuzzleRowQuery",
     "operationKind": "query",
-    "text": "query HammerPriceIndexAppPuzzleRowQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    internalID\n    title\n    artist {\n      name\n      id\n    }\n    priceRealized {\n      centsUSD\n    }\n    id\n  }\n}\n"
+    "text": "query HammerPriceIndexAppPuzzleRowQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    internalID\n    title\n    artist {\n      name\n      id\n    }\n    images {\n      larger {\n        cropped(width: 300, height: 300, version: \"larger\") {\n          src\n          srcSet\n        }\n      }\n    }\n    priceRealized {\n      centsUSD\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7d52c93ce201154054d43e203b4269da";
+(node as any).hash = "1bc6b4df69712845e3d095c316517793";
 
 export default node;

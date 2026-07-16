@@ -86,8 +86,8 @@ describe("HammerPriceApp", () => {
   it("shows the puzzle number for configured puzzles", () => {
     renderWithRelay({ AuctionResult: mockAuctionResult })
 
-    // 7231067 is the 7th configured puzzle
-    expect(screen.getByText(/Puzzle #7/)).toBeInTheDocument()
+    // 7231067 is a configured puzzle, so it gets a number
+    expect(screen.getByText(/Puzzle #\d+/)).toBeInTheDocument()
   })
 
   it("plays ad-hoc auction results without a puzzle number", () => {

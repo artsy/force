@@ -2,13 +2,9 @@ import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { HammerPriceGamePanel } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceGamePanel"
 import { HammerPriceLotDetails } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceLotDetails"
 import { HammerPriceMeta } from "Apps/Games/Routes/HammerPrice/Components/HammerPriceMeta"
-import {
-  getPuzzleByAuctionResultId,
-  getPuzzleNumber,
-} from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
+import { getPuzzleNumber } from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
 import { TopContextBar } from "Components/TopContextBar"
 import type { HammerPriceApp_auctionResult$data } from "__generated__/HammerPriceApp_auctionResult.graphql"
-import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface HammerPriceAppProps {
@@ -18,12 +14,8 @@ interface HammerPriceAppProps {
 const HammerPriceApp: React.FC<
   React.PropsWithChildren<HammerPriceAppProps>
 > = ({ auctionResult }) => {
-  // Configured puzzles get a number and date; any other auction result plays
-  // as an ad-hoc puzzle with just the plain header.
-  const puzzle = getPuzzleByAuctionResultId({
-    auctionResultId: auctionResult.internalID,
-  })
-
+  // Configured puzzles get a number; any other auction result plays as an
+  // ad-hoc puzzle with just the plain header.
   const puzzleNumber = getPuzzleNumber({
     auctionResultId: auctionResult.internalID,
   })
@@ -44,10 +36,9 @@ const HammerPriceApp: React.FC<
             Hammer Price
           </Text>
 
-          {puzzle && (
+          {puzzleNumber != null && (
             <Text variant="sm-display" color="mono60">
-              Puzzle #{puzzleNumber} /{" "}
-              {DateTime.fromISO(puzzle.date).toFormat("MMM d, yyyy")}
+              Puzzle #{puzzleNumber}
             </Text>
           )}
         </Box>

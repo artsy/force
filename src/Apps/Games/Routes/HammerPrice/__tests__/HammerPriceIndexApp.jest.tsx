@@ -26,6 +26,40 @@ const ROW_FIXTURES: Record<string, RowFixture> = {
 
 const mockUseClientQuery = useClientQuery as jest.Mock
 
+// Tiles fetch lazily once they scroll into view; simulate every tile being
+// visible by firing the IntersectionObserver callback immediately on observe.
+class ImmediateIntersectionObserver {
+  private readonly callback: IntersectionObserverCallback
+
+  constructor(callback: IntersectionObserverCallback) {
+    this.callback = callback
+  }
+
+  observe(target: Element) {
+    this.callback(
+      [{ isIntersecting: true, target } as IntersectionObserverEntry],
+      this as unknown as IntersectionObserver,
+    )
+  }
+
+  unobserve() {}
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return []
+  }
+}
+
+const originalIntersectionObserver = window.IntersectionObserver
+
+beforeAll(() => {
+  window.IntersectionObserver =
+    ImmediateIntersectionObserver as unknown as typeof IntersectionObserver
+})
+
+afterAll(() => {
+  window.IntersectionObserver = originalIntersectionObserver
+})
+
 const mockLoadedRows = () => {
   mockUseClientQuery.mockImplementation(({ variables }) => ({
     data: {
@@ -47,7 +81,7 @@ describe("HammerPriceIndexApp", () => {
     mockUseClientQuery.mockReset()
   })
 
-  it("lists browsable puzzles newest first with links", () => {
+  it("lists puzzles as a grid of links", () => {
     mockLoadedRows()
 
     render(
@@ -58,11 +92,17 @@ describe("HammerPriceIndexApp", () => {
 
     expect(screen.getByText("Hammer Price")).toBeInTheDocument()
 
-    const links = screen.getAllByRole("link")
+    expect(
+      screen.getByRole("link", { name: /Return to Artsy/ }),
+    ).toHaveAttribute("href", "/")
 
-    expect(links.length).toBeGreaterThan(0)
-    // Newest first: the Rothko (2026-07-14) leads
-    expect(links[0]).toHaveAttribute(
+    const puzzleLinks = screen
+      .getAllByRole("link")
+      .filter(link => link.getAttribute("href")?.includes("/puzzles/"))
+
+    expect(puzzleLinks.length).toBeGreaterThan(0)
+    // The Rothko leads the configured list
+    expect(puzzleLinks[0]).toHaveAttribute(
       "href",
       "/games/hammer-price/puzzles/7318095",
     )
@@ -102,8 +142,13 @@ describe("HammerPriceIndexApp", () => {
       </MockBoot>,
     )
 
-    // No artist names render while loading, but the rows themselves do
+    // No artist names render while loading, but the tiles themselves do
     expect(screen.queryByText(/Mark Rothko/)).not.toBeInTheDocument()
-    expect(screen.getAllByRole("link").length).toBeGreaterThan(0)
+
+    const puzzleLinks = screen
+      .getAllByRole("link")
+      .filter(link => link.getAttribute("href")?.includes("/puzzles/"))
+
+    expect(puzzleLinks.length).toBeGreaterThan(0)
   })
 })

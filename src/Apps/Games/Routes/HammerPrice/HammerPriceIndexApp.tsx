@@ -1,7 +1,19 @@
-import { Box, Flex, SkeletonText, Spacer, Stack, Text } from "@artsy/palette"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 import {
-  deriveGameStatus,
+  Box,
+  Column,
+  Flex,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import {
   type HammerPriceGameStatus,
+  deriveGameStatus,
 } from "Apps/Games/Routes/HammerPrice/Utils/deriveGameStatus"
 import {
   type HammerPriceGameProgress,
@@ -9,25 +21,21 @@ import {
 } from "Apps/Games/Routes/HammerPrice/Utils/gameProgressStore"
 import { realizedPriceToTargetDigits } from "Apps/Games/Routes/HammerPrice/Utils/priceDigits"
 import {
-  getBrowsablePuzzles,
+  getPuzzleIds,
   getPuzzleNumber,
-  getTodayDateString,
 } from "Apps/Games/Routes/HammerPrice/Utils/puzzleSelection"
-import {
-  HAMMER_PRICE_MAX_GUESSES,
-  type HammerPricePuzzle,
-} from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
+import { HAMMER_PRICE_MAX_GUESSES } from "Apps/Games/Routes/HammerPrice/hammerPricePuzzles"
 import { MetaTags } from "Components/MetaTags"
+import { TopContextBar } from "Components/TopContextBar"
 import { RouterLink } from "System/Components/RouterLink"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import type { HammerPriceIndexAppPuzzleRowQuery } from "__generated__/HammerPriceIndexAppPuzzleRowQuery.graphql"
-import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
 import { graphql } from "react-relay"
 
 export const HammerPriceIndexApp: React.FC = () => {
-  const today = getTodayDateString()
-  const puzzles = getBrowsablePuzzles({ today })
+  const puzzleIds = getPuzzleIds()
 
   // Progress lives in localStorage, so it is only read after mount to keep
   // server and client renders identical.
@@ -47,63 +55,75 @@ export const HammerPriceIndexApp: React.FC = () => {
     <>
       <MetaTags
         title="Hammer Price — Browse Puzzles | Artsy"
-        description="Guess the hammer price of a real auction result, digit by digit, in six tries. A new puzzle every day."
+        description="Guess the hammer price of a real auction result, digit by digit, in six tries."
         pathname="/games/hammer-price/puzzles"
       />
 
-      <Box mt={4}>
+      <TopContextBar displayBackArrow href="/">
+        Return to Artsy
+      </TopContextBar>
+
+      <Box mt={4} pb={12}>
         <Text as="h1" variant="xl">
           Hammer Price
         </Text>
 
         <Text variant="sm" color="mono60">
           Guess the hammer price of a real auction result, digit by digit, in
-          six tries. A new puzzle every day.
+          six tries.
         </Text>
 
         <Spacer y={4} />
 
-        <Stack gap={2}>
-          {puzzles.map(puzzle => {
+        <GridColumns gridRowGap={4}>
+          {puzzleIds.map(auctionResultId => {
             return (
-              <PuzzleRow
-                key={puzzle.auctionResultId}
-                puzzle={puzzle}
-                isToday={puzzle.date === today}
-                progress={progressByAuctionResultId[puzzle.auctionResultId]}
-              />
+              <Column span={[6, 4, 2]} key={auctionResultId}>
+                <PuzzleTile
+                  auctionResultId={auctionResultId}
+                  progress={progressByAuctionResultId[auctionResultId]}
+                />
+              </Column>
             )
           })}
-        </Stack>
+        </GridColumns>
       </Box>
     </>
   )
 }
 
-interface PuzzleRowProps {
-  puzzle: HammerPricePuzzle
-  isToday: boolean
+interface PuzzleTileProps {
+  auctionResultId: string
   progress?: HammerPriceGameProgress
 }
 
-const PuzzleRow: React.FC<React.PropsWithChildren<PuzzleRowProps>> = ({
-  puzzle,
-  isToday,
+const PuzzleTile: React.FC<React.PropsWithChildren<PuzzleTileProps>> = ({
+  auctionResultId,
   progress,
 }) => {
+  // Only fetch a tile’s record once it scrolls into view, so the grid doesn’t
+  // fire every query on load.
+  const [inView, setInView] = useState(false)
+
+  const { ref } = useIntersectionObserver<HTMLDivElement>({
+    once: true,
+    options: { threshold: 0, rootMargin: "200px" },
+    onIntersection: () => setInView(true),
+  })
+
   const { data, loading, error } =
     useClientQuery<HammerPriceIndexAppPuzzleRowQuery>({
       query: PUZZLE_ROW_QUERY,
-      variables: { auctionResultId: puzzle.auctionResultId },
+      variables: { auctionResultId },
+      skip: !inView,
     })
 
   const auctionResult = data?.auctionResult
 
-  const puzzleNumber = getPuzzleNumber({
-    auctionResultId: puzzle.auctionResultId,
-  })
+  // Pending covers both "not yet in view" and "in view but still fetching"
+  const isPending = !inView || loading
 
-  const formattedDate = DateTime.fromISO(puzzle.date).toFormat("MMM d, yyyy")
+  const puzzleNumber = getPuzzleNumber({ auctionResultId })
 
   const targetDigits = realizedPriceToTargetDigits(
     auctionResult?.priceRealized?.centsUSD,
@@ -113,52 +133,73 @@ const PuzzleRow: React.FC<React.PropsWithChildren<PuzzleRowProps>> = ({
     ? deriveGameStatus({ targetDigits, guesses: progress?.guesses ?? [] })
     : "notStarted"
 
+  const image = auctionResult?.images?.larger?.cropped
+
   return (
-    <RouterLink
-      to={`/games/hammer-price/puzzles/${puzzle.auctionResultId}`}
-      textDecoration="none"
-      display="block"
-    >
-      <Flex
-        border="1px solid"
-        borderColor="mono15"
-        p={2}
-        justifyContent="space-between"
-        alignItems="center"
-        gap={2}
+    <div ref={ref}>
+      <RouterLink
+        to={`/games/hammer-price/puzzles/${auctionResultId}`}
+        textDecoration="none"
+        display="block"
       >
-        <Box>
-          {loading ? (
-            <>
-              <SkeletonText variant="sm-display">#0 — Artist Name</SkeletonText>
-
-              <SkeletonText variant="xs">
-                Artwork title • {formattedDate}
-              </SkeletonText>
-            </>
+        <ResponsiveBox
+          aspectWidth={1}
+          aspectHeight={1}
+          maxWidth="100%"
+          bg="mono10"
+        >
+          {isPending ? (
+            <SkeletonBox width="100%" height="100%" />
+          ) : image ? (
+            <Image
+              src={image.src}
+              srcSet={image.srcSet}
+              width="100%"
+              height="100%"
+              alt=""
+              lazyLoad
+              style={{ display: "block" }}
+            />
           ) : (
-            <>
-              <Text variant="sm-display">
-                {puzzleNumber && `#${puzzleNumber} — `}
-                {error || !auctionResult
-                  ? "Unavailable"
-                  : (auctionResult.artist?.name ?? "Unknown artist")}
-              </Text>
-
-              <Text variant="xs" color="mono60">
-                {auctionResult?.title ?? "—"} • {formattedDate}
-                {isToday && " • Today’s puzzle"}
-              </Text>
-            </>
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              height="100%"
+              width="100%"
+            >
+              <NoArtIcon height={24} width={24} fill="mono60" />
+            </Flex>
           )}
-        </Box>
+        </ResponsiveBox>
+
+        <Spacer y={1} />
+
+        {isPending ? (
+          <>
+            <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+            <SkeletonText variant="xs">Artwork title</SkeletonText>
+          </>
+        ) : (
+          <>
+            <Text variant="sm-display" lineClamp={1}>
+              {puzzleNumber && `#${puzzleNumber} — `}
+              {error || !auctionResult
+                ? "Unavailable"
+                : (auctionResult.artist?.name ?? "Unknown artist")}
+            </Text>
+
+            <Text variant="xs" color="mono60" lineClamp={1}>
+              {auctionResult?.title ?? "—"}
+            </Text>
+          </>
+        )}
 
         <StatusLabel
           status={status}
           guessCount={progress?.guesses.length ?? 0}
         />
-      </Flex>
-    </RouterLink>
+      </RouterLink>
+    </div>
   )
 }
 
@@ -196,7 +237,7 @@ const StatusLabel: React.FC<React.PropsWithChildren<StatusLabelProps>> = ({
   const { text, color } = getLabel()
 
   return (
-    <Text variant="xs" color={color} flexShrink={0}>
+    <Text variant="xs" color={color}>
       {text}
     </Text>
   )
@@ -209,6 +250,14 @@ const PUZZLE_ROW_QUERY = graphql`
       title
       artist {
         name
+      }
+      images {
+        larger {
+          cropped(width: 300, height: 300, version: "larger") {
+            src
+            srcSet
+          }
+        }
       }
       priceRealized {
         centsUSD

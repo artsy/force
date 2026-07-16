@@ -1,11 +1,11 @@
 /**
- * Configuration for all currently available Hammer Price puzzles.
+ * Configuration for all available Hammer Price puzzles.
  *
- * A puzzle is just an auction result ID plus the date it is the daily puzzle.
- * Everything else — the answer (realized price), artist, title, images —
- * is fetched from Metaphysics at runtime, which also means any auction
- * result ID entered at /games/hammer-price/puzzles/:auctionResultId works
- * as a puzzle whether or not it is listed here.
+ * A puzzle is just an auction result ID. Everything else — the answer
+ * (realized price), artist, title, images — is fetched from Metaphysics at
+ * runtime, which also means any auction result ID entered at
+ * /games/hammer-price/puzzles/:auctionResultId works as a puzzle whether or
+ * not it is listed here. The order below determines the puzzle number.
  */
 
 export const HAMMER_PRICE_MAX_GUESSES = 6
@@ -25,21 +25,27 @@ export const HAMMER_PRICE_DIGIT_COUNT = 8
  */
 export const HAMMER_PRICE_GUESS_CURRENCY = "USD"
 
-export interface HammerPricePuzzle {
-  /** internalID of the auction result in Metaphysics; the full record lives at /auction-result/:auctionResultId */
-  auctionResultId: string
-  /** YYYY-MM-DD — the day this puzzle is the daily puzzle */
-  date: string
-  isActive: boolean
-}
-
-export const HAMMER_PRICE_PUZZLES: HammerPricePuzzle[] = [
-  { auctionResultId: "41823", date: "2026-07-07", isActive: true },
-  { auctionResultId: "4159662", date: "2026-07-08", isActive: true },
-  { auctionResultId: "5410641", date: "2026-07-09", isActive: true },
-  { auctionResultId: "503667", date: "2026-07-10", isActive: true },
-  { auctionResultId: "587153", date: "2026-07-11", isActive: true },
-  { auctionResultId: "2614035", date: "2026-07-12", isActive: true },
-  { auctionResultId: "7231067", date: "2026-07-13", isActive: true },
-  { auctionResultId: "7318095", date: "2026-07-14", isActive: true },
+/** Auction result internalIDs, in display order */
+export const HAMMER_PRICE_PUZZLES: string[] = [
+  "7318095",
+  "7292702",
+  "41823",
+  "7167897",
+  "4159662",
+  "7123592",
+  "277160",
+  "391646",
+  "5410641",
+  "6556998",
+  "503667",
+  "587153",
+  "392092",
+  "2614035",
+  "399715",
+  "7231067",
+  "67193",
+  "6653694",
+  "2821422",
+  "287461",
+  "508682",
 ]
