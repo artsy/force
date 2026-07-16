@@ -40,7 +40,11 @@ interface ArtworkGridProps {
   preloadImageCount?: number
   itemMargin?: number
   layout?: ArtworkGridLayout
-  onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
+  onBrickClick?: (
+    artwork: Artwork,
+    artworkIndex: number,
+    hasCuratorNote?: boolean,
+  ) => void
   onClearFilters?: () => any
   onLoadMore?: () => any
   sectionMargin?: number
@@ -197,7 +201,11 @@ export class ArtworkGridContainer extends React.Component<
             }
             onClick={() => {
               if (this.props.onBrickClick) {
-                this.props.onBrickClick(artwork, artworkIndex)
+                this.props.onBrickClick(
+                  artwork,
+                  artworkIndex,
+                  !!curatorNotesById[artwork.id],
+                )
               }
             }}
             showHighDemandIcon={showHighDemandIcon}

@@ -315,7 +315,13 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
           maxWidth={showPrimaryLabelLine ? "95%" : "75%"}
           overflow="hidden"
         >
-          {!!curatorNote && <CuratorNote note={curatorNote} />}
+          {!!curatorNote && (
+            <CuratorNote
+              note={curatorNote}
+              artworkInternalID={rest?.artwork?.internalID}
+              artworkSlug={rest?.artwork?.slug}
+            />
+          )}
 
           {showPrimaryLabelLine && (
             <PrimaryLabelLineQueryRenderer
@@ -354,6 +360,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
     fragment Details_artwork on Artwork {
       internalID
+      slug
       href
       title
       date

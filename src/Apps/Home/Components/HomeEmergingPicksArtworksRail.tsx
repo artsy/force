@@ -79,6 +79,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
                 destination_page_owner_type: OwnerType.artwork,
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
+                has_curator_note: !!curatorNotesByArtworkId[artwork.internalID],
                 type: "thumbnail",
                 signal_label: getSignalLabel({
                   signals: signals?.[artwork.internalID] ?? [],

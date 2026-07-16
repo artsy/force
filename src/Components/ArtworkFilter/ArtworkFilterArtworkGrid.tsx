@@ -75,7 +75,7 @@ const ArtworkFilterArtworkGrid: React.FC<
           layout={props.layout}
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
-          onBrickClick={(artwork, artworkIndex) => {
+          onBrickClick={(artwork, artworkIndex, hasCuratorNote) => {
             const event: ClickedMainArtworkGrid = {
               action: ActionType.clickedMainArtworkGrid,
               context_module: ContextModule.artworkGrid,
@@ -85,6 +85,7 @@ const ArtworkFilterArtworkGrid: React.FC<
               destination_page_owner_id: artwork.internalID,
               destination_page_owner_slug: artwork.slug,
               destination_page_owner_type: OwnerType.artwork,
+              has_curator_note: hasCuratorNote,
               position: artworkIndex,
               sort: context?.filters?.sort,
               type: "thumbnail",

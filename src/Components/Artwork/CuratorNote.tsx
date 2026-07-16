@@ -1,15 +1,27 @@
 import { Clickable, ModalDialog, Text } from "@artsy/palette"
+import {
+  ActionType,
+  type ClickedCuratorNote,
+  ContextModule,
+} from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useState } from "react"
+import { useTracking } from "react-tracking"
+
+// NOTE: this Unleash flag must be created in the Unleash dashboard; confirm the
+// exact name/prefix with the owning team's convention (e.g. `diamond_…`).
+export const CURATORS_NOTES_FLAG = "curators-notes"
+
+// The inline badge shows at most 2 lines. Notes longer than this are very likely
+// truncated in the artwork metadata column, so surface a "Read more" cue.
+const READ_MORE_THRESHOLD = 80
 
 interface CuratorNoteProps {
   note: string
+  artworkInternalID?: string
+  artworkSlug?: string
 }
-
-// The inline badge shows at most 2 lines. Notes longer than this are very likely
-// truncated in the artwork metadata column, so surface a "Read more" cue. A length
-// heuristic keeps this simple and avoids a measuring pass; it's good enough for a
-// fixed-width card.
-const READ_MORE_THRESHOLD = 80
 
 /**
  * Renders a curator's note for an artwork within a marketing collection.
@@ -20,23 +32,47 @@ const READ_MORE_THRESHOLD = 80
  * collector signal badge (`PrimaryLabelLine`) and renders directly above it.
  *
  * The inline badge is truncated; clicking it opens a dialog with the full note.
+ * Gated behind the `curators-notes` Unleash flag.
  */
-export const CuratorNote: React.FC<CuratorNoteProps> = ({ note }) => {
+export const CuratorNote: React.FC<CuratorNoteProps> = ({
+  note,
+  artworkInternalID,
+  artworkSlug,
+}) => {
   const [open, setOpen] = useState(false)
+  const enabled = useFlag(CURATORS_NOTES_FLAG)
+  const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerType,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+  } = useAnalyticsContext()
 
-  if (!note) {
+  if (!note || !enabled) {
     return null
   }
+
+  const showReadMore = note.length > READ_MORE_THRESHOLD
 
   const handleClick = (event: React.MouseEvent) => {
     // The note sits inside the artwork metadata link — don't navigate to the
     // artwork when the note is clicked; open the dialog instead.
     event.preventDefault()
     event.stopPropagation()
+
+    const trackingEvent: ClickedCuratorNote = {
+      action: ActionType.clickedCuratorNote,
+      context_module: ContextModule.artworkGrid,
+      context_page_owner_type: contextPageOwnerType as any,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      artwork_id: artworkInternalID,
+      artwork_slug: artworkSlug,
+    }
+    trackEvent(trackingEvent)
+
     setOpen(true)
   }
-
-  const showReadMore = note.length > READ_MORE_THRESHOLD
 
   return (
     <>
