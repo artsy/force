@@ -13,6 +13,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { Order2EditButton } from "Apps/Order2/Components/Order2EditButton"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
@@ -395,18 +396,7 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
           <SectionHeading>{title}</SectionHeading>
         </Flex>
 
-        <Clickable
-          textDecoration="underline"
-          cursor="pointer"
-          type="button"
-          aria-label="Edit response"
-          onClick={onEdit}
-        >
-          {/*TODO: maybe refactor to reuse across order/offer */}
-          <Text variant="sm" fontWeight="normal" color="mono100">
-            Edit
-          </Text>
-        </Clickable>
+        <Order2EditButton aria-label="Edit response" onClick={onEdit} />
       </Flex>
 
       {(detail || note) && (

@@ -1,6 +1,7 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
+import { Order2EditButton } from "Apps/Order2/Components/Order2EditButton"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ConfirmationTokenState } from "Apps/Order2/Routes/Checkout/CheckoutContext/Order2CheckoutContext"
 import { type Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
@@ -51,17 +52,7 @@ export const Order2PaymentCompletedView: React.FC<
           <SectionHeading>Payment</SectionHeading>
         </Flex>
         {onEdit && (
-          <Clickable
-            textDecoration="underline"
-            cursor="pointer"
-            type="button"
-            aria-label="Edit payment method"
-            onClick={onEdit}
-          >
-            <Text variant="sm" fontWeight="normal" color="mono100">
-              Edit
-            </Text>
-          </Clickable>
+          <Order2EditButton aria-label="Edit payment method" onClick={onEdit} />
         )}
       </Flex>
       <Flex alignItems="center" ml="30px" mt={1}>
