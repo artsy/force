@@ -1,7 +1,8 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
-import { LabeledInput, useDidMount } from "@artsy/palette"
+import { Box, LabeledInput, useDidMount } from "@artsy/palette"
 import { type FC, useState } from "react"
 import { OverlayRefetchContainer } from "./Overlay"
+import { SearchByImageButton } from "Components/Search/ImageSearch/SearchByImageButton"
 import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -40,12 +41,25 @@ export const MobileSearchBar: FC<
         />
       )}
 
-      <LabeledInput
-        placeholder="Search Artsy"
-        label={<SearchIcon fill="mono60" aria-hidden size={22} />}
-        onClick={displayOverlay}
-        height={40}
-      />
+      <Box position="relative">
+        <LabeledInput
+          placeholder="Search Artsy"
+          label={<SearchIcon fill="mono60" aria-hidden size={22} />}
+          onClick={displayOverlay}
+          height={40}
+        />
+
+        <Box
+          position="absolute"
+          top={0}
+          bottom={0}
+          right={40}
+          display="flex"
+          alignItems="center"
+        >
+          <SearchByImageButton />
+        </Box>
+      </Box>
     </>
   )
 }
