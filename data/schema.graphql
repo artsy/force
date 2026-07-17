@@ -2722,6 +2722,16 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   ): [ArtistInsight!]!
 
   """
+  Instagram media for display on an artist page.
+  """
+  instagramMedia(
+    """
+    The number of media items to return.
+    """
+    first: Int
+  ): [ArtistInstagramMedia]
+
+  """
   A type-specific ID likely used as a database ID.
   """
   internalID: ID!
@@ -3063,6 +3073,13 @@ type ArtistInsightsCount {
   groupShowCount: Int!
   reviewedCount: Int!
   soloShowCount: Int!
+}
+
+type ArtistInstagramMedia {
+  caption: String
+  image: Image
+  internalID: String
+  permalink: String
 }
 
 type ArtistMeta {
@@ -4936,6 +4953,50 @@ type ArtworkFilterNode {
   The display title for this filtered connection
   """
   title: String!
+}
+
+type ArtworkFilterSuggestion {
+  """
+  Values the parser rejected as invalid.
+  """
+  dropped: [ArtworkFilterSuggestionDropped!]!
+
+  """
+  True when parsing failed and the query fell back to a plain keyword search.
+  """
+  fellOpen: Boolean
+
+  """
+  Validated hard filters to pass to artworksConnection.
+  """
+  filters: ArtworkFilterSuggestionFilters
+
+  """
+  Leftover 'vibe' text to use as a keyword search.
+  """
+  keyword: String
+}
+
+type ArtworkFilterSuggestionDropped {
+  field: String
+  value: String
+}
+
+type ArtworkFilterSuggestionFilters {
+  acquireable: Boolean
+  artistNationalities: [String]
+  atAuction: Boolean
+  attributionClass: [String]
+  colors: [String]
+  forSale: Boolean
+  framed: Boolean
+  geneIDs: [String]
+  inquireable: Boolean
+  majorPeriods: [String]
+  offerable: Boolean
+  priceRange: String
+  signed: Boolean
+  sizes: [ArtworkSizes]
 }
 
 union ArtworkHighlight = Article | Show
@@ -19031,9 +19092,47 @@ type FeatureFlag {
   variants: [FeatureFlagVariantType]
 }
 
+type FeatureFlagConstraint {
+  caseInsensitive: Boolean
+  contextName: String
+  inverted: Boolean
+  operator: String
+
+  """
+  The Partners referenced by this constraint's values, resolved when contextName is `partnerId`
+  """
+  partnerConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): PartnerConnection
+  value: String
+  values: [String]
+}
+
 type FeatureFlagEnvironments {
   enabled: Boolean!
   name: String!
+  strategies: [FeatureFlagStrategy]
+}
+
+type FeatureFlagSegment {
+  constraints: [FeatureFlagConstraint]
+  description: String
+  internalID: Int
+  name: String
+}
+
+type FeatureFlagStrategy {
+  constraints: [FeatureFlagConstraint]
+  name: String
+  parameters: JSON
+
+  """
+  Constraints applied to this strategy via a reusable, named Unleash segment (as opposed to inline constraints)
+  """
+  segments: [FeatureFlagSegment]
 }
 
 input FeatureFlagStrategyInput {
@@ -24936,6 +25035,11 @@ type Mutation {
   ): AcceptPartnerAgreementPayload
 
   """
+  Accept a seller's offer on an order
+  """
+  acceptSellerOffer(input: acceptSellerOfferInput!): acceptSellerOfferPayload
+
+  """
   Updates a Task on the logged in User
   """
   ackTask(input: AckTaskMutationInput!): AckTaskMutationPayload
@@ -26229,6 +26333,11 @@ type Mutation {
   ): RefreshInstagramAccountPayload
 
   """
+  Decline a seller's offer on an order
+  """
+  rejectSellerOffer(input: rejectSellerOfferInput!): rejectSellerOfferPayload
+
+  """
   Removes an artwork from a partner list.
   """
   removeArtworkFromPartnerList(
@@ -26390,6 +26499,11 @@ type Mutation {
   startIdentityVerification(
     input: startIdentityVerificationMutationInput!
   ): startIdentityVerificationMutationPayload
+
+  """
+  Submit a pending buyer offer
+  """
+  submitBuyerOffer(input: submitBuyerOfferInput!): submitBuyerOfferPayload
 
   """
   Create an artwork inquiry request
@@ -27486,9 +27600,47 @@ type OfferResponse {
 
 type OfferableActivity {
   """
+  Details of the collectors with eligible offerable activities.
+  """
+  collectors: [OfferableActivityCollector]
+
+  """
   Count of collectors with eligible offerable activities.
   """
   totalCount: Int
+}
+
+"""
+A collector with eligible offerable activity on the artwork, and how they engaged with it.
+"""
+type OfferableActivityCollector {
+  confirmedBuyerAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  firstNameLastInitial: String
+  icon: Image
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+  isIdentityVerified: Boolean
+  location: MyLocation
+
+  """
+  The way this collector engaged with the artwork (e.g. saved it and/or abandoned an order).
+  """
+  sources: [PartnerOfferSourceEnum]
 }
 
 type OpeningHoursArray {
@@ -31462,6 +31614,16 @@ type Query {
     """
     status: ArtworkDuplicatePairStatus
   ): ArtworkDuplicatePairConnection
+
+  """
+  Interpret a natural-language search query into validated artwork filters.
+  """
+  artworkFilterSuggestions(
+    """
+    The natural-language search query.
+    """
+    query: String!
+  ): ArtworkFilterSuggestion
   artworkImport(id: String!): ArtworkImport
 
   """
@@ -31493,6 +31655,26 @@ type Query {
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
+
+  """
+  A connection of artworks matching an uploaded query image, using a pure vector (neural) image search.
+  """
+  artworksByImageConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    S3 bucket of the uploaded query image.
+    """
+    s3Bucket: String!
+
+    """
+    S3 key of the uploaded query image.
+    """
+    s3Key: String!
+  ): ArtworkConnection
 
   """
   Artworks Elastic Search results
@@ -41221,6 +41403,16 @@ type Viewer {
     """
     status: ArtworkDuplicatePairStatus
   ): ArtworkDuplicatePairConnection
+
+  """
+  Interpret a natural-language search query into validated artwork filters.
+  """
+  artworkFilterSuggestions(
+    """
+    The natural-language search query.
+    """
+    query: String!
+  ): ArtworkFilterSuggestion
   artworkImport(id: String!): ArtworkImport
 
   """
@@ -41252,6 +41444,26 @@ type Viewer {
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
+
+  """
+  A connection of artworks matching an uploaded query image, using a pure vector (neural) image search.
+  """
+  artworksByImageConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    S3 bucket of the uploaded query image.
+    """
+    s3Bucket: String!
+
+    """
+    S3 key of the uploaded query image.
+    """
+    s3Key: String!
+  ): ArtworkConnection
 
   """
   Artworks Elastic Search results
@@ -43203,6 +43415,25 @@ type YearRange {
   startAt: Int
 }
 
+input acceptSellerOfferInput {
+  clientMutationId: String
+
+  """
+  Offer id to accept.
+  """
+  offerID: ID!
+
+  """
+  Order id.
+  """
+  orderID: ID!
+}
+
+type acceptSellerOfferPayload {
+  clientMutationId: String
+  orderOrError: OrderMutationResponse
+}
+
 type addOrderedSetItemFailure {
   mutationError: GravityMutationError
 }
@@ -43313,6 +43544,11 @@ input createBuyerOfferInput {
   Order id.
   """
   orderID: ID!
+
+  """
+  Offer id this counteroffer responds to.
+  """
+  respondsToID: ID
 }
 
 type createBuyerOfferPayload {
@@ -43655,6 +43891,30 @@ type purchases {
   totalPrivateSaleCount: Int!
 }
 
+input rejectSellerOfferInput {
+  clientMutationId: String
+
+  """
+  Offer id to decline.
+  """
+  offerID: ID!
+
+  """
+  Order id.
+  """
+  orderID: ID!
+
+  """
+  Optional reason for declining the offer.
+  """
+  rejectReason: String
+}
+
+type rejectSellerOfferPayload {
+  clientMutationId: String
+  orderOrError: OrderMutationResponse
+}
+
 input setOrderFulfillmentOptionInput {
   clientMutationId: String
   fulfillmentOption: FulfillmentOptionInput!
@@ -43721,6 +43981,25 @@ input startIdentityVerificationMutationInput {
 type startIdentityVerificationMutationPayload {
   clientMutationId: String
   startIdentityVerificationResponseOrError: StartIdentityVerificationResponseOrError
+}
+
+input submitBuyerOfferInput {
+  clientMutationId: String
+
+  """
+  Offer id to submit.
+  """
+  offerID: ID!
+
+  """
+  Order id.
+  """
+  orderID: ID!
+}
+
+type submitBuyerOfferPayload {
+  clientMutationId: String
+  offerOrError: OfferMutationResponse
 }
 
 input submitOrderInput {

@@ -1,4 +1,4 @@
-import { AutocompleteInput, useDidMount } from "@artsy/palette"
+import { AutocompleteInput, Box, useDidMount } from "@artsy/palette"
 import {
   type ChangeEvent,
   type FC,
@@ -26,6 +26,7 @@ import type {
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useDebounce } from "use-debounce"
+import { SearchByImageButton } from "./ImageSearch/SearchByImageButton"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -307,56 +308,69 @@ export const SearchBarInput: FC<
   }
 
   return (
-    <AutocompleteInput
-      forwardRef={ref}
-      key={match.location.pathname}
-      value={value}
-      placeholder="Search by artist, gallery, style, theme, tag, etc."
-      spellCheck={false}
-      options={shouldStartSearching(value) ? formattedOptions : []}
-      defaultValue={value}
-      onChange={handleChange}
-      onClear={resetValue}
-      onSelect={handleSelect}
-      onSubmit={handleSubmit}
-      onFocus={handleFocus}
-      onPaste={handlePaste}
-      header={
-        data?.viewer ? (
-          <SearchInputPillsFragmentContainer
-            viewer={data.viewer}
-            selectedPill={selectedPill}
-            onPillClick={handlePillClick}
-          />
-        ) : null
-      }
-      renderOption={option => {
-        if (!value) return <></>
-
-        if (option.typename === "Footer") {
-          return (
-            <SearchBarFooter
-              query={value}
-              href={encodedSearchURL}
+    <Box position="relative">
+      <AutocompleteInput
+        forwardRef={ref}
+        key={match.location.pathname}
+        value={value}
+        placeholder="Search by artist, gallery, style, theme, tag, etc."
+        spellCheck={false}
+        options={shouldStartSearching(value) ? formattedOptions : []}
+        defaultValue={value}
+        onChange={handleChange}
+        onClear={resetValue}
+        onSelect={handleSelect}
+        onSubmit={handleSubmit}
+        onFocus={handleFocus}
+        onPaste={handlePaste}
+        header={
+          data?.viewer ? (
+            <SearchInputPillsFragmentContainer
+              viewer={data.viewer}
               selectedPill={selectedPill}
+              onPillClick={handlePillClick}
+            />
+          ) : null
+        }
+        renderOption={option => {
+          if (!value) return <></>
+
+          if (option.typename === "Footer") {
+            return (
+              <SearchBarFooter
+                query={value}
+                href={encodedSearchURL}
+                selectedPill={selectedPill}
+              />
+            )
+          }
+
+          return (
+            <SuggestionItem
+              query={value}
+              option={option}
+              onClick={handleSuggestionClick}
+              onQuickNavClick={handleQuickNavClick}
             />
           )
-        }
+        }}
+        dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
+        dropdownMinWidth={600}
+        flip={false}
+        height={40}
+      />
 
-        return (
-          <SuggestionItem
-            query={value}
-            option={option}
-            onClick={handleSuggestionClick}
-            onQuickNavClick={handleQuickNavClick}
-          />
-        )
-      }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
-      dropdownMinWidth={600}
-      flip={false}
-      height={40}
-    />
+      <Box
+        position="absolute"
+        top={0}
+        bottom={0}
+        right={40}
+        display="flex"
+        alignItems="center"
+      >
+        <SearchByImageButton />
+      </Box>
+    </Box>
   )
 }
 
