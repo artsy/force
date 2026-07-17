@@ -117,7 +117,7 @@ describe("Order2OfferHistory", () => {
         context_module: "ordersCounter",
         context_page_owner_id: "order-id",
         context_page_owner_type: "orders-respond",
-        expanded: true,
+        expanded: false,
       })
 
       fireEvent.click(screen.getByText("Offer history"))
@@ -127,7 +127,7 @@ describe("Order2OfferHistory", () => {
         context_module: "ordersCounter",
         context_page_owner_id: "order-id",
         context_page_owner_type: "orders-respond",
-        expanded: false,
+        expanded: true,
       })
     })
   })
