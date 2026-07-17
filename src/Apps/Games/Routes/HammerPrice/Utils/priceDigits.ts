@@ -87,7 +87,7 @@ export const currencyPrefix = (currency: string): string => {
     GBP: "£",
     HKD: "HK$",
     JPY: "¥",
-    USD: "US$",
+    USD: "$",
   }
 
   return CURRENCY_PREFIXES[currency] ?? `${currency} `

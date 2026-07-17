@@ -64,7 +64,7 @@ describe("formatDigitsWithSeparators", () => {
 
 describe("currencyPrefix", () => {
   it("maps known currencies", () => {
-    expect(currencyPrefix("USD")).toBe("US$")
+    expect(currencyPrefix("USD")).toBe("$")
     expect(currencyPrefix("GBP")).toBe("£")
   })
 

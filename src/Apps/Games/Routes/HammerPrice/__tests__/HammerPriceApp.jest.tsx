@@ -1,10 +1,17 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HammerPriceAppFragmentContainer } from "Apps/Games/Routes/HammerPrice/HammerPriceApp"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import type { HammerPriceApp_Test_Query } from "__generated__/HammerPriceApp_Test_Query.graphql"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
+
+jest.mock("Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: jest.fn(),
+}))
+
+const mockUseMatchMedia = __internal__useMatchMedia as jest.Mock
 
 // The Roni Horn lot: US$1,804,500, padded to the standard 8 digits
 const TARGET_DIGITS = "01804500"
@@ -66,6 +73,8 @@ const findGuessCount = (usedCount: number) => {
 describe("HammerPriceApp", () => {
   beforeEach(() => {
     localStorage.clear()
+    // Default to desktop; individual tests opt into mobile.
+    mockUseMatchMedia.mockReturnValue(false)
   })
 
   it("renders the game-safe auction record", () => {
@@ -256,5 +265,145 @@ describe("HammerPriceApp", () => {
     expect(
       document.querySelectorAll('[data-cell-state="miss"]').length,
     ).toBeGreaterThan(0)
+  })
+
+  it("scrolls the active row into view on mobile as guesses advance", async () => {
+    mockUseMatchMedia.mockReturnValue(true)
+    ;(Element.prototype.scrollIntoView as jest.Mock).mockClear()
+
+    renderWithRelay({ AuctionResult: mockAuctionResult })
+
+    // A wrong guess advances the active row to the next line
+    enterGuess("99999999")
+    fireEvent.click(getSubmit())
+
+    await waitFor(() =>
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalled(),
+    )
+  })
+
+  it("does not autoscroll on desktop", async () => {
+    ;(Element.prototype.scrollIntoView as jest.Mock).mockClear()
+
+    renderWithRelay({ AuctionResult: mockAuctionResult })
+
+    enterGuess("99999999")
+    fireEvent.click(getSubmit())
+
+    await findGuessCount(1)
+
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled()
+  })
+
+  describe("sharing results", () => {
+    const originalShare = Object.getOwnPropertyDescriptor(navigator, "share")
+    const originalClipboard = Object.getOwnPropertyDescriptor(
+      navigator,
+      "clipboard",
+    )
+    const originalExecCommand = document.execCommand
+
+    const setNavigatorShare = (value: unknown) => {
+      Object.defineProperty(navigator, "share", {
+        value,
+        configurable: true,
+        writable: true,
+      })
+    }
+
+    const setNavigatorClipboard = (value: unknown) => {
+      Object.defineProperty(navigator, "clipboard", {
+        value,
+        configurable: true,
+        writable: true,
+      })
+    }
+
+    afterEach(() => {
+      if (originalShare) {
+        Object.defineProperty(navigator, "share", originalShare)
+      } else {
+        setNavigatorShare(undefined)
+      }
+
+      if (originalClipboard) {
+        Object.defineProperty(navigator, "clipboard", originalClipboard)
+      }
+
+      document.execCommand = originalExecCommand
+    })
+
+    it("uses the native share sheet on mobile when available", async () => {
+      mockUseMatchMedia.mockReturnValue(true)
+      const share = jest.fn().mockResolvedValue(undefined)
+      setNavigatorShare(share)
+
+      renderWithRelay({ AuctionResult: mockAuctionResult })
+
+      enterGuess(TARGET_DIGITS)
+      fireEvent.click(getSubmit())
+
+      const shareButton = await screen.findByRole("button", {
+        name: "Share your result with link",
+      })
+      fireEvent.click(shareButton)
+
+      await waitFor(() => expect(share).toHaveBeenCalledTimes(1))
+
+      const payload = share.mock.calls[0][0]
+      expect(payload.url).toContain("/games/hammer-price/puzzles/7231067")
+      expect(payload.text).toContain("Hammer Price: Roni Horn")
+      // The link is passed as `url`, not duplicated in the text body
+      expect(payload.text).not.toContain("/puzzles/7231067")
+    })
+
+    it("copies to the clipboard on desktop", async () => {
+      const writeText = jest.fn().mockResolvedValue(undefined)
+      setNavigatorClipboard({ writeText })
+      setNavigatorShare(undefined)
+
+      renderWithRelay({ AuctionResult: mockAuctionResult })
+
+      enterGuess(TARGET_DIGITS)
+      fireEvent.click(getSubmit())
+
+      const shareButton = await screen.findByRole("button", {
+        name: "Share your result",
+      })
+      fireEvent.click(shareButton)
+
+      await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1))
+
+      expect(
+        await screen.findByRole("button", { name: "Copied to clipboard" }),
+      ).toBeInTheDocument()
+    })
+
+    it("falls back to a legacy copy in non-secure contexts", async () => {
+      // Non-secure context: neither the Web Share nor Clipboard API exists,
+      // e.g. hitting the dev server over http from a phone.
+      mockUseMatchMedia.mockReturnValue(true)
+      setNavigatorShare(undefined)
+      setNavigatorClipboard(undefined)
+
+      const execCommand = jest.fn().mockReturnValue(true)
+      document.execCommand = execCommand
+
+      renderWithRelay({ AuctionResult: mockAuctionResult })
+
+      enterGuess(TARGET_DIGITS)
+      fireEvent.click(getSubmit())
+
+      const shareButton = await screen.findByRole("button", {
+        name: "Share your result with link",
+      })
+      fireEvent.click(shareButton)
+
+      await waitFor(() => expect(execCommand).toHaveBeenCalledWith("copy"))
+
+      expect(
+        await screen.findByRole("button", { name: "Copied to clipboard" }),
+      ).toBeInTheDocument()
+    })
   })
 })
