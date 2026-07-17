@@ -1,5 +1,6 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { Order2EditButton } from "Apps/Order2/Components/Order2EditButton"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { INTERNATIONAL_SHIPPING_WARNING } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/utils"
 
@@ -36,17 +37,10 @@ export const Order2DeliveryOptionsCompletedView: React.FC<
         </Flex>
 
         {onEdit && (
-          <Clickable
-            textDecoration="underline"
-            cursor="pointer"
-            type="button"
+          <Order2EditButton
             aria-label="Edit shipping method"
             onClick={onEdit}
-          >
-            <Text variant="sm" fontWeight="normal" color="mono100">
-              Edit
-            </Text>
-          </Clickable>
+          />
         )}
       </Flex>
 
