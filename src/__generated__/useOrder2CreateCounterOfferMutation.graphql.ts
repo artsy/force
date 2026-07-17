@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6fed1e50904d5b1eb62684b8c341e20>>
+ * @generated SignedSource<<1f809461de5b9904d68d147c6c9910bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -131,31 +131,28 @@ v8 = {
   "name": "display",
   "storageKey": null
 },
-v9 = [
-  (v8/*: any*/)
-],
-v10 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "displayName",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "amountFallbackText",
   "storageKey": null
 },
-v12 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "currencySymbol",
   "storageKey": null
 },
-v13 = [
+v12 = [
   {
     "alias": null,
     "args": null,
@@ -163,24 +160,24 @@ v13 = [
     "name": "amount",
     "storageKey": null
   },
-  (v12/*: any*/)
+  (v11/*: any*/)
 ],
-v14 = {
+v13 = {
   "alias": null,
   "args": null,
   "concreteType": "Money",
   "kind": "LinkedField",
   "name": "amount",
   "plural": false,
-  "selections": (v13/*: any*/),
+  "selections": (v12/*: any*/),
   "storageKey": null
 },
-v15 = [
+v14 = [
+  (v9/*: any*/),
   (v10/*: any*/),
-  (v11/*: any*/),
-  (v14/*: any*/)
+  (v13/*: any*/)
 ],
-v16 = {
+v15 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -191,21 +188,21 @@ v16 = {
     (v2/*: any*/),
     {
       "kind": "InlineFragment",
-      "selections": (v15/*: any*/),
+      "selections": (v14/*: any*/),
       "type": "ShippingLine",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v15/*: any*/),
+      "selections": (v14/*: any*/),
       "type": "TaxLine",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": [
-        (v10/*: any*/),
-        (v14/*: any*/)
+        (v9/*: any*/),
+        (v13/*: any*/)
       ],
       "type": "SubtotalLine",
       "abstractKey": null
@@ -213,8 +210,8 @@ v16 = {
     {
       "kind": "InlineFragment",
       "selections": [
+        (v9/*: any*/),
         (v10/*: any*/),
-        (v11/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -222,7 +219,9 @@ v16 = {
           "kind": "LinkedField",
           "name": "amount",
           "plural": false,
-          "selections": (v9/*: any*/),
+          "selections": [
+            (v8/*: any*/)
+          ],
           "storageKey": null
         }
       ],
@@ -232,14 +231,14 @@ v16 = {
   ],
   "storageKey": null
 },
-v17 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v18 = {
+v17 = {
   "alias": null,
   "args": [
     {
@@ -258,21 +257,21 @@ v18 = {
   "name": "resized",
   "plural": false,
   "selections": [
-    (v17/*: any*/)
+    (v16/*: any*/)
   ],
   "storageKey": "resized(height:138,width:185)"
 },
-v19 = [
+v18 = [
   (v3/*: any*/)
 ],
-v20 = {
+v19 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v21 = [
+v20 = [
   {
     "alias": null,
     "args": null,
@@ -288,24 +287,24 @@ v21 = [
     "storageKey": null
   }
 ],
-v22 = {
+v21 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "dimensions",
   "plural": false,
-  "selections": (v21/*: any*/),
+  "selections": (v20/*: any*/),
   "storageKey": null
 },
-v23 = {
+v22 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "framedDimensions",
   "plural": false,
-  "selections": (v21/*: any*/),
+  "selections": (v20/*: any*/),
   "storageKey": null
 };
 return {
@@ -466,18 +465,9 @@ return {
                                     "kind": "ScalarField",
                                     "name": "currencyCode",
                                     "storageKey": null
-                                  }
+                                  },
+                                  (v8/*: any*/)
                                 ],
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Money",
-                                "kind": "LinkedField",
-                                "name": "buyerTotal",
-                                "plural": false,
-                                "selections": (v9/*: any*/),
                                 "storageKey": null
                               }
                             ],
@@ -493,7 +483,7 @@ return {
                             "selections": [
                               (v5/*: any*/),
                               (v3/*: any*/),
-                              (v16/*: any*/),
+                              (v15/*: any*/),
                               (v6/*: any*/),
                               {
                                 "alias": null,
@@ -553,14 +543,14 @@ return {
                                       {
                                         "kind": "InlineFragment",
                                         "selections": [
-                                          (v18/*: any*/)
+                                          (v17/*: any*/)
                                         ],
                                         "type": "Image",
                                         "abstractKey": null
                                       },
                                       {
                                         "kind": "InlineFragment",
-                                        "selections": (v19/*: any*/),
+                                        "selections": (v18/*: any*/),
                                         "type": "Video",
                                         "abstractKey": null
                                       }
@@ -583,9 +573,9 @@ return {
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
-                                      (v20/*: any*/),
-                                      (v22/*: any*/),
-                                      (v23/*: any*/)
+                                      (v19/*: any*/),
+                                      (v21/*: any*/),
+                                      (v22/*: any*/)
                                     ],
                                     "type": "Artwork",
                                     "abstractKey": null
@@ -593,9 +583,9 @@ return {
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
-                                      (v20/*: any*/),
+                                      (v19/*: any*/),
+                                      (v21/*: any*/),
                                       (v22/*: any*/),
-                                      (v23/*: any*/),
                                       (v3/*: any*/)
                                     ],
                                     "type": "EditionSet",
@@ -603,7 +593,7 @@ return {
                                   },
                                   {
                                     "kind": "InlineFragment",
-                                    "selections": (v19/*: any*/),
+                                    "selections": (v18/*: any*/),
                                     "type": "Node",
                                     "abstractKey": "__isNode"
                                   }
@@ -666,8 +656,8 @@ return {
                                     "name": "image",
                                     "plural": false,
                                     "selections": [
-                                      (v17/*: any*/),
-                                      (v18/*: any*/)
+                                      (v16/*: any*/),
+                                      (v17/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -699,7 +689,7 @@ return {
                             "name": "buyerStateExpiresAt",
                             "storageKey": null
                           },
-                          (v16/*: any*/),
+                          (v15/*: any*/),
                           (v6/*: any*/),
                           {
                             "alias": null,
@@ -816,7 +806,7 @@ return {
                                     "storageKey": null
                                   },
                                   (v8/*: any*/),
-                                  (v12/*: any*/),
+                                  (v11/*: any*/),
                                   (v7/*: any*/)
                                 ],
                                 "storageKey": null
@@ -951,7 +941,7 @@ return {
                                 "name": "fromParticipant",
                                 "storageKey": null
                               },
-                              (v14/*: any*/),
+                              (v13/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -959,7 +949,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "buyerTotal",
                                 "plural": false,
-                                "selections": (v13/*: any*/),
+                                "selections": (v12/*: any*/),
                                 "storageKey": null
                               },
                               (v3/*: any*/)
@@ -987,12 +977,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b4a418fc8dad5f3ceb29296e246aedad",
+    "cacheID": "4170220f16cbf904324096e275476641",
     "id": null,
     "metadata": {},
     "name": "useOrder2CreateCounterOfferMutation",
     "operationKind": "mutation",
-    "text": "mutation useOrder2CreateCounterOfferMutation(\n  $input: createBuyerOfferInput!\n) {\n  createBuyerOffer(input: $input) {\n    offerOrError {\n      __typename\n      ... on OfferMutationSuccess {\n        __typename\n        offer {\n          order {\n            id\n            ...Order2RespondContext_order\n            ...Order2RespondApp_order\n          }\n          id\n        }\n      }\n      ... on OfferMutationError {\n        mutationError {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2OfferHistory_order on Order {\n  submittedOffers {\n    internalID\n    createdAt(format: \"MMMM D, YYYY\")\n    fromParticipant\n    amount {\n      amount\n      currencySymbol\n    }\n    buyerTotal {\n      amount\n      currencySymbol\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PaymentCompletedView_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2RespondApp_order on Order {\n  paymentMethod\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  ...Order2RespondSummary_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...Order2PaymentCompletedView_order\n  ...Order2RespondForm_order\n  ...Order2OfferHistory_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2RespondContext_order on Order {\n  source\n  mode\n  lastSubmittedOffer {\n    createdAt\n    id\n  }\n  pendingOffer {\n    createdAt\n    id\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  internalID\n  lastSubmittedOffer {\n    internalID\n    amount {\n      major\n      currencyCode\n    }\n    buyerTotal {\n      display\n    }\n    id\n  }\n  pendingOffer {\n    amount {\n      major\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2OrderSummary_order\n  internalID\n  lastSubmittedOffer {\n    internalID\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n  lineItems {\n    ...useOrder2LineItemData_lineItem\n    id\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "mutation useOrder2CreateCounterOfferMutation(\n  $input: createBuyerOfferInput!\n) {\n  createBuyerOffer(input: $input) {\n    offerOrError {\n      __typename\n      ... on OfferMutationSuccess {\n        __typename\n        offer {\n          order {\n            id\n            ...Order2RespondContext_order\n            ...Order2RespondApp_order\n          }\n          id\n        }\n      }\n      ... on OfferMutationError {\n        mutationError {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2OfferHistory_order on Order {\n  submittedOffers {\n    internalID\n    createdAt(format: \"MMMM D, YYYY\")\n    fromParticipant\n    amount {\n      amount\n      currencySymbol\n    }\n    buyerTotal {\n      amount\n      currencySymbol\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PaymentCompletedView_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2RespondApp_order on Order {\n  paymentMethod\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n  ...Order2RespondSummary_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...Order2PaymentCompletedView_order\n  ...Order2RespondForm_order\n  ...Order2OfferHistory_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2RespondContext_order on Order {\n  source\n  mode\n  lastSubmittedOffer {\n    createdAt\n    id\n  }\n  pendingOffer {\n    createdAt\n    id\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  internalID\n  lastSubmittedOffer {\n    internalID\n    amount {\n      major\n      currencyCode\n      display\n    }\n    id\n  }\n  pendingOffer {\n    amount {\n      major\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2OrderSummary_order\n  internalID\n  lastSubmittedOffer {\n    internalID\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n  lineItems {\n    ...useOrder2LineItemData_lineItem\n    id\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -68,13 +68,13 @@ interface CompletedResponse {
 
 interface GetCompletedResponseParams {
   action: RespondAction
-  totalPrice?: string | null
+  offerPrice?: string | null
   counterofferAmount: string
 }
 
 const getCompletedResponse = ({
   action,
-  totalPrice,
+  offerPrice,
   counterofferAmount,
 }: GetCompletedResponseParams): CompletedResponse => {
   if (action === "DECLINE") {
@@ -91,9 +91,9 @@ const getCompletedResponse = ({
 
   return {
     title: "Accepted gallery offer",
-    ...(totalPrice && {
-      detail: totalPrice,
-      note: "Including shipping and taxes",
+    ...(offerPrice && {
+      detail: offerPrice,
+      note: "Excluding shipping and taxes",
     }),
   }
 }
@@ -132,8 +132,8 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const { submitMutation: createCounterOffer } =
     useOrder2CreateCounterOfferMutation()
 
-  // Total the buyer would pay — items + shipping + taxes combined.
-  const totalPrice = orderData.lastSubmittedOffer?.buyerTotal?.display
+  // The gallery’s offer amount, excluding shipping and taxes.
+  const offerPrice = orderData.lastSubmittedOffer?.amount?.display
 
   const isRespondCompleted =
     steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
@@ -236,7 +236,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     return (
       <RespondCompletedView
         action={selectedAction}
-        totalPrice={totalPrice}
+        offerPrice={offerPrice}
         counterofferAmount={counterofferAmount}
         onEdit={editRespond}
       />
@@ -247,11 +247,11 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     <RespondCard>
       <Text variant={["sm", "md"]}>Respond to gallery offer</Text>
 
-      {totalPrice && (
+      {offerPrice && (
         <>
           <Spacer y={1} />
           <Flex alignItems="flex-end" gap={1}>
-            <Text variant={["md", "lg-display"]}>{totalPrice}</Text>
+            <Text variant={["md", "lg-display"]}>{offerPrice}</Text>
             <Clickable
               display="flex"
               alignItems="center"
@@ -261,7 +261,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
               aria-expanded={isOfferDetailsExpanded}
               aria-label="Toggle offer details"
             >
-              <Text variant="xs">including shipping &amp; taxes</Text>
+              <Text variant="xs">excluding shipping &amp; taxes</Text>
               <Spacer x={0.5} />
               <ChevronUpIcon
                 height="18px"
@@ -322,7 +322,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
                   <>
                     <Spacer y={1} />
                     <Input
-                      title="Your offer ($)"
+                      title="Your counteroffer ($)"
                       placeholder="Enter amount excluding shipping & tax"
                       inputMode="numeric"
                       value={counterofferAmount}
@@ -376,13 +376,13 @@ interface RespondCompletedViewProps extends GetCompletedResponseParams {
 
 const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
   action,
-  totalPrice,
+  offerPrice,
   counterofferAmount,
   onEdit,
 }) => {
   const { title, detail, note } = getCompletedResponse({
     action,
-    totalPrice,
+    offerPrice,
     counterofferAmount,
   })
 
@@ -403,7 +403,7 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
           onClick={onEdit}
         >
           {/*TODO: maybe refactor to reuse across order/offer */}
-          <Text variant="xs" fontWeight="normal" color="mono100">
+          <Text variant="sm" fontWeight="normal" color="mono100">
             Edit
           </Text>
         </Clickable>
@@ -411,7 +411,7 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
 
       {(detail || note) && (
         <Box ml="30px" mt={1}>
-          {detail && <Text variant="sm-display">{detail}</Text>}
+          {detail && <Text variant="md">{detail}</Text>}
           {note && (
             <Text variant="sm-display" color="mono60">
               {note}
@@ -440,8 +440,6 @@ const FRAGMENT = graphql`
       amount {
         major
         currencyCode
-      }
-      buyerTotal {
         display
       }
     }
