@@ -26,6 +26,9 @@ interface City {
 
 interface GlobeMapProps {
   partnersData?: CityGuidesAppQuery$data["partnersConnection"]
+  selectedCity: City | null
+  onCitiesChange: (cities: City[]) => void
+  onCityClick: (city: City) => void
 }
 
 const TIER_CITIES = [
@@ -120,7 +123,12 @@ const MEXICO_CITY_QUERY = graphql`
   }
 `
 
-export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
+export const GlobeMap = ({
+  partnersData,
+  selectedCity: externalSelectedCity,
+  onCitiesChange,
+  onCityClick,
+}: GlobeMapProps) => {
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 20,
@@ -128,7 +136,6 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
   })
   const [isSpinning, setIsSpinning] = useState(true)
   const [hoveredCity, setHoveredCity] = useState<City | null>(null)
-  const [selectedCity, setSelectedCity] = useState<City | null>(null)
   const [hoveredLocation, setHoveredLocation] =
     useState<PartnerLocation | null>(null)
   const animationFrameRef = useRef<number | null>(null)
@@ -297,50 +304,36 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
     return uniquePartners.size
   }, [mexicoCityLocations])
 
+  // Notify parent when cities change
+  useEffect(() => {
+    onCitiesChange(cities)
+  }, [cities, onCitiesChange])
+
   // Get locations for the selected city
   const selectedCityLocations = useMemo(() => {
-    if (!selectedCity) return []
+    if (!externalSelectedCity) return []
 
-    if (selectedCity.name === "Mexico City") {
+    if (externalSelectedCity.name === "Mexico City") {
       return mexicoCityLocations
     }
 
-    return selectedCity.locations
-  }, [selectedCity, mexicoCityLocations])
+    return externalSelectedCity.locations
+  }, [externalSelectedCity, mexicoCityLocations])
 
-  // Debug logging for selected city
+  // Trigger zoom animation when selectedCity changes (from marker click OR list click)
   useEffect(() => {
-    if (selectedCity) {
-      console.log(
-        `Selected city: ${selectedCity.name}, Locations: ${selectedCityLocations.length}`,
-      )
-      if (selectedCityLocations.length > 0) {
-        console.log("First location:", selectedCityLocations[0])
-      }
-    }
-  }, [selectedCity, selectedCityLocations])
+    if (externalSelectedCity && mapRef.current) {
+      setIsSpinning(false)
+      setHoveredCity(null)
 
-  // Handle city marker click to zoom in
-  const handleCityClick = (city: City) => {
-    setIsSpinning(false)
-    setHoveredCity(null)
-    setSelectedCity(city)
-
-    if (mapRef.current) {
       mapRef.current.flyTo({
-        center: [city.longitude, city.latitude],
+        center: [externalSelectedCity.longitude, externalSelectedCity.latitude],
         zoom: 12,
         duration: 2000,
         essential: true,
       })
-    }
-  }
-
-  // Handle back to globe view
-  const handleBackToGlobe = () => {
-    setSelectedCity(null)
-
-    if (mapRef.current) {
+    } else if (!externalSelectedCity && mapRef.current) {
+      // Back to globe view
       mapRef.current.flyTo({
         center: [0, 20],
         zoom: 2.7,
@@ -348,6 +341,29 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
         essential: true,
       })
     }
+  }, [externalSelectedCity])
+
+  // Debug logging for selected city
+  useEffect(() => {
+    if (externalSelectedCity) {
+      console.log(
+        `Selected city: ${externalSelectedCity.name}, Locations: ${selectedCityLocations.length}`,
+      )
+      if (selectedCityLocations.length > 0) {
+        console.log("First location:", selectedCityLocations[0])
+      }
+    }
+  }, [externalSelectedCity, selectedCityLocations])
+
+  // Handle city marker click to zoom in
+  const handleCityClick = (city: City) => {
+    setHoveredCity(null)
+    onCityClick(city)
+  }
+
+  // Handle back to globe view
+  const handleBackToGlobe = () => {
+    onCityClick(null as any)
   }
 
   return (
@@ -381,7 +397,7 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
         doubleClickZoom={false}
         touchZoomRotate={false}
       >
-        {!selectedCity &&
+        {!externalSelectedCity &&
           cities.map(city => {
             return (
               <Marker
@@ -414,7 +430,7 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
             )
           })}
 
-        {selectedCity &&
+        {externalSelectedCity &&
           selectedCityLocations.map(location => {
             return (
               <Marker
@@ -447,7 +463,7 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
             )
           })}
 
-        {hoveredCity && !selectedCity && (
+        {hoveredCity && !externalSelectedCity && (
           <Popup
             key={hoveredCity.name}
             longitude={hoveredCity.longitude}
@@ -543,7 +559,7 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
           </Popup>
         )}
 
-        {hoveredLocation && selectedCity && (
+        {hoveredLocation && externalSelectedCity && (
           <Popup
             key={hoveredLocation.locationId}
             longitude={hoveredLocation.longitude}
@@ -560,7 +576,7 @@ export const GlobeMap = ({ partnersData }: GlobeMapProps) => {
         )}
       </MapView>
 
-      {selectedCity && (
+      {externalSelectedCity && (
         <Box position="absolute" top={20} right={20}>
           <Button onClick={handleBackToGlobe} size="small">
             ← Back to Globe View

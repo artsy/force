@@ -1,14 +1,32 @@
 import { Box, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { GlobeMap } from "./Components/GlobeMap"
+import { CityList } from "./Components/CityList"
 import { graphql } from "react-relay"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import type { CityGuidesAppQuery } from "__generated__/CityGuidesAppQuery.graphql"
+import { useState, useCallback } from "react"
+
+interface City {
+  name: string
+  country: string
+  latitude: number
+  longitude: number
+  galleryCount: number
+  locations: any[]
+}
 
 export const CityGuidesApp = () => {
   const { data } = useClientQuery<CityGuidesAppQuery>({
     query: cityGuidesQuery,
   })
+
+  const [cities, setCities] = useState<City[]>([])
+  const [selectedCity, setSelectedCity] = useState<City | null>(null)
+
+  const handleCityClick = useCallback((city: City) => {
+    setSelectedCity(city)
+  }, [])
 
   return (
     <>
@@ -19,13 +37,26 @@ export const CityGuidesApp = () => {
           <Text variant="xl" mb={2}>
             City Guides
           </Text>
-          <Text variant="sm-display" color="black60">
+          <Text variant="sm-display" color="black60" mb={2}>
             Discover galleries and art spaces around the world
           </Text>
         </Box>
 
+        <Box px={4}>
+          <CityList
+            cities={cities}
+            selectedCity={selectedCity}
+            onCityClick={handleCityClick}
+          />
+        </Box>
+
         <Box flex={1} minHeight={0}>
-          <GlobeMap partnersData={data?.partnersConnection} />
+          <GlobeMap
+            partnersData={data?.partnersConnection}
+            selectedCity={selectedCity}
+            onCitiesChange={setCities}
+            onCityClick={handleCityClick}
+          />
         </Box>
       </Box>
     </>
