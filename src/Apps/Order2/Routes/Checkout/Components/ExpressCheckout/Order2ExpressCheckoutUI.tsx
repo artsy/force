@@ -1,4 +1,4 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
   useElements,
@@ -22,15 +22,15 @@ import {
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
+import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
-import { RouterLink } from "System/Components/RouterLink"
 import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import createLogger from "Utils/logger"
 import type {
@@ -666,6 +666,7 @@ export const Order2ExpressCheckoutUI: React.FC<
         <>
           <CheckoutErrorBanner
             error={error}
+            checkoutTracking={checkoutTracking}
             analytics={{
               flow: "Express checkout",
             }}
@@ -674,18 +675,12 @@ export const Order2ExpressCheckoutUI: React.FC<
         </>
       )}
       {expressCheckoutElement}
-      <Text variant="xs" color="mono60" mt={[1, 1, 2]}>
-        <>By clicking Pay, I agree to Artsy's </>
-        <RouterLink
-          inline
-          to="https://www.artsy.net/terms"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          General Terms and Conditions of Sale
-        </RouterLink>
-        .
-      </Text>
+      <Spacer y={[1, 1, 2]} />
+      <TermsAndConditions
+        onClickTermsAndConditions={() => {
+          checkoutTracking.clickedTermsAndConditions()
+        }}
+      />
     </Box>
   )
 }

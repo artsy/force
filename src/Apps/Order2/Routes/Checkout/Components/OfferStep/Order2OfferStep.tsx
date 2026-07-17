@@ -306,6 +306,7 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
             <CheckoutErrorBanner
               ref={errorBannerRef}
               error={offerAmountError}
+              checkoutTracking={checkoutTracking}
               analytics={{ flow: "User setting offer" }}
             />
           )}

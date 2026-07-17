@@ -317,4 +317,48 @@ describe("Order2RespondSummary", () => {
       screen.queryByRole("button", { name: "Submit" }),
     ).not.toBeInTheDocument()
   })
+
+  it("prices the summary from the pending draft without disturbing the gallery-offer total shown elsewhere", () => {
+    renderWithRelay({
+      Me: () => ({
+        order: {
+          mode: "OFFER",
+          internalID: "order-id",
+          lastSubmittedOffer: {
+            internalID: "gallery-offer-id",
+            createdAt: "2025-01-01T00:00:00Z",
+          },
+          pendingOffer: {
+            internalID: "pending-offer-id",
+            createdAt: "2025-02-01T00:00:00Z", // after the gallery offer => current-round draft
+            amount: { major: 200 },
+            pricingBreakdownLines: [
+              {
+                __typename: "TotalLine",
+                displayName: "Total",
+                amount: { display: "Counteroffer $200" },
+              },
+            ],
+          },
+          // Order-level pricing = what accept/decline (priceFromPendingOffer={false})
+          // shows. Per verified Exchange behavior, this is genuinely a separate,
+          // independently-written value — not something the counteroffer draft
+          // could have touched.
+          pricingBreakdownLines: [
+            {
+              __typename: "TotalLine",
+              displayName: "Total",
+              amount: { display: "Order $100" },
+            },
+          ],
+        },
+      }),
+    })
+
+    // Selecting COUNTEROFFER flips the summary's priceFromPendingOffer gate on.
+    fireEvent.click(screen.getByText("Send counteroffer"))
+
+    expect(screen.getByText("Counteroffer $200")).toBeInTheDocument()
+    expect(screen.getByText("Order $100")).toBeInTheDocument()
+  })
 })

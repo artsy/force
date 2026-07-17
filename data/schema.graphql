@@ -2722,6 +2722,16 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   ): [ArtistInsight!]!
 
   """
+  Instagram media for display on an artist page.
+  """
+  instagramMedia(
+    """
+    The number of media items to return.
+    """
+    first: Int
+  ): [ArtistInstagramMedia]
+
+  """
   A type-specific ID likely used as a database ID.
   """
   internalID: ID!
@@ -3063,6 +3073,13 @@ type ArtistInsightsCount {
   groupShowCount: Int!
   reviewedCount: Int!
   soloShowCount: Int!
+}
+
+type ArtistInstagramMedia {
+  caption: String
+  image: Image
+  internalID: String
+  permalink: String
 }
 
 type ArtistMeta {
@@ -4936,6 +4953,50 @@ type ArtworkFilterNode {
   The display title for this filtered connection
   """
   title: String!
+}
+
+type ArtworkFilterSuggestion {
+  """
+  Values the parser rejected as invalid.
+  """
+  dropped: [ArtworkFilterSuggestionDropped!]!
+
+  """
+  True when parsing failed and the query fell back to a plain keyword search.
+  """
+  fellOpen: Boolean
+
+  """
+  Validated hard filters to pass to artworksConnection.
+  """
+  filters: ArtworkFilterSuggestionFilters
+
+  """
+  Leftover 'vibe' text to use as a keyword search.
+  """
+  keyword: String
+}
+
+type ArtworkFilterSuggestionDropped {
+  field: String
+  value: String
+}
+
+type ArtworkFilterSuggestionFilters {
+  acquireable: Boolean
+  artistNationalities: [String]
+  atAuction: Boolean
+  attributionClass: [String]
+  colors: [String]
+  forSale: Boolean
+  framed: Boolean
+  geneIDs: [String]
+  inquireable: Boolean
+  majorPeriods: [String]
+  offerable: Boolean
+  priceRange: String
+  signed: Boolean
+  sizes: [ArtworkSizes]
 }
 
 union ArtworkHighlight = Article | Show
@@ -31553,6 +31614,16 @@ type Query {
     """
     status: ArtworkDuplicatePairStatus
   ): ArtworkDuplicatePairConnection
+
+  """
+  Interpret a natural-language search query into validated artwork filters.
+  """
+  artworkFilterSuggestions(
+    """
+    The natural-language search query.
+    """
+    query: String!
+  ): ArtworkFilterSuggestion
   artworkImport(id: String!): ArtworkImport
 
   """
@@ -31584,6 +31655,26 @@ type Query {
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
+
+  """
+  A connection of artworks matching an uploaded query image, using a pure vector (neural) image search.
+  """
+  artworksByImageConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    S3 bucket of the uploaded query image.
+    """
+    s3Bucket: String!
+
+    """
+    S3 key of the uploaded query image.
+    """
+    s3Key: String!
+  ): ArtworkConnection
 
   """
   Artworks Elastic Search results
@@ -41312,6 +41403,16 @@ type Viewer {
     """
     status: ArtworkDuplicatePairStatus
   ): ArtworkDuplicatePairConnection
+
+  """
+  Interpret a natural-language search query into validated artwork filters.
+  """
+  artworkFilterSuggestions(
+    """
+    The natural-language search query.
+    """
+    query: String!
+  ): ArtworkFilterSuggestion
   artworkImport(id: String!): ArtworkImport
 
   """
@@ -41343,6 +41444,26 @@ type Viewer {
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
+
+  """
+  A connection of artworks matching an uploaded query image, using a pure vector (neural) image search.
+  """
+  artworksByImageConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    S3 bucket of the uploaded query image.
+    """
+    s3Bucket: String!
+
+    """
+    S3 key of the uploaded query image.
+    """
+    s3Key: String!
+  ): ArtworkConnection
 
   """
   Artworks Elastic Search results

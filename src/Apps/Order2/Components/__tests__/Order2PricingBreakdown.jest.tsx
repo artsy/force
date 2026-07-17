@@ -4,9 +4,9 @@ import type { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCh
 import { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { DeepPartial } from "Utils/typeSupport"
-import type { Order2CheckoutPricingBreakdownTestQuery } from "__generated__/Order2CheckoutPricingBreakdownTestQuery.graphql"
+import type { Order2PricingBreakdownTestQuery } from "__generated__/Order2PricingBreakdownTestQuery.graphql"
 import { graphql } from "react-relay"
-import { Order2CheckoutPricingBreakdown } from "../Order2CheckoutPricingBreakdown"
+import { Order2PricingBreakdown } from "../Order2PricingBreakdown"
 
 jest.unmock("react-relay")
 
@@ -53,8 +53,8 @@ beforeEach(() => {
   }
 })
 
-const { renderWithRelay } =
-  setupTestWrapperTL<Order2CheckoutPricingBreakdownTestQuery>({
+const { renderWithRelay } = setupTestWrapperTL<Order2PricingBreakdownTestQuery>(
+  {
     Component: props => {
       const order = props.me!.order!
       const checkoutTracking = useCheckoutTracking({
@@ -62,7 +62,7 @@ const { renderWithRelay } =
         mode: "BUY",
       })
       return (
-        <Order2CheckoutPricingBreakdown
+        <Order2PricingBreakdown
           order={order}
           contextModule={ContextModule.ordersCheckout}
           isLoading={mockIsLoading}
@@ -72,15 +72,16 @@ const { renderWithRelay } =
       )
     },
     query: graphql`
-      query Order2CheckoutPricingBreakdownTestQuery @relay_test_operation {
+      query Order2PricingBreakdownTestQuery @relay_test_operation {
         me {
           order(id: "test-order") {
-            ...Order2CheckoutPricingBreakdown_order
+            ...Order2PricingBreakdown_order
           }
         }
       }
     `,
-  })
+  },
+)
 
 describe("Order2PricingBreakdown", () => {
   it("renders pricing breakdown lines with fallback text if amount is null", () => {

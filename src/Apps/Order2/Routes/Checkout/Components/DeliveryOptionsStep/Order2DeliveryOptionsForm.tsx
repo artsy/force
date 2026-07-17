@@ -150,6 +150,7 @@ export const Order2DeliveryOptionsForm: React.FC<
           <CheckoutErrorBanner
             ref={errorBannerRef}
             error={deliveryOptionError}
+            checkoutTracking={checkoutTracking}
             analytics={{ flow: "User setting delivery method" }}
           />
           <Spacer y={2} />

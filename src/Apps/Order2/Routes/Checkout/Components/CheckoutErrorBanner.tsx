@@ -1,6 +1,6 @@
 import { ErrorBanner } from "Apps/Order2/Components/ErrorBanner"
+import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { forwardRef, useEffect } from "react"
-import { useCheckoutContext } from "../Hooks/useCheckoutContext"
 
 export const ORDER_SUPPORT_EMAIL = "orders@artsy.net" as const
 
@@ -48,6 +48,7 @@ export const fallbackError = (
 
 export interface CheckoutErrorBannerProps {
   error?: CheckoutErrorBannerMessage | null
+  checkoutTracking: ReturnType<typeof useCheckoutTracking>
   analytics?: {
     flow: string
   }
@@ -56,8 +57,7 @@ export interface CheckoutErrorBannerProps {
 export const CheckoutErrorBanner = forwardRef<
   HTMLDivElement,
   CheckoutErrorBannerProps
->(({ error, analytics }, ref) => {
-  const { checkoutTracking } = useCheckoutContext()
+>(({ error, checkoutTracking, analytics }, ref) => {
   const flow = analytics?.flow
 
   // Track when error is displayed to user

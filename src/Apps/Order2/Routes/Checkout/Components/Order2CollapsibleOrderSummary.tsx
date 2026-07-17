@@ -1,7 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 import { Box, Clickable, Flex, Image, Spacer, Text } from "@artsy/palette"
-import { Order2CheckoutPricingBreakdown } from "Apps/Order2/Routes/Checkout/Components/Order2CheckoutPricingBreakdown"
+import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -126,7 +126,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
       >
         <Spacer y={1} />
         <Box mb={2}>
-          <Order2CheckoutPricingBreakdown
+          <Order2PricingBreakdown
             order={orderData}
             contextModule={contextModule}
             isLoading={isFulfillmentDetailsSaving}
@@ -141,7 +141,7 @@ export const Order2CollapsibleOrderSummary: React.FC<
 
 const FRAGMENT = graphql`
   fragment Order2CollapsibleOrderSummary_order on Order {
-    ...Order2CheckoutPricingBreakdown_order
+    ...Order2PricingBreakdown_order
     source
     buyerTotal {
       display

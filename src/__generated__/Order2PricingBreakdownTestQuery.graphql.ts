@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bfb960904b23a5c543a5a17a14fb3c52>>
+ * @generated SignedSource<<feef4616084989e84014a48eda7179f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Order2CheckoutPricingBreakdownTestQuery$variables = Record<PropertyKey, never>;
-export type Order2CheckoutPricingBreakdownTestQuery$data = {
+export type Order2PricingBreakdownTestQuery$variables = Record<PropertyKey, never>;
+export type Order2PricingBreakdownTestQuery$data = {
   readonly me: {
     readonly order: {
-      readonly " $fragmentSpreads": FragmentRefs<"Order2CheckoutPricingBreakdown_order">;
+      readonly " $fragmentSpreads": FragmentRefs<"Order2PricingBreakdown_order">;
     } | null | undefined;
   } | null | undefined;
 };
-export type Order2CheckoutPricingBreakdownTestQuery = {
-  response: Order2CheckoutPricingBreakdownTestQuery$data;
-  variables: Order2CheckoutPricingBreakdownTestQuery$variables;
+export type Order2PricingBreakdownTestQuery = {
+  response: Order2PricingBreakdownTestQuery$data;
+  variables: Order2PricingBreakdownTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -183,7 +183,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "Order2CheckoutPricingBreakdownTestQuery",
+    "name": "Order2PricingBreakdownTestQuery",
     "selections": [
       {
         "alias": null,
@@ -204,7 +204,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Order2CheckoutPricingBreakdown_order"
+                "name": "Order2PricingBreakdown_order"
               }
             ],
             "storageKey": "order(id:\"test-order\")"
@@ -220,7 +220,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "Order2CheckoutPricingBreakdownTestQuery",
+    "name": "Order2PricingBreakdownTestQuery",
     "selections": [
       {
         "alias": null,
@@ -291,7 +291,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e7d23bea4e0d0624e50d98ceff8d7ed9",
+    "cacheID": "21eb9a4f54ae8f26b32ee0e968c52b07",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -377,13 +377,13 @@ return {
         }
       }
     },
-    "name": "Order2CheckoutPricingBreakdownTestQuery",
+    "name": "Order2PricingBreakdownTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutPricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2CheckoutPricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutPricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query Order2PricingBreakdownTestQuery {\n  me {\n    order(id: \"test-order\") {\n      ...Order2PricingBreakdown_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c1b0ab3db9b0cca3db42d1cf655170f1";
+(node as any).hash = "dbac9586b71148a8d18eeaa130661fcd";
 
 export default node;

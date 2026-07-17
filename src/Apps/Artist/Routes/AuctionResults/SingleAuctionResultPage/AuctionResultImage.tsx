@@ -50,6 +50,7 @@ export const AuctionResultImage: React.FC<
       maxWidth={MAX_DIMENSION}
       aspectWidth={image.width || 1}
       aspectHeight={image.height || 1}
+      p={1}
     >
       <Image
         lazyLoad

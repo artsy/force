@@ -21,6 +21,7 @@ import { fairRoutes } from "Apps/Fair/fairRoutes"
 import { fairsRoutes } from "Apps/Fairs/fairsRoutes"
 import { favoritesRoutes } from "Apps/Favorites/favoritesRoutes"
 import { featureRoutes } from "Apps/Feature/featureRoutes"
+import { gamesRoutes } from "Apps/Games/gamesRoutes"
 import { geneRoutes } from "Apps/Gene/geneRoutes"
 import { homeRoutes } from "Apps/Home/homeRoutes"
 import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
@@ -93,6 +94,7 @@ const ROUTES = buildAppRoutes([
   fairsRoutes,
   favoritesRoutes,
   featureRoutes,
+  gamesRoutes,
   geneRoutes,
   homeRoutes,
   identityVerificationRoutes,

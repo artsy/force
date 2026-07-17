@@ -13,8 +13,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ErrorBanner } from "Apps/Order2/Components/ErrorBanner"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
@@ -23,7 +23,6 @@ import {
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
-import { hasCurrentCounterofferDraft } from "Apps/Order2/Routes/Respond/Utils/counterofferDraft"
 import createLogger from "Utils/logger"
 import type { Order2RespondForm_order$key } from "__generated__/Order2RespondForm_order.graphql"
 import { useState } from "react"
@@ -57,6 +56,9 @@ const DECLINE_WARNING = "Declining this offer ends this negotiation."
 const RESPONSE_REQUIRED_TITLE = "Response required"
 const RESPONSE_REQUIRED_MESSAGE =
   "Please accept, counter, or decline the gallery’s offer to continue."
+
+const COUNTEROFFER_TOO_LOW_TITLE = "Counteroffer amount too low"
+const COUNTEROFFER_TOO_LOW_MESSAGE = "Please increase amount"
 
 interface CompletedResponse {
   title: string
@@ -107,6 +109,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     editRespond,
     steps,
     checkoutTracking,
+    isCurrentCounterofferDraft,
   } = useRespondContext()
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
@@ -119,10 +122,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   // a draft that belongs to the current round — a pending offer from an earlier
   // round (buyer countered, gallery countered back) is stale and must be
   // ignored.
-  const draftCounterofferAmount = hasCurrentCounterofferDraft({
-    pendingOffer: orderData.pendingOffer,
-    galleryOffer: orderData.lastSubmittedOffer,
-  })
+  const draftCounterofferAmount = isCurrentCounterofferDraft
     ? orderData.pendingOffer?.amount?.major
     : null
   const [counterofferAmount, setCounterofferAmount] = useState(
@@ -142,6 +142,22 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   // Require a counteroffer amount before continuing.
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
+
+  const getValidationError = () => {
+    if (selectedAction === "COUNTEROFFER" && !isCounterofferValid) {
+      return {
+        title: COUNTEROFFER_TOO_LOW_TITLE,
+        message: COUNTEROFFER_TOO_LOW_MESSAGE,
+        code: "counteroffer_amount_too_low",
+      }
+    }
+
+    return {
+      title: RESPONSE_REQUIRED_TITLE,
+      message: RESPONSE_REQUIRED_MESSAGE,
+      code: "response_required",
+    }
+  }
 
   const handleSelectAction = (value: string) => {
     const action = value as RespondAction
@@ -276,9 +292,11 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
       {hasValidationError && (
         <>
-          <ErrorBanner title={RESPONSE_REQUIRED_TITLE}>
-            {RESPONSE_REQUIRED_MESSAGE}
-          </ErrorBanner>
+          <CheckoutErrorBanner
+            error={getValidationError()}
+            checkoutTracking={checkoutTracking}
+            analytics={{ flow: "User responding to offer" }}
+          />
           <Spacer y={2} />
         </>
       )}
@@ -384,7 +402,7 @@ const RespondCompletedView: React.FC<RespondCompletedViewProps> = ({
           aria-label="Edit response"
           onClick={onEdit}
         >
-          {/*TODO: maybe refactor to reuse across order/ofer */}
+          {/*TODO: maybe refactor to reuse across order/offer */}
           <Text variant="xs" fontWeight="normal" color="mono100">
             Edit
           </Text>
@@ -419,7 +437,6 @@ const FRAGMENT = graphql`
     internalID
     lastSubmittedOffer {
       internalID
-      createdAt
       amount {
         major
         currencyCode
@@ -429,7 +446,6 @@ const FRAGMENT = graphql`
       }
     }
     pendingOffer {
-      createdAt
       amount {
         major
       }
