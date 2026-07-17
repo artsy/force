@@ -7,6 +7,7 @@ module.exports = {
   moduleNameMapper: {
     "^luxon$": "<rootDir>/node_modules/luxon",
     "^react$": "<rootDir>/node_modules/react",
+    "\\.(png|jpe?g|gif|webp)$": "<rootDir>/src/Utils/fileMock.js",
   },
   reporters: ["default", "jest-junit"],
   setupFilesAfterEnv: [
