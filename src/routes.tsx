@@ -63,6 +63,7 @@ import { userRoutes } from "./Apps/User/userRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { recommendedArtistsRoutes } from "Apps/RecommendedArtists/recommendedArtistsRoutes"
 import { artworkRecommendationsRoutes } from "./Apps/ArtworkRecommendations/artworkRecommendationsRoutes"
+import { imageSearchRoutes } from "./Apps/ImageSearch/imageSearchRoutes"
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
@@ -119,6 +120,7 @@ const ROUTES = buildAppRoutes([
   saleRoutes,
   saleAgreementsRoutes,
   searchRoutes,
+  imageSearchRoutes,
   settingsRoutes,
   showRoutes,
   showsRoutes,

@@ -31,6 +31,7 @@ import type {
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useDebounce } from "use-debounce"
+import { SearchByImageButton } from "./ImageSearch/SearchByImageButton"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -443,6 +444,17 @@ export const SearchBarInput: FC<
         flip={false}
         height={40}
       />
+
+      <Box
+        position="absolute"
+        top={0}
+        bottom={0}
+        right={40}
+        display="flex"
+        alignItems="center"
+      >
+        <SearchByImageButton />
+      </Box>
 
       {isTrendingVisible && (
         <TrendingPanel
