@@ -68,7 +68,13 @@ const { renderWithRelay } = setupTestWrapperTL<Order2RespondFormTestQuery>({
 
 const defaultResolvers = {
   Order: () => ({ mode: "OFFER", pendingOffer: null }),
-  Money: () => ({ display: "$1,000.00", major: 1000, currencyCode: "USD" }),
+  Money: () => ({
+    display: "US$1,000.00",
+    amount: "1,000.00",
+    currencySymbol: "$",
+    major: 1000,
+    currencyCode: "USD",
+  }),
 }
 
 const continueButton = () =>
@@ -81,6 +87,13 @@ describe("Order2RespondForm", () => {
     expect(screen.getByText("Accept gallery offer")).toBeInTheDocument()
     expect(screen.getByText("Send counteroffer")).toBeInTheDocument()
     expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
+  })
+
+  it("shows the gallery offer amount with a plain $ instead of US$", () => {
+    renderWithRelay(defaultResolvers)
+
+    expect(screen.getAllByText("$1,000.00").length).toBeGreaterThan(0)
+    expect(screen.queryByText("US$1,000.00")).not.toBeInTheDocument()
   })
 
   it("shows the response-required banner when submitting without a selection", () => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87ed048704315482da2bc58e788e9455>>
+ * @generated SignedSource<<dcfcb94b23e54c1b5b8ee13de4f16d66>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,9 @@ export type Order2RespondForm_order$data = {
   readonly internalID: string;
   readonly lastSubmittedOffer: {
     readonly amount: {
+      readonly amount: string | null | undefined;
       readonly currencyCode: string;
-      readonly display: string | null | undefined;
+      readonly currencySymbol: string | null | undefined;
       readonly major: number;
     } | null | undefined;
     readonly internalID: string;
@@ -84,7 +85,14 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "display",
+              "name": "currencySymbol",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "amount",
               "storageKey": null
             }
           ],
@@ -127,6 +135,6 @@ return {
 };
 })();
 
-(node as any).hash = "3d3b96aabcc242e905a494cd152b4e30";
+(node as any).hash = "10d0b470dddc037220b75913f664fb2f";
 
 export default node;
