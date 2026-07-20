@@ -147,6 +147,40 @@ describe("OrderDetailsOrderSummary", () => {
     expect(parentLink).toBeNull()
   })
 
+  it("renders the gallery name linking to the partner page in a new window", () => {
+    renderWithRelay({
+      Order: () => ({
+        ...orderData,
+      }),
+    })
+
+    const galleryLink = screen.getByRole("link", { name: "Test Partner" })
+    expect(galleryLink).toHaveAttribute("href", "/test-partner")
+    expect(galleryLink).toHaveAttribute("target", "_blank")
+  })
+
+  it("renders the gallery name as plain text when there is no partner href", () => {
+    renderWithRelay({
+      Order: () => ({
+        ...orderData,
+        lineItems: [
+          {
+            ...orderData.lineItems[0],
+            artwork: {
+              ...orderData.lineItems[0].artwork,
+              partner: { name: "Test Partner", href: null },
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByText("Test Partner")).toBeInTheDocument()
+    expect(
+      screen.queryByRole("link", { name: "Test Partner" }),
+    ).not.toBeInTheDocument()
+  })
+
   it("renders artwork image NOT wrapped in a link if artwork.slug is missing", () => {
     renderWithRelay({
       Order: () => ({
@@ -182,7 +216,7 @@ const orderData = {
     {
       artwork: {
         slug: "test-artwork-slug",
-        partner: { name: "Test Partner" },
+        partner: { name: "Test Partner", href: "/test-partner" },
       },
       artworkVersion: {
         title: "Test Artwork Title",

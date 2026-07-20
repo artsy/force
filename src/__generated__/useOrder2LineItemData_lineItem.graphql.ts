@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6287dbfdd74a018b96ad586180a7f5f9>>
+ * @generated SignedSource<<e5f1a2baa209dc3b48d4060c0f138a0c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,10 @@ export type useOrder2LineItemData_lineItem$data = {
       readonly __typename: "%other";
     }>;
     readonly internalID: string;
+    readonly partner: {
+      readonly href: string | null | undefined;
+      readonly name: string | null | undefined;
+    } | null | undefined;
   } | null | undefined;
   readonly artworkOrEditionSet: {
     readonly __typename: "Artwork";
@@ -265,6 +269,31 @@ return {
         },
         {
           "alias": null,
+          "args": null,
+          "concreteType": "Partner",
+          "kind": "LinkedField",
+          "name": "partner",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "name",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "href",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
@@ -298,6 +327,6 @@ return {
 };
 })();
 
-(node as any).hash = "190eae3829041a31350960a00d561018";
+(node as any).hash = "35a3ccd40b3f03b981952e614df48611";
 
 export default node;

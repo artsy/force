@@ -13,6 +13,7 @@ import { useOrder2Tracking } from "Apps/Order2/Hooks/useOrder2Tracking"
 import { OrderDetailsPricingBreakdown } from "Apps/Order/Routes/Details/Components/OrderDetailsPricingBreakdown"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
 import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
+import { SellerName } from "Components/SellerName"
 import { RouterLink } from "System/Components/RouterLink"
 import type { OrderDetailsOrderSummary_order$key } from "__generated__/OrderDetailsOrderSummary_order.graphql"
 import type * as React from "react"
@@ -99,9 +100,10 @@ export const OrderDetailsOrderSummary: React.FC<
             </Text>
           )}
         </Flex>
-        <Text variant="sm" color="mono60">
-          {artwork?.partner?.name}
-        </Text>
+        <SellerName
+          name={artwork?.partner?.name}
+          href={artwork?.partner?.href}
+        />
         {price && (
           <Text variant="sm" color="mono60">
             List price: {price}
@@ -171,6 +173,7 @@ const FRAGMENT = graphql`
         published
         partner {
           name
+          href
         }
       }
       artworkOrEditionSet {

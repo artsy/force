@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<35219856a3488af05ead1e004b892eb3>>
+ * @generated SignedSource<<3ce3ced9d9a6c70ac70f229ebe52be28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -473,6 +473,32 @@ return {
                       (v3/*: any*/),
                       {
                         "alias": null,
+                        "args": null,
+                        "concreteType": "Partner",
+                        "kind": "LinkedField",
+                        "name": "partner",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "href",
+                            "storageKey": null
+                          },
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -641,7 +667,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c746342b2d096bd1051ea51fbaf5ce41",
+    "cacheID": "f84d7a62711539cdc2e0867059a16de1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -715,6 +741,15 @@ return {
         "me.order.lineItems.artwork.figures.resized.url": (v23/*: any*/),
         "me.order.lineItems.artwork.id": (v19/*: any*/),
         "me.order.lineItems.artwork.internalID": (v19/*: any*/),
+        "me.order.lineItems.artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "me.order.lineItems.artwork.partner.href": (v20/*: any*/),
+        "me.order.lineItems.artwork.partner.id": (v19/*: any*/),
+        "me.order.lineItems.artwork.partner.name": (v20/*: any*/),
         "me.order.lineItems.artwork.slug": (v19/*: any*/),
         "me.order.lineItems.artworkOrEditionSet": {
           "enumValues": null,
@@ -806,7 +841,7 @@ return {
     },
     "name": "Order2RespondSummaryTestQuery",
     "operationKind": "query",
-    "text": "query Order2RespondSummaryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2RespondForm_order\n      ...Order2RespondSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2RespondContext_order on Order {\n  source\n  mode\n  lastSubmittedOffer {\n    createdAt\n    id\n  }\n  pendingOffer {\n    createdAt\n    id\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  internalID\n  lastSubmittedOffer {\n    internalID\n    amount {\n      major\n      currencyCode\n      display\n    }\n    id\n  }\n  pendingOffer {\n    amount {\n      major\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2OrderSummary_order\n  internalID\n  lastSubmittedOffer {\n    internalID\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n  lineItems {\n    ...useOrder2LineItemData_lineItem\n    id\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query Order2RespondSummaryTestQuery {\n  me {\n    order(id: \"order-id\") {\n      ...Order2RespondContext_order\n      ...Order2RespondForm_order\n      ...Order2RespondSummary_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2RespondContext_order on Order {\n  source\n  mode\n  lastSubmittedOffer {\n    createdAt\n    id\n  }\n  pendingOffer {\n    createdAt\n    id\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2RespondForm_order on Order {\n  internalID\n  lastSubmittedOffer {\n    internalID\n    amount {\n      major\n      currencyCode\n      display\n    }\n    id\n  }\n  pendingOffer {\n    amount {\n      major\n    }\n    id\n  }\n  ...Order2RespondOfferDetails_order\n}\n\nfragment Order2RespondOfferDetails_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2RespondSummary_order on Order {\n  ...Order2OrderSummary_order\n  internalID\n  lastSubmittedOffer {\n    internalID\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n  lineItems {\n    ...useOrder2LineItemData_lineItem\n    id\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    partner {\n      name\n      href\n      id\n    }\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
