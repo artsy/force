@@ -4,7 +4,7 @@ import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
-import { GalleryName } from "Components/GalleryName"
+import { SellerName } from "Components/SellerName"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2OrderSummary_order$key } from "__generated__/Order2OrderSummary_order.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -102,12 +102,10 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
             {[artworkTitle, date].join(", ")}
           </Text>
-          <GalleryName
+          <SellerName
             name={partnerName}
             href={partnerHref}
             overflowEllipsis
-            variant="sm"
-            color="mono60"
             textAlign="left"
           />
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
