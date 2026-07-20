@@ -29,7 +29,9 @@ export const autoResolvePhoneValidation = (env: MockEnvironment): void => {
     env.mock.queueOperationResolver(makeResolver())
 
     return MockPayloadGenerator.generate(operation, {
-      PhoneNumber: () => ({ isValid: true }),
+      // The field resolves to the `PhoneNumberType` GraphQL type; keying on
+      // anything else silently falls back to a default mock value for `isValid`.
+      PhoneNumberType: () => ({ isValid: true }),
     })
   }
 
