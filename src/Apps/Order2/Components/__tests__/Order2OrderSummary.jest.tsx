@@ -1,6 +1,9 @@
 import { ContextModule } from "@artsy/cohesion"
 import { screen } from "@testing-library/react"
-import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
+import {
+  Order2OrderSummary,
+  type Order2OrderSummaryArtwork,
+} from "Apps/Order2/Components/Order2OrderSummary"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2OrderSummaryTestQuery } from "__generated__/Order2OrderSummaryTestQuery.graphql"
 import { Text } from "@artsy/palette"
@@ -13,7 +16,7 @@ const checkoutTracking = {
   clickedBuyerProtection: jest.fn(),
 } as any
 
-const artwork = {
+const artwork: Order2OrderSummaryArtwork = {
   artworkInternalID: "artwork-id",
   artistNames: "Pablo Picasso",
   title: "Guernica",
@@ -22,6 +25,8 @@ const artwork = {
   attributionClassLabel: "Unique work",
   dimensionsLabel: "10 × 20 in",
   imageURL: "https://example.com/image.jpg",
+  partnerName: "Gagosian",
+  partnerHref: "/gagosian",
 }
 
 const { renderWithRelay } = setupTestWrapperTL<Order2OrderSummaryTestQuery>({
@@ -67,6 +72,27 @@ describe("Order2OrderSummary", () => {
     expect(screen.getByText("List price: $1,000.00")).toBeInTheDocument()
     expect(screen.getByText("Unique work")).toBeInTheDocument()
     expect(screen.getByText("10 × 20 in")).toBeInTheDocument()
+  })
+
+  it("renders the gallery name linking to the partner page in a new window", () => {
+    renderWithRelay()
+
+    const galleryLink = screen.getByRole("link", { name: "Gagosian" })
+    expect(galleryLink).toHaveAttribute("href", "/gagosian")
+    expect(galleryLink).toHaveAttribute("target", "_blank")
+  })
+
+  it("renders the gallery name as plain text when there is no partner href", () => {
+    artwork.partnerHref = null
+
+    renderWithRelay()
+
+    expect(screen.getByText("Gagosian")).toBeInTheDocument()
+    expect(
+      screen.queryByRole("link", { name: "Gagosian" }),
+    ).not.toBeInTheDocument()
+
+    artwork.partnerHref = "/gagosian"
   })
 
   it("renders the buyer guarantee message", () => {

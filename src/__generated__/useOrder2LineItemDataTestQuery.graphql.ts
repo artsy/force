@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<598cffae74a2a17db77dfd162711fc34>>
+ * @generated SignedSource<<c196fef05860494c0c4f91a825e80ce2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -145,13 +145,13 @@ v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "dimensions"
+  "type": "String"
 },
 v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "dimensions"
 };
 return {
   "fragment": {
@@ -353,6 +353,32 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": null,
+                        "concreteType": "Partner",
+                        "kind": "LinkedField",
+                        "name": "partner",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "href",
+                            "storageKey": null
+                          },
+                          (v6/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -402,7 +428,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a0eadf00e02fbac8277326b4913edc0e",
+    "cacheID": "8fbe43c5c5d07e9d82a97dcb6cf260c9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -444,6 +470,15 @@ return {
         "me.order.lineItems.artwork.figures.resized.url": (v11/*: any*/),
         "me.order.lineItems.artwork.id": (v10/*: any*/),
         "me.order.lineItems.artwork.internalID": (v10/*: any*/),
+        "me.order.lineItems.artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "me.order.lineItems.artwork.partner.href": (v13/*: any*/),
+        "me.order.lineItems.artwork.partner.id": (v10/*: any*/),
+        "me.order.lineItems.artwork.partner.name": (v13/*: any*/),
         "me.order.lineItems.artworkOrEditionSet": {
           "enumValues": null,
           "nullable": true,
@@ -452,21 +487,21 @@ return {
         },
         "me.order.lineItems.artworkOrEditionSet.__isNode": (v11/*: any*/),
         "me.order.lineItems.artworkOrEditionSet.__typename": (v11/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.dimensions": (v13/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.dimensions.cm": (v14/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.dimensions.in": (v14/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.framedDimensions": (v13/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.framedDimensions.cm": (v14/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.framedDimensions.in": (v14/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.dimensions": (v14/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.dimensions.cm": (v13/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.dimensions.in": (v13/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.framedDimensions": (v14/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.framedDimensions.cm": (v13/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.framedDimensions.in": (v13/*: any*/),
         "me.order.lineItems.artworkOrEditionSet.id": (v10/*: any*/),
-        "me.order.lineItems.artworkOrEditionSet.price": (v14/*: any*/),
+        "me.order.lineItems.artworkOrEditionSet.price": (v13/*: any*/),
         "me.order.lineItems.artworkVersion": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkVersion"
         },
-        "me.order.lineItems.artworkVersion.artistNames": (v14/*: any*/),
+        "me.order.lineItems.artworkVersion.artistNames": (v13/*: any*/),
         "me.order.lineItems.artworkVersion.attributionClass": {
           "enumValues": null,
           "nullable": true,
@@ -474,8 +509,8 @@ return {
           "type": "AttributionClass"
         },
         "me.order.lineItems.artworkVersion.attributionClass.id": (v10/*: any*/),
-        "me.order.lineItems.artworkVersion.attributionClass.shortDescription": (v14/*: any*/),
-        "me.order.lineItems.artworkVersion.date": (v14/*: any*/),
+        "me.order.lineItems.artworkVersion.attributionClass.shortDescription": (v13/*: any*/),
+        "me.order.lineItems.artworkVersion.date": (v13/*: any*/),
         "me.order.lineItems.artworkVersion.id": (v10/*: any*/),
         "me.order.lineItems.artworkVersion.image": {
           "enumValues": null,
@@ -485,14 +520,14 @@ return {
         },
         "me.order.lineItems.artworkVersion.image.resized": (v12/*: any*/),
         "me.order.lineItems.artworkVersion.image.resized.url": (v11/*: any*/),
-        "me.order.lineItems.artworkVersion.image.url": (v14/*: any*/),
-        "me.order.lineItems.artworkVersion.title": (v14/*: any*/),
+        "me.order.lineItems.artworkVersion.image.url": (v13/*: any*/),
+        "me.order.lineItems.artworkVersion.title": (v13/*: any*/),
         "me.order.lineItems.id": (v10/*: any*/)
       }
     },
     "name": "useOrder2LineItemDataTestQuery",
     "operationKind": "query",
-    "text": "query useOrder2LineItemDataTestQuery {\n  me {\n    order(id: \"order-id\") {\n      lineItems {\n        ...useOrder2LineItemData_lineItem\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query useOrder2LineItemDataTestQuery {\n  me {\n    order(id: \"order-id\") {\n      lineItems {\n        ...useOrder2LineItemData_lineItem\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    partner {\n      name\n      href\n      id\n    }\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
