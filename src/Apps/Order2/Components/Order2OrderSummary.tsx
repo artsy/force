@@ -126,7 +126,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           )}
         </Box>
       </Flex>
-      <Box>
+      <Box py={1}>
         <Order2PricingBreakdown
           order={orderData}
           contextModule={contextModule}
@@ -135,7 +135,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           priceFromPendingOffer={priceFromPendingOffer}
         />
       </Box>
-      <Spacer y={2} />
+      <Spacer y={1} />
       <Message variant="default" p={1}>
         <Flex>
           <ShieldIcon fill="mono100" />
