@@ -35,6 +35,7 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
   return (
     <Box backgroundColor="mono0" px={[2, 2, 4]}>
       <Expandable
+        expanded
         label={<SectionHeading>Offer history</SectionHeading>}
         borderColor="transparent"
         backgroundColor="mono0"

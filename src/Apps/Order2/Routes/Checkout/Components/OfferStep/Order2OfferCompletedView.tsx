@@ -1,5 +1,6 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
+import { Order2EditButton } from "Apps/Order2/Components/Order2EditButton"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -37,17 +38,10 @@ export const Order2OfferCompletedView: React.FC<
           <Spacer x={1} />
           <SectionHeading>Offer</SectionHeading>
         </Flex>
-        <Clickable
-          textDecoration="underline"
-          cursor="pointer"
-          type="button"
+        <Order2EditButton
           aria-label="Edit offer amount"
           onClick={onClickEdit}
-        >
-          <Text variant="sm" fontWeight="normal" color="mono100">
-            Edit
-          </Text>
-        </Clickable>
+        />
       </Flex>
 
       <Flex

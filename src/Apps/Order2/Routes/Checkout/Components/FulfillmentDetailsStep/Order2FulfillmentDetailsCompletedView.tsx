@@ -1,5 +1,6 @@
 import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { Order2EditButton } from "Apps/Order2/Components/Order2EditButton"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { AddressDisplay } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/AddressDisplay"
 
@@ -36,17 +37,10 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
             <SectionHeading>Pickup</SectionHeading>
           </Flex>
           {onEdit && (
-            <Clickable
-              textDecoration="underline"
-              cursor="pointer"
-              type="button"
+            <Order2EditButton
               aria-label="Edit pickup details"
               onClick={onEdit}
-            >
-              <Text variant="sm" fontWeight="normal" color="mono100">
-                Edit
-              </Text>
-            </Clickable>
+            />
           )}
         </Flex>
         <Flex alignItems="center" ml="30px" mt={1}>
@@ -71,17 +65,10 @@ export const Order2FulfillmentDetailsCompletedView: React.FC<
           <SectionHeading>Delivery</SectionHeading>
         </Flex>
         {onEdit && (
-          <Clickable
-            textDecoration="underline"
-            cursor="pointer"
-            type="button"
+          <Order2EditButton
             aria-label="Edit delivery address"
             onClick={onEdit}
-          >
-            <Text variant="sm" fontWeight="normal" color="mono100">
-              Edit
-            </Text>
-          </Clickable>
+          />
         )}
       </Flex>
 

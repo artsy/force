@@ -65,14 +65,16 @@ export const ArtworkSidebarCollectorSignal: React.FC<
     const startAt = formatDate(
       data.collectorSignals?.runningShow?.startAt ?? "",
     )
-    const endAt = formatDate(data.collectorSignals?.runningShow?.endAt ?? "")
+    const rawEndAt = data.collectorSignals?.runningShow?.endAt
+    const endAt = rawEndAt ? formatDate(rawEndAt) : null
 
     return (
       <Flex alignItems="top" my={4} data-testid="showing-now">
         <FairIcon mr={1} mt={0.5} />
         <Stack gap={0}>
           <Text variant="sm" color="mono100">
-            Showing now • {startAt}–{endAt}
+            Showing now • {startAt}
+            {endAt ? `–${endAt}` : ""}
           </Text>
           <RouterLink to={data.collectorSignals?.runningShow?.href}>
             <Text variant="sm">{data.collectorSignals?.runningShow?.name}</Text>

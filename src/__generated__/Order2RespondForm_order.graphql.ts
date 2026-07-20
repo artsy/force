@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b907103dd87ffdd8dba0223def8c2680>>
+ * @generated SignedSource<<87ed048704315482da2bc58e788e9455>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,8 @@ export type Order2RespondForm_order$data = {
   readonly lastSubmittedOffer: {
     readonly amount: {
       readonly currencyCode: string;
-      readonly major: number;
-    } | null | undefined;
-    readonly buyerTotal: {
       readonly display: string | null | undefined;
+      readonly major: number;
     } | null | undefined;
     readonly internalID: string;
   } | null | undefined;
@@ -81,18 +79,7 @@ return {
               "kind": "ScalarField",
               "name": "currencyCode",
               "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Money",
-          "kind": "LinkedField",
-          "name": "buyerTotal",
-          "plural": false,
-          "selections": [
+            },
             {
               "alias": null,
               "args": null,
@@ -140,6 +127,6 @@ return {
 };
 })();
 
-(node as any).hash = "05cc5edda9300079248f07e0733f8724";
+(node as any).hash = "3d3b96aabcc242e905a494cd152b4e30";
 
 export default node;
