@@ -1,4 +1,5 @@
 import type { CreateTokenCardData } from "@stripe/stripe-js"
+import { ErrorWithMetadata, sendErrorToService } from "Utils/errors"
 import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
 import { debounce } from "lodash"
 import { fetchQuery, graphql } from "react-relay"
@@ -32,6 +33,15 @@ type PhoneNumber = {
   regionCode: string
 }
 
+// Cap how long we wait on the validation query. Without this a hung request
+// leaves the validation promise unresolved, which stalls Formik and can block
+// form submission indefinitely. On timeout we fail open (see below).
+export const PHONE_VALIDATION_TIMEOUT_MS = 5000
+
+// Sentinel used to distinguish a timed-out request (which we report to Sentry)
+// from a request that merely returned no data.
+const TIMED_OUT = Symbol("phoneValidationTimedOut")
+
 const phoneValidator = debounce(
   async (
     { national, regionCode }: PhoneNumber,
@@ -42,24 +52,46 @@ const phoneValidator = debounce(
       return resolve(false)
     }
 
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
+
     try {
-      const response = await fetchQuery<utilsValidatePhoneNumberQuery>(
-        relayEnvironment,
-        graphql`
-          query utilsValidatePhoneNumberQuery(
-            $phoneNumber: String!
-            $regionCode: String
-          ) {
-            phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {
-              isValid
+      const response = await Promise.race([
+        fetchQuery<utilsValidatePhoneNumberQuery>(
+          relayEnvironment,
+          graphql`
+            query utilsValidatePhoneNumberQuery(
+              $phoneNumber: String!
+              $regionCode: String
+            ) {
+              phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {
+                isValid
+              }
             }
-          }
-        `,
-        { phoneNumber: national, regionCode },
-      ).toPromise()
+          `,
+          { phoneNumber: national, regionCode },
+        ).toPromise(),
+        new Promise<typeof TIMED_OUT>(timeoutResolve => {
+          timeoutId = setTimeout(() => {
+            timeoutResolve(TIMED_OUT)
+          }, PHONE_VALIDATION_TIMEOUT_MS)
+        }),
+      ])
+
+      if (response === TIMED_OUT) {
+        // Surface hung requests in Sentry for visibility, then fail open so a
+        // slow or hung request can't block form submission.
+        sendErrorToService(
+          new ErrorWithMetadata("Phone number validation timed out", {
+            regionCode,
+            timeoutMs: PHONE_VALIDATION_TIMEOUT_MS,
+          }),
+        )
+
+        return resolve(true)
+      }
 
       if (!response?.phoneNumber) {
-        // Assume the phone number is valid if we can't validate it
+        // Assume the phone number is valid if we can't validate it.
         return resolve(true)
       }
 
@@ -69,6 +101,10 @@ const phoneValidator = debounce(
 
       // Assume the phone number is valid if we can't validate it
       return resolve(true)
+    } finally {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId)
+      }
     }
   },
   200,
