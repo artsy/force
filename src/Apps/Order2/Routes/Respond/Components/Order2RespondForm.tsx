@@ -134,7 +134,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     useOrder2CreateCounterOfferMutation()
 
   // The gallery’s offer amount, excluding shipping and taxes.
-  const offerPrice = orderData.lastSubmittedOffer?.amount?.display
+  const offerPrice = `${orderData.lastSubmittedOffer?.amount?.currencySymbol}${orderData.lastSubmittedOffer?.amount?.amount}`
 
   const isRespondCompleted =
     steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
@@ -246,7 +246,13 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   return (
     <RespondCard>
-      <Text variant={["sm", "md"]}>Respond to gallery offer</Text>
+      <Text
+        color="mono100"
+        fontWeight="bold"
+        variant={["sm-display", "sm-display", "md"]}
+      >
+        Respond to gallery offer
+      </Text>
 
       {offerPrice && (
         <>
@@ -430,7 +436,8 @@ const FRAGMENT = graphql`
       amount {
         major
         currencyCode
-        display
+        currencySymbol
+        amount
       }
     }
     pendingOffer {
