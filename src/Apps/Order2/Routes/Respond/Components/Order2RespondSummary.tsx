@@ -197,7 +197,9 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
 
           <TermsAndConditions
             onClickTermsAndConditions={() =>
-              checkoutTracking.clickedTermsAndConditions()
+              checkoutTracking.clickedTermsAndConditions(
+                ContextModule.ordersReview,
+              )
             }
           />
 

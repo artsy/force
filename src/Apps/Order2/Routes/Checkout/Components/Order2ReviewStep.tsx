@@ -230,7 +230,9 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
           <Spacer y={2} />
           <TermsAndConditions
             onClickTermsAndConditions={() =>
-              checkoutTracking.clickedTermsAndConditions()
+              checkoutTracking.clickedTermsAndConditions(
+                ContextModule.ordersReview,
+              )
             }
           />
           <Spacer y={2} />
