@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js"
 import { fireEvent, waitFor } from "@testing-library/react"
 import { screen } from "@testing-library/react"
@@ -223,6 +224,7 @@ describe("ExpressCheckoutUI", () => {
       device: Device.Unknown,
       downloadAppUrl: "",
     })
+    mockCheckoutContext.expressCheckoutPaymentMethods = undefined
     // Reset messages
     mockMessages.EXPRESS_CHECKOUT = { error: null }
     mockMessages.FULFILLMENT_DETAILS = { error: null }
@@ -981,6 +983,27 @@ describe("ExpressCheckoutUI", () => {
         }),
       })
       expect(mockReject).toHaveBeenCalled()
+    })
+  })
+
+  describe("Terms and conditions", () => {
+    it("tracks clickedTermsAndConditions with the ordersCheckout context module", async () => {
+      mockCheckoutContext.expressCheckoutPaymentMethods = ["applePay"]
+
+      renderWithRelay({
+        Order: () => ({ ...orderData }),
+      })
+
+      fireEvent.click(
+        await screen.findByText("General Terms and Conditions of Sale."),
+      )
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedTermsAndConditions",
+        context_module: ContextModule.ordersCheckout,
+        context_page_owner_type: "owner-type-from-context",
+        context_page_owner_id: "order-id-from-context",
+      })
     })
   })
 })
