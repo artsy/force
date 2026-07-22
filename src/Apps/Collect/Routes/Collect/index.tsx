@@ -1,4 +1,5 @@
 import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
+import { CollectAgentChat } from "Apps/Collect/Components/CollectAgentChat"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { ArtworkFilter } from "Components/ArtworkFilter"
@@ -162,6 +163,8 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
           </ArtworkGridContextProvider>
         </Box>
       </FrameWithRecentlyViewed>
+
+      <CollectAgentChat />
     </>
   )
 }

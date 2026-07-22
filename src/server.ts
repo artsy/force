@@ -2,6 +2,7 @@ import "instrument"
 
 import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
 import { appPreferencesServerRoutes } from "Apps/AppPreferences/appPreferencesServerRoutes"
+import { collectAgentServerRoutes } from "Apps/Collect/Server/collectAgentServerRoutes"
 import { redirectCollectionToGene } from "Apps/Collect/Server/redirectCollectionToGene"
 import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
 import { rssServerApp } from "Apps/RSS/rssServerApp"
@@ -81,6 +82,7 @@ app.get(
 
 // Common express routes
 app
+  .use(collectAgentServerRoutes)
   .use(appPreferencesServerRoutes)
   .use(cookieConsentManagerServerRoutes)
   .use(adminServerRoutes)
