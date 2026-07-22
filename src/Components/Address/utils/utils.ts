@@ -1,8 +1,7 @@
 import type { CreateTokenCardData } from "@stripe/stripe-js"
 import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
 import { debounce } from "lodash"
-import { useCallback, useEffect, useState } from "react"
-import { fetchQuery, graphql, useRelayEnvironment } from "react-relay"
+import { fetchQuery, graphql } from "react-relay"
 import type { Environment } from "relay-runtime"
 import * as Yup from "yup"
 
@@ -90,38 +89,6 @@ export const validatePhoneNumber = (
   return new Promise(resolve => {
     phoneValidator(phoneNumber, resolve, relayEnvironment)
   })
-}
-
-/**
- * React hook for phone number validation
- * @param national The national phone number
- * @param regionCode The region/country code
- * @returns Boolean indicating if phone number is valid
- */
-export const useValidatePhoneNumber = ({
-  national,
-  regionCode,
-}: PhoneNumber) => {
-  const relayEnvironment = useRelayEnvironment()
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true)
-
-  const validate = useCallback(async () => {
-    const isValid = await validatePhoneNumber(
-      {
-        national,
-        regionCode,
-      },
-      relayEnvironment,
-    )
-
-    setIsPhoneNumberValid(isValid)
-  }, [national, regionCode, relayEnvironment])
-
-  useEffect(() => {
-    validate()
-  }, [validate])
-
-  return isPhoneNumberValid
 }
 
 export const toStripeAddress = (address: Address): CreateTokenCardData => {
