@@ -41,6 +41,8 @@ export const useOrder2LineItemData = (
     attributionClassLabel: artworkVersion?.attributionClass?.shortDescription,
     dimensionsLabel,
     imageURL: image?.resized?.url,
+    partnerName: artwork?.partner?.name,
+    partnerHref: artwork?.partner?.href,
   }
 }
 
@@ -87,6 +89,10 @@ const FRAGMENT = graphql`
     }
     artwork {
       internalID
+      partner {
+        name
+        href
+      }
       figures(includeAll: false) {
         __typename
         ... on Image {

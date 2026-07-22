@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db92446ca5dc6f95a6162d3baf0956d2>>
+ * @generated SignedSource<<3ab135767fddedaeaa6619224636ed9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -352,10 +352,17 @@ v33 = {
 v34 = [
   (v7/*: any*/)
 ],
-v35 = [
+v35 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v36 = [
   (v23/*: any*/)
 ],
-v36 = {
+v37 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -374,7 +381,7 @@ v36 = {
           "kind": "LinkedField",
           "name": "maxPrice",
           "plural": false,
-          "selections": (v35/*: any*/),
+          "selections": (v36/*: any*/),
           "storageKey": null
         },
         {
@@ -384,7 +391,7 @@ v36 = {
           "kind": "LinkedField",
           "name": "minPrice",
           "plural": false,
-          "selections": (v35/*: any*/),
+          "selections": (v36/*: any*/),
           "storageKey": null
         }
       ],
@@ -394,14 +401,14 @@ v36 = {
   ],
   "storageKey": null
 },
-v37 = {
+v38 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v38 = [
+v39 = [
   {
     "alias": null,
     "args": null,
@@ -417,109 +424,109 @@ v38 = [
     "storageKey": null
   }
 ],
-v39 = {
+v40 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "dimensions",
   "plural": false,
-  "selections": (v38/*: any*/),
+  "selections": (v39/*: any*/),
   "storageKey": null
 },
-v40 = {
+v41 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
   "kind": "LinkedField",
   "name": "framedDimensions",
   "plural": false,
-  "selections": (v38/*: any*/),
+  "selections": (v39/*: any*/),
   "storageKey": null
 },
-v41 = {
+v42 = {
   "kind": "InlineFragment",
   "selections": (v34/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
 },
-v42 = {
+v43 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "currencyCode",
   "storageKey": null
 },
-v43 = [
-  (v21/*: any*/),
-  (v42/*: any*/),
-  (v22/*: any*/)
-],
 v44 = [
   (v21/*: any*/),
+  (v43/*: any*/),
   (v22/*: any*/)
 ],
-v45 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
+v45 = [
+  (v21/*: any*/),
+  (v22/*: any*/)
+],
 v46 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
 v47 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v48 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "Boolean"
+  "type": "ID"
 },
 v49 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "PhoneNumberType"
+  "type": "Boolean"
 },
 v50 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "PhoneNumberType"
 },
 v51 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v52 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v52 = [
+v53 = [
   "CREDIT_CARD",
   "SEPA_DEBIT",
   "US_BANK_ACCOUNT",
   "WIRE_TRANSFER"
 ],
-v53 = {
+v54 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Money"
 },
-v54 = {
+v55 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Long"
 },
-v55 = {
+v56 = {
   "enumValues": [
     "ARTSY_EXPRESS",
     "ARTSY_STANDARD",
@@ -533,31 +540,31 @@ v55 = {
   "plural": false,
   "type": "FulfillmentOptionTypeEnum"
 },
-v56 = {
+v57 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ResizedImageUrl"
 },
-v57 = {
+v58 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "dimensions"
 },
-v58 = {
+v59 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Float"
 },
-v59 = {
+v60 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v60 = {
+v61 = {
   "enumValues": null,
   "nullable": false,
   "plural": true,
@@ -1120,13 +1127,7 @@ return {
                             "name": "artsyShippingInternational",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "href",
-                            "storageKey": null
-                          },
+                          (v35/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1142,6 +1143,20 @@ return {
                                 "name": "share",
                                 "storageKey": null
                               }
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Partner",
+                            "kind": "LinkedField",
+                            "name": "partner",
+                            "plural": false,
+                            "selections": [
+                              (v11/*: any*/),
+                              (v35/*: any*/),
+                              (v7/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -1254,10 +1269,10 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v36/*: any*/),
                               (v37/*: any*/),
-                              (v39/*: any*/),
-                              (v40/*: any*/)
+                              (v38/*: any*/),
+                              (v40/*: any*/),
+                              (v41/*: any*/)
                             ],
                             "type": "Artwork",
                             "abstractKey": null
@@ -1265,16 +1280,16 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v36/*: any*/),
-                              (v7/*: any*/),
                               (v37/*: any*/),
-                              (v39/*: any*/),
-                              (v40/*: any*/)
+                              (v7/*: any*/),
+                              (v38/*: any*/),
+                              (v40/*: any*/),
+                              (v41/*: any*/)
                             ],
                             "type": "EditionSet",
                             "abstractKey": null
                           },
-                          (v41/*: any*/)
+                          (v42/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -1288,7 +1303,7 @@ return {
                     "kind": "LinkedField",
                     "name": "buyerTotal",
                     "plural": false,
-                    "selections": (v43/*: any*/),
+                    "selections": (v44/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1298,7 +1313,7 @@ return {
                     "kind": "LinkedField",
                     "name": "itemsTotal",
                     "plural": false,
-                    "selections": (v43/*: any*/),
+                    "selections": (v44/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1308,7 +1323,7 @@ return {
                     "kind": "LinkedField",
                     "name": "shippingTotal",
                     "plural": false,
-                    "selections": (v44/*: any*/),
+                    "selections": (v45/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1318,7 +1333,7 @@ return {
                     "kind": "LinkedField",
                     "name": "taxTotal",
                     "plural": false,
-                    "selections": (v44/*: any*/),
+                    "selections": (v45/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1344,7 +1359,7 @@ return {
                         "kind": "LinkedField",
                         "name": "amount",
                         "plural": false,
-                        "selections": (v43/*: any*/),
+                        "selections": (v44/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -1398,7 +1413,7 @@ return {
                         "type": "Partner",
                         "abstractKey": null
                       },
-                      (v41/*: any*/)
+                      (v42/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -1418,7 +1433,7 @@ return {
                   },
                   (v29/*: any*/),
                   (v26/*: any*/),
-                  (v42/*: any*/),
+                  (v43/*: any*/),
                   (v7/*: any*/),
                   {
                     "alias": null,
@@ -1479,7 +1494,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e5b1b1da575f09a4fa45072e1b080c87",
+    "cacheID": "80f07a91df7dd90b9c81da4f84ed677c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1513,21 +1528,21 @@ return {
           "plural": false,
           "type": "UserAddress"
         },
-        "viewer.me.addressConnection.edges.node.addressLine1": (v45/*: any*/),
-        "viewer.me.addressConnection.edges.node.addressLine2": (v46/*: any*/),
-        "viewer.me.addressConnection.edges.node.city": (v45/*: any*/),
-        "viewer.me.addressConnection.edges.node.country": (v45/*: any*/),
-        "viewer.me.addressConnection.edges.node.id": (v47/*: any*/),
-        "viewer.me.addressConnection.edges.node.internalID": (v47/*: any*/),
-        "viewer.me.addressConnection.edges.node.isDefault": (v48/*: any*/),
-        "viewer.me.addressConnection.edges.node.name": (v46/*: any*/),
-        "viewer.me.addressConnection.edges.node.phoneNumber": (v46/*: any*/),
-        "viewer.me.addressConnection.edges.node.phoneNumberCountryCode": (v46/*: any*/),
-        "viewer.me.addressConnection.edges.node.phoneNumberParsed": (v49/*: any*/),
-        "viewer.me.addressConnection.edges.node.phoneNumberParsed.display": (v46/*: any*/),
-        "viewer.me.addressConnection.edges.node.phoneNumberParsed.isValid": (v50/*: any*/),
-        "viewer.me.addressConnection.edges.node.postalCode": (v46/*: any*/),
-        "viewer.me.addressConnection.edges.node.region": (v46/*: any*/),
+        "viewer.me.addressConnection.edges.node.addressLine1": (v46/*: any*/),
+        "viewer.me.addressConnection.edges.node.addressLine2": (v47/*: any*/),
+        "viewer.me.addressConnection.edges.node.city": (v46/*: any*/),
+        "viewer.me.addressConnection.edges.node.country": (v46/*: any*/),
+        "viewer.me.addressConnection.edges.node.id": (v48/*: any*/),
+        "viewer.me.addressConnection.edges.node.internalID": (v48/*: any*/),
+        "viewer.me.addressConnection.edges.node.isDefault": (v49/*: any*/),
+        "viewer.me.addressConnection.edges.node.name": (v47/*: any*/),
+        "viewer.me.addressConnection.edges.node.phoneNumber": (v47/*: any*/),
+        "viewer.me.addressConnection.edges.node.phoneNumberCountryCode": (v47/*: any*/),
+        "viewer.me.addressConnection.edges.node.phoneNumberParsed": (v50/*: any*/),
+        "viewer.me.addressConnection.edges.node.phoneNumberParsed.display": (v47/*: any*/),
+        "viewer.me.addressConnection.edges.node.phoneNumberParsed.isValid": (v51/*: any*/),
+        "viewer.me.addressConnection.edges.node.postalCode": (v47/*: any*/),
+        "viewer.me.addressConnection.edges.node.region": (v47/*: any*/),
         "viewer.me.bankAccounts": {
           "enumValues": null,
           "nullable": true,
@@ -1546,11 +1561,11 @@ return {
           "plural": false,
           "type": "BankAccount"
         },
-        "viewer.me.bankAccounts.edges.node.__typename": (v45/*: any*/),
-        "viewer.me.bankAccounts.edges.node.bankName": (v46/*: any*/),
-        "viewer.me.bankAccounts.edges.node.id": (v47/*: any*/),
-        "viewer.me.bankAccounts.edges.node.internalID": (v47/*: any*/),
-        "viewer.me.bankAccounts.edges.node.last4": (v45/*: any*/),
+        "viewer.me.bankAccounts.edges.node.__typename": (v46/*: any*/),
+        "viewer.me.bankAccounts.edges.node.bankName": (v47/*: any*/),
+        "viewer.me.bankAccounts.edges.node.id": (v48/*: any*/),
+        "viewer.me.bankAccounts.edges.node.internalID": (v48/*: any*/),
+        "viewer.me.bankAccounts.edges.node.last4": (v46/*: any*/),
         "viewer.me.bankAccounts.edges.node.type": {
           "enumValues": [
             "SEPA_DEBIT",
@@ -1578,15 +1593,15 @@ return {
           "plural": false,
           "type": "CreditCard"
         },
-        "viewer.me.creditCards.edges.node.__typename": (v45/*: any*/),
-        "viewer.me.creditCards.edges.node.brand": (v45/*: any*/),
-        "viewer.me.creditCards.edges.node.expirationMonth": (v51/*: any*/),
-        "viewer.me.creditCards.edges.node.expirationYear": (v51/*: any*/),
-        "viewer.me.creditCards.edges.node.id": (v47/*: any*/),
-        "viewer.me.creditCards.edges.node.internalID": (v47/*: any*/),
-        "viewer.me.creditCards.edges.node.lastDigits": (v45/*: any*/),
-        "viewer.me.id": (v47/*: any*/),
-        "viewer.me.name": (v46/*: any*/),
+        "viewer.me.creditCards.edges.node.__typename": (v46/*: any*/),
+        "viewer.me.creditCards.edges.node.brand": (v46/*: any*/),
+        "viewer.me.creditCards.edges.node.expirationMonth": (v52/*: any*/),
+        "viewer.me.creditCards.edges.node.expirationYear": (v52/*: any*/),
+        "viewer.me.creditCards.edges.node.id": (v48/*: any*/),
+        "viewer.me.creditCards.edges.node.internalID": (v48/*: any*/),
+        "viewer.me.creditCards.edges.node.lastDigits": (v46/*: any*/),
+        "viewer.me.id": (v48/*: any*/),
+        "viewer.me.name": (v47/*: any*/),
         "viewer.me.order": {
           "enumValues": null,
           "nullable": true,
@@ -1594,7 +1609,7 @@ return {
           "type": "Order"
         },
         "viewer.me.order.availablePaymentMethods": {
-          "enumValues": (v52/*: any*/),
+          "enumValues": (v53/*: any*/),
           "nullable": false,
           "plural": true,
           "type": "OrderPaymentMethodEnum"
@@ -1621,7 +1636,7 @@ return {
           "plural": false,
           "type": "BankAccountBalanceCheck"
         },
-        "viewer.me.order.bankAccountBalanceCheck.message": (v46/*: any*/),
+        "viewer.me.order.bankAccountBalanceCheck.message": (v47/*: any*/),
         "viewer.me.order.bankAccountBalanceCheck.result": {
           "enumValues": [
             "INSUFFICIENT",
@@ -1656,51 +1671,51 @@ return {
           "plural": false,
           "type": "OrderBuyerStateEnum"
         },
-        "viewer.me.order.buyerStateExpiresAt": (v46/*: any*/),
-        "viewer.me.order.buyerTotal": (v53/*: any*/),
-        "viewer.me.order.buyerTotal.currencyCode": (v45/*: any*/),
-        "viewer.me.order.buyerTotal.display": (v46/*: any*/),
-        "viewer.me.order.buyerTotal.minor": (v54/*: any*/),
-        "viewer.me.order.code": (v45/*: any*/),
-        "viewer.me.order.currencyCode": (v45/*: any*/),
-        "viewer.me.order.currencySymbol": (v45/*: any*/),
+        "viewer.me.order.buyerStateExpiresAt": (v47/*: any*/),
+        "viewer.me.order.buyerTotal": (v54/*: any*/),
+        "viewer.me.order.buyerTotal.currencyCode": (v46/*: any*/),
+        "viewer.me.order.buyerTotal.display": (v47/*: any*/),
+        "viewer.me.order.buyerTotal.minor": (v55/*: any*/),
+        "viewer.me.order.code": (v46/*: any*/),
+        "viewer.me.order.currencyCode": (v46/*: any*/),
+        "viewer.me.order.currencySymbol": (v46/*: any*/),
         "viewer.me.order.fulfillmentDetails": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FulfillmentDetails"
         },
-        "viewer.me.order.fulfillmentDetails.addressLine1": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.addressLine2": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.city": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.country": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.name": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.phoneNumber": (v49/*: any*/),
-        "viewer.me.order.fulfillmentDetails.phoneNumber.countryCode": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.phoneNumber.display": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.phoneNumber.originalNumber": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.phoneNumber.regionCode": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.postalCode": (v46/*: any*/),
-        "viewer.me.order.fulfillmentDetails.region": (v46/*: any*/),
+        "viewer.me.order.fulfillmentDetails.addressLine1": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.addressLine2": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.city": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.country": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.name": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.phoneNumber": (v50/*: any*/),
+        "viewer.me.order.fulfillmentDetails.phoneNumber.countryCode": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.phoneNumber.display": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.phoneNumber.originalNumber": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.phoneNumber.regionCode": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.postalCode": (v47/*: any*/),
+        "viewer.me.order.fulfillmentDetails.region": (v47/*: any*/),
         "viewer.me.order.fulfillmentOptions": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "FulfillmentOption"
         },
-        "viewer.me.order.fulfillmentOptions.amount": (v53/*: any*/),
-        "viewer.me.order.fulfillmentOptions.amount.currencyCode": (v45/*: any*/),
-        "viewer.me.order.fulfillmentOptions.amount.display": (v46/*: any*/),
-        "viewer.me.order.fulfillmentOptions.amount.minor": (v54/*: any*/),
-        "viewer.me.order.fulfillmentOptions.selected": (v50/*: any*/),
-        "viewer.me.order.fulfillmentOptions.shippingQuoteId": (v46/*: any*/),
-        "viewer.me.order.fulfillmentOptions.type": (v55/*: any*/),
-        "viewer.me.order.id": (v47/*: any*/),
-        "viewer.me.order.internalID": (v47/*: any*/),
-        "viewer.me.order.itemsTotal": (v53/*: any*/),
-        "viewer.me.order.itemsTotal.currencyCode": (v45/*: any*/),
-        "viewer.me.order.itemsTotal.display": (v46/*: any*/),
-        "viewer.me.order.itemsTotal.minor": (v54/*: any*/),
+        "viewer.me.order.fulfillmentOptions.amount": (v54/*: any*/),
+        "viewer.me.order.fulfillmentOptions.amount.currencyCode": (v46/*: any*/),
+        "viewer.me.order.fulfillmentOptions.amount.display": (v47/*: any*/),
+        "viewer.me.order.fulfillmentOptions.amount.minor": (v55/*: any*/),
+        "viewer.me.order.fulfillmentOptions.selected": (v51/*: any*/),
+        "viewer.me.order.fulfillmentOptions.shippingQuoteId": (v47/*: any*/),
+        "viewer.me.order.fulfillmentOptions.type": (v56/*: any*/),
+        "viewer.me.order.id": (v48/*: any*/),
+        "viewer.me.order.internalID": (v48/*: any*/),
+        "viewer.me.order.itemsTotal": (v54/*: any*/),
+        "viewer.me.order.itemsTotal.currencyCode": (v46/*: any*/),
+        "viewer.me.order.itemsTotal.display": (v47/*: any*/),
+        "viewer.me.order.itemsTotal.minor": (v55/*: any*/),
         "viewer.me.order.lineItems": {
           "enumValues": null,
           "nullable": false,
@@ -1713,94 +1728,103 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "viewer.me.order.lineItems.artwork.artsyShippingInternational": (v50/*: any*/),
+        "viewer.me.order.lineItems.artwork.artsyShippingInternational": (v51/*: any*/),
         "viewer.me.order.lineItems.artwork.figures": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "viewer.me.order.lineItems.artwork.figures.__typename": (v45/*: any*/),
-        "viewer.me.order.lineItems.artwork.figures.id": (v47/*: any*/),
-        "viewer.me.order.lineItems.artwork.figures.resized": (v56/*: any*/),
-        "viewer.me.order.lineItems.artwork.figures.resized.url": (v45/*: any*/),
-        "viewer.me.order.lineItems.artwork.figures.resizedSquare": (v56/*: any*/),
-        "viewer.me.order.lineItems.artwork.figures.resizedSquare.url": (v45/*: any*/),
-        "viewer.me.order.lineItems.artwork.href": (v46/*: any*/),
-        "viewer.me.order.lineItems.artwork.id": (v47/*: any*/),
-        "viewer.me.order.lineItems.artwork.internalID": (v47/*: any*/),
-        "viewer.me.order.lineItems.artwork.isAcquireable": (v50/*: any*/),
-        "viewer.me.order.lineItems.artwork.isFixedShippingFeeOnly": (v50/*: any*/),
-        "viewer.me.order.lineItems.artwork.isPriceHidden": (v50/*: any*/),
+        "viewer.me.order.lineItems.artwork.figures.__typename": (v46/*: any*/),
+        "viewer.me.order.lineItems.artwork.figures.id": (v48/*: any*/),
+        "viewer.me.order.lineItems.artwork.figures.resized": (v57/*: any*/),
+        "viewer.me.order.lineItems.artwork.figures.resized.url": (v46/*: any*/),
+        "viewer.me.order.lineItems.artwork.figures.resizedSquare": (v57/*: any*/),
+        "viewer.me.order.lineItems.artwork.figures.resizedSquare.url": (v46/*: any*/),
+        "viewer.me.order.lineItems.artwork.href": (v47/*: any*/),
+        "viewer.me.order.lineItems.artwork.id": (v48/*: any*/),
+        "viewer.me.order.lineItems.artwork.internalID": (v48/*: any*/),
+        "viewer.me.order.lineItems.artwork.isAcquireable": (v51/*: any*/),
+        "viewer.me.order.lineItems.artwork.isFixedShippingFeeOnly": (v51/*: any*/),
+        "viewer.me.order.lineItems.artwork.isPriceHidden": (v51/*: any*/),
         "viewer.me.order.lineItems.artwork.meta": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMeta"
         },
-        "viewer.me.order.lineItems.artwork.meta.share": (v46/*: any*/),
-        "viewer.me.order.lineItems.artwork.processWithArtsyShippingDomestic": (v50/*: any*/),
-        "viewer.me.order.lineItems.artwork.shippingOriginRegion": (v46/*: any*/),
-        "viewer.me.order.lineItems.artwork.slug": (v47/*: any*/),
+        "viewer.me.order.lineItems.artwork.meta.share": (v47/*: any*/),
+        "viewer.me.order.lineItems.artwork.partner": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Partner"
+        },
+        "viewer.me.order.lineItems.artwork.partner.href": (v47/*: any*/),
+        "viewer.me.order.lineItems.artwork.partner.id": (v48/*: any*/),
+        "viewer.me.order.lineItems.artwork.partner.name": (v47/*: any*/),
+        "viewer.me.order.lineItems.artwork.processWithArtsyShippingDomestic": (v51/*: any*/),
+        "viewer.me.order.lineItems.artwork.shippingOriginRegion": (v47/*: any*/),
+        "viewer.me.order.lineItems.artwork.slug": (v48/*: any*/),
         "viewer.me.order.lineItems.artworkOrEditionSet": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkOrEditionSetType"
         },
-        "viewer.me.order.lineItems.artworkOrEditionSet.__isNode": (v45/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.__typename": (v45/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.dimensions": (v57/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.dimensions.cm": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.dimensions.in": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.framedDimensions": (v57/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.framedDimensions.cm": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.framedDimensions.in": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.id": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.__isNode": (v46/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.__typename": (v46/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.dimensions": (v58/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.dimensions.cm": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.dimensions.in": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.framedDimensions": (v58/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.framedDimensions.cm": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.framedDimensions.in": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.id": (v48/*: any*/),
         "viewer.me.order.lineItems.artworkOrEditionSet.listPrice": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ListPrice"
         },
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.__typename": (v45/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice": (v53/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice.major": (v58/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice": (v53/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice.major": (v58/*: any*/),
-        "viewer.me.order.lineItems.artworkOrEditionSet.price": (v46/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.__typename": (v46/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice": (v54/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.maxPrice.major": (v59/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice": (v54/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.listPrice.minPrice.major": (v59/*: any*/),
+        "viewer.me.order.lineItems.artworkOrEditionSet.price": (v47/*: any*/),
         "viewer.me.order.lineItems.artworkVersion": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkVersion"
         },
-        "viewer.me.order.lineItems.artworkVersion.artistNames": (v46/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.artistNames": (v47/*: any*/),
         "viewer.me.order.lineItems.artworkVersion.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "viewer.me.order.lineItems.artworkVersion.attributionClass.id": (v47/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.attributionClass.shortDescription": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.date": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.id": (v47/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.image": (v59/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.image.resized": (v56/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.image.resized.url": (v45/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.image.url": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.internalID": (v47/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.thumbnail": (v59/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.thumbnail.resizedSquare": (v56/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.thumbnail.resizedSquare.url": (v45/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.thumbnail.url": (v46/*: any*/),
-        "viewer.me.order.lineItems.artworkVersion.title": (v46/*: any*/),
-        "viewer.me.order.lineItems.id": (v47/*: any*/),
-        "viewer.me.order.lineItems.listPrice": (v53/*: any*/),
-        "viewer.me.order.lineItems.listPrice.__typename": (v45/*: any*/),
-        "viewer.me.order.lineItems.listPrice.display": (v46/*: any*/),
-        "viewer.me.order.lineItems.listPrice.major": (v58/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.attributionClass.id": (v48/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.attributionClass.shortDescription": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.date": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.id": (v48/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.image": (v60/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.image.resized": (v57/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.image.resized.url": (v46/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.image.url": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.internalID": (v48/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.thumbnail": (v60/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.thumbnail.resizedSquare": (v57/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.thumbnail.resizedSquare.url": (v46/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.thumbnail.url": (v47/*: any*/),
+        "viewer.me.order.lineItems.artworkVersion.title": (v47/*: any*/),
+        "viewer.me.order.lineItems.id": (v48/*: any*/),
+        "viewer.me.order.lineItems.listPrice": (v54/*: any*/),
+        "viewer.me.order.lineItems.listPrice.__typename": (v46/*: any*/),
+        "viewer.me.order.lineItems.listPrice.display": (v47/*: any*/),
+        "viewer.me.order.lineItems.listPrice.major": (v59/*: any*/),
         "viewer.me.order.mode": {
           "enumValues": [
             "BUY",
@@ -1811,7 +1835,7 @@ return {
           "type": "OrderModeEnum"
         },
         "viewer.me.order.paymentMethod": {
-          "enumValues": (v52/*: any*/),
+          "enumValues": (v53/*: any*/),
           "nullable": true,
           "plural": false,
           "type": "OrderPaymentMethodEnum"
@@ -1822,78 +1846,78 @@ return {
           "plural": false,
           "type": "PaymentMethodUnion"
         },
-        "viewer.me.order.paymentMethodDetails.__typename": (v45/*: any*/),
-        "viewer.me.order.paymentMethodDetails.bankName": (v46/*: any*/),
-        "viewer.me.order.paymentMethodDetails.brand": (v45/*: any*/),
-        "viewer.me.order.paymentMethodDetails.expirationMonth": (v51/*: any*/),
-        "viewer.me.order.paymentMethodDetails.expirationYear": (v51/*: any*/),
-        "viewer.me.order.paymentMethodDetails.id": (v47/*: any*/),
-        "viewer.me.order.paymentMethodDetails.internalID": (v47/*: any*/),
-        "viewer.me.order.paymentMethodDetails.isManualPayment": (v48/*: any*/),
-        "viewer.me.order.paymentMethodDetails.last4": (v45/*: any*/),
-        "viewer.me.order.paymentMethodDetails.lastDigits": (v45/*: any*/),
+        "viewer.me.order.paymentMethodDetails.__typename": (v46/*: any*/),
+        "viewer.me.order.paymentMethodDetails.bankName": (v47/*: any*/),
+        "viewer.me.order.paymentMethodDetails.brand": (v46/*: any*/),
+        "viewer.me.order.paymentMethodDetails.expirationMonth": (v52/*: any*/),
+        "viewer.me.order.paymentMethodDetails.expirationYear": (v52/*: any*/),
+        "viewer.me.order.paymentMethodDetails.id": (v48/*: any*/),
+        "viewer.me.order.paymentMethodDetails.internalID": (v48/*: any*/),
+        "viewer.me.order.paymentMethodDetails.isManualPayment": (v49/*: any*/),
+        "viewer.me.order.paymentMethodDetails.last4": (v46/*: any*/),
+        "viewer.me.order.paymentMethodDetails.lastDigits": (v46/*: any*/),
         "viewer.me.order.pendingOffer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Offer"
         },
-        "viewer.me.order.pendingOffer.amount": (v53/*: any*/),
-        "viewer.me.order.pendingOffer.amount.display": (v46/*: any*/),
-        "viewer.me.order.pendingOffer.amount.major": (v58/*: any*/),
-        "viewer.me.order.pendingOffer.amount.minor": (v54/*: any*/),
-        "viewer.me.order.pendingOffer.id": (v47/*: any*/),
-        "viewer.me.order.pendingOffer.internalID": (v47/*: any*/),
-        "viewer.me.order.pendingOffer.note": (v46/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines": (v60/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines.__typename": (v45/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount": (v53/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v46/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount.currencySymbol": (v46/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount.display": (v46/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines.amountFallbackText": (v46/*: any*/),
-        "viewer.me.order.pendingOffer.pricingBreakdownLines.displayName": (v45/*: any*/),
-        "viewer.me.order.pricingBreakdownLines": (v60/*: any*/),
-        "viewer.me.order.pricingBreakdownLines.__typename": (v45/*: any*/),
-        "viewer.me.order.pricingBreakdownLines.amount": (v53/*: any*/),
-        "viewer.me.order.pricingBreakdownLines.amount.amount": (v46/*: any*/),
-        "viewer.me.order.pricingBreakdownLines.amount.currencySymbol": (v46/*: any*/),
-        "viewer.me.order.pricingBreakdownLines.amount.display": (v46/*: any*/),
-        "viewer.me.order.pricingBreakdownLines.amountFallbackText": (v46/*: any*/),
-        "viewer.me.order.pricingBreakdownLines.displayName": (v45/*: any*/),
+        "viewer.me.order.pendingOffer.amount": (v54/*: any*/),
+        "viewer.me.order.pendingOffer.amount.display": (v47/*: any*/),
+        "viewer.me.order.pendingOffer.amount.major": (v59/*: any*/),
+        "viewer.me.order.pendingOffer.amount.minor": (v55/*: any*/),
+        "viewer.me.order.pendingOffer.id": (v48/*: any*/),
+        "viewer.me.order.pendingOffer.internalID": (v48/*: any*/),
+        "viewer.me.order.pendingOffer.note": (v47/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines": (v61/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines.__typename": (v46/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount": (v54/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount.amount": (v47/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount.currencySymbol": (v47/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines.amount.display": (v47/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines.amountFallbackText": (v47/*: any*/),
+        "viewer.me.order.pendingOffer.pricingBreakdownLines.displayName": (v46/*: any*/),
+        "viewer.me.order.pricingBreakdownLines": (v61/*: any*/),
+        "viewer.me.order.pricingBreakdownLines.__typename": (v46/*: any*/),
+        "viewer.me.order.pricingBreakdownLines.amount": (v54/*: any*/),
+        "viewer.me.order.pricingBreakdownLines.amount.amount": (v47/*: any*/),
+        "viewer.me.order.pricingBreakdownLines.amount.currencySymbol": (v47/*: any*/),
+        "viewer.me.order.pricingBreakdownLines.amount.display": (v47/*: any*/),
+        "viewer.me.order.pricingBreakdownLines.amountFallbackText": (v47/*: any*/),
+        "viewer.me.order.pricingBreakdownLines.displayName": (v46/*: any*/),
         "viewer.me.order.selectedFulfillmentOption": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FulfillmentOption"
         },
-        "viewer.me.order.selectedFulfillmentOption.amount": (v53/*: any*/),
-        "viewer.me.order.selectedFulfillmentOption.amount.currencySymbol": (v46/*: any*/),
-        "viewer.me.order.selectedFulfillmentOption.amount.display": (v46/*: any*/),
-        "viewer.me.order.selectedFulfillmentOption.amount.major": (v58/*: any*/),
-        "viewer.me.order.selectedFulfillmentOption.amount.minor": (v54/*: any*/),
-        "viewer.me.order.selectedFulfillmentOption.type": (v55/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount": (v54/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.currencySymbol": (v47/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.display": (v47/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.major": (v59/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.amount.minor": (v55/*: any*/),
+        "viewer.me.order.selectedFulfillmentOption.type": (v56/*: any*/),
         "viewer.me.order.seller": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SellerType"
         },
-        "viewer.me.order.seller.__isNode": (v45/*: any*/),
-        "viewer.me.order.seller.__typename": (v45/*: any*/),
-        "viewer.me.order.seller.id": (v47/*: any*/),
+        "viewer.me.order.seller.__isNode": (v46/*: any*/),
+        "viewer.me.order.seller.__typename": (v46/*: any*/),
+        "viewer.me.order.seller.id": (v48/*: any*/),
         "viewer.me.order.seller.merchantAccount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PartnerMerchantAccount"
         },
-        "viewer.me.order.seller.merchantAccount.externalId": (v45/*: any*/),
-        "viewer.me.order.shippingOrigin": (v46/*: any*/),
-        "viewer.me.order.shippingRadius": (v46/*: any*/),
-        "viewer.me.order.shippingTotal": (v53/*: any*/),
-        "viewer.me.order.shippingTotal.display": (v46/*: any*/),
-        "viewer.me.order.shippingTotal.minor": (v54/*: any*/),
+        "viewer.me.order.seller.merchantAccount.externalId": (v46/*: any*/),
+        "viewer.me.order.shippingOrigin": (v47/*: any*/),
+        "viewer.me.order.shippingRadius": (v47/*: any*/),
+        "viewer.me.order.shippingTotal": (v54/*: any*/),
+        "viewer.me.order.shippingTotal.display": (v47/*: any*/),
+        "viewer.me.order.shippingTotal.minor": (v55/*: any*/),
         "viewer.me.order.source": {
           "enumValues": [
             "ARTWORK_PAGE",
@@ -1905,19 +1929,19 @@ return {
           "plural": false,
           "type": "OrderSourceEnum"
         },
-        "viewer.me.order.stripeConfirmationToken": (v46/*: any*/),
-        "viewer.me.order.taxTotal": (v53/*: any*/),
-        "viewer.me.order.taxTotal.display": (v46/*: any*/),
-        "viewer.me.order.taxTotal.minor": (v54/*: any*/),
-        "viewer.me.phoneNumber": (v49/*: any*/),
-        "viewer.me.phoneNumber.display": (v46/*: any*/),
-        "viewer.me.phoneNumber.originalNumber": (v46/*: any*/),
-        "viewer.me.phoneNumber.regionCode": (v46/*: any*/)
+        "viewer.me.order.stripeConfirmationToken": (v47/*: any*/),
+        "viewer.me.order.taxTotal": (v54/*: any*/),
+        "viewer.me.order.taxTotal.display": (v47/*: any*/),
+        "viewer.me.order.taxTotal.minor": (v55/*: any*/),
+        "viewer.me.phoneNumber": (v50/*: any*/),
+        "viewer.me.phoneNumber.display": (v47/*: any*/),
+        "viewer.me.phoneNumber.originalNumber": (v47/*: any*/),
+        "viewer.me.phoneNumber.regionCode": (v47/*: any*/)
       }
     },
     "name": "Order2CheckoutRouteTestQuery",
     "operationKind": "query",
-    "text": "query Order2CheckoutRouteTestQuery {\n  viewer {\n    ...Order2CheckoutRoute_viewer_oauVf\n  }\n}\n\nfragment OfferInput_order on Order {\n  currencySymbol\n}\n\nfragment Order2CheckoutApp_me on Me {\n  ...Order2PaymentStep_me\n  ...Order2FulfillmentDetailsStep_me\n}\n\nfragment Order2CheckoutApp_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      isFixedShippingFeeOnly\n      id\n    }\n    id\n  }\n  ...useIsDeliveryOptionExpanded_order\n  ...useLoadCheckout_order\n  ...Order2ExpressCheckout_order\n  ...Order2CollapsibleOrderSummary_order\n  ...Order2OfferStep_order\n  ...Order2FulfillmentDetailsStep_order\n  ...Order2DeliveryOptionsStep_order\n  ...Order2PaymentStep_order\n  ...Order2ReviewStep_order\n  ...Order2CheckoutLoadingSkeleton_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2CheckoutContext_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  shippingRadius\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutLoadingSkeleton_order on Order {\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutRoute_viewer_oauVf on Viewer {\n  me {\n    ...Order2CheckoutApp_me\n    ...Order2CheckoutContext_me\n    order(id: \"order-id\") {\n      internalID\n      ...Order2CheckoutContext_order\n      ...Order2CheckoutApp_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        url\n        resizedSquare: resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      figures(includeAll: false) {\n        __typename\n        ... on Image {\n          resizedSquare: resized(height: 200, version: [\"square\"]) {\n            url\n          }\n        }\n        ... on Video {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  name\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n      countryCode\n    }\n  }\n  lineItems {\n    artwork {\n      shippingOriginRegion\n      processWithArtsyShippingDomestic\n      artsyShippingInternational\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment Order2DeliveryOptionsStep_order on Order {\n  ...useCompleteDeliveryOptionData_order\n  ...useIsDeliveryOptionExpanded_order\n  ...Order2DeliveryOptionsForm_order\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n    amount {\n      display\n    }\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckout_order on Order {\n  ...Order2ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2FulfillmentDetailsStep_me on Me {\n  ...Order2DeliveryForm_me\n  ...Order2PickupForm_me\n}\n\nfragment Order2FulfillmentDetailsStep_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  ...Order2PickupForm_order\n  ...Order2DeliveryForm_order\n  id\n  internalID\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n      display(format: INTERNATIONAL)\n    }\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentOptions {\n    type\n    selected\n  }\n  availableShippingCountries\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2OfferOptions_order on Order {\n  ...OfferInput_order\n  source\n  buyerStateExpiresAt\n  currencyCode\n  lineItems {\n    listPrice {\n      __typename\n      major\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n      }\n      ... on EditionSet {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OfferStep_order on Order {\n  ...useCompleteOfferData_order\n  ...Order2OfferOptions_order\n  ...OfferInput_order\n  internalID\n  mode\n  source\n  currencyCode\n  selectedFulfillmentOption {\n    type\n  }\n  pendingOffer {\n    amount {\n      display\n      major\n    }\n    note\n    id\n  }\n  lineItems {\n    artwork {\n      isPriceHidden\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n      }\n      ... on EditionSet {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PaymentCompletedView_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        bankName\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  ...WireTransferOption_order\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  availableStripePaymentMethodTypes\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n}\n\nfragment Order2PaymentStep_me on Me {\n  ...Order2PaymentForm_me\n}\n\nfragment Order2PaymentStep_order on Order {\n  ...useCompletePaymentData_order\n  ...Order2PaymentForm_order\n  ...Order2PaymentCompletedView_order\n  internalID\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2PickupForm_me on Me {\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n}\n\nfragment Order2PickupForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n  }\n  shippingOrigin\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2ReviewStep_order on Order {\n  ...Order2OrderSummary_order\n  internalID\n  source\n  buyerStateExpiresAt\n  stripeConfirmationToken\n  paymentMethod\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    listPrice {\n      __typename\n      display\n    }\n    ...useOrder2LineItemData_lineItem\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n}\n\nfragment WireTransferOption_order on Order {\n  code\n  lineItems {\n    artwork {\n      href\n      meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment useIsDeliveryOptionExpanded_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useLoadCheckout_order on Order {\n  internalID\n  lineItems {\n    artwork {\n      isAcquireable\n      id\n    }\n    artworkVersion {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query Order2CheckoutRouteTestQuery {\n  viewer {\n    ...Order2CheckoutRoute_viewer_oauVf\n  }\n}\n\nfragment OfferInput_order on Order {\n  currencySymbol\n}\n\nfragment Order2CheckoutApp_me on Me {\n  ...Order2PaymentStep_me\n  ...Order2FulfillmentDetailsStep_me\n}\n\nfragment Order2CheckoutApp_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      isFixedShippingFeeOnly\n      id\n    }\n    id\n  }\n  ...useIsDeliveryOptionExpanded_order\n  ...useLoadCheckout_order\n  ...Order2ExpressCheckout_order\n  ...Order2CollapsibleOrderSummary_order\n  ...Order2OfferStep_order\n  ...Order2FulfillmentDetailsStep_order\n  ...Order2DeliveryOptionsStep_order\n  ...Order2PaymentStep_order\n  ...Order2ReviewStep_order\n  ...Order2CheckoutLoadingSkeleton_order\n  ...Order2HelpLinks_order\n}\n\nfragment Order2CheckoutContext_me on Me {\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Order2CheckoutContext_order on Order {\n  ...useBuildInitialSteps_order\n  internalID\n  mode\n  shippingRadius\n  source\n  stripeConfirmationToken\n  selectedFulfillmentOption {\n    type\n  }\n  lineItems {\n    artwork {\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutLoadingSkeleton_order on Order {\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CheckoutRoute_viewer_oauVf on Viewer {\n  me {\n    ...Order2CheckoutApp_me\n    ...Order2CheckoutContext_me\n    order(id: \"order-id\") {\n      internalID\n      ...Order2CheckoutContext_order\n      ...Order2CheckoutApp_order\n      id\n    }\n    id\n  }\n}\n\nfragment Order2CollapsibleOrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n  source\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    artworkVersion {\n      title\n      artistNames\n      date\n      thumbnail: image {\n        url\n        resizedSquare: resized(height: 200, version: [\"square\"]) {\n          url\n        }\n      }\n      id\n    }\n    artwork {\n      internalID\n      figures(includeAll: false) {\n        __typename\n        ... on Image {\n          resizedSquare: resized(height: 200, version: [\"square\"]) {\n            url\n          }\n        }\n        ... on Video {\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryForm_me on Me {\n  name\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n  addressConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        city\n        region\n        postalCode\n        country\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        phoneNumberParsed {\n          display(format: INTERNATIONAL)\n          isValid\n        }\n        isDefault\n        id\n      }\n    }\n  }\n}\n\nfragment Order2DeliveryForm_order on Order {\n  internalID\n  selectedFulfillmentOption {\n    type\n  }\n  availableShippingCountries\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n    name\n    phoneNumber {\n      originalNumber\n      regionCode\n      countryCode\n    }\n  }\n  lineItems {\n    artwork {\n      shippingOriginRegion\n      processWithArtsyShippingDomestic\n      artsyShippingInternational\n      id\n    }\n    id\n  }\n}\n\nfragment Order2DeliveryOptionsForm_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  internalID\n  fulfillmentOptions {\n    amount {\n      display\n      minor\n      currencyCode\n    }\n    type\n    selected\n    shippingQuoteId\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  shippingOrigin\n}\n\nfragment Order2DeliveryOptionsStep_order on Order {\n  ...useCompleteDeliveryOptionData_order\n  ...useIsDeliveryOptionExpanded_order\n  ...Order2DeliveryOptionsForm_order\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n    amount {\n      display\n    }\n  }\n}\n\nfragment Order2ExpressCheckoutUI_order on Order {\n  internalID\n  source\n  mode\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  availableShippingCountries\n  fulfillmentOptions {\n    type\n    amount {\n      minor\n      currencyCode\n    }\n    selected\n  }\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    name\n  }\n  lineItems {\n    artwork {\n      internalID\n      slug\n      id\n    }\n    id\n  }\n}\n\nfragment Order2ExpressCheckout_order on Order {\n  ...Order2ExpressCheckoutUI_order\n  availableShippingCountries\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2FulfillmentDetailsStep_me on Me {\n  ...Order2DeliveryForm_me\n  ...Order2PickupForm_me\n}\n\nfragment Order2FulfillmentDetailsStep_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  ...Order2PickupForm_order\n  ...Order2DeliveryForm_order\n  id\n  internalID\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n      display(format: INTERNATIONAL)\n    }\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentOptions {\n    type\n    selected\n  }\n  availableShippingCountries\n}\n\nfragment Order2HelpLinks_order on Order {\n  internalID\n  mode\n  source\n}\n\nfragment Order2OfferOptions_order on Order {\n  ...OfferInput_order\n  source\n  buyerStateExpiresAt\n  currencyCode\n  lineItems {\n    listPrice {\n      __typename\n      major\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n      }\n      ... on EditionSet {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OfferStep_order on Order {\n  ...useCompleteOfferData_order\n  ...Order2OfferOptions_order\n  ...OfferInput_order\n  internalID\n  mode\n  source\n  currencyCode\n  selectedFulfillmentOption {\n    type\n  }\n  pendingOffer {\n    amount {\n      display\n      major\n    }\n    note\n    id\n  }\n  lineItems {\n    artwork {\n      isPriceHidden\n      id\n    }\n    artworkOrEditionSet {\n      __typename\n      ... on Artwork {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n      }\n      ... on EditionSet {\n        listPrice {\n          __typename\n          ... on PriceRange {\n            maxPrice {\n              major\n            }\n            minPrice {\n              major\n            }\n          }\n        }\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Order2OrderSummary_order on Order {\n  ...Order2PricingBreakdown_order\n}\n\nfragment Order2PaymentCompletedView_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      bankName\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Order2PaymentForm_me on Me {\n  creditCards(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        id\n      }\n    }\n  }\n  bankAccounts(first: 10) {\n    edges {\n      node {\n        __typename\n        type\n        internalID\n        last4\n        bankName\n        id\n      }\n    }\n  }\n}\n\nfragment Order2PaymentForm_order on Order {\n  ...WireTransferOption_order\n  code\n  mode\n  source\n  internalID\n  currencyCode\n  availablePaymentMethods\n  availableStripePaymentMethodTypes\n  bankAccountBalanceCheck {\n    result\n    message\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fulfillmentDetails {\n    name\n    addressLine1\n    addressLine2\n    city\n    region\n    postalCode\n    country\n  }\n}\n\nfragment Order2PaymentStep_me on Me {\n  ...Order2PaymentForm_me\n}\n\nfragment Order2PaymentStep_order on Order {\n  ...useCompletePaymentData_order\n  ...Order2PaymentForm_order\n  ...Order2PaymentCompletedView_order\n  internalID\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal {\n    minor\n    currencyCode\n  }\n  itemsTotal {\n    minor\n    currencyCode\n  }\n  shippingTotal {\n    minor\n  }\n  taxTotal {\n    minor\n  }\n  seller {\n    __typename\n    ... on Partner {\n      merchantAccount {\n        externalId\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Order2PickupForm_me on Me {\n  phoneNumber {\n    display(format: NATIONAL)\n    originalNumber\n    regionCode\n  }\n}\n\nfragment Order2PickupForm_order on Order {\n  internalID\n  fulfillmentOptions {\n    type\n  }\n  selectedFulfillmentOption {\n    type\n  }\n  fulfillmentDetails {\n    phoneNumber {\n      countryCode\n      regionCode\n      originalNumber\n    }\n  }\n  shippingOrigin\n}\n\nfragment Order2PricingBreakdown_order on Order {\n  source\n  mode\n  buyerState\n  buyerStateExpiresAt\n  pricingBreakdownLines {\n    __typename\n    ... on ShippingLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TaxLine {\n      displayName\n      amountFallbackText\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on SubtotalLine {\n      displayName\n      amount {\n        amount\n        currencySymbol\n      }\n    }\n    ... on TotalLine {\n      displayName\n      amountFallbackText\n      amount {\n        display\n      }\n    }\n  }\n  pendingOffer {\n    pricingBreakdownLines {\n      __typename\n      ... on ShippingLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TaxLine {\n        displayName\n        amountFallbackText\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on SubtotalLine {\n        displayName\n        amount {\n          amount\n          currencySymbol\n        }\n      }\n      ... on TotalLine {\n        displayName\n        amountFallbackText\n        amount {\n          display\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Order2ReviewStep_order on Order {\n  ...Order2OrderSummary_order\n  internalID\n  source\n  buyerStateExpiresAt\n  stripeConfirmationToken\n  paymentMethod\n  buyerTotal {\n    display\n  }\n  itemsTotal {\n    display\n  }\n  shippingTotal {\n    display\n  }\n  taxTotal {\n    display\n  }\n  lineItems {\n    listPrice {\n      __typename\n      display\n    }\n    ...useOrder2LineItemData_lineItem\n    id\n  }\n  pendingOffer {\n    internalID\n    id\n  }\n}\n\nfragment WireTransferOption_order on Order {\n  code\n  lineItems {\n    artwork {\n      href\n      meta {\n        share\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment useBuildInitialSteps_order on Order {\n  ...useCompleteOfferData_order\n  ...useCompleteFulfillmentDetailsData_order\n  ...useCompleteDeliveryOptionData_order\n  ...useCompletePaymentData_order\n  mode\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteDeliveryOptionData_order on Order {\n  shippingOrigin\n  shippingRadius\n  selectedFulfillmentOption {\n    type\n    amount {\n      minor\n      display\n      currencySymbol\n      major\n    }\n  }\n}\n\nfragment useCompleteFulfillmentDetailsData_order on Order {\n  mode\n  fulfillmentDetails {\n    addressLine1\n    addressLine2\n    city\n    country\n    name\n    postalCode\n    region\n    phoneNumber {\n      display(format: INTERNATIONAL)\n    }\n  }\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useCompleteOfferData_order on Order {\n  mode\n  pendingOffer {\n    note\n    amount {\n      minor\n      display\n    }\n    id\n  }\n}\n\nfragment useCompletePaymentData_order on Order {\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      internalID\n      id\n    }\n    ... on BankAccount {\n      internalID\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment useIsDeliveryOptionExpanded_order on Order {\n  ...useCompleteFulfillmentDetailsData_order\n  selectedFulfillmentOption {\n    type\n  }\n}\n\nfragment useLoadCheckout_order on Order {\n  internalID\n  lineItems {\n    artwork {\n      isAcquireable\n      id\n    }\n    artworkVersion {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment useOrder2LineItemData_lineItem on LineItem {\n  artworkOrEditionSet {\n    __typename\n    ... on Artwork {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n    }\n    ... on EditionSet {\n      price\n      dimensions {\n        in\n        cm\n      }\n      framedDimensions {\n        in\n        cm\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  artworkVersion {\n    title\n    artistNames\n    date\n    attributionClass {\n      shortDescription\n      id\n    }\n    image {\n      url\n      resized(width: 185, height: 138) {\n        url\n      }\n    }\n    id\n  }\n  artwork {\n    internalID\n    partner {\n      name\n      href\n      id\n    }\n    figures(includeAll: false) {\n      __typename\n      ... on Image {\n        resized(width: 185, height: 138) {\n          url\n        }\n      }\n      ... on Video {\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

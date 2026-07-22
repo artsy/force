@@ -4,6 +4,7 @@ import { Box, Flex, Image, Message, Spacer, Text } from "@artsy/palette"
 import { Order2PricingBreakdown } from "Apps/Order2/Components/Order2PricingBreakdown"
 import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { BUYER_GUARANTEE_URL } from "Apps/Order2/constants"
+import { SellerName } from "Components/SellerName"
 import { RouterLink } from "System/Components/RouterLink"
 import type { Order2OrderSummary_order$key } from "__generated__/Order2OrderSummary_order.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -17,6 +18,8 @@ export interface Order2OrderSummaryArtwork {
   attributionClassLabel?: string | null
   dimensionsLabel?: string | null
   imageURL?: string | null
+  partnerName?: string | null
+  partnerHref?: string | null
 }
 
 interface Order2OrderSummaryProps {
@@ -56,6 +59,8 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
     attributionClassLabel,
     dimensionsLabel,
     imageURL,
+    partnerName,
+    partnerHref,
   } = artwork
 
   return (
@@ -97,6 +102,12 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
             {[artworkTitle, date].join(", ")}
           </Text>
+          <SellerName
+            name={partnerName}
+            href={partnerHref}
+            overflowEllipsis
+            textAlign="left"
+          />
           <Text overflowEllipsis variant="sm" color="mono60" textAlign="left">
             List price: {listPriceDisplay}
           </Text>
@@ -113,7 +124,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           )}
         </Box>
       </Flex>
-      <Box>
+      <Box py={1}>
         <Order2PricingBreakdown
           order={orderData}
           contextModule={contextModule}
@@ -122,7 +133,7 @@ export const Order2OrderSummary: React.FC<Order2OrderSummaryProps> = ({
           priceFromPendingOffer={priceFromPendingOffer}
         />
       </Box>
-      <Spacer y={2} />
+      <Spacer y={1} />
       <Message variant="default" p={1}>
         <Flex>
           <ShieldIcon fill="mono100" />
