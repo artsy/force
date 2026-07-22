@@ -11,11 +11,10 @@ import {
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
-import { AddressFormFields } from "Components/Address/AddressFormFields"
 import {
-  getRichRequiredPhoneValidators,
-  yupAddressValidator,
-} from "Components/Address/utils"
+  AddressFormFields,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import { countries as countryPhoneOptions } from "Utils/countries"
@@ -76,8 +75,10 @@ export const SettingsShippingAddressForm: FC<
   const validationSchema = useMemo(
     () =>
       Yup.object().shape({
-        address: yupAddressValidator,
-        ...getRichRequiredPhoneValidators(relayEnvironment),
+        ...addressFormFieldsValidator({
+          withPhoneNumber: true,
+          relayEnvironment,
+        }),
         setAsDefault: Yup.boolean().optional(),
       }),
     [relayEnvironment],

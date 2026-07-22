@@ -21,6 +21,7 @@ import { countries as countryPhoneOptions } from "Utils/countries"
 import type { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { Form, Formik } from "formik"
 import type * as React from "react"
+import { useMemo } from "react"
 import {
   createFragmentContainer,
   graphql,
@@ -39,7 +40,6 @@ export const SettingsEditSettingsInformation: React.FC<
   const { sendToast } = useToasts()
   const { submitMutation } = useUpdateSettingsInformation()
   const relayEnvironment = useRelayEnvironment()
-  const richPhoneValidators = getRichPhoneValidators(relayEnvironment)
   const phoneNumber = me.phoneNumber?.display ?? me.phoneNumber?.originalNumber
   const phoneCountryCode = me.phoneNumber?.regionCode
 
@@ -49,6 +49,24 @@ export const SettingsEditSettingsInformation: React.FC<
   const defaultPhoneCountryCode = phoneCountryCode
     ? phoneCountryCode
     : locationBasedInitialValues.phoneNumberCountryCode || "us"
+
+  const validationSchema = useMemo(() => {
+    const richPhoneValidators = getRichPhoneValidators(relayEnvironment)
+
+    return Yup.object().shape({
+      email: Yup.string()
+        .email("Please enter a valid email.")
+        .required("Please enter a valid email."),
+      // Requires password when email is changed
+      password: passwordValidator.when("email", {
+        is: email => email !== me.email,
+        otherwise: field => field.notRequired(),
+      }),
+      phoneNumber: richPhoneValidators.phoneNumber.notRequired(),
+      phoneNumberCountryCode:
+        richPhoneValidators.phoneNumberCountryCode.notRequired(),
+    })
+  }, [relayEnvironment, me.email])
 
   return (
     <>
@@ -66,19 +84,7 @@ export const SettingsEditSettingsInformation: React.FC<
           priceRangeMin: me.priceRangeMin,
           password: "",
         }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("Please enter a valid email.")
-            .required("Please enter a valid email."),
-          // Requires password when email is changed
-          password: passwordValidator.when("email", {
-            is: email => email !== me.email,
-            otherwise: field => field.notRequired(),
-          }),
-          phoneNumber: richPhoneValidators.phoneNumber.notRequired(),
-          phoneNumberCountryCode:
-            richPhoneValidators.phoneNumberCountryCode.notRequired(),
-        })}
+        validationSchema={validationSchema}
         onSubmit={async (
           {
             email,
