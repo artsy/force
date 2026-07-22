@@ -1,8 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Button, Message, Spacer, Text } from "@artsy/palette"
+import { Button, Spacer } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
+import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2LineItemData } from "Apps/Order2/Hooks/useOrder2LineItemData"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
@@ -20,7 +22,20 @@ import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2RespondSummary")
 
-const GENERIC_ERROR = "Something went wrong. Please try again."
+// Payment-authentication failures route to the payment modal; any other API
+// error falls through to the generic submit-error modal.
+const PAYMENT_ERROR_CODES = [
+  "charge_authorization_failed",
+  "payment_method_confirmation_failed",
+]
+
+// TODO(EMI-3175): the API does not yet return a dedicated code for an expired
+// offer. OFFER_EXPIRED_CODE is a placeholder that keeps the expiry-modal wiring
+// in place — replace it with the real code (and finalized copy) once the
+// backend exposes one.
+const OFFER_EXPIRED_CODE = "offer_expired"
+const OFFER_EXPIRED_MESSAGE =
+  "This offer is no longer available because the response window has closed."
 
 interface Order2RespondSummaryProps {
   order: Order2RespondSummary_order$key
@@ -44,10 +59,43 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     useOrder2SubmitCounterOfferMutation()
   const { submitMutation: acceptOffer } = useOrder2AcceptOfferMutation()
   const { submitMutation: declineOffer } = useOrder2DeclineOfferMutation()
+  const { showCheckoutErrorModal } = useCheckoutModal()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const artwork = useOrder2LineItemData(orderData.lineItems[0]!)
+
+  const showPaymentError = (message?: string | null) => {
+    showCheckoutErrorModal({
+      error: CheckoutModalError.PAYMENT_PROCESSING_FAILED,
+      description: message ?? undefined,
+      // TODO(EMI-3175): on Continue, navigate to a change-payment page so the
+      // collector can update their card. The Respond flow has no editable
+      // payment step/route today, so this is left unwired for now.
+    })
+  }
+
+  const handleSubmitError = (
+    mutationError?: { code?: string | null; message?: string | null } | null,
+  ) => {
+    const code = mutationError?.code
+    const message = mutationError?.message
+    logger.error("Error submitting offer response", { code, message })
+
+    if (code && PAYMENT_ERROR_CODES.includes(code)) {
+      showPaymentError(message)
+      return
+    }
+
+    if (code === OFFER_EXPIRED_CODE) {
+      showCheckoutErrorModal({
+        error: CheckoutModalError.SUBMIT_ERROR,
+        description: OFFER_EXPIRED_MESSAGE,
+      })
+      return
+    }
+
+    showCheckoutErrorModal({ error: CheckoutModalError.SUBMIT_ERROR })
+  }
 
   // The Submit CTA appears once the respond step is completed and the
   // confirmation step becomes active — mirroring the checkout review step.
@@ -76,8 +124,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     const offerOrError = response.submitBuyerOffer?.offerOrError
 
     if (offerOrError && "mutationError" in offerOrError) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+      handleSubmitError(offerOrError.mutationError)
       return
     }
 
@@ -96,8 +143,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     const orderOrError = response.rejectSellerOffer?.orderOrError
 
     if (orderOrError && "mutationError" in orderOrError) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      handleSubmitError(orderOrError.mutationError)
       return
     }
 
@@ -121,8 +167,10 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       })
 
       if (error) {
-        // TODO: proper error handling is tracked in EMI-3175.
-        setErrorMessage(error.message ?? GENERIC_ERROR)
+        handleSubmitError({
+          code: "charge_authorization_failed",
+          message: error.message,
+        })
         return
       }
 
@@ -131,8 +179,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     }
 
     if (orderOrError?.__typename === "OrderMutationError") {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      handleSubmitError(orderOrError.mutationError)
       return
     }
 
@@ -145,7 +192,6 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     }
 
     try {
-      setErrorMessage(null)
       setIsSubmitting(true)
 
       if (selectedAction === "COUNTEROFFER") {
@@ -156,9 +202,8 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
         await accept()
       }
     } catch (error) {
-      // TODO: proper error handling is tracked in EMI-3175.
       logger.error(error)
-      setErrorMessage(GENERIC_ERROR)
+      showCheckoutErrorModal({ error: CheckoutModalError.SUBMIT_ERROR })
     } finally {
       setIsSubmitting(false)
     }
@@ -202,15 +247,6 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
           />
 
           <Spacer y={2} />
-
-          {errorMessage && (
-            <>
-              <Spacer y={1} />
-              <Message variant="error" p={1}>
-                <Text variant="xs">{errorMessage}</Text>
-              </Message>
-            </>
-          )}
         </>
       )}
     </Order2OrderSummary>

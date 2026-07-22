@@ -248,6 +248,8 @@ export const Order2CheckoutApp: React.FC<Order2CheckoutAppProps> = ({
       </GridColumns>
       <CheckoutModal
         error={checkoutModalError}
+        artworkPath={artworkPath}
+        checkoutTracking={checkoutTracking}
         overrideTitle={checkoutModalTitle}
         overrideDescription={checkoutModalDescription}
       />

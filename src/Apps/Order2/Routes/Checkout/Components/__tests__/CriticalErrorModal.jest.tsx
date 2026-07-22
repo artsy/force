@@ -1,12 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useRouter } from "System/Hooks/useRouter"
 import { CheckoutModal, CheckoutModalError } from "../CheckoutModal"
-
-// Mock the useCheckoutContext hook
-jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext")
 
 // Mock the useCheckoutModal hook
 jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal")
@@ -18,16 +14,19 @@ const mockRouterReplace = jest.fn()
 const mockDismissCheckoutErrorModal = jest.fn()
 const mockErrorMessageViewed = jest.fn()
 
+// artworkPath + checkoutTracking are now props on CheckoutModal (previously read
+// from checkout context) so the shared modal works across Checkout and Respond.
+const defaultProps = {
+  artworkPath: "/artwork/test-artwork",
+  checkoutTracking: {
+    flow: "Buy now",
+    errorMessageViewed: mockErrorMessageViewed,
+  },
+} as any
+
 describe("CriticalErrorModal", () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useCheckoutContext as jest.Mock).mockReturnValue({
-      artworkPath: "/artwork/test-artwork",
-      checkoutTracking: {
-        flow: "Buy now",
-        errorMessageViewed: mockErrorMessageViewed,
-      },
-    })
     ;(useCheckoutModal as jest.Mock).mockReturnValue({
       dismissCheckoutErrorModal: mockDismissCheckoutErrorModal,
     })
@@ -41,13 +40,20 @@ describe("CriticalErrorModal", () => {
   })
 
   it("does not render when error is null", () => {
-    const { container } = render(<CheckoutModal error={null} />)
+    const { container } = render(
+      <CheckoutModal {...defaultProps} error={null} />,
+    )
     expect(container.firstChild).toBeNull()
   })
 
   describe("loading_timeout error", () => {
     it("shows the loading timeout message with reload button", () => {
-      render(<CheckoutModal error={CheckoutModalError.LOADING_TIMEOUT} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.LOADING_TIMEOUT}
+        />,
+      )
 
       expect(screen.getByText("Checkout error")).toBeInTheDocument()
       expect(
@@ -58,7 +64,12 @@ describe("CriticalErrorModal", () => {
     })
 
     it("reloads the page when Reload button is clicked", async () => {
-      render(<CheckoutModal error={CheckoutModalError.LOADING_TIMEOUT} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.LOADING_TIMEOUT}
+        />,
+      )
 
       const reloadButton = screen.getByText("Reload")
       await userEvent.click(reloadButton)
@@ -68,7 +79,12 @@ describe("CriticalErrorModal", () => {
     })
 
     it("returns to artwork when Return to Artwork button is clicked", async () => {
-      render(<CheckoutModal error={CheckoutModalError.LOADING_TIMEOUT} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.LOADING_TIMEOUT}
+        />,
+      )
 
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
@@ -80,7 +96,10 @@ describe("CriticalErrorModal", () => {
   describe("artwork_version_mismatch error", () => {
     it("shows the version mismatch message without reload button", () => {
       render(
-        <CheckoutModal error={CheckoutModalError.ARTWORK_VERSION_MISMATCH} />,
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.ARTWORK_VERSION_MISMATCH}
+        />,
       )
 
       expect(screen.getByText("Work has been updated")).toBeInTheDocument()
@@ -95,7 +114,10 @@ describe("CriticalErrorModal", () => {
 
     it("returns to artwork when Return to Artwork button is clicked", async () => {
       render(
-        <CheckoutModal error={CheckoutModalError.ARTWORK_VERSION_MISMATCH} />,
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.ARTWORK_VERSION_MISMATCH}
+        />,
       )
 
       const returnButton = screen.getByText("Return to Artwork")
@@ -107,7 +129,12 @@ describe("CriticalErrorModal", () => {
 
   describe("artwork_not_for_sale error", () => {
     it("shows the sold work message without reload button", () => {
-      render(<CheckoutModal error={CheckoutModalError.ARTWORK_NOT_FOR_SALE} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.ARTWORK_NOT_FOR_SALE}
+        />,
+      )
 
       expect(screen.getByText("Not available")).toBeInTheDocument()
       expect(
@@ -118,7 +145,12 @@ describe("CriticalErrorModal", () => {
     })
 
     it("returns to artwork when Return to Artwork button is clicked", async () => {
-      render(<CheckoutModal error={CheckoutModalError.ARTWORK_NOT_FOR_SALE} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.ARTWORK_NOT_FOR_SALE}
+        />,
+      )
 
       const returnButton = screen.getByText("Return to Artwork")
       await userEvent.click(returnButton)
@@ -129,7 +161,12 @@ describe("CriticalErrorModal", () => {
 
   describe("unknown error types", () => {
     it("shows the default error message without reload button", () => {
-      render(<CheckoutModal error={CheckoutModalError.OTHER_ERROR} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.OTHER_ERROR}
+        />,
+      )
 
       expect(screen.getByText("Checkout error")).toBeInTheDocument()
       expect(
@@ -144,7 +181,12 @@ describe("CriticalErrorModal", () => {
 
   describe("modal close handling", () => {
     it("returns to artwork when modal is closed via X button", async () => {
-      render(<CheckoutModal error={CheckoutModalError.LOADING_TIMEOUT} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.LOADING_TIMEOUT}
+        />,
+      )
 
       // ModalDialog should have a close button with aria-label
       const closeButton = screen.getByLabelText("Close")
@@ -156,7 +198,12 @@ describe("CriticalErrorModal", () => {
 
   describe("submit_error", () => {
     it("shows dismissible error message with Continue button", () => {
-      render(<CheckoutModal error={CheckoutModalError.SUBMIT_ERROR} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.SUBMIT_ERROR}
+        />,
+      )
 
       expect(screen.getByText("An error occurred")).toBeInTheDocument()
       expect(
@@ -169,7 +216,12 @@ describe("CriticalErrorModal", () => {
     })
 
     it("dismisses modal when Continue button is clicked", async () => {
-      render(<CheckoutModal error={CheckoutModalError.SUBMIT_ERROR} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.SUBMIT_ERROR}
+        />,
+      )
 
       const continueButton = screen.getByText("Continue")
       await userEvent.click(continueButton)
@@ -179,7 +231,12 @@ describe("CriticalErrorModal", () => {
     })
 
     it("dismisses modal when X button is clicked", async () => {
-      render(<CheckoutModal error={CheckoutModalError.SUBMIT_ERROR} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.SUBMIT_ERROR}
+        />,
+      )
 
       const closeButton = screen.getByLabelText("Close")
       await userEvent.click(closeButton)
@@ -192,7 +249,10 @@ describe("CriticalErrorModal", () => {
   describe("PAYMENT_PROCESSING_FAILED error", () => {
     it("shows payment authentication error message with Continue button", () => {
       render(
-        <CheckoutModal error={CheckoutModalError.PAYMENT_PROCESSING_FAILED} />,
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.PAYMENT_PROCESSING_FAILED}
+        />,
       )
 
       expect(
@@ -209,7 +269,10 @@ describe("CriticalErrorModal", () => {
 
     it("dismisses modal when Continue button is clicked", async () => {
       render(
-        <CheckoutModal error={CheckoutModalError.PAYMENT_PROCESSING_FAILED} />,
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.PAYMENT_PROCESSING_FAILED}
+        />,
       )
 
       const continueButton = screen.getByText("Continue")
@@ -221,7 +284,10 @@ describe("CriticalErrorModal", () => {
 
     it("dismisses modal when X button is clicked", async () => {
       render(
-        <CheckoutModal error={CheckoutModalError.PAYMENT_PROCESSING_FAILED} />,
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.PAYMENT_PROCESSING_FAILED}
+        />,
       )
 
       const closeButton = screen.getByLabelText("Close")
@@ -234,7 +300,12 @@ describe("CriticalErrorModal", () => {
 
   describe("tracking", () => {
     it("tracks errorMessageViewed when error is displayed", () => {
-      render(<CheckoutModal error={CheckoutModalError.LOADING_TIMEOUT} />)
+      render(
+        <CheckoutModal
+          {...defaultProps}
+          error={CheckoutModalError.LOADING_TIMEOUT}
+        />,
+      )
 
       expect(mockErrorMessageViewed).toHaveBeenCalledWith({
         error_code: CheckoutModalError.LOADING_TIMEOUT,
@@ -244,7 +315,7 @@ describe("CriticalErrorModal", () => {
     })
 
     it("does not track when error is null", () => {
-      render(<CheckoutModal error={null} />)
+      render(<CheckoutModal {...defaultProps} error={null} />)
 
       expect(mockErrorMessageViewed).not.toHaveBeenCalled()
     })
@@ -254,6 +325,7 @@ describe("CriticalErrorModal", () => {
     it("uses override title when provided", () => {
       render(
         <CheckoutModal
+          {...defaultProps}
           error={CheckoutModalError.SUBMIT_ERROR}
           overrideTitle="Custom Title"
         />,
@@ -265,6 +337,7 @@ describe("CriticalErrorModal", () => {
     it("uses override description when provided", () => {
       render(
         <CheckoutModal
+          {...defaultProps}
           error={CheckoutModalError.SUBMIT_ERROR}
           overrideDescription="Custom description text"
         />,
@@ -276,6 +349,7 @@ describe("CriticalErrorModal", () => {
     it("uses both override title and description when provided", () => {
       render(
         <CheckoutModal
+          {...defaultProps}
           error={CheckoutModalError.SUBMIT_ERROR}
           overrideTitle="Custom Title"
           overrideDescription="Custom description text"

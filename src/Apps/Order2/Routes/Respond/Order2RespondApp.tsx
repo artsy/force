@@ -9,6 +9,9 @@ import {
 } from "@artsy/palette"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
 import { Order2HelpLinksWithInquiry } from "Apps/Order2/Components/Order2HelpLinks"
+import { CheckoutModal } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
+import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 // TODO: These imports from the checkout route should either be hoisted up to the general Apps/Order2/Components folder or copied into the respond route.
 import { Order2DeliveryOptionsCompletedView } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/Order2DeliveryOptionsCompletedView"
 import { useCompleteDeliveryOptionData } from "Apps/Order2/Routes/Checkout/Components/DeliveryOptionsStep/useCompleteDeliveryOptionData"
@@ -32,6 +35,9 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
   order,
 }) => {
   const { isEigen } = useSystemContext()
+  const { artworkPath, checkoutTracking } = useRespondContext()
+  const { checkoutModalError, checkoutModalTitle, checkoutModalDescription } =
+    useCheckoutModal()
 
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const artworkSlug = orderData?.lineItems[0]?.artwork?.slug
@@ -113,6 +119,13 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
           </Box>
         </Column>
       </GridColumns>
+      <CheckoutModal
+        error={checkoutModalError}
+        artworkPath={artworkPath}
+        checkoutTracking={checkoutTracking}
+        overrideTitle={checkoutModalTitle}
+        overrideDescription={checkoutModalDescription}
+      />
     </>
   )
 }

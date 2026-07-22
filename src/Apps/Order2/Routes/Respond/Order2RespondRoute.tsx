@@ -1,6 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import { OrderErrorApp } from "Apps/Order2/Components/Order2ErrorApp"
+import { CheckoutModalProvider } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { Order2RespondApp } from "Apps/Order2/Routes/Respond/Order2RespondApp"
 import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
 import { NOT_FOUND_ERROR } from "Apps/Order2/constants"
@@ -29,9 +30,11 @@ export const Order2RespondRoute: React.FC<Order2RespondRouteProps> = ({
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Elements stripe={stripePromise}>
-        <Order2RespondContextProvider order={order}>
-          <Order2RespondApp order={order} />
-        </Order2RespondContextProvider>
+        <CheckoutModalProvider>
+          <Order2RespondContextProvider order={order}>
+            <Order2RespondApp order={order} />
+          </Order2RespondContextProvider>
+        </CheckoutModalProvider>
       </Elements>
     </Analytics>
   )

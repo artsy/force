@@ -1,5 +1,5 @@
 import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
-import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
+import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useRouter } from "System/Hooks/useRouter"
 import { useEffect } from "react"
@@ -13,12 +13,22 @@ export enum CheckoutModalError {
   OTHER_ERROR = "other_error",
 }
 
+// `artworkPath` and `checkoutTracking` are passed in rather than read from
+// checkout context so this modal can be shared across flows (Checkout and
+// Respond, which each have their own context but the same tracking shape).
 export const CheckoutModal: React.FC<{
   error: CheckoutModalError | null
+  artworkPath: string
+  checkoutTracking: ReturnType<typeof useCheckoutTracking>
   overrideTitle?: string
   overrideDescription?: string
-}> = ({ error, overrideTitle, overrideDescription }) => {
-  const { artworkPath, checkoutTracking } = useCheckoutContext()
+}> = ({
+  error,
+  artworkPath,
+  checkoutTracking,
+  overrideTitle,
+  overrideDescription,
+}) => {
   const { dismissCheckoutErrorModal } = useCheckoutModal()
   const { router } = useRouter()
 

@@ -5,6 +5,8 @@ import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutatio
 import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
 import { useOrder2SubmitCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2SubmitCounterOfferMutation"
+import { CheckoutModalError } from "Apps/Order2/Routes/Checkout/Components/CheckoutModal"
+import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2RespondSummaryTestQuery } from "__generated__/Order2RespondSummaryTestQuery.graphql"
@@ -33,11 +35,13 @@ jest.mock(
 )
 jest.mock("Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation")
 jest.mock("Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation")
+jest.mock("Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal")
 
 const mockCreateCounterOffer = jest.fn()
 const mockSubmitCounterOffer = jest.fn()
 const mockAcceptOffer = jest.fn()
 const mockDeclineOffer = jest.fn()
+const mockShowCheckoutErrorModal = jest.fn()
 
 beforeEach(() => {
   mockCreateCounterOffer.mockReset().mockResolvedValue({
@@ -77,6 +81,11 @@ beforeEach(() => {
   })
   ;(useOrder2DeclineOfferMutation as jest.Mock).mockReturnValue({
     submitMutation: mockDeclineOffer,
+  })
+  mockShowCheckoutErrorModal.mockReset()
+  ;(useCheckoutModal as jest.Mock).mockReturnValue({
+    showCheckoutErrorModal: mockShowCheckoutErrorModal,
+    dismissCheckoutErrorModal: jest.fn(),
   })
 })
 
@@ -209,6 +218,102 @@ describe("Order2RespondSummary", () => {
         variables: {
           input: { orderID: "order-id", offerID: "pending-offer-id" },
         },
+      })
+    })
+  })
+
+  describe("error handling", () => {
+    const acceptFlowResolvers = {
+      Order: () => ({
+        mode: "OFFER",
+        internalID: "order-id",
+        lastSubmittedOffer: { internalID: "gallery-offer-id" },
+      }),
+      Money: () => ({ display: "$1,000.00" }),
+    }
+
+    const submitAccept = async () => {
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+    }
+
+    it("shows the generic submit-error modal when a mutation returns an error", async () => {
+      mockAcceptOffer.mockResolvedValue({
+        acceptSellerOffer: {
+          orderOrError: {
+            __typename: "OrderMutationError",
+            mutationError: { code: "something_broke", message: "Nope" },
+          },
+        },
+      })
+
+      renderWithRelay(acceptFlowResolvers)
+      await submitAccept()
+
+      await waitFor(() => {
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.SUBMIT_ERROR,
+        })
+      })
+    })
+
+    it("shows the generic submit-error modal when the mutation throws", async () => {
+      mockAcceptOffer.mockRejectedValue(new Error("network"))
+
+      renderWithRelay(acceptFlowResolvers)
+      await submitAccept()
+
+      await waitFor(() => {
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.SUBMIT_ERROR,
+        })
+      })
+    })
+
+    it("shows the payment modal (with the error message) on a payment failure", async () => {
+      mockAcceptOffer.mockResolvedValue({
+        acceptSellerOffer: {
+          orderOrError: {
+            __typename: "OrderMutationError",
+            mutationError: {
+              code: "charge_authorization_failed",
+              message: "Your card has insufficient funds.",
+            },
+          },
+        },
+      })
+
+      renderWithRelay(acceptFlowResolvers)
+      await submitAccept()
+
+      await waitFor(() => {
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.PAYMENT_PROCESSING_FAILED,
+          description: "Your card has insufficient funds.",
+        })
+      })
+    })
+
+    it("shows an expiry modal when the mutation reports an expired offer", async () => {
+      mockAcceptOffer.mockResolvedValue({
+        acceptSellerOffer: {
+          orderOrError: {
+            __typename: "OrderMutationError",
+            mutationError: { code: "offer_expired", message: "Too late" },
+          },
+        },
+      })
+
+      renderWithRelay(acceptFlowResolvers)
+      await submitAccept()
+
+      await waitFor(() => {
+        expect(mockShowCheckoutErrorModal).toHaveBeenCalledWith({
+          error: CheckoutModalError.SUBMIT_ERROR,
+          description:
+            "This offer is no longer available because the response window has closed.",
+        })
       })
     })
   })
