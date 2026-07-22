@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { Order2RespondForm } from "Apps/Order2/Routes/Respond/Components/Order2RespondForm"
 import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
@@ -13,6 +13,16 @@ jest.mock(
   "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation",
 )
 
+const mockJumpTo = jest.fn()
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: mockJumpTo }),
+}))
+
+const mockUseMatchMedia = jest.fn()
+jest.mock("Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: (...args: any[]) => mockUseMatchMedia(...args),
+}))
+
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerId: "order-id",
@@ -26,6 +36,10 @@ const COUNTEROFFER_PLACEHOLDER = "Enter amount excluding shipping & tax"
 const mockCreateCounterOffer = jest.fn()
 
 beforeEach(() => {
+  mockJumpTo.mockReset()
+  // Default to the mobile/mWeb layout, where the Submit CTA is below the fold.
+  mockUseMatchMedia.mockReset()
+  mockUseMatchMedia.mockReturnValue(true)
   mockCreateCounterOffer.mockReset()
   mockCreateCounterOffer.mockResolvedValue({
     createBuyerOffer: {
@@ -299,6 +313,72 @@ describe("Order2RespondForm", () => {
 
     expect(screen.getByText("Respond to gallery offer")).toBeInTheDocument()
     expect(screen.getByText("Decline gallery offer")).toBeInTheDocument()
+  })
+
+  describe("scrolling to the Submit CTA", () => {
+    beforeEach(() => {
+      jest.useFakeTimers()
+    })
+
+    afterEach(() => {
+      act(() => {
+        jest.runOnlyPendingTimers()
+      })
+      jest.useRealTimers()
+    })
+
+    it("scrolls to the Submit CTA after continuing on mobile", () => {
+      renderWithRelay(defaultResolvers)
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+
+      act(() => {
+        jest.advanceTimersByTime(100)
+      })
+
+      expect(mockJumpTo).toHaveBeenCalledWith("respond-submit-cta", {
+        behavior: "smooth",
+        offset: 30,
+      })
+    })
+
+    it("scrolls to the Submit CTA after creating a counteroffer on mobile", async () => {
+      renderWithRelay(defaultResolvers)
+
+      fireEvent.click(screen.getByText("Send counteroffer"))
+      fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+        target: { value: "500" },
+      })
+      fireEvent.click(continueButton())
+
+      await act(async () => {
+        await Promise.resolve()
+        jest.advanceTimersByTime(100)
+      })
+
+      expect(mockJumpTo).toHaveBeenCalledWith("respond-submit-cta", {
+        behavior: "smooth",
+        offset: 30,
+      })
+    })
+
+    it("does not scroll on desktop, where the Submit CTA is already visible", () => {
+      // Desktop layout: neither the xs nor sm media query matches.
+      mockUseMatchMedia.mockReturnValue(false)
+
+      renderWithRelay(defaultResolvers)
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+
+      act(() => {
+        jest.advanceTimersByTime(100)
+      })
+
+      expect(screen.getByText("Accepted gallery offer")).toBeInTheDocument()
+      expect(mockJumpTo).not.toHaveBeenCalled()
+    })
   })
 
   describe("analytics", () => {

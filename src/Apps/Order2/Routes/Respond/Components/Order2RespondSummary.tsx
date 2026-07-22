@@ -13,6 +13,7 @@ import {
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
 import { useRouter } from "System/Hooks/useRouter"
+import { Jump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
 import type { Order2RespondSummary_order$key } from "__generated__/Order2RespondSummary_order.graphql"
 import { useState } from "react"
@@ -24,10 +25,12 @@ const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondSummaryProps {
   order: Order2RespondSummary_order$key
+  jumpToSubmit?: boolean
 }
 
 export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   order,
+  jumpToSubmit,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const {
@@ -179,6 +182,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       {isConfirmationActive && (
         <>
           <Spacer y={2} />
+          {jumpToSubmit && <Jump id="respond-submit-cta" />}
           <Button
             variant="primaryBlack"
             width="100%"
