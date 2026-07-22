@@ -56,6 +56,24 @@ interface Props {
 }
 
 /**
+ * Arguments for `addressFormFieldsValidator`. Modeled as a discriminated union
+ * so that requesting rich phone validation (`withPhoneNumber: true`) forces a
+ * Relay `relayEnvironment` to be supplied — otherwise the async phone-number
+ * validation would be silently omitted from the schema.
+ */
+type AddressFormFieldsValidatorArgs =
+  | {
+      withPhoneNumber: true
+      relayEnvironment: Environment
+      withLegacyPhoneInput?: boolean
+    }
+  | {
+      withPhoneNumber?: false
+      relayEnvironment?: Environment
+      withLegacyPhoneInput?: boolean
+    }
+
+/**
  * Validation schema for address form fields. Arguments match the
  * <AddressFormFields/> component - e.g. to include phone number validation
  *
@@ -84,14 +102,11 @@ interface Props {
  * ```
  */
 export const addressFormFieldsValidator = (
-  args: Pick<Props, "withLegacyPhoneInput" | "withPhoneNumber"> & {
-    relayEnvironment?: Environment
-  } = {},
+  args: AddressFormFieldsValidatorArgs = {},
 ) => ({
   address: yupAddressValidator,
   ...(args.withLegacyPhoneInput && basicPhoneValidator),
   ...(args.withPhoneNumber &&
-    args.relayEnvironment &&
     getRichRequiredPhoneValidators(args.relayEnvironment)),
 })
 
