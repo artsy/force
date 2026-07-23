@@ -18,6 +18,10 @@ interface Order2PricingBreakdownProps {
   checkoutTracking: ReturnType<typeof useCheckoutTracking>
   // Defaults on. Pass false to price from the order rather than the buyer's pending offer
   priceFromPendingOffer?: boolean
+  // Override the color of every breakdown line. Defaults to the per-line colors.
+  textColor?: string
+  // Render the offer expiry countdown inline beside the line name.
+  inlineTimer?: boolean
 }
 
 const TAX_CALCULATION_ARTICLE_URL =
@@ -29,6 +33,8 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
   isLoading,
   checkoutTracking,
   priceFromPendingOffer = true,
+  textColor,
+  inlineTimer,
 }) => {
   const orderData = useFragment(FRAGMENT, order)
   const { mode, source, buyerState, buyerStateExpiresAt } = orderData
@@ -63,9 +69,10 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
         const typename = line.__typename
         let variant: "sm" | "sm-display" = "sm"
         let fontWeight: "normal" | "bold" = "normal"
-        let color = "mono60"
+        let color = textColor ?? "mono60"
         let withAsterisk = false
         let secondLine: JSX.Element | null = null
+        let inlineTimerLine: JSX.Element | null = null
 
         let amountText = ""
         let showSkeleton = false
@@ -79,19 +86,27 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
 
             // Show timer if we have a valid offer with time remaining
             if (showOfferCountdown && timer.hasValidRemainingTime) {
-              color = "blue100"
+              color = textColor ?? "blue100"
 
-              secondLine = (
-                <>
-                  <Text variant="sm" color="blue100">
-                    <Order2OfferExpiryTimer
-                      remainingTime={timer.remainingTime}
-                      variant="icon"
-                    />
-                  </Text>
-                  <Spacer y={0.5} />
-                </>
+              const timerText = (
+                <Text variant="sm" color={textColor ?? "blue100"}>
+                  <Order2OfferExpiryTimer
+                    remainingTime={timer.remainingTime}
+                    variant="icon"
+                  />
+                </Text>
               )
+
+              if (inlineTimer) {
+                inlineTimerLine = timerText
+              } else {
+                secondLine = (
+                  <>
+                    {timerText}
+                    <Spacer y={0.5} />
+                  </>
+                )
+              }
             }
 
             break
@@ -117,7 +132,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
           case "TotalLine":
             variant = "sm-display"
             fontWeight = "bold"
-            color = "mono100"
+            color = textColor ?? "mono100"
             if (isLoading) {
               showSkeleton = true
             } else if (line.amount?.display) {
@@ -131,10 +146,21 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
           <Fragment key={typename}>
             {typename === "TotalLine" && <Spacer y={0.5} />}
             <Flex color={color}>
-              <Text flexGrow={1} variant={variant} fontWeight={fontWeight}>
-                {line.displayName}
-                {withAsterisk && "*"}
-              </Text>
+              {inlineTimerLine ? (
+                <Flex flexGrow={1} alignItems="center">
+                  <Text variant={variant} fontWeight={fontWeight}>
+                    {line.displayName}
+                    {withAsterisk && "*"}
+                  </Text>
+                  <Spacer x={0.5} />
+                  {inlineTimerLine}
+                </Flex>
+              ) : (
+                <Text flexGrow={1} variant={variant} fontWeight={fontWeight}>
+                  {line.displayName}
+                  {withAsterisk && "*"}
+                </Text>
+              )}
               <Text flexGrow={0} variant={variant} fontWeight={fontWeight}>
                 {showSkeleton ? (
                   <SkeletonText variant={variant}>Loading</SkeletonText>
@@ -147,7 +173,7 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
           </Fragment>
         )
       })}
-      <Text variant="xs" color="mono60" textAlign="left" mt={2}>
+      <Text variant="xs" color={textColor ?? "mono60"} textAlign="left" mt={2}>
         *Additional duties and taxes{" "}
         <RouterLink
           inline
