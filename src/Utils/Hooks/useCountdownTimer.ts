@@ -52,7 +52,7 @@ const calculatePercentage = (startTime: string, endTime: string) => {
 const LOADING_MESSAGE = "Calculating time"
 const EXPIRATION_MESSAGE = "Expired"
 
-type RemainingTime =
+export type RemainingTime =
   | typeof LOADING_MESSAGE
   | typeof EXPIRATION_MESSAGE
   | Omit<string, typeof LOADING_MESSAGE | typeof EXPIRATION_MESSAGE>

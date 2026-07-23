@@ -2,6 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { Button, Spacer, Text } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { validateAndExtractOrderResponse } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
+import { Order2OfferExpiryTimer } from "Apps/Order2/Components/Order2OfferExpiryTimer"
 import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import {
   CheckoutStepName,
@@ -14,10 +15,9 @@ import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckou
 import { useCheckoutModal } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutModal"
 import { useOrder2SubmitOrderMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SubmitOrderMutation"
 import { useOrder2LineItemData } from "Apps/Order2/Hooks/useOrder2LineItemData"
-import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
+import { useOrder2OfferCountdown } from "Apps/Order2/Hooks/useOrder2OfferCountdown"
 import createLogger from "Utils/logger"
 import type { Order2ReviewStep_order$key } from "__generated__/Order2ReviewStep_order.graphql"
-import { DateTime } from "luxon"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -59,15 +59,9 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
   // Limited partner offer variables
   const isOfferOnTopOfPartnerOffer =
     isOffer && orderData.source === "PARTNER_OFFER"
-  const partnerOfferEndTime =
-    (isOfferOnTopOfPartnerOffer && orderData.buyerStateExpiresAt) || ""
-  const partnerOfferStartTime = isOfferOnTopOfPartnerOffer
-    ? DateTime.fromISO(partnerOfferEndTime).minus({ days: 3 }).toString()
-    : ""
-  const timer = useCountdownTimer({
-    startTime: partnerOfferStartTime,
-    endTime: partnerOfferEndTime,
-    imminentTime: 1,
+  const timer = useOrder2OfferCountdown({
+    endTime: (isOfferOnTopOfPartnerOffer && orderData.buyerStateExpiresAt) || "",
+    isPartnerOffer: isOfferOnTopOfPartnerOffer,
   })
   const itemPrice = orderData.lineItems?.[0]?.listPrice
   const displayLimitedOfferLine =
@@ -202,9 +196,10 @@ export const Order2ReviewStep: React.FC<Order2ReviewStepProps> = ({
         displayLimitedOfferLine && (
           <Text variant="sm" color="blue100" textAlign="left">
             Gallery offer: {itemPrice.display}{" "}
-            <span style={{ whiteSpace: "nowrap" }}>
-              (Exp. {timer.remainingTime})
-            </span>
+            <Order2OfferExpiryTimer
+              remainingTime={timer.remainingTime}
+              variant="inline"
+            />
           </Text>
         )
       }

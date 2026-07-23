@@ -1,14 +1,13 @@
 import type { ContextModule } from "@artsy/cohesion"
-import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, SkeletonText, Spacer, Text } from "@artsy/palette"
+import { Order2OfferExpiryTimer } from "Apps/Order2/Components/Order2OfferExpiryTimer"
+import { useOrder2OfferCountdown } from "Apps/Order2/Hooks/useOrder2OfferCountdown"
 import type { useCheckoutTracking } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutTracking"
 import { RouterLink } from "System/Components/RouterLink"
-import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import type {
   Order2PricingBreakdown_order$data,
   Order2PricingBreakdown_order$key,
 } from "__generated__/Order2PricingBreakdown_order.graphql"
-import { DateTime } from "luxon"
 import { Fragment } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -42,18 +41,9 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
   const isAwaitingBuyerResponse = buyerState === "OFFER_RECEIVED"
   const showOfferCountdown = accountForPartnerOffer || isAwaitingBuyerResponse
 
-  // Calculate timer directly in this component to ensure re-renders. Only the
-  // end time drives the countdown display; startTime feeds percentComplete
-  // (unused here), so partner offers assume a 3-day window.
-  const offerEndTime = (showOfferCountdown && buyerStateExpiresAt) || ""
-  const offerStartTime = accountForPartnerOffer
-    ? DateTime.fromISO(offerEndTime).minus({ days: 3 }).toString()
-    : offerEndTime
-
-  const timer = useCountdownTimer({
-    startTime: offerStartTime,
-    endTime: offerEndTime,
-    imminentTime: 1,
+  const timer = useOrder2OfferCountdown({
+    endTime: (showOfferCountdown && buyerStateExpiresAt) || "",
+    isPartnerOffer: accountForPartnerOffer,
   })
 
   const pricingBreakdownLines =
@@ -94,11 +84,10 @@ export const Order2PricingBreakdown: React.FC<Order2PricingBreakdownProps> = ({
               secondLine = (
                 <>
                   <Text variant="sm" color="blue100">
-                    <Flex alignItems="center">
-                      <StopwatchIcon height={18} />
-                      <Spacer x={0.5} />
-                      Exp. {timer.remainingTime}
-                    </Flex>
+                    <Order2OfferExpiryTimer
+                      remainingTime={timer.remainingTime}
+                      variant="icon"
+                    />
                   </Text>
                   <Spacer y={0.5} />
                 </>
