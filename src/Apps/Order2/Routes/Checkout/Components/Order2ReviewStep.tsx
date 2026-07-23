@@ -26,7 +26,6 @@ const logger = createLogger("Order2ReviewStep.tsx")
 const PAYMENT_METHOD_UPDATE_REQUIRED: CheckoutErrorBannerMessage = {
   title: "Payment error",
   message: "Please update your payment method",
-  code: "charge_authorization_failed",
   // The failure was already tracked via the payment-processing-failed modal;
   // skip tracking here so the re-displayed banner does not double report.
   skipTracking: true,
