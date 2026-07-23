@@ -68,18 +68,16 @@ describe("ConversationReply", () => {
   }
 
   const { renderWithRelay } = setupTestWrapperTL<ConversationReplyTestQuery>({
-    Component: ({ conversation, viewer }) => (
-      <ConversationsProvider viewer={viewer!}>
+    Component: ({ conversation }) => (
+      <ConversationsProvider conversation={conversation!}>
         <ConversationReply conversation={conversation!} />
       </ConversationsProvider>
     ),
     query: graphql`
       query ConversationReplyTestQuery @relay_test_operation {
         conversation(id: "conversation-id") {
+          ...ConversationsContext_conversation
           ...ConversationReply_conversation
-        }
-        viewer {
-          ...ConversationsContext_viewer
         }
       }
     `,

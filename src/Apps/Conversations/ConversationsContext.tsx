@@ -1,8 +1,8 @@
 import { extractNodes } from "Utils/extractNodes"
 import type {
-  ConversationsContext_viewer$data,
-  ConversationsContext_viewer$key,
-} from "__generated__/ConversationsContext_viewer.graphql"
+  ConversationsContext_conversation$data,
+  ConversationsContext_conversation$key,
+} from "__generated__/ConversationsContext_conversation.graphql"
 import { createContext, useContext, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
@@ -25,16 +25,14 @@ const ConversationsContext = createContext<ConversationsContextProps>({
 } as unknown as ConversationsContextProps)
 
 interface ConversationsProviderProps {
-  viewer: ConversationsContext_viewer$key
+  conversation: ConversationsContext_conversation$key
 }
 
 export type PartnerOffer = NonNullable<
   NonNullable<
     NonNullable<
       NonNullable<
-        NonNullable<
-          ConversationsContext_viewer$data["me"]
-        >["partnerOffersConnection"]
+        ConversationsContext_conversation$data["collectorPartnerOffersConnection"]
       >["edges"]
     >[number]
   >["node"]
@@ -42,16 +40,16 @@ export type PartnerOffer = NonNullable<
 
 export const ConversationsProvider: React.FC<
   React.PropsWithChildren<ConversationsProviderProps>
-> = ({ children, viewer }) => {
+> = ({ children, conversation }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false)
   const [isCreatingOfferOrder, setCreatingOfferOrder] = useState(false)
   const [selectedEditionSetId, setSelectedEditionSetId] = useState<
     string | null
   >(null)
-  const { me } = useFragment(VIEWER_FRAGMENT, viewer)
+  const data = useFragment(CONVERSATION_FRAGMENT, conversation)
 
   const partnerOfferMap: Record<string, PartnerOffer> = extractNodes(
-    me?.partnerOffersConnection,
+    data?.collectorPartnerOffersConnection,
   ).reduce((acc, offer) => {
     if (offer.artworkId) {
       acc[offer.artworkId] = offer
@@ -109,20 +107,22 @@ export const useConversationsContext = () => {
   return context
 }
 
-const VIEWER_FRAGMENT = graphql`
-  fragment ConversationsContext_viewer on Viewer {
-    me {
-      partnerOffersConnection(first: 100, offerType: [BULK, PERSONALIZED]) {
-        edges {
-          node {
-            artworkId
-            endAt
-            internalID
-            isAvailable
-            note
-            priceWithDiscount {
-              display
-            }
+const CONVERSATION_FRAGMENT = graphql`
+  fragment ConversationsContext_conversation on Conversation {
+    collectorPartnerOffersConnection(
+      first: 10
+      offerType: [BULK, PERSONALIZED]
+    ) {
+      edges {
+        node {
+          artworkId
+          endAt
+          internalID
+          isAvailable
+          isPurchased
+          note
+          priceWithDiscount {
+            display
           }
         }
       }
