@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
 import {
   ExpressCheckoutElement,
@@ -678,7 +679,9 @@ export const Order2ExpressCheckoutUI: React.FC<
       <Spacer y={[1, 1, 2]} />
       <TermsAndConditions
         onClickTermsAndConditions={() => {
-          checkoutTracking.clickedTermsAndConditions()
+          checkoutTracking.clickedTermsAndConditions(
+            ContextModule.ordersCheckout,
+          )
         }}
       />
     </Box>
