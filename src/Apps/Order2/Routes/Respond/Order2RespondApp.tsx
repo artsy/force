@@ -84,7 +84,7 @@ export const Order2RespondApp: React.FC<Order2RespondAppProps> = ({
               )}
 
               <Box display={["block", "block", "none"]}>
-                <Order2RespondSummary order={orderData} />
+                <Order2RespondSummary order={orderData} jumpToSubmit />
                 <Order2HelpLinksWithInquiry
                   order={orderData}
                   artworkID={artworkSlug as string}
