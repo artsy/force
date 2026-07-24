@@ -22,6 +22,8 @@ export const Order2RespondOfferDetails: React.FC<
         contextModule={ContextModule.ordersRespond}
         checkoutTracking={checkoutTracking}
         priceFromPendingOffer={false}
+        textColor="mono100"
+        inlineTimer
       />
     </Flex>
   )
