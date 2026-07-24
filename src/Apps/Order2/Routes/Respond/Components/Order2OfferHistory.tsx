@@ -36,7 +36,7 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
     <Box backgroundColor="mono0" px={[2, 2, 4]}>
       <Expandable
         expanded
-        label={<SectionHeading>Offer history</SectionHeading>}
+        label={<SectionHeading ml="30px">Offer history</SectionHeading>}
         borderColor="transparent"
         backgroundColor="mono0"
         pb={1}
@@ -44,46 +44,48 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
           checkoutTracking.toggledOfferHistory(isExpanded)
         }}
       >
-        <Flex justifyContent="flex-end" mb={1}>
-          <Text variant="xs">Incl. shipping &amp; taxes</Text>
-        </Flex>
+        <Box ml="30px">
+          <Flex justifyContent="flex-end" mb={1}>
+            <Text variant="xs">Incl. shipping &amp; taxes</Text>
+          </Flex>
 
-        <Box pb={1}>
-          {submittedOffers.map(offer => {
-            const isSeller = offer.fromParticipant === "SELLER"
-            return (
-              <Flex
-                key={offer.internalID}
-                mt={1}
-                backgroundColor={isSeller ? "mono0" : "mono5"}
-              >
-                <Box flex={COLUMNS[0]}>
-                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
-                    {offer.createdAt}
-                  </Text>
-                </Box>
-                <Box flex={COLUMNS[1]}>
-                  <Text variant={["xs", "sm"]}>
-                    {sourceLabel(offer.fromParticipant)}
-                  </Text>
-                </Box>
-                <Box flex={COLUMNS[2]}>
-                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
-                    {offer.amount &&
-                      `${offer.amount.currencySymbol}${offer.amount.amount}`}
-                  </Text>
-                </Box>
-                <Box flex={COLUMNS[3]} textAlign="right">
-                  {/* buyerTotal is undefined for incomplete (original) offers */}
-                  <Text variant={["xs", "sm"]}>
-                    {offer.buyerTotal
-                      ? `${offer.buyerTotal.currencySymbol}${offer.buyerTotal.amount}`
-                      : "N/A"}
-                  </Text>
-                </Box>
-              </Flex>
-            )
-          })}
+          <Box pb={1}>
+            {submittedOffers.map(offer => {
+              const isSeller = offer.fromParticipant === "SELLER"
+              return (
+                <Flex
+                  key={offer.internalID}
+                  mt={1}
+                  backgroundColor={isSeller ? "mono0" : "mono5"}
+                >
+                  <Box flex={COLUMNS[0]}>
+                    <Text variant={["xs", "sm"]} justifySelf="flex-start">
+                      {offer.createdAt}
+                    </Text>
+                  </Box>
+                  <Box flex={COLUMNS[1]}>
+                    <Text variant={["xs", "sm"]}>
+                      {sourceLabel(offer.fromParticipant)}
+                    </Text>
+                  </Box>
+                  <Box flex={COLUMNS[2]}>
+                    <Text variant={["xs", "sm"]} justifySelf="flex-start">
+                      {offer.amount &&
+                        `${offer.amount.currencySymbol}${offer.amount.amount}`}
+                    </Text>
+                  </Box>
+                  <Box flex={COLUMNS[3]} textAlign="right">
+                    {/* buyerTotal is undefined for incomplete (original) offers */}
+                    <Text variant={["xs", "sm"]}>
+                      {offer.buyerTotal
+                        ? `${offer.buyerTotal.currencySymbol}${offer.buyerTotal.amount}`
+                        : "N/A"}
+                    </Text>
+                  </Box>
+                </Flex>
+              )
+            })}
+          </Box>
         </Box>
       </Expandable>
     </Box>
