@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<004183ada7f3bb8cf78fc97f5893f50a>>
+ * @generated SignedSource<<76931afb7e14a8eb0836994e8c554b25>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,7 +92,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "size",
-                "value": 8
+                "value": 3
               }
             ],
             "concreteType": "Article",
@@ -218,7 +218,7 @@ return {
               },
               (v2/*: any*/)
             ],
-            "storageKey": "relatedArticles(size:8)"
+            "storageKey": "relatedArticles(size:3)"
           },
           (v2/*: any*/)
         ],
@@ -227,12 +227,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cd7710ae24328410ddf7435358549a69",
+    "cacheID": "1f9c0096e7fefcfff84051df7b4d075d",
     "id": null,
     "metadata": {},
     "name": "ArticleNewsRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleNewsRelatedArticlesQuery(\n  $id: String!\n) @cacheable {\n  article(id: $id) {\n    ...ArticleNewsRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleNewsRelatedArticles_article on Article {\n  newsRelatedArticles: relatedArticles(size: 8) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArticleNewsRelatedArticlesQuery(\n  $id: String!\n) @cacheable {\n  article(id: $id) {\n    ...ArticleNewsRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleNewsRelatedArticles_article on Article {\n  newsRelatedArticles: relatedArticles(size: 3) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

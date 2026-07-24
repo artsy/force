@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83ef9e61b87f1c136837f7434949491e>>
+ * @generated SignedSource<<30f16147c38fee54b5457ce28a3c325d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -107,7 +107,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "size",
-                "value": 8
+                "value": 3
               }
             ],
             "concreteType": "Article",
@@ -233,7 +233,7 @@ return {
               },
               (v1/*: any*/)
             ],
-            "storageKey": "relatedArticles(size:8)"
+            "storageKey": "relatedArticles(size:3)"
           },
           (v1/*: any*/)
         ],
@@ -242,7 +242,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2c2d14c321b4326cdf86b60cedc39d5e",
+    "cacheID": "463aea9a21a8af906fc23a6b758f9b92",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -287,7 +287,7 @@ return {
     },
     "name": "ArticleNewsRelatedArticles_test_Query",
     "operationKind": "query",
-    "text": "query ArticleNewsRelatedArticles_test_Query {\n  article(id: \"example\") {\n    ...ArticleNewsRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleNewsRelatedArticles_article on Article {\n  newsRelatedArticles: relatedArticles(size: 8) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArticleNewsRelatedArticles_test_Query {\n  article(id: \"example\") {\n    ...ArticleNewsRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleNewsRelatedArticles_article on Article {\n  newsRelatedArticles: relatedArticles(size: 3) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

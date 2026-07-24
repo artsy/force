@@ -22,7 +22,7 @@ export const ArticleNewsRelatedArticlesFragmentContainer =
   createFragmentContainer(ArticleNewsRelatedArticles, {
     article: graphql`
       fragment ArticleNewsRelatedArticles_article on Article {
-        newsRelatedArticles: relatedArticles(size: 8) {
+        newsRelatedArticles: relatedArticles(size: 3) {
           internalID
           ...CellArticle_article
         }

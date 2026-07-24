@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c55efde2af1e3be9497317c38d2b5db>>
+ * @generated SignedSource<<91b8b9f5797087f6d5cfa58f3fd3be22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "size",
-          "value": 8
+          "value": 3
         }
       ],
       "concreteType": "Article",
@@ -55,13 +55,13 @@ const node: ReaderFragment = {
           "name": "CellArticle_article"
         }
       ],
-      "storageKey": "relatedArticles(size:8)"
+      "storageKey": "relatedArticles(size:3)"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
 
-(node as any).hash = "f917acf1f9be1d77662137171fa38bb8";
+(node as any).hash = "92d51d42e350f13ba55746b02b032e92";
 
 export default node;
