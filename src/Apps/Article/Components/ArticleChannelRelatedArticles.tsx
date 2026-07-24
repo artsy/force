@@ -1,8 +1,7 @@
-import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
 import {
-  CellArticleFragmentContainer,
-  CellArticlePlaceholder,
-} from "Components/Cells/CellArticle"
+  ArticleRelatedArticlesShelf,
+  ArticleRelatedArticlesShelfPlaceholder,
+} from "Apps/Article/Components/ArticleRelatedArticlesShelf"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { ArticleChannelRelatedArticlesQuery } from "__generated__/ArticleChannelRelatedArticlesQuery.graphql"
 import type { ArticleChannelRelatedArticles_article$data } from "__generated__/ArticleChannelRelatedArticles_article.graphql"
@@ -16,25 +15,11 @@ interface ArticleChannelRelatedArticlesProps {
 const ArticleChannelRelatedArticles: FC<
   React.PropsWithChildren<ArticleChannelRelatedArticlesProps>
 > = ({ article }) => {
-  if (article.channelArticles.length === 0) return null
-
   return (
-    <>
-      <Text variant="lg-display" mb={4}>
-        More From {article.channel?.name || article.byline}
-      </Text>
-
-      <Shelf alignItems="flex-start">
-        {article.channelArticles.map(article => {
-          return (
-            <CellArticleFragmentContainer
-              key={article.internalID}
-              article={article}
-            />
-          )
-        })}
-      </Shelf>
-    </>
+    <ArticleRelatedArticlesShelf
+      articles={article.channelArticles}
+      heading={`More From ${article.channel?.name || article.byline}`}
+    />
   )
 }
 
@@ -97,16 +82,6 @@ const ArticleChannelRelatedArticlesPlaceholder: FC<
   React.PropsWithChildren<unknown>
 > = () => {
   return (
-    <Skeleton>
-      <SkeletonText variant="lg-display" mb={4}>
-        More From This Author
-      </SkeletonText>
-
-      <Shelf alignItems="flex-start">
-        {[...new Array(8)].map((_, index) => {
-          return <CellArticlePlaceholder key={index} />
-        })}
-      </Shelf>
-    </Skeleton>
+    <ArticleRelatedArticlesShelfPlaceholder heading="More From This Author" />
   )
 }
