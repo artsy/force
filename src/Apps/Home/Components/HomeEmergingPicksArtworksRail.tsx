@@ -34,6 +34,15 @@ export const HomeEmergingPicksArtworksRail: React.FC<
     return null
   }
 
+  // `note` is an edge-level field on the marketing collection's artworksConnection,
+  // so build a lookup keyed by artwork internalID and thread each note into its card.
+  const curatorNotesByArtworkId: Record<string, string | null> = {}
+  viewer.artworksConnection?.edges?.forEach(edge => {
+    if (edge?.node?.internalID && edge?.note) {
+      curatorNotesByArtworkId[edge.node.internalID] = edge.note
+    }
+  })
+
   return (
     <Rail
       title="Curators’ Picks"
@@ -58,6 +67,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
           <ShelfArtworkFragmentContainer
             artwork={artwork}
             key={artwork.internalID}
+            curatorNote={curatorNotesByArtworkId[artwork.internalID]}
             lazyLoad
             // @ts-expect-error TODO: add troveArtworksRail to the union type of auth context module
             contextModule={ContextModule.troveArtworksRail}
@@ -69,6 +79,7 @@ export const HomeEmergingPicksArtworksRail: React.FC<
                 destination_page_owner_type: OwnerType.artwork,
                 destination_page_owner_id: artwork.internalID,
                 destination_page_owner_slug: artwork.slug,
+                has_curator_note: !!curatorNotesByArtworkId[artwork.internalID],
                 type: "thumbnail",
                 signal_label: getSignalLabel({
                   signals: signals?.[artwork.internalID] ?? [],
@@ -100,6 +111,7 @@ export const HomeEmergingPicksArtworksRailFragmentContainer =
           sort: "-decayed_merch"
         ) {
           edges {
+            note
             node {
               internalID
               slug

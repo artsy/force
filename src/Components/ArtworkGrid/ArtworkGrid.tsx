@@ -40,7 +40,11 @@ interface ArtworkGridProps {
   preloadImageCount?: number
   itemMargin?: number
   layout?: ArtworkGridLayout
-  onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
+  onBrickClick?: (
+    artwork: Artwork,
+    artworkIndex: number,
+    hasCuratorNote?: boolean,
+  ) => void
   onClearFilters?: () => any
   onLoadMore?: () => any
   sectionMargin?: number
@@ -161,6 +165,15 @@ export class ArtworkGridContainer extends React.Component<
       artwork => (artwork as any)?.artist?.targetSupply?.priority === "TRUE",
     )
 
+    // `note` is an edge-level field on marketing collection connections, so build a
+    // lookup keyed by node id and thread each note into its grid item as a plain prop.
+    const curatorNotesById: Record<string, string> = {}
+    ;((this.props.artworks as any)?.edges ?? []).forEach((edge: any) => {
+      if (edge?.node?.id && edge?.note) {
+        curatorNotesById[edge.node.id] = edge.note
+      }
+    })
+
     for (let column = 0; column < columnCount; column++) {
       const artworkComponents: React.ReactNode[] = []
       for (let row = 0; row < sectionedArtworks[column].length; row++) {
@@ -177,6 +190,7 @@ export class ArtworkGridContainer extends React.Component<
           <GridItem
             contextModule={contextModule}
             artwork={artwork}
+            curatorNote={curatorNotesById[artwork.id]}
             hideSaleInfo={hideSaleInfo}
             key={artwork.id}
             lazyLoad={
@@ -187,7 +201,11 @@ export class ArtworkGridContainer extends React.Component<
             }
             onClick={() => {
               if (this.props.onBrickClick) {
-                this.props.onBrickClick(artwork, artworkIndex)
+                this.props.onBrickClick(
+                  artwork,
+                  artworkIndex,
+                  !!curatorNotesById[artwork.id],
+                )
               }
             }}
             showHighDemandIcon={showHighDemandIcon}
@@ -344,6 +362,11 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
       includeAllImages: { type: "Boolean", defaultValue: false }
     ) {
       edges {
+        # Curator's note is an edge-level field only present on marketing
+        # collection connections (FilterArtworksEdge); null elsewhere.
+        ... on FilterArtworksEdge {
+          note
+        }
         node {
           id
           slug

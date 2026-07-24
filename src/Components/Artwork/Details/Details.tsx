@@ -14,11 +14,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { BidTimerLine } from "./BidTimerLine"
 import { PrimaryLabelLineQueryRenderer } from "./PrimaryLabelLine"
+import { CuratorNote } from "Components/Artwork/CuratorNote"
 import { SaleMessageQueryRenderer } from "./SaleMessage"
 
 export interface DetailsProps {
   artwork: Details_artwork$data
   contextModule?: AuthContextModule
+  /** Curator's note for this artwork within a marketing collection (edge-level field) */
+  curatorNote?: string | null
   includeLinks: boolean
   hideSaleInfo?: boolean
   hideArtistName?: boolean
@@ -231,6 +234,7 @@ const BidInfo: React.FC<React.PropsWithChildren<DetailsProps>> = ({
 
 export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
   contextModule,
+  curatorNote,
   hideArtistName,
   hidePartnerName,
   hidePrimaryLabel,
@@ -311,6 +315,14 @@ export const Details: React.FC<React.PropsWithChildren<DetailsProps>> = ({
           maxWidth={showPrimaryLabelLine ? "95%" : "75%"}
           overflow="hidden"
         >
+          {!!curatorNote && (
+            <CuratorNote
+              note={curatorNote}
+              artworkInternalID={rest?.artwork?.internalID}
+              artworkSlug={rest?.artwork?.slug}
+            />
+          )}
+
           {showPrimaryLabelLine && (
             <PrimaryLabelLineQueryRenderer
               id={artworkId}
@@ -348,6 +360,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
     fragment Details_artwork on Artwork {
       internalID
+      slug
       href
       title
       date

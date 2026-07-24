@@ -21,6 +21,8 @@ export interface ShelfArtworkProps
   artwork: ShelfArtwork_artwork$data
   children?: React.ReactNode
   contextModule?: AuthContextModule
+  /** Curator's note for this artwork within a marketing collection (edge-level field) */
+  curatorNote?: string | null
   hideSaleInfo?: boolean
   lazyLoad?: boolean
   maxImageHeight?: number
@@ -32,6 +34,7 @@ const ShelfArtwork: React.FC<React.PropsWithChildren<ShelfArtworkProps>> = ({
   artwork,
   children,
   contextModule,
+  curatorNote,
   hideSaleInfo,
   lazyLoad,
   maxImageHeight = DEFAULT_MAX_IMG_HEIGHT,
@@ -107,6 +110,7 @@ const ShelfArtwork: React.FC<React.PropsWithChildren<ShelfArtworkProps>> = ({
 
         <Metadata
           artwork={artwork}
+          curatorNote={curatorNote}
           hideSaleInfo={hideSaleInfo}
           isHovered={isHovered}
           contextModule={contextModule}
