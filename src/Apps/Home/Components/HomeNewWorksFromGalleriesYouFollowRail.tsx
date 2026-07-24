@@ -5,12 +5,14 @@ import {
   OwnerType,
   clickedEntityGroup,
 } from "@artsy/cohesion"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import { Skeleton } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -23,17 +25,22 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeNewWorksFromGalleriesYouFollowRailProps {
+interface HomeNewWorksFromGalleriesYouFollowRailProps
+  extends HomeRailTrackingProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
 }
 
 const HomeNewWorksFromGalleriesYouFollowRail: React.FC<
   React.PropsWithChildren<HomeNewWorksFromGalleriesYouFollowRailProps>
-> = ({ newWorksFromGalleriesYouFollowConnection }) => {
+> = ({ newWorksFromGalleriesYouFollowConnection, railPositionY }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
   const { signals } = useArtworkGridContext()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.newWorksByGalleriesYouFollowRail,
+    positionY: railPositionY,
+  })
   const artworks = extractNodes(newWorksFromGalleriesYouFollowConnection)
 
   if (!artworks || artworks?.length === 0) {
@@ -42,6 +49,7 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<
 
   return (
     <Rail
+      ref={railImpressionRef}
       title="New Works from Galleries You Follow"
       viewAllLabel="View All Works"
       viewAllHref="/new-works-from-galleries-you-follow"
@@ -114,8 +122,8 @@ export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer =
   })
 
 export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   const { user } = useSystemContext()
@@ -154,6 +162,7 @@ export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC<
               newWorksFromGalleriesYouFollowConnection={
                 props.me.newWorksFromGalleriesYouFollowConnection
               }
+              railPositionY={railPositionY}
             />
           )
         }
