@@ -129,13 +129,10 @@ describe("useCheckoutAutoScroll", () => {
     rerender()
     jest.runAllTimers()
 
-    // The initial load scroll (first useEffect) should NOT fire for the first step (activeStepIndex = 0)
-    // The step navigation scroll (second useEffect) should also not fire because step hasn't changed
-    // We expect 0 calls, confirming no unwanted scrolling on load for the first step
     expect(mockJumpTo).not.toHaveBeenCalled()
   })
 
-  it("does  scroll on load if express checkout is available and we are on the review step", () => {
+  it("does scroll on load if express checkout is available and we are on the review step", () => {
     const steps = createSteps(CheckoutStepName.CONFIRMATION)
 
     mockUseCheckoutContext.mockReturnValue({
@@ -155,9 +152,6 @@ describe("useCheckoutAutoScroll", () => {
     rerender()
     jest.runAllTimers()
 
-    // The initial load scroll (first useEffect) should NOT fire for the first step (activeStepIndex = 0)
-    // The step navigation scroll (second useEffect) should also not fire because step hasn't changed
-    // We expect 0 calls, confirming no unwanted scrolling on load for the first step
     expect(mockJumpTo).toHaveBeenCalled()
   })
 
