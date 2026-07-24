@@ -4,7 +4,6 @@ import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationEventRow } from "Apps/Conversations/components/Message/ConversationEventRow"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
-import { extractNodes } from "Utils/extractNodes"
 import type { ConversationPartnerOfferUpdate_conversation$key } from "__generated__/ConversationPartnerOfferUpdate_conversation.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -32,18 +31,7 @@ export const ConversationPartnerOfferUpdate: FC<
     return null
   }
 
-  const PURCHASED_BUYER_STATES = new Set(["SUBMITTED", "APPROVED", "COMPLETED"])
-
-  const orders = extractNodes(data.collectorOrdersConnection)
-  const isPurchased = orders.some(
-    order =>
-      PURCHASED_BUYER_STATES.has(order.buyerState ?? "") &&
-      order.lineItems?.some(
-        lineItem => lineItem?.partnerOfferId === partnerOffer.internalID,
-      ),
-  )
-
-  if (isPurchased) {
+  if (partnerOffer.isPurchased) {
     return (
       <ConversationEventRow
         Icon={MoneyFillIcon}
@@ -82,16 +70,6 @@ const CONVERSATION_FRAGMENT = graphql`
         __typename
         ... on Artwork {
           internalID
-        }
-      }
-    }
-    collectorOrdersConnection(first: 10) {
-      edges {
-        node {
-          buyerState
-          lineItems {
-            partnerOfferId
-          }
         }
       }
     }

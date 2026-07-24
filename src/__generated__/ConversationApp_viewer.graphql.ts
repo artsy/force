@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed418eb46079729d12b65d5a5965fab1>>
+ * @generated SignedSource<<8dbf294fb74b2ca90457196fd8daf012>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationApp_viewer$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationsContext_viewer" | "ConversationsSidebar_viewer">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationsSidebar_viewer">;
   readonly " $fragmentType": "ConversationApp_viewer";
 };
 export type ConversationApp_viewer$key = {
@@ -41,17 +41,12 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "ConversationsSidebar_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ConversationsContext_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "cf67b6848e119d4f26ec70cd2873d7ee";
+(node as any).hash = "99ad5acc1db0a37512da36d832028657";
 
 export default node;
