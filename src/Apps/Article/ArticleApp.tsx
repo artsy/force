@@ -10,6 +10,7 @@ import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfiniteScroll"
 import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
+import { ArticleNewsRelatedArticlesQueryRenderer } from "./Components/ArticleNewsRelatedArticles"
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
@@ -40,7 +41,19 @@ const ArticleApp: FC<React.PropsWithChildren<ArticleAppProps>> = ({
                 return <ArticleVideoFragmentContainer article={article} />
 
               case "NEWS":
-                return <ArticleBodyFragmentContainer article={article} />
+                return (
+                  <>
+                    <ArticleBodyFragmentContainer article={article} />
+
+                    <FullBleed>
+                      <Separator />
+                    </FullBleed>
+
+                    <ArticleNewsRelatedArticlesQueryRenderer
+                      id={article.internalID}
+                    />
+                  </>
+                )
 
               case "CLASSIC":
                 return (
