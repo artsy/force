@@ -5,6 +5,7 @@ import {
   CheckoutStepState,
 } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { useSelectDeliveryOption } from "Apps/Order2/Routes/Checkout/Hooks/useSelectDeliveryOption"
+import { autoResolvePhoneValidation } from "DevTools/autoResolvePhoneValidation"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { Order2DeliveryFormTestQuery } from "__generated__/Order2DeliveryFormTestQuery.graphql"
@@ -68,25 +69,34 @@ beforeEach(() => {
   }
 })
 
-const { renderWithRelay } = setupTestWrapperTL<Order2DeliveryFormTestQuery>({
-  Component: (props: any) => (
-    <Order2DeliveryForm
-      order={props.me.order}
-      me={props.me}
-      hasFulfillmentDetails={false}
-    />
-  ),
-  query: graphql`
-    query Order2DeliveryFormTestQuery @relay_test_operation {
-      me {
-        ...Order2DeliveryForm_me
-        order(id: "order-id") {
-          ...Order2DeliveryForm_order
+const { renderWithRelay: renderWithRelayBase } =
+  setupTestWrapperTL<Order2DeliveryFormTestQuery>({
+    Component: (props: any) => (
+      <Order2DeliveryForm
+        order={props.me.order}
+        me={props.me}
+        hasFulfillmentDetails={false}
+      />
+    ),
+    query: graphql`
+      query Order2DeliveryFormTestQuery @relay_test_operation {
+        me {
+          ...Order2DeliveryForm_me
+          order(id: "order-id") {
+            ...Order2DeliveryForm_order
+          }
         }
       }
-    }
-  `,
-})
+    `,
+  })
+
+// Auto-resolve the async phone-validation query so form submission isn't
+// blocked waiting on it; other operations remain pending for manual resolution.
+const renderWithRelay: typeof renderWithRelayBase = (...args) => {
+  const result = renderWithRelayBase(...args)
+  autoResolvePhoneValidation(result.env)
+  return result
+}
 
 describe("Order2DeliveryForm", () => {
   const baseOrderProps = {
