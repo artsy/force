@@ -19,11 +19,19 @@ export type CheckoutErrorBannerMessage =
       message: React.ReactNode
       displayText: string
       code?: string
+      /**
+       * When true, the banner renders but does not fire the
+       * `errorMessageViewed` tracking event. Use for errors that were
+       * already tracked elsewhere (e.g. re-displayed after a modal) to
+       * avoid double reporting.
+       */
+      skipTracking?: boolean
     }
   | {
       title: string
       message: string
       code?: string
+      skipTracking?: boolean
     }
 
 /**
@@ -62,7 +70,7 @@ export const CheckoutErrorBanner = forwardRef<
 
   // Track when error is displayed to user
   useEffect(() => {
-    if (!error || !flow) return
+    if (!error || !flow || error.skipTracking) return
 
     const messageText =
       "displayText" in error ? error.displayText : error.message

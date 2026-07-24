@@ -17,7 +17,10 @@ describe("CheckoutErrorBanner", () => {
     }
 
     render(
-      <CheckoutErrorBanner error={error} checkoutTracking={mockCheckoutTracking} />,
+      <CheckoutErrorBanner
+        error={error}
+        checkoutTracking={mockCheckoutTracking}
+      />,
     )
 
     expect(screen.getByText("Test Error")).toBeInTheDocument()
@@ -26,7 +29,10 @@ describe("CheckoutErrorBanner", () => {
 
   it("renders nothing when error is null", () => {
     const { container } = render(
-      <CheckoutErrorBanner error={null} checkoutTracking={mockCheckoutTracking} />,
+      <CheckoutErrorBanner
+        error={null}
+        checkoutTracking={mockCheckoutTracking}
+      />,
     )
 
     expect(container.firstChild).toBeNull()
@@ -124,9 +130,39 @@ describe("CheckoutErrorBanner", () => {
     }
 
     render(
-      <CheckoutErrorBanner error={error} checkoutTracking={mockCheckoutTracking} />,
+      <CheckoutErrorBanner
+        error={error}
+        checkoutTracking={mockCheckoutTracking}
+      />,
     )
 
+    expect(mockCheckoutTracking.errorMessageViewed).not.toHaveBeenCalled()
+  })
+
+  it("does not track when the error has skipTracking set, but still renders", () => {
+    const error = {
+      title: "Payment error",
+      message: "Please update your payment method",
+      code: "charge_authorization_failed",
+      skipTracking: true,
+    }
+
+    const analytics = {
+      flow: "User setting payment",
+    }
+
+    render(
+      <CheckoutErrorBanner
+        error={error}
+        checkoutTracking={mockCheckoutTracking}
+        analytics={analytics}
+      />,
+    )
+
+    expect(screen.getByText("Payment error")).toBeInTheDocument()
+    expect(
+      screen.getByText("Please update your payment method"),
+    ).toBeInTheDocument()
     expect(mockCheckoutTracking.errorMessageViewed).not.toHaveBeenCalled()
   })
 })
