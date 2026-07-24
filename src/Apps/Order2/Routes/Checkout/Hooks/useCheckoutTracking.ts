@@ -247,10 +247,10 @@ export const useCheckoutTracking = ({
         trackEvent(payload)
       },
 
-      clickedTermsAndConditions: () => {
+      clickedTermsAndConditions: (contextModule: ContextModule) => {
         const payload: ClickedTermsAndConditions = {
           action: ActionType.clickedTermsAndConditions,
-          context_module: ContextModule.ordersReview,
+          context_module: contextModule,
           context_page_owner_type: contextPageOwnerType,
           context_page_owner_id: contextPageOwnerId,
         }

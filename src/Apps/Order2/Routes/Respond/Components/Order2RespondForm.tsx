@@ -18,6 +18,7 @@ import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
+import { useScrollToRespondSubmit } from "Apps/Order2/Routes/Respond/Hooks/useScrollToRespondSubmit"
 import { useOrder2CreateCounterOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2CreateCounterOfferMutation"
 import {
   type RespondAction,
@@ -133,8 +134,10 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const { submitMutation: createCounterOffer } =
     useOrder2CreateCounterOfferMutation()
 
+  const { scrollToSubmitCTA } = useScrollToRespondSubmit()
+
   // The gallery’s offer amount, excluding shipping and taxes.
-  const offerPrice = orderData.lastSubmittedOffer?.amount?.display
+  const offerPrice = `${orderData.lastSubmittedOffer?.amount?.currencySymbol}${orderData.lastSubmittedOffer?.amount?.amount}`
 
   const isRespondCompleted =
     steps.find(step => step.name === RespondStepName.RESPOND)?.state ===
@@ -191,6 +194,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     // summary’s Submit CTA. Accept/decline just advance to that step.
     if (selectedAction !== "COUNTEROFFER") {
       setRespondComplete()
+      scrollToSubmitCTA()
       return
     }
 
@@ -224,6 +228,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       }
 
       setRespondComplete()
+      scrollToSubmitCTA()
     } catch (error) {
       // TODO: proper error handling is tracked in EMI-3175.
       logger.error(error)
@@ -246,7 +251,13 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   return (
     <RespondCard>
-      <Text variant={["sm", "md"]}>Respond to gallery offer</Text>
+      <Text
+        color="mono100"
+        fontWeight="bold"
+        variant={["sm-display", "sm-display", "md"]}
+      >
+        Respond to gallery offer
+      </Text>
 
       {offerPrice && (
         <>
@@ -430,7 +441,8 @@ const FRAGMENT = graphql`
       amount {
         major
         currencyCode
-        display
+        currencySymbol
+        amount
       }
     }
     pendingOffer {

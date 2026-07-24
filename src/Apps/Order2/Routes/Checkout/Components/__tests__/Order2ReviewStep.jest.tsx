@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -40,6 +41,7 @@ const mockCheckoutContext = {
     clickedOrderProgression: jest.fn(),
     submittedOrder: jest.fn(),
     clickedBuyerProtection: jest.fn(),
+    clickedTermsAndConditions: jest.fn(),
   },
   artworkPath: "/artwork/test-artwork",
 }
@@ -462,6 +464,24 @@ describe("Order2ReviewStep", () => {
       // SEPA cannot be saved, so oneTimeUse should always be true
       expect(input.oneTimeUse).toBe(true)
       expect(input.confirmationToken).toBeUndefined()
+    })
+  })
+
+  describe("Terms and conditions", () => {
+    it("tracks clickedTermsAndConditions with the ordersReview context module", async () => {
+      renderWithRelay({
+        Me: () => ({
+          order: createBuyOrder(),
+        }),
+      })
+
+      await userEvent.click(
+        screen.getByText("General Terms and Conditions of Sale."),
+      )
+
+      expect(
+        mockCheckoutContext.checkoutTracking.clickedTermsAndConditions,
+      ).toHaveBeenCalledWith(ContextModule.ordersReview)
     })
   })
 

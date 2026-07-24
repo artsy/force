@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { act, renderHook } from "@testing-library/react-hooks"
 import type { ProcessedUserAddress } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useTracking } from "react-tracking"
@@ -127,12 +128,12 @@ describe("useCheckoutTracking", () => {
       )
 
       act(() => {
-        result.current.clickedTermsAndConditions()
+        result.current.clickedTermsAndConditions(ContextModule.ordersCheckout)
       })
 
       assertTracked({
         action: "clickedTermsAndConditions",
-        context_module: "ordersReview",
+        context_module: "ordersCheckout",
         context_page_owner_type: "orders-checkout",
         context_page_owner_id: "order-id",
       })
