@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b7853d918bd4923ab8ce3346049f8d7>>
+ * @generated SignedSource<<9b76fededc1ed9a552d3ea54317a4b90>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,19 +9,8 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type OrderBuyerStateEnum = "APPROVED" | "CANCELED" | "COMPLETED" | "COUNTEROFFER_SENT" | "DECLINED_BY_BUYER" | "DECLINED_BY_SELLER" | "INCOMPLETE" | "OFFER_RECEIVED" | "PAYMENT_FAILED" | "PROCESSING_OFFLINE_PAYMENT" | "PROCESSING_PAYMENT" | "REFUNDED" | "SHIPPED" | "SUBMITTED" | "UNKNOWN" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferUpdate_conversation$data = {
-  readonly collectorOrdersConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly buyerState: OrderBuyerStateEnum | null | undefined;
-        readonly lineItems: ReadonlyArray<{
-          readonly partnerOfferId: string | null | undefined;
-        } | null | undefined>;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
@@ -87,76 +76,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 10
-        }
-      ],
-      "concreteType": "MeOrdersConnection",
-      "kind": "LinkedField",
-      "name": "collectorOrdersConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "MeOrdersEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Order",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "buyerState",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "LineItem",
-                  "kind": "LinkedField",
-                  "name": "lineItems",
-                  "plural": true,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "partnerOfferId",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "collectorOrdersConnection(first:10)"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
 
-(node as any).hash = "ef4497b595c41ef15443f264d5c8f967";
+(node as any).hash = "c1e718b17b27a2bcd3175e34e9a394d4";
 
 export default node;

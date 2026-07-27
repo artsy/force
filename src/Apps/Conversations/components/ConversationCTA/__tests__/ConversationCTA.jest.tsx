@@ -16,7 +16,7 @@ const mockUseFlag = useFlag as jest.Mock
 describe("ConversationCTA", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
-      <ConversationsProvider viewer={props.viewer}>
+      <ConversationsProvider conversation={props.me.conversation}>
         <ConversationCTA conversation={props.me.conversation} />
       </ConversationsProvider>
     ),
@@ -24,15 +24,42 @@ describe("ConversationCTA", () => {
       query ConversationCTA_Test_Query @relay_test_operation {
         me {
           conversation(id: "1234") {
+            ...ConversationsContext_conversation
             ...ConversationCTA_conversation
           }
-        }
-        viewer {
-          ...ConversationsContext_viewer
         }
       }
     `,
   })
+
+  // Merges a collector partner offer onto a conversation mock, so the provider
+  // (which now reads offers from the conversation) sees it.
+  const withOffer =
+    (
+      conversationThunk: () => Record<string, unknown>,
+      offerOverrides: Record<string, unknown> = {},
+    ) =>
+    () => {
+      const futureTime = new Date()
+      futureTime.setHours(futureTime.getHours() + 1)
+
+      return {
+        ...conversationThunk(),
+        collectorPartnerOffersConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "partner-offer-id",
+                artworkId: "artwork-id",
+                endAt: futureTime.toISOString(),
+                isAvailable: true,
+                ...offerOverrides,
+              },
+            },
+          ],
+        },
+      }
+    }
 
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
@@ -136,9 +163,6 @@ describe("ConversationCTA", () => {
   })
 
   describe("with an active order and an open partner offer", () => {
-    const futureTime = new Date()
-    futureTime.setHours(futureTime.getHours() + 1)
-
     const mockConversationWithOrderAndOffer = () => ({
       internalID: "internal-test-id",
       activeOrders: {
@@ -161,23 +185,6 @@ describe("ConversationCTA", () => {
       ],
     })
 
-    const activeOfferViewer = () => ({
-      me: {
-        partnerOffersConnection: {
-          edges: [
-            {
-              node: {
-                internalID: "partner-offer-id",
-                artworkId: "artwork-id",
-                endAt: futureTime.toISOString(),
-                isAvailable: true,
-              },
-            },
-          ],
-        },
-      },
-    })
-
     describe("with the partner-offer-convo flag on", () => {
       beforeEach(() => {
         mockUseFlag.mockImplementation(() => true)
@@ -185,8 +192,7 @@ describe("ConversationCTA", () => {
 
       it("hides the order offer CTA when there is an open partner offer", () => {
         renderWithRelay({
-          Conversation: mockConversationWithOrderAndOffer,
-          Viewer: activeOfferViewer,
+          Conversation: withOffer(mockConversationWithOrderAndOffer),
         })
 
         expect(screen.queryByText("Offer Received")).not.toBeInTheDocument()
@@ -200,8 +206,7 @@ describe("ConversationCTA", () => {
 
       it("shows the order offer CTA when the flag is off", () => {
         renderWithRelay({
-          Conversation: mockConversationWithOrderAndOffer,
-          Viewer: activeOfferViewer,
+          Conversation: withOffer(mockConversationWithOrderAndOffer),
         })
 
         expect(screen.queryByText("Offer Received")).toBeInTheDocument()
@@ -239,59 +244,23 @@ describe("ConversationCTA", () => {
 
     it("does not purchase button on orders with an expired partner offer", () => {
       const pastTime = new Date()
-      pastTime.setSeconds(pastTime.getSeconds() + 1)
+      pastTime.setHours(pastTime.getHours() - 1)
 
       renderWithRelay({
-        Conversation: mockConversationWithArtwork({
-          internalID: "artwork-id",
-          isAcquireable: false,
-        }),
-        Viewer: () => ({
-          me: {
-            partnerOffersConnection: {
-              edges: [
-                {
-                  node: {
-                    internalID: "partner-offer-id",
-                    artworkId: "artwork-id",
-                    endAt: pastTime.toISOString(),
-                  },
-                },
-              ],
-            },
-          },
-        }),
+        Conversation: withOffer(
+          mockConversationWithArtwork({
+            internalID: "artwork-id",
+            isAcquireable: false,
+          }),
+          { endAt: pastTime.toISOString() },
+        ),
       })
-      jest.advanceTimersByTime(1010)
 
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
       expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
     })
 
-    const offerViewer = (offerOverrides: Record<string, unknown> = {}) => {
-      const futureTime = new Date()
-      futureTime.setHours(futureTime.getHours() + 1)
-
-      return () => ({
-        me: {
-          partnerOffersConnection: {
-            edges: [
-              {
-                node: {
-                  internalID: "partner-offer-id",
-                  artworkId: "artwork-id",
-                  endAt: futureTime.toISOString(),
-                  isAvailable: true,
-                  ...offerOverrides,
-                },
-              },
-            ],
-          },
-        },
-      })
-    }
-
-    // The `partnerOffersConnection` query fetches both `BULK` (sent via the
+    // The `collectorPartnerOffersConnection` query fetches both `BULK` (sent via the
     // partner dashboard's send-offer tool) and `PERSONALIZED` offer types.
     // Force can't distinguish between the two once fetched, so both should
     // behave identically here.
@@ -306,12 +275,13 @@ describe("ConversationCTA", () => {
 
         it("hides the transaction buttons when there is an active offer", () => {
           renderWithRelay({
-            Conversation: mockConversationWithArtwork({
-              internalID: "artwork-id",
-              isAcquireable: true,
-              isOfferable: true,
-            }),
-            Viewer: offerViewer(),
+            Conversation: withOffer(
+              mockConversationWithArtwork({
+                internalID: "artwork-id",
+                isAcquireable: true,
+                isOfferable: true,
+              }),
+            ),
           })
 
           expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
@@ -323,12 +293,14 @@ describe("ConversationCTA", () => {
           pastTime.setHours(pastTime.getHours() - 1)
 
           renderWithRelay({
-            Conversation: mockConversationWithArtwork({
-              internalID: "artwork-id",
-              isAcquireable: true,
-              isOfferable: true,
-            }),
-            Viewer: offerViewer({ endAt: pastTime.toISOString() }),
+            Conversation: withOffer(
+              mockConversationWithArtwork({
+                internalID: "artwork-id",
+                isAcquireable: true,
+                isOfferable: true,
+              }),
+              { endAt: pastTime.toISOString() },
+            ),
           })
 
           expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -343,11 +315,12 @@ describe("ConversationCTA", () => {
 
         it("ignores the offer and shows the normal transaction buttons", () => {
           renderWithRelay({
-            Conversation: mockConversationWithArtwork({
-              internalID: "artwork-id",
-              isAcquireable: true,
-            }),
-            Viewer: offerViewer(),
+            Conversation: withOffer(
+              mockConversationWithArtwork({
+                internalID: "artwork-id",
+                isAcquireable: true,
+              }),
+            ),
           })
           expect(screen.queryByText("Purchase")).toBeInTheDocument()
         })
