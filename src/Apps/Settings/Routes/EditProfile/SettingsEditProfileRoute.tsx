@@ -19,7 +19,7 @@ const SettingsEditProfileRoute: React.FC<
           title="Complete your profile and make a great impression"
         >
           The information you provide here will be shared when you contact a
-          gallery or make an offer.
+          gallery, start an order, set an alert, or save an artwork.
         </Message>
       </Column>
 
