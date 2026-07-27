@@ -4,11 +4,13 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Shelf, Skeleton } from "@artsy/palette"
+import { Box, Shelf, Skeleton } from "@artsy/palette"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -19,15 +21,19 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeWorksByArtistsYouFollowRailProps {
+interface HomeWorksByArtistsYouFollowRailProps extends HomeRailTrackingProps {
   homePage: HomeWorksByArtistsYouFollowRail_homePage$data
 }
 
 const HomeWorksByArtistsYouFollowRail: React.FC<
   React.PropsWithChildren<HomeWorksByArtistsYouFollowRailProps>
-> = ({ homePage }) => {
+> = ({ homePage, railPositionY }) => {
   const { trackEvent } = useTracking()
   const { signals } = useArtworkGridContext()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.worksByArtistsYouFollowRail,
+    positionY: railPositionY,
+  })
 
   const results = homePage.artworkModule?.results
   if (!results || results?.length === 0) {
@@ -35,42 +41,44 @@ const HomeWorksByArtistsYouFollowRail: React.FC<
   }
 
   return (
-    <Shelf>
-      {results.map((artwork, index) => {
-        if (!artwork) {
-          return <></>
-        }
+    <Box ref={railImpressionRef} width="100%">
+      <Shelf>
+        {results.map((artwork, index) => {
+          if (!artwork) {
+            return <></>
+          }
 
-        return (
-          <ShelfArtworkFragmentContainer
-            artwork={artwork}
-            key={index}
-            contextModule={ContextModule.worksByArtistsYouFollowRail}
-            lazyLoad
-            onClick={() => {
-              const trackingEvent: ClickedArtworkGroup = {
-                action: ActionType.clickedArtworkGroup,
-                context_module: ContextModule.worksByArtistsYouFollowRail,
-                context_page_owner_type: OwnerType.home,
-                destination_page_owner_id: artwork.internalID,
-                destination_page_owner_slug: artwork.slug,
-                destination_page_owner_type: OwnerType.artwork,
-                type: "thumbnail",
-                signal_label: getSignalLabel({
-                  signals: signals?.[artwork.internalID] ?? [],
-                }),
-                signal_bid_count:
-                  artwork.collectorSignals?.auction?.bidCount ?? undefined,
-                signal_lot_watcher_count:
-                  artwork.collectorSignals?.auction?.lotWatcherCount ??
-                  undefined,
-              }
-              trackEvent(trackingEvent)
-            }}
-          />
-        )
-      })}
-    </Shelf>
+          return (
+            <ShelfArtworkFragmentContainer
+              artwork={artwork}
+              key={index}
+              contextModule={ContextModule.worksByArtistsYouFollowRail}
+              lazyLoad
+              onClick={() => {
+                const trackingEvent: ClickedArtworkGroup = {
+                  action: ActionType.clickedArtworkGroup,
+                  context_module: ContextModule.worksByArtistsYouFollowRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: artwork.internalID,
+                  destination_page_owner_slug: artwork.slug,
+                  destination_page_owner_type: OwnerType.artwork,
+                  type: "thumbnail",
+                  signal_label: getSignalLabel({
+                    signals: signals?.[artwork.internalID] ?? [],
+                  }),
+                  signal_bid_count:
+                    artwork.collectorSignals?.auction?.bidCount ?? undefined,
+                  signal_lot_watcher_count:
+                    artwork.collectorSignals?.auction?.lotWatcherCount ??
+                    undefined,
+                }
+                trackEvent(trackingEvent)
+              }}
+            />
+          )
+        })}
+      </Shelf>
+    </Box>
   )
 }
 
@@ -107,8 +115,8 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer =
   })
 
 export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -137,6 +145,7 @@ export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC<
           return (
             <HomeWorksByArtistsYouFollowRailFragmentContainer
               homePage={props.homePage}
+              railPositionY={railPositionY}
             />
           )
         }

@@ -1,3 +1,4 @@
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import {
   ActionType,
   type ClickedArtworkGroup,
@@ -13,8 +14,8 @@ import { useSystemContext } from "System/Hooks/useSystemContext"
 import type * as React from "react"
 
 export const HomeAuctionLotsTabBar: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { user } = useSystemContext()
 
   return (
@@ -46,11 +47,13 @@ export const HomeAuctionLotsTabBar: React.FC<
       <Tabs>
         {!user ? null : (
           <Tab name="Lots for You">
-            <HomeAuctionLotsForYouRailQueryRenderer />
+            <HomeAuctionLotsForYouRailQueryRenderer
+              railPositionY={railPositionY}
+            />
           </Tab>
         )}
         <Tab name="Curators’ Picks">
-          <HomeAuctionLotsRailQueryRenderer />
+          <HomeAuctionLotsRailQueryRenderer railPositionY={railPositionY} />
         </Tab>
       </Tabs>
     </>

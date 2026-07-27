@@ -4,11 +4,13 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import { Skeleton } from "@artsy/palette"
 import {
   CellPartnerFragmentContainer,
   CellPartnerPlaceholder,
 } from "Components/Cells/CellPartner"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -19,14 +21,18 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeFeaturedGalleriesRailProps {
+interface HomeFeaturedGalleriesRailProps extends HomeRailTrackingProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet$data
 }
 
 const HomeFeaturedGalleriesRail: React.FC<
   React.PropsWithChildren<HomeFeaturedGalleriesRailProps>
-> = ({ orderedSet }) => {
+> = ({ orderedSet, railPositionY }) => {
   const { trackEvent } = useTracking()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.featuredGalleriesRail,
+    positionY: railPositionY,
+  })
 
   const nodes = extractNodes(orderedSet.orderedItemsConnection)
 
@@ -36,6 +42,7 @@ const HomeFeaturedGalleriesRail: React.FC<
 
   return (
     <Rail
+      ref={railImpressionRef}
       title="Featured Galleries"
       countLabel={nodes.length}
       viewAllLabel="View All Galleries"
@@ -119,8 +126,8 @@ export const HomeFeaturedGalleriesRailFragmentContainer =
   })
 
 export const HomeFeaturedGalleriesRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -149,6 +156,7 @@ export const HomeFeaturedGalleriesRailQueryRenderer: React.FC<
           return (
             <HomeFeaturedGalleriesRailFragmentContainer
               orderedSet={props.orderedSet}
+              railPositionY={railPositionY}
             />
           )
         }

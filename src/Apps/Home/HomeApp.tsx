@@ -3,6 +3,7 @@ import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeAuctionLotsTabBar } from "Apps/Home/Components/HomeAuctionLotsTabBar"
 import { HomeNewWorksFromGalleriesYouFollowRailQueryRenderer } from "Apps/Home/Components/HomeNewWorksFromGalleriesYouFollowRail"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import { ImpressionDedupeProvider } from "Components/RailImpression/ImpressionDedupeContext"
 import { FlashBannerQueryRenderer } from "Components/FlashBanner"
 import type { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
 import type { HomeApp_heroUnitsConnection$data } from "__generated__/HomeApp_heroUnitsConnection.graphql"
@@ -21,6 +22,7 @@ import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingA
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { HomeRecommendedArtistsRailQueryRenderer } from "Apps/Home/Components/HomeRecommendedArtistsRail"
 import { HomeArtworkRecommendationsRailQueryRenderer } from "Apps/Home/Components/HomeArtworkRecommendationsRail"
+import { HOME_RAIL_POSITION_Y } from "Apps/Home/homeRailPositionY"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
@@ -32,7 +34,7 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
   heroUnitsConnection,
 }) => {
   return (
-    <>
+    <ImpressionDedupeProvider>
       <HomeMeta />
 
       <HomeStructuredData />
@@ -41,7 +43,10 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
 
       <Spacer y={[2, 0]} />
 
-      <HomeHeroUnitsFragmentContainer heroUnits={heroUnitsConnection} />
+      <HomeHeroUnitsFragmentContainer
+        heroUnits={heroUnitsConnection}
+        railPositionY={HOME_RAIL_POSITION_Y.hero}
+      />
 
       <Spacer y={[4, 6]} />
       <ArtworkGridContextProvider>
@@ -50,38 +55,63 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
             <>
               <HomeFeaturedEventsRailFragmentContainer
                 orderedSet={featuredEventsOrderedSet}
+                railPositionY={HOME_RAIL_POSITION_Y.featured}
               />
             </>
           )}
 
-          <MyBidsQueryRenderer />
+          <MyBidsQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.myActiveBids}
+          />
 
-          <HomeWorksForYouTabBar />
+          <HomeWorksForYouTabBar
+            railPositionY={HOME_RAIL_POSITION_Y.worksForYou}
+          />
 
-          <HomeArtworkRecommendationsRailQueryRenderer />
+          <HomeArtworkRecommendationsRailQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.artworkRecommendations}
+          />
 
           <ArtworkGridContextProvider hideSignals>
-            <HomeEmergingPicksArtworksRailQueryRenderer />
+            <HomeEmergingPicksArtworksRailQueryRenderer
+              railPositionY={HOME_RAIL_POSITION_Y.curatorsPicksEmerging}
+            />
           </ArtworkGridContextProvider>
 
-          <HomeFeaturedMarketNewsQueryRenderer />
+          <HomeFeaturedMarketNewsQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.editorial}
+          />
 
-          <HomeAuctionLotsTabBar />
+          <HomeAuctionLotsTabBar
+            railPositionY={HOME_RAIL_POSITION_Y.auctionLots}
+          />
 
-          <HomeFeaturedShowsRailQueryRenderer />
+          <HomeFeaturedShowsRailQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.featuredShows}
+          />
 
-          <HomeCurrentFairsQueryRenderer />
+          <HomeCurrentFairsQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.currentFairs}
+          />
 
-          <HomeFeaturedGalleriesRailQueryRenderer />
+          <HomeFeaturedGalleriesRailQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.featuredGalleries}
+          />
 
-          <HomeNewWorksFromGalleriesYouFollowRailQueryRenderer />
+          <HomeNewWorksFromGalleriesYouFollowRailQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.newWorksFromGalleriesYouFollow}
+          />
 
-          <HomeRecommendedArtistsRailQueryRenderer />
+          <HomeRecommendedArtistsRailQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.recommendedArtists}
+          />
 
-          <HomeTrendingArtistsRailQueryRenderer />
+          <HomeTrendingArtistsRailQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.trendingArtists}
+          />
         </Join>
       </ArtworkGridContextProvider>
-    </>
+    </ImpressionDedupeProvider>
   )
 }
 

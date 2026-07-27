@@ -4,11 +4,13 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import { Skeleton } from "@artsy/palette"
 import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,
 } from "Components/Cells/CellArtist"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -19,14 +21,18 @@ import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-interface HomeTrendingArtistsRailProps {
+interface HomeTrendingArtistsRailProps extends HomeRailTrackingProps {
   viewer: HomeTrendingArtistsRail_viewer$data
 }
 
 const HomeTrendingArtistsRail: React.FC<
   React.PropsWithChildren<HomeTrendingArtistsRailProps>
-> = ({ viewer }) => {
+> = ({ viewer, railPositionY }) => {
   const { trackEvent } = useTracking()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.trendingArtistsRail,
+    positionY: railPositionY,
+  })
 
   const artists = extractNodes(viewer.curatedTrendingArtists)
 
@@ -36,6 +42,7 @@ const HomeTrendingArtistsRail: React.FC<
 
   return (
     <Rail
+      ref={railImpressionRef}
       alignItems="flex-start"
       title="Trending Artists on Artsy"
       viewAllLabel="View All Artists"
@@ -111,8 +118,8 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
 )
 
 export const HomeTrendingArtistsRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -139,7 +146,10 @@ export const HomeTrendingArtistsRailQueryRenderer: React.FC<
 
         if (props.viewer) {
           return (
-            <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer} />
+            <HomeTrendingArtistsRailFragmentContainer
+              viewer={props.viewer}
+              railPositionY={railPositionY}
+            />
           )
         }
 
