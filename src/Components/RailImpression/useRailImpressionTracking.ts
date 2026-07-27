@@ -12,7 +12,7 @@ import {
   meetsRailVisibilityRequirement,
   useDwellImpressionTracking,
 } from "Components/RailImpression/useDwellImpressionTracking"
-import { useRailImpressionDedupe } from "Components/RailImpression/RailImpressionDedupeContext"
+import { useImpressionDedupe } from "Components/RailImpression/ImpressionDedupeContext"
 import { type RefCallback, useEffect, useRef } from "react"
 import { useTracking } from "react-tracking"
 
@@ -75,7 +75,7 @@ export const useRailImpressionTracking = ({
 }: UseRailImpressionTrackingOptions): UseRailImpressionTrackingResult => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const { hasRailFired, markRailFired } = useRailImpressionDedupe()
+  const { hasFired, markFired } = useImpressionDedupe()
   const missingContextWarnedRef = useRef(false)
 
   useEffect(() => {
@@ -91,10 +91,11 @@ export const useRailImpressionTracking = ({
     visibilityDurationMs,
     visibilityCoverageSlack,
     onImpression: () => {
-      // Fire at most once per page view (see RailImpressionDedupeProvider),
-      // even if the rail remounts — e.g. when the user returns to a tab.
-      if (hasRailFired(contextModule)) return
-      markRailFired(contextModule)
+      // Fire at most once per page view (see ImpressionDedupeProvider), even if
+      // the rail remounts — e.g. when the user returns to a tab.
+      const dedupeKey = `rail:${contextModule}`
+      if (hasFired(dedupeKey)) return
+      markFired(dedupeKey)
 
       const payload: RailViewed = {
         action: ActionType.railViewed,

@@ -10,6 +10,7 @@ import {
   DEFAULT_RAIL_VISIBILITY_COVERAGE_SLACK,
   useDwellImpressionTracking,
 } from "Components/RailImpression/useDwellImpressionTracking"
+import { useImpressionDedupe } from "Components/RailImpression/ImpressionDedupeContext"
 import type { RefCallback } from "react"
 import { useTracking } from "react-tracking"
 
@@ -38,12 +39,19 @@ export const useArtworkItemImpressionTracking = ({
 }: UseArtworkItemImpressionTrackingOptions): UseArtworkItemImpressionTrackingResult => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
+  const { hasFired, markFired } = useImpressionDedupe()
 
   const { impressionRef } = useDwellImpressionTracking({
     disabled: disabled || contextPageOwnerType !== contextScreen,
     visibilityDurationMs,
     visibilityCoverageSlack,
     onImpression: () => {
+      // Fire at most once per page view (see ImpressionDedupeProvider), even if
+      // the item remounts — e.g. when the user returns to a tab.
+      const dedupeKey = `item:${contextModule}:${itemID}`
+      if (hasFired(dedupeKey)) return
+      markFired(dedupeKey)
+
       const payload: ItemViewed = {
         action: ActionType.itemViewed,
         context_module: contextModule,

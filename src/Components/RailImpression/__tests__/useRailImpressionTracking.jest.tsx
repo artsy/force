@@ -5,7 +5,7 @@ import {
   RAIL_IMPRESSION_INTERSECTION_THRESHOLDS,
   useRailImpressionTracking,
 } from "Components/RailImpression/useRailImpressionTracking"
-import { RailImpressionDedupeProvider } from "Components/RailImpression/RailImpressionDedupeContext"
+import { ImpressionDedupeProvider } from "Components/RailImpression/ImpressionDedupeContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
@@ -226,20 +226,18 @@ describe("useRailImpressionTracking", () => {
       // Simulates leaving a tab and returning to it: the rail unmounts and a
       // fresh instance (same contextModule) mounts under the same provider.
       const { rerender } = render(
-        <RailImpressionDedupeProvider>
+        <ImpressionDedupeProvider>
           <TestRail visibilityDurationMs={100} />
-        </RailImpressionDedupeProvider>,
+        </ImpressionDedupeProvider>,
       )
       fire()
       expect(mockTrackEvent).toHaveBeenCalledTimes(1)
 
+      rerender(<ImpressionDedupeProvider>{null}</ImpressionDedupeProvider>)
       rerender(
-        <RailImpressionDedupeProvider>{null}</RailImpressionDedupeProvider>,
-      )
-      rerender(
-        <RailImpressionDedupeProvider>
+        <ImpressionDedupeProvider>
           <TestRail visibilityDurationMs={100} />
-        </RailImpressionDedupeProvider>,
+        </ImpressionDedupeProvider>,
       )
       fire()
 
@@ -248,7 +246,7 @@ describe("useRailImpressionTracking", () => {
 
     it("fires once for each distinct rail under the same page view", () => {
       render(
-        <RailImpressionDedupeProvider>
+        <ImpressionDedupeProvider>
           <TestRail
             contextModule={ContextModule.newWorksForYouRail}
             testId="rail-a"
@@ -259,7 +257,7 @@ describe("useRailImpressionTracking", () => {
             testId="rail-b"
             visibilityDurationMs={100}
           />
-        </RailImpressionDedupeProvider>,
+        </ImpressionDedupeProvider>,
       )
 
       fire("rail-a")
@@ -280,9 +278,9 @@ describe("useRailImpressionTracking", () => {
 
     it("fires again on a new page view (fresh provider)", () => {
       const { unmount } = render(
-        <RailImpressionDedupeProvider>
+        <ImpressionDedupeProvider>
           <TestRail visibilityDurationMs={100} />
-        </RailImpressionDedupeProvider>,
+        </ImpressionDedupeProvider>,
       )
       fire()
       expect(mockTrackEvent).toHaveBeenCalledTimes(1)
@@ -290,9 +288,9 @@ describe("useRailImpressionTracking", () => {
       // Navigating away and back remounts the page-level provider.
       unmount()
       render(
-        <RailImpressionDedupeProvider>
+        <ImpressionDedupeProvider>
           <TestRail visibilityDurationMs={100} />
-        </RailImpressionDedupeProvider>,
+        </ImpressionDedupeProvider>,
       )
       fire()
 

@@ -2,6 +2,7 @@ import { act, render, screen } from "@testing-library/react"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useArtworkItemImpressionTracking } from "Components/RailImpression/useArtworkItemImpressionTracking"
 import { DEFAULT_RAIL_VISIBILITY_COVERAGE_SLACK } from "Components/RailImpression/useRailImpressionTracking"
+import { ImpressionDedupeProvider } from "Components/RailImpression/ImpressionDedupeContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
@@ -24,22 +25,26 @@ const mockDomRect = (height: number, width: number): DOMRectReadOnly =>
   }) as DOMRectReadOnly
 
 const TestItem: React.FC<{
+  contextModule?: ContextModule
   contextScreen?: OwnerType
   disabled?: boolean
   itemID?: string
   position?: number
   visibilityDurationMs?: number
   visibilityCoverageSlack?: number
+  testId?: string
 }> = ({
+  contextModule = ContextModule.newWorksForYouRail,
   contextScreen = OwnerType.home,
   disabled,
   itemID = "artwork-1-id",
   position = 0,
   visibilityDurationMs,
   visibilityCoverageSlack = DEFAULT_RAIL_VISIBILITY_COVERAGE_SLACK,
+  testId = "item-root",
 }) => {
   const { itemImpressionRef } = useArtworkItemImpressionTracking({
-    contextModule: ContextModule.newWorksForYouRail,
+    contextModule,
     contextScreen,
     disabled,
     itemID,
@@ -49,7 +54,7 @@ const TestItem: React.FC<{
   })
 
   return (
-    <div ref={itemImpressionRef} data-testid="item-root">
+    <div ref={itemImpressionRef} data-testid={testId}>
       artwork
     </div>
   )
@@ -227,5 +232,85 @@ describe("useArtworkItemImpressionTracking", () => {
     act(() => jest.advanceTimersByTime(100))
 
     expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+  })
+
+  describe("per-page-view deduping", () => {
+    const fire = (testId = "item-root") => {
+      const root = screen.getByTestId(testId)
+      act(() => intersect(root, true))
+      act(() => jest.advanceTimersByTime(100))
+    }
+
+    it("fires only once when the same item remounts within a page view", () => {
+      // Simulates leaving a tab and returning to it: the item unmounts and a
+      // fresh instance (same contextModule + itemID) mounts under the same
+      // provider.
+      const { rerender } = render(
+        <ImpressionDedupeProvider>
+          <TestItem visibilityDurationMs={100} />
+        </ImpressionDedupeProvider>,
+      )
+      fire()
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+
+      rerender(<ImpressionDedupeProvider>{null}</ImpressionDedupeProvider>)
+      rerender(
+        <ImpressionDedupeProvider>
+          <TestItem visibilityDurationMs={100} />
+        </ImpressionDedupeProvider>,
+      )
+      fire()
+
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+    })
+
+    it("fires once for each distinct item under the same page view", () => {
+      render(
+        <ImpressionDedupeProvider>
+          <TestItem
+            itemID="artwork-a"
+            testId="item-a"
+            visibilityDurationMs={100}
+          />
+          <TestItem
+            itemID="artwork-b"
+            testId="item-b"
+            visibilityDurationMs={100}
+          />
+        </ImpressionDedupeProvider>,
+      )
+
+      fire("item-a")
+      fire("item-b")
+
+      expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({ item_id: "artwork-a" }),
+      )
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({ item_id: "artwork-b" }),
+      )
+    })
+
+    it("fires again on a new page view (fresh provider)", () => {
+      const { unmount } = render(
+        <ImpressionDedupeProvider>
+          <TestItem visibilityDurationMs={100} />
+        </ImpressionDedupeProvider>,
+      )
+      fire()
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+
+      // Navigating away and back remounts the page-level provider.
+      unmount()
+      render(
+        <ImpressionDedupeProvider>
+          <TestItem visibilityDurationMs={100} />
+        </ImpressionDedupeProvider>,
+      )
+      fire()
+
+      expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+    })
   })
 })

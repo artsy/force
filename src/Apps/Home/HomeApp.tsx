@@ -3,7 +3,7 @@ import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeAuctionLotsTabBar } from "Apps/Home/Components/HomeAuctionLotsTabBar"
 import { HomeNewWorksFromGalleriesYouFollowRailQueryRenderer } from "Apps/Home/Components/HomeNewWorksFromGalleriesYouFollowRail"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { RailImpressionDedupeProvider } from "Components/RailImpression/RailImpressionDedupeContext"
+import { ImpressionDedupeProvider } from "Components/RailImpression/ImpressionDedupeContext"
 import { FlashBannerQueryRenderer } from "Components/FlashBanner"
 import type { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
 import type { HomeApp_heroUnitsConnection$data } from "__generated__/HomeApp_heroUnitsConnection.graphql"
@@ -34,7 +34,7 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
   heroUnitsConnection,
 }) => {
   return (
-    <RailImpressionDedupeProvider>
+    <ImpressionDedupeProvider>
       <HomeMeta />
 
       <HomeStructuredData />
@@ -111,7 +111,7 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
           />
         </Join>
       </ArtworkGridContextProvider>
-    </RailImpressionDedupeProvider>
+    </ImpressionDedupeProvider>
   )
 }
 
