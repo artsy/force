@@ -5,6 +5,7 @@ import {
   RAIL_IMPRESSION_INTERSECTION_THRESHOLDS,
   useRailImpressionTracking,
 } from "Components/RailImpression/useRailImpressionTracking"
+import { RailImpressionDedupeProvider } from "Components/RailImpression/RailImpressionDedupeContext"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type * as React from "react"
 import { useTracking } from "react-tracking"
@@ -27,18 +28,22 @@ const mockDomRect = (height: number, width: number): DOMRectReadOnly =>
   }) as DOMRectReadOnly
 
 const TestRail: React.FC<{
+  contextModule?: ContextModule
   disabled?: boolean
   visibilityDurationMs?: number
   positionY?: number
   visibilityCoverageSlack?: number
+  testId?: string
 }> = ({
+  contextModule = ContextModule.artworkRecommendationsRail,
   disabled,
   visibilityDurationMs,
   positionY,
   visibilityCoverageSlack = DEFAULT_RAIL_VISIBILITY_COVERAGE_SLACK,
+  testId = "rail-root",
 }) => {
   const { railImpressionRef } = useRailImpressionTracking({
-    contextModule: ContextModule.artworkRecommendationsRail,
+    contextModule,
     disabled,
     visibilityDurationMs,
     positionY,
@@ -46,7 +51,7 @@ const TestRail: React.FC<{
   })
 
   return (
-    <div ref={railImpressionRef} data-testid="rail-root">
+    <div ref={railImpressionRef} data-testid={testId}>
       rail
     </div>
   )
@@ -208,5 +213,102 @@ describe("useRailImpressionTracking", () => {
       "Missing analytics context for rail impression",
     )
     warn.mockRestore()
+  })
+
+  describe("per-page-view deduping", () => {
+    const fire = (testId = "rail-root") => {
+      const root = screen.getByTestId(testId)
+      act(() => intersect(root, true))
+      act(() => jest.advanceTimersByTime(100))
+    }
+
+    it("fires only once when the same rail remounts within a page view", () => {
+      // Simulates leaving a tab and returning to it: the rail unmounts and a
+      // fresh instance (same contextModule) mounts under the same provider.
+      const { rerender } = render(
+        <RailImpressionDedupeProvider>
+          <TestRail visibilityDurationMs={100} />
+        </RailImpressionDedupeProvider>,
+      )
+      fire()
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+
+      rerender(
+        <RailImpressionDedupeProvider>{null}</RailImpressionDedupeProvider>,
+      )
+      rerender(
+        <RailImpressionDedupeProvider>
+          <TestRail visibilityDurationMs={100} />
+        </RailImpressionDedupeProvider>,
+      )
+      fire()
+
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+    })
+
+    it("fires once for each distinct rail under the same page view", () => {
+      render(
+        <RailImpressionDedupeProvider>
+          <TestRail
+            contextModule={ContextModule.newWorksForYouRail}
+            testId="rail-a"
+            visibilityDurationMs={100}
+          />
+          <TestRail
+            contextModule={ContextModule.worksByArtistsYouFollowRail}
+            testId="rail-b"
+            visibilityDurationMs={100}
+          />
+        </RailImpressionDedupeProvider>,
+      )
+
+      fire("rail-a")
+      fire("rail-b")
+
+      expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context_module: ContextModule.newWorksForYouRail,
+        }),
+      )
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context_module: ContextModule.worksByArtistsYouFollowRail,
+        }),
+      )
+    })
+
+    it("fires again on a new page view (fresh provider)", () => {
+      const { unmount } = render(
+        <RailImpressionDedupeProvider>
+          <TestRail visibilityDurationMs={100} />
+        </RailImpressionDedupeProvider>,
+      )
+      fire()
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+
+      // Navigating away and back remounts the page-level provider.
+      unmount()
+      render(
+        <RailImpressionDedupeProvider>
+          <TestRail visibilityDurationMs={100} />
+        </RailImpressionDedupeProvider>,
+      )
+      fire()
+
+      expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+    })
+
+    it("without a provider, a remount fires again (default per-mount behavior)", () => {
+      const { rerender } = render(<TestRail visibilityDurationMs={100} />)
+      fire()
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+
+      rerender(<></>)
+      rerender(<TestRail visibilityDurationMs={100} />)
+      fire()
+
+      expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+    })
   })
 })
