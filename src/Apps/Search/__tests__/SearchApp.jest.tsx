@@ -1,18 +1,21 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { screen } from "@testing-library/react"
 import { SearchAppFragmentContainer as SearchApp } from "Apps/Search/SearchApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { SystemContextProvider } from "System/Contexts/SystemContext"
 import type { SearchAppTestQuery } from "__generated__/SearchAppTestQuery.graphql"
-import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+let mockLocationQuery: { term?: string } = { term: "andy" }
 jest.mock("System/Hooks/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {
-        query: { term: "andy" },
+        query: mockLocationQuery,
       },
     },
   }),
@@ -21,6 +24,17 @@ jest.mock("System/Hooks/useRouter", () => ({
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
+
+const mockTrackEvent = jest.fn()
+
+beforeEach(() => {
+  mockLocationQuery = { term: "andy" }
+  ;(useTracking as jest.Mock).mockReturnValue({ trackEvent: mockTrackEvent })
+})
+
+afterEach(() => {
+  jest.clearAllMocks()
+})
 
 const { renderWithRelay } = setupTestWrapperTL<SearchAppTestQuery>({
   Component: props => {
@@ -72,6 +86,35 @@ describe("SearchApp", () => {
 
     expect(screen.getByText("More")).toBeInTheDocument()
   })
+
+  it("does not track searchedWithNoResults when there are results", async () => {
+    renderWithRelay({
+      Viewer: () => VIEWER_FIXTURE,
+    })
+
+    await screen.findByText("521 results for")
+
+    expect(mockTrackEvent).not.toHaveBeenCalled()
+  })
+
+  it("shows the zero state and tracks searchedWithNoResults when there are no results", async () => {
+    renderWithRelay({
+      Viewer: () => NO_RESULTS_VIEWER_FIXTURE,
+    })
+
+    await screen.findByText(
+      "Try checking for spelling errors or try another search term.",
+    )
+
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: ActionType.searchedWithNoResults,
+      context_module: ContextModule.searchPageResults,
+      context_owner_type: OwnerType.search,
+      context_owner_id: undefined,
+      context_owner_slug: undefined,
+      query: "andy",
+    })
+  })
 })
 
 const VIEWER_FIXTURE = {
@@ -89,6 +132,22 @@ const VIEWER_FIXTURE = {
           { count: 0, name: "gene" },
           { count: 1, name: "feature" },
         ],
+        slice: "TYPE",
+      },
+    ],
+  },
+}
+
+const NO_RESULTS_VIEWER_FIXTURE = {
+  artworksConnection: {
+    counts: {
+      total: 0,
+    },
+  },
+  searchConnection: {
+    aggregations: [
+      {
+        counts: [],
         slice: "TYPE",
       },
     ],
