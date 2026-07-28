@@ -5,11 +5,12 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Shelf, Skeleton } from "@artsy/palette"
+import { Box, Shelf, Skeleton } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
@@ -21,13 +22,18 @@ import { useTracking } from "react-tracking"
 
 interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer$data
+  railPositionY?: number
 }
 
 const HomeAuctionLotsRail: React.FC<
   React.PropsWithChildren<HomeAuctionLotsRailProps>
-> = ({ viewer }) => {
+> = ({ viewer, railPositionY }) => {
   const { trackEvent } = useTracking()
   const contextModule = ContextModule.topAuctionLotsRail as AuthContextModule
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.topAuctionLotsRail,
+    positionY: railPositionY,
+  })
 
   const artworks = extractNodes(viewer.artworksConnection)
 
@@ -36,33 +42,35 @@ const HomeAuctionLotsRail: React.FC<
   }
 
   return (
-    <Shelf>
-      {artworks.map(artwork => {
-        return (
-          <ShelfArtworkFragmentContainer
-            artwork={artwork}
-            key={artwork.slug}
-            lazyLoad
-            contextModule={contextModule}
-            onClick={() => {
-              const trackingEvent: ClickedArtworkGroup = {
-                action: ActionType.clickedArtworkGroup,
-                context_module: ContextModule.topAuctionLotsRail,
-                context_page_owner_type: OwnerType.home,
-                destination_page_owner_id: artwork.internalID,
-                destination_page_owner_slug: artwork.slug,
-                destination_page_owner_type: OwnerType.artwork,
-                type: "thumbnail",
-                signal_bid_count: artwork.collectorSignals?.auction?.bidCount,
-                signal_lot_watcher_count:
-                  artwork.collectorSignals?.auction?.lotWatcherCount,
-              }
-              trackEvent(trackingEvent)
-            }}
-          />
-        )
-      })}
-    </Shelf>
+    <Box ref={railImpressionRef} width="100%">
+      <Shelf>
+        {artworks.map(artwork => {
+          return (
+            <ShelfArtworkFragmentContainer
+              artwork={artwork}
+              key={artwork.slug}
+              lazyLoad
+              contextModule={contextModule}
+              onClick={() => {
+                const trackingEvent: ClickedArtworkGroup = {
+                  action: ActionType.clickedArtworkGroup,
+                  context_module: ContextModule.topAuctionLotsRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: artwork.internalID,
+                  destination_page_owner_slug: artwork.slug,
+                  destination_page_owner_type: OwnerType.artwork,
+                  type: "thumbnail",
+                  signal_bid_count: artwork.collectorSignals?.auction?.bidCount,
+                  signal_lot_watcher_count:
+                    artwork.collectorSignals?.auction?.lotWatcherCount,
+                }
+                trackEvent(trackingEvent)
+              }}
+            />
+          )
+        })}
+      </Shelf>
+    </Box>
   )
 }
 
@@ -107,8 +115,8 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
 )
 
 export const HomeAuctionLotsRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<{ railPositionY?: number }>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -134,7 +142,12 @@ export const HomeAuctionLotsRailQueryRenderer: React.FC<
         }
 
         if (props.viewer) {
-          return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer} />
+          return (
+            <HomeAuctionLotsRailFragmentContainer
+              viewer={props.viewer}
+              railPositionY={railPositionY}
+            />
+          )
         }
 
         return null

@@ -64,10 +64,12 @@
     "cipher-base": "^1.0.5",
     "form-data": "^4.0.4",
     "lodash": "^4.17.21",
-    "sha.js": "^2.4.12"
+    "sha.js": "^2.4.12",
+    "tar@npm:^7.4.3": "7.5.20",
+    "make-fetch-happen@npm:^13.0.1": "^14.0.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.386.1",
+    "@artsy/cohesion": "4.387.0",
     "@artsy/detect-responsive-traits": "^0.2.0",
     "@artsy/dismissible": "^0.9.0",
     "@artsy/express-reloadable": "^1.7.0",

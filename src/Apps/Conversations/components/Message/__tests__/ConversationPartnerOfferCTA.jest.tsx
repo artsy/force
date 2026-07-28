@@ -38,7 +38,7 @@ const pastDate = () => {
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => (
-    <ConversationsProvider viewer={props.viewer}>
+    <ConversationsProvider conversation={props.me.conversation}>
       <ConversationPartnerOfferCTA conversation={props.me.conversation} />
     </ConversationsProvider>
   ),
@@ -46,17 +46,15 @@ const { renderWithRelay } = setupTestWrapperTL({
     query ConversationPartnerOfferCTA_Test_Query @relay_test_operation {
       me {
         conversation(id: "conversation-id") {
+          ...ConversationsContext_conversation
           ...ConversationPartnerOfferCTA_conversation
         }
-      }
-      viewer {
-        ...ConversationsContext_viewer
       }
     }
   `,
 })
 
-const Conversation = () => ({
+const baseConversation = {
   internalID: "conversation-id",
   items: [
     {
@@ -68,11 +66,17 @@ const Conversation = () => ({
     },
   ],
   activeOrders: { edges: [] },
-})
+}
 
-const offerViewer = (offer: Record<string, unknown>) => () => ({
-  me: {
-    partnerOffersConnection: {
+const conversationWithOffer =
+  (
+    offer: Record<string, unknown> = {},
+    overrides: Record<string, unknown> = {},
+  ) =>
+  () => ({
+    ...baseConversation,
+    ...overrides,
+    collectorPartnerOffersConnection: {
       edges: [
         {
           node: {
@@ -86,11 +90,15 @@ const offerViewer = (offer: Record<string, unknown>) => () => ({
         },
       ],
     },
-  },
+  })
+
+const conversationWithoutOffer = () => ({
+  ...baseConversation,
+  collectorPartnerOffersConnection: { edges: [] },
 })
 
 describe("ConversationPartnerOfferCTA", () => {
-  // The `partnerOffersConnection` query fetches both `BULK` (sent via the
+  // The `collectorPartnerOffersConnection` query fetches both `BULK` (sent via the
   // partner dashboard's send-offer tool) and `PERSONALIZED` offer types.
   // Force can't distinguish between the two once fetched, so the banner
   // should render identically for both.
@@ -99,7 +107,7 @@ describe("ConversationPartnerOfferCTA", () => {
     ["a bulk offer (send offer)"],
   ])("with %s", () => {
     it("renders the offer bar linking to the artwork with the partner offer id", () => {
-      renderWithRelay({ Conversation, Viewer: offerViewer({}) })
+      renderWithRelay({ Conversation: conversationWithOffer() })
 
       expect(screen.getByText("Offer received for $450")).toBeInTheDocument()
 
@@ -119,8 +127,7 @@ describe("ConversationPartnerOfferCTA", () => {
 
     it("renders nothing when the offer has expired", () => {
       renderWithRelay({
-        Conversation,
-        Viewer: offerViewer({ endAt: pastDate() }),
+        Conversation: conversationWithOffer({ endAt: pastDate() }),
       })
 
       expect(
@@ -131,20 +138,14 @@ describe("ConversationPartnerOfferCTA", () => {
 
   it("falls back to a generic message when there is no discounted price", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: offerViewer({ priceWithDiscount: null }),
+      Conversation: conversationWithOffer({ priceWithDiscount: null }),
     })
 
     expect(screen.getByText("Offer received")).toBeInTheDocument()
   })
 
   it("renders nothing when there is no offer for the artwork", () => {
-    renderWithRelay({
-      Conversation,
-      Viewer: () => ({
-        me: { partnerOffersConnection: { edges: [] } },
-      }),
-    })
+    renderWithRelay({ Conversation: conversationWithoutOffer })
 
     expect(
       screen.queryByTestId("partnerOfferActionLink"),
@@ -155,8 +156,7 @@ describe("ConversationPartnerOfferCTA", () => {
 
   it("renders nothing when the offer is unavailable", () => {
     renderWithRelay({
-      Conversation,
-      Viewer: offerViewer({ isAvailable: false }),
+      Conversation: conversationWithOffer({ isAvailable: false }),
     })
 
     expect(
@@ -166,13 +166,10 @@ describe("ConversationPartnerOfferCTA", () => {
 
   it("renders nothing when there is an active order", () => {
     renderWithRelay({
-      Conversation: () => ({
-        ...Conversation(),
-        activeOrders: {
-          edges: [{ node: { internalID: "order-id" } }],
-        },
-      }),
-      Viewer: offerViewer({}),
+      Conversation: conversationWithOffer(
+        {},
+        { activeOrders: { edges: [{ node: { internalID: "order-id" } }] } },
+      ),
     })
 
     expect(
@@ -194,7 +191,7 @@ describe("ConversationPartnerOfferCTA", () => {
     it("shows the time remaining when the offer expires in more than a day", () => {
       const endAt = DateTime.fromMillis(NOW).plus({ days: 3 }).toISO() as string
 
-      renderWithRelay({ Conversation, Viewer: offerViewer({ endAt }) })
+      renderWithRelay({ Conversation: conversationWithOffer({ endAt }) })
 
       expect(screen.getByText("Expires in 3 days")).toBeInTheDocument()
       expect(screen.getByText("Expires in 3 days")).toHaveStyle({
@@ -207,7 +204,7 @@ describe("ConversationPartnerOfferCTA", () => {
         .plus({ minutes: 30 })
         .toISO() as string
 
-      renderWithRelay({ Conversation, Viewer: offerViewer({ endAt }) })
+      renderWithRelay({ Conversation: conversationWithOffer({ endAt }) })
 
       expect(screen.getByText("Expires in 30 minutes")).toBeInTheDocument()
       expect(screen.getByText("Expires in 30 minutes")).toHaveStyle({
@@ -219,7 +216,7 @@ describe("ConversationPartnerOfferCTA", () => {
   it("renders nothing when the partner-offer-convo flag is off", () => {
     mockUseFlag.mockImplementation(() => false)
 
-    renderWithRelay({ Conversation, Viewer: offerViewer({}) })
+    renderWithRelay({ Conversation: conversationWithOffer() })
 
     expect(
       screen.queryByTestId("partnerOfferActionLink"),

@@ -1,4 +1,10 @@
 import {
+  ActionType,
+  ContextModule,
+  OwnerType,
+  type SearchedWithNoResults,
+} from "@artsy/cohesion"
+import {
   Box,
   FullBleed,
   HorizontalOverflow,
@@ -14,7 +20,9 @@ import { Sticky } from "Components/Sticky"
 import { useRouter } from "System/Hooks/useRouter"
 import type { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
 import type React from "react"
+import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { ZeroState } from "./Components/ZeroState"
 
 import { Jump } from "Utils/Hooks/useJump"
@@ -58,18 +66,32 @@ export const SearchApp: React.FC<React.PropsWithChildren<SearchAppProps>> = ({
 
   const artworkCount = artworksConnection?.counts?.total ?? 0
   const countWithoutArtworks =
-    typeAggregation?.reduce((total = 0, aggregation) => {
-      if (!aggregation) {
+    typeAggregation?.reduce((total, aggregation) => {
+      if (!aggregation || aggregation.name === "artwork") {
         return total
       }
-      const { count, name } = aggregation
-      if (name !== "artwork") {
-        return total + count
-      }
+      return total + aggregation.count
     }, 0) ?? 0
 
   const hasResults = !!(countWithoutArtworks || artworkCount)
   const totalCount = countWithoutArtworks + artworkCount
+
+  const { trackEvent } = useTracking()
+
+  useEffect(() => {
+    if (hasResults) {
+      return
+    }
+
+    const trackingData: SearchedWithNoResults = {
+      action: ActionType.searchedWithNoResults,
+      context_module: ContextModule.searchPageResults,
+      context_owner_type: OwnerType.search,
+      query: term,
+    }
+
+    trackEvent(trackingData)
+  }, [hasResults, term, trackEvent])
 
   return (
     <>

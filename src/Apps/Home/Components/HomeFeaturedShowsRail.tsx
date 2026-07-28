@@ -4,8 +4,10 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import type { HomeRailTrackingProps } from "Apps/Home/homeRailPositionY"
 import { Skeleton } from "@artsy/palette"
 import { CellShowPlaceholder } from "Components/Cells/CellShow"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
 import { Rail } from "Components/Rail/Rail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -17,14 +19,18 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
 
-interface HomeFeaturedShowsRailProps {
+interface HomeFeaturedShowsRailProps extends HomeRailTrackingProps {
   orderedSet: HomeFeaturedShowsRail_orderedSet$data
 }
 
 const HomeFeaturedShowsRail: React.FC<
   React.PropsWithChildren<HomeFeaturedShowsRailProps>
-> = ({ orderedSet }) => {
+> = ({ orderedSet, railPositionY }) => {
   const { trackEvent } = useTracking()
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.featuredShowsRail,
+    positionY: railPositionY,
+  })
 
   const shows = compact(orderedSet.items).flatMap(item =>
     item.__typename === "Show" ? [item] : [],
@@ -36,6 +42,7 @@ const HomeFeaturedShowsRail: React.FC<
 
   return (
     <Rail
+      ref={railImpressionRef}
       alignItems="flex-start"
       title="Featured Shows"
       countLabel={shows.length}
@@ -99,8 +106,8 @@ const PLACEHOLDER = (
 )
 
 export const HomeFeaturedShowsRailQueryRenderer: React.FC<
-  React.PropsWithChildren<unknown>
-> = () => {
+  React.PropsWithChildren<HomeRailTrackingProps>
+> = ({ railPositionY }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -129,6 +136,7 @@ export const HomeFeaturedShowsRailQueryRenderer: React.FC<
           return (
             <HomeFeaturedShowsRailFragmentContainer
               orderedSet={props.orderedSet}
+              railPositionY={railPositionY}
             />
           )
         }

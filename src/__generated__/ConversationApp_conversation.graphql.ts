@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9637cfde68014d4eef4a48f698791496>>
+ * @generated SignedSource<<a43d4c6f0ae57e210973e4b25f2eff51>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationApp_conversation$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationDetails_conversation" | "ConversationHeader_conversation" | "ConversationMessages_conversation" | "ConversationReply_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationDetails_conversation" | "ConversationHeader_conversation" | "ConversationMessages_conversation" | "ConversationReply_conversation" | "ConversationsContext_conversation">;
   readonly " $fragmentType": "ConversationApp_conversation";
 };
 export type ConversationApp_conversation$key = {
@@ -25,6 +25,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ConversationApp_conversation",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationsContext_conversation"
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -50,6 +55,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "aa48487d1b584f4a38348b2757e50746";
+(node as any).hash = "c16f4c606b0e62bf29b2614809b269f1";
 
 export default node;
