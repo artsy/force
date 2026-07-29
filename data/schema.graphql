@@ -631,6 +631,11 @@ type Alert {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -2595,6 +2600,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -3230,6 +3240,11 @@ type ArtistPartnerEdge {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -3477,6 +3492,11 @@ type ArtistSeries implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -4891,6 +4911,11 @@ type ArtworkFilterNode {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -18230,6 +18255,11 @@ interface EntityWithFilterArtworksConnectionInterface {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -18701,6 +18731,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -19490,6 +19525,11 @@ input FilterArtworksInput {
   When true, will only return exact keyword match
   """
   keywordMatchExact: Boolean
+
+  """
+  When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+  """
+  keywordTypoTolerance: Boolean
   last: Int
   locationCities: [String]
   locationId: String
@@ -20282,6 +20322,11 @@ type Gene implements Node & Searchable {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -23439,6 +23484,11 @@ type MarketingCollection implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -28798,6 +28848,11 @@ type Partner implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -29363,6 +29418,11 @@ type PartnerArtist {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -29657,6 +29717,11 @@ type PartnerArtistEdge {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -31799,6 +31864,11 @@ type Query {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -32409,6 +32479,11 @@ type Query {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -36188,6 +36263,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -37049,6 +37129,11 @@ type Tag implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -41588,6 +41673,11 @@ type Viewer {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -41987,6 +42077,11 @@ type Viewer {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
