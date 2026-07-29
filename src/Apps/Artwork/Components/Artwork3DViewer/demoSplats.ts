@@ -15,7 +15,8 @@ export const DEMO_SPLATS: Record<string, string> = {
   "jon-allured-mask":
     "https://s3.amazonaws.com/artsy-vanity-files-staging/other/mask.ply",
   "chris-wolston-plant-chair":
-    "https://s3.amazonaws.com/artsy-vanity-files-staging/other/chair-smaller-sphere-float-cc.ply",
+    "https://s3.amazonaws.com/artsy-vanity-files-staging/other/chair-smaller-sphere-float-cleaner.ply", // larger, higher fidelity
+  // "https://s3.amazonaws.com/artsy-vanity-files-staging/other/chair-smaller-sphere-float-clean.splat" // smaller, less fidelity
 }
 
 export const has3DAsset = (slug: string): boolean => {
