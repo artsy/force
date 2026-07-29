@@ -97,7 +97,7 @@
     "actioncable": "^5.2.7-1",
     "autosuggest-highlight": "3.1.1",
     "blurhash": "^2.0.5",
-    "body-parser": "1.20.3",
+    "body-parser": "1.20.6",
     "chalk": "4.1.0",
     "compression": "1.7.2",
     "connect-timeout": "1.9.0",
@@ -131,7 +131,7 @@
     "map-cursor-to-max": "^1.0.0",
     "memoize-one": "^5.2.1",
     "mime": "2.4.0",
-    "morgan": "1.10.0",
+    "morgan": "1.11.0",
     "node-uuid": "1.4.8",
     "openseadragon": "2.4.2",
     "passport": "0.3.2",
@@ -295,5 +295,5 @@
   "pull-lock": {
     "yarn.lock": "yarn install"
   },
-  "packageManager": "yarn@4.17.1"
+  "packageManager": "yarn@4.18.0"
 }
