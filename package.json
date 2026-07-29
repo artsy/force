@@ -97,7 +97,7 @@
     "actioncable": "^5.2.7-1",
     "autosuggest-highlight": "3.1.1",
     "blurhash": "^2.0.5",
-    "body-parser": "1.20.3",
+    "body-parser": "1.20.6",
     "chalk": "4.1.0",
     "compression": "1.7.2",
     "connect-timeout": "1.9.0",
