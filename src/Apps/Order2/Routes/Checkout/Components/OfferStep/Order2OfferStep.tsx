@@ -342,13 +342,14 @@ const Order2OfferStepFormContent: React.FC<Order2OfferStepFormContentProps> = ({
         <Flex flexDirection="column">
           <SectionHeading>Offer note</SectionHeading>
           <Text variant="sm" color="mono100">
-            Additional context to help the gallery evaluate your offer.
+            The more context a gallery has around an offer, the more likely it
+            is they’ll accept.
           </Text>
 
           <TextArea
             title="Note (recommended)"
             maxLength={1000}
-            placeholder="Share what draws you to this work or artist, or add any context about your offer"
+            placeholder="Share what draws you to this work, a bit about your collection, or any other context that feels relevant."
             onChange={onOfferNoteChange}
             value={values.offerNote}
           />

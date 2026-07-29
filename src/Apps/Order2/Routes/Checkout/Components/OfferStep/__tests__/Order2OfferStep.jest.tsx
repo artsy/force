@@ -446,7 +446,7 @@ describe("Order2OfferStep", () => {
       expect(screen.getByText("Offer note")).toBeInTheDocument()
       expect(
         screen.getByText(
-          "Additional context to help the gallery evaluate your offer.",
+          "The more context a gallery has around an offer, the more likely it is they’ll accept.",
         ),
       ).toBeInTheDocument()
 
