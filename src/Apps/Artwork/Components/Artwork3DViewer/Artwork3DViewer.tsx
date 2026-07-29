@@ -75,8 +75,8 @@ export const Artwork3DViewer: React.FC<
                 undefined,
                 center,
               )
-              controls.minZoom = diagonal * 0.1
-              controls.maxZoom = diagonal * 5
+              controls.minZoom = diagonal * 1 // allow zoom out to here
+              controls.maxZoom = diagonal * 3 // allow zoom in to here
 
               controlsRef.current = controls
 
