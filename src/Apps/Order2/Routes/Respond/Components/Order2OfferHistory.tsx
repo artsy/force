@@ -25,7 +25,7 @@ const sourceLabel = (fromParticipant: string) => {
 export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
   order,
 }) => {
-  const { submittedOffers } = useFragment(FRAGMENT, order)
+  const { submittedOffers, lastSubmittedOffer } = useFragment(FRAGMENT, order)
   const { checkoutTracking } = useRespondContext()
 
   if (!submittedOffers || submittedOffers.length === 0) {
@@ -48,44 +48,59 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
           <Flex justifyContent="flex-end" mb={1}>
             <Text variant="xs">Incl. shipping &amp; taxes</Text>
           </Flex>
+        </Box>
 
-          <Box pb={1}>
-            {submittedOffers.map(offer => {
-              const isSeller = offer.fromParticipant === "SELLER"
-              return (
-                <Flex
-                  key={offer.internalID}
-                  mt={1}
-                  backgroundColor={isSeller ? "mono0" : "mono5"}
-                >
-                  <Box flex={COLUMNS[0]}>
-                    <Text variant={["xs", "sm"]} justifySelf="flex-start">
-                      {offer.createdAt}
-                    </Text>
-                  </Box>
-                  <Box flex={COLUMNS[1]}>
-                    <Text variant={["xs", "sm"]}>
-                      {sourceLabel(offer.fromParticipant)}
-                    </Text>
-                  </Box>
-                  <Box flex={COLUMNS[2]}>
-                    <Text variant={["xs", "sm"]} justifySelf="flex-start">
-                      {offer.amount &&
-                        `${offer.amount.currencySymbol}${offer.amount.amount}`}
-                    </Text>
-                  </Box>
-                  <Box flex={COLUMNS[3]} textAlign="right">
-                    {/* buyerTotal is undefined for incomplete (original) offers */}
-                    <Text variant={["xs", "sm"]}>
-                      {offer.buyerTotal
-                        ? `${offer.buyerTotal.currencySymbol}${offer.buyerTotal.amount}`
-                        : "N/A"}
-                    </Text>
-                  </Box>
+        <Box pb={1}>
+          {submittedOffers.map(offer => {
+            const isSeller = offer.fromParticipant === "SELLER"
+            const isRespondingTo =
+              !!lastSubmittedOffer &&
+              offer.internalID === lastSubmittedOffer.internalID
+            return (
+              <Flex
+                key={offer.internalID}
+                mt={1}
+                backgroundColor={isSeller ? "mono0" : "mono5"}
+              >
+                <Flex width="30px" flexShrink={0} alignItems="center">
+                  {isRespondingTo && (
+                    <Flex width="18px" justifyContent="center">
+                      <Box
+                        data-testid="responded-to-offer-indicator"
+                        size={8}
+                        borderRadius="50%"
+                        backgroundColor="blue100"
+                      />
+                    </Flex>
+                  )}
                 </Flex>
-              )
-            })}
-          </Box>
+                <Box flex={COLUMNS[0]}>
+                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
+                    {offer.createdAt}
+                  </Text>
+                </Box>
+                <Box flex={COLUMNS[1]}>
+                  <Text variant={["xs", "sm"]}>
+                    {sourceLabel(offer.fromParticipant)}
+                  </Text>
+                </Box>
+                <Box flex={COLUMNS[2]}>
+                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
+                    {offer.amount &&
+                      `${offer.amount.currencySymbol}${offer.amount.amount}`}
+                  </Text>
+                </Box>
+                <Box flex={COLUMNS[3]} textAlign="right">
+                  {/* buyerTotal is undefined for incomplete (original) offers */}
+                  <Text variant={["xs", "sm"]}>
+                    {offer.buyerTotal
+                      ? `${offer.buyerTotal.currencySymbol}${offer.buyerTotal.amount}`
+                      : "N/A"}
+                  </Text>
+                </Box>
+              </Flex>
+            )
+          })}
         </Box>
       </Expandable>
     </Box>
@@ -94,6 +109,9 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
 
 const FRAGMENT = graphql`
   fragment Order2OfferHistory_order on Order {
+    lastSubmittedOffer {
+      internalID
+    }
     submittedOffers {
       internalID
       createdAt(format: "MMMM D, YYYY")
