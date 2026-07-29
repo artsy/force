@@ -391,6 +391,60 @@ describe("Order2OfferStep", () => {
     })
   })
 
+  it("recommends raising a custom offer below the low-end of the price range", async () => {
+    renderWithRelay({
+      Viewer: () => ({
+        me: {
+          order: MOCK_PRICE_RANGE_ORDER,
+        },
+      }),
+    })
+
+    const otherAmountRadio = screen.getByText("Other amount")
+    fireEvent.click(otherAmountRadio)
+
+    const customInput = await screen.findByTitle("Your offer (US$)")
+
+    fireEvent.change(customInput, { target: { value: "500" } })
+
+    expect(
+      screen.getByText(
+        "Consider raising your offer to US$1,000 to increase your chance of acceptance.",
+      ),
+    ).toBeInTheDocument()
+
+    fireEvent.change(customInput, { target: { value: "1000" } })
+
+    expect(
+      screen.queryByText(
+        "Consider raising your offer to US$1,000 to increase your chance of acceptance.",
+      ),
+    ).not.toBeInTheDocument()
+  })
+
+  it("recommends raising a custom offer below 20% below list price", async () => {
+    renderWithRelay({
+      Viewer: () => ({
+        me: {
+          order: MOCK_EXACT_PRICE_ORDER,
+        },
+      }),
+    })
+
+    const otherAmountRadio = screen.getByText("Other amount")
+    fireEvent.click(otherAmountRadio)
+
+    const customInput = await screen.findByTestId("offer-input")
+
+    fireEvent.change(customInput, { target: { value: "3000" } })
+
+    expect(
+      screen.getByText(
+        "Consider raising your offer to US$4,000 to increase your chance of acceptance.",
+      ),
+    ).toBeInTheDocument()
+  })
+
   it("allows custom note input", async () => {
     renderWithRelay({
       Viewer: () => ({
