@@ -16,6 +16,10 @@ import {
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import {
+  OFFER_UNAVAILABLE_CODES,
+  PAYMENT_FAILURE_CODES,
+} from "Apps/Order2/Utils/exchangeErrorCodes"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
@@ -60,6 +64,28 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     setErrorModal({ type: RespondErrorModalType.SUBMIT_ERROR })
   }
 
+  const showMutationErrorModal = (mutationError?: {
+    code: string
+    message: string
+  }) => {
+    if (!mutationError) {
+      showSubmitErrorModal()
+      return
+    }
+
+    if (PAYMENT_FAILURE_CODES.includes(mutationError.code)) {
+      setErrorModal({ type: RespondErrorModalType.PAYMENT_PROCESSING_FAILED })
+      return
+    }
+
+    if (OFFER_UNAVAILABLE_CODES.includes(mutationError.code)) {
+      setErrorModal({ type: RespondErrorModalType.OFFER_NO_LONGER_AVAILABLE })
+      return
+    }
+
+    showSubmitErrorModal()
+  }
+
   const artwork = useOrder2LineItemData(orderData.lineItems[0]!)
 
   // The Submit CTA appears once the respond step is completed and the
@@ -98,7 +124,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
 
     if (offerOrError && "mutationError" in offerOrError) {
       logger.error(offerOrError.mutationError)
-      showSubmitErrorModal()
+      showMutationErrorModal(offerOrError.mutationError)
       return
     }
 
@@ -120,7 +146,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
 
     if (orderOrError && "mutationError" in orderOrError) {
       logger.error(orderOrError.mutationError)
-      showSubmitErrorModal()
+      showMutationErrorModal(orderOrError.mutationError)
       return
     }
 
@@ -161,9 +187,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     if (orderOrError?.__typename === "OrderMutationError") {
       const { mutationError } = orderOrError
       logger.error(mutationError)
-      setErrorModal({
-        type: RespondErrorModalType.PAYMENT_PROCESSING_FAILED,
-      })
+      showMutationErrorModal(mutationError)
       return
     }
 
@@ -243,6 +267,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
               setErrorModal(null)
             }}
             onFixPayment={redirectToNewPayment}
+            onViewOrderDetails={redirectToOrderDetails}
           />
         </>
       )}

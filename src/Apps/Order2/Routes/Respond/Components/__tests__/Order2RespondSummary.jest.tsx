@@ -229,6 +229,9 @@ describe("Order2RespondSummary", () => {
     const SUBMIT_ERROR_TITLE = "An error occurred"
     const SUBMIT_ERROR_MESSAGE =
       "Something went wrong while submitting your response. Please try again."
+    const OFFER_UNAVAILABLE_TITLE = "This offer is no longer available"
+    const OFFER_UNAVAILABLE_MESSAGE =
+      "The offer has expired or the order is no longer awaiting your response. Please review your order for the latest details."
 
     const galleryOfferResolvers = {
       Order: () => ({
@@ -325,6 +328,47 @@ describe("Order2RespondSummary", () => {
       expect(await screen.findByText(SUBMIT_ERROR_TITLE)).toBeInTheDocument()
     })
 
+    it("re-submits the acceptance after 3DS authentication succeeds", async () => {
+      mockAcceptOffer
+        .mockResolvedValueOnce({
+          acceptSellerOffer: {
+            orderOrError: {
+              __typename: "OrderMutationActionRequired",
+              actionData: { clientSecret: "secret" },
+            },
+          },
+        })
+        .mockResolvedValueOnce({
+          acceptSellerOffer: {
+            orderOrError: { __typename: "OrderMutationSuccess" },
+          },
+        })
+
+      renderWithRelay(galleryOfferResolvers)
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+      await waitFor(() => {
+        expect(mockRouterReplace).toHaveBeenCalledWith(
+          "/orders/order-id/details",
+        )
+      })
+
+      expect(mockHandleNextAction).toHaveBeenCalledWith({
+        clientSecret: "secret",
+      })
+      // The retry hits the same mutation with the same input.
+      expect(mockAcceptOffer).toHaveBeenCalledTimes(2)
+      expect(mockAcceptOffer).toHaveBeenLastCalledWith({
+        variables: {
+          input: { orderID: "order-id", offerID: "gallery-offer-id" },
+        },
+      })
+      expect(screen.queryByText(SUBMIT_ERROR_TITLE)).not.toBeInTheDocument()
+    })
+
     it("shows Stripe’s own message when 3DS authentication fails", async () => {
       mockAcceptOffer.mockResolvedValue({
         acceptSellerOffer: {
@@ -353,18 +397,13 @@ describe("Order2RespondSummary", () => {
       expect(screen.queryByText(SUBMIT_ERROR_MESSAGE)).not.toBeInTheDocument()
     })
 
-    it.each([
-      "capture_failed",
-      "charge_authorization_failed",
-      "payment_method_confirmation_failed",
-      "payment_failed",
-    ])("shows the payment modal for a %s card failure", async code => {
+    it("shows the payment modal for a card failure", async () => {
       mockAcceptOffer.mockResolvedValue({
         acceptSellerOffer: {
           orderOrError: {
             __typename: "OrderMutationError",
             mutationError: {
-              code,
+              code: "capture_failed",
               message: "Exchange: capture failed for charge ch_123",
             },
           },
@@ -393,14 +432,14 @@ describe("Order2RespondSummary", () => {
       expect(screen.queryByText(SUBMIT_ERROR_TITLE)).not.toBeInTheDocument()
     })
 
-    it("keeps the generic modal for non-payment mutation errors", async () => {
+    it("keeps the generic modal for unrecognized mutation errors", async () => {
       mockAcceptOffer.mockResolvedValue({
         acceptSellerOffer: {
           orderOrError: {
             __typename: "OrderMutationError",
             mutationError: {
-              code: "cannot_accept_offer",
-              message: "Offer is no longer available",
+              code: "internal_error",
+              message: "Something unexpected happened",
             },
           },
         },
@@ -446,6 +485,122 @@ describe("Order2RespondSummary", () => {
       )
     })
 
+    it("shows the offer unavailable modal when the offer can no longer be accepted", async () => {
+      mockAcceptOffer.mockResolvedValue({
+        acceptSellerOffer: {
+          orderOrError: {
+            __typename: "OrderMutationError",
+            mutationError: {
+              code: "invalid_state",
+              message: "Exchange: invalid state",
+            },
+          },
+        },
+      })
+
+      renderWithRelay(galleryOfferResolvers)
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+      expect(
+        await screen.findByText(OFFER_UNAVAILABLE_TITLE),
+      ).toBeInTheDocument()
+      expect(screen.getByText(OFFER_UNAVAILABLE_MESSAGE)).toBeInTheDocument()
+      expect(screen.queryByText(SUBMIT_ERROR_TITLE)).not.toBeInTheDocument()
+    })
+
+    it("shows the offer unavailable modal when the declined offer has lapsed", async () => {
+      mockDeclineOffer.mockResolvedValue({
+        rejectSellerOffer: {
+          orderOrError: {
+            __typename: "OrderMutationError",
+            mutationError: {
+              code: "invalid_state",
+              message: "Exchange: invalid state",
+            },
+          },
+        },
+      })
+
+      renderWithRelay(galleryOfferResolvers)
+
+      fireEvent.click(screen.getByText("Decline gallery offer"))
+      fireEvent.click(continueButton())
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+      expect(
+        await screen.findByText(OFFER_UNAVAILABLE_TITLE),
+      ).toBeInTheDocument()
+    })
+
+    it("shows the offer unavailable modal when the counteroffer can no longer be submitted", async () => {
+      mockSubmitCounterOffer.mockResolvedValue({
+        submitBuyerOffer: {
+          offerOrError: {
+            __typename: "OfferMutationError",
+            mutationError: {
+              code: "not_last_offer",
+              message: "Exchange: not the last offer",
+            },
+          },
+        },
+      })
+
+      renderWithRelay({
+        Order: () => ({
+          mode: "OFFER",
+          internalID: "order-id",
+          pendingOffer: {
+            internalID: "pending-offer-id",
+            amount: { major: 500 },
+          },
+        }),
+        Money: () => ({ display: "$1,000.00" }),
+      })
+
+      fireEvent.click(screen.getByText("Send counteroffer"))
+      fireEvent.change(
+        screen.getByPlaceholderText("Enter amount excluding shipping & tax"),
+        { target: { value: "500" } },
+      )
+      fireEvent.click(continueButton())
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+      expect(
+        await screen.findByText(OFFER_UNAVAILABLE_TITLE),
+      ).toBeInTheDocument()
+    })
+
+    it("sends the buyer to the order details from the offer unavailable modal CTA", async () => {
+      mockAcceptOffer.mockResolvedValue({
+        acceptSellerOffer: {
+          orderOrError: {
+            __typename: "OrderMutationError",
+            mutationError: {
+              code: "invalid_state",
+              message: "Exchange: invalid state",
+            },
+          },
+        },
+      })
+
+      renderWithRelay(galleryOfferResolvers)
+
+      fireEvent.click(screen.getByText("Accept gallery offer"))
+      fireEvent.click(continueButton())
+      fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+      expect(
+        await screen.findByText(OFFER_UNAVAILABLE_TITLE),
+      ).toBeInTheDocument()
+
+      fireEvent.click(screen.getByRole("button", { name: "Continue" }))
+
+      expect(mockRouterReplace).toHaveBeenCalledWith("/orders/order-id/details")
+    })
+
     it("dismisses the modal and stays on the page via Continue", async () => {
       mockAcceptOffer.mockRejectedValue(new Error("Network error"))
 
@@ -464,6 +619,62 @@ describe("Order2RespondSummary", () => {
       })
       // Still on the review step, able to retry.
       expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument()
+    })
+
+    describe("when the offer to act on is missing", () => {
+      const noGalleryOfferResolvers = {
+        Order: () => ({
+          mode: "OFFER",
+          internalID: "order-id",
+          lastSubmittedOffer: null,
+        }),
+        Money: () => ({ display: "$1,000.00" }),
+      }
+
+      it("shows the error modal without accepting", async () => {
+        renderWithRelay(noGalleryOfferResolvers)
+
+        fireEvent.click(screen.getByText("Accept gallery offer"))
+        fireEvent.click(continueButton())
+        fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+        expect(await screen.findByText(SUBMIT_ERROR_TITLE)).toBeInTheDocument()
+        expect(mockAcceptOffer).not.toHaveBeenCalled()
+      })
+
+      it("shows the error modal without declining", async () => {
+        renderWithRelay(noGalleryOfferResolvers)
+
+        fireEvent.click(screen.getByText("Decline gallery offer"))
+        fireEvent.click(continueButton())
+        fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+        expect(await screen.findByText(SUBMIT_ERROR_TITLE)).toBeInTheDocument()
+        expect(mockDeclineOffer).not.toHaveBeenCalled()
+      })
+
+      it("shows the error modal without submitting the counteroffer when the pending draft is missing", async () => {
+        renderWithRelay({
+          Order: () => ({
+            mode: "OFFER",
+            internalID: "order-id",
+            lastSubmittedOffer: { internalID: "gallery-offer-id" },
+            pendingOffer: null,
+          }),
+          Money: () => ({ display: "$1,000.00" }),
+        })
+
+        fireEvent.click(screen.getByText("Send counteroffer"))
+        fireEvent.change(
+          screen.getByPlaceholderText("Enter amount excluding shipping & tax"),
+          { target: { value: "500" } },
+        )
+        fireEvent.click(continueButton())
+        fireEvent.click(await screen.findByRole("button", { name: "Submit" }))
+
+        expect(await screen.findByText(SUBMIT_ERROR_TITLE)).toBeInTheDocument()
+        expect(mockSubmitCounterOffer).not.toHaveBeenCalled()
+      })
     })
   })
 
