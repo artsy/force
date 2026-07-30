@@ -57,11 +57,7 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
               !!lastSubmittedOffer &&
               offer.internalID === lastSubmittedOffer.internalID
             return (
-              <Flex
-                key={offer.internalID}
-                mt={1}
-                backgroundColor={isSeller ? "mono0" : "mono5"}
-              >
+              <Flex key={offer.internalID} mt={1}>
                 <Flex width="30px" flexShrink={0} alignItems="center">
                   {isRespondingTo && (
                     <Flex width="18px" justifyContent="center">
@@ -74,30 +70,32 @@ export const Order2OfferHistory: React.FC<Order2OfferHistoryProps> = ({
                     </Flex>
                   )}
                 </Flex>
-                <Box flex={COLUMNS[0]}>
-                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
-                    {offer.createdAt}
-                  </Text>
-                </Box>
-                <Box flex={COLUMNS[1]}>
-                  <Text variant={["xs", "sm"]}>
-                    {sourceLabel(offer.fromParticipant)}
-                  </Text>
-                </Box>
-                <Box flex={COLUMNS[2]}>
-                  <Text variant={["xs", "sm"]} justifySelf="flex-start">
-                    {offer.amount &&
-                      `${offer.amount.currencySymbol}${offer.amount.amount}`}
-                  </Text>
-                </Box>
-                <Box flex={COLUMNS[3]} textAlign="right">
-                  {/* buyerTotal is undefined for incomplete (original) offers */}
-                  <Text variant={["xs", "sm"]}>
-                    {offer.buyerTotal
-                      ? `${offer.buyerTotal.currencySymbol}${offer.buyerTotal.amount}`
-                      : "N/A"}
-                  </Text>
-                </Box>
+                <Flex flex={1} backgroundColor={isSeller ? "mono0" : "mono5"}>
+                  <Box flex={COLUMNS[0]}>
+                    <Text variant={["xs", "sm"]} justifySelf="flex-start">
+                      {offer.createdAt}
+                    </Text>
+                  </Box>
+                  <Box flex={COLUMNS[1]}>
+                    <Text variant={["xs", "sm"]}>
+                      {sourceLabel(offer.fromParticipant)}
+                    </Text>
+                  </Box>
+                  <Box flex={COLUMNS[2]}>
+                    <Text variant={["xs", "sm"]} justifySelf="flex-start">
+                      {offer.amount &&
+                        `${offer.amount.currencySymbol}${offer.amount.amount}`}
+                    </Text>
+                  </Box>
+                  <Box flex={COLUMNS[3]} textAlign="right">
+                    {/* buyerTotal is undefined for incomplete (original) offers */}
+                    <Text variant={["xs", "sm"]}>
+                      {offer.buyerTotal
+                        ? `${offer.buyerTotal.currencySymbol}${offer.buyerTotal.amount}`
+                        : "N/A"}
+                    </Text>
+                  </Box>
+                </Flex>
               </Flex>
             )
           })}
