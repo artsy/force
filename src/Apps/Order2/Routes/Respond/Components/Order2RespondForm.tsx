@@ -7,7 +7,6 @@ import {
   Clickable,
   Flex,
   Input,
-  Message,
   Radio,
   RadioGroup,
   Spacer,
@@ -15,7 +14,11 @@ import {
 } from "@artsy/palette"
 import { Order2EditButton } from "Apps/Order2/Components/Order2EditButton"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
-import { CheckoutErrorBanner } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
+import {
+  CheckoutErrorBanner,
+  type CheckoutErrorBannerMessage,
+  fallbackError,
+} from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
 import { Order2RespondOfferDetails } from "Apps/Order2/Routes/Respond/Components/Order2RespondOfferDetails"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { useScrollToRespondSubmit } from "Apps/Order2/Routes/Respond/Hooks/useScrollToRespondSubmit"
@@ -31,8 +34,6 @@ import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2RespondForm")
-
-const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondFormProps {
   order: Order2RespondForm_order$key
@@ -61,6 +62,9 @@ const RESPONSE_REQUIRED_MESSAGE =
 
 const COUNTEROFFER_TOO_LOW_TITLE = "Counteroffer amount too low"
 const COUNTEROFFER_TOO_LOW_MESSAGE = "Please increase amount"
+
+// The `whileClause` for the generic fallback error
+const SENDING_COUNTEROFFER = "sending your counteroffer"
 
 interface CompletedResponse {
   title: string
@@ -116,14 +120,9 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const [isOfferDetailsExpanded, setIsOfferDetailsExpanded] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [hasValidationError, setHasValidationError] = useState(false)
+  const [error, setError] = useState<CheckoutErrorBannerMessage | null>(null)
 
-  // Pre-fill the input from the buyer’s draft counteroffer (e.g. after a
-  // refresh) so they can edit it rather than start from a blank field. Only use
-  // a draft that belongs to the current round — a pending offer from an earlier
-  // round (buyer countered, gallery countered back) is stale and must be
-  // ignored.
+  // Pre-fill the input from the buyer’s draft counteroffer
   const draftCounterofferAmount = isCurrentCounterofferDraft
     ? orderData.pendingOffer?.amount?.major
     : null
@@ -147,7 +146,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
   const isCounterofferValid =
     selectedAction !== "COUNTEROFFER" || Number(counterofferAmount) > 0
 
-  const getValidationError = () => {
+  const getValidationError = (): CheckoutErrorBannerMessage => {
     if (selectedAction === "COUNTEROFFER" && !isCounterofferValid) {
       return {
         title: COUNTEROFFER_TOO_LOW_TITLE,
@@ -165,7 +164,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const handleSelectAction = (value: string) => {
     const action = value as RespondAction
-    setHasValidationError(false)
+    setError(null)
     setRespondAction(action)
 
     const amount = orderData.lastSubmittedOffer?.amount?.major
@@ -183,12 +182,12 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
   const handleContinueToReview = async () => {
     if (!selectedAction || !isCounterofferValid) {
-      setHasValidationError(true)
+      setError(getValidationError())
       return
     }
 
     checkoutTracking.clickedOrderProgression(ContextModule.ordersCounter)
-    setHasValidationError(false)
+    setError(null)
 
     // No response is submitted here — every response is submitted from the
     // summary’s Submit CTA. Accept/decline just advance to that step.
@@ -202,11 +201,12 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     // the gallery’s offer) before advancing to the summary’s Submit CTA.
     const respondsToID = orderData.lastSubmittedOffer?.internalID
     if (!respondsToID) {
+      logger.error("Missing gallery offer to respond to")
+      setError(fallbackError(SENDING_COUNTEROFFER))
       return
     }
 
     try {
-      setErrorMessage(null)
       setIsSubmitting(true)
 
       const response = await createCounterOffer({
@@ -222,17 +222,19 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       const offerOrError = response.createBuyerOffer?.offerOrError
 
       if (offerOrError && "mutationError" in offerOrError) {
-        // TODO: proper error handling is tracked in EMI-3175.
-        setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+        const { mutationError } = offerOrError
+        logger.error(mutationError)
+        setError(
+          fallbackError(SENDING_COUNTEROFFER, mutationError?.code ?? undefined),
+        )
         return
       }
 
       setRespondComplete()
       scrollToSubmitCTA()
     } catch (error) {
-      // TODO: proper error handling is tracked in EMI-3175.
       logger.error(error)
-      setErrorMessage(GENERIC_ERROR)
+      setError(fallbackError(SENDING_COUNTEROFFER))
     } finally {
       setIsSubmitting(false)
     }
@@ -302,10 +304,10 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
 
       <Spacer y={2} />
 
-      {hasValidationError && (
+      {error && (
         <>
           <CheckoutErrorBanner
-            error={getValidationError()}
+            error={error}
             checkoutTracking={checkoutTracking}
             analytics={{ flow: "User responding to offer" }}
           />
@@ -339,7 +341,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
                       inputMode="numeric"
                       value={counterofferAmount}
                       onChange={event => {
-                        setHasValidationError(false)
+                        setError(null)
                         // Keep digits only.
                         setCounterofferAmount(
                           event.currentTarget.value.replace(/[^\d]/g, ""),
@@ -358,15 +360,6 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
           )
         })}
       </RadioGroup>
-
-      {errorMessage && (
-        <>
-          <Spacer y={2} />
-          <Message variant="error" p={1}>
-            <Text variant="xs">{errorMessage}</Text>
-          </Message>
-        </>
-      )}
 
       <Spacer y={2} />
 
