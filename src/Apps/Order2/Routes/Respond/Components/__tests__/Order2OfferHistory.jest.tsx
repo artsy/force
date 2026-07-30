@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, within } from "@testing-library/react"
 import { Order2OfferHistory } from "Apps/Order2/Routes/Respond/Components/Order2OfferHistory"
 import { Order2RespondContextProvider } from "Apps/Order2/Routes/Respond/RespondContext/Order2RespondContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -37,8 +37,10 @@ const { renderWithRelay } = setupTestWrapperTL<Order2OfferHistoryTestQuery>({
 })
 
 // A gallery offer (complete) + a buyer offer with no buyerTotal (incomplete).
+// `lastSubmittedOffer` is the gallery offer being responded to (offer-1).
 const withOffers = {
   Order: () => ({
+    lastSubmittedOffer: { internalID: "offer-1" },
     submittedOffers: [
       {
         internalID: "offer-1",
@@ -79,6 +81,48 @@ describe("Order2OfferHistory", () => {
     expect(screen.getByText("January 2, 2026")).toBeInTheDocument()
     expect(screen.getByText("You")).toBeInTheDocument()
     expect(screen.getByText("$900.00")).toBeInTheDocument()
+  })
+
+  it("marks the gallery offer being responded to with a single indicator", () => {
+    renderWithRelay(withOffers)
+    fireEvent.click(screen.getByText("Offer history"))
+
+    const indicators = screen.getAllByTestId("responded-to-offer-indicator")
+    expect(indicators).toHaveLength(1)
+
+    // The indicator sits in the gallery (offer-1) row: walk up to the nearest
+    // ancestor holding the "Gallery" label — it must not also hold the buyer
+    // row's "You" label.
+    let row: HTMLElement | null = indicators[0].parentElement
+    while (row && !within(row).queryByText("Gallery")) {
+      row = row.parentElement
+    }
+    expect(row).not.toBeNull()
+    expect(
+      within(row as HTMLElement).queryByText("You"),
+    ).not.toBeInTheDocument()
+  })
+
+  it("shows no indicator when no offer matches lastSubmittedOffer", () => {
+    renderWithRelay({
+      Order: () => ({
+        lastSubmittedOffer: { internalID: "not-in-history" },
+        submittedOffers: [
+          {
+            internalID: "offer-1",
+            createdAt: "January 1, 2026",
+            fromParticipant: "SELLER",
+            amount: { amount: "1,000.00", currencySymbol: "$" },
+            buyerTotal: { amount: "1,100.00", currencySymbol: "$" },
+          },
+        ],
+      }),
+    })
+    fireEvent.click(screen.getByText("Offer history"))
+
+    expect(
+      screen.queryByTestId("responded-to-offer-indicator"),
+    ).not.toBeInTheDocument()
   })
 
   it("shows N/A when an offer has no buyerTotal", () => {

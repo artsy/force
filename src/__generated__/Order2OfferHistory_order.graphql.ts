@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7f275bafdb703a9b811d20661156777>>
+ * @generated SignedSource<<21089772ab0c80d1ee71d3ddbac66bbe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { ReaderFragment } from 'relay-runtime';
 export type FromParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Order2OfferHistory_order$data = {
+  readonly lastSubmittedOffer: {
+    readonly internalID: string;
+  } | null | undefined;
   readonly submittedOffers: ReadonlyArray<{
     readonly amount: {
       readonly amount: string | null | undefined;
@@ -33,7 +36,14 @@ export type Order2OfferHistory_order$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -60,16 +70,22 @@ return {
       "args": null,
       "concreteType": "Offer",
       "kind": "LinkedField",
+      "name": "lastSubmittedOffer",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Offer",
+      "kind": "LinkedField",
       "name": "submittedOffers",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": [
@@ -97,7 +113,7 @@ return {
           "kind": "LinkedField",
           "name": "amount",
           "plural": false,
-          "selections": (v0/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": null
         },
         {
@@ -107,7 +123,7 @@ return {
           "kind": "LinkedField",
           "name": "buyerTotal",
           "plural": false,
-          "selections": (v0/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": null
         }
       ],
@@ -119,6 +135,6 @@ return {
 };
 })();
 
-(node as any).hash = "868aa1b5c17140452c4905f51a7c5714";
+(node as any).hash = "735bba09e94d7a55734c5335288e2130";
 
 export default node;
