@@ -36,7 +36,7 @@ const MODAL_CONTENT: Record<
   [RespondErrorModalType.OFFER_NO_LONGER_AVAILABLE]: {
     title: "This offer is no longer available",
     description:
-      "The offer has expired or the order is no longer awaiting your response. Please review your order for the latest details.",
+      "The offer has expired or the order is no longer awaiting your response.",
     ctaText: "Continue",
     ctaAction: "viewOrderDetails",
   },

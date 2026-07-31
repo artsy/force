@@ -64,7 +64,7 @@ const COUNTEROFFER_TOO_LOW_TITLE = "Counteroffer amount too low"
 const COUNTEROFFER_TOO_LOW_MESSAGE = "Please increase amount"
 
 // The `whileClause` for the generic fallback error
-const SENDING_COUNTEROFFER = "sending your counteroffer"
+const SELECTING_COUNTEROFFER_AMOUNT = "selecting your counteroffer amount"
 
 interface CompletedResponse {
   title: string
@@ -202,7 +202,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
     const respondsToID = orderData.lastSubmittedOffer?.internalID
     if (!respondsToID) {
       logger.error("Missing gallery offer to respond to")
-      setError(fallbackError(SENDING_COUNTEROFFER))
+      setError(fallbackError(SELECTING_COUNTEROFFER_AMOUNT))
       return
     }
 
@@ -225,7 +225,10 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
         const { mutationError } = offerOrError
         logger.error(mutationError)
         setError(
-          fallbackError(SENDING_COUNTEROFFER, mutationError?.code ?? undefined),
+          fallbackError(
+            SELECTING_COUNTEROFFER_AMOUNT,
+            mutationError?.code ?? undefined,
+          ),
         )
         return
       }
@@ -234,7 +237,7 @@ export const Order2RespondForm: React.FC<Order2RespondFormProps> = ({
       scrollToSubmitCTA()
     } catch (error) {
       logger.error(error)
-      setError(fallbackError(SENDING_COUNTEROFFER))
+      setError(fallbackError(SELECTING_COUNTEROFFER_AMOUNT))
     } finally {
       setIsSubmitting(false)
     }

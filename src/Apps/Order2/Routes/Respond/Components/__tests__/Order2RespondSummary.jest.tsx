@@ -231,7 +231,7 @@ describe("Order2RespondSummary", () => {
       "Something went wrong while submitting your response. Please try again."
     const OFFER_UNAVAILABLE_TITLE = "This offer is no longer available"
     const OFFER_UNAVAILABLE_MESSAGE =
-      "The offer has expired or the order is no longer awaiting your response. Please review your order for the latest details."
+      "The offer has expired or the order is no longer awaiting your response."
 
     const galleryOfferResolvers = {
       Order: () => ({

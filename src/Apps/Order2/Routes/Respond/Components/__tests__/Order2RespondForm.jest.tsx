@@ -289,7 +289,9 @@ describe("Order2RespondForm", () => {
       expect(screen.getByText("An error occurred")).toBeInTheDocument()
     })
     expect(
-      screen.getByText(/Something went wrong while sending your counteroffer/),
+      screen.getByText(
+        /Something went wrong while selecting your counteroffer amount/,
+      ),
     ).toBeInTheDocument()
     // Still on the editable form — not collapsed.
     expect(screen.queryByText("Your counteroffer")).not.toBeInTheDocument()
