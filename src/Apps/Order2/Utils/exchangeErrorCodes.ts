@@ -17,4 +17,5 @@ export const OFFER_UNAVAILABLE_CODES = [
   "cannot_reject_offer",
   "cannot_offer",
   "cannot_update_submitted_offer",
+  "cannot_counter",
 ]
