@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c8b0ccdeda8f13d4ba302a2748787ca>>
+ * @generated SignedSource<<ac64d2df24ff44a7f65b32f6f348274c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -474,10 +474,13 @@ v24 = [
   }
 ],
 v25 = [
+  (v2/*: any*/)
+],
+v26 = [
   (v18/*: any*/),
   (v2/*: any*/)
 ],
-v26 = {
+v27 = {
   "kind": "InlineFragment",
   "selections": [
     (v15/*: any*/),
@@ -489,7 +492,7 @@ v26 = {
       "kind": "LinkedField",
       "name": "artists",
       "plural": true,
-      "selections": (v25/*: any*/),
+      "selections": (v26/*: any*/),
       "storageKey": "artists(shallow:true)"
     },
     {
@@ -499,7 +502,7 @@ v26 = {
       "kind": "LinkedField",
       "name": "partner",
       "plural": false,
-      "selections": (v25/*: any*/),
+      "selections": (v26/*: any*/),
       "storageKey": null
     },
     (v22/*: any*/)
@@ -507,7 +510,7 @@ v26 = {
   "type": "Artwork",
   "abstractKey": null
 },
-v27 = {
+v28 = {
   "kind": "InlineFragment",
   "selections": [
     (v23/*: any*/),
@@ -516,12 +519,9 @@ v27 = {
   "type": "ArticleImageSection",
   "abstractKey": null
 },
-v28 = [
-  (v2/*: any*/)
-],
 v29 = {
   "kind": "InlineFragment",
-  "selections": (v28/*: any*/),
+  "selections": (v25/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
 };
@@ -659,7 +659,13 @@ return {
                     "plural": false,
                     "selections": [
                       (v11/*: any*/),
-                      (v10/*: any*/)
+                      (v10/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v25/*: any*/),
+                        "type": "ArticleImageSection",
+                        "abstractKey": null
+                      }
                     ],
                     "storageKey": null
                   },
@@ -687,12 +693,12 @@ return {
                             "plural": true,
                             "selections": [
                               (v11/*: any*/),
-                              (v26/*: any*/),
                               (v27/*: any*/),
+                              (v28/*: any*/),
                               (v29/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v28/*: any*/),
+                                "selections": (v25/*: any*/),
                                 "type": "ArticleUnpublishedArtwork",
                                 "abstractKey": null
                               }
@@ -715,8 +721,8 @@ return {
                             "plural": true,
                             "selections": [
                               (v11/*: any*/),
-                              (v26/*: any*/),
                               (v27/*: any*/),
+                              (v28/*: any*/),
                               (v29/*: any*/)
                             ],
                             "storageKey": null
@@ -740,12 +746,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2aeb0e5a1555875fa30a0620a1790ee4",
+    "cacheID": "3c788b600a40a300e80c990389fb61fb",
     "id": null,
     "metadata": {},
     "name": "RssArticlesQuery",
     "operationKind": "query",
-    "text": "query RssArticlesQuery(\n  $channelId: String!\n) {\n  articlesConnection(channelId: $channelId, sort: PUBLISHED_AT_DESC, first: 50) {\n    edges {\n      node {\n        id\n        publishedAt\n        thumbnailTitle\n        thumbnailImage {\n          imageURL\n        }\n        href\n        byline\n        hero {\n          __typename\n          ... on ArticleFeatureSection {\n            embed\n            image {\n              resized(width: 1100) {\n                src\n              }\n            }\n          }\n        }\n        sections {\n          __typename\n          ... on ArticleSectionText {\n            body\n          }\n          ... on ArticleSectionEmbed {\n            url\n          }\n          ... on ArticleSectionVideo {\n            embed\n          }\n          ... on ArticleSectionImageCollection {\n            figures {\n              __typename\n              ... on Artwork {\n                title\n                date\n                artists(shallow: true) {\n                  name\n                  id\n                }\n                partner {\n                  name\n                  id\n                }\n                image {\n                  resized(width: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n              }\n              ... on ArticleImageSection {\n                image {\n                  caption\n                  resized(width: 500) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n              ... on ArticleUnpublishedArtwork {\n                id\n              }\n            }\n          }\n          ... on ArticleSectionImageSet {\n            figures {\n              __typename\n              ... on Artwork {\n                title\n                date\n                artists(shallow: true) {\n                  name\n                  id\n                }\n                partner {\n                  name\n                  id\n                }\n                image {\n                  resized(width: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n              }\n              ... on ArticleImageSection {\n                image {\n                  caption\n                  resized(width: 500) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query RssArticlesQuery(\n  $channelId: String!\n) {\n  articlesConnection(channelId: $channelId, sort: PUBLISHED_AT_DESC, first: 50) {\n    edges {\n      node {\n        id\n        publishedAt\n        thumbnailTitle\n        thumbnailImage {\n          imageURL\n        }\n        href\n        byline\n        hero {\n          __typename\n          ... on ArticleFeatureSection {\n            embed\n            image {\n              resized(width: 1100) {\n                src\n              }\n            }\n          }\n          ... on ArticleImageSection {\n            id\n          }\n        }\n        sections {\n          __typename\n          ... on ArticleSectionText {\n            body\n          }\n          ... on ArticleSectionEmbed {\n            url\n          }\n          ... on ArticleSectionVideo {\n            embed\n          }\n          ... on ArticleSectionImageCollection {\n            figures {\n              __typename\n              ... on Artwork {\n                title\n                date\n                artists(shallow: true) {\n                  name\n                  id\n                }\n                partner {\n                  name\n                  id\n                }\n                image {\n                  resized(width: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n              }\n              ... on ArticleImageSection {\n                image {\n                  caption\n                  resized(width: 500) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n              ... on ArticleUnpublishedArtwork {\n                id\n              }\n            }\n          }\n          ... on ArticleSectionImageSet {\n            figures {\n              __typename\n              ... on Artwork {\n                title\n                date\n                artists(shallow: true) {\n                  name\n                  id\n                }\n                partner {\n                  name\n                  id\n                }\n                image {\n                  resized(width: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n              }\n              ... on ArticleImageSection {\n                image {\n                  caption\n                  resized(width: 500) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
