@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<187e9d0025d0a8bfe9c8d9817807aacc>>
+ * @generated SignedSource<<a82c5d92cebca59dc08058117a1705fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -260,6 +260,14 @@ return {
                 ],
                 "type": "ArticleFeatureSection",
                 "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v2/*: any*/)
+                ],
+                "type": "ArticleImageSection",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -271,12 +279,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "61dff9cd28a4bb7db2eaf8e8a0008a71",
+    "cacheID": "3b38bf5a0ff65da8b7ab1a2041fdeafe",
     "id": null,
     "metadata": {},
     "name": "ArticleHeroStoryQuery",
     "operationKind": "query",
-    "text": "query ArticleHeroStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleHero_article\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArticleHeroStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleHero_article\n    id\n  }\n}\n\nfragment ArticleHero_article on Article {\n  title\n  href\n  vertical\n  authors {\n    internalID\n    slug\n    name\n    id\n  }\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n    ... on ArticleImageSection {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
