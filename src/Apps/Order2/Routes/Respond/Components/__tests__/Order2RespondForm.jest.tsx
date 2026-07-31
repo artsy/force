@@ -267,7 +267,7 @@ describe("Order2RespondForm", () => {
     })
   })
 
-  it("keeps the form open and surfaces an error when the counteroffer fails", async () => {
+  it("keeps the form open and surfaces the error banner when the counteroffer mutation errors", async () => {
     mockCreateCounterOffer.mockResolvedValue({
       createBuyerOffer: {
         offerOrError: {
@@ -286,10 +286,54 @@ describe("Order2RespondForm", () => {
     fireEvent.click(continueButton())
 
     await waitFor(() => {
-      expect(screen.getByText("Offer too low")).toBeInTheDocument()
+      expect(screen.getByText("An error occurred")).toBeInTheDocument()
     })
+    expect(
+      screen.getByText(
+        /Something went wrong while selecting your counteroffer amount/,
+      ),
+    ).toBeInTheDocument()
     // Still on the editable form — not collapsed.
     expect(screen.queryByText("Your counteroffer")).not.toBeInTheDocument()
+  })
+
+  it("surfaces the error banner when the counteroffer request throws", async () => {
+    mockCreateCounterOffer.mockRejectedValue(new Error("Network error"))
+
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+    fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+      target: { value: "500" },
+    })
+    fireEvent.click(continueButton())
+
+    await waitFor(() => {
+      expect(screen.getByText("An error occurred")).toBeInTheDocument()
+    })
+    expect(screen.queryByText("Your counteroffer")).not.toBeInTheDocument()
+  })
+
+  it("clears the submission error banner when the counteroffer amount is edited", async () => {
+    mockCreateCounterOffer.mockRejectedValue(new Error("Network error"))
+
+    renderWithRelay(defaultResolvers)
+
+    fireEvent.click(screen.getByText("Send counteroffer"))
+    fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+      target: { value: "500" },
+    })
+    fireEvent.click(continueButton())
+
+    await waitFor(() => {
+      expect(screen.getByText("An error occurred")).toBeInTheDocument()
+    })
+
+    fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+      target: { value: "600" },
+    })
+
+    expect(screen.queryByText("An error occurred")).not.toBeInTheDocument()
   })
 
   it("does not create an offer for accept or decline", () => {
@@ -429,6 +473,51 @@ describe("Order2RespondForm", () => {
         })
       },
     )
+
+    it("tracks errorMessageViewed for validation errors", () => {
+      renderWithRelay(defaultResolvers)
+
+      fireEvent.click(continueButton())
+
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "errorMessageViewed",
+          error_code: "response_required",
+          title: "Response required",
+          flow: "User responding to offer",
+        }),
+      )
+    })
+
+    it("tracks errorMessageViewed for counteroffer submission errors", async () => {
+      mockCreateCounterOffer.mockResolvedValue({
+        createBuyerOffer: {
+          offerOrError: {
+            __typename: "OfferMutationError",
+            mutationError: { code: "invalid", message: "Offer too low" },
+          },
+        },
+      })
+
+      renderWithRelay(defaultResolvers)
+
+      fireEvent.click(screen.getByText("Send counteroffer"))
+      fireEvent.change(screen.getByPlaceholderText(COUNTEROFFER_PLACEHOLDER), {
+        target: { value: "500" },
+      })
+      fireEvent.click(continueButton())
+
+      await waitFor(() => {
+        expect(mockTrackEvent).toHaveBeenCalledWith(
+          expect.objectContaining({
+            action: "errorMessageViewed",
+            error_code: "invalid",
+            title: "An error occurred",
+            flow: "User responding to offer",
+          }),
+        )
+      })
+    })
 
     it("tracks clickedOrderProgression when Save and Review is clicked", () => {
       renderWithRelay(defaultResolvers)

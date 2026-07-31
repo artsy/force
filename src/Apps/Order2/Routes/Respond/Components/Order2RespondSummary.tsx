@@ -1,9 +1,13 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Button, Message, Spacer, Text } from "@artsy/palette"
+import { Button, Spacer } from "@artsy/palette"
 import { useStripe } from "@stripe/react-stripe-js"
 import { Order2OrderSummary } from "Apps/Order2/Components/Order2OrderSummary"
 import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
 import { useOrder2LineItemData } from "Apps/Order2/Hooks/useOrder2LineItemData"
+import {
+  Order2RespondErrorModal,
+  RespondErrorModalType,
+} from "Apps/Order2/Routes/Respond/Components/Order2RespondErrorModal"
 import { useRespondContext } from "Apps/Order2/Routes/Respond/Hooks/useRespondContext"
 import { useOrder2AcceptOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2AcceptOfferMutation"
 import { useOrder2DeclineOfferMutation } from "Apps/Order2/Routes/Respond/Mutations/useOrder2DeclineOfferMutation"
@@ -12,6 +16,10 @@ import {
   RespondStepName,
   RespondStepState,
 } from "Apps/Order2/Routes/Respond/RespondContext/types"
+import {
+  OFFER_UNAVAILABLE_CODES,
+  PAYMENT_FAILURE_CODES,
+} from "Apps/Order2/Utils/exchangeErrorCodes"
 import { useRouter } from "System/Hooks/useRouter"
 import { Jump } from "Utils/Hooks/useJump"
 import createLogger from "Utils/logger"
@@ -20,8 +28,6 @@ import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 const logger = createLogger("Order2RespondSummary")
-
-const GENERIC_ERROR = "Something went wrong. Please try again."
 
 interface Order2RespondSummaryProps {
   order: Order2RespondSummary_order$key
@@ -48,7 +54,37 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
   const { submitMutation: acceptOffer } = useOrder2AcceptOfferMutation()
   const { submitMutation: declineOffer } = useOrder2DeclineOfferMutation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const [errorModal, setErrorModal] = useState<{
+    type: RespondErrorModalType
+    description?: string | null
+  } | null>(null)
+
+  const showSubmitErrorModal = () => {
+    setErrorModal({ type: RespondErrorModalType.SUBMIT_ERROR })
+  }
+
+  const showMutationErrorModal = (mutationError?: {
+    code: string
+    message: string
+  }) => {
+    if (!mutationError) {
+      showSubmitErrorModal()
+      return
+    }
+
+    if (PAYMENT_FAILURE_CODES.includes(mutationError.code)) {
+      setErrorModal({ type: RespondErrorModalType.PAYMENT_PROCESSING_FAILED })
+      return
+    }
+
+    if (OFFER_UNAVAILABLE_CODES.includes(mutationError.code)) {
+      setErrorModal({ type: RespondErrorModalType.OFFER_NO_LONGER_AVAILABLE })
+      return
+    }
+
+    showSubmitErrorModal()
+  }
 
   const artwork = useOrder2LineItemData(orderData.lineItems[0]!)
 
@@ -68,8 +104,16 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     router.replace(`/orders/${orderID}/details`)
   }
 
+  // The Order2 respond route has no payment step, so a declined card is fixed
+  // on the legacy payment route.
+  const redirectToNewPayment = () => {
+    router.push(`/orders/${orderID}/payment/new`)
+  }
+
   const submitCounter = async () => {
     if (!pendingOfferID) {
+      logger.error("Missing pending offer to submit")
+      showSubmitErrorModal()
       return
     }
 
@@ -79,8 +123,8 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     const offerOrError = response.submitBuyerOffer?.offerOrError
 
     if (offerOrError && "mutationError" in offerOrError) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(offerOrError.mutationError?.message ?? GENERIC_ERROR)
+      logger.error(offerOrError.mutationError)
+      showMutationErrorModal(offerOrError.mutationError)
       return
     }
 
@@ -90,6 +134,8 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
 
   const decline = async () => {
     if (!galleryOfferID) {
+      logger.error("Missing gallery offer to decline")
+      showSubmitErrorModal()
       return
     }
 
@@ -99,8 +145,8 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     const orderOrError = response.rejectSellerOffer?.orderOrError
 
     if (orderOrError && "mutationError" in orderOrError) {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      logger.error(orderOrError.mutationError)
+      showMutationErrorModal(orderOrError.mutationError)
       return
     }
 
@@ -109,6 +155,8 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
 
   const accept = async () => {
     if (!stripe || !galleryOfferID) {
+      logger.error("Missing Stripe or gallery offer to accept")
+      showSubmitErrorModal()
       return
     }
 
@@ -124,8 +172,11 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
       })
 
       if (error) {
-        // TODO: proper error handling is tracked in EMI-3175.
-        setErrorMessage(error.message ?? GENERIC_ERROR)
+        logger.error(error)
+        setErrorModal({
+          type: RespondErrorModalType.PAYMENT_PROCESSING_FAILED,
+          description: error.message,
+        })
         return
       }
 
@@ -134,8 +185,9 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     }
 
     if (orderOrError?.__typename === "OrderMutationError") {
-      // TODO: proper error handling is tracked in EMI-3175.
-      setErrorMessage(orderOrError.mutationError?.message ?? GENERIC_ERROR)
+      const { mutationError } = orderOrError
+      logger.error(mutationError)
+      showMutationErrorModal(mutationError)
       return
     }
 
@@ -148,7 +200,7 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
     }
 
     try {
-      setErrorMessage(null)
+      setErrorModal(null)
       setIsSubmitting(true)
 
       if (selectedAction === "COUNTEROFFER") {
@@ -159,9 +211,8 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
         await accept()
       }
     } catch (error) {
-      // TODO: proper error handling is tracked in EMI-3175.
       logger.error(error)
-      setErrorMessage(GENERIC_ERROR)
+      showSubmitErrorModal()
     } finally {
       setIsSubmitting(false)
     }
@@ -209,14 +260,15 @@ export const Order2RespondSummary: React.FC<Order2RespondSummaryProps> = ({
 
           <Spacer y={2} />
 
-          {errorMessage && (
-            <>
-              <Spacer y={1} />
-              <Message variant="error" p={1}>
-                <Text variant="xs">{errorMessage}</Text>
-              </Message>
-            </>
-          )}
+          <Order2RespondErrorModal
+            error={errorModal?.type ?? null}
+            overrideDescription={errorModal?.description}
+            onClose={() => {
+              setErrorModal(null)
+            }}
+            onFixPayment={redirectToNewPayment}
+            onViewOrderDetails={redirectToOrderDetails}
+          />
         </>
       )}
     </Order2OrderSummary>
