@@ -145,6 +145,10 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
     )
   }
 
+  const minPriceOption = priceOptions.find(
+    opt => opt.key === PriceOptionKey.MIN,
+  )
+
   const handleRadioSelect = (value: string) => {
     const option = priceOptions.find(opt => opt.key === value)
 
@@ -194,12 +198,24 @@ export const Order2OfferOptions: React.FC<Order2OfferOptionsProps> = ({
           label="Other amount"
         >
           {selectedRadio === PriceOptionKey.CUSTOM && (
-            <Flex flexDirection="column" mt={2}>
+            <Flex flexDirection="column" mt={1}>
               <OfferInput
                 name="offerValue"
                 order={orderData}
                 onBlur={onCustomOfferBlur}
               />
+              {!!minPriceOption &&
+                values.offerValue > 0 &&
+                values.offerValue < minPriceOption.value && (
+                  <>
+                    <Spacer y={1} />
+                    <Text variant="xs" color="mono100">
+                      Consider raising your offer to{" "}
+                      {formatCurrency(minPriceOption.value)} to increase your
+                      chance of acceptance.
+                    </Text>
+                  </>
+                )}
             </Flex>
           )}
         </Radio>,
