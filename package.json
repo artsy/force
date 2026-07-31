@@ -62,7 +62,7 @@
     "styled-components": "^6.1.13",
     "strip-ansi": "6.0.1",
     "cipher-base": "^1.0.5",
-    "form-data": "^4.0.4",
+    "form-data": "^4.0.6",
     "lodash": "^4.17.21",
     "sha.js": "^2.4.12",
     "tar@npm:^7.4.3": "7.5.20",
