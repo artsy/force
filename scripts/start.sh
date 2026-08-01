@@ -13,13 +13,13 @@ if [ "${NODE_ENV}" != "production" ]; then
 
   # Smoke Tests
   if [ "$CIRCLECI" = "true" ]; then
-    exec node --max_old_space_size=3072 -r @swc-node/register ./src/dev.ts
+    exec node --max_old_space_size=3072 -r ./scripts/swcNodeTypescript5.js -r @swc-node/register ./src/dev.ts
   # Dev
   else
-    yarn concurrently --raw --kill-others 'yarn relay --watch' "node --max_old_space_size=3072 -r @swc-node/register ./src/dev.ts $@"
+    yarn concurrently --raw --kill-others 'yarn relay --watch' "node --max_old_space_size=3072 -r ./scripts/swcNodeTypescript5.js -r @swc-node/register ./src/dev.ts $@"
   fi
 # Prod
 else
   export NODE_PATH=src
-  exec  node "${OPT[@]}" --no-experimental-fetch -r @swc-node/register ./src/prod.ts
+  exec  node "${OPT[@]}" --no-experimental-fetch -r ./scripts/swcNodeTypescript5.js -r @swc-node/register ./src/prod.ts
 fi
