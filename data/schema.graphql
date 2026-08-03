@@ -2080,7 +2080,7 @@ type ArticleFeaturedArtistNotificationItem {
   ): ArtistConnection
 }
 
-union ArticleHero = ArticleFeatureSection
+union ArticleHero = ArticleFeatureSection | ArticleImageSection
 
 type ArticleImageSection {
   caption: String
