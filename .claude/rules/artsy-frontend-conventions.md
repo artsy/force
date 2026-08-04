@@ -148,6 +148,10 @@
 - **Constants**: Use `UPPER_SNAKE_CASE` for constants. Use `Record<EnumType, string>` for enum-like label maps.
 - **Props interfaces**: Name them `[ComponentName]Props`. Define the interface immediately above the component. Export it if callers need the type.
 
+## Verification Runs
+
+- **Filter output before it hits context**: Never `tail` a raw jest failure (RTL DOM dumps are huge). Jest's default reporter writes to stderr, so redirect first: `yarn jest [file] 2>&1 | grep -E "Tests:|Suites:|✕|FAIL"`. Use `tail -20` for type-check/lint output. Chain independent checks in one Bash call with `;` to cut round trips — piping through `grep` masks the underlying exit code, so `&&` won't short-circuit on a jest failure.
+
 ## UI Components
 
 - **Prefer Palette over custom styling**: Use Palette or DesignSystem components (`Box`, `Text`, `Flex`, `Button`, etc.) rather than writing custom styled components.
