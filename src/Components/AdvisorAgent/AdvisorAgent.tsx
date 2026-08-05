@@ -1,6 +1,9 @@
 import { Box, Button, Flex, Input, Spacer, Text } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import type * as React from "react"
 import { useEffect, useRef, useState } from "react"
+
+export const AGENTIC_SEARCH_FEATURE_FLAG = "emerald_agentic-search"
 
 interface TranscriptEntry {
   role: "you" | "advisor"
@@ -194,6 +197,7 @@ const ArtworkPreviewCard: React.FC<ArtworkPreviewCardProps> = ({ artwork }) => {
 }
 
 export const AdvisorAgent: React.FC = () => {
+  const isEnabled = !!useFlag(AGENTIC_SEARCH_FEATURE_FLAG)
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [draft, setDraft] = useState("")
@@ -221,6 +225,13 @@ export const AdvisorAgent: React.FC = () => {
 
     container.scrollTop += delta
   }, [transcript, isLoading])
+
+  // Placed after the hooks above so they run on every render regardless of the
+  // flag. `useFlag` isn't isomorphic, so this is always false during SSR and the
+  // advisor mounts once Unleash resolves on the client.
+  if (!isEnabled) {
+    return null
+  }
 
   const searchedArtworks = collectSearchedArtworks(wireMessages)
 

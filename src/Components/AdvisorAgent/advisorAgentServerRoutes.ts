@@ -1,3 +1,4 @@
+import { AGENTIC_SEARCH_FEATURE_FLAG } from "Components/AdvisorAgent/AdvisorAgent"
 import {
   type AdvisorArtwork,
   searchAdvisorArtworks,
@@ -6,7 +7,8 @@ import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
-import { Router } from "express"
+import { getOrInitUnleashServer } from "System/FeatureFlags/unleashServer"
+import { type NextFunction, Router } from "express"
 
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 const MODEL = "claude-opus-4-8"
@@ -161,13 +163,46 @@ const advisorAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
 
     res.send({ messages, reply: extractReply(messages[messages.length - 1]) })
   } catch (error) {
-    console.error(error)
-    res.status(500).send({ error: "Agent request failed" })
+    console.error("[advisorAgent] request failed:", error)
+    res.status(500).send({
+      error: error instanceof Error ? error.message : "Advisor request failed",
+    })
   }
+}
+
+// Falls through to the app's catch-all 404 while the feature is off, so the
+// endpoint behaves as though it were never mounted. The flag is read per request
+// rather than at mount time because Unleash fetches asynchronously and isn't
+// ready yet when this router is registered at boot.
+const featureEnabled = (
+  req: ArtsyRequest,
+  _res: ArtsyResponse,
+  next: NextFunction,
+) => {
+  const isEnabled = getOrInitUnleashServer().isEnabled(
+    AGENTIC_SEARCH_FEATURE_FLAG,
+    {
+      userId: req.user?.id,
+      sessionId: req.session?.id,
+    },
+  )
+
+  if (!isEnabled) {
+    // Skips advisorAgentChatPost; nothing else matches, so the request lands on
+    // the app's 404 handler.
+    next("route")
+    return
+  }
+
+  next()
 }
 
 const advisorAgentServerRoutes = Router()
 
-advisorAgentServerRoutes.post("/api/advisor-agent/chat", advisorAgentChatPost)
+advisorAgentServerRoutes.post(
+  "/api/advisor-agent/chat",
+  featureEnabled,
+  advisorAgentChatPost,
+)
 
 export { advisorAgentServerRoutes }
