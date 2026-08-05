@@ -1,4 +1,4 @@
-export interface AgentArtwork {
+export interface AdvisorArtwork {
   id: string
   title: string
   artist: string
@@ -14,7 +14,7 @@ export interface AgentArtwork {
 //
 // `imageUrl` is a width-300 preview pulled from Metaphysics for each work, used
 // by the chat UI to show a thumbnail alongside a recommendation.
-export const AGENT_ARTWORK_CATALOG: AgentArtwork[] = [
+export const ADVISOR_ARTWORK_CATALOG: AdvisorArtwork[] = [
   {
     id: "nicolas-party-cats-head-2",
     title: "Cat's Head",
@@ -161,6 +161,6 @@ export const AGENT_ARTWORK_CATALOG: AgentArtwork[] = [
 // Demo behavior: ignore the query and return the catalog in a random order, so
 // results always come back and feel fresh. Every work stays reachable
 // regardless of how the collector phrases the request.
-export const searchAgentArtworks = (): AgentArtwork[] => {
-  return [...AGENT_ARTWORK_CATALOG].sort(() => Math.random() - 0.5)
+export const searchAdvisorArtworks = (): AdvisorArtwork[] => {
+  return [...ADVISOR_ARTWORK_CATALOG].sort(() => Math.random() - 0.5)
 }

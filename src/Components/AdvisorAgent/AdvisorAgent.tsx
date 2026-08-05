@@ -17,7 +17,7 @@ interface WireMessage {
 
 // An artwork the advisor surfaced via search_artworks, pulled back out of the
 // wire transcript so the UI can show a preview when the advisor recommends it.
-interface AgentArtworkPreview {
+interface AdvisorArtworkPreview {
   id: string
   title: string
   artist?: string
@@ -31,8 +31,8 @@ interface AgentArtworkPreview {
 // `tool_result` blocks; we parse those and dedupe by id.
 const collectSearchedArtworks = (
   wireMessages: WireMessage[],
-): AgentArtworkPreview[] => {
-  const byId = new Map<string, AgentArtworkPreview>()
+): AdvisorArtworkPreview[] => {
+  const byId = new Map<string, AdvisorArtworkPreview>()
 
   wireMessages.forEach(message => {
     if (!Array.isArray(message.content)) {
@@ -93,8 +93,8 @@ const normalize = (value: string): string => {
 // Which searched works this advisor message actually names — those get a preview.
 const findRecommendedArtworks = (
   text: string,
-  artworks: AgentArtworkPreview[],
-): AgentArtworkPreview[] => {
+  artworks: AdvisorArtworkPreview[],
+): AdvisorArtworkPreview[] => {
   const normalizedText = normalize(text)
 
   return artworks.filter(artwork => {
@@ -107,7 +107,7 @@ const findRecommendedArtworks = (
 }
 
 interface ArtworkPreviewCardProps {
-  artwork: AgentArtworkPreview
+  artwork: AdvisorArtworkPreview
 }
 
 const ArtworkPreviewCard: React.FC<ArtworkPreviewCardProps> = ({ artwork }) => {
@@ -193,7 +193,7 @@ const ArtworkPreviewCard: React.FC<ArtworkPreviewCardProps> = ({ artwork }) => {
   )
 }
 
-export const CollectAgentChat: React.FC = () => {
+export const AdvisorAgent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [draft, setDraft] = useState("")
@@ -241,7 +241,7 @@ export const CollectAgentChat: React.FC = () => {
     ]
 
     try {
-      const response = await fetch("/api/collect-agent/chat", {
+      const response = await fetch("/api/advisor-agent/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: nextWire }),

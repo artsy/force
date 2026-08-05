@@ -1,7 +1,7 @@
 import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
-import { CollectAgentChat } from "Apps/Collect/Components/CollectAgentChat"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
+import { AdvisorAgent } from "Components/AdvisorAgent/AdvisorAgent"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import type {
   Counts,
@@ -164,7 +164,7 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
         </Box>
       </FrameWithRecentlyViewed>
 
-      <CollectAgentChat />
+      <AdvisorAgent />
     </>
   )
 }

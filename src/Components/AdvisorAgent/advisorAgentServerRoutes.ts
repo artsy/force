@@ -1,7 +1,7 @@
 import {
-  type AgentArtwork,
-  searchAgentArtworks,
-} from "Apps/Collect/Server/agentArtworkCatalog"
+  type AdvisorArtwork,
+  searchAdvisorArtworks,
+} from "Components/AdvisorAgent/advisorArtworkCatalog"
 import type {
   ArtsyRequest,
   ArtsyResponse,
@@ -12,7 +12,7 @@ const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 const MODEL = "claude-opus-4-8"
 const MAX_TOOL_STEPS = 8
 
-const SYSTEM_PROMPT = `You are an art advisor for Artsy. You help collectors discover artworks through conversation on the /collect page.
+const SYSTEM_PROMPT = `You are an art advisor for Artsy. You help collectors discover artworks through conversation.
 
 Tools:
 - search_artworks: find available works matching a collector's taste and budget. Always search before recommending — never invent artists, titles, or prices.
@@ -51,7 +51,7 @@ interface RunToolParams {
   name: string
 }
 
-const toDisplayArtwork = (artwork: AgentArtwork) => {
+const toDisplayArtwork = (artwork: AdvisorArtwork) => {
   return {
     id: artwork.id,
     title: artwork.title,
@@ -65,7 +65,7 @@ const toDisplayArtwork = (artwork: AgentArtwork) => {
 
 const runTool = async ({ name }: RunToolParams): Promise<string> => {
   if (name === "search_artworks") {
-    const results = searchAgentArtworks().map(toDisplayArtwork)
+    const results = searchAdvisorArtworks().map(toDisplayArtwork)
 
     return JSON.stringify(results)
   }
@@ -115,7 +115,7 @@ const extractReply = (message: AgentMessage): string => {
     .join("")
 }
 
-const collectAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
+const advisorAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
   const incomingMessages = req.body?.messages
 
   if (!Array.isArray(incomingMessages) || incomingMessages.length === 0) {
@@ -166,8 +166,8 @@ const collectAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
   }
 }
 
-const collectAgentServerRoutes = Router()
+const advisorAgentServerRoutes = Router()
 
-collectAgentServerRoutes.post("/api/collect-agent/chat", collectAgentChatPost)
+advisorAgentServerRoutes.post("/api/advisor-agent/chat", advisorAgentChatPost)
 
-export { collectAgentServerRoutes }
+export { advisorAgentServerRoutes }
