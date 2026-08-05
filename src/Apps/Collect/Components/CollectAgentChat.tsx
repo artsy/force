@@ -1,10 +1,6 @@
-import { Box, Button, Flex, Input, Select, Spacer, Text } from "@artsy/palette"
-import type { CollectAgentChatCreditCardsQuery } from "__generated__/CollectAgentChatCreditCardsQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { Box, Button, Flex, Input, Spacer, Text } from "@artsy/palette"
 import type * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { graphql } from "react-relay"
 
 interface TranscriptEntry {
   role: "you" | "advisor"
@@ -78,82 +74,6 @@ const safeParse = (value: string): unknown => {
   } catch {
     return null
   }
-}
-
-// A placed order, recovered from buy_artwork tool results so the confirmation
-// code the advisor prints can be linked to its order details page.
-interface OrderRef {
-  code: string
-  id: string
-}
-
-const collectOrders = (wireMessages: WireMessage[]): OrderRef[] => {
-  const byCode = new Map<string, OrderRef>()
-
-  wireMessages.forEach(message => {
-    if (!Array.isArray(message.content)) {
-      return
-    }
-
-    message.content.forEach((block: any) => {
-      if (block?.type !== "tool_result" || typeof block.content !== "string") {
-        return
-      }
-
-      const parsed = safeParse(block.content) as any
-
-      if (parsed?.order_code && parsed?.order_id) {
-        byCode.set(String(parsed.order_code), {
-          code: String(parsed.order_code),
-          id: String(parsed.order_id),
-        })
-      }
-    })
-  })
-
-  return Array.from(byCode.values())
-}
-
-const escapeRegExp = (value: string): string => {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-}
-
-// Render advisor text, turning any order confirmation code into a link to that
-// order's details page. Returns the raw string when there are no codes to link.
-const renderTextWithOrderLinks = (
-  text: string,
-  orders: OrderRef[],
-): React.ReactNode => {
-  const codeToId = new Map(orders.map(order => [order.code, order.id]))
-  const codes = orders.map(order => order.code).filter(Boolean)
-
-  if (codes.length === 0) {
-    return text
-  }
-
-  const pattern = new RegExp(`(${codes.map(escapeRegExp).join("|")})`, "g")
-
-  return text.split(pattern).map((part, index) => {
-    const orderId = codeToId.get(part)
-
-    if (!orderId) {
-      return part
-    }
-
-    return (
-      <a
-        key={index}
-        href={`/orders/${orderId}/details`}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ textDecoration: "none" }}
-      >
-        <Text as="span" variant="sm" color="blue100">
-          {part}
-        </Text>
-      </a>
-    )
-  })
 }
 
 const formatPriceUsd = (priceUsd: number): string => {
@@ -279,7 +199,6 @@ export const CollectAgentChat: React.FC = () => {
   const [draft, setDraft] = useState("")
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
   const [wireMessages, setWireMessages] = useState<WireMessage[]>([])
-  const [selectedCardId, setSelectedCardId] = useState<string | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const lastMessageRef = useRef<HTMLDivElement>(null)
 
@@ -303,15 +222,7 @@ export const CollectAgentChat: React.FC = () => {
     container.scrollTop += delta
   }, [transcript, isLoading])
 
-  const { data } = useClientQuery<CollectAgentChatCreditCardsQuery>({
-    query: CREDIT_CARDS_QUERY,
-    variables: {},
-  })
-
-  const cards = extractNodes(data?.me?.creditCards)
-  const activeCardId = selectedCardId ?? cards[0]?.internalID ?? null
   const searchedArtworks = collectSearchedArtworks(wireMessages)
-  const orders = collectOrders(wireMessages)
 
   const handleSend = async () => {
     const text = draft.trim()
@@ -333,10 +244,7 @@ export const CollectAgentChat: React.FC = () => {
       const response = await fetch("/api/collect-agent/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: nextWire,
-          creditCardId: activeCardId,
-        }),
+        body: JSON.stringify({ messages: nextWire }),
       })
 
       if (!response.ok) {
@@ -440,9 +348,7 @@ export const CollectAgentChat: React.FC = () => {
                   py={0.5}
                 >
                   <Text variant="sm" style={{ whiteSpace: "pre-wrap" }}>
-                    {isYou
-                      ? entry.text
-                      : renderTextWithOrderLinks(entry.text, orders)}
+                    {entry.text}
                   </Text>
                 </Box>
 
@@ -483,26 +389,6 @@ export const CollectAgentChat: React.FC = () => {
         ) : null}
       </Box>
 
-      {cards.length > 0 ? (
-        <Select
-          title="Pay with"
-          selected={activeCardId ?? undefined}
-          onSelect={value => setSelectedCardId(value)}
-          options={cards.map(card => {
-            return {
-              text: `${card.brand} •••• ${card.lastDigits}`,
-              value: card.internalID,
-            }
-          })}
-        />
-      ) : (
-        <Text variant="xs" color="mono60">
-          Sign in and add a card to purchase.
-        </Text>
-      )}
-
-      <Spacer y={1} />
-
       <Flex alignItems="center">
         <Box flex={1}>
           <Input
@@ -523,19 +409,3 @@ export const CollectAgentChat: React.FC = () => {
     </Box>
   )
 }
-
-const CREDIT_CARDS_QUERY = graphql`
-  query CollectAgentChatCreditCardsQuery {
-    me {
-      creditCards(first: 10) {
-        edges {
-          node {
-            internalID
-            brand
-            lastDigits
-          }
-        }
-      }
-    }
-  }
-`

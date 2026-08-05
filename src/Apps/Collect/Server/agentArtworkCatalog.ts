@@ -8,19 +8,12 @@ export interface AgentArtwork {
   link?: string
 }
 
-// ⚠️ DEMO DATA — replace each `id` with a REAL acquireable Gravity artwork ID,
-// and set `priceCents` near its real listed price. Exchange re-prices
-// server-side at purchase, so these prices are only for the agent's
-// discovery/display, not the authoritative charge amount.
+// ⚠️ DEMO DATA — replace each `id` with a REAL Gravity artwork ID, and set
+// `priceCents` near its real listed price. These prices are only for the
+// agent's discovery/display.
 //
 // `imageUrl` is a width-300 preview pulled from Metaphysics for each work, used
 // by the chat UI to show a thumbnail alongside a recommendation.
-//
-// Prices are arranged around the $5,000 confirmation threshold (AgenticBuy in
-// Exchange) and the SPT `max_amount` cap, so the demo can show all three beats:
-//   • under $5k → buys immediately
-//   • over $5k  → triggers confirmation_required
-//   • over cap  → declined by Stripe at the payment rail
 export const AGENT_ARTWORK_CATALOG: AgentArtwork[] = [
   {
     id: "nicolas-party-cats-head-2",
@@ -166,9 +159,8 @@ export const AGENT_ARTWORK_CATALOG: AgentArtwork[] = [
 ]
 
 // Demo behavior: ignore the query and return the catalog in a random order, so
-// results always come back and feel fresh. Every work stays reachable, which
-// keeps all three guardrail beats available regardless of how the collector
-// phrases the request.
+// results always come back and feel fresh. Every work stays reachable
+// regardless of how the collector phrases the request.
 export const searchAgentArtworks = (): AgentArtwork[] => {
   return [...AGENT_ARTWORK_CATALOG].sort(() => Math.random() - 0.5)
 }

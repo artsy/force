@@ -12,16 +12,14 @@ const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 const MODEL = "claude-opus-4-8"
 const MAX_TOOL_STEPS = 8
 
-const SYSTEM_PROMPT = `You are an art advisor for Artsy. You help collectors discover and acquire artworks through conversation on the /collect page.
+const SYSTEM_PROMPT = `You are an art advisor for Artsy. You help collectors discover artworks through conversation on the /collect page.
 
 Tools:
 - search_artworks: find available works matching a collector's taste and budget. Always search before recommending — never invent artists, titles, or prices.
-- buy_artwork: place an order for a specific work by its id.
 
 Rules:
-- State the exact title, artist, and price before any purchase. Prices are in USD.
-- buy_artwork may return "confirmation_required" for higher-value works — when it does, tell the collector the exact price and only call buy_artwork again with confirmed=true after they clearly agree.
-- If a purchase is "declined" (e.g. it exceeds a spending limit), explain plainly and suggest works within budget. Do not retry the same charge.
+- State the exact title, artist, and price for every work you recommend. Prices are in USD.
+- You cannot place orders. If a collector asks to buy a work, point them to its page on Artsy to complete the purchase there.
 - Be warm, knowledgeable, and concise — an advisor, not a catalog dump.
 - When you recommend a work, refer to it by its exact title so the interface can show its image preview and a link automatically. Do not paste image URLs or artwork links into your reply.
 - Reply in plain text. Do not use Markdown — no asterisks for bold, no "#" headings, no backticks, and no "-" or "*" bullet characters. Separate points with line breaks and blank lines instead.`
@@ -30,7 +28,7 @@ const TOOLS = [
   {
     name: "search_artworks",
     description:
-      "Search Artsy's available artworks. Call this whenever the collector wants to find or buy a work, before purchasing. Only use what this returns.",
+      "Search Artsy's available artworks. Call this whenever the collector wants to find a work, before recommending anything. Only use what this returns.",
     input_schema: {
       type: "object",
       properties: {
@@ -47,30 +45,10 @@ const TOOLS = [
       required: ["query"],
     },
   },
-  {
-    name: "buy_artwork",
-    description:
-      "Purchase an artwork by its id on the collector's behalf. If the result is confirmation_required, tell the collector the exact price and only call again with confirmed=true after they clearly agree.",
-    input_schema: {
-      type: "object",
-      properties: {
-        artwork_id: { type: "string" },
-        confirmed: {
-          type: "boolean",
-          description:
-            "true only after the collector explicitly approves the price",
-        },
-      },
-      required: ["artwork_id"],
-    },
-  },
 ]
 
 interface RunToolParams {
   name: string
-  input: any
-  accessToken?: string
-  creditCardId?: string
 }
 
 const toDisplayArtwork = (artwork: AgentArtwork) => {
@@ -85,49 +63,11 @@ const toDisplayArtwork = (artwork: AgentArtwork) => {
   }
 }
 
-const runTool = async ({
-  name,
-  input,
-  accessToken,
-  creditCardId,
-}: RunToolParams): Promise<string> => {
+const runTool = async ({ name }: RunToolParams): Promise<string> => {
   if (name === "search_artworks") {
     const results = searchAgentArtworks().map(toDisplayArtwork)
 
     return JSON.stringify(results)
-  }
-
-  if (name === "buy_artwork") {
-    if (!accessToken) {
-      return JSON.stringify({
-        status: "error",
-        message: "The collector must be signed in to purchase.",
-      })
-    }
-
-    if (!creditCardId) {
-      return JSON.stringify({
-        status: "error",
-        message: "The collector must choose a card to pay with.",
-      })
-    }
-
-    const exchangeUrl = process.env.EXCHANGE_APP_URL ?? "http://localhost:3000"
-
-    const response = await fetch(`${exchangeUrl}/api/agentic_orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        artwork_id: input.artwork_id,
-        confirmed: input.confirmed ?? false,
-        credit_card_id: creditCardId,
-      }),
-    })
-
-    return JSON.stringify(await response.json())
   }
 
   return JSON.stringify({ status: "error", message: `Unknown tool ${name}` })
@@ -188,11 +128,6 @@ const collectAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
     return
   }
 
-  // The logged-in collector's token — the agent purchases as this user.
-  // const accessToken = (req.user as any)?.accessToken
-  const accessToken = "<replace>"
-
-  const creditCardId = req.body?.creditCardId
   const messages: AgentMessage[] = [...incomingMessages]
 
   try {
@@ -211,12 +146,7 @@ const collectAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
         response.content
           .filter((block: any) => block.type === "tool_use")
           .map(async (block: any) => {
-            const output = await runTool({
-              name: block.name,
-              input: block.input,
-              accessToken,
-              creditCardId,
-            })
+            const output = await runTool({ name: block.name })
 
             return {
               type: "tool_result",
