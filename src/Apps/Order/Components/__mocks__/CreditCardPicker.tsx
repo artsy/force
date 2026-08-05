@@ -45,6 +45,13 @@ export const useThrownError = () => {
   )
 }
 
+export const useAnotherCreditCard = (creditCardId: string) => {
+  CreditCardPickerMock.getCreditCardId.mockResolvedValue({
+    type: "success",
+    creditCardId,
+  })
+}
+
 const CreditCardPickerMock = {
   getCreditCardId: jest.fn(
     () => Promise.resolve(goodResult) as Promise<CreditCardIdResult>,
@@ -56,7 +63,19 @@ beforeEach(() => {
   useGoodResult()
 })
 
-export const CreditCardPickerFragmentContainer = ({ innerRef }) => {
+export const CreditCardPickerFragmentContainer = ({
+  innerRef,
+  onCreditCardChange,
+}) => {
   innerRef.current = CreditCardPickerMock
-  return createElement("div")
+
+  // Stands in for selecting a different card in the real picker
+  return createElement(
+    "div",
+    {
+      "data-testid": "select-another-credit-card",
+      onClick: onCreditCardChange,
+    },
+    null,
+  )
 }
