@@ -4,7 +4,7 @@
 
 Conversations currently refresh via polling (`useRefetchLatestMessagesPoll`, every 20s while the tab is visible). This adds a websocket path so new messages and conversation-list updates arrive immediately, following the pattern already shipped in [Volt (PR #11808)](https://github.com/artsy/volt/pull/11808) and [Eigen (PR #13833)](https://github.com/artsy/eigen/pull/13833).
 
-Feature flag: `amber_conversations-force-websocket` (client-side unleash, distinct from Volt's server-gated `amber_conversations-websocket`).
+Feature flag: `amber_conversations-force--websocket` (client-side unleash, distinct from Volt's server-gated `amber_conversations-websocket`).
 
 ## Background: how Volt and Eigen did this
 
@@ -76,7 +76,7 @@ Making the shared context support multiple keyed channels and a user-token auth 
 
 **`ConversationMessages.tsx`** (thread): `useConversationsWebsocket({ subscriptionKey: `conversation:${conversation.internalID}`, enabled: isWebsocketEnabled, onEvent: (event) => { if (event.conversation_id !== conversation.internalID) return; refetchMessages({ showPreloader: false }) } })`. Reuses the existing `refetchMessages` function (`relay.refetchConnection`), same scroll-position-aware behavior the poll uses at `ConversationMessages.tsx:114`.
 
-Both call sites read `isWebsocketEnabled = useFlag("amber_conversations-force-websocket")` and pass it to their existing `useRefetchLatestMessagesPoll({ clearWhen: isWebsocketEnabled, ... })` call, unchanged otherwise. When the flag is off, or the socket fails to connect, polling keeps running exactly as it does today — a zero-risk fallback.
+Both call sites read `isWebsocketEnabled = useFlag("amber_conversations-force--websocket")` and pass it to their existing `useRefetchLatestMessagesPoll({ clearWhen: isWebsocketEnabled, ... })` call, unchanged otherwise. When the flag is off, or the socket fails to connect, polling keeps running exactly as it does today — a zero-risk fallback.
 
 ## Error handling
 
