@@ -71,7 +71,7 @@ export const ConversationMessages: FC<
     autoScrollToBottomRef,
   })
 
-  const isWebsocketEnabled = useFlag("amber_conversations-force--websocket")
+  const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
 
   useConversationsWebsocket({
     subscriptionKey: `conversation:${conversation.internalID}`,
