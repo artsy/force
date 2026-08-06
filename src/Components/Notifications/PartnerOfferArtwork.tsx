@@ -11,6 +11,8 @@ import type { PartnerOfferArtwork_artwork$key } from "__generated__/PartnerOffer
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
 
+const MAX_IMAGE_HEIGHT = "35vh"
+
 interface PartnerOfferArtworkProps {
   artwork: PartnerOfferArtwork_artwork$key
   targetHref: string
@@ -41,6 +43,8 @@ export const PartnerOfferArtwork: FC<
   const artwork = useFragment(partnerOfferArtworkFragment, artworkProp)
   const priceListed = artwork.price || "Not publicly listed"
   const image = resized(artwork?.image?.src ?? "", { width: CARD_MAX_WIDTH })
+  const imageWidth = artwork.image?.width ?? 1
+  const imageHeight = artwork.image?.height ?? 1
   const label =
     (artwork.title ?? "Artwork") +
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
@@ -75,12 +79,12 @@ export const PartnerOfferArtwork: FC<
       >
         <Box
           width="100%"
+          mx="auto"
+          overflow="hidden"
           style={{
-            aspectRatio: `${artwork.image?.width ?? 1} / ${
-              artwork.image?.height ?? 1
-            }`,
+            aspectRatio: `${imageWidth} / ${imageHeight}`,
+            maxWidth: `calc(${MAX_IMAGE_HEIGHT} * ${imageWidth} / ${imageHeight})`,
           }}
-          maxHeight={"35vh"}
         >
           <Link href={fullyAvailable ? artworkListingHref : href}>
             <Image
