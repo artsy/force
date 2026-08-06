@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks"
+import { waitFor } from "@testing-library/react"
 import {
   ConversationsWebsocketProvider,
   useCable,
@@ -35,30 +36,48 @@ describe("ConversationsWebsocketProvider", () => {
     })
   })
 
-  it("creates exactly one consumer even when multiple hooks read the cable", () => {
-    const { result: resultA } = renderHook(() => useCable(), {
-      wrapper: ConversationsWebsocketProvider,
-    })
-    const { result: resultB } = renderHook(() => useCable(), {
-      wrapper: ConversationsWebsocketProvider,
+  it("creates exactly one consumer when multiple hooks read the cable from the same provider", async () => {
+    const MultiConsumerWrapper = () => {
+      const cableA = useCable()
+      const cableB = useCable()
+      return (
+        <div>
+          <span data-testid="cable-a">{String(cableA.cable !== null)}</span>
+          <span data-testid="cable-b">{String(cableB.cable !== null)}</span>
+          <span data-testid="same-cable">
+            {String(cableA.cable === cableB.cable)}
+          </span>
+        </div>
+      )
+    }
+
+    const { result } = renderHook(() => useCable(), {
+      wrapper: ({ children }) => (
+        <ConversationsWebsocketProvider>
+          <MultiConsumerWrapper />
+          {children}
+        </ConversationsWebsocketProvider>
+      ),
     })
 
-    expect(resultA.current.cable).not.toBeNull()
-    expect(resultB.current.cable).not.toBeNull()
-    // Each renderHook mounts its own provider instance in this test, so this
-    // asserts intra-provider memoization: re-rendering the same provider
-    // does not re-create the consumer.
-    expect(mockCreateConsumer).toHaveBeenCalledTimes(2)
+    await waitFor(() => {
+      expect(result.current.cable).not.toBeNull()
+    })
+
+    expect(mockCreateConsumer).toHaveBeenCalledTimes(1)
   })
 
-  it("returns a null cable when the user has no access token", () => {
+  it("returns a null cable when the user has no access token", async () => {
     mockUseSystemContext.mockReturnValue({ user: null })
 
     const { result } = renderHook(() => useCable(), {
       wrapper: ConversationsWebsocketProvider,
     })
 
-    expect(result.current.cable).toBeNull()
+    await waitFor(() => {
+      expect(result.current.cable).toBeNull()
+    })
+
     expect(mockCreateConsumer).not.toHaveBeenCalled()
   })
 })

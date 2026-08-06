@@ -1,6 +1,13 @@
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { getENV } from "Utils/getENV"
-import { createContext, useContext, useRef } from "react"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 
 interface Subscription {
   unsubscribe: () => void
@@ -55,31 +62,25 @@ export const ConversationsWebsocketProvider: React.FC<
   React.PropsWithChildren<{}>
 > = ({ children }) => {
   const { user } = useSystemContext()
-  const cableRef = useRef<ActionCableConsumer | null>(null)
+  const [cable, setCable] = useState<ActionCableConsumer | null>(null)
   const channelsHolderRef = useRef<ChannelsHolder>(createChannelsHolder())
 
-  const getCable = (): ActionCableConsumer | null => {
+  useEffect(() => {
     if (!user?.accessToken) {
-      return null
+      return
     }
 
-    if (!cableRef.current) {
-      const ActionCable = require("actioncable")
-      cableRef.current = ActionCable.createConsumer(
-        getENV("GRAVITY_WEBSOCKET_URL"),
-      )
-    }
+    const ActionCable = require("actioncable")
+    setCable(ActionCable.createConsumer(getENV("GRAVITY_WEBSOCKET_URL")))
+  }, [user?.accessToken])
 
-    return cableRef.current
-  }
+  const value = useMemo(
+    () => ({ cable, channelsHolder: channelsHolderRef.current }),
+    [cable],
+  )
 
   return (
-    <ConversationsWebsocketContext.Provider
-      value={{
-        cable: getCable(),
-        channelsHolder: channelsHolderRef.current,
-      }}
-    >
+    <ConversationsWebsocketContext.Provider value={value}>
       {children}
     </ConversationsWebsocketContext.Provider>
   )
