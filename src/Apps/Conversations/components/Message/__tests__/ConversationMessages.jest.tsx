@@ -55,6 +55,13 @@ describe("ConversationMessages", () => {
     },
   )
 
+  // The "Latest Messages" text sits in an inner div that doesn't carry the
+  // opacity styling itself (opacity doesn't inherit into computed style), so
+  // assertions on visibility need the actual <button>.
+  const getLatestMessagesButton = () => {
+    return screen.getByText("Latest Messages").closest("button") as HTMLElement
+  }
+
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetENV.mockImplementation(
@@ -206,6 +213,8 @@ describe("ConversationMessages", () => {
   })
 
   it("calls refetch when clicking the latest messages button", () => {
+    jest.useFakeTimers()
+
     const { env } = renderWithRelay({
       MessageConnection: () => ({
         edges: [
@@ -216,9 +225,18 @@ describe("ConversationMessages", () => {
       }),
     })
 
+    // Genuine scroll-away, past the initial layout settling window (see the
+    // "initial layout settling window" tests below for the false-positive
+    // case this window guards against).
+    act(() => {
+      jest.advanceTimersByTime(500)
+    })
+
     const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
     act(() => intersect(bottomSentinel, true))
     act(() => intersect(bottomSentinel, false))
+
+    jest.useRealTimers()
 
     fireEvent.click(screen.getByText("Latest Messages"))
 
@@ -294,6 +312,133 @@ describe("ConversationMessages", () => {
           screen.getByText("This is the second message"),
         ).toBeInTheDocument()
       })
+    })
+  })
+
+  describe("initial layout settling window", () => {
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+
+    const threeMessages = {
+      MessageConnection: () => ({
+        edges: [
+          { node: { createdAt: "2022-12-25T21:03:20+00:00" } },
+          { node: { createdAt: subDays(new Date(), 1).toISOString() } },
+          { node: { createdAt: new Date().toISOString() } },
+        ],
+      }),
+    }
+
+    it("does not show the latest messages flyout when the bottom sentinel exits view right after mount", () => {
+      jest.useFakeTimers()
+
+      renderWithRelay(threeMessages)
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+
+      // Simulate the false-positive: layout is still settling (e.g. the
+      // partner offer CTA growing below us), so the sentinel reports an
+      // "exit" even though the user never scrolled.
+      act(() => intersect(bottomSentinel, false))
+
+      expect(getLatestMessagesButton()).toHaveStyle({ opacity: 0 })
+    })
+
+    it("shows the latest messages flyout when the bottom sentinel genuinely exits view after the settling window elapses", () => {
+      jest.useFakeTimers()
+
+      renderWithRelay(threeMessages)
+
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+      act(() => intersect(bottomSentinel, false))
+
+      expect(getLatestMessagesButton()).toHaveStyle({ opacity: 1 })
+    })
+
+    it("re-pins the view to the bottom when the message list's own height shrinks during the settling window", () => {
+      jest.useFakeTimers()
+
+      let resizeCallback: (() => void) | undefined
+
+      class MockResizeObserver {
+        constructor(callback: () => void) {
+          resizeCallback = callback
+        }
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      }
+
+      // @ts-ignore - jsdom doesn't implement ResizeObserver
+      global.ResizeObserver = MockResizeObserver
+
+      renderWithRelay(threeMessages)
+
+      // Flush the scroll-to-bottom-on-mount effects so only the
+      // resize-triggered call below is attributed to the assertion.
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+      scrollIntoViewMock.mockClear()
+
+      act(() => {
+        resizeCallback?.()
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+
+      expect(scrollIntoViewMock).toHaveBeenCalledWith(
+        expect.objectContaining({ behavior: "instant", block: "end" }),
+      )
+
+      // @ts-ignore
+      delete global.ResizeObserver
+    })
+
+    it("does not re-pin the view once the settling window has elapsed", () => {
+      jest.useFakeTimers()
+
+      let resizeCallback: (() => void) | undefined
+
+      class MockResizeObserver {
+        constructor(callback: () => void) {
+          resizeCallback = callback
+        }
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      }
+
+      // @ts-ignore - jsdom doesn't implement ResizeObserver
+      global.ResizeObserver = MockResizeObserver
+
+      renderWithRelay(threeMessages)
+
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      scrollIntoViewMock.mockClear()
+
+      act(() => {
+        resizeCallback?.()
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+
+      expect(scrollIntoViewMock).not.toHaveBeenCalled()
+
+      // @ts-ignore
+      delete global.ResizeObserver
     })
   })
 
