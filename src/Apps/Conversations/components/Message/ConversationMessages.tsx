@@ -85,6 +85,7 @@ export const ConversationMessages: FC<
   const { triggerAutoScroll } = useAutoScrollToBottom({
     messages,
     autoScrollToBottomRef,
+    showLatestMessagesFlyOut,
   })
 
   useEffect(() => {
@@ -156,7 +157,16 @@ export const ConversationMessages: FC<
         return
       }
 
-      refreshLatestMessages()
+      // Unlike the poll (below), the websocket only refetches once per
+      // genuine new message, so we call refetchMessages directly rather
+      // than going through refreshLatestMessages — this bypasses its
+      // showLatestMessagesFlyOut early-return, keeping the thread fresh
+      // even while the user is scrolled away reading history. This is
+      // safe because useAutoScrollToBottom won't force-scroll while
+      // showLatestMessagesFlyOut is true.
+      refetchMessages({
+        showPreloader: false,
+      })
     },
   })
 
@@ -475,11 +485,13 @@ export const ConversationMessagesPaginationContainer =
 interface UseAutoScrollToBottomProps {
   messages: any[]
   autoScrollToBottomRef: any
+  showLatestMessagesFlyOut: boolean
 }
 
 const useAutoScrollToBottom = ({
   messages,
   autoScrollToBottomRef,
+  showLatestMessagesFlyOut,
 }: UseAutoScrollToBottomProps) => {
   const lastMessageId = messages.length > 0 ? messages[0].internalID : null
 
@@ -496,15 +508,18 @@ const useAutoScrollToBottom = ({
     [autoScrollToBottomRef],
   )
 
+  // Only auto-scroll on a new message when the user hasn't scrolled away —
+  // otherwise a refetch triggered while reading older history (e.g. via the
+  // websocket path) would yank their scroll position back to the bottom.
   useEffect(() => {
-    if (lastMessageId) {
+    if (lastMessageId && !showLatestMessagesFlyOut) {
       triggerAutoScroll({
         behavior: "instant",
         block: "end",
         inline: "end",
       })
     }
-  }, [lastMessageId, triggerAutoScroll])
+  }, [lastMessageId, triggerAutoScroll, showLatestMessagesFlyOut])
 
   // Additional effect to ensure initial scroll after component mount
   // biome-ignore lint/correctness/useExhaustiveDependencies:

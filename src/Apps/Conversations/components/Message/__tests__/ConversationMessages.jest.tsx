@@ -593,6 +593,85 @@ describe("ConversationMessages", () => {
       )
     })
 
+    it("refetches messages via websocket even when the user is scrolled away from the bottom", () => {
+      mockUseFlag.mockReturnValue(true)
+      jest.useFakeTimers()
+
+      const { env } = renderWithRelay(oneMessage)
+
+      // Past the initial layout settling window, then a genuine scroll-away.
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+      act(() => intersect(bottomSentinel, true))
+      act(() => intersect(bottomSentinel, false))
+
+      // Grab the most recent registration, not calls[0] — the onEvent
+      // closure captures showLatestMessagesFlyOut at render time, and we
+      // need the version from after the sentinel toggled it to true.
+      const { onEvent } =
+        mockUseConversationsWebsocket.mock.calls[
+          mockUseConversationsWebsocket.mock.calls.length - 1
+        ][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      jest.useRealTimers()
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).toContain("ConversationMessagesPaginationQuery")
+    })
+
+    it("does not scroll when a websocket-triggered refetch happens while scrolled away", () => {
+      mockUseFlag.mockReturnValue(true)
+      jest.useFakeTimers()
+
+      renderWithRelay(oneMessage)
+
+      // Past the initial layout settling window, then a genuine scroll-away.
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+      act(() => intersect(bottomSentinel, true))
+      act(() => intersect(bottomSentinel, false))
+
+      scrollIntoViewMock.mockClear()
+
+      const { onEvent } =
+        mockUseConversationsWebsocket.mock.calls[
+          mockUseConversationsWebsocket.mock.calls.length - 1
+        ][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+
+      jest.useRealTimers()
+
+      expect(scrollIntoViewMock).not.toHaveBeenCalled()
+    })
+
     it("clears polling when the websocket flag is on", () => {
       mockUseFlag.mockReturnValue(true)
 
