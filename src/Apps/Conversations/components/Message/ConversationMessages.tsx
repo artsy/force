@@ -77,6 +77,7 @@ export const ConversationMessages: FC<
   const isAutoRefreshEnabled = !!getENV(
     "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
   )
+
   const isTabVisible = useTabVisible()
 
   const refreshLatestMessages = () => {
@@ -91,13 +92,15 @@ export const ConversationMessages: FC<
     })
   }
 
-  const { isSubscribed } = useConversationsWebsocket({
+  useConversationsWebsocket({
     subscriptionKey: `conversation:${conversation.internalID}`,
     enabled: isWebsocketEnabled && isAutoRefreshEnabled,
     onEvent: event => {
       if (event.type !== "message.sent") {
         return
       }
+
+      console.log({ event, conversation })
 
       if (event.conversation_id !== conversation.internalID) {
         return
@@ -111,9 +114,9 @@ export const ConversationMessages: FC<
     },
   })
 
-  // Refetch messages in the background, unless we have a live subscription
+  // Refetch messages in the background, unless the websocket is enabled
   useRefetchLatestMessagesPoll({
-    clearWhen: showLatestMessagesFlyOut || isSubscribed,
+    clearWhen: showLatestMessagesFlyOut || isWebsocketEnabled,
     onRefetch: refreshLatestMessages,
   })
 

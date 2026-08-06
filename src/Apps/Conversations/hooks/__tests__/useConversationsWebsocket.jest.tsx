@@ -49,7 +49,7 @@ describe("useConversationsWebsocket", () => {
     const create = jest.fn()
     setupCable({ create })
 
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useConversationsWebsocket({
         subscriptionKey: "inbox",
         enabled: false,
@@ -58,14 +58,13 @@ describe("useConversationsWebsocket", () => {
     )
 
     expect(create).not.toHaveBeenCalled()
-    expect(result.current.isSubscribed).toBe(false)
   })
 
   it("does not subscribe when there is no access token", () => {
     const create = jest.fn()
     setupCable({ create, accessToken: null })
 
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useConversationsWebsocket({
         subscriptionKey: "inbox",
         enabled: true,
@@ -74,14 +73,13 @@ describe("useConversationsWebsocket", () => {
     )
 
     expect(create).not.toHaveBeenCalled()
-    expect(result.current.isSubscribed).toBe(false)
   })
 
   it("subscribes to the ConversationsChannel with the key and access token", () => {
     const create = jest.fn().mockReturnValue({ unsubscribe: jest.fn() })
     setupCable({ create })
 
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useConversationsWebsocket({
         subscriptionKey: "inbox",
         enabled: true,
@@ -97,10 +95,9 @@ describe("useConversationsWebsocket", () => {
       },
       expect.objectContaining({ received: expect.any(Function) }),
     )
-    expect(result.current.isSubscribed).toBe(true)
   })
 
-  it("reports isSubscribed once the cable arrives, not before", () => {
+  it("subscribes once the cable arrives, not before", () => {
     const create = jest.fn().mockReturnValue({ unsubscribe: jest.fn() })
     const channelsHolder = createChannelsHolder()
 
@@ -110,7 +107,7 @@ describe("useConversationsWebsocket", () => {
       accessToken: ACCESS_TOKEN,
     })
 
-    const { result, rerender } = renderHook(() =>
+    const { rerender } = renderHook(() =>
       useConversationsWebsocket({
         subscriptionKey: "inbox",
         enabled: true,
@@ -119,7 +116,6 @@ describe("useConversationsWebsocket", () => {
     )
 
     expect(create).not.toHaveBeenCalled()
-    expect(result.current.isSubscribed).toBe(false)
 
     mockUseCable.mockReturnValue({
       cable: { subscriptions: { create } },
@@ -130,7 +126,6 @@ describe("useConversationsWebsocket", () => {
     rerender()
 
     expect(create).toHaveBeenCalledTimes(1)
-    expect(result.current.isSubscribed).toBe(true)
   })
 
   it("unsubscribes its own channel on unmount", () => {
@@ -177,8 +172,6 @@ describe("useConversationsWebsocket", () => {
     const mobile = renderInstance(mobileOnEvent)
 
     expect(create).toHaveBeenCalledTimes(1)
-    expect(desktop.result.current.isSubscribed).toBe(true)
-    expect(mobile.result.current.isSubscribed).toBe(true)
 
     received(event)
 

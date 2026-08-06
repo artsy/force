@@ -55,9 +55,6 @@ describe("ConversationDetails", () => {
       key => key === "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
     )
     mockUseTabVisible.mockReturnValue(true)
-    ;(useConversationsWebsocket as jest.Mock).mockReturnValue({
-      isSubscribed: false,
-    })
   })
 
   it("renders", () => {
@@ -207,25 +204,23 @@ describe("ConversationDetails", () => {
       expect(env.mock.getAllOperations().length).toBe(operationCountBefore)
     })
 
-    it("keeps polling while the websocket is enabled but not yet subscribed", () => {
+    it("clears polling when the websocket flag is on", () => {
       mockUseFlag.mockReturnValue(true)
-      mockUseConversationsWebsocket.mockReturnValue({ isSubscribed: false })
-
-      renderWithRelay(oneConversation)
-
-      expect(mockUseRefetchLatestMessagesPoll).toHaveBeenCalledWith(
-        expect.objectContaining({ clearWhen: false }),
-      )
-    })
-
-    it("stops polling once the subscription is live", () => {
-      mockUseFlag.mockReturnValue(true)
-      mockUseConversationsWebsocket.mockReturnValue({ isSubscribed: true })
 
       renderWithRelay(oneConversation)
 
       expect(mockUseRefetchLatestMessagesPoll).toHaveBeenCalledWith(
         expect.objectContaining({ clearWhen: true }),
+      )
+    })
+
+    it("keeps polling when the websocket flag is off", () => {
+      mockUseFlag.mockReturnValue(false)
+
+      renderWithRelay(oneConversation)
+
+      expect(mockUseRefetchLatestMessagesPoll).toHaveBeenCalledWith(
+        expect.objectContaining({ clearWhen: false }),
       )
     })
   })

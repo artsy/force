@@ -103,7 +103,7 @@ export const ConversationsSidebar: React.FC<
     )
   }
 
-  const { isSubscribed } = useConversationsWebsocket({
+  useConversationsWebsocket({
     subscriptionKey: "inbox",
     enabled: isWebsocketEnabled && isAutoRefreshEnabled,
     onEvent: event => {
@@ -120,10 +120,10 @@ export const ConversationsSidebar: React.FC<
   })
 
   // Refetch messages in the background, but only when a user has scrolled to
-  // the top of the convo list, and only while we have no live subscription.
+  // the top of the convo list, and only while the websocket is disabled.
   useRefetchLatestMessagesPoll({
     intervalTime: 10000,
-    clearWhen: !enableSilentSidebarRefetch || isSubscribed,
+    clearWhen: !enableSilentSidebarRefetch || isWebsocketEnabled,
     onRefetch: refetchSidebar,
   })
 
