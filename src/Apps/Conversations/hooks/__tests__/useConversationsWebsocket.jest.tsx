@@ -1,32 +1,55 @@
 import { renderHook } from "@testing-library/react-hooks"
-import { useCable } from "Apps/Conversations/context/ConversationsWebsocketContext"
+import {
+  createChannelsHolder,
+  useCable,
+} from "Apps/Conversations/context/ConversationsWebsocketContext"
 import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 
-jest.mock("Apps/Conversations/context/ConversationsWebsocketContext")
+jest.mock("Apps/Conversations/context/ConversationsWebsocketContext", () => {
+  const actual = jest.requireActual(
+    "Apps/Conversations/context/ConversationsWebsocketContext",
+  )
+
+  return { ...actual, useCable: jest.fn() }
+})
 
 const mockUseCable = useCable as jest.Mock
 
-const makeChannelsHolder = () => {
-  const channels = new Map()
-  return {
-    setChannel: jest.fn((key, subscription) => {
-      channels.set(key, subscription)
-      return subscription
-    }),
-    getChannel: jest.fn(key => channels.get(key)),
-    removeChannel: jest.fn(key => channels.delete(key)),
-  }
+const ACCESS_TOKEN = "test-token"
+
+const event = {
+  type: "message.sent" as const,
+  conversation_id: "conv-1",
+  message_id: "msg-1",
+  created_at: "2026-08-06T00:00:00Z",
 }
 
 describe("useConversationsWebsocket", () => {
+  const setupCable = ({
+    create,
+    accessToken = ACCESS_TOKEN,
+    cable = { subscriptions: { create } },
+    channelsHolder = createChannelsHolder(),
+  }: {
+    create: jest.Mock
+    accessToken?: string | null
+    cable?: unknown
+    channelsHolder?: ReturnType<typeof createChannelsHolder>
+  }) => {
+    mockUseCable.mockReturnValue({ cable, channelsHolder, accessToken })
+
+    return { channelsHolder }
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it("does not subscribe when disabled", () => {
     const create = jest.fn()
-    mockUseCable.mockReturnValue({
-      cable: { subscriptions: { create } },
-      channelsHolder: makeChannelsHolder(),
-    })
+    setupCable({ create })
 
-    renderHook(() =>
+    const { result } = renderHook(() =>
       useConversationsWebsocket({
         subscriptionKey: "inbox",
         enabled: false,
@@ -35,16 +58,30 @@ describe("useConversationsWebsocket", () => {
     )
 
     expect(create).not.toHaveBeenCalled()
+    expect(result.current.isSubscribed).toBe(false)
   })
 
-  it("subscribes to the ConversationsChannel with the given key when enabled", () => {
-    const create = jest.fn().mockReturnValue({ unsubscribe: jest.fn() })
-    mockUseCable.mockReturnValue({
-      cable: { subscriptions: { create } },
-      channelsHolder: makeChannelsHolder(),
-    })
+  it("does not subscribe when there is no access token", () => {
+    const create = jest.fn()
+    setupCable({ create, accessToken: null })
 
-    renderHook(() =>
+    const { result } = renderHook(() =>
+      useConversationsWebsocket({
+        subscriptionKey: "inbox",
+        enabled: true,
+        onEvent: jest.fn(),
+      }),
+    )
+
+    expect(create).not.toHaveBeenCalled()
+    expect(result.current.isSubscribed).toBe(false)
+  })
+
+  it("subscribes to the ConversationsChannel with the key and access token", () => {
+    const create = jest.fn().mockReturnValue({ unsubscribe: jest.fn() })
+    setupCable({ create })
+
+    const { result } = renderHook(() =>
       useConversationsWebsocket({
         subscriptionKey: "inbox",
         enabled: true,
@@ -53,18 +90,53 @@ describe("useConversationsWebsocket", () => {
     )
 
     expect(create).toHaveBeenCalledWith(
-      { channel: "ConversationsChannel", key: "inbox" },
+      {
+        channel: "ConversationsChannel",
+        key: "inbox",
+        access_token: ACCESS_TOKEN,
+      },
       expect.objectContaining({ received: expect.any(Function) }),
     )
+    expect(result.current.isSubscribed).toBe(true)
+  })
+
+  it("reports isSubscribed once the cable arrives, not before", () => {
+    const create = jest.fn().mockReturnValue({ unsubscribe: jest.fn() })
+    const channelsHolder = createChannelsHolder()
+
+    mockUseCable.mockReturnValue({
+      cable: null,
+      channelsHolder,
+      accessToken: ACCESS_TOKEN,
+    })
+
+    const { result, rerender } = renderHook(() =>
+      useConversationsWebsocket({
+        subscriptionKey: "inbox",
+        enabled: true,
+        onEvent: jest.fn(),
+      }),
+    )
+
+    expect(create).not.toHaveBeenCalled()
+    expect(result.current.isSubscribed).toBe(false)
+
+    mockUseCable.mockReturnValue({
+      cable: { subscriptions: { create } },
+      channelsHolder,
+      accessToken: ACCESS_TOKEN,
+    })
+
+    rerender()
+
+    expect(create).toHaveBeenCalledTimes(1)
+    expect(result.current.isSubscribed).toBe(true)
   })
 
   it("unsubscribes its own channel on unmount", () => {
     const unsubscribe = jest.fn()
     const create = jest.fn().mockReturnValue({ unsubscribe })
-    mockUseCable.mockReturnValue({
-      cable: { subscriptions: { create } },
-      channelsHolder: makeChannelsHolder(),
-    })
+    setupCable({ create })
 
     const { unmount } = renderHook(() =>
       useConversationsWebsocket({
@@ -79,39 +151,64 @@ describe("useConversationsWebsocket", () => {
     expect(unsubscribe).toHaveBeenCalledTimes(1)
   })
 
-  it("does not create a duplicate subscription for a key that already has one", () => {
-    const create = jest.fn().mockReturnValue({ unsubscribe: jest.fn() })
-    const channelsHolder = makeChannelsHolder()
-    mockUseCable.mockReturnValue({
-      cable: { subscriptions: { create } },
-      channelsHolder,
+  it("shares one physical subscription across two instances of the same key, and delivers events to both", () => {
+    let received: (payload: unknown) => void = () => {}
+    const unsubscribe = jest.fn()
+    const create = jest.fn((_channelInfo, callbacks) => {
+      received = callbacks.received
+      return { unsubscribe }
     })
+    const { channelsHolder } = setupCable({ create })
 
-    const { rerender } = renderHook(
-      ({ subscriptionKey }) =>
+    const desktopOnEvent = jest.fn()
+    const mobileOnEvent = jest.fn()
+
+    const renderInstance = (onEvent: jest.Mock) => {
+      return renderHook(() =>
         useConversationsWebsocket({
-          subscriptionKey,
+          subscriptionKey: "inbox",
           enabled: true,
-          onEvent: jest.fn(),
+          onEvent,
         }),
-      { initialProps: { subscriptionKey: "inbox" } },
-    )
+      )
+    }
 
-    rerender({ subscriptionKey: "inbox" })
+    const desktop = renderInstance(desktopOnEvent)
+    const mobile = renderInstance(mobileOnEvent)
 
     expect(create).toHaveBeenCalledTimes(1)
+    expect(desktop.result.current.isSubscribed).toBe(true)
+    expect(mobile.result.current.isSubscribed).toBe(true)
+
+    received(event)
+
+    expect(desktopOnEvent).toHaveBeenCalledWith(event)
+    expect(mobileOnEvent).toHaveBeenCalledWith(event)
+
+    // The physical subscription survives until the last listener goes away
+    desktop.unmount()
+
+    expect(unsubscribe).not.toHaveBeenCalled()
+    expect(channelsHolder.hasSubscription("conversations:inbox")).toBe(true)
+
+    received(event)
+
+    expect(desktopOnEvent).toHaveBeenCalledTimes(1)
+    expect(mobileOnEvent).toHaveBeenCalledTimes(2)
+
+    mobile.unmount()
+
+    expect(unsubscribe).toHaveBeenCalledTimes(1)
+    expect(channelsHolder.hasSubscription("conversations:inbox")).toBe(false)
   })
 
   it("always invokes the latest onEvent callback, even after a re-render changed it", () => {
-    let receivedCallback: (event: unknown) => void = () => {}
+    let received: (payload: unknown) => void = () => {}
     const create = jest.fn((_channelInfo, callbacks) => {
-      receivedCallback = callbacks.received
+      received = callbacks.received
       return { unsubscribe: jest.fn() }
     })
-    mockUseCable.mockReturnValue({
-      cable: { subscriptions: { create } },
-      channelsHolder: makeChannelsHolder(),
-    })
+    setupCable({ create })
 
     const firstOnEvent = jest.fn()
     const secondOnEvent = jest.fn()
@@ -128,13 +225,7 @@ describe("useConversationsWebsocket", () => {
 
     rerender({ onEvent: secondOnEvent })
 
-    const event = {
-      type: "message.sent" as const,
-      conversation_id: "conv-1",
-      message_id: "msg-1",
-      created_at: "2026-08-06T00:00:00Z",
-    }
-    receivedCallback(event)
+    received(event)
 
     expect(firstOnEvent).not.toHaveBeenCalled()
     expect(secondOnEvent).toHaveBeenCalledWith(event)

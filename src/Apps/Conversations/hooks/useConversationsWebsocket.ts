@@ -1,5 +1,5 @@
 import { useCable } from "Apps/Conversations/context/ConversationsWebsocketContext"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export interface ConversationMessageSentEvent {
   type: "message.sent"
@@ -14,41 +14,60 @@ interface UseConversationsWebsocketProps {
   onEvent: (event: ConversationMessageSentEvent) => void
 }
 
+interface UseConversationsWebsocketResult {
+  /**
+   * True once this caller has a live listener on the channel. Callers use it to
+   * decide whether their polling fallback can stand down: the flag being on is
+   * not enough, since the cable is created asynchronously and may never connect.
+   */
+  isSubscribed: boolean
+}
+
 export const useConversationsWebsocket = ({
   subscriptionKey,
   enabled,
   onEvent,
-}: UseConversationsWebsocketProps) => {
-  const { cable, channelsHolder } = useCable()
+}: UseConversationsWebsocketProps): UseConversationsWebsocketResult => {
+  const { cable, channelsHolder, accessToken } = useCable()
   const onEventRef = useRef(onEvent)
   onEventRef.current = onEvent
 
+  const [isSubscribed, setIsSubscribed] = useState(false)
+
   useEffect(() => {
-    if (!enabled || !cable) {
+    if (!enabled || !cable || !accessToken) {
       return
     }
 
     const channelKey = `conversations:${subscriptionKey}`
 
-    if (channelsHolder.getChannel(channelKey)) {
-      return
+    // Route through a ref so the callback never runs against a stale closure.
+    const listener = (payload: unknown) => {
+      onEventRef.current(payload as ConversationMessageSentEvent)
     }
 
-    const subscription = cable.subscriptions.create(
-      { channel: "ConversationsChannel", key: subscriptionKey },
-      {
-        received: (event: ConversationMessageSentEvent) => {
-          onEventRef.current(event)
-        },
+    const deregister = channelsHolder.subscribe({
+      key: channelKey,
+      listener,
+      createSubscription: onMessage => {
+        return cable.subscriptions.create(
+          {
+            channel: "ConversationsChannel",
+            key: subscriptionKey,
+            access_token: accessToken,
+          },
+          { received: onMessage },
+        )
       },
-    )
+    })
 
-    channelsHolder.setChannel(channelKey, subscription)
+    setIsSubscribed(true)
 
     return () => {
-      subscription.unsubscribe()
-      channelsHolder.removeChannel(channelKey)
+      deregister()
+      setIsSubscribed(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enabled, cable, channelsHolder, subscriptionKey])
+  }, [enabled, cable, channelsHolder, subscriptionKey, accessToken])
+
+  return { isSubscribed }
 }
