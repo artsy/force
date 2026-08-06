@@ -1,6 +1,8 @@
 import { act, fireEvent, screen, waitFor } from "@testing-library/react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations/components/Message/ConversationMessages"
+import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
@@ -9,6 +11,7 @@ import { format, subDays } from "date-fns"
 import { graphql } from "react-relay"
 
 jest.mock("Apps/Conversations/hooks/useLoadMore")
+jest.mock("Apps/Conversations/hooks/useConversationsWebsocket")
 
 jest.unmock("react-relay")
 
@@ -277,6 +280,97 @@ describe("ConversationMessages", () => {
           screen.getByText("This is the second message"),
         ).toBeInTheDocument()
       })
+    })
+  })
+
+  describe("realtime updates", () => {
+    const mockUseFlag = useFlag as jest.Mock
+    const mockUseConversationsWebsocket = useConversationsWebsocket as jest.Mock
+
+    const oneMessage = {
+      MessageConnection: () => ({
+        edges: [
+          {
+            node: {
+              internalID: "msg-1",
+              body: "Hello",
+              isFromUser: true,
+              createdAt: new Date().toISOString(),
+            },
+          },
+        ],
+      }),
+      Conversation: () => ({ internalID: "conv-1" }),
+    }
+
+    it("does not enable the websocket hook when the flag is off", () => {
+      mockUseFlag.mockReturnValue(false)
+
+      renderWithRelay(oneMessage)
+
+      expect(mockUseConversationsWebsocket).toHaveBeenCalledWith(
+        expect.objectContaining({
+          enabled: false,
+          subscriptionKey: "conversation:conv-1",
+        }),
+      )
+    })
+
+    it("enables the websocket hook, keyed by the conversation id, when the flag is on", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      renderWithRelay(oneMessage)
+
+      expect(mockUseConversationsWebsocket).toHaveBeenCalledWith(
+        expect.objectContaining({
+          enabled: true,
+          subscriptionKey: "conversation:conv-1",
+        }),
+      )
+    })
+
+    it("refetches messages when a matching event arrives", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      const { env } = renderWithRelay(oneMessage)
+
+      const { onEvent } = mockUseConversationsWebsocket.mock.calls[0][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).toContain("ConversationMessagesPaginationQuery")
+    })
+
+    it("ignores events for a different conversation", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      const { env } = renderWithRelay(oneMessage)
+
+      const { onEvent } = mockUseConversationsWebsocket.mock.calls[0][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "some-other-conversation",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).not.toContain("ConversationMessagesPaginationQuery")
     })
   })
 })

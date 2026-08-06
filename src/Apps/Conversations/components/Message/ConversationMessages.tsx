@@ -1,9 +1,11 @@
 import { Box, type BoxProps, Flex, Spinner } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
 import { ConversationPartnerOfferUpdate } from "Apps/Conversations/components/Message/ConversationPartnerOfferUpdate"
 import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
+import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import {
   type Message,
   isRelevantEvent,
@@ -69,9 +71,27 @@ export const ConversationMessages: FC<
     autoScrollToBottomRef,
   })
 
+  const isWebsocketEnabled = useFlag("amber_conversations-force--websocket")
+
+  useConversationsWebsocket({
+    subscriptionKey: `conversation:${conversation.internalID}`,
+    enabled: isWebsocketEnabled,
+    onEvent: event => {
+      if (event.conversation_id !== conversation.internalID) {
+        return
+      }
+
+      if (showLatestMessagesFlyOut) {
+        return
+      }
+
+      refetchMessages({ showPreloader: false })
+    },
+  })
+
   // Refetch messages in the background
   useRefetchLatestMessagesPoll({
-    clearWhen: showLatestMessagesFlyOut,
+    clearWhen: showLatestMessagesFlyOut || isWebsocketEnabled,
     onRefetch: () => {
       // Don't refetch if we're scrolled away from the bottom as the user may
       // be reviewing old conversations up the list
