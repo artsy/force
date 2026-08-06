@@ -86,11 +86,7 @@ export const ConversationsSidebar: React.FC<
   )
   const isTabVisible = useTabVisible()
 
-  const refetchSidebar = () => {
-    if (!enableSilentSidebarRefetch) {
-      return
-    }
-
+  const performSidebarRefetch = () => {
     const fetchSize =
       viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
 
@@ -101,6 +97,14 @@ export const ConversationsSidebar: React.FC<
         first: fetchSize,
       },
     )
+  }
+
+  const refetchSidebar = () => {
+    if (!enableSilentSidebarRefetch) {
+      return
+    }
+
+    performSidebarRefetch()
   }
 
   useConversationsWebsocket({
@@ -115,7 +119,11 @@ export const ConversationsSidebar: React.FC<
         return
       }
 
-      refetchSidebar()
+      // Bypass the scroll-position guard: unlike the polling fallback, the
+      // websocket path only refetches once per genuine new message, so we
+      // accept that a conversation may reorder under the user's scroll
+      // position rather than silently missing the update.
+      performSidebarRefetch()
     },
   })
 
@@ -148,6 +156,7 @@ export const ConversationsSidebar: React.FC<
       {conversations.length === 0 && <ConversationsSidebarEmpty />}
 
       <Sentinel
+        testId="ConversationsSidebarTopSentinel"
         onEnterView={() => setEnableSilentSidebarRefetch(true)}
         onExitView={() => setEnableSilentSidebarRefetch(false)}
       />

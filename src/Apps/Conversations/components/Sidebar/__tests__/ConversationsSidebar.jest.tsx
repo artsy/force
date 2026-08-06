@@ -4,6 +4,7 @@ import { ConversationsSidebarPaginationContainer } from "Apps/Conversations/comp
 import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
 import { useTabVisible } from "Utils/Hooks/useTabVisible"
 import { getENV } from "Utils/getENV"
 import type { ConversationsSidebarTestQuery } from "__generated__/ConversationsSidebarTestQuery.graphql"
@@ -161,6 +162,59 @@ describe("ConversationDetails", () => {
       expect(env.mock.getAllOperations().length).toBeGreaterThan(
         operationCountBefore,
       )
+    })
+
+    it("still refetches via the websocket path when the user has scrolled down", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      const { env } = renderWithRelay(oneConversation)
+
+      const topSentinel = screen.getByTestId("ConversationsSidebarTopSentinel")
+
+      // Simulate the user scrolling past the top sentinel, which disables
+      // enableSilentSidebarRefetch and would previously have caused
+      // refetchSidebar to early-return for every caller.
+      act(() => intersect(topSentinel, false))
+
+      const operationCountBefore = env.mock.getAllOperations().length
+
+      // Grab the most recent onEvent closure — enableSilentSidebarRefetch
+      // is a render-scoped variable, so a stale closure from before the
+      // scroll-state change would still see the old value.
+      const websocketCalls = mockUseConversationsWebsocket.mock.calls
+      const { onEvent } = websocketCalls[websocketCalls.length - 1][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conversation-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(env.mock.getAllOperations().length).toBeGreaterThan(
+        operationCountBefore,
+      )
+    })
+
+    it("does not refetch via the poll fallback when the user has scrolled down", () => {
+      mockUseFlag.mockReturnValue(false)
+
+      const { env } = renderWithRelay(oneConversation)
+
+      const topSentinel = screen.getByTestId("ConversationsSidebarTopSentinel")
+
+      act(() => intersect(topSentinel, false))
+
+      const operationCountBefore = env.mock.getAllOperations().length
+
+      const pollCalls = mockUseRefetchLatestMessagesPoll.mock.calls
+      const { onRefetch } = pollCalls[pollCalls.length - 1][0]
+      act(() => {
+        onRefetch()
+      })
+
+      expect(env.mock.getAllOperations().length).toBe(operationCountBefore)
     })
 
     it("ignores events of an unknown type", () => {
