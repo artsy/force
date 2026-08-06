@@ -136,6 +136,32 @@ describe("ConversationSidebarItem", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
   })
 
+  it("shows the last message preview without a You: prefix when the partner sent it", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        lastMessage: "Thanks for your interest in this piece!",
+        isLastMessageToUser: true,
+      }),
+    })
+
+    expect(
+      screen.getByText("Thanks for your interest in this piece!"),
+    ).toBeInTheDocument()
+    expect(screen.queryByText("You:")).not.toBeInTheDocument()
+  })
+
+  it("shows a You: prefix on the last message preview when the collector sent it", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        lastMessage: "Is this still available?",
+        isLastMessageToUser: false,
+      }),
+    })
+
+    expect(screen.getByText("You:")).toBeInTheDocument()
+    expect(screen.getByText("Is this still available?")).toBeInTheDocument()
+  })
+
   it("tracks click", () => {
     renderWithRelay({
       ConversationItemType: () => ({ id: "mocked-artwork-id" }),

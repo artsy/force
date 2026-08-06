@@ -40,6 +40,7 @@ export const ConversationsSidebarItem: React.FC<
 
   const item = data?.items?.[0]?.item
   const orders = extractNodes(data?.orderConnection)
+  const lastMessagePreview = data.lastMessage?.replace(/\n/g, " ").trim()
 
   if (!item || item.__typename !== "Artwork") {
     return null
@@ -120,6 +121,22 @@ export const ConversationsSidebarItem: React.FC<
               {conversationType}
             </Text>
 
+            {!!lastMessagePreview && (
+              <Text
+                variant="xs"
+                color="mono60"
+                overflowEllipsis
+                fontWeight={shouldHighlight ? "bold" : "regular"}
+              >
+                {!data.isLastMessageToUser && (
+                  <Text variant="xs" display="inline" color="mono100">
+                    You:{" "}
+                  </Text>
+                )}
+                {lastMessagePreview}
+              </Text>
+            )}
+
             {item.isUnlisted && (
               <Text display="inline" variant="xs">
                 Exclusive Access
@@ -162,6 +179,8 @@ const FRAGMENT = graphql`
       name
     }
     lastMessageAt(format: "MMM D")
+    lastMessage
+    isLastMessageToUser
 
     orderConnection(
       last: 1
