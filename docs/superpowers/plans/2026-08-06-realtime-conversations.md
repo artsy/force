@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add websocket-driven realtime updates to Force's Conversations app (sidebar list + open thread), gated behind the `amber_conversations-force--websocket` unleash flag, falling back to existing polling when the flag is off.
+**Goal:** Add websocket-driven realtime updates to Force's Conversations app (sidebar list + open thread), gated behind the `amber_conversations-force-websocket` unleash flag, falling back to existing polling when the flag is off.
 
 **Architecture:** One shared ActionCable connection (lazily created, authenticated with the logged-in user's `accessToken`) is provided at the root of the Conversations app. A `channelsHolder` map lets the sidebar and an open thread each hold their own keyed subscription to Gravity's `ConversationsChannel` over that single connection. A small `useConversationsWebsocket` hook wraps subscribe/unsubscribe lifecycle and stale-closure-safe event delivery; call sites in `ConversationsSidebar.tsx` and `ConversationMessages.tsx` gate it on the flag and reuse their existing Relay refetch logic.
 
@@ -12,7 +12,7 @@
 
 - Follow AGENTS.md: named exports only, explicit `return` in multi-line components, TypeScript strict (no `@ts-expect-error`).
 - No message content travels over the socket — the payload only carries IDs; refetch via Relay is the source of truth (per spec).
-- The flag check (`useFlag("amber_conversations-force--websocket")`) lives at call sites, not inside `useConversationsWebsocket` — the hook stays flag-agnostic.
+- The flag check (`useFlag("amber_conversations-force-websocket")`) lives at call sites, not inside `useConversationsWebsocket` — the hook stays flag-agnostic.
 - Do not modify `src/System/Contexts/WebsocketContext.tsx`, `AuctionApp`, or `ArtworkApp` (per spec's "why not extend `WebsocketContext`").
 - Before committing any task: `yarn type-check`, `yarn jest $(git ls-files --modified --others --exclude-standard)`, `yarn lint $(git ls-files --modified --others --exclude-standard)` must all pass clean.
 - Spec: `docs/superpowers/specs/2026-08-06-realtime-conversations-design.md`
@@ -702,7 +702,7 @@ import { useFlag } from "@unleash/proxy-client-react"
 Immediately above the existing `useRefetchLatestMessagesPoll({...})` call (line 73), add:
 
 ```ts
-const isWebsocketEnabled = useFlag("amber_conversations-force--websocket")
+const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
 
 useConversationsWebsocket({
   subscriptionKey: `conversation:${conversation.internalID}`,
@@ -867,7 +867,7 @@ import { useFlag } from "@unleash/proxy-client-react"
 Add a helper above the return statement that both the poll and the socket call, to avoid duplicating the refetch logic currently inline in `useRefetchLatestMessagesPoll`'s `onRefetch` (lines 81-101):
 
 ```ts
-const isWebsocketEnabled = useFlag("amber_conversations-force--websocket")
+const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
 
 const refetchSidebar = () => {
   if (!enableSilentSidebarRefetch) {
@@ -924,4 +924,4 @@ git commit -m "feat: refetch conversations sidebar on realtime message event"
 
 - [ ] Run the full Conversations test suite: `yarn jest src/Apps/Conversations 2>&1 | grep -E "Tests:|Suites:|✕|FAIL"` — expect all green.
 - [ ] Run `yarn type-check` clean across the whole repo.
-- [ ] Manually toggle the `amber_conversations-force--websocket` flag off and confirm the sidebar/thread still refresh via polling (no visible regression) — this can't be verified against a live Gravity socket without the flag actually flipped in an environment; note in the PR description that live-socket behavior needs verification against staging once the flag is enabled there.
+- [ ] Manually toggle the `amber_conversations-force-websocket` flag off and confirm the sidebar/thread still refresh via polling (no visible regression) — this can't be verified against a live Gravity socket without the flag actually flipped in an environment; note in the PR description that live-socket behavior needs verification against staging once the flag is enabled there.
