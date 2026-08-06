@@ -1,7 +1,9 @@
 import { Box, Flex, Spinner, Text } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
+import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { Sentinel } from "Components/Sentinal"
@@ -76,28 +78,37 @@ export const ConversationsSidebar: React.FC<
     // across renders.
   }, [totalDisplayedCount])
 
+  const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
+
+  const refetchSidebar = () => {
+    if (!enableSilentSidebarRefetch) {
+      return
+    }
+
+    const fetchSize =
+      viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
+
+    relay.refetchConnection(
+      fetchSize,
+      {},
+      {
+        first: fetchSize,
+      },
+    )
+  }
+
+  useConversationsWebsocket({
+    subscriptionKey: "inbox",
+    enabled: isWebsocketEnabled,
+    onEvent: refetchSidebar,
+  })
+
   // Refetch messages in the background, but only when a user has scrolled to
   // the top of the convo list.
   useRefetchLatestMessagesPoll({
     intervalTime: 10000,
-    clearWhen: !enableSilentSidebarRefetch,
-    onRefetch: () => {
-      if (!enableSilentSidebarRefetch) {
-        return
-      }
-      // When refetching, check to see if we've loaded more, and if so, refetch
-      // current total count of sidebar list
-      const fetchSize =
-        viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
-
-      relay.refetchConnection(
-        fetchSize,
-        {},
-        {
-          first: fetchSize,
-        },
-      )
-    },
+    clearWhen: !enableSilentSidebarRefetch || isWebsocketEnabled,
+    onRefetch: refetchSidebar,
   })
 
   return (

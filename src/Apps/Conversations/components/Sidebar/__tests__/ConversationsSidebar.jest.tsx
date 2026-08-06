@@ -1,8 +1,12 @@
-import { screen } from "@testing-library/react"
+import { act, screen } from "@testing-library/react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsSidebarPaginationContainer } from "Apps/Conversations/components/Sidebar/ConversationsSidebar"
+import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import type { ConversationsSidebarTestQuery } from "__generated__/ConversationsSidebarTestQuery.graphql"
 import { graphql } from "react-relay"
+
+jest.mock("Apps/Conversations/hooks/useConversationsWebsocket")
 
 jest.unmock("react-relay")
 
@@ -69,5 +73,67 @@ describe("ConversationDetails", () => {
     expect(
       screen.getByText("All conversations with galleries will show here."),
     ).toBeInTheDocument()
+  })
+
+  describe("realtime updates", () => {
+    const mockUseFlag = useFlag as jest.Mock
+    const mockUseConversationsWebsocket = useConversationsWebsocket as jest.Mock
+
+    const oneConversation = {
+      ConversationConnection: () => ({
+        edges: [
+          {
+            node: {
+              internalID: "conversation-1",
+              to: { name: "Collector 1" },
+              lastMessageAt: "2022-12-02",
+              unread: false,
+            },
+          },
+        ],
+      }),
+    }
+
+    it("subscribes with the 'inbox' key when the flag is on", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      renderWithRelay(oneConversation)
+
+      expect(mockUseConversationsWebsocket).toHaveBeenCalledWith(
+        expect.objectContaining({ enabled: true, subscriptionKey: "inbox" }),
+      )
+    })
+
+    it("does not enable the websocket hook when the flag is off", () => {
+      mockUseFlag.mockReturnValue(false)
+
+      renderWithRelay(oneConversation)
+
+      expect(mockUseConversationsWebsocket).toHaveBeenCalledWith(
+        expect.objectContaining({ enabled: false, subscriptionKey: "inbox" }),
+      )
+    })
+
+    it("refetches the sidebar list on any realtime event", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      const { env } = renderWithRelay(oneConversation)
+
+      const operationCountBefore = env.mock.getAllOperations().length
+
+      const { onEvent } = mockUseConversationsWebsocket.mock.calls[0][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conversation-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(env.mock.getAllOperations().length).toBeGreaterThan(
+        operationCountBefore,
+      )
+    })
   })
 })
