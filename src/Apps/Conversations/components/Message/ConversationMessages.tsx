@@ -14,7 +14,9 @@ import {
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { useUpdateConversation } from "Apps/Conversations/mutations/useUpdateConversationMutation"
 import { Sentinel } from "Components/Sentinal"
+import { useTabVisible } from "Utils/Hooks/useTabVisible"
 import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import type React from "react"
 import {
@@ -72,37 +74,47 @@ export const ConversationMessages: FC<
   })
 
   const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
+  const isAutoRefreshEnabled = !!getENV(
+    "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
+  )
+  const isTabVisible = useTabVisible()
 
-  useConversationsWebsocket({
+  const refreshLatestMessages = () => {
+    // Don't refetch if we're scrolled away from the bottom as the user may
+    // be reviewing old conversations up the list
+    if (showLatestMessagesFlyOut) {
+      return
+    }
+
+    refetchMessages({
+      showPreloader: false,
+    })
+  }
+
+  const { isSubscribed } = useConversationsWebsocket({
     subscriptionKey: `conversation:${conversation.internalID}`,
-    enabled: isWebsocketEnabled,
+    enabled: isWebsocketEnabled && isAutoRefreshEnabled,
     onEvent: event => {
+      if (event.type !== "message.sent") {
+        return
+      }
+
       if (event.conversation_id !== conversation.internalID) {
         return
       }
 
-      if (showLatestMessagesFlyOut) {
+      if (!isTabVisible) {
         return
       }
 
-      refetchMessages({ showPreloader: false })
+      refreshLatestMessages()
     },
   })
 
-  // Refetch messages in the background
+  // Refetch messages in the background, unless we have a live subscription
   useRefetchLatestMessagesPoll({
-    clearWhen: showLatestMessagesFlyOut || isWebsocketEnabled,
-    onRefetch: () => {
-      // Don't refetch if we're scrolled away from the bottom as the user may
-      // be reviewing old conversations up the list
-      if (showLatestMessagesFlyOut) {
-        return
-      }
-
-      refetchMessages({
-        showPreloader: false,
-      })
-    },
+    clearWhen: showLatestMessagesFlyOut || isSubscribed,
+    onRefetch: refreshLatestMessages,
   })
 
   useEffect(() => {

@@ -8,7 +8,9 @@ import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { Sentinel } from "Components/Sentinal"
 import { useRouter } from "System/Hooks/useRouter"
+import { useTabVisible } from "Utils/Hooks/useTabVisible"
 import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
 import type { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { useEffect, useState } from "react"
 import {
@@ -79,6 +81,10 @@ export const ConversationsSidebar: React.FC<
   }, [totalDisplayedCount])
 
   const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
+  const isAutoRefreshEnabled = !!getENV(
+    "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
+  )
+  const isTabVisible = useTabVisible()
 
   const refetchSidebar = () => {
     if (!enableSilentSidebarRefetch) {
@@ -97,17 +103,27 @@ export const ConversationsSidebar: React.FC<
     )
   }
 
-  useConversationsWebsocket({
+  const { isSubscribed } = useConversationsWebsocket({
     subscriptionKey: "inbox",
-    enabled: isWebsocketEnabled,
-    onEvent: refetchSidebar,
+    enabled: isWebsocketEnabled && isAutoRefreshEnabled,
+    onEvent: event => {
+      if (event.type !== "message.sent") {
+        return
+      }
+
+      if (!isTabVisible) {
+        return
+      }
+
+      refetchSidebar()
+    },
   })
 
   // Refetch messages in the background, but only when a user has scrolled to
-  // the top of the convo list.
+  // the top of the convo list, and only while we have no live subscription.
   useRefetchLatestMessagesPoll({
     intervalTime: 10000,
-    clearWhen: !enableSilentSidebarRefetch || isWebsocketEnabled,
+    clearWhen: !enableSilentSidebarRefetch || isSubscribed,
     onRefetch: refetchSidebar,
   })
 
