@@ -1,16 +1,29 @@
 import { act, fireEvent, screen, waitFor } from "@testing-library/react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations/components/Message/ConversationMessages"
+import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
+import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
+import { useTabVisible } from "Utils/Hooks/useTabVisible"
+import { getENV } from "Utils/getENV"
 import type { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
 import { format, subDays } from "date-fns"
 import { graphql } from "react-relay"
 
 jest.mock("Apps/Conversations/hooks/useLoadMore")
+jest.mock("Apps/Conversations/hooks/useConversationsWebsocket")
+jest.mock("Apps/Conversations/hooks/useRefetchLatestMessagesPoll")
+
+jest.mock("Utils/getENV", () => ({ getENV: jest.fn() }))
+jest.mock("Utils/Hooks/useTabVisible", () => ({ useTabVisible: jest.fn() }))
 
 jest.unmock("react-relay")
+
+const mockGetENV = getENV as jest.Mock
+const mockUseTabVisible = useTabVisible as jest.Mock
 
 describe("ConversationMessages", () => {
   const mockUseLoadMore = useLoadMore as jest.Mock
@@ -42,8 +55,19 @@ describe("ConversationMessages", () => {
     },
   )
 
+  // The "Latest Messages" text sits in an inner div that doesn't carry the
+  // opacity styling itself (opacity doesn't inherit into computed style), so
+  // assertions on visibility need the actual <button>.
+  const getLatestMessagesButton = () => {
+    return screen.getByText("Latest Messages").closest("button") as HTMLElement
+  }
+
   beforeEach(() => {
     jest.clearAllMocks()
+    mockGetENV.mockImplementation(
+      key => key === "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
+    )
+    mockUseTabVisible.mockReturnValue(true)
     HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
   })
 
@@ -189,6 +213,8 @@ describe("ConversationMessages", () => {
   })
 
   it("calls refetch when clicking the latest messages button", () => {
+    jest.useFakeTimers()
+
     const { env } = renderWithRelay({
       MessageConnection: () => ({
         edges: [
@@ -199,9 +225,18 @@ describe("ConversationMessages", () => {
       }),
     })
 
+    // Genuine scroll-away, past the initial layout settling window (see the
+    // "initial layout settling window" tests below for the false-positive
+    // case this window guards against).
+    act(() => {
+      jest.advanceTimersByTime(500)
+    })
+
     const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
     act(() => intersect(bottomSentinel, true))
     act(() => intersect(bottomSentinel, false))
+
+    jest.useRealTimers()
 
     fireEvent.click(screen.getByText("Latest Messages"))
 
@@ -277,6 +312,384 @@ describe("ConversationMessages", () => {
           screen.getByText("This is the second message"),
         ).toBeInTheDocument()
       })
+    })
+  })
+
+  describe("initial layout settling window", () => {
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+
+    const threeMessages = {
+      MessageConnection: () => ({
+        edges: [
+          { node: { createdAt: "2022-12-25T21:03:20+00:00" } },
+          { node: { createdAt: subDays(new Date(), 1).toISOString() } },
+          { node: { createdAt: new Date().toISOString() } },
+        ],
+      }),
+    }
+
+    it("does not show the latest messages flyout when the bottom sentinel exits view right after mount", () => {
+      jest.useFakeTimers()
+
+      renderWithRelay(threeMessages)
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+
+      // Simulate the false-positive: layout is still settling (e.g. the
+      // partner offer CTA growing below us), so the sentinel reports an
+      // "exit" even though the user never scrolled.
+      act(() => intersect(bottomSentinel, false))
+
+      expect(getLatestMessagesButton()).toHaveStyle({ opacity: 0 })
+    })
+
+    it("shows the latest messages flyout when the bottom sentinel genuinely exits view after the settling window elapses", () => {
+      jest.useFakeTimers()
+
+      renderWithRelay(threeMessages)
+
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+      act(() => intersect(bottomSentinel, false))
+
+      expect(getLatestMessagesButton()).toHaveStyle({ opacity: 1 })
+    })
+
+    it("re-pins the view to the bottom when the message list's own height shrinks during the settling window", () => {
+      jest.useFakeTimers()
+
+      let resizeCallback: (() => void) | undefined
+
+      class MockResizeObserver {
+        constructor(callback: () => void) {
+          resizeCallback = callback
+        }
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      }
+
+      // @ts-ignore - jsdom doesn't implement ResizeObserver
+      global.ResizeObserver = MockResizeObserver
+
+      renderWithRelay(threeMessages)
+
+      // Flush the scroll-to-bottom-on-mount effects so only the
+      // resize-triggered call below is attributed to the assertion.
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+      scrollIntoViewMock.mockClear()
+
+      act(() => {
+        resizeCallback?.()
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+
+      expect(scrollIntoViewMock).toHaveBeenCalledWith(
+        expect.objectContaining({ behavior: "instant", block: "end" }),
+      )
+
+      // @ts-ignore
+      delete global.ResizeObserver
+    })
+
+    it("does not re-pin the view once the settling window has elapsed", () => {
+      jest.useFakeTimers()
+
+      let resizeCallback: (() => void) | undefined
+
+      class MockResizeObserver {
+        constructor(callback: () => void) {
+          resizeCallback = callback
+        }
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      }
+
+      // @ts-ignore - jsdom doesn't implement ResizeObserver
+      global.ResizeObserver = MockResizeObserver
+
+      renderWithRelay(threeMessages)
+
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      scrollIntoViewMock.mockClear()
+
+      act(() => {
+        resizeCallback?.()
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+
+      expect(scrollIntoViewMock).not.toHaveBeenCalled()
+
+      // @ts-ignore
+      delete global.ResizeObserver
+    })
+  })
+
+  describe("realtime updates", () => {
+    const mockUseFlag = useFlag as jest.Mock
+    const mockUseConversationsWebsocket = useConversationsWebsocket as jest.Mock
+    const mockUseRefetchLatestMessagesPoll =
+      useRefetchLatestMessagesPoll as jest.Mock
+
+    const oneMessage = {
+      MessageConnection: () => ({
+        edges: [
+          {
+            node: {
+              internalID: "msg-1",
+              body: "Hello",
+              isFromUser: true,
+              createdAt: new Date().toISOString(),
+            },
+          },
+        ],
+      }),
+      Conversation: () => ({ internalID: "conv-1" }),
+    }
+
+    it("does not enable the websocket hook when the flag is off", () => {
+      mockUseFlag.mockReturnValue(false)
+
+      renderWithRelay(oneMessage)
+
+      expect(mockUseConversationsWebsocket).toHaveBeenCalledWith(
+        expect.objectContaining({
+          enabled: false,
+          subscriptionKey: "conversation:conv-1",
+        }),
+      )
+    })
+
+    it("enables the websocket hook, keyed by the conversation id, when the flag is on", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      renderWithRelay(oneMessage)
+
+      expect(mockUseConversationsWebsocket).toHaveBeenCalledWith(
+        expect.objectContaining({
+          enabled: true,
+          subscriptionKey: "conversation:conv-1",
+        }),
+      )
+    })
+
+    it("refetches messages when a matching event arrives", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      const { env } = renderWithRelay(oneMessage)
+
+      const { onEvent } = mockUseConversationsWebsocket.mock.calls[0][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).toContain("ConversationMessagesPaginationQuery")
+    })
+
+    it("ignores events for a different conversation", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      const { env } = renderWithRelay(oneMessage)
+
+      const { onEvent } = mockUseConversationsWebsocket.mock.calls[0][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "some-other-conversation",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).not.toContain("ConversationMessagesPaginationQuery")
+    })
+
+    it("ignores events of an unknown type", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      const { env } = renderWithRelay(oneMessage)
+
+      const { onEvent } = mockUseConversationsWebsocket.mock.calls[0][0]
+      act(() => {
+        onEvent({
+          type: "conversation.archived",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).not.toContain("ConversationMessagesPaginationQuery")
+    })
+
+    it("does not refetch when the tab is in the background", () => {
+      mockUseFlag.mockReturnValue(true)
+      mockUseTabVisible.mockReturnValue(false)
+
+      const { env } = renderWithRelay(oneMessage)
+
+      const { onEvent } = mockUseConversationsWebsocket.mock.calls[0][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).not.toContain("ConversationMessagesPaginationQuery")
+    })
+
+    it("does not enable the websocket hook when the auto-refresh kill switch is off", () => {
+      mockUseFlag.mockReturnValue(true)
+      mockGetENV.mockReturnValue(false)
+
+      renderWithRelay(oneMessage)
+
+      expect(mockUseConversationsWebsocket).toHaveBeenCalledWith(
+        expect.objectContaining({
+          enabled: false,
+          subscriptionKey: "conversation:conv-1",
+        }),
+      )
+    })
+
+    it("refetches messages via websocket even when the user is scrolled away from the bottom", () => {
+      mockUseFlag.mockReturnValue(true)
+      jest.useFakeTimers()
+
+      const { env } = renderWithRelay(oneMessage)
+
+      // Past the initial layout settling window, then a genuine scroll-away.
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+      act(() => intersect(bottomSentinel, true))
+      act(() => intersect(bottomSentinel, false))
+
+      // Grab the most recent registration, not calls[0] — the onEvent
+      // closure captures showLatestMessagesFlyOut at render time, and we
+      // need the version from after the sentinel toggled it to true.
+      const { onEvent } =
+        mockUseConversationsWebsocket.mock.calls[
+          mockUseConversationsWebsocket.mock.calls.length - 1
+        ][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      jest.useRealTimers()
+
+      expect(
+        env.mock
+          .getAllOperations()
+          .map(operation => operation.request.node.params.name),
+      ).toContain("ConversationMessagesPaginationQuery")
+    })
+
+    it("does not scroll when a websocket-triggered refetch happens while scrolled away", () => {
+      mockUseFlag.mockReturnValue(true)
+      jest.useFakeTimers()
+
+      renderWithRelay(oneMessage)
+
+      // Past the initial layout settling window, then a genuine scroll-away.
+      act(() => {
+        jest.advanceTimersByTime(500)
+      })
+
+      const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
+      act(() => intersect(bottomSentinel, true))
+      act(() => intersect(bottomSentinel, false))
+
+      scrollIntoViewMock.mockClear()
+
+      const { onEvent } =
+        mockUseConversationsWebsocket.mock.calls[
+          mockUseConversationsWebsocket.mock.calls.length - 1
+        ][0]
+      act(() => {
+        onEvent({
+          type: "message.sent",
+          conversation_id: "conv-1",
+          message_id: "msg-99",
+          created_at: "2026-08-06T00:00:00Z",
+        })
+      })
+
+      act(() => {
+        jest.advanceTimersByTime(0)
+      })
+
+      jest.useRealTimers()
+
+      expect(scrollIntoViewMock).not.toHaveBeenCalled()
+    })
+
+    it("clears polling when the websocket flag is on", () => {
+      mockUseFlag.mockReturnValue(true)
+
+      renderWithRelay(oneMessage)
+
+      expect(mockUseRefetchLatestMessagesPoll).toHaveBeenCalledWith(
+        expect.objectContaining({ clearWhen: true }),
+      )
+    })
+
+    it("keeps polling when the websocket flag is off", () => {
+      mockUseFlag.mockReturnValue(false)
+
+      renderWithRelay(oneMessage)
+
+      expect(mockUseRefetchLatestMessagesPoll).toHaveBeenCalledWith(
+        expect.objectContaining({ clearWhen: false }),
+      )
     })
   })
 })

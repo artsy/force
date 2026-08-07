@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fdf9de5150a2580f8191e373f8af7dd>>
+ * @generated SignedSource<<a0b43f3c1922b5a70dfb403ea0ef5df7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebarItem_conversation$data = {
   readonly internalID: string | null | undefined;
+  readonly isLastMessageToUser: boolean | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
@@ -31,6 +32,7 @@ export type ConversationsSidebarItem_conversation$data = {
       readonly __typename: "%other";
     };
   } | null | undefined> | null | undefined;
+  readonly lastMessage: string | null | undefined;
   readonly lastMessageAt: string | null | undefined;
   readonly orderConnection: {
     readonly edges: ReadonlyArray<{
@@ -109,6 +111,20 @@ return {
       "kind": "ScalarField",
       "name": "lastMessageAt",
       "storageKey": "lastMessageAt(format:\"MMM D\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lastMessage",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isLastMessageToUser",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -288,6 +304,6 @@ return {
 };
 })();
 
-(node as any).hash = "6cf22d1354fe8278113464e349098e28";
+(node as any).hash = "7056b04f4cf61f88ca603c3dd874475b";
 
 export default node;
