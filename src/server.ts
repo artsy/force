@@ -7,6 +7,7 @@ import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCo
 import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
 import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
+import { advisorAgentServerRoutes } from "Components/AdvisorAgent/advisorAgentServerRoutes"
 import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 import type {
   ArtsyRequest,
@@ -81,6 +82,7 @@ app.get(
 
 // Common express routes
 app
+  .use(advisorAgentServerRoutes)
   .use(appPreferencesServerRoutes)
   .use(cookieConsentManagerServerRoutes)
   .use(adminServerRoutes)
