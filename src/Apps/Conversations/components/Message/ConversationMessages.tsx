@@ -1,9 +1,11 @@
 import { Box, type BoxProps, Flex, Spinner } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/ConversationOrderUpdate"
 import { ConversationPartnerOfferUpdate } from "Apps/Conversations/components/Message/ConversationPartnerOfferUpdate"
 import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
+import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import {
   type Message,
   isRelevantEvent,
@@ -12,7 +14,9 @@ import {
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { useUpdateConversation } from "Apps/Conversations/mutations/useUpdateConversationMutation"
 import { Sentinel } from "Components/Sentinal"
+import { useTabVisible } from "Utils/Hooks/useTabVisible"
 import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
 import type { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import type React from "react"
 import {
@@ -33,6 +37,13 @@ import { ConversationMessage, type Messages } from "./ConversationMessage"
 
 const PAGE_SIZE = 15
 
+// How long after mount we treat a resize or a sentinel exit as a side effect
+// of layout still settling (e.g. the partner offer CTA mounting and growing
+// the reply box below us), rather than something the user did. 500ms comfortably
+// covers a CTA's mount-driven layout shift while still being short enough that a
+// genuinely fast scroll-up shortly after opening the conversation is respected.
+const SETTLING_WINDOW_MS = 500
+
 interface ConversationMessagesProps {
   conversation: NonNullable<ConversationMessages_conversation$data>
   relay: RelayPaginationProp
@@ -47,6 +58,13 @@ export const ConversationMessages: FC<
     useState(false)
 
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
+  const messageListRef = useRef<HTMLDivElement>(null)
+
+  // True while we're still settling right after mount, so a layout-shift-induced
+  // resize (Part 1) or sentinel exit (Part 2) doesn't get mistaken for the user
+  // scrolling away. Shared by both effects below.
+  const isSettlingRef = useRef(true)
+
   const toInitials = (conversation?.to as any)?.initials
   const toName = conversation?.to?.name
   const { submitMutation: updateConversation } = useUpdateConversation()
@@ -67,22 +85,95 @@ export const ConversationMessages: FC<
   const { triggerAutoScroll } = useAutoScrollToBottom({
     messages,
     autoScrollToBottomRef,
+    showLatestMessagesFlyOut,
   })
 
-  // Refetch messages in the background
-  useRefetchLatestMessagesPoll({
-    clearWhen: showLatestMessagesFlyOut,
-    onRefetch: () => {
-      // Don't refetch if we're scrolled away from the bottom as the user may
-      // be reviewing old conversations up the list
-      if (showLatestMessagesFlyOut) {
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      isSettlingRef.current = false
+    }, SETTLING_WINDOW_MS)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
+
+  // A sibling (e.g. the partner offer CTA in ConversationReply) mounting or
+  // growing shrinks our own allocated height within the fixed-height flex
+  // column, without changing our scrollHeight or scrollTop. That leaves the
+  // bottom sentinel visually below the (now shorter) visible window, so its
+  // IntersectionObserver reports an "exit" that isn't a real user scroll.
+  // Re-pin to the bottom while we're still settling to correct for it.
+  useEffect(() => {
+    const node = messageListRef.current
+
+    if (!node || typeof ResizeObserver === "undefined") {
+      return
+    }
+
+    const observer = new ResizeObserver(() => {
+      if (!isSettlingRef.current) {
         return
       }
 
+      triggerAutoScroll({ behavior: "instant", block: "end" })
+    })
+
+    observer.observe(node)
+
+    return () => observer.disconnect()
+  }, [triggerAutoScroll])
+
+  const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
+  const isAutoRefreshEnabled = !!getENV(
+    "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
+  )
+
+  const isTabVisible = useTabVisible()
+
+  const refreshLatestMessages = () => {
+    // Don't refetch if we're scrolled away from the bottom as the user may
+    // be reviewing old conversations up the list
+    if (showLatestMessagesFlyOut) {
+      return
+    }
+
+    refetchMessages({
+      showPreloader: false,
+    })
+  }
+
+  useConversationsWebsocket({
+    subscriptionKey: `conversation:${conversation.internalID}`,
+    enabled: isWebsocketEnabled && isAutoRefreshEnabled,
+    onEvent: event => {
+      if (event.type !== "message.sent") {
+        return
+      }
+
+      if (event.conversation_id !== conversation.internalID) {
+        return
+      }
+
+      if (!isTabVisible) {
+        return
+      }
+
+      // Unlike the poll (below), the websocket only refetches once per
+      // genuine new message, so we call refetchMessages directly rather
+      // than going through refreshLatestMessages — this bypasses its
+      // showLatestMessagesFlyOut early-return, keeping the thread fresh
+      // even while the user is scrolled away reading history. This is
+      // safe because useAutoScrollToBottom won't force-scroll while
+      // showLatestMessagesFlyOut is true.
       refetchMessages({
         showPreloader: false,
       })
     },
+  })
+
+  // Refetch messages in the background, unless the websocket is enabled
+  useRefetchLatestMessagesPoll({
+    clearWhen: showLatestMessagesFlyOut || isWebsocketEnabled,
+    onRefetch: refreshLatestMessages,
   })
 
   useEffect(() => {
@@ -144,7 +235,13 @@ export const ConversationMessages: FC<
   }
 
   return (
-    <Flex flexDirection="column" overflowY="auto" p={2} flexGrow={1}>
+    <Flex
+      ref={messageListRef as any}
+      flexDirection="column"
+      overflowY="auto"
+      p={2}
+      flexGrow={1}
+    >
       <Flex flexDirection="column" position="relative">
         {enableTopListSentinal && (
           <LoadAllMessagesSentinal
@@ -237,7 +334,13 @@ export const ConversationMessages: FC<
 
         <LatestMessagesSentinel
           onEnterView={() => setShowLatestMessagesFlyOut(false)}
-          onExitView={() => setShowLatestMessagesFlyOut(true)}
+          onExitView={() => {
+            if (isSettlingRef.current) {
+              return
+            }
+
+            setShowLatestMessagesFlyOut(true)
+          }}
           testId="LatestMessagesSentinel"
         />
 
@@ -382,11 +485,13 @@ export const ConversationMessagesPaginationContainer =
 interface UseAutoScrollToBottomProps {
   messages: any[]
   autoScrollToBottomRef: any
+  showLatestMessagesFlyOut: boolean
 }
 
 const useAutoScrollToBottom = ({
   messages,
   autoScrollToBottomRef,
+  showLatestMessagesFlyOut,
 }: UseAutoScrollToBottomProps) => {
   const lastMessageId = messages.length > 0 ? messages[0].internalID : null
 
@@ -403,15 +508,18 @@ const useAutoScrollToBottom = ({
     [autoScrollToBottomRef],
   )
 
+  // Only auto-scroll on a new message when the user hasn't scrolled away —
+  // otherwise a refetch triggered while reading older history (e.g. via the
+  // websocket path) would yank their scroll position back to the bottom.
   useEffect(() => {
-    if (lastMessageId) {
+    if (lastMessageId && !showLatestMessagesFlyOut) {
       triggerAutoScroll({
         behavior: "instant",
         block: "end",
         inline: "end",
       })
     }
-  }, [lastMessageId, triggerAutoScroll])
+  }, [lastMessageId, triggerAutoScroll, showLatestMessagesFlyOut])
 
   // Additional effect to ensure initial scroll after component mount
   // biome-ignore lint/correctness/useExhaustiveDependencies:

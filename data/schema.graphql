@@ -6902,9 +6902,9 @@ input AuthenticatePrivateViewingRoomMutationInput {
   clientMutationId: String
 
   """
-  The room's password.
+  The room's passcode.
   """
-  password: String!
+  passcode: String!
 
   """
   The slug of the private viewing room.
@@ -6916,7 +6916,7 @@ type AuthenticatePrivateViewingRoomMutationPayload {
   clientMutationId: String
 
   """
-  On success: the private viewing room's contents. On error: the error that occurred (e.g. an incorrect password).
+  On success: the private viewing room's contents. On error: the error that occurred (e.g. an incorrect passcode).
   """
   privateViewingRoomOrError: AuthenticatePrivateViewingRoomResponseOrError
 }
@@ -25282,7 +25282,7 @@ type Mutation {
   ): AssignArtistToPartnerMutationPayload
 
   """
-  Authenticates against a password-protected private viewing room, returning its contents on success.
+  Authenticates against a passcode-protected private viewing room, returning its contents on success.
   """
   authenticatePrivateViewingRoom(
     input: AuthenticatePrivateViewingRoomMutationInput!
@@ -30491,7 +30491,12 @@ type PartnerListPublication {
     timezone: String
   ): String
   partnerListID: String
-  passwordProtected: Boolean
+
+  """
+  Plain-text passcode gating this room, if one is set.
+  """
+  passcode: String
+  passcodeProtected: Boolean
   published: Boolean
   publishedAt(
     format: String
@@ -31350,9 +31355,9 @@ type PrivateViewingRoom {
   galleryName: String
 
   """
-  Whether this room requires a password to view.
+  Whether this room requires a passcode to view.
   """
-  passwordRequired: Boolean!
+  passcodeRequired: Boolean!
 }
 
 type PrivateViewingRoomArtwork {
@@ -31520,9 +31525,9 @@ input PublishPartnerListPublicationMutationInput {
   partnerListID: String!
 
   """
-  Password to gate the room. Pass an empty string to clear a previously set password.
+  Passcode to gate the room. Pass an empty string to clear a previously set passcode.
   """
-  password: String
+  passcode: String
 }
 
 type PublishPartnerListPublicationMutationPayload {
@@ -33601,7 +33606,7 @@ type Query {
   ): PriceInsightConnection
 
   """
-  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a password is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
+  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
   """
   privateViewingRoom(slug: String!): PrivateViewingRoom
 
@@ -43147,7 +43152,7 @@ type Viewer {
   ): PreviewSavedSearch
 
   """
-  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a password is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
+  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
   """
   privateViewingRoom(slug: String!): PrivateViewingRoom
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc2488e8bf4023dab5a0fbb42163aa6f>>
+ * @generated SignedSource<<05e84a4fa88fd2a58e4ef3473dd27a98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,9 +74,15 @@ v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Boolean"
 },
 v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -197,6 +203,20 @@ return {
                         "kind": "ScalarField",
                         "name": "lastMessageAt",
                         "storageKey": "lastMessageAt(format:\"MMM D\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "lastMessage",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isLastMessageToUser",
+                        "storageKey": null
                       },
                       {
                         "alias": null,
@@ -400,7 +420,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4567cb2c6fe7a39435ae50f3d909dc35",
+    "cacheID": "9067f478be361e2110dee5b12b3503e0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -437,6 +457,7 @@ return {
           "plural": false,
           "type": "ID"
         },
+        "viewer.conversationsConnection.edges.node.isLastMessageToUser": (v6/*: any*/),
         "viewer.conversationsConnection.edges.node.items": {
           "enumValues": null,
           "nullable": true,
@@ -458,8 +479,8 @@ return {
           "type": "Artist"
         },
         "viewer.conversationsConnection.edges.node.items.item.artist.id": (v5/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.artist.name": (v6/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.date": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.artist.name": (v7/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.date": (v7/*: any*/),
         "viewer.conversationsConnection.edges.node.items.item.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.items.item.image": {
           "enumValues": null,
@@ -467,10 +488,11 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "viewer.conversationsConnection.edges.node.items.item.image.url": (v6/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.isUnlisted": (v7/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.title": (v6/*: any*/),
-        "viewer.conversationsConnection.edges.node.lastMessageAt": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.image.url": (v7/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.isUnlisted": (v8/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.title": (v7/*: any*/),
+        "viewer.conversationsConnection.edges.node.lastMessage": (v7/*: any*/),
+        "viewer.conversationsConnection.edges.node.lastMessageAt": (v7/*: any*/),
         "viewer.conversationsConnection.edges.node.orderConnection": {
           "enumValues": null,
           "nullable": true,
@@ -499,20 +521,15 @@ return {
         },
         "viewer.conversationsConnection.edges.node.to.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.to.name": (v4/*: any*/),
-        "viewer.conversationsConnection.edges.node.unreadByCollector": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "viewer.conversationsConnection.edges.node.unreadByCollector": (v6/*: any*/),
         "viewer.conversationsConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "viewer.conversationsConnection.pageInfo.endCursor": (v6/*: any*/),
-        "viewer.conversationsConnection.pageInfo.hasNextPage": (v7/*: any*/),
+        "viewer.conversationsConnection.pageInfo.endCursor": (v7/*: any*/),
+        "viewer.conversationsConnection.pageInfo.hasNextPage": (v8/*: any*/),
         "viewer.conversationsConnection.totalUnreadCount": {
           "enumValues": null,
           "nullable": true,
@@ -523,7 +540,7 @@ return {
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    totalUnreadCount\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  lastMessage\n  isLastMessageToUser\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    totalUnreadCount\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
