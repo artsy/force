@@ -104,4 +104,17 @@ describe("SearchResultsArtworks", () => {
 
     expect(screen.getByText("Sort: Recommended")).toBeInTheDocument()
   })
+
+  it("requests typo tolerance when refetching after a filter change", async () => {
+    const { env, user } = renderWithRelay()
+
+    await user.click(screen.getByText("Sort: Recommended"))
+    await user.click(screen.getByText("Recently Added"))
+
+    const operation = env.mock.getMostRecentOperation()
+
+    expect(operation.request.variables.input).toMatchObject({
+      keywordTypoTolerance: true,
+    })
+  })
 })

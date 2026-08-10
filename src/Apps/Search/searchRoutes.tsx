@@ -136,6 +136,9 @@ export const searchRoutes: RouteProps[] = [
           const input: Record<string, any> = {
             ...allowedFilters(other),
             first: 30,
+            // Lets the backend retry the search with typo tolerance (fuzzy
+            // matching) when the exact keyword returns no results.
+            keywordTypoTolerance: true,
           }
           const aggregations = [...sourceAggregations, "ARTIST"]
 
@@ -145,6 +148,7 @@ export const searchRoutes: RouteProps[] = [
             sidebarInput: {
               aggregations,
               keyword: input.keyword,
+              keywordTypoTolerance: true,
             },
           }
         },
