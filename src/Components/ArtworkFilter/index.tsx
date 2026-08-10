@@ -180,6 +180,9 @@ export const BaseArtworkFilter: React.FC<
 
   const total = viewer.filtered_artworks?.counts?.total ?? 0
   const totalCountLabel = getTotalCountLabel({ total, isAuctionArtwork })
+  // `total` is comma-formatted (e.g. "1,241") for display; strip separators so
+  // AskBar gets a real number instead of NaN.
+  const totalCount = Number(String(total).replace(/,/g, ""))
 
   // Count of all filters, sans `sort`
   const revisedArtworkFiltersCount = useMemo(() => {
@@ -362,7 +365,7 @@ export const BaseArtworkFilter: React.FC<
 
         <Spacer y={2} />
 
-        <AskBar total={Number(total)} />
+        <AskBar total={totalCount} />
 
         <Spacer y={4} />
 
@@ -482,7 +485,7 @@ export const BaseArtworkFilter: React.FC<
 
         <Spacer y={2} />
 
-        <AskBar total={Number(total)} />
+        <AskBar total={totalCount} />
 
         <Spacer y={2} />
 

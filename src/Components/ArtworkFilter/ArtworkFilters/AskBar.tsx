@@ -80,10 +80,12 @@ export const AskBar: React.FC<AskBarProps> = ({ total }) => {
 
     loosenedForQuery.current = suggestion.keyword ?? ""
 
+    // Reset the loosened field to its default. Deleting it from the mapped set
+    // isn't enough — currentFilters still carries the strict value we applied,
+    // so we must overwrite it back to the context default to actually relax it.
     const relaxed = mapFilterSuggestion(suggestion)
-    delete (relaxed as Record<string, unknown>)[
-      field === "sizes" ? "sizes" : "priceRange"
-    ]
+    ;(relaxed as Record<string, unknown>)[field] =
+      field === "sizes" ? [] : "*-*"
     setFilters({ ...currentFilters, ...relaxed })
     setLoosenedFields([field])
     setMessage(
