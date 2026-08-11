@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("Gene", () => {
   test("/gene/:id", async ({ page }) => {
@@ -7,6 +7,8 @@ test.describe("Gene", () => {
     await expect(page.locator("h1").first()).toContainText(
       "Contemporary Figurative Painting",
     )
-    await expect(page).toHaveTitle("Contemporary Figurative Painting | Artsy")
+    await expect(page).toHaveTitle(
+      "Contemporary Figurative Painting - Art & Prints for Sale | Artsy",
+    )
   })
 })
