@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eae75b4162146428c82e3a4073bc6f14>>
+ * @generated SignedSource<<6272321f9c6b646807cf2f2d01be5851>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -249,6 +249,11 @@ return {
               },
               {
                 "kind": "Literal",
+                "name": "keywordTypoTolerance",
+                "value": true
+              },
+              {
+                "kind": "Literal",
                 "name": "size",
                 "value": 0
               }
@@ -278,7 +283,7 @@ return {
               },
               (v1/*: any*/)
             ],
-            "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],keyword:\"andy\",size:0)"
+            "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],keyword:\"andy\",keywordTypoTolerance:true,size:0)"
           }
         ],
         "storageKey": null
@@ -286,7 +291,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a16f03b0e2c1c2b7a5cef92893d6a44a",
+    "cacheID": "92300b2d3095f6a657e78020c6e280ab",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -368,7 +373,7 @@ return {
     },
     "name": "SearchAppTestQuery",
     "operationKind": "query",
-    "text": "query SearchAppTestQuery {\n  viewer {\n    ...SearchApp_viewer_2rc5k6\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2rc5k6 on Viewer {\n  searchConnection(query: \"andy\", first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: \"andy\", size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": "query SearchAppTestQuery {\n  viewer {\n    ...SearchApp_viewer_2rc5k6\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2rc5k6 on Viewer {\n  searchConnection(query: \"andy\", first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: \"andy\", size: 0, aggregations: [TOTAL], keywordTypoTolerance: true) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
   }
 };
 })();

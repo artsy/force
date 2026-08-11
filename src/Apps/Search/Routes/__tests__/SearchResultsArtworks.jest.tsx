@@ -104,4 +104,32 @@ describe("SearchResultsArtworks", () => {
 
     expect(screen.getByText("Sort: Recommended")).toBeInTheDocument()
   })
+
+  it("requests typo tolerance when refetching after a sort change", async () => {
+    const { env, user } = renderWithRelay()
+
+    await user.click(screen.getByText("Sort: Recommended"))
+    await user.click(screen.getByText("Recently Added"))
+
+    const operation = env.mock.getMostRecentOperation()
+
+    expect(operation.request.variables.input).toMatchObject({
+      keywordTypoTolerance: true,
+    })
+  })
+
+  it("requests typo tolerance when refetching after a filter change", async () => {
+    const { env, user } = renderWithRelay()
+
+    // Quick filters are rendered for both mobile and desktop, hence `getAllByText`
+    await user.click(screen.getAllByText("Rarity")[0])
+    await user.click(screen.getAllByText("Unique")[0])
+
+    const operation = env.mock.getMostRecentOperation()
+
+    expect(operation.request.variables.input).toMatchObject({
+      attributionClass: ["unique"],
+      keywordTypoTolerance: true,
+    })
+  })
 })

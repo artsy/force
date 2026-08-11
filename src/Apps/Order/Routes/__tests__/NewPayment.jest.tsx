@@ -1,3 +1,4 @@
+import { screen } from "@testing-library/react"
 import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
 import {
   fixFailedPaymentFailure,
@@ -13,7 +14,6 @@ import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import { screen } from "@testing-library/react"
 import type { NewPaymentTestQuery$rawResponse } from "__generated__/NewPaymentTestQuery.graphql"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
@@ -253,6 +253,38 @@ describe("Payment", () => {
       title: "Charge failed",
       message: expect.stringContaining("Payment has been declined"),
     })
+  })
+
+  it("uses the newly selected credit card when retrying after a failed charge", async () => {
+    mockCommitMutation.mockResolvedValueOnce(fixFailedPaymentFailure)
+    const { user } = renderWithRelay({ CommerceOrder: () => testOrder })
+    const page = new OrderAppTestPageRTL(screen, user)
+    await page.clickSubmit()
+
+    expect(mockCommitMutation).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        variables: expect.objectContaining({
+          input: expect.objectContaining({ creditCardId: "credit-card-id" }),
+        }),
+      }),
+    )
+
+    CreditCardPickerMock.useAnotherCreditCard("another-credit-card-id")
+    await user.click(screen.getByTestId("select-another-credit-card"))
+
+    mockCommitMutation.mockResolvedValueOnce(fixFailedPaymentSuccess)
+    await page.clickSubmit()
+
+    expect(mockCommitMutation).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        variables: expect.objectContaining({
+          input: expect.objectContaining({
+            creditCardId: "another-credit-card-id",
+          }),
+        }),
+      }),
+    )
+    expect(pushMock).toHaveBeenCalledWith("/orders/1234/details")
   })
 
   it("shows an error modal when there is a network error", async () => {

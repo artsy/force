@@ -25,7 +25,7 @@ import type { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPa
 import type { NewPayment_me$data } from "__generated__/NewPayment_me.graphql"
 import type { NewPayment_order$data } from "__generated__/NewPayment_order.graphql"
 import type { Router } from "found"
-import { type FC, createRef, useState } from "react"
+import { type FC, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
@@ -77,7 +77,7 @@ export const NewPaymentRoute: FC<
     stripe,
   } = props
   const isLoading = isCommittingMutation || isGettingCreditCardId
-  const CreditCardPicker = createRef<CreditCardPicker>()
+  const CreditCardPicker = useRef<CreditCardPicker>(null)
 
   const trackErrorMessageEvent = (
     title: string,
@@ -127,6 +127,14 @@ export const NewPaymentRoute: FC<
     }
 
     return null
+  }
+
+  // The result of the picker is cached so that retrying after a recoverable
+  // failure (a declined charge, or an SCA challenge) doesn't create a duplicate
+  // credit card. That cache is only valid for as long as the user sticks with
+  // the same payment method, so drop it as soon as they pick a different one.
+  const handleCreditCardChange = () => {
+    setCreditCardPickerResult(null)
   }
 
   const onContinue = async () => {
@@ -326,6 +334,7 @@ export const NewPaymentRoute: FC<
               commitMutation={commitMutation}
               innerRef={CreditCardPicker}
               tracking={tracking}
+              onCreditCardChange={handleCreditCardChange}
             />
             <Media greaterThan="xs">
               <ContinueButton onClick={onContinue} loading={isLoading} />
