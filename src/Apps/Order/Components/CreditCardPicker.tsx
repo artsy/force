@@ -54,6 +54,7 @@ export interface CreditCardPickerProps {
   commitMutation: CommitMutation
   innerRef: React.RefObject<CreditCardPicker>
   tracking: TrackingProp
+  onCreditCardChange?: () => void
 }
 
 interface CreditCardPickerState {
@@ -270,6 +271,8 @@ export class CreditCardPicker extends React.Component<
             <RadioGroup
               data-test="credit-cards"
               onSelect={val => {
+                this.props.onCreditCardChange?.()
+
                 if (val === "new") {
                   this.setState({ creditCardSelection: { type: "new" } })
                 } else {
@@ -322,6 +325,7 @@ export class CreditCardPicker extends React.Component<
             <CreditCardInput
               error={stripeError?.message}
               onChange={response => {
+                this.props.onCreditCardChange?.()
                 this.setState({ stripeError: response.error as StripeError })
               }}
               required
