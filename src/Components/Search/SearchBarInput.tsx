@@ -1,6 +1,26 @@
+import {
+  ActionType,
+  type SearchedWithNoResults,
+  type SearchedWithResults,
+  type SelectedItemFromSearch,
+} from "@artsy/cohesion"
 import { AutocompleteInput, Box, useDidMount } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useFlag } from "@unleash/proxy-client-react"
+import { Z } from "Apps/Components/constants"
+import { AISearchModal } from "Components/AISearch/AISearchModal"
+import { AISearchTrigger } from "Components/AISearch/AISearchTrigger"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useRouter } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { extractNodes } from "Utils/extractNodes"
+import type {
+  SearchBarInputSuggestQuery,
+  SearchEntity,
+} from "__generated__/SearchBarInputSuggestQuery.graphql"
 import {
   type ChangeEvent,
   type FC,
@@ -10,27 +30,9 @@ import {
   useRef,
   useState,
 } from "react"
-import styled from "styled-components"
-
-import {
-  ActionType,
-  type SearchedWithNoResults,
-  type SearchedWithResults,
-  type SelectedItemFromSearch,
-} from "@artsy/cohesion"
-import { Z } from "Apps/Components/constants"
-import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useRouter } from "System/Hooks/useRouter"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
-import { extractNodes } from "Utils/extractNodes"
-import type {
-  SearchBarInputSuggestQuery,
-  SearchEntity,
-} from "__generated__/SearchBarInputSuggestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import styled from "styled-components"
 import { useDebounce } from "use-debounce"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
@@ -85,6 +87,7 @@ export const SearchBarInput: FC<
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   const [isFocused, setIsFocused] = useState(false)
+  const [isAISearchOpen, setIsAISearchOpen] = useState(false)
   // Request tracking / cancellation
   const [requestId, setRequestId] = useState(0)
   const lastRequestIdRef = useRef<number | null>(null)
@@ -92,6 +95,9 @@ export const SearchBarInput: FC<
   const ref = useRef<HTMLInputElement | null>(null)
 
   const { router, match } = useRouter()
+  // `Subscription.aiAgentTurn` requires a signed-in user's access token, so
+  // there is nothing to offer a visitor here.
+  const { isLoggedIn } = useSystemContext()
 
   // Trimmed so recorded recent searches and the results page never carry
   // accidental whitespace padding
@@ -395,8 +401,9 @@ export const SearchBarInput: FC<
     // toast's "Add to a List" action) takes focus — a provider inside the
     // panel would take the modal down with it.
     <ManageArtworkForSavesProvider>
-      <Box
+      <SearchBarInputContainer
         position="relative"
+        $hasAISearch={!!isLoggedIn}
         onBlur={handleContainerBlur}
         onKeyDown={handleContainerKeyDown}
       >
@@ -451,6 +458,18 @@ export const SearchBarInput: FC<
           height={40}
         />
 
+        {isLoggedIn && (
+          <AISearchTrigger
+            position="absolute"
+            top={0}
+            bottom={0}
+            right={`${AI_SEARCH_TRIGGER_RIGHT}px`}
+            onClick={() => {
+              setIsAISearchOpen(true)
+            }}
+          />
+        )}
+
         {isTrendingVisible && (
           <TrendingPanel
             position="absolute"
@@ -477,10 +496,40 @@ export const SearchBarInput: FC<
             />
           </TrendingPanel>
         )}
-      </Box>
+      </SearchBarInputContainer>
+
+      {isAISearchOpen && (
+        <AISearchModal
+          onClose={() => {
+            setIsAISearchOpen(false)
+          }}
+        />
+      )}
     </ManageArtworkForSavesProvider>
   )
 }
+
+// Palette's `AutocompleteInput` hardcodes its own suffix slot (search icon /
+// clear button / spinner) at `right: 1`, so the AI trigger sits just to the
+// left of it.
+const AI_SEARCH_TRIGGER_RIGHT = 28
+const AI_SEARCH_INPUT_PADDING_RIGHT = 62
+
+// `LabeledInput` measures its suffix and sets `paddingRight` on the input via an
+// inline style, so `!important` is the only way to make room for the trigger.
+const SearchBarInputContainer = styled(Box)<{ $hasAISearch: boolean }>`
+  ${props => {
+    if (!props.$hasAISearch) {
+      return ""
+    }
+
+    return `
+      input {
+        padding-right: ${AI_SEARCH_INPUT_PADDING_RIGHT}px !important;
+      }
+    `
+  }}
+`
 
 // Same box shadow as Palette's AutocompleteInput dropdown, so the trending
 // panel is indistinguishable from the results dropdown chrome.
