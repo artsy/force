@@ -30,16 +30,16 @@ export const SearchResultsArtworksRoute: React.FC<
   )
   const { viewer } = props
   const { sidebar } = viewer
+  const { pathname, query } = match.location
+  const { term } = query
 
   useEffect(() => {
-    const term = match.location.query.term
-
     // This is to avoid remounting the component when moving away from the search page (e.g. by clicking on a search result).
-    if (match.location.pathname !== SEARCH_PATH_NAME || !term) return
+    if (pathname !== SEARCH_PATH_NAME || !term) return
 
     // refresh artwork filter on query change
     setSearchFilterKey(term)
-  }, [match.location.query.term])
+  }, [pathname, term])
 
   return (
     <ArtworkGridContextProvider>
@@ -49,6 +49,11 @@ export const SearchResultsArtworksRoute: React.FC<
         viewer={viewer}
         filters={match.location.query}
         onChange={updateUrl}
+        relayRefetchInputVariables={{
+          // Lets the backend retry the search with typo tolerance (fuzzy
+          // matching) when the exact keyword returns no results.
+          keywordTypoTolerance: true,
+        }}
         ZeroState={ZeroState}
         aggregations={
           sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]

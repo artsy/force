@@ -1,6 +1,38 @@
-import { prepareVariables } from "Apps/Search/searchRoutes"
+import { prepareVariables, searchRoutes } from "Apps/Search/searchRoutes"
 
 describe("searchRoutes", () => {
+  describe("the artworks tab", () => {
+    const prepareArtworksVariables = searchRoutes
+      .find(route => route.path === "/search")
+      ?.children?.find(child => child.path === "")?.prepareVariables
+
+    const getVariables = () => {
+      const variables = prepareArtworksVariables?.({}, {
+        location: { query: { term: "andy" } },
+        context: {},
+      } as any)
+
+      return variables as {
+        input: Record<string, unknown>
+        sidebarInput: Record<string, unknown>
+      }
+    }
+
+    it("requests typo tolerance for the artwork grid", () => {
+      expect(getVariables().input).toMatchObject({
+        keyword: "andy",
+        keywordTypoTolerance: true,
+      })
+    })
+
+    it("requests typo tolerance for the sidebar aggregations", () => {
+      expect(getVariables().sidebarInput).toMatchObject({
+        keyword: "andy",
+        keywordTypoTolerance: true,
+      })
+    })
+  })
+
   describe("prepareVariables", () => {
     it("passes the term through as the keyword", () => {
       const variables = prepareVariables(
