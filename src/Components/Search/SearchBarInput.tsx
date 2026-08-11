@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react"
+import styled, { keyframes } from "styled-components"
 
 import {
   ActionType,
@@ -31,11 +32,11 @@ import { useDebounce } from "use-debounce"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
-import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
+import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
 import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
@@ -370,20 +371,23 @@ export const SearchBarInput: FC<
           )
         }}
         dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
-        dropdownMinWidth={600}
+        // Wide enough that the entity pills don't scroll, and closer to the
+        // trending panel's width so the surface swap is less jarring; clamps
+        // to the viewport on smaller screens.
+        dropdownMinWidth={`min(${RESULTS_DROPDOWN_MIN_WIDTH}px, calc(100vw - 120px))`}
         flip={false}
         height={40}
       />
 
       {showTrending && (
-        <Box
+        <TrendingPanel
           position="absolute"
           top="calc(100% + 8px)"
           left={0}
-          // Extend the panel past the input to span the nav container's width
-          // (like the mega-menu), rather than being limited to the input width.
-          width="calc(100vw - 120px)"
-          maxWidth={1760}
+          // Anchor to the input like the results dropdown, but allow a wider
+          // surface — capped so the size change to the (narrower) results
+          // dropdown stays moderate rather than near-viewport wide.
+          width={`min(${TRENDING_PANEL_MAX_WIDTH}px, calc(100vw - 120px))`}
           zIndex={Z.dropdown}
           bg="mono0"
           border="1px solid"
@@ -396,11 +400,35 @@ export const SearchBarInput: FC<
           onMouseDown={event => event.preventDefault()}
         >
           <TrendingSearches onNavigate={() => setIsFocused(false)} />
-        </Box>
+        </TrendingPanel>
       )}
     </Box>
   )
 }
+
+// Wide enough to fit five artwork cards without scrolling on typical desktop
+// viewports, while staying anchored to the input like the results dropdown.
+const TRENDING_PANEL_MAX_WIDTH = 1200
+
+// Fits all ten entity pills in a single row without horizontal scrolling.
+const RESULTS_DROPDOWN_MIN_WIDTH = 980
+
+const trendingPanelEnter = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
+// Eases the surface swap between the trending panel and the (narrower)
+// results dropdown so the size change reads as intentional, not jumpy.
+const TrendingPanel = styled(Box)`
+  animation: ${trendingPanelEnter} 200ms ease-out;
+`
 
 const QUERY = graphql`
   query SearchBarInputSuggestQuery(

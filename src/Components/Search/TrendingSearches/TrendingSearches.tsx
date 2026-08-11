@@ -2,9 +2,12 @@ import {
   Box,
   Flex,
   Image,
+  ShelfScrollBar,
   SkeletonBox,
   SkeletonText,
+  Spacer,
   Text,
+  useResizeObserver,
 } from "@artsy/palette"
 import { ContextModule } from "@artsy/cohesion"
 import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
@@ -12,7 +15,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
-import { type FC, useMemo, useState } from "react"
+import { type FC, useEffect, useMemo, useState } from "react"
 import { graphql } from "react-relay"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -43,6 +46,10 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const active = TRENDING_WINDOWS[activeIndex]
 
+  // Held in state (not a ref) so the scrollbar re-renders once the rail mounts
+  const [railElement, setRailElement] = useState<HTMLDivElement | null>(null)
+  const [isRailScrollable, setIsRailScrollable] = useState(false)
+
   // Fetch the union of all windows' ids once, then filter client-side per tab.
   const { artistIds, artworkIds } = useMemo(() => {
     const artists = new Set<string>()
@@ -58,6 +65,18 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
     query: QUERY,
     variables: { artistIds, artworkIds },
   })
+
+  const updateRailScrollability = () => {
+    if (!railElement) return
+    setIsRailScrollable(railElement.scrollWidth > railElement.clientWidth)
+  }
+
+  // Re-check when the rail mounts or its content changes (tab switch, load)…
+  // biome-ignore lint/correctness/useExhaustiveDependencies: activeIndex/loading change the rail's content
+  useEffect(updateRailScrollability, [railElement, activeIndex, loading])
+
+  // …and when the rail resizes (viewport changes)
+  useResizeObserver({ target: railElement, onResize: updateRailScrollability })
 
   const artistById = useMemo(() => {
     const map = new Map<string, HydratedArtist>()
@@ -76,51 +95,34 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
   }, [data])
 
   return (
-    <Box>
-      <Flex
-        justifyContent="space-between"
-        alignItems="center"
-        px={2}
-        pt={2}
-        pb={1}
-      >
-        <Text variant="sm-display" fontWeight="bold">
-          Trending on Artsy
-        </Text>
+    // px matches the results dropdown rows (SuggestionItemLink px={2}) so the
+    // edge-to-content spacing stays consistent when the surfaces swap.
+    <Box p={2}>
+      <Text variant={["md", "lg-display"]}>Trending on Artsy</Text>
 
-        <Flex gap={1}>
-          {TRENDING_WINDOWS.map((w, i) => (
-            <Tab
-              key={w.window}
-              selected={i === activeIndex}
-              onClick={() => setActiveIndex(i)}
-              type="button"
-            >
-              {w.label}
-            </Tab>
-          ))}
-        </Flex>
-      </Flex>
+      <Spacer y={2} />
 
-      <Flex flexDirection={["column", "row"]} px={2} pb={2} gap={3}>
+      <Flex flexDirection={["column", "row"]} gap={2}>
         {/* Artists */}
-        <Box width={["auto", 240]} flexShrink={0}>
+        <Box width={["auto", 260]} flexShrink={0}>
           <SectionLabel>Artists</SectionLabel>
 
+          <Spacer y={1} />
+
           {loading
-            ? Array.from({ length: MAX_ARTISTS }).map((_, i) => (
-                <ArtistRowSkeleton key={i} />
-              ))
-            : active.artists
-                .slice(0, MAX_ARTISTS)
-                .map(item => (
+            ? Array.from({ length: MAX_ARTISTS }).map((_, i) => {
+                return <ArtistRowSkeleton key={i} />
+              })
+            : active.artists.slice(0, MAX_ARTISTS).map(item => {
+                return (
                   <ArtistRow
                     key={item.internalID}
                     item={item}
                     hydrated={artistById.get(item.internalID)}
                     onNavigate={onNavigate}
                   />
-                ))}
+                )
+              })}
         </Box>
 
         <Box
@@ -135,23 +137,53 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
         <Box flex={1} overflow="hidden">
           <SectionLabel>Artworks</SectionLabel>
 
-          <Flex gap={2} mt={1} alignItems="flex-end">
+          <Spacer y={1} />
+
+          <ArtworkRail ref={setRailElement} gap={2} alignItems="flex-end">
             {loading
-              ? Array.from({ length: MAX_ARTWORKS }).map((_, i) => (
-                  <ArtworkCardSkeleton key={i} />
-                ))
-              : active.artworks
-                  .slice(0, MAX_ARTWORKS)
-                  .map(item => (
+              ? Array.from({ length: MAX_ARTWORKS }).map((_, i) => {
+                  return <ArtworkCardSkeleton key={i} />
+                })
+              : active.artworks.slice(0, MAX_ARTWORKS).map(item => {
+                  return (
                     <ArtworkCard
                       key={item.internalID}
                       item={item}
                       hydrated={artworkById.get(item.internalID)}
                       onNavigate={onNavigate}
                     />
-                  ))}
-          </Flex>
+                  )
+                })}
+          </ArtworkRail>
+
+          {/* Same scroll affordance as the homepage artwork rails; hidden
+              entirely when all artworks already fit */}
+          {isRailScrollable && (
+            <>
+              <Spacer y={1} />
+
+              <ShelfScrollBar viewport={railElement} />
+            </>
+          )}
         </Box>
+      </Flex>
+
+      <Spacer y={2} />
+
+      <Flex justifyContent="flex-end" gap={1}>
+        {TRENDING_WINDOWS.map((w, i) => {
+          return (
+            <Tab
+              key={w.window}
+              selected={i === activeIndex}
+              aria-pressed={i === activeIndex}
+              onClick={() => setActiveIndex(i)}
+              type="button"
+            >
+              {w.label}
+            </Tab>
+          )
+        })}
       </Flex>
     </Box>
   )
@@ -212,6 +244,10 @@ const ArtistRow: FC<{
 }
 
 const ARTWORK_IMAGE_HEIGHT = 200
+// Cards keep at least this width; the rail scrolls when space runs out.
+// Slightly narrower from `sm` up so all five artworks fit inside the panel
+// on typical desktop viewports (≥ ~1240px) without scrolling.
+const ARTWORK_CARD_FLEX = ["1 0 160px", "1 0 135px"]
 
 const ArtworkCard: FC<{
   item: TrendingArtwork
@@ -226,7 +262,7 @@ const ArtworkCard: FC<{
   }
 
   return (
-    <Box flex={1} minWidth={0}>
+    <Box flex={ARTWORK_CARD_FLEX} minWidth={0}>
       <RouterLink to={href} onClick={onNavigate} display="block">
         <Box width="100%" height={ARTWORK_IMAGE_HEIGHT}>
           <Image
@@ -283,31 +319,49 @@ const ArtworkCard: FC<{
   )
 }
 
-const ArtistRowSkeleton: FC = () => (
-  <Flex alignItems="center" gap={1} py={1}>
-    <SkeletonBox width={ARTIST_IMAGE_SIZE} height={ARTIST_IMAGE_SIZE} ml={3} />
-    <Box flex={1}>
-      <SkeletonText variant="sm-display">Artist name</SkeletonText>
-      <SkeletonText variant="xs">Nationality</SkeletonText>
-    </Box>
-  </Flex>
-)
+const ArtistRowSkeleton: FC = () => {
+  return (
+    <Flex alignItems="center" gap={1} py={1}>
+      <SkeletonBox
+        width={ARTIST_IMAGE_SIZE}
+        height={ARTIST_IMAGE_SIZE}
+        ml={3}
+      />
+      <Box flex={1}>
+        <SkeletonText variant="sm-display">Artist name</SkeletonText>
+        <SkeletonText variant="xs">Nationality</SkeletonText>
+      </Box>
+    </Flex>
+  )
+}
 
-const ArtworkCardSkeleton: FC = () => (
-  <Box flex={1} minWidth={0}>
-    <SkeletonBox width="100%" height={ARTWORK_IMAGE_HEIGHT} />
-    <SkeletonText variant="sm-display" mt={1}>
-      Artist name
-    </SkeletonText>
-    <SkeletonText variant="xs">Artwork title, date</SkeletonText>
-    <SkeletonText variant="xs">Partner</SkeletonText>
-  </Box>
-)
+const ArtworkCardSkeleton: FC = () => {
+  return (
+    <Box flex={ARTWORK_CARD_FLEX} minWidth={0}>
+      <SkeletonBox width="100%" height={ARTWORK_IMAGE_HEIGHT} />
+      <SkeletonText variant="sm-display" mt={1}>
+        Artist name
+      </SkeletonText>
+      <SkeletonText variant="xs">Artwork title, date</SkeletonText>
+      <SkeletonText variant="xs">Partner</SkeletonText>
+    </Box>
+  )
+}
 
 const SectionLabel = styled(Text).attrs({
   variant: "sm",
   color: "mono60",
 })``
+
+// Horizontally scrollable rail; hides scrollbars like SearchInputPills.
+const ArtworkRail = styled(Flex)`
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 const Tab = styled.button<{ selected: boolean }>`
   border: none;
@@ -333,6 +387,8 @@ const RowLink = styled(RouterLink)`
   align-items: center;
   gap: 12px;
   padding: 6px 8px;
+  /* Bleed the hover background so row content aligns with section labels */
+  margin: 0 -8px;
   text-decoration: none;
 
   &:hover {

@@ -15,6 +15,7 @@ import {
 } from "Components/Search/constants"
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
+import { TrendingSearches } from "Components/Search/TrendingSearches/TrendingSearches"
 import createLogger from "Utils/logger"
 import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
@@ -138,13 +139,15 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
         </>
       }
     >
-      {shouldStartSearching(inputValue) && (
+      {shouldStartSearching(inputValue) ? (
         <SearchResultsListPaginationContainer
           viewer={viewer}
           query={inputValue}
           selectedPill={selectedPill}
           onClose={onClose}
         />
+      ) : (
+        <TrendingSearches onNavigate={onClose} />
       )}
     </OverlayBase>
   )
