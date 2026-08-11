@@ -153,18 +153,31 @@ export const SavedAddressOptions = ({
     }
   }, [isStepActive])
 
+  const loneInvalidAddress =
+    savedAddresses.length === 1 && initialSelectedAddress?.isValid === false
+      ? initialSelectedAddress
+      : null
+
   // Auto-open edit form for the single saved address if it has missing fields
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally runs once on mount
   useEffect(() => {
-    if (savedAddresses.length !== 1 || !initialSelectedAddress) return
-    if (!initialSelectedAddress.isValid) {
-      setUserAddressMode({ mode: "edit", address: initialSelectedAddress })
+    if (loneInvalidAddress) {
+      setUserAddressMode({ mode: "edit", address: loneInvalidAddress })
     }
   }, [])
 
   // Reactively set/clear error banner based on selected address validity and shippability
   useEffect(() => {
-    if (!selectedAddress || userAddressMode || !isStepActive) return
+    if (!selectedAddress || !isStepActive) return
+
+    // Skip while the user is adding or editing an address — except for the lone
+    // invalid address above, whose form is open precisely because of this error.
+    // In the offer flow the step isn't active on mount, so this effect first
+    // runs once the form is already open; skipping would drop the error (and
+    // its `errorMessageViewed` event) entirely.
+    const isEditingLoneInvalidAddress =
+      userAddressMode?.mode === "edit" && !!loneInvalidAddress
+    if (userAddressMode && !isEditingLoneInvalidAddress) return
 
     if (!selectedAddress.isShippable && !isOffer) {
       setSectionErrorMessage({
@@ -189,6 +202,7 @@ export const SavedAddressOptions = ({
   }, [
     selectedAddress,
     userAddressMode,
+    loneInvalidAddress,
     isOffer,
     setSectionErrorMessage,
     shippingOriginRegion,

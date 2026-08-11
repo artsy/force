@@ -709,6 +709,84 @@ describe("SavedAddressOptions", () => {
       })
     })
 
+    it("surfaces the error banner for the auto-opened edit form once the step becomes active", async () => {
+      const mockSingleInvalidAddress: ProcessedUserAddress = {
+        ...mockUSAddress1,
+        isValid: false,
+        address: { ...mockUSAddress1.address, city: "" },
+      }
+
+      const contextWith = ({
+        state,
+        userAddressMode,
+      }: {
+        state: CheckoutStepState
+        userAddressMode: { mode: "edit"; address: ProcessedUserAddress } | null
+      }) => {
+        return {
+          ...mockCheckoutContext,
+          isOffer: true,
+          userAddressMode,
+          steps: [{ name: CheckoutStepName.FULFILLMENT_DETAILS, state }],
+        } as any
+      }
+
+      const props = {
+        savedAddresses: [mockSingleInvalidAddress],
+        initialSelectedAddress: mockSingleInvalidAddress,
+      }
+
+      // Offer flow: fulfillment details is not active yet, and the single
+      // invalid address auto-opens its edit form on mount.
+      mockUseCheckoutContext.mockReturnValue(
+        contextWith({
+          state: CheckoutStepState.UPCOMING,
+          userAddressMode: null,
+        }),
+      )
+
+      const { rerender } = renderSavedAddressOptions(props)
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setUserAddressMode).toHaveBeenCalledWith({
+          mode: "edit",
+          address: mockSingleInvalidAddress,
+        })
+      })
+      expect(mockCheckoutContext.setSectionErrorMessage).not.toHaveBeenCalled()
+
+      const userAddressMode = {
+        mode: "edit",
+        address: mockSingleInvalidAddress,
+      } as const
+
+      mockUseCheckoutContext.mockReturnValue(
+        contextWith({ state: CheckoutStepState.UPCOMING, userAddressMode }),
+      )
+      rerender(buildSavedAddressOptions(props))
+
+      expect(mockCheckoutContext.setSectionErrorMessage).not.toHaveBeenCalled()
+
+      // Completing the offer step activates fulfillment details, and the error
+      // explaining why the form is open is surfaced (and tracked as viewed).
+      mockUseCheckoutContext.mockReturnValue(
+        contextWith({ state: CheckoutStepState.ACTIVE, userAddressMode }),
+      )
+      rerender(buildSavedAddressOptions(props))
+
+      await waitFor(() => {
+        expect(mockCheckoutContext.setSectionErrorMessage).toHaveBeenCalledWith(
+          {
+            section: CheckoutStepName.FULFILLMENT_DETAILS,
+            error: {
+              title: "Missing required information",
+              message: "Edit your address and/or phone number to continue.",
+            },
+          },
+        )
+      })
+    })
+
     it("does not open edit form on mount for single valid address", async () => {
       renderSavedAddressOptions({ savedAddresses: [mockUSAddress1] })
 
