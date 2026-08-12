@@ -1,0 +1,116 @@
+focus_areas:
+  - |
+    SSR safety: Force server-side renders every route, so module-scope or
+    render-time access to browser globals (window, document, localStorage,
+    navigator) crashes the server render.
+
+    ✗ FLAG - runs during SSR:
+    const width = window.innerWidth
+    const Foo = () => { const w = window.innerWidth; ... }
+
+    ✓ DO NOT FLAG - guarded or client-only:
+    access inside useEffect / useDidMount / event handlers / callbacks
+    code behind a typeof window !== "undefined" check
+    files under src/Server/, *.jest.tsx, or Playwright specs
+  - |
+    JSX explicit returns: multi-line JSX must use an explicit return with
+    curly braces, not a parenthesized implicit return.
+
+    ✗ FLAG - multi-line implicit return:
+    const Foo = props => (
+      <Box>
+        <Text>Hi</Text>
+      </Box>
+    )
+    items.map(item => (
+      <Item key={item.id} />
+    ))
+
+    ✓ DO NOT FLAG - single-line implicit returns are explicitly allowed:
+    const Foo = ({ title }) => <Text variant="lg-display">{title}</Text>
+    <Button renderIcon={props => <Icon {...props} />} />
+
+    ✓ DO NOT FLAG - not returning JSX:
+    onClick={() => handleClick()}
+    items.filter(x => x.active)
+  - |
+    Typographic quotes: user-facing copy uses curly quotes (‘ ’ “ ”), not
+    straight ones. Applies to rendered strings and their test expectations.
+
+    ✗ FLAG - straight apostrophe in user-facing text:
+    <Text>You're all set</Text>
+    title: "Artsy's guide"
+
+    ✓ DO NOT FLAG - code, not copy:
+    identifiers, prop names, GraphQL fields, URLs, aria/test ids,
+    className strings, or any non-rendered string literal
+  - |
+    Relay conventions:
+    - New query-based components should use SystemQueryRenderer (SSR,
+      lazy-loading, placeholders) or useClientQuery rather than
+      useLazyLoadQuery.
+    - New components should use useFragment / usePaginationFragment.
+      Force still has ~478 files on createFragmentContainer — do NOT flag
+      edits to an existing container; only flag a NEW container being added.
+    - Fragments named ComponentName_fieldName; @refetchable queries named
+      ComponentNamePaginationQuery / ComponentNameRefetchQuery.
+    - Unwrap connections with extractNodes, not manual .edges?.map access.
+  - |
+    Strict null checks: new code must type-check without escape hatches.
+    Adding `@ts-expect-error` — especially
+    `PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` — to new code is a
+    Suggestion at minimum. There are ~70 files with pre-existing flags; do
+    NOT flag those unless the diff adds a new one. Removing one is good.
+  - |
+    Palette and layout:
+    - Prefer @artsy/palette components and their style props (p, m, color,
+      bg) over custom styled-components or the style prop.
+    - Use mono0 / mono100 instead of "white" / "black" so dark mode works.
+    - No external margins: a component must not apply its own outer margin
+      or trailing Spacer. Layout belongs to the parent. Only flag margins on
+      the component's outermost element, not internal spacing.
+  - |
+    Tests: no new snapshot tests (toMatchSnapshot). Prefer React Testing
+    Library assertions on user-visible behavior over implementation details
+    (instance internals, prop spying). Relay components should be tested via
+    setupTestWrapperTL from src/DevTools/setupTestWrapperTL.tsx.
+  - |
+    Module conventions: prefer named exports over default exports; do not
+    add index.ts / index.tsx barrel files that re-export modules.
+
+ignore_paths:
+  - "src/__generated__/**"
+  - "data/schema.graphql"
+  - "data/schema.json"
+  - "yarn.lock"
+  - "patches/**"
+
+context: |
+  Force is Artsy's public-facing web app (artsy.net) — a React 18 +
+  TypeScript SSR app served by Express.
+
+  - Found for routing; sub-apps live in src/Apps/<App>/ with routes.tsx,
+    Components/, and Routes/. Shared components in src/Components/,
+    framework code in src/System/.
+  - Relay against Metaphysics for all data fetching.
+  - @artsy/palette for UI, styled-components underneath.
+  - react-tracking with @artsy/cohesion schemas for analytics; entity
+    routes wrap in <Analytics contextPageOwnerId={...}>.
+  - Jest + @testing-library/react for unit tests, Playwright for route
+    smoke tests in playwright/e2e.
+
+  Conventions are documented in AGENTS.md and docs/best_practices.md.
+
+  Biome handles formatting and lint, `yarn type-check` handles types, and
+  the Relay compiler validates GraphQL — do not duplicate those checks or
+  comment on formatting.
+
+  Force is a large codebase with a long history, so newer code follows newer
+  patterns. Judge a diff against current conventions, but do not ask the
+  author to modernize surrounding legacy code they merely touched.
+
+  Calibration: use Blocking only for provable bugs, security issues, or SSR
+  crashes. Convention and pattern issues are Suggestions. If you are
+  hedging ("might", "could", "possibly"), use "Questions for Author"
+  instead. Don't claim "tests will fail" — CI covers that; suggesting new
+  tests or updated expectations is fine as a Suggestion.
