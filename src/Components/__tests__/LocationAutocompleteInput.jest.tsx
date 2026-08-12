@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { render } from "@testing-library/react"
 import {
   LocationAutocompleteInput,
@@ -177,6 +177,43 @@ describe("LocationAutocompleteInput", () => {
       await waitFor(() => {
         expect(screen.getAllByRole("option", { hidden: true })).toHaveLength(2)
       })
+    })
+  })
+})
+
+describe("when another Google script defines window.google without Maps", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    // @ts-ignore
+    global.window.google = { accounts: {} }
+    global.window.__googleMapsCallback = undefined
+  })
+
+  afterEach(() => {
+    setupGoogleMapsMock()
+    global.window.__googleMapsCallback = undefined
+  })
+
+  it("renders without crashing and waits for the Maps script", () => {
+    render(<LocationAutocompleteInput name="location" title="Location" />)
+
+    expect(screen.getByTestId("autocomplete-location")).toBeInTheDocument()
+    expect(AutocompleteService).not.toHaveBeenCalled()
+    expect(typeof global.window.__googleMapsCallback).toBe("function")
+  })
+
+  it("initializes the Places services once the Maps script loads", async () => {
+    render(<LocationAutocompleteInput name="location" title="Location" />)
+
+    setupGoogleMapsMock()
+
+    act(() => {
+      global.window.__googleMapsCallback?.()
+    })
+
+    await waitFor(() => {
+      expect(AutocompleteService).toHaveBeenCalledTimes(1)
+      expect(Geocoder).toHaveBeenCalledTimes(1)
     })
   })
 })
