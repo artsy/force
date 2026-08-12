@@ -1,12 +1,16 @@
 import { Box, Flex, Spinner, Text } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar/ConversationsSidebarEmpty"
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
+import { useConversationsWebsocket } from "Apps/Conversations/hooks/useConversationsWebsocket"
 import { useLoadMore } from "Apps/Conversations/hooks/useLoadMore"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 import { Sentinel } from "Components/Sentinal"
 import { useRouter } from "System/Hooks/useRouter"
+import { useTabVisible } from "Utils/Hooks/useTabVisible"
 import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
 import type { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { useEffect, useState } from "react"
 import {
@@ -76,28 +80,59 @@ export const ConversationsSidebar: React.FC<
     // across renders.
   }, [totalDisplayedCount])
 
-  // Refetch messages in the background, but only when a user has scrolled to
-  // the top of the convo list.
-  useRefetchLatestMessagesPoll({
-    intervalTime: 10000,
-    clearWhen: !enableSilentSidebarRefetch,
-    onRefetch: () => {
-      if (!enableSilentSidebarRefetch) {
+  const isWebsocketEnabled = useFlag("amber_conversations-force-websocket")
+  const isAutoRefreshEnabled = !!getENV(
+    "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
+  )
+  const isTabVisible = useTabVisible()
+
+  const performSidebarRefetch = () => {
+    const fetchSize =
+      viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
+
+    relay.refetchConnection(
+      fetchSize,
+      {},
+      {
+        first: fetchSize,
+      },
+    )
+  }
+
+  const refetchSidebar = () => {
+    if (!enableSilentSidebarRefetch) {
+      return
+    }
+
+    performSidebarRefetch()
+  }
+
+  useConversationsWebsocket({
+    subscriptionKey: "inbox",
+    enabled: isWebsocketEnabled && isAutoRefreshEnabled,
+    onEvent: event => {
+      if (event.type !== "message.sent") {
         return
       }
-      // When refetching, check to see if we've loaded more, and if so, refetch
-      // current total count of sidebar list
-      const fetchSize =
-        viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
 
-      relay.refetchConnection(
-        fetchSize,
-        {},
-        {
-          first: fetchSize,
-        },
-      )
+      if (!isTabVisible) {
+        return
+      }
+
+      // Bypass the scroll-position guard: unlike the polling fallback, the
+      // websocket path only refetches once per genuine new message, so we
+      // accept that a conversation may reorder under the user's scroll
+      // position rather than silently missing the update.
+      performSidebarRefetch()
     },
+  })
+
+  // Refetch messages in the background, but only when a user has scrolled to
+  // the top of the convo list, and only while the websocket is disabled.
+  useRefetchLatestMessagesPoll({
+    intervalTime: 10000,
+    clearWhen: !enableSilentSidebarRefetch || isWebsocketEnabled,
+    onRefetch: refetchSidebar,
   })
 
   return (
@@ -121,6 +156,7 @@ export const ConversationsSidebar: React.FC<
       {conversations.length === 0 && <ConversationsSidebarEmpty />}
 
       <Sentinel
+        testId="ConversationsSidebarTopSentinel"
         onEnterView={() => setEnableSilentSidebarRefetch(true)}
         onExitView={() => setEnableSilentSidebarRefetch(false)}
       />

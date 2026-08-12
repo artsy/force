@@ -1,4 +1,5 @@
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
+import { ConversationsWebsocketProvider } from "Apps/Conversations/context/ConversationsWebsocketContext"
 import { ConversationHeader } from "Apps/Conversations/components/ConversationHeader"
 import { ConversationsLayout } from "Apps/Conversations/components/ConversationLayout"
 import { ConversationReply } from "Apps/Conversations/components/ConversationReply"
@@ -28,36 +29,38 @@ const ConversationApp: React.FC<
   }
 
   return (
-    <ConversationsProvider conversation={conversation}>
-      <MetaTags title="Inbox | Artsy" />
+    <ConversationsWebsocketProvider>
+      <ConversationsProvider conversation={conversation}>
+        <MetaTags title="Inbox | Artsy" />
 
-      <ConversationsLayout
-        renderSidebar={() => {
-          return <ConversationsSidebarPaginationContainer viewer={viewer} />
-        }}
-        renderMessages={() => {
-          return (
-            <>
-              <Media lessThan="md">
-                <ConversationHeader conversation={conversation} />
-              </Media>
-              <ConversationMessagesPaginationContainer
+        <ConversationsLayout
+          renderSidebar={() => {
+            return <ConversationsSidebarPaginationContainer viewer={viewer} />
+          }}
+          renderMessages={() => {
+            return (
+              <>
+                <Media lessThan="md">
+                  <ConversationHeader conversation={conversation} />
+                </Media>
+                <ConversationMessagesPaginationContainer
+                  conversation={conversation}
+                />
+                <ConversationReply conversation={conversation} />
+              </>
+            )
+          }}
+          renderDetails={() => {
+            return (
+              <ConversationDetails
                 conversation={conversation}
+                onClose={goToConversation}
               />
-              <ConversationReply conversation={conversation} />
-            </>
-          )
-        }}
-        renderDetails={() => {
-          return (
-            <ConversationDetails
-              conversation={conversation}
-              onClose={goToConversation}
-            />
-          )
-        }}
-      />
-    </ConversationsProvider>
+            )
+          }}
+        />
+      </ConversationsProvider>
+    </ConversationsWebsocketProvider>
   )
 }
 

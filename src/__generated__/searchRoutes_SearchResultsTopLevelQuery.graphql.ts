@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c7f25a76acd6fe6b9507ecadd535834>>
+ * @generated SignedSource<<dae4a0417c09592f2cfb48be71a02af7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -239,6 +239,11 @@ return {
               },
               {
                 "kind": "Literal",
+                "name": "keywordTypoTolerance",
+                "value": true
+              },
+              {
+                "kind": "Literal",
                 "name": "size",
                 "value": 0
               }
@@ -276,12 +281,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "29135631f3bc0ca939f6d9397bbd8532",
+    "cacheID": "b158792e4ac9c05464863c7f83a484c5",
     "id": null,
     "metadata": {},
     "name": "searchRoutes_SearchResultsTopLevelQuery",
     "operationKind": "query",
-    "text": "query searchRoutes_SearchResultsTopLevelQuery(\n  $keyword: String!\n) {\n  viewer {\n    ...SearchApp_viewer_2hPz0N\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2hPz0N on Viewer {\n  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": "query searchRoutes_SearchResultsTopLevelQuery(\n  $keyword: String!\n) {\n  viewer {\n    ...SearchApp_viewer_2hPz0N\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2hPz0N on Viewer {\n  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL], keywordTypoTolerance: true) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
   }
 };
 })();

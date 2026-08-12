@@ -172,7 +172,12 @@ export const SearchAppFragmentContainer = createFragmentContainer(SearchApp, {
           }
         }
       }
-      artworksConnection(keyword: $term, size: 0, aggregations: [TOTAL]) {
+      artworksConnection(
+        keyword: $term
+        size: 0
+        aggregations: [TOTAL]
+        keywordTypoTolerance: true
+      ) {
         counts {
           total
         }
