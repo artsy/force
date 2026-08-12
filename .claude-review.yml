@@ -1,0 +1,86 @@
+focus_areas:
+  - |
+    SSR safety: Force server-side renders every route, so module-scope or
+    render-time access to browser globals (window, document, localStorage,
+    navigator) crashes the server render. This is the one category worth
+    treating as Blocking.
+
+    ✗ FLAG - runs during SSR:
+    const width = window.innerWidth
+    const Foo = () => { const w = window.innerWidth; ... }
+
+    ✓ DO NOT FLAG - guarded or client-only:
+    access inside useEffect / useDidMount / event handlers / callbacks
+    code behind a typeof window !== "undefined" check
+    files under src/Server/, *.jest.tsx, or Playwright specs
+  - |
+    Typographic quotes: user-facing copy uses curly quotes (‘ ’ “ ”), not
+    straight ones. Applies to rendered strings and their test expectations.
+
+    ✗ FLAG - straight apostrophe in user-facing text:
+    <Text>You're all set</Text>
+    title: "Artsy's guide"
+
+    ✓ DO NOT FLAG - code, not copy:
+    identifiers, prop names, GraphQL fields, URLs, aria/test ids,
+    className strings, or any non-rendered string literal
+  - |
+    Relay entry points: Force prefers SystemQueryRenderer (SSR,
+    lazy-loading, placeholders) or useClientQuery over useLazyLoadQuery —
+    note this differs from other Artsy repos. New components should use
+    useFragment / usePaginationFragment, but ~478 files still use
+    createFragmentContainer: do NOT flag edits to an existing container,
+    only a NEW one being added.
+  - |
+    Strict null checks: new code must type-check without escape hatches.
+    Adding `@ts-expect-error` — especially
+    `PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` — to new code is a
+    Suggestion at minimum. ~70 files carry pre-existing flags; do NOT flag
+    those unless the diff adds a new one. Removing one is good.
+  - |
+    No external margins: a component must not apply its own outer margin or
+    trailing Spacer — layout belongs to the parent, so components stay
+    portable. Only flag margins on the component's outermost element, not
+    internal spacing.
+  - |
+    Tests: no new snapshot tests (toMatchSnapshot). Relay components should
+    be tested via setupTestWrapperTL from
+    src/DevTools/setupTestWrapperTL.tsx. Prefer assertions on user-visible
+    behavior over implementation details.
+
+ignore_paths:
+  - "src/__generated__/**"
+  - "data/schema.graphql"
+  - "data/schema.json"
+  - "yarn.lock"
+  - "patches/**"
+
+context: |
+  Force is Artsy's public-facing web app (artsy.net) — a React 18 +
+  TypeScript SSR app served by Express.
+
+  - Found for routing; sub-apps live in src/Apps/<App>/ with routes.tsx,
+    Components/, and Routes/. Shared components in src/Components/,
+    framework code in src/System/.
+  - Relay against Metaphysics for all data fetching.
+  - @artsy/palette for UI, styled-components underneath.
+  - react-tracking with @artsy/cohesion schemas for analytics; entity
+    routes wrap in <Analytics contextPageOwnerId={...}>.
+  - Jest + @testing-library/react for unit tests, Playwright for route
+    smoke tests in playwright/e2e.
+
+  Conventions live in AGENTS.md, docs/best_practices.md, and the shared
+  conventions doc AGENTS.md imports. Read AGENTS.md first; where it
+  conflicts with the shared doc, AGENTS.md wins.
+
+  Biome handles formatting and lint, `yarn type-check` handles types, and
+  the Relay compiler validates GraphQL — do not duplicate those checks or
+  comment on formatting.
+
+  Force is a large codebase with a long history, so newer code follows newer
+  patterns. Judge a diff against current conventions, but do not ask the
+  author to modernize surrounding legacy code they merely touched.
+
+  Calibration: an SSR crash is Blocking. Convention and pattern issues are
+  Suggestions, never Blocking. Don't claim "tests will fail" — CI covers
+  that; suggesting new tests or updated expectations is fine.
