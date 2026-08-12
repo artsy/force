@@ -2,7 +2,8 @@ focus_areas:
   - |
     SSR safety: Force server-side renders every route, so module-scope or
     render-time access to browser globals (window, document, localStorage,
-    navigator) crashes the server render.
+    navigator) crashes the server render. This is the one category worth
+    treating as Blocking.
 
     ✗ FLAG - runs during SSR:
     const width = window.innerWidth
@@ -12,27 +13,6 @@ focus_areas:
     access inside useEffect / useDidMount / event handlers / callbacks
     code behind a typeof window !== "undefined" check
     files under src/Server/, *.jest.tsx, or Playwright specs
-  - |
-    JSX explicit returns: multi-line JSX must use an explicit return with
-    curly braces, not a parenthesized implicit return.
-
-    ✗ FLAG - multi-line implicit return:
-    const Foo = props => (
-      <Box>
-        <Text>Hi</Text>
-      </Box>
-    )
-    items.map(item => (
-      <Item key={item.id} />
-    ))
-
-    ✓ DO NOT FLAG - single-line implicit returns are explicitly allowed:
-    const Foo = ({ title }) => <Text variant="lg-display">{title}</Text>
-    <Button renderIcon={props => <Icon {...props} />} />
-
-    ✓ DO NOT FLAG - not returning JSX:
-    onClick={() => handleClick()}
-    items.filter(x => x.active)
   - |
     Typographic quotes: user-facing copy uses curly quotes (‘ ’ “ ”), not
     straight ones. Applies to rendered strings and their test expectations.
@@ -45,38 +25,28 @@ focus_areas:
     identifiers, prop names, GraphQL fields, URLs, aria/test ids,
     className strings, or any non-rendered string literal
   - |
-    Relay conventions:
-    - New query-based components should use SystemQueryRenderer (SSR,
-      lazy-loading, placeholders) or useClientQuery rather than
-      useLazyLoadQuery.
-    - New components should use useFragment / usePaginationFragment.
-      Force still has ~478 files on createFragmentContainer — do NOT flag
-      edits to an existing container; only flag a NEW container being added.
-    - Fragments named ComponentName_fieldName; @refetchable queries named
-      ComponentNamePaginationQuery / ComponentNameRefetchQuery.
-    - Unwrap connections with extractNodes, not manual .edges?.map access.
+    Relay entry points: Force prefers SystemQueryRenderer (SSR,
+    lazy-loading, placeholders) or useClientQuery over useLazyLoadQuery —
+    note this differs from other Artsy repos. New components should use
+    useFragment / usePaginationFragment, but ~478 files still use
+    createFragmentContainer: do NOT flag edits to an existing container,
+    only a NEW one being added.
   - |
     Strict null checks: new code must type-check without escape hatches.
     Adding `@ts-expect-error` — especially
     `PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` — to new code is a
-    Suggestion at minimum. There are ~70 files with pre-existing flags; do
-    NOT flag those unless the diff adds a new one. Removing one is good.
+    Suggestion at minimum. ~70 files carry pre-existing flags; do NOT flag
+    those unless the diff adds a new one. Removing one is good.
   - |
-    Palette and layout:
-    - Prefer @artsy/palette components and their style props (p, m, color,
-      bg) over custom styled-components or the style prop.
-    - Use mono0 / mono100 instead of "white" / "black" so dark mode works.
-    - No external margins: a component must not apply its own outer margin
-      or trailing Spacer. Layout belongs to the parent. Only flag margins on
-      the component's outermost element, not internal spacing.
+    No external margins: a component must not apply its own outer margin or
+    trailing Spacer — layout belongs to the parent, so components stay
+    portable. Only flag margins on the component's outermost element, not
+    internal spacing.
   - |
-    Tests: no new snapshot tests (toMatchSnapshot). Prefer React Testing
-    Library assertions on user-visible behavior over implementation details
-    (instance internals, prop spying). Relay components should be tested via
-    setupTestWrapperTL from src/DevTools/setupTestWrapperTL.tsx.
-  - |
-    Module conventions: prefer named exports over default exports; do not
-    add index.ts / index.tsx barrel files that re-export modules.
+    Tests: no new snapshot tests (toMatchSnapshot). Relay components should
+    be tested via setupTestWrapperTL from
+    src/DevTools/setupTestWrapperTL.tsx. Prefer assertions on user-visible
+    behavior over implementation details.
 
 ignore_paths:
   - "src/__generated__/**"
@@ -99,7 +69,9 @@ context: |
   - Jest + @testing-library/react for unit tests, Playwright for route
     smoke tests in playwright/e2e.
 
-  Conventions are documented in AGENTS.md and docs/best_practices.md.
+  Conventions live in AGENTS.md, docs/best_practices.md, and the shared
+  conventions doc AGENTS.md imports. Read AGENTS.md first; where it
+  conflicts with the shared doc, AGENTS.md wins.
 
   Biome handles formatting and lint, `yarn type-check` handles types, and
   the Relay compiler validates GraphQL — do not duplicate those checks or
@@ -109,8 +81,6 @@ context: |
   patterns. Judge a diff against current conventions, but do not ask the
   author to modernize surrounding legacy code they merely touched.
 
-  Calibration: use Blocking only for provable bugs, security issues, or SSR
-  crashes. Convention and pattern issues are Suggestions. If you are
-  hedging ("might", "could", "possibly"), use "Questions for Author"
-  instead. Don't claim "tests will fail" — CI covers that; suggesting new
-  tests or updated expectations is fine as a Suggestion.
+  Calibration: an SSR crash is Blocking. Convention and pattern issues are
+  Suggestions, never Blocking. Don't claim "tests will fail" — CI covers
+  that; suggesting new tests or updated expectations is fine.

@@ -4,6 +4,8 @@ Force is Artsy's public-facing web application.
 
 Our best practices are documented in detail in @docs/best_practices.md
 
+Shared Artsy frontend conventions live in @.claude/rules/artsy-frontend-conventions.md (synced from [artsy/agent-tooling](https://github.com/artsy/agent-tooling)). This file wins where the two conflict.
+
 ## Tech Stack
 
 - **React** - Component framework
