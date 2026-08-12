@@ -27,6 +27,10 @@ const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${get
   "SESSION_ID",
 )}&callback=__googleMapsCallback`
 
+const isGooglePlacesLoaded = (): boolean => {
+  return typeof google !== "undefined" && !!google.maps?.places
+}
+
 interface LocationAutocompleteInputProps
   extends Omit<
     AutocompleteInputProps<AutocompleteInputOptionType>,
@@ -49,7 +53,7 @@ export const LocationAutocompleteInput: FC<
   const geocoderRef = useRef<google.maps.Geocoder | null>(null)
 
   useEffect(() => {
-    if (typeof google === "undefined") {
+    if (!isGooglePlacesLoaded()) {
       window.__googleMapsCallback = () => {
         setReady(true)
       }
@@ -60,7 +64,7 @@ export const LocationAutocompleteInput: FC<
   }, [])
 
   useEffect(() => {
-    if (typeof google === "undefined" || !ready) return
+    if (!ready || !isGooglePlacesLoaded()) return
     autocompleteServiceRef.current =
       new google.maps.places.AutocompleteService()
     geocoderRef.current = new google.maps.Geocoder()
