@@ -48,7 +48,7 @@ export const AboutOurTeam = () => {
                     gap={1}
                     flexDirection={["column", "row"]}
                   >
-                    {TEAM_MEMBERS.slice(0, 3).map(member => (
+                    {TEAM_MEMBERS.slice(0, 4).map(member => (
                       <Box key={member.name} flexBasis={["100%", "25%"]}>
                         <AboutOurTeamItem {...member} />
                       </Box>
@@ -56,7 +56,7 @@ export const AboutOurTeam = () => {
                   </Flex>
 
                   <GridColumns gridColumnGap={1}>
-                    {TEAM_MEMBERS.slice(3).map(member => (
+                    {TEAM_MEMBERS.slice(4).map(member => (
                       <AboutOurTeamItem key={member.name} {...member} />
                     ))}
                   </GridColumns>
@@ -86,37 +86,52 @@ const TEAM_MEMBERS = [
   {
     name: "Jeffrey Yin",
     title: "CEO",
-    src: "https://files.artsy.net/images/about-our-team-jeffrey-yin.png",
+    src: "https://files.artsy.net/images/about-our-team-jeffrey-yin-v2.png",
   },
   {
     name: "Dustyn Kim",
     title: "President",
-    src: "https://files.artsy.net/images/about-our-team-dustyn-kim.png",
+    src: "https://files.artsy.net/images/about-our-team-dustyn-kim-v2.png",
   },
   {
     name: "Angela Vinci",
     title: "Chief Product Officer",
-    src: "https://files.artsy.net/images/about-our-team-angela-vinci-1.png",
+    src: "https://files.artsy.net/images/about-our-team-angela-vinci-v2.png",
   },
   {
-    name: "Joey Aghion",
-    title: "VP, Engineering",
-    src: "https://files.artsy.net/images/about-our-team-joey-aghion.png",
-  },
-  {
-    name: "Alex Forbes",
-    title: "VP, Global Partnerships",
-    src: "https://files.artsy.net/images/about-our-team-alex-forbes.png",
+    name: "Katie Foley",
+    title: "Chief Operating Officer",
+    src: "https://files.artsy.net/images/about-our-team-kathryn-foley-v2.png",
   },
   {
     name: "Ani Petrov",
     title: "VP, Marketing & Data Analytics",
-    src: "https://files.artsy.net/images/about-our-team-ani-petrov-1.png",
+    src: "https://files.artsy.net/images/about-our-team-ani-petrov-v2.png",
+  },
+  {
+    name: "Alex Forbes",
+    title: "VP, Global Partnerships",
+    src: "https://files.artsy.net/images/about-our-team-alex-forbes-v2.png",
+  },
+  {
+    name: "Joey Aghion",
+    title: "VP, Engineering",
+    src: "https://files.artsy.net/images/about-our-team-joey-aghion-v2.png",
   },
   {
     name: "Christopher Young",
     title: "VP, Finance & Corporate Development",
-    src: "https://files.artsy.net/images/about-our-team-christopher-young-1.png",
+    src: "https://files.artsy.net/images/about-our-team-christopher-young-v2.png",
+  },
+  {
+    name: "Bill Fine",
+    title: "EVP, Strategic Accounts",
+    src: "https://files.artsy.net/images/about-our-team-bill-fine-v2.png",
+  },
+  {
+    name: "Gray Holubar",
+    title: "VP of People",
+    src: "https://files.artsy.net/images/about-our-team-gray-holubar-v2.png",
   },
 ]
 
