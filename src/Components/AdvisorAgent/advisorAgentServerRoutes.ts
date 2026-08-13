@@ -12,7 +12,18 @@ import { type NextFunction, Router } from "express"
 
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 const MODEL = "claude-opus-4-8"
-const MAX_TOOL_STEPS = 8
+const MAX_TOKENS = 16000
+
+// Each step is a separate, non-streaming Anthropic call, and the app times out
+// requests after 29s in production (see initializeMiddleware). Keep the loop
+// short and the thinking budget moderate so a search-and-recommend turn fits.
+const MAX_TOOL_STEPS = 4
+const EFFORT = "medium"
+
+// This endpoint spends against Artsy's Anthropic account and the transcript is
+// supplied by the client, so bound what a single request can carry.
+const MAX_INCOMING_MESSAGES = 40
+const MAX_INCOMING_CHARS = 60_000
 
 const SYSTEM_PROMPT = `You are an art advisor for Artsy. You help collectors discover artworks through conversation.
 
@@ -90,8 +101,9 @@ const callAnthropic = async ({ messages }: { messages: AgentMessage[] }) => {
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 4096,
+      max_tokens: MAX_TOKENS,
       thinking: { type: "adaptive" },
+      output_config: { effort: EFFORT },
       system: SYSTEM_PROMPT,
       tools: TOOLS,
       messages,
@@ -118,10 +130,23 @@ const extractReply = (message: AgentMessage): string => {
 }
 
 const advisorAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
+  if (!req.user) {
+    res.status(403).send({ error: "You must be signed in to use the advisor" })
+    return
+  }
+
   const incomingMessages = req.body?.messages
 
   if (!Array.isArray(incomingMessages) || incomingMessages.length === 0) {
     res.status(400).send({ error: "messages is required" })
+    return
+  }
+
+  if (
+    incomingMessages.length > MAX_INCOMING_MESSAGES ||
+    JSON.stringify(incomingMessages).length > MAX_INCOMING_CHARS
+  ) {
+    res.status(413).send({ error: "This conversation is too long to continue" })
     return
   }
 
@@ -134,11 +159,24 @@ const advisorAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
 
   try {
     // Agentic loop: resolve tool calls until the model produces a final answer.
+    // The last assistant message is tracked separately because the loop can end
+    // on a `tool_use` turn once it runs out of steps, leaving a tool result as
+    // the final entry.
+    let lastAssistantMessage: AgentMessage | null = null
+    let stopReason: string | null = null
+
     let step = 0
     while (step < MAX_TOOL_STEPS) {
       step += 1
       const response = await callAnthropic({ messages })
-      messages.push({ role: "assistant", content: response.content })
+      const assistantMessage: AgentMessage = {
+        role: "assistant",
+        content: response.content,
+      }
+
+      messages.push(assistantMessage)
+      lastAssistantMessage = assistantMessage
+      stopReason = response.stop_reason ?? null
 
       if (response.stop_reason !== "tool_use") {
         break
@@ -161,7 +199,13 @@ const advisorAgentChatPost = async (req: ArtsyRequest, res: ArtsyResponse) => {
       messages.push({ role: "user", content: toolResults })
     }
 
-    res.send({ messages, reply: extractReply(messages[messages.length - 1]) })
+    res.send({
+      messages,
+      reply: lastAssistantMessage ? extractReply(lastAssistantMessage) : "",
+      // `max_tokens` (truncated), `refusal` (declined), or `tool_use` (ran out
+      // of steps) all mean the reply is incomplete; the UI says so.
+      stopReason,
+    })
   } catch (error) {
     console.error("[advisorAgent] request failed:", error)
     res.status(500).send({

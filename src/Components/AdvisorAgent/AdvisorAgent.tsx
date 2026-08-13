@@ -8,7 +8,25 @@ export const AGENTIC_SEARCH_FEATURE_FLAG = "emerald_agentic-search"
 interface TranscriptEntry {
   role: "you" | "advisor"
   text: string
+  // Shown under the message when a reply came back incomplete.
+  notice?: string
 }
+
+// The server passes the Anthropic stop reason through so we can tell the
+// collector why a reply looks cut short, rather than silently rendering it as a
+// finished answer.
+const NOTICE_BY_STOP_REASON: Record<string, string> = {
+  max_tokens: "This reply was cut off before the advisor finished.",
+  refusal: "The advisor declined to answer that.",
+  tool_use: "The advisor ran out of steps before finishing its search.",
+}
+
+const ERROR_BY_STATUS: Record<number, string> = {
+  403: "Sign in to Artsy to chat with an advisor.",
+  413: "This conversation has gotten too long for the advisor to continue.",
+}
+
+const GENERIC_ERROR = "Sorry — something went wrong reaching the advisor."
 
 // The full message list the server round-trips (opaque to the UI — it carries
 // tool calls, tool results, and thinking blocks). We keep it to send back each
@@ -259,7 +277,15 @@ export const AdvisorAgent: React.FC = () => {
       })
 
       if (!response.ok) {
-        throw new Error(`Request failed: ${response.status}`)
+        setTranscript(prev => [
+          ...prev,
+          {
+            role: "advisor",
+            text: ERROR_BY_STATUS[response.status] ?? GENERIC_ERROR,
+          },
+        ])
+
+        return
       }
 
       const payload = await response.json()
@@ -267,17 +293,15 @@ export const AdvisorAgent: React.FC = () => {
       setWireMessages(payload.messages)
       setTranscript(prev => [
         ...prev,
-        { role: "advisor", text: payload.reply || "…" },
+        {
+          role: "advisor",
+          text: payload.reply || "…",
+          notice: NOTICE_BY_STOP_REASON[payload.stopReason],
+        },
       ])
     } catch (error) {
       console.error(error)
-      setTranscript(prev => [
-        ...prev,
-        {
-          role: "advisor",
-          text: "Sorry — something went wrong reaching the advisor.",
-        },
-      ])
+      setTranscript(prev => [...prev, { role: "advisor", text: GENERIC_ERROR }])
     } finally {
       setIsLoading(false)
     }
@@ -362,6 +386,12 @@ export const AdvisorAgent: React.FC = () => {
                     {entry.text}
                   </Text>
                 </Box>
+
+                {entry.notice ? (
+                  <Text variant="xs" color="mono60" mt={0.3}>
+                    {entry.notice}
+                  </Text>
+                ) : null}
 
                 {recommended.length > 0 ? (
                   <Box width="85%" mt={0.5}>
