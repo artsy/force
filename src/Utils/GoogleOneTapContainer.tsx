@@ -34,7 +34,10 @@ export const GoogleOneTapContainer = () => {
   const { sendToast } = useToasts()
   const { state: authDialogState } = useAuthDialogContext()
 
+  // `window` guard keeps this from throwing during SSR, where the pathname
+  // check below would otherwise run against an undefined `window`.
   const enabled =
+    typeof window !== "undefined" &&
     !isLoggedIn &&
     !!googleClientId &&
     !isAuthPath(window.location.pathname) &&
