@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Input, Spacer, Text } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import type * as React from "react"
 import { useEffect, useRef, useState } from "react"
 
@@ -215,7 +216,10 @@ const ArtworkPreviewCard: React.FC<ArtworkPreviewCardProps> = ({ artwork }) => {
 }
 
 export const AdvisorAgent: React.FC = () => {
-  const isEnabled = !!useFlag(AGENTIC_SEARCH_FEATURE_FLAG)
+  const isFlagEnabled = !!useFlag(AGENTIC_SEARCH_FEATURE_FLAG)
+  const { isLoggedIn } = useSystemContext()
+
+  const isEnabled = isFlagEnabled && !!isLoggedIn
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [draft, setDraft] = useState("")
@@ -245,8 +249,8 @@ export const AdvisorAgent: React.FC = () => {
   }, [transcript, isLoading])
 
   // Placed after the hooks above so they run on every render regardless of the
-  // flag. `useFlag` isn't isomorphic, so this is always false during SSR and the
-  // advisor mounts once Unleash resolves on the client.
+  // flag or login state. `useFlag` isn't isomorphic, so this is always false
+  // during SSR and the advisor mounts once Unleash resolves on the client.
   if (!isEnabled) {
     return null
   }
