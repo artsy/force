@@ -15074,7 +15074,7 @@ type CreateMailchimpCampaignFailure {
 
 input CreateMailchimpCampaignInput {
   """
-  Artwork IDs to associate with the campaign for tracking (mutually exclusive with partnerShowId)
+  Artwork IDs to associate with the campaign for tracking
   """
   artworkIds: [String!]
   clientMutationId: String
@@ -15093,11 +15093,6 @@ input CreateMailchimpCampaignInput {
   The internal ID of the Mailchimp account to use
   """
   mailchimpAccountId: String!
-
-  """
-  Partner show ID to associate with the campaign for tracking (mutually exclusive with artworkIds)
-  """
-  partnerShowId: String
 
   """
   The email preview text
@@ -23214,11 +23209,6 @@ type MailchimpCampaign {
   partnerId: String
 
   """
-  The partner show associated with this campaign, if any
-  """
-  partnerShowId: String
-
-  """
   The email preview text
   """
   previewText: String
@@ -30375,9 +30365,19 @@ type PartnerList {
   partnerShowID: String
 
   """
+  Whether this list's private viewing room publication is gated by a passcode. Null if no publication exists yet.
+  """
+  passcodeProtected: Boolean
+
+  """
   The private viewing room publication for this list, if one exists (only applies to private_viewing_room lists). Not resolvable through partnerListsConnection.
   """
   publication: PartnerListPublication
+
+  """
+  Whether this list's private viewing room publication is live. Null if no publication exists yet.
+  """
+  published: Boolean
   startAt(
     format: String
 
@@ -30468,6 +30468,11 @@ type PartnerListPublication {
   Per-field visibility toggles for artworks in the room. Any key the gallery hasn't set is null.
   """
   artworkFieldVisibility: ArtworkFieldVisibility
+
+  """
+  Number of artworks currently snapshotted into this publication.
+  """
+  artworksCount: Int!
   createdAt(
     format: String
 
@@ -33908,6 +33913,7 @@ type Query {
     """
     visibleToPublic: Boolean
   ): SearchableConnection
+  searchDropdown: SearchDropdown!
 
   """
   A ShippingPreset
@@ -35858,6 +35864,10 @@ type SearchCriteriaLabel {
   value: String!
 }
 
+type SearchDropdown {
+  trending(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches!
+}
+
 enum SearchEntity {
   ARTICLE
   ARTIST
@@ -37719,6 +37729,48 @@ union TransferMyCollectionSuccessOrErrorsUnion =
 
 type TrendingArtists {
   artists: [Artist]
+}
+
+type TrendingSearchArtist {
+  artist: Artist
+  internalID: String!
+  rank: Int!
+}
+
+type TrendingSearchArtwork {
+  artwork: Artwork
+  internalID: String!
+  rank: Int!
+}
+
+"""
+The rolling window a trending ranking was computed over.
+"""
+enum TrendingSearchPeriod {
+  ONE_DAY
+  SEVEN_DAYS
+  THIRTY_DAYS
+}
+
+"""
+Trending artists and artworks over a rolling window.
+"""
+type TrendingSearches {
+  artists(
+    """
+    Limits the number of results returned.
+    """
+    first: Int
+  ): [TrendingSearchArtist!]
+  artworks(
+    """
+    Limits the number of results returned.
+    """
+    first: Int
+  ): [TrendingSearchArtwork!]
+  asOf: String!
+  label: String!
+  period: TrendingSearchPeriod!
 }
 
 enum TriggerCampaignID {
@@ -43454,6 +43506,7 @@ type Viewer {
     """
     visibleToPublic: Boolean
   ): SearchableConnection
+  searchDropdown: SearchDropdown!
 
   """
   A ShippingPreset

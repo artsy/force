@@ -1,6 +1,5 @@
 import { act, render } from "@testing-library/react"
 import { useToasts } from "@artsy/palette"
-import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { GoogleOneTapContainer } from "Utils/GoogleOneTapContainer"
@@ -21,11 +20,6 @@ jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
 }))
 
-jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: jest.fn(),
-  useFlagsStatus: jest.fn(),
-}))
-
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: jest.fn(),
 }))
@@ -35,16 +29,12 @@ jest.mock("Components/AuthDialog/AuthDialogContext", () => ({
 }))
 
 describe("GoogleOneTapContainer", () => {
-  const mockUseFlag = useFlag as jest.Mock
-  const mockUseFlagsStatus = useFlagsStatus as jest.Mock
   const mockGetENV = getENV as jest.Mock
   const mockUseSystemContext = useSystemContext as jest.Mock
   const mockUseToasts = useToasts as jest.Mock
   const mockUseAuthDialogContext = useAuthDialogContext as jest.Mock
 
   const enableOneTap = () => {
-    mockUseFlag.mockReturnValue(true)
-    mockUseFlagsStatus.mockReturnValue({ flagsReady: true })
     mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
     mockUseAuthDialogContext.mockReturnValue({ state: { isVisible: false } })
     mockGetENV.mockImplementation((key: string) => {
@@ -55,8 +45,6 @@ describe("GoogleOneTapContainer", () => {
   }
 
   beforeEach(() => {
-    mockUseFlag.mockReturnValue(false)
-    mockUseFlagsStatus.mockReturnValue({ flagsReady: true })
     mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
     mockUseAuthDialogContext.mockReturnValue({ state: { isVisible: false } })
     mockGetENV.mockReturnValue(null)
@@ -75,7 +63,7 @@ describe("GoogleOneTapContainer", () => {
     ) as HTMLScriptElement | null
 
   describe("g_id_onload div", () => {
-    it("renders when feature flag is on, GOOGLE_CLIENT_ID is set, and user is logged out", () => {
+    it("renders when GOOGLE_CLIENT_ID is set and user is logged out", () => {
       enableOneTap()
       render(<GoogleOneTapContainer />)
       expect(document.getElementById("g_id_onload")).toBeInTheDocument()
@@ -89,16 +77,7 @@ describe("GoogleOneTapContainer", () => {
       )
     })
 
-    it("does not render when feature flag is off", () => {
-      mockUseFlag.mockReturnValue(false)
-      mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
-      mockGetENV.mockReturnValue("test-client-id")
-      render(<GoogleOneTapContainer />)
-      expect(document.getElementById("g_id_onload")).not.toBeInTheDocument()
-    })
-
     it("does not render when GOOGLE_CLIENT_ID is not set", () => {
-      mockUseFlag.mockReturnValue(true)
       mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
       mockGetENV.mockReturnValue(null)
       render(<GoogleOneTapContainer />)
@@ -106,7 +85,6 @@ describe("GoogleOneTapContainer", () => {
     })
 
     it("does not render when user is logged in", () => {
-      mockUseFlag.mockReturnValue(true)
       mockUseSystemContext.mockReturnValue({ isLoggedIn: true })
       mockGetENV.mockReturnValue("test-client-id")
       render(<GoogleOneTapContainer />)
@@ -144,7 +122,7 @@ describe("GoogleOneTapContainer", () => {
   })
 
   describe("GSI script injection", () => {
-    it("appends script to body when feature flag is on and user is logged out", () => {
+    it("appends script to body when user is logged out", () => {
       enableOneTap()
       render(<GoogleOneTapContainer />)
       expect(gsiScript()).toBeInTheDocument()
@@ -168,16 +146,7 @@ describe("GoogleOneTapContainer", () => {
       input.remove()
     })
 
-    it("does not append script when feature flag is off", () => {
-      mockUseFlag.mockReturnValue(false)
-      mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
-      mockGetENV.mockReturnValue("test-client-id")
-      render(<GoogleOneTapContainer />)
-      expect(gsiScript()).not.toBeInTheDocument()
-    })
-
     it("does not append script when GOOGLE_CLIENT_ID is not set", () => {
-      mockUseFlag.mockReturnValue(true)
       mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
       mockGetENV.mockReturnValue(null)
       render(<GoogleOneTapContainer />)
@@ -185,7 +154,6 @@ describe("GoogleOneTapContainer", () => {
     })
 
     it("does not append script when user is logged in", () => {
-      mockUseFlag.mockReturnValue(true)
       mockUseSystemContext.mockReturnValue({ isLoggedIn: true })
       mockGetENV.mockReturnValue("test-client-id")
       render(<GoogleOneTapContainer />)
@@ -197,46 +165,6 @@ describe("GoogleOneTapContainer", () => {
       mockUseAuthDialogContext.mockReturnValue({ state: { isVisible: true } })
       render(<GoogleOneTapContainer />)
       expect(gsiScript()).not.toBeInTheDocument()
-    })
-  })
-
-  describe("experiment tracking", () => {
-    let mockTrack: jest.Mock
-
-    beforeEach(() => {
-      mockTrack = jest.fn()
-      ;(window as any).analytics = { track: mockTrack }
-    })
-
-    afterEach(() => {
-      delete (window as any).analytics
-    })
-
-    it("fires experiment_viewed with variant_name: experiment when flag is enabled", () => {
-      enableOneTap()
-      render(<GoogleOneTapContainer />)
-
-      expect(mockTrack).toHaveBeenCalledWith(
-        "experiment_viewed",
-        expect.objectContaining({
-          service: "unleash",
-          experiment_name: "diamond_google-one-tap",
-          variant_name: "experiment",
-        }),
-      )
-    })
-
-    it("fires experiment_viewed with variant_name: control when flag is disabled", () => {
-      render(<GoogleOneTapContainer />)
-
-      expect(mockTrack).toHaveBeenCalledWith(
-        "experiment_viewed",
-        expect.objectContaining({
-          service: "unleash",
-          experiment_name: "diamond_google-one-tap",
-          variant_name: "control",
-        }),
-      )
     })
   })
 

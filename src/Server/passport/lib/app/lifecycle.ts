@@ -14,7 +14,6 @@ import type { NextFunction } from "express"
 import { get, isFunction, isString } from "lodash"
 import passport from "passport"
 import { type GravityError, requestGravity } from "../http"
-import { isFeatureFlagEnabled } from "System/FeatureFlags/unleashServer"
 import type { LinkingTokenData } from "../types"
 import forwardedFor from "./forwarded_for"
 import redirectBack from "./redirectBack"
@@ -281,34 +280,24 @@ export const afterSocialAuth =
         err?.response?.body?.error === "User Already Exists" &&
         req.socialProfileEmail
       ) {
-        if (isFeatureFlagEnabled("diamond_inline-account-linking")) {
-          req.session.linkingToken = req.socialTokenData
+        req.session.linkingToken = req.socialTokenData
 
-          const gravityProviders = (
-            (err.response.body.providers as string[] | undefined) ?? []
-          ).map((p: string) => p.toLowerCase())
+        const gravityProviders = (
+          (err.response.body.providers as string[] | undefined) ?? []
+        ).map((p: string) => p.toLowerCase())
 
-          if (
-            err.response.body.has_password === true &&
-            !gravityProviders.includes("email")
-          ) {
-            gravityProviders.unshift("email")
-          }
-
-          return res.redirect(
-            redirectWithQuery(redirectPath, {
-              email: req.socialProfileEmail,
-              error_code: "ALREADY_EXISTS",
-              existing_providers: gravityProviders.join(",") || "email",
-              provider,
-            }),
-          )
+        if (
+          err.response.body.has_password === true &&
+          !gravityProviders.includes("email")
+        ) {
+          gravityProviders.unshift("email")
         }
 
         return res.redirect(
           redirectWithQuery(redirectPath, {
             email: req.socialProfileEmail,
             error_code: "ALREADY_EXISTS",
+            existing_providers: gravityProviders.join(",") || "email",
             provider,
           }),
         )
