@@ -57,22 +57,38 @@ describe("TrendingSearches", () => {
     })
   })
 
-  it("renders the heading and the three time-window tabs", () => {
+  it("renders the section labels and the three time-window tabs", () => {
     render(<TrendingSearches />)
 
-    expect(screen.getByText("Trending on Artsy")).toBeInTheDocument()
+    expect(screen.getByText("Trending Artists")).toBeInTheDocument()
+    expect(screen.getByText("Trending Artworks")).toBeInTheDocument()
     expect(screen.getByText("Today")).toBeInTheDocument()
     expect(screen.getByText("Past 7 Days")).toBeInTheDocument()
     expect(screen.getByText("Past 30 days")).toBeInTheDocument()
   })
 
-  it("renders a trending artist with name and nationality, without a growth indicator", () => {
+  it("renders recent searches as removable chips", async () => {
     render(<TrendingSearches />)
 
-    expect(screen.getByText("Banksy")).toBeInTheDocument()
-    expect(screen.getAllByText("British").length).toBeGreaterThan(0)
-    expect(screen.queryByText(/%/)).not.toBeInTheDocument()
-    expect(screen.queryByText("New")).not.toBeInTheDocument()
+    expect(screen.getByText("Recent Searches")).toBeInTheDocument()
+    expect(screen.getByText("banksy")).toBeInTheDocument()
+
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: "Remove banksy from recent searches",
+      }),
+    )
+
+    expect(screen.queryByText("banksy")).not.toBeInTheDocument()
+  })
+
+  it("renders a trending artist avatar linking to the artist page", () => {
+    render(<TrendingSearches />)
+
+    expect(screen.getByRole("link", { name: /Banksy/ })).toHaveAttribute(
+      "href",
+      "/artist/banksy",
+    )
   })
 
   it("renders an artwork card with artist, title, partner, price, and save button", () => {
@@ -90,7 +106,8 @@ describe("TrendingSearches", () => {
 
     await userEvent.click(screen.getByText("Past 30 days"))
 
-    // The heading remains and the newly-selected window renders its content.
-    expect(screen.getByText("Trending on Artsy")).toBeInTheDocument()
+    expect(
+      screen.getByRole("button", { name: "Past 30 days" }),
+    ).toHaveAttribute("aria-pressed", "true")
   })
 })

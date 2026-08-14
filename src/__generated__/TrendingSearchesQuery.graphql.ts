@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9266c13577760c5335f04ac2e004e8d1>>
+ * @generated SignedSource<<1e4758541fae120828c202e6f90ca5d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,7 +144,7 @@ v9 = {
         {
           "kind": "Literal",
           "name": "height",
-          "value": 96
+          "value": 128
         },
         {
           "kind": "Literal",
@@ -158,7 +158,7 @@ v9 = {
         {
           "kind": "Literal",
           "name": "width",
-          "value": 96
+          "value": 128
         }
       ],
       "concreteType": "CroppedImageUrl",
@@ -169,7 +169,7 @@ v9 = {
         (v7/*: any*/),
         (v8/*: any*/)
       ],
-      "storageKey": "cropped(height:96,version:[\"square\",\"small\",\"large\"],width:96)"
+      "storageKey": "cropped(height:128,version:[\"square\",\"small\",\"large\"],width:128)"
     }
   ],
   "storageKey": null
@@ -525,16 +525,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d97506b994ffa59de67bc058983510bf",
+    "cacheID": "c5c82fc61e294f89837fafaa6d3098c9",
     "id": null,
     "metadata": {},
     "name": "TrendingSearchesQuery",
     "operationKind": "query",
-    "text": "query TrendingSearchesQuery(\n  $artistIds: [String]\n  $artworkIds: [String]\n) {\n  artists(ids: $artistIds) {\n    internalID\n    slug\n    name\n    href\n    initials\n    coverArtwork {\n      image {\n        cropped(width: 96, height: 96, version: [\"square\", \"small\", \"large\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  artworks(ids: $artworkIds, first: 50, respectParamsOrder: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        title\n        date\n        artistNames\n        saleMessage\n        partner(shallow: true) {\n          name\n          id\n        }\n        image {\n          resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...SaveButton_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query TrendingSearchesQuery(\n  $artistIds: [String]\n  $artworkIds: [String]\n) {\n  artists(ids: $artistIds) {\n    internalID\n    slug\n    name\n    href\n    initials\n    coverArtwork {\n      image {\n        cropped(width: 128, height: 128, version: [\"square\", \"small\", \"large\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n  artworks(ids: $artworkIds, first: 50, respectParamsOrder: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        title\n        date\n        artistNames\n        saleMessage\n        partner(shallow: true) {\n          name\n          id\n        }\n        image {\n          resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...SaveButton_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "88b2cddbc11d0795e8023d82e1e2dac0";
+(node as any).hash = "ac8880e42409b8a20a58011efd6b73ac";
 
 export default node;

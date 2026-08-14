@@ -1,6 +1,8 @@
+import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Box,
   Flex,
+  type FlexProps,
   Image,
   ShelfScrollBar,
   SkeletonBox,
@@ -15,7 +17,7 @@ import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
-import { type FC, useEffect, useMemo, useState } from "react"
+import { type FC, type ReactNode, useEffect, useMemo, useState } from "react"
 import { graphql } from "react-relay"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -39,16 +41,31 @@ type HydratedArtwork = NonNullable<
   >[number]
 >["node"]
 
-const MAX_ARTISTS = 7
-const MAX_ARTWORKS = 5
+const MAX_ARTISTS = 12
+const MAX_ARTWORKS = 8
+
+// Mocked until recent searches are actually persisted (module-level so
+// removals survive closing/reopening the panel, mirroring what a
+// localStorage-backed implementation would do).
+let mockRecentSearches = [
+  "banksy",
+  "yayoi kusama",
+  "picasso prints",
+  "photography",
+  "david hockney",
+]
 
 export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const active = TRENDING_WINDOWS[activeIndex]
 
-  // Held in state (not a ref) so the scrollbar re-renders once the rail mounts
-  const [railElement, setRailElement] = useState<HTMLDivElement | null>(null)
-  const [isRailScrollable, setIsRailScrollable] = useState(false)
+  const [recentSearches, setRecentSearches] = useState(mockRecentSearches)
+
+  const handleRemoveRecentSearch = (term: string) => {
+    const next = recentSearches.filter(t => t !== term)
+    mockRecentSearches = next
+    setRecentSearches(next)
+  }
 
   // Fetch the union of all windows' ids once, then filter client-side per tab.
   const { artistIds, artworkIds } = useMemo(() => {
@@ -65,18 +82,6 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
     query: QUERY,
     variables: { artistIds, artworkIds },
   })
-
-  const updateRailScrollability = () => {
-    if (!railElement) return
-    setIsRailScrollable(railElement.scrollWidth > railElement.clientWidth)
-  }
-
-  // Re-check when the rail mounts or its content changes (tab switch, load)…
-  // biome-ignore lint/correctness/useExhaustiveDependencies: activeIndex/loading change the rail's content
-  useEffect(updateRailScrollability, [railElement, activeIndex, loading])
-
-  // …and when the rail resizes (viewport changes)
-  useResizeObserver({ target: railElement, onResize: updateRailScrollability })
 
   const artistById = useMemo(() => {
     const map = new Map<string, HydratedArtist>()
@@ -98,78 +103,92 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
     // px matches the results dropdown rows (SuggestionItemLink px={2}) so the
     // edge-to-content spacing stays consistent when the surfaces swap.
     <Box p={2}>
-      <Text variant={["md", "lg-display"]}>Trending on Artsy</Text>
-
-      <Spacer y={2} />
-
-      <Flex flexDirection={["column", "row"]} gap={2}>
-        {/* Artists */}
-        <Box width={["auto", 260]} flexShrink={0}>
-          <SectionLabel>Artists</SectionLabel>
+      {/* Recent searches first — personalized, most relevant to a returning user */}
+      {recentSearches.length > 0 && (
+        <>
+          <SectionLabel>Recent Searches</SectionLabel>
 
           <Spacer y={1} />
 
-          {loading
-            ? Array.from({ length: MAX_ARTISTS }).map((_, i) => {
-                return <ArtistRowSkeleton key={i} />
-              })
-            : active.artists.slice(0, MAX_ARTISTS).map(item => {
-                return (
-                  <ArtistRow
-                    key={item.internalID}
-                    item={item}
-                    hydrated={artistById.get(item.internalID)}
-                    onNavigate={onNavigate}
-                  />
-                )
-              })}
-        </Box>
+          <Flex gap={1} flexWrap="wrap">
+            {recentSearches.map(term => {
+              return (
+                <RecentChip key={term}>
+                  <RecentChipLink
+                    to={`/search?term=${encodeURIComponent(term)}`}
+                    onClick={onNavigate}
+                  >
+                    {term}
+                  </RecentChipLink>
 
-        <Box
-          width="1px"
-          bg="mono10"
-          alignSelf="stretch"
-          flexShrink={0}
-          display={["none", "block"]}
-        />
+                  <RecentChipRemove
+                    type="button"
+                    aria-label={`Remove ${term} from recent searches`}
+                    onClick={() => handleRemoveRecentSearch(term)}
+                  >
+                    <CloseIcon width={12} height={12} fill="mono60" />
+                  </RecentChipRemove>
+                </RecentChip>
+              )
+            })}
+          </Flex>
 
-        {/* Artworks */}
-        <Box flex={1} overflow="hidden">
-          <SectionLabel>Artworks</SectionLabel>
+          <Spacer y={2} />
+        </>
+      )}
 
-          <Spacer y={1} />
+      {/* Artists before artworks: artist page views carry the highest signal
+          weight, and a name/face is faster to recognize than a thumbnail */}
+      <SectionLabel>Trending Artists</SectionLabel>
 
-          <ArtworkRail ref={setRailElement} gap={2} alignItems="flex-end">
-            {loading
-              ? Array.from({ length: MAX_ARTWORKS }).map((_, i) => {
-                  return <ArtworkCardSkeleton key={i} />
-                })
-              : active.artworks.slice(0, MAX_ARTWORKS).map(item => {
-                  return (
-                    <ArtworkCard
-                      key={item.internalID}
-                      item={item}
-                      hydrated={artworkById.get(item.internalID)}
-                      onNavigate={onNavigate}
-                    />
-                  )
-                })}
-          </ArtworkRail>
+      <Spacer y={1} />
 
-          {/* Same scroll affordance as the homepage artwork rails; hidden
-              entirely when all artworks already fit */}
-          {isRailScrollable && (
-            <>
-              <Spacer y={1} />
-
-              <ShelfScrollBar viewport={railElement} />
-            </>
-          )}
-        </Box>
-      </Flex>
+      <ScrollRail contentKey={`artists-${activeIndex}-${loading}`}>
+        {loading
+          ? Array.from({ length: 7 }).map((_, i) => {
+              return <ArtistAvatarSkeleton key={i} />
+            })
+          : active.artists.slice(0, MAX_ARTISTS).map(item => {
+              return (
+                <ArtistAvatar
+                  key={item.internalID}
+                  item={item}
+                  hydrated={artistById.get(item.internalID)}
+                  onNavigate={onNavigate}
+                />
+              )
+            })}
+      </ScrollRail>
 
       <Spacer y={2} />
 
+      <SectionLabel>Trending Artworks</SectionLabel>
+
+      <Spacer y={1} />
+
+      <ScrollRail
+        contentKey={`artworks-${activeIndex}-${loading}`}
+        alignItems="flex-end"
+      >
+        {loading
+          ? Array.from({ length: 4 }).map((_, i) => {
+              return <ArtworkCardSkeleton key={i} />
+            })
+          : active.artworks.slice(0, MAX_ARTWORKS).map(item => {
+              return (
+                <ArtworkCard
+                  key={item.internalID}
+                  item={item}
+                  hydrated={artworkById.get(item.internalID)}
+                  onNavigate={onNavigate}
+                />
+              )
+            })}
+      </ScrollRail>
+
+      <Spacer y={2} />
+
+      {/* Refinement control, not primary content — bottom, per design feedback */}
       <Flex justifyContent="flex-end" gap={1}>
         {TRENDING_WINDOWS.map((w, i) => {
           return (
@@ -189,65 +208,101 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
   )
 }
 
-const ARTIST_IMAGE_SIZE = 48
+interface ScrollRailProps {
+  children: ReactNode
+  /** Changes whenever the rail's content changes, to re-measure overflow */
+  contentKey: string
+  alignItems?: FlexProps["alignItems"]
+}
 
-const ArtistRow: FC<{
+// Horizontally scrollable row with the same scroll affordance as the homepage
+// artwork rails; the scrollbar is hidden entirely when the content fits.
+const ScrollRail: FC<ScrollRailProps> = ({
+  children,
+  contentKey,
+  alignItems,
+}) => {
+  // Held in state (not a ref) so the scrollbar re-renders once the rail mounts
+  const [element, setElement] = useState<HTMLDivElement | null>(null)
+  const [isScrollable, setIsScrollable] = useState(false)
+
+  const updateScrollability = () => {
+    if (!element) return
+    setIsScrollable(element.scrollWidth > element.clientWidth)
+  }
+
+  // Re-check when the rail mounts or its content changes (tab switch, load)…
+  // biome-ignore lint/correctness/useExhaustiveDependencies: contentKey tracks content changes
+  useEffect(updateScrollability, [element, contentKey])
+
+  // …and when the rail resizes (viewport changes)
+  useResizeObserver({ target: element, onResize: updateScrollability })
+
+  return (
+    <>
+      <RailFlex ref={setElement} gap={2} alignItems={alignItems}>
+        {children}
+      </RailFlex>
+
+      {isScrollable && (
+        <>
+          <Spacer y={1} />
+
+          <ShelfScrollBar viewport={element} />
+        </>
+      )}
+    </>
+  )
+}
+
+const ARTIST_AVATAR_SIZE = 64
+
+const ArtistAvatar: FC<{
   item: TrendingArtist
   hydrated?: HydratedArtist
   onNavigate?: () => void
 }> = ({ item, hydrated, onNavigate }) => {
   const image = hydrated?.coverArtwork?.image?.cropped
-  const href = hydrated?.href ?? `/artist/${item.slug}`
 
   return (
-    <RowLink to={href} onClick={onNavigate}>
-      <Text variant="sm" color="mono60" width={16} flexShrink={0}>
-        {item.rank}
-      </Text>
-
+    <AvatarItem
+      to={hydrated?.href ?? `/artist/${item.slug}`}
+      onClick={onNavigate}
+    >
       {image?.src ? (
-        <Image
+        <AvatarImage
           src={image.src}
           srcSet={image.srcSet}
-          width={ARTIST_IMAGE_SIZE}
-          height={ARTIST_IMAGE_SIZE}
+          width={ARTIST_AVATAR_SIZE}
+          height={ARTIST_AVATAR_SIZE}
           alt=""
-          style={{ objectFit: "cover", flexShrink: 0 }}
         />
       ) : (
-        <Flex
-          width={ARTIST_IMAGE_SIZE}
-          height={ARTIST_IMAGE_SIZE}
-          bg="mono10"
-          alignItems="center"
-          justifyContent="center"
-          flexShrink={0}
-        >
-          <Text variant="xs" color="mono60">
+        <AvatarFallback>
+          <Text variant="sm" color="mono60">
             {hydrated?.initials ?? item.name?.[0]}
           </Text>
-        </Flex>
+        </AvatarFallback>
       )}
 
-      <Box flex={1} overflow="hidden">
-        <Text variant="sm-display" overflowEllipsis>
-          {hydrated?.name ?? item.name}
-        </Text>
-        {item.nationality && (
-          <Text variant="xs" color="mono60" overflowEllipsis>
-            {item.nationality}
-          </Text>
-        )}
-      </Box>
-    </RowLink>
+      {/* maxWidth is required for the ellipsis: nowrap text otherwise forces
+          the flex item wider than the 80px avatar column */}
+      <Text
+        variant="xs"
+        mt={0.5}
+        maxWidth="100%"
+        overflowEllipsis
+        textAlign="center"
+      >
+        {hydrated?.name ?? item.name}
+      </Text>
+    </AvatarItem>
   )
 }
 
 const ARTWORK_IMAGE_HEIGHT = 200
 // Cards keep at least this width; the rail scrolls when space runs out.
-// Slightly narrower from `sm` up so all five artworks fit inside the panel
-// on typical desktop viewports (≥ ~1240px) without scrolling.
-const ARTWORK_CARD_FLEX = ["1 0 160px", "1 0 135px"]
+const ARTWORK_CARD_FLEX = "1 0 160px"
 
 const ArtworkCard: FC<{
   item: TrendingArtwork
@@ -319,18 +374,17 @@ const ArtworkCard: FC<{
   )
 }
 
-const ArtistRowSkeleton: FC = () => {
+const ArtistAvatarSkeleton: FC = () => {
   return (
-    <Flex alignItems="center" gap={1} py={1}>
+    <Flex flexDirection="column" alignItems="center" width={80} flexShrink={0}>
       <SkeletonBox
-        width={ARTIST_IMAGE_SIZE}
-        height={ARTIST_IMAGE_SIZE}
-        ml={3}
+        width={ARTIST_AVATAR_SIZE}
+        height={ARTIST_AVATAR_SIZE}
+        borderRadius="50%"
       />
-      <Box flex={1}>
-        <SkeletonText variant="sm-display">Artist name</SkeletonText>
-        <SkeletonText variant="xs">Nationality</SkeletonText>
-      </Box>
+      <SkeletonText variant="xs" mt={0.5}>
+        Artist name
+      </SkeletonText>
     </Flex>
   )
 }
@@ -353,14 +407,68 @@ const SectionLabel = styled(Text).attrs({
   color: "mono60",
 })``
 
-// Horizontally scrollable rail; hides scrollbars like SearchInputPills.
-const ArtworkRail = styled(Flex)`
+// Hides native scrollbars like SearchInputPills; ShelfScrollBar replaces them.
+const RailFlex = styled(Flex)`
   overflow-x: auto;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
+`
+
+const RecentChip = styled(Flex)`
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 6px 16px;
+  border: 1px solid ${themeGet("colors.mono15")};
+  border-radius: 20px;
+
+  &:hover {
+    border-color: ${themeGet("colors.mono60")};
+  }
+`
+
+const RecentChipLink = styled(RouterLink)`
+  font-size: 13px;
+  color: ${themeGet("colors.mono100")};
+  text-decoration: none;
+`
+
+const RecentChipRemove = styled.button`
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  &:hover svg {
+    fill: ${themeGet("colors.mono100")};
+  }
+`
+
+const AvatarItem = styled(RouterLink)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 80px;
+  text-decoration: none;
+`
+
+const AvatarImage = styled(Image)`
+  border-radius: 50%;
+  object-fit: cover;
+`
+
+const AvatarFallback = styled(Flex)`
+  width: ${ARTIST_AVATAR_SIZE}px;
+  height: ${ARTIST_AVATAR_SIZE}px;
+  border-radius: 50%;
+  background-color: ${themeGet("colors.mono10")};
+  align-items: center;
+  justify-content: center;
 `
 
 const Tab = styled.button<{ selected: boolean }>`
@@ -382,20 +490,6 @@ const Tab = styled.button<{ selected: boolean }>`
   }
 `
 
-const RowLink = styled(RouterLink)`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 8px;
-  /* Bleed the hover background so row content aligns with section labels */
-  margin: 0 -8px;
-  text-decoration: none;
-
-  &:hover {
-    background-color: ${themeGet("colors.mono5")};
-  }
-`
-
 const QUERY = graphql`
   query TrendingSearchesQuery($artistIds: [String], $artworkIds: [String]) {
     artists(ids: $artistIds) {
@@ -407,8 +501,8 @@ const QUERY = graphql`
       coverArtwork {
         image {
           cropped(
-            width: 96
-            height: 96
+            width: 128
+            height: 128
             version: ["square", "small", "large"]
           ) {
             src

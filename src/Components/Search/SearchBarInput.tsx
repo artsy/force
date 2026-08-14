@@ -8,7 +8,8 @@ import {
   useRef,
   useState,
 } from "react"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 import {
   ActionType,
@@ -371,10 +372,7 @@ export const SearchBarInput: FC<
           )
         }}
         dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
-        // Wide enough that the entity pills don't scroll, and closer to the
-        // trending panel's width so the surface swap is less jarring; clamps
-        // to the viewport on smaller screens.
-        dropdownMinWidth={`min(${RESULTS_DROPDOWN_MIN_WIDTH}px, calc(100vw - 120px))`}
+        dropdownMinWidth={600}
         flip={false}
         height={40}
       />
@@ -382,18 +380,15 @@ export const SearchBarInput: FC<
       {showTrending && (
         <TrendingPanel
           position="absolute"
-          top="calc(100% + 8px)"
+          // Mirrors the results dropdown exactly (same anchor, offset, width,
+          // min-width, and shadow) so trending and autosuggest read as one
+          // overlay swapping content rather than two differently-sized surfaces.
+          top="calc(100% + 10px)"
           left={0}
-          // Anchor to the input like the results dropdown, but allow a wider
-          // surface — capped so the size change to the (narrower) results
-          // dropdown stays moderate rather than near-viewport wide.
-          width={`min(${TRENDING_PANEL_MAX_WIDTH}px, calc(100vw - 120px))`}
+          width="100%"
+          minWidth={600}
           zIndex={Z.dropdown}
           bg="mono0"
-          border="1px solid"
-          borderColor="mono10"
-          borderRadius={4}
-          boxShadow="0px 4px 12px rgba(0, 0, 0, 0.1)"
           maxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
           overflowY="auto"
           // Keep input focused so the panel stays open while clicking inside it
@@ -406,28 +401,10 @@ export const SearchBarInput: FC<
   )
 }
 
-// Wide enough to fit five artwork cards without scrolling on typical desktop
-// viewports, while staying anchored to the input like the results dropdown.
-const TRENDING_PANEL_MAX_WIDTH = 1200
-
-// Fits all ten entity pills in a single row without horizontal scrolling.
-const RESULTS_DROPDOWN_MIN_WIDTH = 980
-
-const trendingPanelEnter = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
-
-// Eases the surface swap between the trending panel and the (narrower)
-// results dropdown so the size change reads as intentional, not jumpy.
+// Same box shadow as Palette's AutocompleteInput dropdown, so the trending
+// panel is indistinguishable from the results dropdown chrome.
 const TrendingPanel = styled(Box)`
-  animation: ${trendingPanelEnter} 200ms ease-out;
+  box-shadow: ${themeGet("effects.dropShadow")};
 `
 
 const QUERY = graphql`
