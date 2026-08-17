@@ -43,6 +43,8 @@ type HydratedArtwork = NonNullable<
 
 const MAX_ARTISTS = 12
 const MAX_ARTWORKS = 8
+// Matches the recent-searches limit in the Eigen app
+const MAX_RECENT_SEARCHES = 7
 
 // Mocked until recent searches are actually persisted (module-level so
 // removals survive closing/reopening the panel, mirroring what a
@@ -53,6 +55,9 @@ let mockRecentSearches = [
   "picasso prints",
   "photography",
   "david hockney",
+  "monet",
+  "sculpture",
+  "street art",
 ]
 
 export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
@@ -110,8 +115,13 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
 
           <Spacer y={1} />
 
-          <Flex gap={1} flexWrap="wrap">
-            {recentSearches.map(term => {
+          {/* Single scrollable row capped at 7 terms, matching Eigen */}
+          <ScrollRail
+            contentKey={`recents-${recentSearches.length}`}
+            gap={1}
+            showScrollBar={false}
+          >
+            {recentSearches.slice(0, MAX_RECENT_SEARCHES).map(term => {
               return (
                 <RecentChip key={term}>
                   <RecentChipLink
@@ -131,7 +141,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
                 </RecentChip>
               )
             })}
-          </Flex>
+          </ScrollRail>
 
           <Spacer y={2} />
         </>
@@ -143,7 +153,10 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
 
       <Spacer y={1} />
 
-      <ScrollRail contentKey={`artists-${activeIndex}-${loading}`}>
+      <ScrollRail
+        contentKey={`artists-${activeIndex}-${loading}`}
+        showScrollBar={false}
+      >
         {loading
           ? Array.from({ length: 7 }).map((_, i) => {
               return <ArtistAvatarSkeleton key={i} />
@@ -213,6 +226,9 @@ interface ScrollRailProps {
   /** Changes whenever the rail's content changes, to re-measure overflow */
   contentKey: string
   alignItems?: FlexProps["alignItems"]
+  gap?: FlexProps["gap"]
+  /** Whether to show the scroll indicator when content overflows */
+  showScrollBar?: boolean
 }
 
 // Horizontally scrollable row with the same scroll affordance as the homepage
@@ -221,6 +237,8 @@ const ScrollRail: FC<ScrollRailProps> = ({
   children,
   contentKey,
   alignItems,
+  gap = 2,
+  showScrollBar = true,
 }) => {
   // Held in state (not a ref) so the scrollbar re-renders once the rail mounts
   const [element, setElement] = useState<HTMLDivElement | null>(null)
@@ -240,11 +258,11 @@ const ScrollRail: FC<ScrollRailProps> = ({
 
   return (
     <>
-      <RailFlex ref={setElement} gap={2} alignItems={alignItems}>
+      <RailFlex ref={setElement} gap={gap} alignItems={alignItems}>
         {children}
       </RailFlex>
 
-      {isScrollable && (
+      {showScrollBar && isScrollable && (
         <>
           <Spacer y={1} />
 
@@ -419,6 +437,8 @@ const RailFlex = styled(Flex)`
 
 const RecentChip = styled(Flex)`
   align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
   gap: 6px;
   padding: 6px 10px 6px 16px;
   border: 1px solid ${themeGet("colors.mono15")};

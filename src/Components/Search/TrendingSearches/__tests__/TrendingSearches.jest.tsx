@@ -67,6 +67,14 @@ describe("TrendingSearches", () => {
     expect(screen.getByText("Past 30 days")).toBeInTheDocument()
   })
 
+  it("caps recent searches at seven terms", () => {
+    render(<TrendingSearches />)
+
+    // The mock has eight terms; the seventh renders, the eighth does not
+    expect(screen.getByText("sculpture")).toBeInTheDocument()
+    expect(screen.queryByText("street art")).not.toBeInTheDocument()
+  })
+
   it("renders recent searches as removable chips", async () => {
     render(<TrendingSearches />)
 
