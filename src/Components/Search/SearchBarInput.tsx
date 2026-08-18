@@ -38,8 +38,14 @@ import {
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
 import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
+import {
+  recentSearchFromOption,
+  useRecentSearches,
+} from "./hooks/useRecentSearches"
 import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
+import { isModifiedClick } from "./utils/isModifiedClick"
+import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
 export interface SearchBarInputProps {
@@ -54,6 +60,8 @@ export const SearchBarInput: FC<
     useAnalyticsContext()
 
   const isClient = useDidMount()
+
+  const { addRecentSearch } = useRecentSearches()
 
   const { data, refetch } = useClientQuery<SearchBarInputSuggestQuery>({
     query: QUERY,
@@ -74,10 +82,11 @@ export const SearchBarInput: FC<
   const [requestId, setRequestId] = useState(0)
   const lastRequestIdRef = useRef<number | null>(null)
   const lastRefetchDisposableRef = useRef<{ dispose: () => void } | null>(null)
+  const ref = useRef<HTMLInputElement | null>(null)
 
   const { router, match } = useRouter()
 
-  const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
+  const encodedSearchURL = searchResultsHref(value)
 
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
@@ -213,8 +222,18 @@ export const SearchBarInput: FC<
     })
   }
 
+  // Matches production behavior: once a result is chosen the input gives up
+  // focus, so neither the results dropdown nor the trending panel lingers
+  // over the destination page.
+  const closeDropdown = () => {
+    setIsFocused(false)
+    ref.current?.blur()
+  }
+
   const handleSubmit = () => {
     if (value) {
+      addRecentSearch({ label: value, href: encodedSearchURL })
+      closeDropdown()
       redirect(encodedSearchURL)
     }
   }
@@ -235,27 +254,29 @@ export const SearchBarInput: FC<
     }
   }
 
+  // For the “See all results” footer row, text/href are the raw query and
+  // the search results page — the same entry a plain Enter submit records.
+  const recordRecentSearch = (option: SuggestionItemOptionProps) => {
+    addRecentSearch(recentSearchFromOption(option))
+  }
+
   const handleSelect = (option: SuggestionItemOptionProps) => {
     trackSelection(option)
+    recordRecentSearch(option)
 
+    closeDropdown()
     resetValue()
     redirect(option.href)
   }
-
-  const isModifiedClick = (event?: MouseEvent<HTMLElement>) =>
-    !!event &&
-    (event.button === 1 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey)
 
   const handleSuggestionClick = (
     option: SuggestionItemOptionProps,
     event?: MouseEvent<HTMLElement>,
   ) => {
     trackSelection(option)
+    recordRecentSearch(option)
     if (isModifiedClick(event)) return
+    closeDropdown()
     resetValue()
     redirect(option.href)
   }
@@ -265,7 +286,10 @@ export const SearchBarInput: FC<
     event: MouseEvent<HTMLElement>,
   ) => {
     // QuickNavigationItem tracks its own cohesion event
+    // Records the artist itself (base href), matching Eigen’s quick nav
+    recordRecentSearch(option)
     if (isModifiedClick(event)) return
+    closeDropdown()
     resetValue()
     redirect(`${option.href}/auction-results`)
   }
@@ -288,6 +312,28 @@ export const SearchBarInput: FC<
 
   // Show trending only when focused with an empty/too-short query.
   const showTrending = isFocused && !shouldStartSearching(value)
+
+  // Rail impressions count once per focus session, even though the panel
+  // remounts whenever the query crosses the search threshold.
+  const hasTrackedTrendingImpressionsRef = useRef(false)
+
+  useEffect(() => {
+    if (showTrending) {
+      hasTrackedTrendingImpressionsRef.current = true
+    } else if (!isFocused) {
+      hasTrackedTrendingImpressionsRef.current = false
+    }
+  }, [showTrending, isFocused])
+
+  // Palette handles Escape for its own results dropdown; the trending panel
+  // needs the same affordance.
+  const handleContainerKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ) => {
+    if (event.key === "Escape" && showTrending) {
+      closeDropdown()
+    }
+  }
   const handlePaste = () => {
     tracking.trackEvent({
       action_type: ActionType.pastedIntoSearchInput,
@@ -295,8 +341,6 @@ export const SearchBarInput: FC<
       query: value,
     })
   }
-
-  const ref = useRef<HTMLInputElement | null>(null)
 
   // Focus the search input on '/' keypress
   useEffect(() => {
@@ -325,7 +369,11 @@ export const SearchBarInput: FC<
   }
 
   return (
-    <Box position="relative" onBlur={handleContainerBlur}>
+    <Box
+      position="relative"
+      onBlur={handleContainerBlur}
+      onKeyDown={handleContainerKeyDown}
+    >
       <AutocompleteInput
         forwardRef={ref}
         key={match.location.pathname}
@@ -394,7 +442,13 @@ export const SearchBarInput: FC<
           // Keep input focused so the panel stays open while clicking inside it
           onMouseDown={event => event.preventDefault()}
         >
-          <TrendingSearches onNavigate={() => setIsFocused(false)} />
+          <TrendingSearches
+            // closeDropdown (not just setIsFocused) so the input also blurs:
+            // otherwise a same-pathname navigation leaves the input focused
+            // with the panel unable to reopen on the next click
+            onNavigate={closeDropdown}
+            shouldTrackImpressions={!hasTrackedTrendingImpressionsRef.current}
+          />
         </TrendingPanel>
       )}
     </Box>

@@ -15,6 +15,7 @@ jest.mock("@artsy/palette", () => ({
     onChange,
     onFocus,
     onPaste,
+    onSubmit,
     renderOption,
   }) => (
     <div>
@@ -24,6 +25,11 @@ jest.mock("@artsy/palette", () => ({
         onChange={onChange}
         onFocus={onFocus}
         onPaste={onPaste}
+        onKeyDown={event => {
+          if (event.key === "Enter") {
+            onSubmit()
+          }
+        }}
       />
       <div>
         {options.map((option, i) => (
@@ -100,7 +106,10 @@ describe("SearchBarInput", () => {
     })
   })
 
-  afterEach(() => jest.clearAllMocks())
+  afterEach(() => {
+    jest.clearAllMocks()
+    localStorage.clear()
+  })
 
   it("passes the experiment variant to autosuggest", () => {
     render(<SearchBarInput searchTerm="andy" />)
@@ -279,6 +288,101 @@ describe("SearchBarInput", () => {
       )
       expect(mockPush).not.toHaveBeenCalled()
     })
+
+    it("records the artist (not the auction results page) as a recent search", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+
+      await userEvent.click(
+        screen.getByRole("button", { name: "Auction Results" }),
+      )
+
+      expect(JSON.parse(localStorage.getItem("artsy.recentSearches")!)).toEqual(
+        [
+          {
+            label: "Andy Warhol",
+            href: "/artist/andy-warhol",
+            item_type: "Artist",
+            item_id: "andy-warhol",
+          },
+        ],
+      )
+    })
+  })
+
+  describe("recent searches", () => {
+    const RECENT_SEARCHES_KEY = "artsy.recentSearches"
+
+    it("records the suggestion with its entity page on click", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+
+      await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+      expect(JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY)!)).toEqual([
+        {
+          label: "Andy Warhol",
+          href: "/artist/andy-warhol",
+          item_type: "Artist",
+          item_id: "andy-warhol",
+        },
+      ])
+    })
+
+    it("records the raw query with the search results page on submit", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+
+      await userEvent.type(screen.getByRole("textbox"), "{Enter}")
+
+      expect(JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY)!)).toEqual([
+        { label: "andy", href: "/search?term=andy" },
+      ])
+      expect(mockPush).toHaveBeenCalledWith("/search?term=andy")
+    })
+  })
+
+  it("closes the trending panel on Escape", async () => {
+    render(<SearchBarInput searchTerm="" />)
+
+    await userEvent.click(screen.getByRole("textbox"))
+    expect(screen.getByText("Trending Artists")).toBeInTheDocument()
+
+    await userEvent.keyboard("{Escape}")
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("tracks rail impressions once per focus session across threshold crossings", async () => {
+    render(<SearchBarInput searchTerm="" />)
+    const input = screen.getByRole("textbox")
+
+    const countRailViewed = () => {
+      return mockTrackEvent.mock.calls.filter(([event]) => {
+        return event?.action === ActionType.railViewed
+      }).length
+    }
+
+    await userEvent.click(input)
+    const impressionsAfterOpen = countRailViewed()
+    expect(impressionsAfterOpen).toBeGreaterThan(0)
+
+    // Crossing the search threshold unmounts and remounts the panel; the
+    // impressions must not fire again within the same focus session
+    await userEvent.type(input, "ab")
+    await userEvent.clear(input)
+    expect(screen.getByText("Trending Artists")).toBeInTheDocument()
+
+    expect(countRailViewed()).toEqual(impressionsAfterOpen)
+  })
+
+  it("does not reopen the trending panel after a suggestion click", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+
+    // Focus the input, then pick a result; selecting resets the query, which
+    // must not surface the trending panel over the destination page
+    await userEvent.click(screen.getByRole("textbox"))
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+    expect(mockPush).toHaveBeenCalledWith("/artist/andy-warhol")
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
   })
 
   it("tracks focusedOnSearchInput on focus", async () => {

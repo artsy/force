@@ -11,75 +11,204 @@ import {
   Text,
   useResizeObserver,
 } from "@artsy/palette"
-import { ContextModule } from "@artsy/cohesion"
-import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
+import {
+  ActionType,
+  type ClickedArtistGroup,
+  ContextModule,
+  OwnerType,
+  type RailViewed,
+  type SelectedItemFromSearch,
+} from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
+import { trackHelpers } from "Utils/cohesionHelpers"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
-import { type FC, type ReactNode, useEffect, useMemo, useState } from "react"
+import {
+  type FC,
+  type MouseEvent,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { graphql } from "react-relay"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import {
-  TRENDING_WINDOWS,
-  type TrendingArtist,
-  type TrendingArtwork,
-} from "./trendingSearchesData"
+  type RecentSearch,
+  useRecentSearches,
+} from "Components/Search/hooks/useRecentSearches"
+import { isModifiedClick } from "Components/Search/utils/isModifiedClick"
+import {
+  ARTWORK_CARD_FLEX,
+  ARTWORK_IMAGE_HEIGHT,
+  type HydratedArtwork,
+  TrendingArtworkCard,
+} from "./Components/TrendingArtworkCard"
+import { TRENDING_WINDOWS, type TrendingArtist } from "./trendingSearchesData"
 
 interface TrendingSearchesProps {
   /** Called after a result is clicked so the parent can close the panel. */
   onNavigate?: () => void
+  /**
+   * Hosts pass false on remounts within one panel session so that rail
+   * impressions count panel opens, not query-threshold crossings.
+   */
+  shouldTrackImpressions?: boolean
 }
 
 type HydratedArtist = NonNullable<
   NonNullable<TrendingSearchesQuery["response"]["artists"]>[number]
 >
-type HydratedArtwork = NonNullable<
-  NonNullable<
-    NonNullable<TrendingSearchesQuery["response"]["artworks"]>["edges"]
-  >[number]
->["node"]
 
 const MAX_ARTISTS = 12
 const MAX_ARTWORKS = 8
-// Matches the recent-searches limit in the Eigen app
-const MAX_RECENT_SEARCHES = 7
 
-// Mocked until recent searches are actually persisted (module-level so
-// removals survive closing/reopening the panel, mirroring what a
-// localStorage-backed implementation would do).
-let mockRecentSearches = [
-  "banksy",
-  "yayoi kusama",
-  "picasso prints",
-  "photography",
-  "david hockney",
-  "monet",
-  "sculpture",
-  "street art",
-]
+// TODO: Use ContextModule.recentSearchesRail / ContextModule.trendingArtworksRail
+// / ContextModule.trendingSearches once the cohesion release containing them
+// lands in Force
+const RECENT_SEARCHES_RAIL = "recentSearchesRail" as ContextModule
+const TRENDING_ARTWORKS_RAIL = "trendingArtworksRail" as ContextModule
+const TRENDING_SEARCHES = "trendingSearches" as ContextModule
 
-export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
+export const TrendingSearches: FC<TrendingSearchesProps> = ({
+  onNavigate,
+  shouldTrackImpressions = true,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const active = TRENDING_WINDOWS[activeIndex]
 
-  const [recentSearches, setRecentSearches] = useState(mockRecentSearches)
+  const { recentSearches, removeRecentSearch } = useRecentSearches()
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
 
-  const handleRemoveRecentSearch = (term: string) => {
-    const next = recentSearches.filter(t => t !== term)
-    mockRecentSearches = next
-    setRecentSearches(next)
+  // Adoption metric: one impression per visible section per panel session
+  // (the hasTracked ref keeps the full dependency list from re-firing)
+  const hasTrackedImpressionsRef = useRef(false)
+
+  useEffect(() => {
+    if (!shouldTrackImpressions || hasTrackedImpressionsRef.current) return
+    hasTrackedImpressionsRef.current = true
+
+    const trackRailViewed = (contextModule: ContextModule) => {
+      const event: RailViewed = {
+        action: ActionType.railViewed,
+        context_module: contextModule,
+        context_screen: contextPageOwnerType,
+      }
+      trackEvent(event)
+    }
+
+    if (recentSearches.length > 0) {
+      trackRailViewed(RECENT_SEARCHES_RAIL)
+    }
+    trackRailViewed(ContextModule.trendingArtistsRail)
+    trackRailViewed(TRENDING_ARTWORKS_RAIL)
+  }, [shouldTrackImpressions, recentSearches, trackEvent, contextPageOwnerType])
+
+  const navigateUnlessModified = (event?: MouseEvent<HTMLElement>) => {
+    // A modified click opens a new tab; the panel must stay put
+    if (isModifiedClick(event)) return
+    onNavigate?.()
+  }
+
+  const handleRecentSearchClick = ({
+    search,
+    index,
+    event,
+  }: {
+    search: RecentSearch
+    index: number
+    event: MouseEvent<HTMLElement>
+  }) => {
+    const analyticsEvent: SelectedItemFromSearch = {
+      action: ActionType.selectedItemFromSearch,
+      context_module: RECENT_SEARCHES_RAIL,
+      destination_path: search.href,
+      query: search.label,
+      item_id: search.item_id ?? "",
+      item_number: index,
+      // Raw query submits have no entity type; they navigate to search results
+      item_type: search.item_type ?? "Search",
+    }
+    trackEvent(analyticsEvent)
+    navigateUnlessModified(event)
+  }
+
+  // Mirrors the untyped pill event in SearchBarInput: the tabs filter the
+  // rails in place, so there is no destination to report
+  const handleTrendingWindowClick = (index: number) => {
+    // Re-clicking the active tab is a no-op, not a switch
+    if (index !== activeIndex) {
+      trackEvent({
+        action_type: ActionType.tappedNavigationTab,
+        context_module: TRENDING_SEARCHES,
+        subject: TRENDING_WINDOWS[index].label,
+      })
+    }
+    setActiveIndex(index)
+  }
+
+  const handleTrendingArtistClick = ({
+    internalID,
+    slug,
+    index,
+    event,
+  }: {
+    internalID: string
+    slug: string
+    index: number
+    event: MouseEvent<HTMLElement>
+  }) => {
+    const analyticsEvent: ClickedArtistGroup = {
+      action: ActionType.clickedArtistGroup,
+      context_module: ContextModule.trendingArtistsRail,
+      context_page_owner_type: contextPageOwnerType,
+      destination_page_owner_type: OwnerType.artist,
+      destination_page_owner_id: internalID,
+      destination_page_owner_slug: slug,
+      horizontal_slide_position: index,
+      type: "thumbnail",
+    }
+    trackEvent(analyticsEvent)
+    navigateUnlessModified(event)
+  }
+
+  const handleTrendingArtworkClick = ({
+    internalID,
+    slug,
+    index,
+    event,
+  }: {
+    internalID: string
+    slug: string
+    index: number
+    event: MouseEvent<HTMLElement>
+  }) => {
+    trackEvent(
+      trackHelpers.clickedArtworkGroup(
+        TRENDING_ARTWORKS_RAIL,
+        contextPageOwnerType,
+        internalID,
+        slug,
+        index,
+      ),
+    )
+    navigateUnlessModified(event)
   }
 
   // Fetch the union of all windows' ids once, then filter client-side per tab.
   const { artistIds, artworkIds } = useMemo(() => {
     const artists = new Set<string>()
     const artworks = new Set<string>()
-    for (const w of TRENDING_WINDOWS) {
+    TRENDING_WINDOWS.forEach(w => {
       w.artists.forEach(a => artists.add(a.internalID))
       w.artworks.forEach(a => artworks.add(a.internalID))
-    }
+    })
     return { artistIds: [...artists], artworkIds: [...artworks] }
   }, [])
 
@@ -90,17 +219,17 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
 
   const artistById = useMemo(() => {
     const map = new Map<string, HydratedArtist>()
-    for (const a of data?.artists ?? []) {
+    ;(data?.artists ?? []).forEach(a => {
       if (a?.internalID) map.set(a.internalID, a)
-    }
+    })
     return map
   }, [data])
 
   const artworkById = useMemo(() => {
     const map = new Map<string, HydratedArtwork>()
-    for (const a of extractNodes(data?.artworks)) {
+    extractNodes(data?.artworks).forEach(a => {
       if (a?.internalID) map.set(a.internalID, a)
-    }
+    })
     return map
   }, [data])
 
@@ -115,26 +244,30 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
 
           <Spacer y={1} />
 
-          {/* Single scrollable row capped at 7 terms, matching Eigen */}
+          {/* Single scrollable row; the hook caps the list at 7 terms, matching Eigen */}
           <ScrollRail
             contentKey={`recents-${recentSearches.length}`}
             gap={1}
             showScrollBar={false}
           >
-            {recentSearches.slice(0, MAX_RECENT_SEARCHES).map(term => {
+            {recentSearches.map((search, index) => {
               return (
-                <RecentChip key={term}>
+                <RecentChip key={search.label}>
+                  {/* Links to the destination the user actually visited: an
+                      entity page or the search results page */}
                   <RecentChipLink
-                    to={`/search?term=${encodeURIComponent(term)}`}
-                    onClick={onNavigate}
+                    to={search.href}
+                    onClick={event => {
+                      handleRecentSearchClick({ search, index, event })
+                    }}
                   >
-                    {term}
+                    {search.label}
                   </RecentChipLink>
 
                   <RecentChipRemove
                     type="button"
-                    aria-label={`Remove ${term} from recent searches`}
-                    onClick={() => handleRemoveRecentSearch(term)}
+                    aria-label={`Remove ${search.label} from recent searches`}
+                    onClick={() => removeRecentSearch(search.label)}
                   >
                     <CloseIcon width={12} height={12} fill="mono60" />
                   </RecentChipRemove>
@@ -161,13 +294,22 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
           ? Array.from({ length: 7 }).map((_, i) => {
               return <ArtistAvatarSkeleton key={i} />
             })
-          : active.artists.slice(0, MAX_ARTISTS).map(item => {
+          : active.artists.slice(0, MAX_ARTISTS).map((item, index) => {
+              const hydrated = artistById.get(item.internalID)
+
               return (
                 <ArtistAvatar
                   key={item.internalID}
                   item={item}
-                  hydrated={artistById.get(item.internalID)}
-                  onNavigate={onNavigate}
+                  hydrated={hydrated}
+                  onClick={event => {
+                    handleTrendingArtistClick({
+                      internalID: item.internalID,
+                      slug: hydrated?.slug ?? item.slug,
+                      index,
+                      event,
+                    })
+                  }}
                 />
               )
             })}
@@ -187,13 +329,22 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
           ? Array.from({ length: 4 }).map((_, i) => {
               return <ArtworkCardSkeleton key={i} />
             })
-          : active.artworks.slice(0, MAX_ARTWORKS).map(item => {
+          : active.artworks.slice(0, MAX_ARTWORKS).map((item, index) => {
+              const hydrated = artworkById.get(item.internalID)
+
               return (
-                <ArtworkCard
+                <TrendingArtworkCard
                   key={item.internalID}
                   item={item}
-                  hydrated={artworkById.get(item.internalID)}
-                  onNavigate={onNavigate}
+                  hydrated={hydrated}
+                  onClick={event => {
+                    handleTrendingArtworkClick({
+                      internalID: item.internalID,
+                      slug: hydrated?.slug ?? item.slug,
+                      index,
+                      event,
+                    })
+                  }}
                 />
               )
             })}
@@ -207,9 +358,9 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({ onNavigate }) => {
           return (
             <Tab
               key={w.window}
-              selected={i === activeIndex}
+              $isSelected={i === activeIndex}
               aria-pressed={i === activeIndex}
-              onClick={() => setActiveIndex(i)}
+              onClick={() => handleTrendingWindowClick(i)}
               type="button"
             >
               {w.label}
@@ -275,18 +426,17 @@ const ScrollRail: FC<ScrollRailProps> = ({
 
 const ARTIST_AVATAR_SIZE = 64
 
-const ArtistAvatar: FC<{
+interface ArtistAvatarProps {
   item: TrendingArtist
   hydrated?: HydratedArtist
-  onNavigate?: () => void
-}> = ({ item, hydrated, onNavigate }) => {
+  onClick?: (event: MouseEvent<HTMLElement>) => void
+}
+
+const ArtistAvatar: FC<ArtistAvatarProps> = ({ item, hydrated, onClick }) => {
   const image = hydrated?.coverArtwork?.image?.cropped
 
   return (
-    <AvatarItem
-      to={hydrated?.href ?? `/artist/${item.slug}`}
-      onClick={onNavigate}
-    >
+    <AvatarItem to={hydrated?.href ?? `/artist/${item.slug}`} onClick={onClick}>
       {image?.src ? (
         <AvatarImage
           src={image.src}
@@ -315,80 +465,6 @@ const ArtistAvatar: FC<{
         {hydrated?.name ?? item.name}
       </Text>
     </AvatarItem>
-  )
-}
-
-const ARTWORK_IMAGE_HEIGHT = 200
-// Cards keep at least this width; the rail scrolls when space runs out.
-const ARTWORK_CARD_FLEX = "1 0 160px"
-
-const ArtworkCard: FC<{
-  item: TrendingArtwork
-  hydrated?: HydratedArtwork
-  onNavigate?: () => void
-}> = ({ item, hydrated, onNavigate }) => {
-  const image = hydrated?.image?.resized
-  const href = hydrated?.href ?? `/artwork/${item.slug}`
-
-  if (!hydrated || !image?.src) {
-    return null
-  }
-
-  return (
-    <Box flex={ARTWORK_CARD_FLEX} minWidth={0}>
-      <RouterLink to={href} onClick={onNavigate} display="block">
-        <Box width="100%" height={ARTWORK_IMAGE_HEIGHT}>
-          <Image
-            src={image.src}
-            srcSet={image.srcSet}
-            width={image.width}
-            height={image.height}
-            alt={hydrated.title ?? ""}
-            style={{
-              display: "block",
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              objectPosition: "bottom left",
-            }}
-          />
-        </Box>
-      </RouterLink>
-
-      <Box position="relative" mt={1}>
-        <Box position="absolute" top={0} right={0}>
-          <SaveButtonFragmentContainer
-            artwork={hydrated}
-            contextModule={ContextModule.header}
-          />
-        </Box>
-
-        <RouterLink
-          to={href}
-          onClick={onNavigate}
-          display="block"
-          textDecoration="none"
-        >
-          <Text variant="sm-display" overflowEllipsis pr={4}>
-            {hydrated.artistNames ?? item.artistName}
-          </Text>
-          <Text variant="xs" color="mono60">
-            {hydrated.title}
-            {hydrated.date ? `, ${hydrated.date}` : ""}
-          </Text>
-          {hydrated.partner?.name && (
-            <Text variant="xs" color="mono60" overflowEllipsis>
-              {hydrated.partner.name}
-            </Text>
-          )}
-          {hydrated.saleMessage && (
-            <Text variant="xs" fontWeight="bold" mt={0.5}>
-              {hydrated.saleMessage}
-            </Text>
-          )}
-        </RouterLink>
-      </Box>
-    </Box>
   )
 }
 
@@ -453,6 +529,12 @@ const RecentChipLink = styled(RouterLink)`
   font-size: 13px;
   color: ${themeGet("colors.mono100")};
   text-decoration: none;
+  /* Long labels (e.g. article titles) truncate instead of stretching the
+     chip; as a flex item the link respects max-width */
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const RecentChipRemove = styled.button`
@@ -491,7 +573,7 @@ const AvatarFallback = styled(Flex)`
   justify-content: center;
 `
 
-const Tab = styled.button<{ selected: boolean }>`
+const Tab = styled.button<{ $isSelected: boolean }>`
   border: none;
   background: none;
   cursor: pointer;
@@ -500,10 +582,10 @@ const Tab = styled.button<{ selected: boolean }>`
   padding: 4px 12px;
   border-radius: 16px;
   white-space: nowrap;
-  color: ${({ selected }) =>
-    selected ? themeGet("colors.mono100") : themeGet("colors.mono60")};
-  background-color: ${({ selected }) =>
-    selected ? themeGet("colors.mono10") : "transparent"};
+  color: ${({ $isSelected }) =>
+    $isSelected ? themeGet("colors.mono100") : themeGet("colors.mono60")};
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? themeGet("colors.mono10") : "transparent"};
 
   &:hover {
     color: ${themeGet("colors.mono100")};

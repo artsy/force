@@ -111,6 +111,16 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     setInputValue(value)
   }
 
+  // Rail impressions count once per overlay session, even though the trending
+  // panel remounts whenever the query crosses the search threshold.
+  const hasTrackedTrendingImpressionsRef = useRef(false)
+
+  useEffect(() => {
+    if (!shouldStartSearching(inputValue)) {
+      hasTrackedTrendingImpressionsRef.current = true
+    }
+  }, [inputValue])
+
   return (
     <OverlayBase
       onClose={onClose}
@@ -147,7 +157,10 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           onClose={onClose}
         />
       ) : (
-        <TrendingSearches onNavigate={onClose} />
+        <TrendingSearches
+          onNavigate={onClose}
+          shouldTrackImpressions={!hasTrackedTrendingImpressionsRef.current}
+        />
       )}
     </OverlayBase>
   )

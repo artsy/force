@@ -1,12 +1,17 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { useTracking } from "react-tracking"
 import { TrendingSearches } from "../TrendingSearches"
 
 jest.mock("Utils/Hooks/useClientQuery", () => ({ useClientQuery: jest.fn() }))
+jest.mock("react-tracking")
 
 jest.mock("Components/Artwork/SaveButton/SaveButton", () => ({
-  SaveButtonFragmentContainer: () => <button type="button">Save</button>,
+  SaveButtonFragmentContainer: () => {
+    return <button type="button">Save</button>
+  },
 }))
 
 const BANKSY_ID = "4dd1584de0091e000100207c"
@@ -49,12 +54,33 @@ const mockData = {
   },
 }
 
+const RECENT_SEARCHES_KEY = "artsy.recentSearches"
+
+const seedRecentSearches = (terms: string[]) => {
+  localStorage.setItem(
+    RECENT_SEARCHES_KEY,
+    JSON.stringify(
+      terms.map(label => {
+        return { label, href: `/search?term=${encodeURIComponent(label)}` }
+      }),
+    ),
+  )
+}
+
+const mockTrackEvent = jest.fn()
+
 describe("TrendingSearches", () => {
   beforeEach(() => {
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: mockData,
       loading: false,
     })
+    ;(useTracking as jest.Mock).mockReturnValue({ trackEvent: mockTrackEvent })
+  })
+
+  afterEach(() => {
+    localStorage.clear()
+    jest.clearAllMocks()
   })
 
   it("renders the section labels and the three time-window tabs", () => {
@@ -67,15 +93,34 @@ describe("TrendingSearches", () => {
     expect(screen.getByText("Past 30 days")).toBeInTheDocument()
   })
 
-  it("caps recent searches at seven terms", () => {
+  it("hides the recent searches section when there are no recent searches", () => {
     render(<TrendingSearches />)
 
-    // The mock has eight terms; the seventh renders, the eighth does not
+    expect(screen.queryByText("Recent Searches")).not.toBeInTheDocument()
+  })
+
+  it("caps recent searches at seven terms", () => {
+    seedRecentSearches([
+      "banksy",
+      "yayoi kusama",
+      "picasso prints",
+      "photography",
+      "david hockney",
+      "monet",
+      "sculpture",
+      "street art",
+    ])
+
+    render(<TrendingSearches />)
+
+    // Eight terms are stored; the seventh renders, the eighth does not
     expect(screen.getByText("sculpture")).toBeInTheDocument()
     expect(screen.queryByText("street art")).not.toBeInTheDocument()
   })
 
   it("renders recent searches as removable chips", async () => {
+    seedRecentSearches(["banksy", "monet"])
+
     render(<TrendingSearches />)
 
     expect(screen.getByText("Recent Searches")).toBeInTheDocument()
@@ -88,6 +133,80 @@ describe("TrendingSearches", () => {
     )
 
     expect(screen.queryByText("banksy")).not.toBeInTheDocument()
+    expect(JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY)!)).toEqual([
+      { label: "monet", href: "/search?term=monet" },
+    ])
+  })
+
+  it("links each recent search chip to the destination that was visited", () => {
+    localStorage.setItem(
+      RECENT_SEARCHES_KEY,
+      JSON.stringify([
+        { label: "White Cube", href: "/partner/white-cube" },
+        { label: "street art", href: "/search?term=street%20art" },
+      ]),
+    )
+
+    render(<TrendingSearches />)
+
+    // An entity that was picked from autosuggest links to its own page…
+    expect(screen.getByRole("link", { name: "White Cube" })).toHaveAttribute(
+      "href",
+      "/partner/white-cube",
+    )
+
+    // …while a submitted query links to the search results page
+    expect(screen.getByRole("link", { name: "street art" })).toHaveAttribute(
+      "href",
+      "/search?term=street%20art",
+    )
+  })
+
+  it("tracks a recent search chip click with its recorded metadata", async () => {
+    localStorage.setItem(
+      RECENT_SEARCHES_KEY,
+      JSON.stringify([
+        { label: "banksy", href: "/search?term=banksy" },
+        {
+          label: "White Cube",
+          href: "/partner/white-cube",
+          item_type: "Gallery",
+          item_id: "white-cube-id",
+        },
+      ]),
+    )
+
+    render(<TrendingSearches />)
+
+    await userEvent.click(screen.getByRole("link", { name: "White Cube" }))
+
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: ActionType.selectedItemFromSearch,
+      context_module: "recentSearchesRail",
+      destination_path: "/partner/white-cube",
+      query: "White Cube",
+      item_id: "white-cube-id",
+      item_number: 1,
+      item_type: "Gallery",
+    })
+  })
+
+  it("tracks a query chip click as a search item without entity metadata", async () => {
+    seedRecentSearches(["street art"])
+
+    render(<TrendingSearches />)
+
+    await userEvent.click(screen.getByRole("link", { name: "street art" }))
+
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action: ActionType.selectedItemFromSearch,
+      context_module: "recentSearchesRail",
+      destination_path: "/search?term=street%20art",
+      query: "street art",
+      item_id: "",
+      item_number: 0,
+      item_type: "Search",
+    })
   })
 
   it("renders a trending artist avatar linking to the artist page", () => {
@@ -109,6 +228,104 @@ describe("TrendingSearches", () => {
     expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument()
   })
 
+  it("tracks a rail impression per section when the panel opens", () => {
+    seedRecentSearches(["banksy"])
+
+    render(<TrendingSearches />)
+
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: ActionType.railViewed,
+        context_module: "recentSearchesRail",
+      }),
+    )
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: ActionType.railViewed,
+        context_module: ContextModule.trendingArtistsRail,
+      }),
+    )
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: ActionType.railViewed,
+        context_module: "trendingArtworksRail",
+      }),
+    )
+  })
+
+  it("does not track a recent searches impression when there are none", () => {
+    render(<TrendingSearches />)
+
+    expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect.objectContaining({ context_module: "recentSearchesRail" }),
+    )
+  })
+
+  it("does not track impressions when the host marks the session as already counted", () => {
+    render(<TrendingSearches shouldTrackImpressions={false} />)
+
+    expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect.objectContaining({ action: ActionType.railViewed }),
+    )
+  })
+
+  it("closes the panel on a plain chip click but not on a modified click", async () => {
+    seedRecentSearches(["banksy"])
+    const onNavigate = jest.fn()
+
+    render(<TrendingSearches onNavigate={onNavigate} />)
+
+    await userEvent.click(screen.getByRole("link", { name: "banksy" }), {
+      metaKey: true,
+    })
+
+    // A cmd+click opens a new tab; the panel must stay put (but still tracks)
+    expect(onNavigate).not.toHaveBeenCalled()
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ action: ActionType.selectedItemFromSearch }),
+    )
+
+    await userEvent.click(screen.getByRole("link", { name: "banksy" }))
+
+    expect(onNavigate).toHaveBeenCalled()
+  })
+
+  it("tracks a trending artist click", async () => {
+    render(<TrendingSearches />)
+
+    await userEvent.click(screen.getByRole("link", { name: /Banksy/ }))
+
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: ActionType.clickedArtistGroup,
+        context_module: ContextModule.trendingArtistsRail,
+        destination_page_owner_type: OwnerType.artist,
+        destination_page_owner_id: BANKSY_ID,
+        destination_page_owner_slug: "banksy",
+        horizontal_slide_position: expect.any(Number),
+        type: "thumbnail",
+      }),
+    )
+  })
+
+  it("tracks a trending artwork click", async () => {
+    render(<TrendingSearches />)
+
+    await userEvent.click(screen.getByText("Rabarama"))
+
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: ActionType.clickedArtworkGroup,
+        context_module: "trendingArtworksRail",
+        destination_page_owner_type: OwnerType.artwork,
+        destination_page_owner_id: RABARAMA_ID,
+        destination_page_owner_slug: "rabarama-dhyana",
+        horizontal_slide_position: expect.any(Number),
+        type: "thumbnail",
+      }),
+    )
+  })
+
   it("switches windows when a tab is clicked", async () => {
     render(<TrendingSearches />)
 
@@ -117,5 +334,29 @@ describe("TrendingSearches", () => {
     expect(
       screen.getByRole("button", { name: "Past 30 days" }),
     ).toHaveAttribute("aria-pressed", "true")
+  })
+
+  it("tracks a time-window switch", async () => {
+    render(<TrendingSearches />)
+
+    await userEvent.click(screen.getByText("Past 30 days"))
+
+    expect(mockTrackEvent).toHaveBeenCalledWith({
+      action_type: ActionType.tappedNavigationTab,
+      context_module: "trendingSearches",
+      subject: "Past 30 days",
+    })
+  })
+
+  it("does not track a re-click of the already-active tab", async () => {
+    render(<TrendingSearches />)
+
+    await userEvent.click(screen.getByText("Today"))
+
+    expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        action_type: ActionType.tappedNavigationTab,
+      }),
+    )
   })
 })
