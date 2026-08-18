@@ -100,7 +100,7 @@ const TEAM_MEMBERS = [
   },
   {
     name: "Katie Foley",
-    title: "Chief Operating Officer",
+    title: "Chief Operating Officer & General Counsel",
     src: "https://files.artsy.net/images/about-our-team-kathryn-foley-v2.png",
   },
   {
