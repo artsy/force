@@ -1,5 +1,6 @@
 import { Box, Flex, Image, Shelf, Skeleton, Text } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistInstagramRailQuery } from "__generated__/ArtistInstagramRailQuery.graphql"
 import type { ArtistInstagramRail_artist$data } from "__generated__/ArtistInstagramRail_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -106,14 +107,20 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
+interface ArtistInstagramRailQueryRendererProps {
+  id: string
+  lazyLoad?: boolean
+  onReady?: () => void
+}
+
 export const ArtistInstagramRailQueryRenderer: React.FC<
-  React.PropsWithChildren<{
-    id: string
-  }>
-> = ({ id }) => {
+  ArtistInstagramRailQueryRendererProps
+> = ({ id, lazyLoad = true, onReady }) => {
+  const { handleReady } = useSectionReady({ onReady })
+
   return (
     <SystemQueryRenderer<ArtistInstagramRailQuery>
-      lazyLoad
+      lazyLoad={lazyLoad}
       variables={{ id }}
       placeholder={PLACEHOLDER}
       query={graphql`
@@ -125,6 +132,7 @@ export const ArtistInstagramRailQueryRenderer: React.FC<
       `}
       render={({ error, props }) => {
         if (error) {
+          handleReady()
           console.error(error)
           return null
         }
@@ -132,6 +140,8 @@ export const ArtistInstagramRailQueryRenderer: React.FC<
         if (!props) {
           return PLACEHOLDER
         }
+
+        handleReady()
 
         if (!props.artist) {
           return null

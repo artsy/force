@@ -6,6 +6,7 @@ import {
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { ArtistCombinedNav } from "Apps/Artist/Routes/Combined/Components/ArtistCombinedNav"
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
+import { ArtistInstagramRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistInstagramRail"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
@@ -34,6 +35,7 @@ const ArtistCombinedRoute: React.FC<
     "market",
     "auction",
     "about",
+    "instagram",
     "editorial",
   ])
 
@@ -151,6 +153,16 @@ const ArtistCombinedRoute: React.FC<
           id={artist.internalID}
           lazyLoad={lazy.about}
           onReady={() => markReady("about")}
+        />
+      </Section>
+
+      <Separator my={4} />
+
+      <Section id="artistInstagramTop">
+        <ArtistInstagramRailQueryRenderer
+          id={artist.internalID}
+          lazyLoad={lazy.instagram}
+          onReady={() => markReady("instagram")}
         />
       </Section>
 

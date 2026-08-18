@@ -48,6 +48,14 @@ jest.mock("Components/Sticky/useStickyBackdrop", () => ({
   })),
 }))
 
+const NAVIGATING = {
+  artworks: false,
+  auction: false,
+  about: false,
+  instagram: false,
+  editorial: false,
+}
+
 describe("ArtistCombinedNav", () => {
   const waitUntil = jest.fn().mockResolvedValue(undefined)
 
@@ -61,17 +69,7 @@ describe("ArtistCombinedNav", () => {
   })
 
   it("renders editorial tab and jumps to editorial section", async () => {
-    render(
-      <ArtistCombinedNav
-        waitUntil={waitUntil}
-        navigating={{
-          artworks: false,
-          auction: false,
-          about: false,
-          editorial: false,
-        }}
-      />,
-    )
+    render(<ArtistCombinedNav waitUntil={waitUntil} navigating={NAVIGATING} />)
 
     fireEvent.click(screen.getByText("Editorial"))
 
@@ -83,6 +81,23 @@ describe("ArtistCombinedNav", () => {
         context_module: "artistHeader",
         context_page_owner_type: "artist",
         subject: "editorial",
+      })
+    })
+  })
+
+  it("renders the Instagram tab and jumps to the Instagram section", async () => {
+    render(<ArtistCombinedNav waitUntil={waitUntil} navigating={NAVIGATING} />)
+
+    fireEvent.click(screen.getByText("Instagram"))
+
+    await waitFor(() => {
+      expect(waitUntil).toHaveBeenCalledWith("instagram")
+      expect(mockJumpTo).toHaveBeenCalledWith("artistInstagramTop")
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "clickedHeader",
+        context_module: "artistHeader",
+        context_page_owner_type: "artist",
+        subject: "instagram",
       })
     })
   })

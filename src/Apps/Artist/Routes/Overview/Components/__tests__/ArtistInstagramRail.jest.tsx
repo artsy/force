@@ -65,20 +65,13 @@ describe("ArtistInstagramRail", () => {
     )
   })
 
-  it("falls back to mock images when there is no Instagram media", () => {
+  it("renders nothing when there is no Instagram media", () => {
     renderWithRelay({
       Artist: () => ({
         instagramMedia: [],
       }),
     })
 
-    expect(screen.getByText("Instagram")).toBeInTheDocument()
-
-    const mockTiles = screen.getAllByAltText("Artsy on Instagram")
-    expect(mockTiles.length).toBeGreaterThan(1)
-    expect(mockTiles[0].closest("a")).toHaveAttribute(
-      "href",
-      "https://www.instagram.com/artsy/",
-    )
+    expect(screen.queryByText("Instagram")).not.toBeInTheDocument()
   })
 })
