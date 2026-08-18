@@ -22,7 +22,6 @@ import {
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Components/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
@@ -31,7 +30,6 @@ import {
   type MouseEvent,
   type ReactNode,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react"
@@ -46,10 +44,8 @@ import { isModifiedClick } from "Components/Search/utils/isModifiedClick"
 import {
   ARTWORK_CARD_FLEX,
   ARTWORK_IMAGE_HEIGHT,
-  type HydratedArtwork,
   TrendingArtworkCard,
 } from "./Components/TrendingArtworkCard"
-import { TRENDING_WINDOWS, type TrendingArtist } from "./trendingSearchesData"
 
 interface TrendingSearchesProps {
   /** Called after a result is clicked so the parent can close the panel. */
@@ -61,12 +57,20 @@ interface TrendingSearchesProps {
   shouldTrackImpressions?: boolean
 }
 
-type HydratedArtist = NonNullable<
-  NonNullable<TrendingSearchesQuery["response"]["artists"]>[number]
->
+// The three windows Metaphysics serves; keys match the query's aliases.
+// Fallback labels render the tabs while the query is in flight.
+const TRENDING_WINDOWS = [
+  { key: "oneDay", fallbackLabel: "Today" },
+  { key: "sevenDays", fallbackLabel: "Past 7 Days" },
+  { key: "thirtyDays", fallbackLabel: "Past 30 Days" },
+] as const
 
-const MAX_ARTISTS = 12
-const MAX_ARTWORKS = 8
+type TrendingWindowData =
+  TrendingSearchesQuery["response"]["searchDropdown"]["oneDay"]
+
+type TrendingArtistNode = NonNullable<
+  NonNullable<TrendingWindowData["artists"]>[number]["artist"]
+>
 
 // TODO: Use ContextModule.recentSearchesRail / ContextModule.trendingArtworksRail
 // / ContextModule.trendingSearches once the cohesion release containing them
@@ -80,19 +84,49 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
   shouldTrackImpressions = true,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const active = TRENDING_WINDOWS[activeIndex]
 
   const { recentSearches, removeRecentSearch } = useRecentSearches()
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
 
-  // Adoption metric: one impression per visible section per panel session
-  // (the hasTracked ref keeps the full dependency list from re-firing)
-  const hasTrackedImpressionsRef = useRef(false)
+  // One request hydrates all three windows, so tab switches are instant.
+  // store-or-network is best-effort reuse across quick panel reopens.
+  const { data, loading } = useClientQuery<TrendingSearchesQuery>({
+    query: QUERY,
+    cacheConfig: { fetchPolicy: "store-or-network" },
+  })
+
+  const windows = data?.searchDropdown
+  const active = windows?.[TRENDING_WINDOWS[activeIndex].key]
+
+  // Rows whose entity failed to hydrate (e.g. delisted) are dropped;
+  // image-less artworks are dropped here (not in the card) so that rail
+  // indexes in analytics match the positions users actually see
+  const artists = (active?.artists ?? []).flatMap(row => {
+    return row.artist ? [row.artist] : []
+  })
+  const artworks = (active?.artworks ?? []).flatMap(row => {
+    return row.artwork?.image?.resized?.src ? [row.artwork] : []
+  })
+
+  const windowLabel = (index: number) => {
+    return (
+      windows?.[TRENDING_WINDOWS[index].key]?.label ??
+      TRENDING_WINDOWS[index].fallbackLabel
+    )
+  }
+
+  // Adoption metric: one impression per rail per panel session, and only for
+  // rails that actually showed content — the trending rails wait for the
+  // query so skeleton/error/empty states are never counted. The session
+  // permission is latched at mount because hosts flip the prop to false
+  // immediately after the first render of a session.
+  const isFirstPanelOfSessionRef = useRef(shouldTrackImpressions)
+  const hasTrackedRecentsImpressionRef = useRef(false)
+  const hasTrackedTrendingImpressionsRef = useRef(false)
 
   useEffect(() => {
-    if (!shouldTrackImpressions || hasTrackedImpressionsRef.current) return
-    hasTrackedImpressionsRef.current = true
+    if (!isFirstPanelOfSessionRef.current) return
 
     const trackRailViewed = (contextModule: ContextModule) => {
       const event: RailViewed = {
@@ -103,12 +137,29 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
       trackEvent(event)
     }
 
-    if (recentSearches.length > 0) {
+    if (!hasTrackedRecentsImpressionRef.current && recentSearches.length > 0) {
+      hasTrackedRecentsImpressionRef.current = true
       trackRailViewed(RECENT_SEARCHES_RAIL)
     }
-    trackRailViewed(ContextModule.trendingArtistsRail)
-    trackRailViewed(TRENDING_ARTWORKS_RAIL)
-  }, [shouldTrackImpressions, recentSearches, trackEvent, contextPageOwnerType])
+
+    if (!hasTrackedTrendingImpressionsRef.current && !loading) {
+      hasTrackedTrendingImpressionsRef.current = true
+
+      if (artists.length > 0) {
+        trackRailViewed(ContextModule.trendingArtistsRail)
+      }
+      if (artworks.length > 0) {
+        trackRailViewed(TRENDING_ARTWORKS_RAIL)
+      }
+    }
+  }, [
+    loading,
+    recentSearches,
+    artists,
+    artworks,
+    trackEvent,
+    contextPageOwnerType,
+  ])
 
   const navigateUnlessModified = (event?: MouseEvent<HTMLElement>) => {
     // A modified click opens a new tab; the panel must stay put
@@ -147,7 +198,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
       trackEvent({
         action_type: ActionType.tappedNavigationTab,
         context_module: TRENDING_SEARCHES,
-        subject: TRENDING_WINDOWS[index].label,
+        subject: windowLabel(index),
       })
     }
     setActiveIndex(index)
@@ -201,38 +252,6 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
     navigateUnlessModified(event)
   }
 
-  // Fetch the union of all windows' ids once, then filter client-side per tab.
-  const { artistIds, artworkIds } = useMemo(() => {
-    const artists = new Set<string>()
-    const artworks = new Set<string>()
-    TRENDING_WINDOWS.forEach(w => {
-      w.artists.forEach(a => artists.add(a.internalID))
-      w.artworks.forEach(a => artworks.add(a.internalID))
-    })
-    return { artistIds: [...artists], artworkIds: [...artworks] }
-  }, [])
-
-  const { data, loading } = useClientQuery<TrendingSearchesQuery>({
-    query: QUERY,
-    variables: { artistIds, artworkIds },
-  })
-
-  const artistById = useMemo(() => {
-    const map = new Map<string, HydratedArtist>()
-    ;(data?.artists ?? []).forEach(a => {
-      if (a?.internalID) map.set(a.internalID, a)
-    })
-    return map
-  }, [data])
-
-  const artworkById = useMemo(() => {
-    const map = new Map<string, HydratedArtwork>()
-    extractNodes(data?.artworks).forEach(a => {
-      if (a?.internalID) map.set(a.internalID, a)
-    })
-    return map
-  }, [data])
-
   return (
     // px matches the results dropdown rows (SuggestionItemLink px={2}) so the
     // edge-to-content spacing stays consistent when the surfaces swap.
@@ -248,7 +267,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
           <ScrollRail
             contentKey={`recents-${recentSearches.length}`}
             gap={1}
-            showScrollBar={false}
+            shouldShowScrollBar={false}
           >
             {recentSearches.map((search, index) => {
               return (
@@ -281,89 +300,92 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
       )}
 
       {/* Artists before artworks: artist page views carry the highest signal
-          weight, and a name/face is faster to recognize than a thumbnail */}
-      <SectionLabel>Trending Artists</SectionLabel>
+          weight, and a name/face is faster to recognize than a thumbnail.
+          Sections hide entirely when a loaded window has nothing to show. */}
+      {(loading || artists.length > 0) && (
+        <>
+          <SectionLabel>Trending Artists</SectionLabel>
 
-      <Spacer y={1} />
+          <Spacer y={1} />
 
-      <ScrollRail
-        contentKey={`artists-${activeIndex}-${loading}`}
-        showScrollBar={false}
-      >
-        {loading
-          ? Array.from({ length: 7 }).map((_, i) => {
-              return <ArtistAvatarSkeleton key={i} />
-            })
-          : active.artists.slice(0, MAX_ARTISTS).map((item, index) => {
-              const hydrated = artistById.get(item.internalID)
+          <ScrollRail
+            contentKey={`artists-${activeIndex}-${loading}`}
+            shouldShowScrollBar={false}
+          >
+            {loading
+              ? Array.from({ length: 7 }).map((_, i) => {
+                  return <ArtistAvatarSkeleton key={i} />
+                })
+              : artists.map((artist, index) => {
+                  return (
+                    <ArtistAvatar
+                      key={artist.internalID}
+                      artist={artist}
+                      onClick={event => {
+                        handleTrendingArtistClick({
+                          internalID: artist.internalID,
+                          slug: artist.slug,
+                          index,
+                          event,
+                        })
+                      }}
+                    />
+                  )
+                })}
+          </ScrollRail>
 
-              return (
-                <ArtistAvatar
-                  key={item.internalID}
-                  item={item}
-                  hydrated={hydrated}
-                  onClick={event => {
-                    handleTrendingArtistClick({
-                      internalID: item.internalID,
-                      slug: hydrated?.slug ?? item.slug,
-                      index,
-                      event,
-                    })
-                  }}
-                />
-              )
-            })}
-      </ScrollRail>
+          <Spacer y={2} />
+        </>
+      )}
 
-      <Spacer y={2} />
+      {(loading || artworks.length > 0) && (
+        <>
+          <SectionLabel>Trending Artworks</SectionLabel>
 
-      <SectionLabel>Trending Artworks</SectionLabel>
+          <Spacer y={1} />
 
-      <Spacer y={1} />
+          <ScrollRail
+            contentKey={`artworks-${activeIndex}-${loading}`}
+            alignItems="flex-end"
+          >
+            {loading
+              ? Array.from({ length: 4 }).map((_, i) => {
+                  return <ArtworkCardSkeleton key={i} />
+                })
+              : artworks.map((artwork, index) => {
+                  return (
+                    <TrendingArtworkCard
+                      key={artwork.internalID}
+                      artwork={artwork}
+                      onClick={event => {
+                        handleTrendingArtworkClick({
+                          internalID: artwork.internalID,
+                          slug: artwork.slug,
+                          index,
+                          event,
+                        })
+                      }}
+                    />
+                  )
+                })}
+          </ScrollRail>
 
-      <ScrollRail
-        contentKey={`artworks-${activeIndex}-${loading}`}
-        alignItems="flex-end"
-      >
-        {loading
-          ? Array.from({ length: 4 }).map((_, i) => {
-              return <ArtworkCardSkeleton key={i} />
-            })
-          : active.artworks.slice(0, MAX_ARTWORKS).map((item, index) => {
-              const hydrated = artworkById.get(item.internalID)
-
-              return (
-                <TrendingArtworkCard
-                  key={item.internalID}
-                  item={item}
-                  hydrated={hydrated}
-                  onClick={event => {
-                    handleTrendingArtworkClick({
-                      internalID: item.internalID,
-                      slug: hydrated?.slug ?? item.slug,
-                      index,
-                      event,
-                    })
-                  }}
-                />
-              )
-            })}
-      </ScrollRail>
-
-      <Spacer y={2} />
+          <Spacer y={2} />
+        </>
+      )}
 
       {/* Refinement control, not primary content — bottom, per design feedback */}
       <Flex justifyContent="flex-end" gap={1}>
         {TRENDING_WINDOWS.map((w, i) => {
           return (
             <Tab
-              key={w.window}
+              key={w.key}
               $isSelected={i === activeIndex}
               aria-pressed={i === activeIndex}
               onClick={() => handleTrendingWindowClick(i)}
               type="button"
             >
-              {w.label}
+              {windowLabel(i)}
             </Tab>
           )
         })}
@@ -379,7 +401,7 @@ interface ScrollRailProps {
   alignItems?: FlexProps["alignItems"]
   gap?: FlexProps["gap"]
   /** Whether to show the scroll indicator when content overflows */
-  showScrollBar?: boolean
+  shouldShowScrollBar?: boolean
 }
 
 // Horizontally scrollable row with the same scroll affordance as the homepage
@@ -389,7 +411,7 @@ const ScrollRail: FC<ScrollRailProps> = ({
   contentKey,
   alignItems,
   gap = 2,
-  showScrollBar = true,
+  shouldShowScrollBar = true,
 }) => {
   // Held in state (not a ref) so the scrollbar re-renders once the rail mounts
   const [element, setElement] = useState<HTMLDivElement | null>(null)
@@ -413,7 +435,7 @@ const ScrollRail: FC<ScrollRailProps> = ({
         {children}
       </RailFlex>
 
-      {showScrollBar && isScrollable && (
+      {shouldShowScrollBar && isScrollable && (
         <>
           <Spacer y={1} />
 
@@ -427,16 +449,15 @@ const ScrollRail: FC<ScrollRailProps> = ({
 const ARTIST_AVATAR_SIZE = 64
 
 interface ArtistAvatarProps {
-  item: TrendingArtist
-  hydrated?: HydratedArtist
+  artist: TrendingArtistNode
   onClick?: (event: MouseEvent<HTMLElement>) => void
 }
 
-const ArtistAvatar: FC<ArtistAvatarProps> = ({ item, hydrated, onClick }) => {
-  const image = hydrated?.coverArtwork?.image?.cropped
+const ArtistAvatar: FC<ArtistAvatarProps> = ({ artist, onClick }) => {
+  const image = artist.coverArtwork?.image?.cropped
 
   return (
-    <AvatarItem to={hydrated?.href ?? `/artist/${item.slug}`} onClick={onClick}>
+    <AvatarItem to={artist.href ?? `/artist/${artist.slug}`} onClick={onClick}>
       {image?.src ? (
         <AvatarImage
           src={image.src}
@@ -444,11 +465,15 @@ const ArtistAvatar: FC<ArtistAvatarProps> = ({ item, hydrated, onClick }) => {
           width={ARTIST_AVATAR_SIZE}
           height={ARTIST_AVATAR_SIZE}
           alt=""
+          // Native attribute, not Palette's lazyLoad prop: the prop swaps in
+          // a wrapper Box that receives this styled component's className,
+          // breaking the border-radius/object-fit on the actual img
+          loading="lazy"
         />
       ) : (
         <AvatarFallback>
           <Text variant="sm" color="mono60">
-            {hydrated?.initials ?? item.name?.[0]}
+            {artist.initials ?? artist.name?.[0]}
           </Text>
         </AvatarFallback>
       )}
@@ -462,7 +487,7 @@ const ArtistAvatar: FC<ArtistAvatarProps> = ({ item, hydrated, onClick }) => {
         overflowEllipsis
         textAlign="center"
       >
-        {hydrated?.name ?? item.name}
+        {artist.name}
       </Text>
     </AvatarItem>
   )
@@ -593,53 +618,75 @@ const Tab = styled.button<{ $isSelected: boolean }>`
 `
 
 const QUERY = graphql`
-  query TrendingSearchesQuery($artistIds: [String], $artworkIds: [String]) {
-    artists(ids: $artistIds) {
+  query TrendingSearchesQuery {
+    searchDropdown {
+      oneDay: trending(period: ONE_DAY) {
+        ...TrendingSearches_trending @relay(mask: false)
+      }
+      sevenDays: trending(period: SEVEN_DAYS) {
+        ...TrendingSearches_trending @relay(mask: false)
+      }
+      thirtyDays: trending(period: THIRTY_DAYS) {
+        ...TrendingSearches_trending @relay(mask: false)
+      }
+    }
+  }
+`
+
+// Shared by the three window aliases above, spread with @relay(mask: false)
+// so the data is read straight off the query result (no useFragment); the
+// SaveButton spread stays masked and is resolved by its fragment container.
+export const TRENDING_WINDOW_FRAGMENT = graphql`
+  fragment TrendingSearches_trending on TrendingSearches {
+    label
+    artists(first: 12) {
       internalID
-      slug
-      name
-      href
-      initials
-      coverArtwork {
-        image {
-          cropped(
-            width: 128
-            height: 128
-            version: ["square", "small", "large"]
-          ) {
-            src
-            srcSet
+      artist {
+        internalID
+        slug
+        name
+        href
+        initials
+        coverArtwork {
+          image {
+            cropped(
+              width: 128
+              height: 128
+              version: ["square", "small", "large"]
+            ) {
+              src
+              srcSet
+            }
           }
         }
       }
     }
-    artworks(ids: $artworkIds, first: 50, respectParamsOrder: true) {
-      edges {
-        node {
-          internalID
-          slug
-          href
-          title
-          date
-          artistNames
-          saleMessage
-          partner(shallow: true) {
-            name
-          }
-          image {
-            resized(
-              width: 240
-              height: 280
-              version: ["larger", "large", "medium"]
-            ) {
-              src
-              srcSet
-              width
-              height
-            }
-          }
-          ...SaveButton_artwork
+    artworks(first: 8) {
+      internalID
+      artwork {
+        internalID
+        slug
+        href
+        title
+        date
+        artistNames
+        saleMessage
+        partner(shallow: true) {
+          name
         }
+        image {
+          resized(
+            width: 240
+            height: 280
+            version: ["larger", "large", "medium"]
+          ) {
+            src
+            srcSet
+            width
+            height
+          }
+        }
+        ...SaveButton_artwork
       }
     }
   }

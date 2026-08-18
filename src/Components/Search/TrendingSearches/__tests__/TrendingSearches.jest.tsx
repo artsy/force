@@ -17,21 +17,27 @@ jest.mock("Components/Artwork/SaveButton/SaveButton", () => ({
 const BANKSY_ID = "4dd1584de0091e000100207c"
 const RABARAMA_ID = "69ef1a335bdeb20008bcebdc"
 
-const mockData = {
-  artists: [
-    {
-      internalID: BANKSY_ID,
-      slug: "banksy",
-      name: "Banksy",
-      href: "/artist/banksy",
-      initials: "B",
-      coverArtwork: null,
-    },
-  ],
-  artworks: {
-    edges: [
+// Mirrors the searchDropdown.trending shape served by Metaphysics
+const trendingWindow = (label: string) => {
+  return {
+    label,
+    artists: [
       {
-        node: {
+        internalID: BANKSY_ID,
+        artist: {
+          internalID: BANKSY_ID,
+          slug: "banksy",
+          name: "Banksy",
+          href: "/artist/banksy",
+          initials: "B",
+          coverArtwork: null,
+        },
+      },
+    ],
+    artworks: [
+      {
+        internalID: RABARAMA_ID,
+        artwork: {
           internalID: RABARAMA_ID,
           slug: "rabarama-dhyana",
           href: "/artwork/rabarama-dhyana",
@@ -51,6 +57,14 @@ const mockData = {
         },
       },
     ],
+  }
+}
+
+const mockData = {
+  searchDropdown: {
+    oneDay: trendingWindow("Today"),
+    sevenDays: trendingWindow("Past 7 Days"),
+    thirtyDays: trendingWindow("Past 30 Days"),
   },
 }
 
@@ -90,7 +104,7 @@ describe("TrendingSearches", () => {
     expect(screen.getByText("Trending Artworks")).toBeInTheDocument()
     expect(screen.getByText("Today")).toBeInTheDocument()
     expect(screen.getByText("Past 7 Days")).toBeInTheDocument()
-    expect(screen.getByText("Past 30 days")).toBeInTheDocument()
+    expect(screen.getByText("Past 30 Days")).toBeInTheDocument()
   })
 
   it("hides the recent searches section when there are no recent searches", () => {
@@ -269,6 +283,50 @@ describe("TrendingSearches", () => {
     )
   })
 
+  it("does not count trending rail impressions while the query is loading", () => {
+    ;(useClientQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      loading: true,
+    })
+    seedRecentSearches(["banksy"])
+
+    render(<TrendingSearches />)
+
+    // Skeletons are not adoption; only the recents rail (real chips) counts
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: ActionType.railViewed,
+        context_module: "recentSearchesRail",
+      }),
+    )
+    expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        context_module: ContextModule.trendingArtistsRail,
+      }),
+    )
+  })
+
+  it("hides sections and counts no impressions for loaded-but-empty rails", () => {
+    ;(useClientQuery as jest.Mock).mockReturnValue({
+      data: {
+        searchDropdown: {
+          oneDay: { label: "Today", artists: [], artworks: [] },
+          sevenDays: { label: "Past 7 Days", artists: [], artworks: [] },
+          thirtyDays: { label: "Past 30 Days", artists: [], artworks: [] },
+        },
+      },
+      loading: false,
+    })
+
+    render(<TrendingSearches />)
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+    expect(screen.queryByText("Trending Artworks")).not.toBeInTheDocument()
+    expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect.objectContaining({ action: ActionType.railViewed }),
+    )
+  })
+
   it("closes the panel on a plain chip click but not on a modified click", async () => {
     seedRecentSearches(["banksy"])
     const onNavigate = jest.fn()
@@ -329,22 +387,22 @@ describe("TrendingSearches", () => {
   it("switches windows when a tab is clicked", async () => {
     render(<TrendingSearches />)
 
-    await userEvent.click(screen.getByText("Past 30 days"))
+    await userEvent.click(screen.getByText("Past 30 Days"))
 
     expect(
-      screen.getByRole("button", { name: "Past 30 days" }),
+      screen.getByRole("button", { name: "Past 30 Days" }),
     ).toHaveAttribute("aria-pressed", "true")
   })
 
   it("tracks a time-window switch", async () => {
     render(<TrendingSearches />)
 
-    await userEvent.click(screen.getByText("Past 30 days"))
+    await userEvent.click(screen.getByText("Past 30 Days"))
 
     expect(mockTrackEvent).toHaveBeenCalledWith({
       action_type: ActionType.tappedNavigationTab,
       context_module: "trendingSearches",
-      subject: "Past 30 days",
+      subject: "Past 30 Days",
     })
   })
 

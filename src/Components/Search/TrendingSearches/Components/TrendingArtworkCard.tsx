@@ -1,36 +1,34 @@
 import { Box, Image, Text } from "@artsy/palette"
+import styled from "styled-components"
 import { ContextModule } from "@artsy/cohesion"
 import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
 import { RouterLink } from "System/Components/RouterLink"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
 import type { FC, MouseEvent } from "react"
-import type { TrendingArtwork } from "Components/Search/TrendingSearches/trendingSearchesData"
 
-export type HydratedArtwork = NonNullable<
+export type TrendingArtworkNode = NonNullable<
   NonNullable<
-    NonNullable<TrendingSearchesQuery["response"]["artworks"]>["edges"]
-  >[number]
->["node"]
+    TrendingSearchesQuery["response"]["searchDropdown"]["oneDay"]["artworks"]
+  >[number]["artwork"]
+>
 
 export const ARTWORK_IMAGE_HEIGHT = 200
 // Cards keep at least this width; the rail scrolls when space runs out.
 export const ARTWORK_CARD_FLEX = "1 0 160px"
 
 export interface TrendingArtworkCardProps {
-  item: TrendingArtwork
-  hydrated?: HydratedArtwork
+  artwork: TrendingArtworkNode
   onClick?: (event: MouseEvent<HTMLElement>) => void
 }
 
 export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
-  item,
-  hydrated,
+  artwork,
   onClick,
 }) => {
-  const image = hydrated?.image?.resized
-  const href = hydrated?.href ?? `/artwork/${item.slug}`
+  const image = artwork.image?.resized
+  const href = artwork.href ?? `/artwork/${artwork.slug}`
 
-  if (!hydrated || !image?.src) {
+  if (!image?.src) {
     return null
   }
 
@@ -38,19 +36,16 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
     <Box flex={ARTWORK_CARD_FLEX} minWidth={0}>
       <RouterLink to={href} onClick={onClick} display="block">
         <Box width="100%" height={ARTWORK_IMAGE_HEIGHT}>
-          <Image
+          <CardImage
             src={image.src}
             srcSet={image.srcSet}
             width={image.width}
             height={image.height}
-            alt={hydrated.title ?? ""}
-            style={{
-              display: "block",
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              objectPosition: "bottom left",
-            }}
+            alt={artwork.title ?? ""}
+            // Native attribute, not Palette's lazyLoad prop: the prop swaps in
+            // a wrapper Box that receives this styled component's className,
+            // breaking the object-fit sizing on the actual img
+            loading="lazy"
           />
         </Box>
       </RouterLink>
@@ -62,7 +57,7 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
               AuthContextModule union rejects unreleased values, and the auth
               flow must only ever receive schema-valid modules */}
           <SaveButtonFragmentContainer
-            artwork={hydrated}
+            artwork={artwork}
             contextModule={ContextModule.header}
           />
         </Box>
@@ -74,20 +69,20 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
           textDecoration="none"
         >
           <Text variant="sm-display" overflowEllipsis pr={4}>
-            {hydrated.artistNames ?? item.artistName}
+            {artwork.artistNames}
           </Text>
           <Text variant="xs" color="mono60">
-            {hydrated.title}
-            {hydrated.date ? `, ${hydrated.date}` : ""}
+            {artwork.title}
+            {artwork.date ? `, ${artwork.date}` : ""}
           </Text>
-          {hydrated.partner?.name && (
+          {artwork.partner?.name && (
             <Text variant="xs" color="mono60" overflowEllipsis>
-              {hydrated.partner.name}
+              {artwork.partner.name}
             </Text>
           )}
-          {hydrated.saleMessage && (
+          {artwork.saleMessage && (
             <Text variant="xs" fontWeight="bold" mt={0.5}>
-              {hydrated.saleMessage}
+              {artwork.saleMessage}
             </Text>
           )}
         </RouterLink>
@@ -95,3 +90,12 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
     </Box>
   )
 }
+
+// Bottom-left anchored so rows of mixed aspect ratios share a baseline
+const CardImage = styled(Image)`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom left;
+`
