@@ -37,6 +37,12 @@ const ARTIST_COMBINED_NAV_ITEMS = [
     subject: "about",
   },
   {
+    activeSection: "artistInstagramTop",
+    label: "Instagram",
+    section: "instagram",
+    subject: "instagram",
+  },
+  {
     activeSection: "artistEditorialTop",
     label: "Editorial",
     section: "editorial",
