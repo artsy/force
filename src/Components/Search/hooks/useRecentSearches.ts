@@ -19,23 +19,24 @@ export interface RecentSearch {
   item_id?: string
 }
 
-/** Maps an autosuggest option to the entry recorded when it is chosen */
-export const recentSearchFromOption = (
-  option: SuggestionItemOptionProps,
-): RecentSearch => {
-  return {
-    label: option.text,
-    href: option.href,
-    item_type: option.item_type,
-    item_id: option.item_id,
-  }
+export interface UseRecentSearches {
+  /** The visible list, capped at MAX_RECENT_SEARCHES, most recent first */
+  recentSearches: RecentSearch[]
+  addRecentSearch: (search: RecentSearch) => void
+  /** Records the autosuggest option the user chose */
+  addRecentSearchFromOption: (option: SuggestionItemOptionProps) => void
+  removeRecentSearch: (label: string) => void
 }
 
 // Chips navigate wherever this href points, so only relative Artsy paths are
-// accepted — never external or protocol-relative URLs from a tampered store.
+// accepted — never external, protocol-relative (//host), or backslash
+// (/\host, which browsers normalize to //host) URLs from a tampered store.
 const isInternalHref = (href: unknown): href is string => {
   return (
-    typeof href === "string" && href.startsWith("/") && !href.startsWith("//")
+    typeof href === "string" &&
+    href.startsWith("/") &&
+    !href.startsWith("//") &&
+    !href.startsWith("/\\")
   )
 }
 
@@ -63,8 +64,25 @@ const asRecentSearch = (entry: unknown): RecentSearch | null => {
   return null
 }
 
-const getStoredSearches = (): RecentSearch[] => {
+// Module-level store shared by every hook instance: mutations always read and
+// write through here, so one instance can never undo another's changes with
+// stale component state (e.g. the never-remounting nav bar resurrecting a
+// chip that was removed via the trending panel).
+let memorySearches: RecentSearch[] | null = null
+let hasFailedWrite = false
+
+/** Test-only: clears the module-level store between tests */
+export const resetRecentSearchesStoreForTests = () => {
+  memorySearches = null
+  hasFailedWrite = false
+}
+
+const readSearches = (): RecentSearch[] => {
   if (typeof window === "undefined") return []
+
+  // After a failed write (e.g. Safari private mode) memory is ahead of
+  // storage; keep serving the session's list from memory.
+  if (hasFailedWrite && memorySearches) return memorySearches
 
   try {
     const raw = window.localStorage.getItem(RECENT_SEARCHES_KEY)
@@ -73,45 +91,52 @@ const getStoredSearches = (): RecentSearch[] => {
     const parsed: unknown = JSON.parse(raw)
     if (!Array.isArray(parsed)) return []
 
+    const seen = new Set<string>()
+
     return parsed
       .flatMap(entry => {
         const search = asRecentSearch(entry)
         return search ? [search] : []
       })
+      .filter(search => {
+        // Storage written by older code or another tab may contain duplicate
+        // labels; render-side keys require uniqueness
+        const key = search.label.toLowerCase()
+        if (seen.has(key)) return false
+        seen.add(key)
+        return true
+      })
       .slice(0, MAX_SAVED_RECENT_SEARCHES)
   } catch {
-    // Storage unavailable (e.g. Safari private mode) or unparseable contents;
-    // treat as no recent searches.
-    return []
+    // Storage unavailable or unparseable; fall back to the session's memory
+    return memorySearches ?? []
   }
 }
 
-const setStoredSearches = (searches: RecentSearch[]) => {
+const writeSearches = (searches: RecentSearch[]) => {
+  memorySearches = searches
+
   if (typeof window === "undefined") return
 
   try {
     window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches))
+    hasFailedWrite = false
   } catch {
-    // Storage unavailable; the in-memory state still updates for this session.
+    // Storage unavailable; the session keeps working from memorySearches
+    hasFailedWrite = true
   }
 }
 
-// Storage entries first (they may include newer writes from other hook
-// instances), then any state-only entries — which exist when persistence
-// fails (e.g. Safari private mode) and keep the session's searches alive.
-const mergeSearches = ({
-  stored,
-  state,
-}: {
-  stored: RecentSearch[]
-  state: RecentSearch[]
-}): RecentSearch[] => {
-  const storedLabels = new Set(stored.map(search => search.label.toLowerCase()))
-
-  return [
-    ...stored,
-    ...state.filter(search => !storedLabels.has(search.label.toLowerCase())),
-  ]
+/** Maps an autosuggest option to the entry recorded when it is chosen */
+const recentSearchFromOption = (
+  option: SuggestionItemOptionProps,
+): RecentSearch => {
+  return {
+    label: option.text,
+    href: option.href,
+    item_type: option.item_type,
+    item_id: option.item_id,
+  }
 }
 
 /**
@@ -121,9 +146,13 @@ const mergeSearches = ({
  * submitted a query. When storage is unavailable the list only lives for
  * the current session.
  */
-export const useRecentSearches = () => {
-  const [storedSearches, setStateSearches] =
-    useState<RecentSearch[]>(getStoredSearches)
+export const useRecentSearches = (): UseRecentSearches => {
+  const [searches, setSearches] = useState<RecentSearch[]>(readSearches)
+
+  const commit = (next: RecentSearch[]) => {
+    writeSearches(next)
+    setSearches(next)
+  }
 
   const addRecentSearch = ({
     label,
@@ -135,41 +164,38 @@ export const useRecentSearches = () => {
     const trimmed = typeof label === "string" ? label.trim() : ""
     if (!trimmed || !isInternalHref(href)) return
 
-    const base = mergeSearches({
-      stored: getStoredSearches(),
-      state: storedSearches,
-    })
-
     // One chip per label (case-insensitive), latest destination wins — an
     // entity click and a query submit for the same term never show twice.
-    const next = [
-      { label: trimmed, href, item_type, item_id },
-      ...base.filter(existing => {
-        return existing.label.toLowerCase() !== trimmed.toLowerCase()
-      }),
-    ].slice(0, MAX_SAVED_RECENT_SEARCHES)
+    commit(
+      [
+        { label: trimmed, href, item_type, item_id },
+        ...readSearches().filter(existing => {
+          return existing.label.toLowerCase() !== trimmed.toLowerCase()
+        }),
+      ].slice(0, MAX_SAVED_RECENT_SEARCHES),
+    )
+  }
 
-    setStoredSearches(next)
-    setStateSearches(next)
+  const addRecentSearchFromOption = (option: SuggestionItemOptionProps) => {
+    addRecentSearch(recentSearchFromOption(option))
   }
 
   const removeRecentSearch = (label: string) => {
-    const base = mergeSearches({
-      stored: getStoredSearches(),
-      state: storedSearches,
-    })
-
-    const next = base.filter(existing => {
-      return existing.label !== label
-    })
-
-    setStoredSearches(next)
-    setStateSearches(next)
+    commit(
+      readSearches().filter(existing => {
+        return existing.label !== label
+      }),
+    )
   }
 
   const recentSearches = useMemo(() => {
-    return storedSearches.slice(0, MAX_RECENT_SEARCHES)
-  }, [storedSearches])
+    return searches.slice(0, MAX_RECENT_SEARCHES)
+  }, [searches])
 
-  return { recentSearches, addRecentSearch, removeRecentSearch }
+  return {
+    recentSearches,
+    addRecentSearch,
+    addRecentSearchFromOption,
+    removeRecentSearch,
+  }
 }

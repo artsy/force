@@ -3,6 +3,7 @@ import {
   MAX_RECENT_SEARCHES,
   MAX_SAVED_RECENT_SEARCHES,
   type RecentSearch,
+  resetRecentSearchesStoreForTests,
   useRecentSearches,
 } from "Components/Search/hooks/useRecentSearches"
 
@@ -22,6 +23,7 @@ const stored = (): unknown => {
 describe("useRecentSearches", () => {
   afterEach(() => {
     localStorage.clear()
+    resetRecentSearchesStoreForTests()
     jest.restoreAllMocks()
   })
 
@@ -240,6 +242,30 @@ describe("useRecentSearches", () => {
     expect(result.current.recentSearches).toEqual([BANKSY])
   })
 
+  it("does not resurrect entries removed through another hook instance", () => {
+    // Mimics the real wiring: the nav bar's instance never remounts, while
+    // removal happens through the trending panel's separate instance
+    const navBar = renderHook(() => useRecentSearches())
+
+    act(() => {
+      navBar.result.current.addRecentSearch(BANKSY)
+    })
+
+    const panel = renderHook(() => useRecentSearches())
+
+    act(() => {
+      panel.result.current.removeRecentSearch("Banksy")
+    })
+
+    // The nav bar instance still holds Banksy in state; a new add must not
+    // write it back
+    act(() => {
+      navBar.result.current.addRecentSearch(MONET)
+    })
+
+    expect(stored()).toEqual([MONET])
+  })
+
   it("ignores non-string labels from nullable GraphQL fields", () => {
     const { result } = renderHook(() => useRecentSearches())
 
@@ -274,16 +300,39 @@ describe("useRecentSearches", () => {
         href: undefined as unknown as string,
       })
     })
+    act(() => {
+      // Browsers normalize backslashes to slashes, making this external
+      result.current.addRecentSearch({
+        label: "backslash",
+        href: "/\\evil.example",
+      })
+    })
 
     expect(result.current.recentSearches).toEqual([])
   })
 
   it("drops stored entries with external destinations on read", () => {
-    seed([{ label: "evil", href: "https://evil.example" }, BANKSY])
+    seed([
+      { label: "evil", href: "https://evil.example" },
+      { label: "sneaky", href: "/\\evil.example" },
+      BANKSY,
+    ])
 
     const { result } = renderHook(() => useRecentSearches())
 
     expect(result.current.recentSearches).toEqual([BANKSY])
+  })
+
+  it("dedupes duplicate labels from storage on read", () => {
+    // Legacy plain-string entries or another tab's writes may hold duplicates
+    seed(["banksy", "Banksy", MONET])
+
+    const { result } = renderHook(() => useRecentSearches())
+
+    expect(result.current.recentSearches).toEqual([
+      { label: "banksy", href: "/search?term=banksy" },
+      MONET,
+    ])
   })
 
   it("renders nothing when reading from storage throws", () => {

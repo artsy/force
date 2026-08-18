@@ -38,10 +38,8 @@ import {
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
 import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
-import {
-  recentSearchFromOption,
-  useRecentSearches,
-} from "./hooks/useRecentSearches"
+import { useRecentSearches } from "./hooks/useRecentSearches"
+import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
 import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
@@ -52,6 +50,11 @@ export interface SearchBarInputProps {
   searchTerm: string
 }
 
+// Shared by the results dropdown and the trending panel so the two surfaces
+// always swap without a visible size jump
+const SEARCH_DROPDOWN_MAX_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`
+const SEARCH_DROPDOWN_MIN_WIDTH = 600
+
 export const SearchBarInput: FC<
   React.PropsWithChildren<SearchBarInputProps>
 > = ({ searchTerm }) => {
@@ -61,7 +64,7 @@ export const SearchBarInput: FC<
 
   const isClient = useDidMount()
 
-  const { addRecentSearch } = useRecentSearches()
+  const { addRecentSearch, addRecentSearchFromOption } = useRecentSearches()
 
   const { data, refetch } = useClientQuery<SearchBarInputSuggestQuery>({
     query: QUERY,
@@ -74,7 +77,9 @@ export const SearchBarInput: FC<
     skip: !searchTerm,
   })
 
-  const [value, setValue] = useState(searchTerm)
+  // searchTerm is typed as string but arrives undefined on routes without a
+  // term (see the `searchTerm ?? ""` guards below); value must be a string
+  const [value, setValue] = useState(searchTerm ?? "")
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   const [isFocused, setIsFocused] = useState(false)
@@ -86,7 +91,9 @@ export const SearchBarInput: FC<
 
   const { router, match } = useRouter()
 
-  const encodedSearchURL = searchResultsHref(value)
+  // Trimmed so recorded recent searches and the results page never carry
+  // accidental whitespace padding
+  const encodedSearchURL = searchResultsHref(value.trim())
 
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
@@ -222,20 +229,27 @@ export const SearchBarInput: FC<
     })
   }
 
+  const suppressFocusUntilRef = useRef(0)
+
   // Matches production behavior: once a result is chosen the input gives up
   // focus, so neither the results dropdown nor the trending panel lingers
   // over the destination page.
   const closeDropdown = () => {
+    // Palette's AutocompleteInput re-focuses the input ~100ms after a
+    // keyboard selection (its internal resetUI); ignore that programmatic
+    // focus so the trending panel doesn't reopen over the destination page
+    suppressFocusUntilRef.current = Date.now() + 500
     setIsFocused(false)
     ref.current?.blur()
   }
 
   const handleSubmit = () => {
-    if (value) {
-      addRecentSearch({ label: value, href: encodedSearchURL })
-      closeDropdown()
-      redirect(encodedSearchURL)
-    }
+    const term = value.trim()
+    if (!term) return
+
+    addRecentSearch({ label: term, href: encodedSearchURL })
+    closeDropdown()
+    redirect(encodedSearchURL)
   }
 
   const trackSelection = (option: SuggestionItemOptionProps) => {
@@ -254,15 +268,11 @@ export const SearchBarInput: FC<
     }
   }
 
-  // For the “See all results” footer row, text/href are the raw query and
-  // the search results page — the same entry a plain Enter submit records.
-  const recordRecentSearch = (option: SuggestionItemOptionProps) => {
-    addRecentSearch(recentSearchFromOption(option))
-  }
-
   const handleSelect = (option: SuggestionItemOptionProps) => {
     trackSelection(option)
-    recordRecentSearch(option)
+    // The “See all results” footer row records the raw query + results page,
+    // the same entry a plain Enter submit records
+    addRecentSearchFromOption(option)
 
     closeDropdown()
     resetValue()
@@ -274,7 +284,7 @@ export const SearchBarInput: FC<
     event?: MouseEvent<HTMLElement>,
   ) => {
     trackSelection(option)
-    recordRecentSearch(option)
+    addRecentSearchFromOption(option)
     if (isModifiedClick(event)) return
     closeDropdown()
     resetValue()
@@ -287,7 +297,7 @@ export const SearchBarInput: FC<
   ) => {
     // QuickNavigationItem tracks its own cohesion event
     // Records the artist itself (base href), matching Eigen’s quick nav
-    recordRecentSearch(option)
+    addRecentSearchFromOption(option)
     if (isModifiedClick(event)) return
     closeDropdown()
     resetValue()
@@ -295,6 +305,9 @@ export const SearchBarInput: FC<
   }
 
   const handleFocus = () => {
+    // Skip Palette's programmatic post-selection refocus (see closeDropdown)
+    if (Date.now() < suppressFocusUntilRef.current) return
+
     setIsFocused(true)
     tracking.trackEvent({
       action_type: ActionType.focusedOnSearchInput,
@@ -311,26 +324,26 @@ export const SearchBarInput: FC<
   }
 
   // Show trending only when focused with an empty/too-short query.
-  const showTrending = isFocused && !shouldStartSearching(value)
+  const isTrendingVisible = isFocused && !shouldStartSearching(value)
 
-  // Rail impressions count once per focus session, even though the panel
-  // remounts whenever the query crosses the search threshold.
-  const hasTrackedTrendingImpressionsRef = useRef(false)
+  const shouldTrackTrendingImpressions = useTrendingImpressionSession({
+    isPanelVisible: isTrendingVisible,
+    // The session ends on blur; refocusing counts as a new panel open
+    isSessionActive: isFocused,
+  })
 
-  useEffect(() => {
-    if (showTrending) {
-      hasTrackedTrendingImpressionsRef.current = true
-    } else if (!isFocused) {
-      hasTrackedTrendingImpressionsRef.current = false
-    }
-  }, [showTrending, isFocused])
-
-  // Palette handles Escape for its own results dropdown; the trending panel
-  // needs the same affordance.
+  // Safety net: while the input is focused, Palette's AutocompleteInput
+  // swallows Escape itself (stopPropagation) and the panel then closes via
+  // the blur Palette triggers. This handler only fires for focus inside the
+  // panel, where Palette isn't involved. isComposing guards IME cancellation.
   const handleContainerKeyDown = (
     event: React.KeyboardEvent<HTMLDivElement>,
   ) => {
-    if (event.key === "Escape" && showTrending) {
+    if (
+      event.key === "Escape" &&
+      !event.nativeEvent.isComposing &&
+      isTrendingVisible
+    ) {
       closeDropdown()
     }
   }
@@ -419,13 +432,13 @@ export const SearchBarInput: FC<
             />
           )
         }}
-        dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
-        dropdownMinWidth={600}
+        dropdownMaxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
+        dropdownMinWidth={SEARCH_DROPDOWN_MIN_WIDTH}
         flip={false}
         height={40}
       />
 
-      {showTrending && (
+      {isTrendingVisible && (
         <TrendingPanel
           position="absolute"
           // Mirrors the results dropdown exactly (same anchor, offset, width,
@@ -434,10 +447,10 @@ export const SearchBarInput: FC<
           top="calc(100% + 10px)"
           left={0}
           width="100%"
-          minWidth={600}
+          minWidth={SEARCH_DROPDOWN_MIN_WIDTH}
           zIndex={Z.dropdown}
           bg="mono0"
-          maxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
+          maxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
           overflowY="auto"
           // Keep input focused so the panel stays open while clicking inside it
           onMouseDown={event => event.preventDefault()}
@@ -447,7 +460,7 @@ export const SearchBarInput: FC<
             // otherwise a same-pathname navigation leaves the input focused
             // with the panel unable to reopen on the next click
             onNavigate={closeDropdown}
-            shouldTrackImpressions={!hasTrackedTrendingImpressionsRef.current}
+            shouldTrackImpressions={shouldTrackTrendingImpressions}
           />
         </TrendingPanel>
       )}

@@ -16,6 +16,7 @@ import {
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
 import { TrendingSearches } from "Components/Search/TrendingSearches/TrendingSearches"
+import { useTrendingImpressionSession } from "Components/Search/hooks/useTrendingImpressionSession"
 import createLogger from "Utils/logger"
 import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
@@ -111,15 +112,11 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     setInputValue(value)
   }
 
-  // Rail impressions count once per overlay session, even though the trending
-  // panel remounts whenever the query crosses the search threshold.
-  const hasTrackedTrendingImpressionsRef = useRef(false)
-
-  useEffect(() => {
-    if (!shouldStartSearching(inputValue)) {
-      hasTrackedTrendingImpressionsRef.current = true
-    }
-  }, [inputValue])
+  const shouldTrackTrendingImpressions = useTrendingImpressionSession({
+    isPanelVisible: !shouldStartSearching(inputValue),
+    // The overlay unmounts on close, so the session spans its whole lifetime
+    isSessionActive: true,
+  })
 
   return (
     <OverlayBase
@@ -159,7 +156,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
       ) : (
         <TrendingSearches
           onNavigate={onClose}
-          shouldTrackImpressions={!hasTrackedTrendingImpressionsRef.current}
+          shouldTrackImpressions={shouldTrackTrendingImpressions}
         />
       )}
     </OverlayBase>

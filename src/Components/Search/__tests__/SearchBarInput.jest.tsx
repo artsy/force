@@ -103,12 +103,21 @@ describe("SearchBarInput", () => {
           viewer: { searchConnection: { edges: [] } },
         }),
       })),
+      // Consumed by the nested TrendingSearches (its searchDropdown data is
+      // absent from this mock, so it renders loading skeletons)
+      loading: true,
     })
   })
 
   afterEach(() => {
     jest.clearAllMocks()
     localStorage.clear()
+  })
+
+  it("renders without a search term (routes without ?term= pass undefined)", () => {
+    render(<SearchBarInput searchTerm={undefined as unknown as string} />)
+
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
   })
 
   it("passes the experiment variant to autosuggest", () => {
@@ -351,6 +360,13 @@ describe("SearchBarInput", () => {
   })
 
   it("tracks rail impressions once per focus session across threshold crossings", async () => {
+    // Seed recents: the trending rails wait for query data (mocked as
+    // loading), but the recents rail impression fires as soon as chips show
+    localStorage.setItem(
+      "artsy.recentSearches",
+      JSON.stringify([{ label: "banksy", href: "/search?term=banksy" }]),
+    )
+
     render(<SearchBarInput searchTerm="" />)
     const input = screen.getByRole("textbox")
 
@@ -382,6 +398,21 @@ describe("SearchBarInput", () => {
     await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
 
     expect(mockPush).toHaveBeenCalledWith("/artist/andy-warhol")
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("ignores Palette's programmatic refocus right after a selection", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+    const input = screen.getByRole("textbox")
+
+    await userEvent.click(input)
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+    // Palette's AutocompleteInput re-focuses the input ~100ms after a
+    // keyboard selection (resetUI); the query is empty by then, so without
+    // suppression the trending panel would pop open over the artist page
+    fireEvent.focus(input)
+
     expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
   })
 
