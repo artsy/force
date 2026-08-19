@@ -10,13 +10,12 @@ export const useOnboardingModal = () => {
   const { match, router } = useRouter()
   const initialized = useRef(false)
 
-  const { onboardingComponent, showOnboarding, hideOnboarding } = useOnboarding(
-    {
+  const { onboardingComponent, isVisible, showOnboarding, hideOnboarding } =
+    useOnboarding({
       onClose: () => {
         hideOnboarding()
       },
-    },
-  )
+    })
 
   // Check to see if we should open onboarding (logged in + ?onboarding=true),
   // show it, and then immediately remove the query param
@@ -34,5 +33,5 @@ export const useOnboardingModal = () => {
     initialized.current = true
   }, [isLoggedIn, match.location, router, showOnboarding])
 
-  return { onboardingComponent }
+  return { onboardingComponent, isOnboardingVisible: isVisible }
 }
