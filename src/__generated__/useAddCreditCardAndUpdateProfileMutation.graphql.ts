@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e2cff97a6165e9da3b0abdcd2b3fc44>>
+ * @generated SignedSource<<669d358f7c7df85502e905b69defe4ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type CreditCardInput = {
   token: string;
 };
 export type UpdateMyProfileInput = {
+  agreedToReceiveEmails?: boolean | null | undefined;
   artworksPerYear?: string | null | undefined;
   bio?: string | null | undefined;
   clientMutationId?: string | null | undefined;

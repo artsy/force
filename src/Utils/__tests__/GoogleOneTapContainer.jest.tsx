@@ -1,5 +1,5 @@
 import { act, render } from "@testing-library/react"
-import { useToasts } from "@artsy/palette"
+import { useDidMount, useToasts } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { GoogleOneTapContainer } from "Utils/GoogleOneTapContainer"
@@ -13,7 +13,9 @@ jest.mock("@sentry/browser", () => ({
 }))
 
 jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
   useToasts: jest.fn(),
+  useDidMount: jest.fn(),
 }))
 
 jest.mock("Utils/getENV", () => ({
@@ -33,6 +35,7 @@ describe("GoogleOneTapContainer", () => {
   const mockUseSystemContext = useSystemContext as jest.Mock
   const mockUseToasts = useToasts as jest.Mock
   const mockUseAuthDialogContext = useAuthDialogContext as jest.Mock
+  const mockUseDidMount = useDidMount as jest.Mock
 
   const enableOneTap = () => {
     mockUseSystemContext.mockReturnValue({ isLoggedIn: false })
@@ -51,6 +54,7 @@ describe("GoogleOneTapContainer", () => {
     mockCaptureException.mockClear()
     mockSendToast.mockClear()
     mockUseToasts.mockReturnValue({ sendToast: mockSendToast })
+    mockUseDidMount.mockReturnValue(true)
   })
 
   afterEach(() => {
@@ -61,6 +65,18 @@ describe("GoogleOneTapContainer", () => {
     document.body.querySelector(
       "script[src='https://accounts.google.com/gsi/client']",
     ) as HTMLScriptElement | null
+
+  describe("hydration safety", () => {
+    it("does not render the g_id_onload div before the client has mounted, even when otherwise eligible", () => {
+      enableOneTap()
+      mockUseDidMount.mockReturnValue(false)
+
+      render(<GoogleOneTapContainer />)
+
+      expect(document.getElementById("g_id_onload")).not.toBeInTheDocument()
+      expect(gsiScript()).not.toBeInTheDocument()
+    })
+  })
 
   describe("g_id_onload div", () => {
     it("renders when GOOGLE_CLIENT_ID is set and user is logged out", () => {

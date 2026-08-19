@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<742bd340c53d98d4241d91ee60a66cd9>>
+ * @generated SignedSource<<e76382c5e1f3279049a83d7ac9f12a08>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest } from 'relay-runtime';
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
+  agreedToReceiveEmails?: boolean | null | undefined;
   artworksPerYear?: string | null | undefined;
   bio?: string | null | undefined;
   clientMutationId?: string | null | undefined;
