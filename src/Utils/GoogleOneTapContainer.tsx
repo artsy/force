@@ -1,4 +1,4 @@
-import { useToasts } from "@artsy/palette"
+import { useDidMount, useToasts } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { AUTH_ERROR_CODES } from "Utils/authConstants"
@@ -34,10 +34,14 @@ export const GoogleOneTapContainer = () => {
   const { sendToast } = useToasts()
   const { state: authDialogState } = useAuthDialogContext()
 
-  // `window` guard keeps this from throwing during SSR, where the pathname
-  // check below would otherwise run against an undefined `window`.
+  // `useDidMount` is false during SSR and during the client's first render
+  // pass, only flipping to true after that first pass commits. This keeps
+  // `enabled` in sync between the server and the client's first paint, avoiding
+  // a hydration mismatch.
+  const isMounted = useDidMount()
+
   const enabled =
-    typeof window !== "undefined" &&
+    isMounted &&
     !isLoggedIn &&
     !!googleClientId &&
     !isAuthPath(window.location.pathname) &&
