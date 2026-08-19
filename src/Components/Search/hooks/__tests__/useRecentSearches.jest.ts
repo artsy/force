@@ -216,16 +216,6 @@ describe("useRecentSearches", () => {
     expect(stored()).toEqual([MONET])
   })
 
-  it("upgrades legacy plain-string entries to search results links", () => {
-    seed(["street art"])
-
-    const { result } = renderHook(() => useRecentSearches())
-
-    expect(result.current.recentSearches).toEqual([
-      { label: "street art", href: "/search?term=street%20art" },
-    ])
-  })
-
   it("ignores unparseable stored values", () => {
     localStorage.setItem(RECENT_SEARCHES_KEY, "not json {")
 
@@ -324,8 +314,12 @@ describe("useRecentSearches", () => {
   })
 
   it("dedupes duplicate labels from storage on read", () => {
-    // Legacy plain-string entries or another tab's writes may hold duplicates
-    seed(["banksy", "Banksy", MONET])
+    // Another tab's writes may hold duplicates
+    seed([
+      { label: "banksy", href: "/search?term=banksy" },
+      { label: "Banksy", href: "/artist/banksy" },
+      MONET,
+    ])
 
     const { result } = renderHook(() => useRecentSearches())
 

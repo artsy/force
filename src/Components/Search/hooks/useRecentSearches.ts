@@ -1,6 +1,6 @@
 import type { SuggestionItemOptionProps } from "Components/Search/SuggestionItem/SuggestionItem"
-import { searchResultsHref } from "Components/Search/utils/searchResultsHref"
 import { useMemo, useState } from "react"
+import * as Yup from "yup"
 
 // Matches the recent-searches limits in the Eigen app: a deep saved history
 // so that removing a chip resurfaces an older search, but only a handful shown.
@@ -40,28 +40,24 @@ const isInternalHref = (href: unknown): href is string => {
   )
 }
 
+// Single source of truth for what a valid entry is, shared by the read path
+// (untrusted storage) and the write path (labels originate from nullable
+// GraphQL fields despite the types) — the same cookie/storage-validation
+// pattern as useAuthIntent and appPreferences.
+const recentSearchSchema = Yup.object({
+  // .trim() transforms during cast; .required() then rejects the empty string
+  label: Yup.string().trim().required(),
+  href: Yup.string().required().test("is-internal", isInternalHref),
+  item_type: Yup.string(),
+  item_id: Yup.string(),
+})
+
 const asRecentSearch = (entry: unknown): RecentSearch | null => {
-  // Entries written by the earlier plain-string format
-  if (typeof entry === "string") {
-    return { label: entry, href: searchResultsHref(entry) }
+  try {
+    return recentSearchSchema.validateSync(entry, { stripUnknown: true })
+  } catch {
+    return null
   }
-
-  if (
-    typeof entry === "object" &&
-    entry !== null &&
-    typeof (entry as RecentSearch).label === "string" &&
-    isInternalHref((entry as RecentSearch).href)
-  ) {
-    const { label, href, item_type, item_id } = entry as RecentSearch
-    return {
-      label,
-      href,
-      ...(typeof item_type === "string" ? { item_type } : {}),
-      ...(typeof item_id === "string" ? { item_id } : {}),
-    }
-  }
-
-  return null
 }
 
 // Module-level store shared by every hook instance: mutations always read and
@@ -99,8 +95,8 @@ const readSearches = (): RecentSearch[] => {
         return search ? [search] : []
       })
       .filter(search => {
-        // Storage written by older code or another tab may contain duplicate
-        // labels; render-side keys require uniqueness
+        // Storage written by another tab may contain duplicate labels;
+        // render-side keys require uniqueness
         const key = search.label.toLowerCase()
         if (seen.has(key)) return false
         seen.add(key)
@@ -154,23 +150,17 @@ export const useRecentSearches = (): UseRecentSearches => {
     setSearches(next)
   }
 
-  const addRecentSearch = ({
-    label,
-    href,
-    item_type,
-    item_id,
-  }: RecentSearch) => {
-    // Labels originate from nullable GraphQL fields despite the types
-    const trimmed = typeof label === "string" ? label.trim() : ""
-    if (!trimmed || !isInternalHref(href)) return
+  const addRecentSearch = (search: RecentSearch) => {
+    const entry = asRecentSearch(search)
+    if (!entry) return
 
     // One chip per label (case-insensitive), latest destination wins — an
     // entity click and a query submit for the same term never show twice.
     commit(
       [
-        { label: trimmed, href, item_type, item_id },
+        entry,
         ...readSearches().filter(existing => {
-          return existing.label.toLowerCase() !== trimmed.toLowerCase()
+          return existing.label.toLowerCase() !== entry.label.toLowerCase()
         }),
       ].slice(0, MAX_SAVED_RECENT_SEARCHES),
     )
