@@ -494,6 +494,12 @@ describe("lifecycle", () => {
         expect(req.session.redirectTo).toBe("/collect")
       })
 
+      it("opts into terms and marketing email, matching other social sign-ups", () => {
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.accepted_terms_of_service).toBe("true")
+        expect(req.session.agreed_to_receive_emails).toBe("true")
+      })
+
       it("sets the suppress cookie on auth error", () => {
         passport.authenticate.mockReturnValueOnce((_req, _res, next) =>
           next(new Error("auth error")),

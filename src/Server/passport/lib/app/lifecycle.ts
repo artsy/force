@@ -256,10 +256,17 @@ export const afterSocialAuth =
     const isOneTap = provider === "google" && mode === "one-tap"
     const strategyName = isOneTap ? "google-one-tap" : provider
 
-    // One-tap has no beforeSocialAuth step to capture redirect-to, so fall back
-    // to the Referer header to return the user to the page they were on.
-    if (isOneTap && !req.session.redirectTo && req.headers?.referer) {
-      req.session.redirectTo = req.headers.referer
+    if (isOneTap) {
+      // One-tap has no beforeSocialAuth step, so it misses the params the other
+      // social buttons pass. Mirror them here:
+      // - fall back to the Referer header for redirect-to
+      // - opt into terms + marketing email, matching the hardcoded `true` the
+      //   other social sign-up buttons send (AuthDialogSocial / SignupFormSocial).
+      if (!req.session.redirectTo && req.headers?.referer) {
+        req.session.redirectTo = req.headers.referer
+      }
+      req.session.accepted_terms_of_service = "true"
+      req.session.agreed_to_receive_emails = "true"
     }
 
     if (req.query.denied) {
