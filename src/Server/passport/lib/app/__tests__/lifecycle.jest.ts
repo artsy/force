@@ -494,10 +494,14 @@ describe("lifecycle", () => {
         expect(req.session.redirectTo).toBe("/collect")
       })
 
-      it("opts into terms and marketing email, matching other social sign-ups", () => {
+      it("accepts terms of service (shown natively in the One Tap prompt)", () => {
         lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
         expect(req.session.accepted_terms_of_service).toBe("true")
-        expect(req.session.agreed_to_receive_emails).toBe("true")
+      })
+
+      it("does not set marketing email consent (collected post-signup)", () => {
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.agreed_to_receive_emails).toBeUndefined()
       })
 
       it("sets the suppress cookie on auth error", () => {

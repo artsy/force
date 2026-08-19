@@ -257,16 +257,14 @@ export const afterSocialAuth =
     const strategyName = isOneTap ? "google-one-tap" : provider
 
     if (isOneTap) {
-      // One-tap has no beforeSocialAuth step, so it misses the params the other
-      // social buttons pass. Mirror them here:
-      // - fall back to the Referer header for redirect-to
-      // - opt into terms + marketing email, matching the hardcoded `true` the
-      //   other social sign-up buttons send (AuthDialogSocial / SignupFormSocial).
       if (!req.session.redirectTo && req.headers?.referer) {
         req.session.redirectTo = req.headers.referer
       }
+      // One-tap has no beforeSocialAuth step to carry these params. Terms are
+      // accepted here because Google renders our Terms of Service link in the
+      // One Tap prompt itself. Marketing email consent is intentionally NOT set
+      // — it's collected post-signup via an explicit opt-in (GDPR-aware).
       req.session.accepted_terms_of_service = "true"
-      req.session.agreed_to_receive_emails = "true"
     }
 
     if (req.query.denied) {
