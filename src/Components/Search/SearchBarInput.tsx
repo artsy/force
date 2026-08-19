@@ -1,4 +1,5 @@
 import { AutocompleteInput, Box, useDidMount } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import {
   type ChangeEvent,
   type FC,
@@ -323,8 +324,13 @@ export const SearchBarInput: FC<
     }
   }
 
+  // Kill switch: with the flag off, the search dropdown behaves as it did
+  // before the trending panel existed.
+  const isTrendingEnabled = useFlag("onyx_trending-searches")
+
   // Show trending only when focused with an empty/too-short query.
-  const isTrendingVisible = isFocused && !shouldStartSearching(value)
+  const isTrendingVisible =
+    isTrendingEnabled && isFocused && !shouldStartSearching(value)
 
   const shouldTrackTrendingImpressions = useTrendingImpressionSession({
     isPanelVisible: isTrendingVisible,
@@ -472,6 +478,12 @@ export const SearchBarInput: FC<
 // panel is indistinguishable from the results dropdown chrome.
 const TrendingPanel = styled(Box)`
   box-shadow: ${themeGet("effects.dropShadow")};
+
+  /* TrendingSearches renders nothing until its query resolves with content;
+     the chrome (shadow) must not paint around an empty panel */
+  &:empty {
+    display: none;
+  }
 `
 
 const QUERY = graphql`

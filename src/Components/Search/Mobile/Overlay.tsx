@@ -1,5 +1,6 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, LabeledInput } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { type FC, useCallback, useEffect, useRef, useState } from "react"
 
 import { ActionType } from "@artsy/cohesion"
@@ -112,8 +113,12 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     setInputValue(value)
   }
 
+  // Kill switch: with the flag off, the search overlay behaves as it did
+  // before the trending panel existed.
+  const isTrendingEnabled = useFlag("onyx_trending-searches")
+
   const shouldTrackTrendingImpressions = useTrendingImpressionSession({
-    isPanelVisible: !shouldStartSearching(inputValue),
+    isPanelVisible: isTrendingEnabled && !shouldStartSearching(inputValue),
     // The overlay unmounts on close, so the session spans its whole lifetime
     isSessionActive: true,
   })
@@ -154,10 +159,12 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           onClose={onClose}
         />
       ) : (
-        <TrendingSearches
-          onNavigate={onClose}
-          shouldTrackImpressions={shouldTrackTrendingImpressions}
-        />
+        isTrendingEnabled && (
+          <TrendingSearches
+            onNavigate={onClose}
+            shouldTrackImpressions={shouldTrackTrendingImpressions}
+          />
+        )
       )}
     </OverlayBase>
   )

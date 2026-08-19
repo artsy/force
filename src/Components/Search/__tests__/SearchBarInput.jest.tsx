@@ -1,10 +1,13 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
 import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useTracking } from "react-tracking"
 import { SearchBarInput } from "../SearchBarInput"
+
+jest.mock("@unleash/proxy-client-react", () => ({ useFlag: jest.fn() }))
 
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
@@ -69,8 +72,42 @@ jest.mock("../SuggestionItem/SuggestionItem", () => ({
 const mockPush = jest.fn()
 const mockTrackEvent = jest.fn()
 
+// Consumed by the nested TrendingSearches, which only renders once trending
+// data is present. Artworks stay empty so the card's SaveButton stays out of
+// this suite.
+const trendingWindow = (label: string) => {
+  return {
+    label,
+    artists: [
+      {
+        internalID: "banksy-id",
+        artist: {
+          internalID: "banksy-id",
+          slug: "banksy",
+          name: "Banksy",
+          href: "/artist/banksy",
+          initials: "B",
+          coverArtwork: null,
+        },
+      },
+    ],
+    artworks: [],
+  }
+}
+
+const TRENDING_DROPDOWN = {
+  oneDay: trendingWindow("Today"),
+  sevenDays: trendingWindow("Past 7 Days"),
+  thirtyDays: trendingWindow("Past 30 Days"),
+}
+
 describe("SearchBarInput", () => {
   beforeEach(() => {
+    // The trending panel ships behind this flag; the tests cover the
+    // flag-on behavior except where they disable it explicitly
+    ;(useFlag as jest.Mock).mockImplementation((flag: string) => {
+      return flag === "onyx_trending-searches"
+    })
     ;(useRouter as jest.Mock).mockReturnValue({
       match: { location: { pathname: "/search" } },
       router: { push: mockPush },
@@ -78,6 +115,7 @@ describe("SearchBarInput", () => {
     ;(useTracking as jest.Mock).mockReturnValue({ trackEvent: mockTrackEvent })
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: {
+        searchDropdown: TRENDING_DROPDOWN,
         viewer: {
           searchConnection: {
             edges: [
@@ -103,9 +141,7 @@ describe("SearchBarInput", () => {
           viewer: { searchConnection: { edges: [] } },
         }),
       })),
-      // Consumed by the nested TrendingSearches (its searchDropdown data is
-      // absent from this mock, so it renders loading skeletons)
-      loading: true,
+      loading: false,
     })
   })
 
@@ -348,6 +384,29 @@ describe("SearchBarInput", () => {
     })
   })
 
+  it("does not show the trending panel when the feature flag is off", async () => {
+    ;(useFlag as jest.Mock).mockReturnValue(false)
+
+    render(<SearchBarInput searchTerm="" />)
+
+    await userEvent.click(screen.getByRole("textbox"))
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("does not show the trending panel until the query resolves", async () => {
+    ;(useClientQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      loading: true,
+    })
+
+    render(<SearchBarInput searchTerm="" />)
+
+    await userEvent.click(screen.getByRole("textbox"))
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
   it("closes the trending panel on Escape", async () => {
     render(<SearchBarInput searchTerm="" />)
 
@@ -360,8 +419,7 @@ describe("SearchBarInput", () => {
   })
 
   it("tracks rail impressions once per focus session across threshold crossings", async () => {
-    // Seed recents: the trending rails wait for query data (mocked as
-    // loading), but the recents rail impression fires as soon as chips show
+    // Seed recents so both the recents and the trending artists rails count
     localStorage.setItem(
       "artsy.recentSearches",
       JSON.stringify([{ label: "banksy", href: "/search?term=banksy" }]),

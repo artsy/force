@@ -5,8 +5,6 @@ import {
   type FlexProps,
   Image,
   ShelfScrollBar,
-  SkeletonBox,
-  SkeletonText,
   Spacer,
   Text,
   useResizeObserver,
@@ -41,11 +39,7 @@ import {
   useRecentSearches,
 } from "Components/Search/hooks/useRecentSearches"
 import { isModifiedClick } from "Components/Search/utils/isModifiedClick"
-import {
-  ARTWORK_CARD_FLEX,
-  ARTWORK_IMAGE_HEIGHT,
-  TrendingArtworkCard,
-} from "./Components/TrendingArtworkCard"
+import { TrendingArtworkCard } from "./Components/TrendingArtworkCard"
 
 interface TrendingSearchesProps {
   /** Called after a result is clicked so the parent can close the panel. */
@@ -58,7 +52,7 @@ interface TrendingSearchesProps {
 }
 
 // The three windows Metaphysics serves; keys match the query's aliases.
-// Fallback labels render the tabs while the query is in flight.
+// Fallback labels cover a response with a missing server label.
 const TRENDING_WINDOWS = [
   { key: "oneDay", fallbackLabel: "Today" },
   { key: "sevenDays", fallbackLabel: "Past 7 Days" },
@@ -117,15 +111,16 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
   }
 
   // Adoption metric: one impression per rail per panel session, and only for
-  // rails that actually showed content — the trending rails wait for the
-  // query so skeleton/error/empty states are never counted. The session
-  // permission is latched at mount because hosts flip the prop to false
-  // immediately after the first render of a session.
+  // rails that actually showed content — the whole panel waits for the query
+  // (see the early return below) so nothing counts before it renders. The
+  // session permission is latched at mount because hosts flip the prop to
+  // false immediately after the first render of a session.
   const isFirstPanelOfSessionRef = useRef(shouldTrackImpressions)
   const hasTrackedRecentsImpressionRef = useRef(false)
   const hasTrackedTrendingImpressionsRef = useRef(false)
 
   useEffect(() => {
+    if (loading) return
     if (!isFirstPanelOfSessionRef.current) return
 
     const trackRailViewed = (contextModule: ContextModule) => {
@@ -142,7 +137,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
       trackRailViewed(RECENT_SEARCHES_RAIL)
     }
 
-    if (!hasTrackedTrendingImpressionsRef.current && !loading) {
+    if (!hasTrackedTrendingImpressionsRef.current) {
       hasTrackedTrendingImpressionsRef.current = true
 
       if (artists.length > 0) {
@@ -160,6 +155,16 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
     trackEvent,
     contextPageOwnerType,
   ])
+
+  // The panel never shows a skeleton, error, or empty state: it stays hidden
+  // until the query resolves with something to show, so the dropdown only
+  // ever opens over real content.
+  const hasContent =
+    artists.length > 0 || artworks.length > 0 || recentSearches.length > 0
+
+  if (loading || !windows || !hasContent) {
+    return null
+  }
 
   const navigateUnlessModified = (event?: MouseEvent<HTMLElement>) => {
     // A modified click opens a new tab; the panel must stay put
@@ -301,73 +306,65 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
 
       {/* Artists before artworks: artist page views carry the highest signal
           weight, and a name/face is faster to recognize than a thumbnail.
-          Sections hide entirely when a loaded window has nothing to show. */}
-      {(loading || artists.length > 0) && (
+          Sections hide entirely when a window has nothing to show. */}
+      {artists.length > 0 && (
         <>
           <SectionLabel>Trending Artists</SectionLabel>
 
           <Spacer y={1} />
 
           <ScrollRail
-            contentKey={`artists-${activeIndex}-${loading}`}
+            contentKey={`artists-${activeIndex}`}
             shouldShowScrollBar={false}
           >
-            {loading
-              ? Array.from({ length: 7 }).map((_, i) => {
-                  return <ArtistAvatarSkeleton key={i} />
-                })
-              : artists.map((artist, index) => {
-                  return (
-                    <ArtistAvatar
-                      key={artist.internalID}
-                      artist={artist}
-                      onClick={event => {
-                        handleTrendingArtistClick({
-                          internalID: artist.internalID,
-                          slug: artist.slug,
-                          index,
-                          event,
-                        })
-                      }}
-                    />
-                  )
-                })}
+            {artists.map((artist, index) => {
+              return (
+                <ArtistAvatar
+                  key={artist.internalID}
+                  artist={artist}
+                  onClick={event => {
+                    handleTrendingArtistClick({
+                      internalID: artist.internalID,
+                      slug: artist.slug,
+                      index,
+                      event,
+                    })
+                  }}
+                />
+              )
+            })}
           </ScrollRail>
 
           <Spacer y={2} />
         </>
       )}
 
-      {(loading || artworks.length > 0) && (
+      {artworks.length > 0 && (
         <>
           <SectionLabel>Trending Artworks</SectionLabel>
 
           <Spacer y={1} />
 
           <ScrollRail
-            contentKey={`artworks-${activeIndex}-${loading}`}
+            contentKey={`artworks-${activeIndex}`}
             alignItems="flex-end"
           >
-            {loading
-              ? Array.from({ length: 4 }).map((_, i) => {
-                  return <ArtworkCardSkeleton key={i} />
-                })
-              : artworks.map((artwork, index) => {
-                  return (
-                    <TrendingArtworkCard
-                      key={artwork.internalID}
-                      artwork={artwork}
-                      onClick={event => {
-                        handleTrendingArtworkClick({
-                          internalID: artwork.internalID,
-                          slug: artwork.slug,
-                          index,
-                          event,
-                        })
-                      }}
-                    />
-                  )
-                })}
+            {artworks.map((artwork, index) => {
+              return (
+                <TrendingArtworkCard
+                  key={artwork.internalID}
+                  artwork={artwork}
+                  onClick={event => {
+                    handleTrendingArtworkClick({
+                      internalID: artwork.internalID,
+                      slug: artwork.slug,
+                      index,
+                      event,
+                    })
+                  }}
+                />
+              )
+            })}
           </ScrollRail>
 
           <Spacer y={2} />
@@ -490,34 +487,6 @@ const ArtistAvatar: FC<ArtistAvatarProps> = ({ artist, onClick }) => {
         {artist.name}
       </Text>
     </AvatarItem>
-  )
-}
-
-const ArtistAvatarSkeleton: FC = () => {
-  return (
-    <Flex flexDirection="column" alignItems="center" width={80} flexShrink={0}>
-      <SkeletonBox
-        width={ARTIST_AVATAR_SIZE}
-        height={ARTIST_AVATAR_SIZE}
-        borderRadius="50%"
-      />
-      <SkeletonText variant="xs" mt={0.5}>
-        Artist name
-      </SkeletonText>
-    </Flex>
-  )
-}
-
-const ArtworkCardSkeleton: FC = () => {
-  return (
-    <Box flex={ARTWORK_CARD_FLEX} minWidth={0}>
-      <SkeletonBox width="100%" height={ARTWORK_IMAGE_HEIGHT} />
-      <SkeletonText variant="sm-display" mt={1}>
-        Artist name
-      </SkeletonText>
-      <SkeletonText variant="xs">Artwork title, date</SkeletonText>
-      <SkeletonText variant="xs">Partner</SkeletonText>
-    </Box>
   )
 }
 

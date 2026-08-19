@@ -283,7 +283,7 @@ describe("TrendingSearches", () => {
     )
   })
 
-  it("does not count trending rail impressions while the query is loading", () => {
+  it("renders nothing and counts nothing while the query is loading", () => {
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: undefined,
       loading: true,
@@ -292,21 +292,28 @@ describe("TrendingSearches", () => {
 
     render(<TrendingSearches />)
 
-    // Skeletons are not adoption; only the recents rail (real chips) counts
-    expect(mockTrackEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        action: ActionType.railViewed,
-        context_module: "recentSearchesRail",
-      }),
-    )
+    // No skeleton state: the panel waits for the API response, so not even
+    // the recents rail shows or counts before it arrives
+    expect(screen.queryByText("Recent Searches")).not.toBeInTheDocument()
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
     expect(mockTrackEvent).not.toHaveBeenCalledWith(
-      expect.objectContaining({
-        context_module: ContextModule.trendingArtistsRail,
-      }),
+      expect.objectContaining({ action: ActionType.railViewed }),
     )
   })
 
-  it("hides sections and counts no impressions for loaded-but-empty rails", () => {
+  it("renders nothing when the query returns no data", () => {
+    ;(useClientQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      loading: false,
+    })
+    seedRecentSearches(["banksy"])
+
+    render(<TrendingSearches />)
+
+    expect(screen.queryByText("Recent Searches")).not.toBeInTheDocument()
+  })
+
+  it("renders nothing for a loaded-but-empty response without recents", () => {
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: {
         searchDropdown: {
@@ -322,9 +329,29 @@ describe("TrendingSearches", () => {
 
     expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
     expect(screen.queryByText("Trending Artworks")).not.toBeInTheDocument()
+    expect(screen.queryByText("Today")).not.toBeInTheDocument()
     expect(mockTrackEvent).not.toHaveBeenCalledWith(
       expect.objectContaining({ action: ActionType.railViewed }),
     )
+  })
+
+  it("still shows recent searches when a loaded response has empty rails", () => {
+    ;(useClientQuery as jest.Mock).mockReturnValue({
+      data: {
+        searchDropdown: {
+          oneDay: { label: "Today", artists: [], artworks: [] },
+          sevenDays: { label: "Past 7 Days", artists: [], artworks: [] },
+          thirtyDays: { label: "Past 30 Days", artists: [], artworks: [] },
+        },
+      },
+      loading: false,
+    })
+    seedRecentSearches(["banksy"])
+
+    render(<TrendingSearches />)
+
+    expect(screen.getByText("Recent Searches")).toBeInTheDocument()
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
   })
 
   it("closes the panel on a plain chip click but not on a modified click", async () => {
