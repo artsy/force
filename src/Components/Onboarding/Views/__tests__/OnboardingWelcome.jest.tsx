@@ -84,6 +84,35 @@ describe("OnboardingWelcome email opt-in", () => {
     expect(screen.getByTestId("onboarding-email-optin")).toBeInTheDocument()
   })
 
+  it("hides the checkbox and disables Get Started while the country is loading", () => {
+    mockPeek.mockReturnValue(true)
+    mockUseCountryCode.mockReturnValue({
+      isAutomaticallySubscribed: false,
+      loading: true,
+    })
+
+    render(<OnboardingWelcome />)
+
+    expect(screen.queryByTestId("onboarding-email-optin")).toBeNull()
+    expect(screen.getByRole("button", { name: "Get Started" })).toBeDisabled()
+  })
+
+  it("does not persist a premature default if Get Started is somehow clicked while loading", () => {
+    mockPeek.mockReturnValue(true)
+    mockUseCountryCode.mockReturnValue({
+      isAutomaticallySubscribed: false,
+      loading: true,
+    })
+
+    render(<OnboardingWelcome />)
+
+    fireEvent.click(screen.getByText("Get Started"))
+
+    expect(mockSubmit).not.toHaveBeenCalled()
+    expect(mockClear).not.toHaveBeenCalled()
+    expect(mockHandleNext).not.toHaveBeenCalled()
+  })
+
   it("preselects for non-GDPR and leaves unchecked for GDPR", () => {
     mockPeek.mockReturnValue(true)
 

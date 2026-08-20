@@ -12,7 +12,7 @@ import {
   clearOneTapEmailOptInPending,
   peekOneTapEmailOptInPending,
 } from "Utils/oneTapEmailOptIn"
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -32,19 +32,16 @@ export const OnboardingWelcome = () => {
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
-  const [agreedToReceiveEmails, setAgreedToReceiveEmails] = useState(false)
+  // Region default: preselected for non-GDPR, unchecked for GDPR. Derive the
+  // value so a manual toggle (userChoice) is never clobbered when the country
+  // query resolves.
+  const [userChoice, setUserChoice] = useState<boolean | null>(null)
+  const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
 
-  // Seed the checkbox from the region default (preselected for non-GDPR,
-  // unchecked for GDPR)
-  const initialized = useRef(false)
-  useEffect(() => {
-    if (!isOneTapSignup || isCountryLoading || initialized.current) {
-      return
-    }
-
-    setAgreedToReceiveEmails(isAutomaticallySubscribed)
-    initialized.current = true
-  }, [isOneTapSignup, isCountryLoading, isAutomaticallySubscribed])
+  // Don't let the user act on the opt-in before the region default is known:
+  // otherwise a fast click would persist the (unchecked) initial value and a
+  // non-GDPR user would silently miss the auto-subscribe default.
+  const isConsentPending = isOneTapSignup && isCountryLoading
 
   const persistEmailOptIn = () => {
     if (!isOneTapSignup) {
@@ -95,11 +92,11 @@ export const OnboardingWelcome = () => {
           <Spacer y={1} />
 
           <Box width="100%">
-            {isOneTapSignup && (
+            {isOneTapSignup && !isCountryLoading && (
               <>
                 <Checkbox
                   selected={agreedToReceiveEmails}
-                  onSelect={setAgreedToReceiveEmails}
+                  onSelect={setUserChoice}
                   data-testid="onboarding-email-optin"
                 >
                   <Text variant="xs">
@@ -114,7 +111,7 @@ export const OnboardingWelcome = () => {
             )}
 
             <Button
-              disabled={loading}
+              disabled={loading || isConsentPending}
               loading={loading}
               onClick={() => {
                 persistEmailOptIn()
@@ -130,9 +127,13 @@ export const OnboardingWelcome = () => {
               variant="tertiary"
               mt={1}
               width="100%"
+              disabled={isConsentPending}
               // @ts-ignore
               as={RouterLink}
               onClick={() => {
+                if (isConsentPending) {
+                  return
+                }
                 persistEmailOptIn()
                 onClose()
               }}
