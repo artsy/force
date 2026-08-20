@@ -59,8 +59,9 @@ const TRENDING_WINDOWS = [
   { key: "thirtyDays", fallbackLabel: "Past 30 Days" },
 ] as const
 
-type TrendingWindowData =
+type TrendingWindowData = NonNullable<
   TrendingSearchesQuery["response"]["searchDropdown"]["oneDay"]
+>
 
 type TrendingArtistNode = NonNullable<
   NonNullable<TrendingWindowData["artists"]>[number]["artist"]

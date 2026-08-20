@@ -1,14 +1,16 @@
-import { Box, Image, Text } from "@artsy/palette"
-import styled from "styled-components"
 import { ContextModule } from "@artsy/cohesion"
+import { Box, Image, Text } from "@artsy/palette"
 import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
 import { RouterLink } from "System/Components/RouterLink"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
 import type { FC, MouseEvent } from "react"
+import styled from "styled-components"
 
 export type TrendingArtworkNode = NonNullable<
   NonNullable<
-    TrendingSearchesQuery["response"]["searchDropdown"]["oneDay"]["artworks"]
+    NonNullable<
+      TrendingSearchesQuery["response"]["searchDropdown"]["oneDay"]
+    >["artworks"]
   >[number]["artwork"]
 >
 
