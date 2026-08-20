@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<388cd8b91d190d314ec1f9a6b3c44263>>
+ * @generated SignedSource<<24414eed4db28ae83957d81fb62e7303>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -57,7 +57,7 @@ export type TrendingSearchesQuery$data = {
         readonly internalID: string;
       }> | null | undefined;
       readonly label: string;
-    };
+    } | null | undefined;
     readonly sevenDays: {
       readonly artists: ReadonlyArray<{
         readonly artist: {
@@ -102,7 +102,7 @@ export type TrendingSearchesQuery$data = {
         readonly internalID: string;
       }> | null | undefined;
       readonly label: string;
-    };
+    } | null | undefined;
     readonly thirtyDays: {
       readonly artists: ReadonlyArray<{
         readonly artist: {
@@ -147,7 +147,7 @@ export type TrendingSearchesQuery$data = {
         readonly internalID: string;
       }> | null | undefined;
       readonly label: string;
-    };
+    } | null | undefined;
   };
 };
 export type TrendingSearchesQuery = {
