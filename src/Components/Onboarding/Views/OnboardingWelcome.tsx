@@ -12,7 +12,12 @@ import {
   clearOneTapEmailOptInPending,
   peekOneTapEmailOptInPending,
 } from "Utils/oneTapEmailOptIn"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+// Fallback so a slow/hung geo lookup can never block One Tap users from
+// leaving the welcome screen; after this we proceed with the GDPR-safe
+// (unchecked) default while still letting them opt in.
+const GEO_LOOKUP_TIMEOUT_MS = 5000
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -38,10 +43,30 @@ export const OnboardingWelcome = () => {
   const [userChoice, setUserChoice] = useState<boolean | null>(null)
   const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
 
+  // Give up waiting on the geo lookup after a timeout so a slow/hung request
+  // can never strand the user on the welcome screen.
+  const [hasGeoTimedOut, setHasGeoTimedOut] = useState(false)
+  useEffect(() => {
+    if (!isOneTapSignup) {
+      return
+    }
+
+    const timeout = setTimeout(() => {
+      setHasGeoTimedOut(true)
+    }, GEO_LOOKUP_TIMEOUT_MS)
+
+    return () => clearTimeout(timeout)
+  }, [isOneTapSignup])
+
   // Don't let the user act on the opt-in before the region default is known:
   // otherwise a fast click would persist the (unchecked) initial value and a
-  // non-GDPR user would silently miss the auto-subscribe default.
-  const isConsentPending = isOneTapSignup && isCountryLoading
+  // non-GDPR user would silently miss the auto-subscribe default. Once the geo
+  // lookup times out we stop blocking and fall back to the unchecked default.
+  const isConsentPending = isOneTapSignup && isCountryLoading && !hasGeoTimedOut
+
+  // Show the opt-in once the region default is known — or once we've given up
+  // waiting for it.
+  const showEmailOptIn = isOneTapSignup && (!isCountryLoading || hasGeoTimedOut)
 
   const persistEmailOptIn = () => {
     if (!isOneTapSignup) {
@@ -92,7 +117,7 @@ export const OnboardingWelcome = () => {
           <Spacer y={1} />
 
           <Box width="100%">
-            {isOneTapSignup && !isCountryLoading && (
+            {showEmailOptIn && (
               <>
                 <Checkbox
                   selected={agreedToReceiveEmails}

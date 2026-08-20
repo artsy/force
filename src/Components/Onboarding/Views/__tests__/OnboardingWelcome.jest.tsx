@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { OnboardingWelcome } from "Components/Onboarding/Views/OnboardingWelcome"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
@@ -111,6 +111,38 @@ describe("OnboardingWelcome email opt-in", () => {
     expect(mockSubmit).not.toHaveBeenCalled()
     expect(mockClear).not.toHaveBeenCalled()
     expect(mockHandleNext).not.toHaveBeenCalled()
+  })
+
+  it("falls back to the unchecked default and unblocks if the geo lookup hangs", () => {
+    jest.useFakeTimers()
+    mockPeek.mockReturnValue(true)
+    mockUseCountryCode.mockReturnValue({
+      isAutomaticallySubscribed: false,
+      loading: true,
+    })
+
+    render(<OnboardingWelcome />)
+
+    // Blocked while the lookup is in flight.
+    expect(screen.queryByTestId("onboarding-email-optin")).toBeNull()
+    expect(screen.getByRole("button", { name: "Get Started" })).toBeDisabled()
+
+    // After the timeout, the opt-in appears (unchecked) and the user can proceed.
+    act(() => {
+      jest.advanceTimersByTime(5000)
+    })
+
+    expect(checkbox()).not.toBeChecked()
+    expect(
+      screen.getByRole("button", { name: "Get Started" }),
+    ).not.toBeDisabled()
+
+    fireEvent.click(screen.getByText("Get Started"))
+    expect(mockClear).toHaveBeenCalled()
+    expect(mockHandleNext).toHaveBeenCalled()
+    expect(mockSubmit).not.toHaveBeenCalled()
+
+    jest.useRealTimers()
   })
 
   it("preselects for non-GDPR and leaves unchecked for GDPR", () => {
