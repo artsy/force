@@ -24,8 +24,7 @@ export const OnboardingWelcome = () => {
   const tracking = useOnboardingTracking()
 
   // One Tap sign-ups have no consent UI at sign-up, so we surface the marketing
-  // email opt-in here. Other sign-up paths already captured a choice, so the
-  // checkbox is only shown for a pending One Tap sign-up.
+  // email opt-in here.
   const [isOneTapSignup] = useState(() => peekOneTapEmailOptInPending())
 
   const { isAutomaticallySubscribed, loading: isCountryLoading } =
@@ -36,8 +35,7 @@ export const OnboardingWelcome = () => {
   const [agreedToReceiveEmails, setAgreedToReceiveEmails] = useState(false)
 
   // Seed the checkbox from the region default (preselected for non-GDPR,
-  // unchecked for GDPR) once the country resolves, without clobbering a choice
-  // the user has already made.
+  // unchecked for GDPR)
   const initialized = useRef(false)
   useEffect(() => {
     if (!isOneTapSignup || isCountryLoading || initialized.current) {
@@ -53,8 +51,8 @@ export const OnboardingWelcome = () => {
       return
     }
 
-    // Consent is idempotent in Gravity (never cleared), so only write when
-    // opting in. Fire-and-forget so it never blocks leaving the welcome screen.
+    // Consent is never cleared in Gravity, only write when
+    // opting in.
     if (agreedToReceiveEmails) {
       submitUpdateMyUserProfile({ agreedToReceiveEmails: true }).catch(err => {
         console.error(
