@@ -1,5 +1,4 @@
 import { Layout } from "Apps/Components/Layouts"
-import { OneTapWelcomeEmail } from "Components/OneTapWelcomeEmail/OneTapWelcomeEmail"
 import { ContentErrorBoundary } from "System/Components/ContentErrorBoundary"
 import { PageLoadingBar } from "System/Components/PageLoadingBar"
 import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
@@ -24,7 +23,7 @@ interface AppShellProps {
 export const AppShell: React.FC<
   React.PropsWithChildren<AppShellProps>
 > = props => {
-  const { onboardingComponent, isOnboardingVisible } = useOnboardingModal()
+  const { onboardingComponent } = useOnboardingModal()
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
@@ -75,8 +74,6 @@ export const AppShell: React.FC<
           </Layout>
 
           {onboardingComponent}
-
-          <OneTapWelcomeEmail isOnboardingVisible={isOnboardingVisible} />
         </AnalyticsContextProvider>
       </NavigationHistoryProvider>
     </>

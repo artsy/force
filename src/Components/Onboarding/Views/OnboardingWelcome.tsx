@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Checkbox, Flex, Spacer, Text } from "@artsy/palette"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { OnboardingWelcomeAnimatedPanel } from "Components/Onboarding/Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
@@ -6,6 +7,12 @@ import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboarding
 import { SplitLayout } from "Components/SplitLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import {
+  clearOneTapEmailOptInPending,
+  peekOneTapEmailOptInPending,
+} from "Utils/oneTapEmailOptIn"
+import { useEffect, useRef, useState } from "react"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -15,6 +22,50 @@ export const OnboardingWelcome = () => {
   })
 
   const tracking = useOnboardingTracking()
+
+  // One Tap sign-ups have no consent UI at sign-up, so we surface the marketing
+  // email opt-in here. Other sign-up paths already captured a choice, so the
+  // checkbox is only shown for a pending One Tap sign-up.
+  const [isOneTapSignup] = useState(() => peekOneTapEmailOptInPending())
+
+  const { isAutomaticallySubscribed, loading: isCountryLoading } =
+    useCountryCode({ skip: !isOneTapSignup })
+
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+
+  const [agreedToReceiveEmails, setAgreedToReceiveEmails] = useState(false)
+
+  // Seed the checkbox from the region default (preselected for non-GDPR,
+  // unchecked for GDPR) once the country resolves, without clobbering a choice
+  // the user has already made.
+  const initialized = useRef(false)
+  useEffect(() => {
+    if (!isOneTapSignup || isCountryLoading || initialized.current) {
+      return
+    }
+
+    setAgreedToReceiveEmails(isAutomaticallySubscribed)
+    initialized.current = true
+  }, [isOneTapSignup, isCountryLoading, isAutomaticallySubscribed])
+
+  const persistEmailOptIn = () => {
+    if (!isOneTapSignup) {
+      return
+    }
+
+    // Consent is idempotent in Gravity (never cleared), so only write when
+    // opting in. Fire-and-forget so it never blocks leaving the welcome screen.
+    if (agreedToReceiveEmails) {
+      submitUpdateMyUserProfile({ agreedToReceiveEmails: true }).catch(err => {
+        console.error(
+          "[OnboardingWelcome] Failed to save email preference",
+          err,
+        )
+      })
+    }
+
+    clearOneTapEmailOptInPending()
+  }
 
   return (
     <SplitLayout
@@ -46,10 +97,29 @@ export const OnboardingWelcome = () => {
           <Spacer y={1} />
 
           <Box width="100%">
+            {isOneTapSignup && (
+              <>
+                <Checkbox
+                  selected={agreedToReceiveEmails}
+                  onSelect={setAgreedToReceiveEmails}
+                  data-testid="onboarding-email-optin"
+                >
+                  <Text variant="xs">
+                    Subscribe to email to hear about our products, services,
+                    editorials, and other promotional content. Unsubscribe at
+                    any time.
+                  </Text>
+                </Checkbox>
+
+                <Spacer y={2} />
+              </>
+            )}
+
             <Button
               disabled={loading}
               loading={loading}
               onClick={() => {
+                persistEmailOptIn()
                 tracking.userStartedOnboarding()
                 handleNext()
               }}
@@ -64,7 +134,10 @@ export const OnboardingWelcome = () => {
               width="100%"
               // @ts-ignore
               as={RouterLink}
-              onClick={onClose}
+              onClick={() => {
+                persistEmailOptIn()
+                onClose()
+              }}
               data-test="onboarding-skip-button"
             >
               Skip
