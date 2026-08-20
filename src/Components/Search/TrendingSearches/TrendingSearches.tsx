@@ -1,3 +1,11 @@
+import {
+  ActionType,
+  type ClickedArtistGroup,
+  ContextModule,
+  OwnerType,
+  type RailViewed,
+  type SelectedItemFromSearch,
+} from "@artsy/cohesion"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import {
   Box,
@@ -9,19 +17,16 @@ import {
   Text,
   useResizeObserver,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import {
-  ActionType,
-  type ClickedArtistGroup,
-  ContextModule,
-  OwnerType,
-  type RailViewed,
-  type SelectedItemFromSearch,
-} from "@artsy/cohesion"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useTracking } from "react-tracking"
+  type RecentSearch,
+  useRecentSearches,
+} from "Components/Search/hooks/useRecentSearches"
+import { isModifiedClick } from "Components/Search/utils/isModifiedClick"
 import { RouterLink } from "System/Components/RouterLink"
-import { trackHelpers } from "Utils/cohesionHelpers"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { trackHelpers } from "Utils/cohesionHelpers"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
 import {
   type FC,
@@ -32,13 +37,8 @@ import {
   useState,
 } from "react"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import {
-  type RecentSearch,
-  useRecentSearches,
-} from "Components/Search/hooks/useRecentSearches"
-import { isModifiedClick } from "Components/Search/utils/isModifiedClick"
 import { TrendingArtworkCard } from "./Components/TrendingArtworkCard"
 
 interface TrendingSearchesProps {
@@ -340,7 +340,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
 
           <ScrollRail
             contentKey={`artworks-${activeIndex}`}
-            alignItems="flex-end"
+            alignItems="flex-start"
           >
             {artworks.map((artwork, index) => {
               return (
