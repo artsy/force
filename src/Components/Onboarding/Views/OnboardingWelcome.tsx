@@ -14,9 +14,8 @@ import {
 } from "Utils/oneTapEmailOptIn"
 import { useEffect, useState } from "react"
 
-// Fallback so a slow/hung geo lookup can never block One Tap users from
-// leaving the welcome screen; after this we proceed with the GDPR-safe
-// (unchecked) default while still letting them opt in.
+// Fall back to the unchecked default if the geo lookup stalls, so users are
+// never blocked from proceeding.
 const GEO_LOOKUP_TIMEOUT_MS = 5000
 
 export const OnboardingWelcome = () => {
@@ -28,8 +27,7 @@ export const OnboardingWelcome = () => {
 
   const tracking = useOnboardingTracking()
 
-  // One Tap sign-ups have no consent UI at sign-up, so we surface the marketing
-  // email opt-in here.
+  // One Tap has no consent UI at sign-up, so we surface the opt-in here.
   const [isOneTapSignup] = useState(() => peekOneTapEmailOptInPending())
 
   const { isAutomaticallySubscribed, loading: isCountryLoading } =
@@ -37,14 +35,11 @@ export const OnboardingWelcome = () => {
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
-  // Region default: preselected for non-GDPR, unchecked for GDPR. Derive the
-  // value so a manual toggle (userChoice) is never clobbered when the country
-  // query resolves.
+  // Derived, not state+effect, so a manual toggle survives the geo lookup
+  // resolving. Falls back to unchecked until the region default is known.
   const [userChoice, setUserChoice] = useState<boolean | null>(null)
   const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
 
-  // Give up waiting on the geo lookup after a timeout so a slow/hung request
-  // can never strand the user on the welcome screen.
   const [hasGeoTimedOut, setHasGeoTimedOut] = useState(false)
   useEffect(() => {
     if (!isOneTapSignup) {
@@ -58,14 +53,10 @@ export const OnboardingWelcome = () => {
     return () => clearTimeout(timeout)
   }, [isOneTapSignup])
 
-  // Don't let the user act on the opt-in before the region default is known:
-  // otherwise a fast click would persist the (unchecked) initial value and a
-  // non-GDPR user would silently miss the auto-subscribe default. Once the geo
-  // lookup times out we stop blocking and fall back to the unchecked default.
+  // Block the CTA until the region default is known, else a fast click persists
+  // the wrong default.
   const isConsentPending = isOneTapSignup && isCountryLoading && !hasGeoTimedOut
 
-  // Show the opt-in once the region default is known — or once we've given up
-  // waiting for it.
   const showEmailOptIn = isOneTapSignup && (!isCountryLoading || hasGeoTimedOut)
 
   const persistEmailOptIn = () => {
@@ -73,8 +64,7 @@ export const OnboardingWelcome = () => {
       return
     }
 
-    // Consent is never cleared in Gravity, only write when
-    // opting in.
+    // Idempotent in Gravity; only write on opt-in.
     if (agreedToReceiveEmails) {
       submitUpdateMyUserProfile({ agreedToReceiveEmails: true }).catch(err => {
         console.error(

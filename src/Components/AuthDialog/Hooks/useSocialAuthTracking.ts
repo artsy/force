@@ -65,8 +65,8 @@ export const useSocialAuthTracking = () => {
         new URLSearchParams(location.search).get("onboarding") === "true"
       track.signedUp({ ...params, onboarding })
 
-      // One Tap has no signup-time consent UI, so flag fresh One Tap sign-ups to
-      // show the email opt-in modal once onboarding is dismissed.
+      // Flag fresh One Tap sign-ups so the onboarding welcome screen shows the
+      // email opt-in.
       if (value.method === "one-tap") {
         markOneTapEmailOptInPending()
       }
