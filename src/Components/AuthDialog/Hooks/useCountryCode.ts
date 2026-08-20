@@ -12,7 +12,14 @@ const USE_COUNTRY_CODE_QUERY = graphql`
   }
 `
 
-export const useCountryCode = () => {
+interface UseCountryCodeProps {
+  // By default the query is skipped for logged-in users (the auth dialog only
+  // needs it while signed out). Callers that need the country post-login — e.g.
+  // the post-signup email opt-in modal — can override this.
+  skip?: boolean
+}
+
+export const useCountryCode = ({ skip }: UseCountryCodeProps = {}) => {
   const { isLoggedIn } = useSystemContext()
 
   const { data, loading, error } = useClientQuery<useCountryCodeQuery>({
@@ -25,8 +32,7 @@ export const useCountryCode = () => {
         force: false,
       },
     },
-    // If the user is logged in, we don't need the country code
-    skip: isLoggedIn,
+    skip: skip ?? isLoggedIn,
   })
 
   const countryCode = data?.requestLocation?.countryCode
