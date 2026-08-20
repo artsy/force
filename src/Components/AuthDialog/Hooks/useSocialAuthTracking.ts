@@ -1,5 +1,6 @@
 import type { AuthDialogAnalytics } from "Components/AuthDialog/AuthDialogContext"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { markOneTapEmailOptInPending } from "Utils/oneTapEmailOptIn"
 import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import Cookies from "cookies-js"
@@ -63,6 +64,12 @@ export const useSocialAuthTracking = () => {
       const onboarding =
         new URLSearchParams(location.search).get("onboarding") === "true"
       track.signedUp({ ...params, onboarding })
+
+      // One Tap has no signup-time consent UI, so flag fresh One Tap sign-ups to
+      // show the email opt-in modal once onboarding is dismissed.
+      if (value.method === "one-tap") {
+        markOneTapEmailOptInPending()
+      }
     } else {
       track.loggedIn(params)
     }
