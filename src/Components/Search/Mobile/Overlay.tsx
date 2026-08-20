@@ -1,5 +1,6 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, LabeledInput } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { type FC, useCallback, useEffect, useRef, useState } from "react"
 
 import { ActionType } from "@artsy/cohesion"
@@ -15,6 +16,8 @@ import {
 } from "Components/Search/constants"
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
+import { TrendingSearches } from "Components/Search/TrendingSearches/TrendingSearches"
+import { useTrendingImpressionSession } from "Components/Search/hooks/useTrendingImpressionSession"
 import createLogger from "Utils/logger"
 import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
@@ -110,6 +113,16 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     setInputValue(value)
   }
 
+  // Kill switch: with the flag off, the search overlay behaves as it did
+  // before the trending panel existed.
+  const isTrendingEnabled = useFlag("onyx_trending-searches")
+
+  const shouldTrackTrendingImpressions = useTrendingImpressionSession({
+    isPanelVisible: isTrendingEnabled && !shouldStartSearching(inputValue),
+    // The overlay unmounts on close, so the session spans its whole lifetime
+    isSessionActive: true,
+  })
+
   return (
     <OverlayBase
       onClose={onClose}
@@ -138,13 +151,20 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
         </>
       }
     >
-      {shouldStartSearching(inputValue) && (
+      {shouldStartSearching(inputValue) ? (
         <SearchResultsListPaginationContainer
           viewer={viewer}
           query={inputValue}
           selectedPill={selectedPill}
           onClose={onClose}
         />
+      ) : (
+        isTrendingEnabled && (
+          <TrendingSearches
+            onNavigate={onClose}
+            shouldTrackImpressions={shouldTrackTrendingImpressions}
+          />
+        )
       )}
     </OverlayBase>
   )

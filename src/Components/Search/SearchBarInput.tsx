@@ -1,12 +1,16 @@
-import { AutocompleteInput, useDidMount } from "@artsy/palette"
+import { AutocompleteInput, Box, useDidMount } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import {
   type ChangeEvent,
   type FC,
+  type FocusEvent,
   type MouseEvent,
   useEffect,
   useRef,
   useState,
 } from "react"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 import {
   ActionType,
@@ -14,6 +18,7 @@ import {
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
+import { Z } from "Apps/Components/constants"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
@@ -33,13 +38,23 @@ import {
   SuggestionItem,
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
+import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
+import { useRecentSearches } from "./hooks/useRecentSearches"
+import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
 import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
+import { isModifiedClick } from "./utils/isModifiedClick"
+import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
 export interface SearchBarInputProps {
   searchTerm: string
 }
+
+// Shared by the results dropdown and the trending panel so the two surfaces
+// always swap without a visible size jump
+const SEARCH_DROPDOWN_MAX_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`
+const SEARCH_DROPDOWN_MIN_WIDTH = 600
 
 export const SearchBarInput: FC<
   React.PropsWithChildren<SearchBarInputProps>
@@ -49,6 +64,8 @@ export const SearchBarInput: FC<
     useAnalyticsContext()
 
   const isClient = useDidMount()
+
+  const { addRecentSearch, addRecentSearchFromOption } = useRecentSearches()
 
   const { data, refetch } = useClientQuery<SearchBarInputSuggestQuery>({
     query: QUERY,
@@ -61,17 +78,23 @@ export const SearchBarInput: FC<
     skip: !searchTerm,
   })
 
-  const [value, setValue] = useState(searchTerm)
+  // searchTerm is typed as string but arrives undefined on routes without a
+  // term (see the `searchTerm ?? ""` guards below); value must be a string
+  const [value, setValue] = useState(searchTerm ?? "")
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
+  const [isFocused, setIsFocused] = useState(false)
   // Request tracking / cancellation
   const [requestId, setRequestId] = useState(0)
   const lastRequestIdRef = useRef<number | null>(null)
   const lastRefetchDisposableRef = useRef<{ dispose: () => void } | null>(null)
+  const ref = useRef<HTMLInputElement | null>(null)
 
   const { router, match } = useRouter()
 
-  const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
+  // Trimmed so recorded recent searches and the results page never carry
+  // accidental whitespace padding
+  const encodedSearchURL = searchResultsHref(value.trim())
 
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
@@ -207,10 +230,27 @@ export const SearchBarInput: FC<
     })
   }
 
+  const suppressFocusUntilRef = useRef(0)
+
+  // Matches production behavior: once a result is chosen the input gives up
+  // focus, so neither the results dropdown nor the trending panel lingers
+  // over the destination page.
+  const closeDropdown = () => {
+    // Palette's AutocompleteInput re-focuses the input ~100ms after a
+    // keyboard selection (its internal resetUI); ignore that programmatic
+    // focus so the trending panel doesn't reopen over the destination page
+    suppressFocusUntilRef.current = Date.now() + 500
+    setIsFocused(false)
+    ref.current?.blur()
+  }
+
   const handleSubmit = () => {
-    if (value) {
-      redirect(encodedSearchURL)
-    }
+    const term = value.trim()
+    if (!term) return
+
+    addRecentSearch({ label: term, href: encodedSearchURL })
+    closeDropdown()
+    redirect(encodedSearchURL)
   }
 
   const trackSelection = (option: SuggestionItemOptionProps) => {
@@ -231,25 +271,23 @@ export const SearchBarInput: FC<
 
   const handleSelect = (option: SuggestionItemOptionProps) => {
     trackSelection(option)
+    // The “See all results” footer row records the raw query + results page,
+    // the same entry a plain Enter submit records
+    addRecentSearchFromOption(option)
 
+    closeDropdown()
     resetValue()
     redirect(option.href)
   }
-
-  const isModifiedClick = (event?: MouseEvent<HTMLElement>) =>
-    !!event &&
-    (event.button === 1 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey)
 
   const handleSuggestionClick = (
     option: SuggestionItemOptionProps,
     event?: MouseEvent<HTMLElement>,
   ) => {
     trackSelection(option)
+    addRecentSearchFromOption(option)
     if (isModifiedClick(event)) return
+    closeDropdown()
     resetValue()
     redirect(option.href)
   }
@@ -259,16 +297,61 @@ export const SearchBarInput: FC<
     event: MouseEvent<HTMLElement>,
   ) => {
     // QuickNavigationItem tracks its own cohesion event
+    // Records the artist itself (base href), matching Eigen’s quick nav
+    addRecentSearchFromOption(option)
     if (isModifiedClick(event)) return
+    closeDropdown()
     resetValue()
     redirect(`${option.href}/auction-results`)
   }
 
   const handleFocus = () => {
+    // Skip Palette's programmatic post-selection refocus (see closeDropdown)
+    if (Date.now() < suppressFocusUntilRef.current) return
+
+    setIsFocused(true)
     tracking.trackEvent({
       action_type: ActionType.focusedOnSearchInput,
       context_module: selectedPill.analyticsContextModule,
     })
+  }
+
+  // Close the trending panel when focus leaves the search container entirely
+  // (clicks inside the panel keep focus via onMouseDown preventDefault below).
+  const handleContainerBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setIsFocused(false)
+    }
+  }
+
+  // Kill switch: with the flag off, the search dropdown behaves as it did
+  // before the trending panel existed.
+  const isTrendingEnabled = useFlag("onyx_trending-searches")
+
+  // Show trending only when focused with an empty/too-short query.
+  const isTrendingVisible =
+    isTrendingEnabled && isFocused && !shouldStartSearching(value)
+
+  const shouldTrackTrendingImpressions = useTrendingImpressionSession({
+    isPanelVisible: isTrendingVisible,
+    // The session ends on blur; refocusing counts as a new panel open
+    isSessionActive: isFocused,
+  })
+
+  // Safety net: while the input is focused, Palette's AutocompleteInput
+  // swallows Escape itself (stopPropagation) and the panel then closes via
+  // the blur Palette triggers. This handler only fires for focus inside the
+  // panel, where Palette isn't involved. isComposing guards IME cancellation.
+  const handleContainerKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ) => {
+    if (
+      event.key === "Escape" &&
+      !event.nativeEvent.isComposing &&
+      isTrendingVisible
+    ) {
+      closeDropdown()
+    }
   }
   const handlePaste = () => {
     tracking.trackEvent({
@@ -277,8 +360,6 @@ export const SearchBarInput: FC<
       query: value,
     })
   }
-
-  const ref = useRef<HTMLInputElement | null>(null)
 
   // Focus the search input on '/' keypress
   useEffect(() => {
@@ -307,58 +388,103 @@ export const SearchBarInput: FC<
   }
 
   return (
-    <AutocompleteInput
-      forwardRef={ref}
-      key={match.location.pathname}
-      value={value}
-      placeholder="Search by artist, gallery, style, theme, tag, etc."
-      spellCheck={false}
-      options={shouldStartSearching(value) ? formattedOptions : []}
-      defaultValue={value}
-      onChange={handleChange}
-      onClear={resetValue}
-      onSelect={handleSelect}
-      onSubmit={handleSubmit}
-      onFocus={handleFocus}
-      onPaste={handlePaste}
-      header={
-        data?.viewer ? (
-          <SearchInputPillsFragmentContainer
-            viewer={data.viewer}
-            selectedPill={selectedPill}
-            onPillClick={handlePillClick}
-          />
-        ) : null
-      }
-      renderOption={option => {
-        if (!value) return <></>
-
-        if (option.typename === "Footer") {
-          return (
-            <SearchBarFooter
-              query={value}
-              href={encodedSearchURL}
+    <Box
+      position="relative"
+      onBlur={handleContainerBlur}
+      onKeyDown={handleContainerKeyDown}
+    >
+      <AutocompleteInput
+        forwardRef={ref}
+        key={match.location.pathname}
+        value={value}
+        placeholder="Search by artist, gallery, style, theme, tag, etc."
+        spellCheck={false}
+        options={shouldStartSearching(value) ? formattedOptions : []}
+        defaultValue={value}
+        onChange={handleChange}
+        onClear={resetValue}
+        onSelect={handleSelect}
+        onSubmit={handleSubmit}
+        onFocus={handleFocus}
+        onPaste={handlePaste}
+        header={
+          data?.viewer ? (
+            <SearchInputPillsFragmentContainer
+              viewer={data.viewer}
               selectedPill={selectedPill}
+              onPillClick={handlePillClick}
+            />
+          ) : null
+        }
+        renderOption={option => {
+          if (!value) return <></>
+
+          if (option.typename === "Footer") {
+            return (
+              <SearchBarFooter
+                query={value}
+                href={encodedSearchURL}
+                selectedPill={selectedPill}
+              />
+            )
+          }
+
+          return (
+            <SuggestionItem
+              query={value}
+              option={option}
+              onClick={handleSuggestionClick}
+              onQuickNavClick={handleQuickNavClick}
             />
           )
-        }
+        }}
+        dropdownMaxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
+        dropdownMinWidth={SEARCH_DROPDOWN_MIN_WIDTH}
+        flip={false}
+        height={40}
+      />
 
-        return (
-          <SuggestionItem
-            query={value}
-            option={option}
-            onClick={handleSuggestionClick}
-            onQuickNavClick={handleQuickNavClick}
+      {isTrendingVisible && (
+        <TrendingPanel
+          position="absolute"
+          // Mirrors the results dropdown exactly (same anchor, offset, width,
+          // min-width, and shadow) so trending and autosuggest read as one
+          // overlay swapping content rather than two differently-sized surfaces.
+          top="calc(100% + 10px)"
+          left={0}
+          width="100%"
+          minWidth={SEARCH_DROPDOWN_MIN_WIDTH}
+          zIndex={Z.dropdown}
+          bg="mono0"
+          maxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
+          overflowY="auto"
+          // Keep input focused so the panel stays open while clicking inside it
+          onMouseDown={event => event.preventDefault()}
+        >
+          <TrendingSearches
+            // closeDropdown (not just setIsFocused) so the input also blurs:
+            // otherwise a same-pathname navigation leaves the input focused
+            // with the panel unable to reopen on the next click
+            onNavigate={closeDropdown}
+            shouldTrackImpressions={shouldTrackTrendingImpressions}
           />
-        )
-      }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
-      dropdownMinWidth={600}
-      flip={false}
-      height={40}
-    />
+        </TrendingPanel>
+      )}
+    </Box>
   )
 }
+
+// Same box shadow as Palette's AutocompleteInput dropdown, so the trending
+// panel is indistinguishable from the results dropdown chrome.
+const TrendingPanel = styled(Box)`
+  box-shadow: ${themeGet("effects.dropShadow")};
+
+  /* TrendingSearches renders nothing until its query resolves with content;
+     the chrome (shadow) must not paint around an empty panel */
+  &:empty {
+    display: none;
+  }
+`
 
 const QUERY = graphql`
   query SearchBarInputSuggestQuery(
