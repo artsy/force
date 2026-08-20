@@ -494,6 +494,16 @@ describe("lifecycle", () => {
         expect(req.session.redirectTo).toBe("/collect")
       })
 
+      it("accepts terms of service (shown natively in the One Tap prompt)", () => {
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.accepted_terms_of_service).toBe("true")
+      })
+
+      it("does not set marketing email consent (collected post-signup)", () => {
+        lifecycle.afterSocialAuth("google", "one-tap")(req, res, next)
+        expect(req.session.agreed_to_receive_emails).toBeUndefined()
+      })
+
       it("sets the suppress cookie on auth error", () => {
         passport.authenticate.mockReturnValueOnce((_req, _res, next) =>
           next(new Error("auth error")),
