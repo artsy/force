@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbd5e9cfe48d81bf6d8e9c4c3fd9fc89>>
+ * @generated SignedSource<<bd0e4917c22447d925a24ae171af7124>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
+  agreedToReceiveEmails?: boolean | null | undefined;
   artworksPerYear?: string | null | undefined;
   bio?: string | null | undefined;
   clientMutationId?: string | null | undefined;
