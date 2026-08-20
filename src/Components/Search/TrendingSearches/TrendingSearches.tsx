@@ -66,13 +66,6 @@ type TrendingArtistNode = NonNullable<
   NonNullable<TrendingWindowData["artists"]>[number]["artist"]
 >
 
-// TODO: Use ContextModule.recentSearchesRail / ContextModule.trendingArtworksRail
-// / ContextModule.trendingSearches once the cohesion release containing them
-// lands in Force
-const RECENT_SEARCHES_RAIL = "recentSearchesRail" as ContextModule
-const TRENDING_ARTWORKS_RAIL = "trendingArtworksRail" as ContextModule
-const TRENDING_SEARCHES = "trendingSearches" as ContextModule
-
 export const TrendingSearches: FC<TrendingSearchesProps> = ({
   onNavigate,
   shouldTrackImpressions = true,
@@ -134,7 +127,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
 
     if (!hasTrackedRecentsImpressionRef.current && recentSearches.length > 0) {
       hasTrackedRecentsImpressionRef.current = true
-      trackRailViewed(RECENT_SEARCHES_RAIL)
+      trackRailViewed(ContextModule.recentSearchesRail)
     }
 
     if (!hasTrackedTrendingImpressionsRef.current) {
@@ -144,7 +137,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
         trackRailViewed(ContextModule.trendingArtistsRail)
       }
       if (artworks.length > 0) {
-        trackRailViewed(TRENDING_ARTWORKS_RAIL)
+        trackRailViewed(ContextModule.trendingArtworksRail)
       }
     }
   }, [
@@ -183,7 +176,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
   }) => {
     const analyticsEvent: SelectedItemFromSearch = {
       action: ActionType.selectedItemFromSearch,
-      context_module: RECENT_SEARCHES_RAIL,
+      context_module: ContextModule.recentSearchesRail,
       destination_path: search.href,
       query: search.label,
       item_id: search.item_id ?? "",
@@ -202,7 +195,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
     if (index !== activeIndex) {
       trackEvent({
         action_type: ActionType.tappedNavigationTab,
-        context_module: TRENDING_SEARCHES,
+        context_module: ContextModule.trendingSearches,
         subject: windowLabel(index),
       })
     }
@@ -247,7 +240,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
   }) => {
     trackEvent(
       trackHelpers.clickedArtworkGroup(
-        TRENDING_ARTWORKS_RAIL,
+        ContextModule.trendingArtworksRail,
         contextPageOwnerType,
         internalID,
         slug,

@@ -52,13 +52,9 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
 
       <Box position="relative" mt={1}>
         <Box position="absolute" top={0} right={0}>
-          {/* TODO: Switch to ContextModule.trendingArtworksRail once the
-              cohesion release containing it lands in Force — SaveButton's
-              AuthContextModule union rejects unreleased values, and the auth
-              flow must only ever receive schema-valid modules */}
           <SaveButtonFragmentContainer
             artwork={artwork}
-            contextModule={ContextModule.header}
+            contextModule={ContextModule.trendingArtworksRail}
           />
         </Box>
 
