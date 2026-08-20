@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Checkbox, Flex, Spacer, Text } from "@artsy/palette"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { OnboardingWelcomeAnimatedPanel } from "Components/Onboarding/Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
@@ -6,6 +7,16 @@ import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboarding
 import { SplitLayout } from "Components/SplitLayout"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import {
+  clearOneTapEmailOptInPending,
+  peekOneTapEmailOptInPending,
+} from "Utils/oneTapEmailOptIn"
+import { useEffect, useState } from "react"
+
+// Fall back to the unchecked default if the geo lookup stalls, so users are
+// never blocked from proceeding.
+const GEO_LOOKUP_TIMEOUT_MS = 5000
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -15,6 +26,56 @@ export const OnboardingWelcome = () => {
   })
 
   const tracking = useOnboardingTracking()
+
+  // One Tap has no consent UI at sign-up, so we surface the opt-in here.
+  const [isOneTapSignup] = useState(() => peekOneTapEmailOptInPending())
+
+  const { isAutomaticallySubscribed, loading: isCountryLoading } =
+    useCountryCode({ skip: !isOneTapSignup })
+
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+
+  // Derived, not state+effect, so a manual toggle survives the geo lookup
+  // resolving. Falls back to unchecked until the region default is known.
+  const [userChoice, setUserChoice] = useState<boolean | null>(null)
+  const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
+
+  const [hasGeoTimedOut, setHasGeoTimedOut] = useState(false)
+  useEffect(() => {
+    if (!isOneTapSignup) {
+      return
+    }
+
+    const timeout = setTimeout(() => {
+      setHasGeoTimedOut(true)
+    }, GEO_LOOKUP_TIMEOUT_MS)
+
+    return () => clearTimeout(timeout)
+  }, [isOneTapSignup])
+
+  // Block the CTA until the region default is known, else a fast click persists
+  // the wrong default.
+  const isConsentPending = isOneTapSignup && isCountryLoading && !hasGeoTimedOut
+
+  const showEmailOptIn = isOneTapSignup && (!isCountryLoading || hasGeoTimedOut)
+
+  const persistEmailOptIn = () => {
+    if (!isOneTapSignup) {
+      return
+    }
+
+    // Idempotent in Gravity; only write on opt-in.
+    if (agreedToReceiveEmails) {
+      submitUpdateMyUserProfile({ agreedToReceiveEmails: true }).catch(err => {
+        console.error(
+          "[OnboardingWelcome] Failed to save email preference",
+          err,
+        )
+      })
+    }
+
+    clearOneTapEmailOptInPending()
+  }
 
   return (
     <SplitLayout
@@ -46,10 +107,29 @@ export const OnboardingWelcome = () => {
           <Spacer y={1} />
 
           <Box width="100%">
+            {showEmailOptIn && (
+              <>
+                <Checkbox
+                  selected={agreedToReceiveEmails}
+                  onSelect={setUserChoice}
+                  data-testid="onboarding-email-optin"
+                >
+                  <Text variant="xs">
+                    Subscribe to email to hear about our products, services,
+                    editorials, and other promotional content. Unsubscribe at
+                    any time.
+                  </Text>
+                </Checkbox>
+
+                <Spacer y={2} />
+              </>
+            )}
+
             <Button
-              disabled={loading}
+              disabled={loading || isConsentPending}
               loading={loading}
               onClick={() => {
+                persistEmailOptIn()
                 tracking.userStartedOnboarding()
                 handleNext()
               }}
@@ -62,9 +142,16 @@ export const OnboardingWelcome = () => {
               variant="tertiary"
               mt={1}
               width="100%"
+              disabled={isConsentPending}
               // @ts-ignore
               as={RouterLink}
-              onClick={onClose}
+              onClick={() => {
+                if (isConsentPending) {
+                  return
+                }
+                persistEmailOptIn()
+                onClose()
+              }}
               data-test="onboarding-skip-button"
             >
               Skip

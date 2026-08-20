@@ -256,10 +256,13 @@ export const afterSocialAuth =
     const isOneTap = provider === "google" && mode === "one-tap"
     const strategyName = isOneTap ? "google-one-tap" : provider
 
-    // One-tap has no beforeSocialAuth step to capture redirect-to, so fall back
-    // to the Referer header to return the user to the page they were on.
-    if (isOneTap && !req.session.redirectTo && req.headers?.referer) {
-      req.session.redirectTo = req.headers.referer
+    if (isOneTap) {
+      if (!req.session.redirectTo && req.headers?.referer) {
+        req.session.redirectTo = req.headers.referer
+      }
+      // One-tap has no beforeSocialAuth step so terms are
+      // accepted here, shown in oauth flow.
+      req.session.accepted_terms_of_service = "true"
     }
 
     if (req.query.denied) {
