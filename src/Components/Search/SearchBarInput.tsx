@@ -7,6 +7,7 @@ import {
   type FocusEvent,
   type MouseEvent,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -18,6 +19,7 @@ import {
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
+import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { Z } from "Apps/Components/constants"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
@@ -35,6 +37,7 @@ import { useDebounce } from "use-debounce"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
+import { SuggestedFiltersItem } from "./SuggestedFiltersItem"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
@@ -45,6 +48,7 @@ import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
+import { parseFilterQuery } from "./utils/parseFilterQuery"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
@@ -99,12 +103,49 @@ export const SearchBarInput: FC<
 
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
+  const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
+
+  // Parsed from `debouncedValue`, not `value`. Parsing is synchronous, so `value`
+  // would land the row a beat sooner — but the row is prepended, so appearing
+  // and disappearing per keystroke while the entity results lag behind shifts
+  // every option index under the user's cursor. Matching the entity list's
+  // cadence keeps the list stable to click and arrow through.
+  const parsedFilters = useMemo(() => {
+    return parseFilterQuery(debouncedValue)
+  }, [debouncedValue])
+
+  // The entity pills scope the search to a single type, where a link out to
+  // browsing artworks is off-topic.
+  const shouldShowSuggestedFilters =
+    isSuggestedFiltersEnabled && !!parsedFilters && selectedPill === TOP_PILL
+
+  const suggestedFiltersHref = parsedFilters
+    ? buildUrlForCollectApp(parsedFilters.filters)
+    : ""
+
   const formattedOptions: SuggestionItemOptionProps[] = [
+    ...(shouldShowSuggestedFilters
+      ? [
+          {
+            kind: "suggestedFilters" as const,
+            text: value,
+            value: value,
+            subtitle: "",
+            imageUrl: "",
+            showAuctionResultsButton: false,
+            href: suggestedFiltersHref,
+            typename: "SuggestedFilters",
+            item_id: "suggested-filters",
+            item_type: "filter-suggestion",
+          },
+        ]
+      : []),
     ...edges.flatMap((edge, index) => {
       const option = edge?.node
       if (!option) return []
       return [
         {
+          kind: "entity" as const,
           text: option.displayLabel ?? "Unknown",
           value: option.displayLabel ?? "unknown",
           subtitle:
@@ -124,6 +165,7 @@ export const SearchBarInput: FC<
       ]
     }),
     {
+      kind: "footer" as const,
       text: value,
       value: value,
       subtitle: "",
@@ -255,8 +297,12 @@ export const SearchBarInput: FC<
   }
 
   const trackSelection = (option: SuggestionItemOptionProps) => {
-    // Only track if this is an actual search result, not the footer
-    if (option.typename !== "Footer") {
+    // Only real search results belong in this event. The footer has never been
+    // tracked here, and the suggested-filters row is not an entity in a ranked
+    // list — emitting it with a synthetic item_number would pollute the
+    // dataset. Its own viewed/clicked events land in a follow-up PR, so clicks
+    // on the row are deliberately untracked for now.
+    if (option.kind === undefined || option.kind === "entity") {
       const analyticsEvent: SelectedItemFromSearch = {
         action: ActionType.selectedItemFromSearch,
         context_module: selectedPill.analyticsContextModule,
@@ -426,7 +472,20 @@ export const SearchBarInput: FC<
           renderOption={option => {
             if (!value) return <></>
 
-            if (option.typename === "Footer") {
+            if (option.kind === "suggestedFilters" && parsedFilters) {
+            return (
+              <SuggestedFiltersItem
+                parsed={parsedFilters}
+                href={suggestedFiltersHref}
+                query={debouncedValue}
+                onClick={event => {
+                  handleSuggestionClick(option, event)
+                }}
+              />
+            )
+          }
+
+          if (option.kind === "footer") {
               return (
                 <SearchBarFooter
                   query={value}
