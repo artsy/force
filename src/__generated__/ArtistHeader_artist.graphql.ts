@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dcb604ad25d0de3d6aa35f848bacb6a>>
+ * @generated SignedSource<<a755a32ba83fcab760dd1f2cc4198f93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,7 @@ export type ArtistHeader_artist$data = {
     readonly kind: ArtistInsightKind | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">;
   }>;
+  readonly instagramHandle: string | null | undefined;
   readonly internalID: string;
   readonly name: string | null | undefined;
   readonly slug: string;
@@ -124,6 +125,13 @@ return {
     (v0/*: any*/),
     (v1/*: any*/),
     (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "instagramHandle",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -419,6 +427,6 @@ return {
 };
 })();
 
-(node as any).hash = "cbd8c3e51f3b6a26b6aa060f49a9ca90";
+(node as any).hash = "a461766a7db9d834e69379032bfbbde6";
 
 export default node;
