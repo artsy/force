@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24414eed4db28ae83957d81fb62e7303>>
+ * @generated SignedSource<<04628f6e9a4d47ce601deb695d6118b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,7 @@ export type TrendingSearchesQuery$data = {
           readonly saleMessage: string | null | undefined;
           readonly slug: string;
           readonly title: string | null | undefined;
-          readonly " $fragmentSpreads": FragmentRefs<"SaveButton_artwork">;
+          readonly " $fragmentSpreads": FragmentRefs<"SaveArtworkToListsButton_artwork">;
         } | null | undefined;
         readonly internalID: string;
       }> | null | undefined;
@@ -97,7 +97,7 @@ export type TrendingSearchesQuery$data = {
           readonly saleMessage: string | null | undefined;
           readonly slug: string;
           readonly title: string | null | undefined;
-          readonly " $fragmentSpreads": FragmentRefs<"SaveButton_artwork">;
+          readonly " $fragmentSpreads": FragmentRefs<"SaveArtworkToListsButton_artwork">;
         } | null | undefined;
         readonly internalID: string;
       }> | null | undefined;
@@ -142,7 +142,7 @@ export type TrendingSearchesQuery$data = {
           readonly saleMessage: string | null | undefined;
           readonly slug: string;
           readonly title: string | null | undefined;
-          readonly " $fragmentSpreads": FragmentRefs<"SaveButton_artwork">;
+          readonly " $fragmentSpreads": FragmentRefs<"SaveArtworkToListsButton_artwork">;
         } | null | undefined;
         readonly internalID: string;
       }> | null | undefined;
@@ -452,7 +452,7 @@ v18 = [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SaveButton_artwork"
+            "name": "SaveArtworkToListsButton_artwork"
           }
         ],
         "storageKey": null
@@ -566,10 +566,41 @@ v22 = [
           (v17/*: any*/),
           (v21/*: any*/),
           {
+            "alias": "preview",
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "square"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"square\")"
+              }
+            ],
+            "storageKey": null
+          },
+          {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isSaved",
+            "name": "isInAuction",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isSavedToAnyList",
             "storageKey": null
           },
           {
@@ -600,6 +631,13 @@ v22 = [
                     "args": null,
                     "kind": "ScalarField",
                     "name": "lotClosesAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "liveBiddingStarted",
                     "storageKey": null
                   }
                 ],
@@ -717,12 +755,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d462514ca4b1f82e32e0c39a30b4fdba",
+    "cacheID": "3a94f8a4e2d244bbab92e559921f9816",
     "id": null,
     "metadata": {},
     "name": "TrendingSearchesQuery",
     "operationKind": "query",
-    "text": "query TrendingSearchesQuery {\n  searchDropdown {\n    oneDay: trending(period: ONE_DAY) {\n      label\n      artists(first: 12) {\n        internalID\n        artist {\n          internalID\n          slug\n          name\n          href\n          initials\n          coverArtwork {\n            image {\n              cropped(width: 128, height: 128, version: [\"square\", \"small\", \"large\"]) {\n                src\n                srcSet\n              }\n            }\n            id\n          }\n          id\n        }\n      }\n      artworks(first: 8) {\n        internalID\n        artwork {\n          internalID\n          slug\n          href\n          title\n          date\n          artistNames\n          saleMessage\n          partner(shallow: true) {\n            name\n            id\n          }\n          image {\n            resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          ...SaveButton_artwork\n          id\n        }\n      }\n    }\n    sevenDays: trending(period: SEVEN_DAYS) {\n      label\n      artists(first: 12) {\n        internalID\n        artist {\n          internalID\n          slug\n          name\n          href\n          initials\n          coverArtwork {\n            image {\n              cropped(width: 128, height: 128, version: [\"square\", \"small\", \"large\"]) {\n                src\n                srcSet\n              }\n            }\n            id\n          }\n          id\n        }\n      }\n      artworks(first: 8) {\n        internalID\n        artwork {\n          internalID\n          slug\n          href\n          title\n          date\n          artistNames\n          saleMessage\n          partner(shallow: true) {\n            name\n            id\n          }\n          image {\n            resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          ...SaveButton_artwork\n          id\n        }\n      }\n    }\n    thirtyDays: trending(period: THIRTY_DAYS) {\n      label\n      artists(first: 12) {\n        internalID\n        artist {\n          internalID\n          slug\n          name\n          href\n          initials\n          coverArtwork {\n            image {\n              cropped(width: 128, height: 128, version: [\"square\", \"small\", \"large\"]) {\n                src\n                srcSet\n              }\n            }\n            id\n          }\n          id\n        }\n      }\n      artworks(first: 8) {\n        internalID\n        artwork {\n          internalID\n          slug\n          href\n          title\n          date\n          artistNames\n          saleMessage\n          partner(shallow: true) {\n            name\n            id\n          }\n          image {\n            resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          ...SaveButton_artwork\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n    }\n  }\n}\n"
+    "text": "query TrendingSearchesQuery {\n  searchDropdown {\n    oneDay: trending(period: ONE_DAY) {\n      label\n      artists(first: 12) {\n        internalID\n        artist {\n          internalID\n          slug\n          name\n          href\n          initials\n          coverArtwork {\n            image {\n              cropped(width: 128, height: 128, version: [\"square\", \"small\", \"large\"]) {\n                src\n                srcSet\n              }\n            }\n            id\n          }\n          id\n        }\n      }\n      artworks(first: 8) {\n        internalID\n        artwork {\n          internalID\n          slug\n          href\n          title\n          date\n          artistNames\n          saleMessage\n          partner(shallow: true) {\n            name\n            id\n          }\n          image {\n            resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          ...SaveArtworkToListsButton_artwork\n          id\n        }\n      }\n    }\n    sevenDays: trending(period: SEVEN_DAYS) {\n      label\n      artists(first: 12) {\n        internalID\n        artist {\n          internalID\n          slug\n          name\n          href\n          initials\n          coverArtwork {\n            image {\n              cropped(width: 128, height: 128, version: [\"square\", \"small\", \"large\"]) {\n                src\n                srcSet\n              }\n            }\n            id\n          }\n          id\n        }\n      }\n      artworks(first: 8) {\n        internalID\n        artwork {\n          internalID\n          slug\n          href\n          title\n          date\n          artistNames\n          saleMessage\n          partner(shallow: true) {\n            name\n            id\n          }\n          image {\n            resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          ...SaveArtworkToListsButton_artwork\n          id\n        }\n      }\n    }\n    thirtyDays: trending(period: THIRTY_DAYS) {\n      label\n      artists(first: 12) {\n        internalID\n        artist {\n          internalID\n          slug\n          name\n          href\n          initials\n          coverArtwork {\n            image {\n              cropped(width: 128, height: 128, version: [\"square\", \"small\", \"large\"]) {\n                src\n                srcSet\n              }\n            }\n            id\n          }\n          id\n        }\n      }\n      artworks(first: 8) {\n        internalID\n        artwork {\n          internalID\n          slug\n          href\n          title\n          date\n          artistNames\n          saleMessage\n          partner(shallow: true) {\n            name\n            id\n          }\n          image {\n            resized(width: 240, height: 280, version: [\"larger\", \"large\", \"medium\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          ...SaveArtworkToListsButton_artwork\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isInAuction\n  isSavedToAnyList\n  collectorSignals {\n    auction {\n      lotWatcherCount\n      lotClosesAt\n      liveBiddingStarted\n    }\n  }\n}\n"
   }
 };
 })();

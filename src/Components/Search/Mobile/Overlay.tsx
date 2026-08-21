@@ -4,20 +4,21 @@ import { useFlag } from "@unleash/proxy-client-react"
 import { type FC, useCallback, useEffect, useRef, useState } from "react"
 
 import { ActionType } from "@artsy/cohesion"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import {
   OVERLAY_CONTENT_ID,
   OverlayBase,
 } from "Components/Search/Mobile/OverlayBase"
 import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
+import { TrendingSearches } from "Components/Search/TrendingSearches/TrendingSearches"
 import {
   type PillType,
   SEARCH_DEBOUNCE_DELAY,
   TOP_PILL,
 } from "Components/Search/constants"
+import { useTrendingImpressionSession } from "Components/Search/hooks/useTrendingImpressionSession"
 import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
-import { TrendingSearches } from "Components/Search/TrendingSearches/TrendingSearches"
-import { useTrendingImpressionSession } from "Components/Search/hooks/useTrendingImpressionSession"
 import createLogger from "Utils/logger"
 import type { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
@@ -123,50 +124,55 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     isSessionActive: true,
   })
 
+  // Hosts the save-to-lists state, modal, and toast action used by the
+  // trending panel's artwork save buttons (kept above the trending panel so
+  // the modal survives the panel swapping out when the user starts typing).
   return (
-    <OverlayBase
-      onClose={onClose}
-      header={
-        <>
-          <Box mt={-15}>
-            <LabeledInput
-              mx={2}
-              ref={inputCallbackRef}
-              value={inputValue}
-              placeholder="Search Artsy"
-              label={<SearchIcon fill="mono60" aria-hidden size={18} />}
-              onChange={handleValueChange}
-            />
-          </Box>
+    <ManageArtworkForSavesProvider>
+      <OverlayBase
+        onClose={onClose}
+        header={
+          <>
+            <Box mt={-15}>
+              <LabeledInput
+                mx={2}
+                ref={inputCallbackRef}
+                value={inputValue}
+                placeholder="Search Artsy"
+                label={<SearchIcon fill="mono60" aria-hidden size={18} />}
+                onChange={handleValueChange}
+              />
+            </Box>
 
-          {shouldStartSearching(inputValue) && (
-            <SearchInputPillsFragmentContainer
-              onPillClick={handlePillClick}
-              viewer={viewer}
-              selectedPill={selectedPill}
-              enableChevronNavigation={false}
-              forceDisabled={disablePills}
-            />
-          )}
-        </>
-      }
-    >
-      {shouldStartSearching(inputValue) ? (
-        <SearchResultsListPaginationContainer
-          viewer={viewer}
-          query={inputValue}
-          selectedPill={selectedPill}
-          onClose={onClose}
-        />
-      ) : (
-        isTrendingEnabled && (
-          <TrendingSearches
-            onNavigate={onClose}
-            shouldTrackImpressions={shouldTrackTrendingImpressions}
+            {shouldStartSearching(inputValue) && (
+              <SearchInputPillsFragmentContainer
+                onPillClick={handlePillClick}
+                viewer={viewer}
+                selectedPill={selectedPill}
+                enableChevronNavigation={false}
+                forceDisabled={disablePills}
+              />
+            )}
+          </>
+        }
+      >
+        {shouldStartSearching(inputValue) ? (
+          <SearchResultsListPaginationContainer
+            viewer={viewer}
+            query={inputValue}
+            selectedPill={selectedPill}
+            onClose={onClose}
           />
-        )
-      )}
-    </OverlayBase>
+        ) : (
+          isTrendingEnabled && (
+            <TrendingSearches
+              onNavigate={onClose}
+              shouldTrackImpressions={shouldTrackTrendingImpressions}
+            />
+          )
+        )}
+      </OverlayBase>
+    </ManageArtworkForSavesProvider>
   )
 }
 

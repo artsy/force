@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53b9af09cac7dd31d1fa00c3480bcfc1>>
+ * @generated SignedSource<<153366be9ccc7f94872ba15f36b68a09>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -49,7 +49,7 @@ export type TrendingSearches_trending$data = {
       readonly saleMessage: string | null | undefined;
       readonly slug: string;
       readonly title: string | null | undefined;
-      readonly " $fragmentSpreads": FragmentRefs<"SaveButton_artwork">;
+      readonly " $fragmentSpreads": FragmentRefs<"SaveArtworkToListsButton_artwork">;
     } | null | undefined;
     readonly internalID: string;
   }> | null | undefined;
@@ -345,7 +345,7 @@ return {
             {
               "args": null,
               "kind": "FragmentSpread",
-              "name": "SaveButton_artwork"
+              "name": "SaveArtworkToListsButton_artwork"
             }
           ],
           "storageKey": null
@@ -359,6 +359,6 @@ return {
 };
 })();
 
-(node as any).hash = "485b7615513f238d3107dc9c7632c5e6";
+(node as any).hash = "009e2901731fde7749256bfb3433d389";
 
 export default node;

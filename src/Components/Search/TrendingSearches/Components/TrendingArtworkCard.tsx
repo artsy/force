@@ -1,6 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Image, Text } from "@artsy/palette"
-import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveButton"
+import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { RouterLink } from "System/Components/RouterLink"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
 import type { FC, MouseEvent } from "react"
@@ -54,7 +54,11 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
 
       <Box position="relative" mt={1}>
         <Box position="absolute" top={0} right={0}>
-          <SaveButtonFragmentContainer
+          {/* Requires a ManageArtworkForSavesProvider. It is mounted in the
+              HOSTS (SearchBarInput / Mobile Overlay), not per-card like
+              ShelfArtwork does: the save flow's list modal and toast action
+              outlive the panel, which unmounts on blur as the modal opens. */}
+          <SaveArtworkToListsButtonFragmentContainer
             artwork={artwork}
             contextModule={ContextModule.trendingArtworksRail}
           />

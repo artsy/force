@@ -649,7 +649,7 @@ export const TRENDING_WINDOW_FRAGMENT = graphql`
             height
           }
         }
-        ...SaveButton_artwork
+        ...SaveArtworkToListsButton_artwork
       }
     }
   }
