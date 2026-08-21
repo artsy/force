@@ -109,6 +109,7 @@ Disallow: /*?dns_source=
 Disallow: /*?microsite=
 Disallow: /*?from-show-guide=
 Disallow: /search
+Disallow: /users/auth
 Sitemap: ${APP_URL}/sitemap-articles.xml
 Sitemap: ${APP_URL}/sitemap-artists.xml
 Sitemap: ${APP_URL}/sitemap-artist-images.xml
