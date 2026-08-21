@@ -15,7 +15,8 @@ import type { ArtistSocialRail_artist$data } from "__generated__/ArtistSocialRai
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-const TILE_SIZE = 300
+const TILE_WIDTH = 300
+const TILE_HEIGHT = 375
 
 interface ArtistSocialRailProps {
   artist: ArtistSocialRail_artist$data
@@ -83,13 +84,13 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Box position="relative" width={TILE_SIZE} height={TILE_SIZE}>
+      <Box position="relative" width={TILE_WIDTH} height={TILE_HEIGHT}>
         {!isLoaded && (
           <Skeleton position="absolute" top={0} left={0}>
             <SkeletonBox
               data-testid="tile-skeleton"
-              width={TILE_SIZE}
-              height={TILE_SIZE}
+              width={TILE_WIDTH}
+              height={TILE_HEIGHT}
             />
           </Skeleton>
         )}
@@ -98,8 +99,8 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
           src={tile.src}
           srcSet={tile.srcSet}
           alt={tile.caption ?? ""}
-          width={TILE_SIZE}
-          height={TILE_SIZE}
+          width={TILE_WIDTH}
+          height={TILE_HEIGHT}
           lazyLoad
           onLoad={() => setIsLoaded(true)}
           onError={() => setIsLoaded(true)}
@@ -120,7 +121,7 @@ export const ArtistSocialRailFragmentContainer = createFragmentContainer(
           permalink
           caption
           image {
-            cropped(width: 300, height: 300) {
+            cropped(width: 300, height: 375) {
               src
               srcSet
             }
@@ -139,7 +140,7 @@ const PLACEHOLDER = (
 
     <Shelf>
       {[...new Array(10)].map((_, i) => {
-        return <SkeletonBox key={i} width={TILE_SIZE} height={TILE_SIZE} />
+        return <SkeletonBox key={i} width={TILE_WIDTH} height={TILE_HEIGHT} />
       })}
     </Shelf>
   </Skeleton>
