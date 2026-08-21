@@ -11,6 +11,7 @@ import {
   type SuggestionItemOptionProps,
 } from "Components/Search/SuggestionItem/SuggestionItem"
 import type { PillType } from "Components/Search/constants"
+import { useRecentSearches } from "Components/Search/hooks/useRecentSearches"
 import {
   type SearchNodeOption,
   formatOptions,
@@ -41,6 +42,7 @@ const SearchResultsList: FC<
   React.PropsWithChildren<SearchResultsListProps>
 > = ({ relay, viewer, query, selectedPill, onClose }) => {
   const tracking = useTracking()
+  const { addRecentSearchFromOption } = useRecentSearches()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const edges = viewer.searchConnection?.edges ?? []
@@ -118,11 +120,14 @@ const SearchResultsList: FC<
       item_type: option.item_type!,
     }
     tracking.trackEvent(event)
+    addRecentSearchFromOption(option)
     onClose()
   }
 
-  const handleQuickNavClick = () => {
+  const handleQuickNavClick = (option: SuggestionItemOptionProps) => {
     // QuickNavigationItem tracks its own cohesion event
+    // Records the artist itself (base href), matching Eigen’s quick nav
+    addRecentSearchFromOption(option)
     onClose()
   }
 

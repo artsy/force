@@ -1,10 +1,13 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
 import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { useFlag } from "@unleash/proxy-client-react"
 import { useRouter } from "System/Hooks/useRouter"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useTracking } from "react-tracking"
 import { SearchBarInput } from "../SearchBarInput"
+
+jest.mock("@unleash/proxy-client-react", () => ({ useFlag: jest.fn() }))
 
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
@@ -15,6 +18,7 @@ jest.mock("@artsy/palette", () => ({
     onChange,
     onFocus,
     onPaste,
+    onSubmit,
     renderOption,
   }) => (
     <div>
@@ -24,6 +28,11 @@ jest.mock("@artsy/palette", () => ({
         onChange={onChange}
         onFocus={onFocus}
         onPaste={onPaste}
+        onKeyDown={event => {
+          if (event.key === "Enter") {
+            onSubmit()
+          }
+        }}
       />
       <div>
         {options.map((option, i) => (
@@ -63,8 +72,42 @@ jest.mock("../SuggestionItem/SuggestionItem", () => ({
 const mockPush = jest.fn()
 const mockTrackEvent = jest.fn()
 
+// Consumed by the nested TrendingSearches, which only renders once trending
+// data is present. Artworks stay empty so the card's SaveButton stays out of
+// this suite.
+const trendingWindow = (label: string) => {
+  return {
+    label,
+    artists: [
+      {
+        internalID: "banksy-id",
+        artist: {
+          internalID: "banksy-id",
+          slug: "banksy",
+          name: "Banksy",
+          href: "/artist/banksy",
+          initials: "B",
+          coverArtwork: null,
+        },
+      },
+    ],
+    artworks: [],
+  }
+}
+
+const TRENDING_DROPDOWN = {
+  oneDay: trendingWindow("Today"),
+  sevenDays: trendingWindow("Past 7 Days"),
+  thirtyDays: trendingWindow("Past 30 Days"),
+}
+
 describe("SearchBarInput", () => {
   beforeEach(() => {
+    // The trending panel ships behind this flag; the tests cover the
+    // flag-on behavior except where they disable it explicitly
+    ;(useFlag as jest.Mock).mockImplementation((flag: string) => {
+      return flag === "onyx_trending-searches"
+    })
     ;(useRouter as jest.Mock).mockReturnValue({
       match: { location: { pathname: "/search" } },
       router: { push: mockPush },
@@ -72,6 +115,7 @@ describe("SearchBarInput", () => {
     ;(useTracking as jest.Mock).mockReturnValue({ trackEvent: mockTrackEvent })
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: {
+        searchDropdown: TRENDING_DROPDOWN,
         viewer: {
           searchConnection: {
             edges: [
@@ -97,10 +141,20 @@ describe("SearchBarInput", () => {
           viewer: { searchConnection: { edges: [] } },
         }),
       })),
+      loading: false,
     })
   })
 
-  afterEach(() => jest.clearAllMocks())
+  afterEach(() => {
+    jest.clearAllMocks()
+    localStorage.clear()
+  })
+
+  it("renders without a search term (routes without ?term= pass undefined)", () => {
+    render(<SearchBarInput searchTerm={undefined as unknown as string} />)
+
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+  })
 
   it("passes the experiment variant to autosuggest", () => {
     render(<SearchBarInput searchTerm="andy" />)
@@ -279,6 +333,145 @@ describe("SearchBarInput", () => {
       )
       expect(mockPush).not.toHaveBeenCalled()
     })
+
+    it("records the artist (not the auction results page) as a recent search", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+
+      await userEvent.click(
+        screen.getByRole("button", { name: "Auction Results" }),
+      )
+
+      expect(JSON.parse(localStorage.getItem("artsy.recentSearches")!)).toEqual(
+        [
+          {
+            label: "Andy Warhol",
+            href: "/artist/andy-warhol",
+            item_type: "Artist",
+            item_id: "andy-warhol",
+          },
+        ],
+      )
+    })
+  })
+
+  describe("recent searches", () => {
+    const RECENT_SEARCHES_KEY = "artsy.recentSearches"
+
+    it("records the suggestion with its entity page on click", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+
+      await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+      expect(JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY)!)).toEqual([
+        {
+          label: "Andy Warhol",
+          href: "/artist/andy-warhol",
+          item_type: "Artist",
+          item_id: "andy-warhol",
+        },
+      ])
+    })
+
+    it("records the raw query with the search results page on submit", async () => {
+      render(<SearchBarInput searchTerm="andy" />)
+
+      await userEvent.type(screen.getByRole("textbox"), "{Enter}")
+
+      expect(JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY)!)).toEqual([
+        { label: "andy", href: "/search?term=andy" },
+      ])
+      expect(mockPush).toHaveBeenCalledWith("/search?term=andy")
+    })
+  })
+
+  it("does not show the trending panel when the feature flag is off", async () => {
+    ;(useFlag as jest.Mock).mockReturnValue(false)
+
+    render(<SearchBarInput searchTerm="" />)
+
+    await userEvent.click(screen.getByRole("textbox"))
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("does not show the trending panel until the query resolves", async () => {
+    ;(useClientQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      loading: true,
+    })
+
+    render(<SearchBarInput searchTerm="" />)
+
+    await userEvent.click(screen.getByRole("textbox"))
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("closes the trending panel on Escape", async () => {
+    render(<SearchBarInput searchTerm="" />)
+
+    await userEvent.click(screen.getByRole("textbox"))
+    expect(screen.getByText("Trending Artists")).toBeInTheDocument()
+
+    await userEvent.keyboard("{Escape}")
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("tracks rail impressions once per focus session across threshold crossings", async () => {
+    // Seed recents so both the recents and the trending artists rails count
+    localStorage.setItem(
+      "artsy.recentSearches",
+      JSON.stringify([{ label: "banksy", href: "/search?term=banksy" }]),
+    )
+
+    render(<SearchBarInput searchTerm="" />)
+    const input = screen.getByRole("textbox")
+
+    const countRailViewed = () => {
+      return mockTrackEvent.mock.calls.filter(([event]) => {
+        return event?.action === ActionType.railViewed
+      }).length
+    }
+
+    await userEvent.click(input)
+    const impressionsAfterOpen = countRailViewed()
+    expect(impressionsAfterOpen).toBeGreaterThan(0)
+
+    // Crossing the search threshold unmounts and remounts the panel; the
+    // impressions must not fire again within the same focus session
+    await userEvent.type(input, "ab")
+    await userEvent.clear(input)
+    expect(screen.getByText("Trending Artists")).toBeInTheDocument()
+
+    expect(countRailViewed()).toEqual(impressionsAfterOpen)
+  })
+
+  it("does not reopen the trending panel after a suggestion click", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+
+    // Focus the input, then pick a result; selecting resets the query, which
+    // must not surface the trending panel over the destination page
+    await userEvent.click(screen.getByRole("textbox"))
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+    expect(mockPush).toHaveBeenCalledWith("/artist/andy-warhol")
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("ignores Palette's programmatic refocus right after a selection", async () => {
+    render(<SearchBarInput searchTerm="andy" />)
+    const input = screen.getByRole("textbox")
+
+    await userEvent.click(input)
+    await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+    // Palette's AutocompleteInput re-focuses the input ~100ms after a
+    // keyboard selection (resetUI); the query is empty by then, so without
+    // suppression the trending panel would pop open over the artist page
+    fireEvent.focus(input)
+
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
   })
 
   it("tracks focusedOnSearchInput on focus", async () => {
