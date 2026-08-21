@@ -1,4 +1,5 @@
 import { AutocompleteInput, Box, useDidMount } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { useFlag } from "@unleash/proxy-client-react"
 import {
   type ChangeEvent,
@@ -10,7 +11,6 @@ import {
   useState,
 } from "react"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 
 import {
   ActionType,
@@ -19,6 +19,7 @@ import {
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
 import { Z } from "Apps/Components/constants"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useRouter } from "System/Hooks/useRouter"
@@ -39,9 +40,9 @@ import {
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
 import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
+import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
-import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
 import { searchResultsHref } from "./utils/searchResultsHref"
@@ -388,89 +389,96 @@ export const SearchBarInput: FC<
   }
 
   return (
-    <Box
-      position="relative"
-      onBlur={handleContainerBlur}
-      onKeyDown={handleContainerKeyDown}
-    >
-      <AutocompleteInput
-        forwardRef={ref}
-        key={match.location.pathname}
-        value={value}
-        placeholder="Search by artist, gallery, style, theme, tag, etc."
-        spellCheck={false}
-        options={shouldStartSearching(value) ? formattedOptions : []}
-        defaultValue={value}
-        onChange={handleChange}
-        onClear={resetValue}
-        onSelect={handleSelect}
-        onSubmit={handleSubmit}
-        onFocus={handleFocus}
-        onPaste={handlePaste}
-        header={
-          data?.viewer ? (
-            <SearchInputPillsFragmentContainer
-              viewer={data.viewer}
-              selectedPill={selectedPill}
-              onPillClick={handlePillClick}
-            />
-          ) : null
-        }
-        renderOption={option => {
-          if (!value) return <></>
-
-          if (option.typename === "Footer") {
-            return (
-              <SearchBarFooter
-                query={value}
-                href={encodedSearchURL}
+    // Hosts the save-to-lists state, modal, and toast action used by the
+    // trending panel's artwork save buttons. Mounted here, OUTSIDE the panel,
+    // because the panel unmounts on blur the moment the lists modal (or the
+    // toast's "Add to a List" action) takes focus — a provider inside the
+    // panel would take the modal down with it.
+    <ManageArtworkForSavesProvider>
+      <Box
+        position="relative"
+        onBlur={handleContainerBlur}
+        onKeyDown={handleContainerKeyDown}
+      >
+        <AutocompleteInput
+          forwardRef={ref}
+          key={match.location.pathname}
+          value={value}
+          placeholder="Search by artist, gallery, style, theme, tag, etc."
+          spellCheck={false}
+          options={shouldStartSearching(value) ? formattedOptions : []}
+          defaultValue={value}
+          onChange={handleChange}
+          onClear={resetValue}
+          onSelect={handleSelect}
+          onSubmit={handleSubmit}
+          onFocus={handleFocus}
+          onPaste={handlePaste}
+          header={
+            data?.viewer ? (
+              <SearchInputPillsFragmentContainer
+                viewer={data.viewer}
                 selectedPill={selectedPill}
+                onPillClick={handlePillClick}
+              />
+            ) : null
+          }
+          renderOption={option => {
+            if (!value) return <></>
+
+            if (option.typename === "Footer") {
+              return (
+                <SearchBarFooter
+                  query={value}
+                  href={encodedSearchURL}
+                  selectedPill={selectedPill}
+                />
+              )
+            }
+
+            return (
+              <SuggestionItem
+                query={value}
+                option={option}
+                onClick={handleSuggestionClick}
+                onQuickNavClick={handleQuickNavClick}
               />
             )
-          }
+          }}
+          dropdownMaxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
+          dropdownMinWidth={SEARCH_DROPDOWN_MIN_WIDTH}
+          flip={false}
+          height={40}
+        />
 
-          return (
-            <SuggestionItem
-              query={value}
-              option={option}
-              onClick={handleSuggestionClick}
-              onQuickNavClick={handleQuickNavClick}
+        {isTrendingVisible && (
+          <TrendingPanel
+            position="absolute"
+            // Mirrors the results dropdown exactly (same anchor, offset, width,
+            // min-width, and shadow) so trending and autosuggest read as one
+            // overlay swapping content rather than two differently-sized surfaces.
+            top="calc(100% + 10px)"
+            left={0}
+            width="100%"
+            minWidth={SEARCH_DROPDOWN_MIN_WIDTH}
+            zIndex={Z.dropdown}
+            bg="mono0"
+            maxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
+            overflowY="auto"
+            // Keep input focused so the panel stays open while clicking inside it
+            onMouseDown={event => event.preventDefault()}
+          >
+            <TrendingSearches
+              // closeDropdown (not just setIsFocused) so the input also blurs:
+              // otherwise a same-pathname navigation leaves the input focused
+              // with the panel unable to reopen on the next click
+              onNavigate={closeDropdown}
+              shouldTrackImpressions={shouldTrackTrendingImpressions}
             />
-          )
-        }}
-        dropdownMaxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
-        dropdownMinWidth={SEARCH_DROPDOWN_MIN_WIDTH}
-        flip={false}
-        height={40}
-      />
-
-      {isTrendingVisible && (
-        <TrendingPanel
-          position="absolute"
-          // Mirrors the results dropdown exactly (same anchor, offset, width,
-          // min-width, and shadow) so trending and autosuggest read as one
-          // overlay swapping content rather than two differently-sized surfaces.
-          top="calc(100% + 10px)"
-          left={0}
-          width="100%"
-          minWidth={SEARCH_DROPDOWN_MIN_WIDTH}
-          zIndex={Z.dropdown}
-          bg="mono0"
-          maxHeight={SEARCH_DROPDOWN_MAX_HEIGHT}
-          overflowY="auto"
-          // Keep input focused so the panel stays open while clicking inside it
-          onMouseDown={event => event.preventDefault()}
-        >
-          <TrendingSearches
-            // closeDropdown (not just setIsFocused) so the input also blurs:
-            // otherwise a same-pathname navigation leaves the input focused
-            // with the panel unable to reopen on the next click
-            onNavigate={closeDropdown}
-            shouldTrackImpressions={shouldTrackTrendingImpressions}
-          />
-        </TrendingPanel>
-      )}
-    </Box>
+          </TrendingPanel>
+        )}
+      </Box>
+    </ManageArtworkForSavesProvider>
   )
 }
 
