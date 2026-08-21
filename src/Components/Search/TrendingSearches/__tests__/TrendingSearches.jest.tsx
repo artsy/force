@@ -8,8 +8,8 @@ import { TrendingSearches } from "../TrendingSearches"
 jest.mock("Utils/Hooks/useClientQuery", () => ({ useClientQuery: jest.fn() }))
 jest.mock("react-tracking")
 
-jest.mock("Components/Artwork/SaveButton/SaveButton", () => ({
-  SaveButtonFragmentContainer: () => {
+jest.mock("Components/Artwork/SaveButton/SaveArtworkToListsButton", () => ({
+  SaveArtworkToListsButtonFragmentContainer: () => {
     return <button type="button">Save</button>
   },
 }))
