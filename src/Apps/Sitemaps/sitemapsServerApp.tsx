@@ -50,13 +50,11 @@ sitemapsServerApp
       { loc: `${APP_URL}/institution-partnerships` },
       { loc: `${APP_URL}/institutions` },
       { loc: `${APP_URL}/jobs` },
-      { loc: `${APP_URL}/login` },
       { loc: `${APP_URL}/press/in-the-media` },
       { loc: `${APP_URL}/press/press-releases` },
       { loc: `${APP_URL}/privacy` },
       { loc: `${APP_URL}/security` },
       { loc: `${APP_URL}/shows`, priority: 1 },
-      { loc: `${APP_URL}/signup` },
       { loc: `${APP_URL}/terms` },
       { loc: `${APP_URL}/viewing-rooms` },
     ]
