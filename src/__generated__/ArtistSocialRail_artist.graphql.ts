@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<512eded5eb88a7818887c7c2518ded1c>>
+ * @generated SignedSource<<0bc9a0c10ea120b86eaf8f18de96cc9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInstagramRail_artist$data = {
+export type ArtistSocialRail_artist$data = {
   readonly instagramMedia: ReadonlyArray<{
     readonly caption: string | null | undefined;
     readonly image: {
@@ -22,18 +22,18 @@ export type ArtistInstagramRail_artist$data = {
     readonly internalID: string | null | undefined;
     readonly permalink: string | null | undefined;
   } | null | undefined> | null | undefined;
-  readonly " $fragmentType": "ArtistInstagramRail_artist";
+  readonly " $fragmentType": "ArtistSocialRail_artist";
 };
-export type ArtistInstagramRail_artist$key = {
-  readonly " $data"?: ArtistInstagramRail_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistInstagramRail_artist">;
+export type ArtistSocialRail_artist$key = {
+  readonly " $data"?: ArtistSocialRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSocialRail_artist">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistInstagramRail_artist",
+  "name": "ArtistSocialRail_artist",
   "selections": [
     {
       "alias": null,
@@ -125,6 +125,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "31fe2e0f5487be7e96c8835a4e2d47c7";
+(node as any).hash = "190fe44dcf3451abed0447f1e1333f5a";
 
 export default node;

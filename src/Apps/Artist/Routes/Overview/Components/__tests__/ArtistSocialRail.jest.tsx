@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
-import { ArtistInstagramRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistInstagramRail"
+import { fireEvent, screen } from "@testing-library/react"
+import { ArtistSocialRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistSocialRail"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
-import type { ArtistInstagramRailTestQuery } from "__generated__/ArtistInstagramRailTestQuery.graphql"
+import type { ArtistSocialRailTestQuery } from "__generated__/ArtistSocialRailTestQuery.graphql"
 import { graphql } from "react-relay"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -9,18 +9,18 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<ArtistInstagramRailTestQuery>({
-  Component: ArtistInstagramRailFragmentContainer,
+const { renderWithRelay } = setupTestWrapperTL<ArtistSocialRailTestQuery>({
+  Component: ArtistSocialRailFragmentContainer,
   query: graphql`
-    query ArtistInstagramRailTestQuery @relay_test_operation {
+    query ArtistSocialRailTestQuery @relay_test_operation {
       artist(id: "test") {
-        ...ArtistInstagramRail_artist
+        ...ArtistSocialRail_artist
       }
     }
   `,
 })
 
-describe("ArtistInstagramRail", () => {
+describe("ArtistSocialRail", () => {
   it("renders the header and image tiles that link to each Instagram post", () => {
     renderWithRelay({
       Artist: () => ({
@@ -51,7 +51,7 @@ describe("ArtistInstagramRail", () => {
       }),
     })
 
-    expect(screen.getByText("Instagram")).toBeInTheDocument()
+    expect(screen.getByText("Social")).toBeInTheDocument()
 
     const first = screen.getByAltText("First post")
     const second = screen.getByAltText("Second post")
@@ -65,6 +65,32 @@ describe("ArtistInstagramRail", () => {
     )
   })
 
+  it("renders a skeleton behind each tile until its image loads", () => {
+    renderWithRelay({
+      Artist: () => ({
+        instagramMedia: [
+          {
+            internalID: "media-1",
+            permalink: "https://www.instagram.com/p/first",
+            caption: "First post",
+            image: {
+              cropped: {
+                src: "https://example.com/1.jpg",
+                srcSet: "https://example.com/1.jpg 1x",
+              },
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByTestId("tile-skeleton")).toBeInTheDocument()
+
+    fireEvent.load(screen.getByAltText("First post"))
+
+    expect(screen.queryByTestId("tile-skeleton")).not.toBeInTheDocument()
+  })
+
   it("renders nothing when there is no Instagram media", () => {
     renderWithRelay({
       Artist: () => ({
@@ -72,6 +98,6 @@ describe("ArtistInstagramRail", () => {
       }),
     })
 
-    expect(screen.queryByText("Instagram")).not.toBeInTheDocument()
+    expect(screen.queryByText("Social")).not.toBeInTheDocument()
   })
 })
