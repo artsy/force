@@ -448,7 +448,12 @@ const ArtistAvatar: FC<ArtistAvatarProps> = ({ artist, onClick }) => {
   const image = artist.coverArtwork?.image?.cropped
 
   return (
-    <AvatarItem to={artist.href ?? `/artist/${artist.slug}`} onClick={onClick}>
+    <AvatarItem
+      to={artist.href ?? `/artist/${artist.slug}`}
+      onClick={onClick}
+      // Full name on desktop hover for the rare 3+ line names that still clamp
+      title={artist.name ?? undefined}
+    >
       {image?.src ? (
         <AvatarImage
           src={image.src}
@@ -469,13 +474,14 @@ const ArtistAvatar: FC<ArtistAvatarProps> = ({ artist, onClick }) => {
         </AvatarFallback>
       )}
 
-      {/* maxWidth is required for the ellipsis: nowrap text otherwise forces
-          the flex item wider than the 80px avatar column */}
+      {/* Eigen parity (TrendingArtistsAvatarsRail): same 80px column, but the
+          name wraps to two lines before ellipsizing. maxWidth keeps rare
+          unbreakable words from forcing the flex item wider than the column */}
       <Text
         variant="xs"
         mt={0.5}
         maxWidth="100%"
-        overflowEllipsis
+        lineClamp={2}
         textAlign="center"
       >
         {artist.name}
