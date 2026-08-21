@@ -6,6 +6,7 @@ import {
   type FocusEvent,
   type MouseEvent,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -18,6 +19,7 @@ import {
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
+import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { Z } from "Apps/Components/constants"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -34,6 +36,7 @@ import { useDebounce } from "use-debounce"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
+import { SuggestedFiltersItem } from "./SuggestedFiltersItem"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
@@ -44,6 +47,7 @@ import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSessi
 import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
+import { parseFilterQuery } from "./utils/parseFilterQuery"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
@@ -55,6 +59,9 @@ export interface SearchBarInputProps {
 // always swap without a visible size jump
 const SEARCH_DROPDOWN_MAX_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`
 const SEARCH_DROPDOWN_MIN_WIDTH = 600
+
+// Sentinel typenames for the synthetic (non-entity) rows in the dropdown
+const SUGGESTED_FILTERS_TYPENAME = "SuggestedFilters"
 
 export const SearchBarInput: FC<
   React.PropsWithChildren<SearchBarInputProps>
@@ -98,7 +105,41 @@ export const SearchBarInput: FC<
 
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
+  // Parsed from `value` rather than `debouncedValue`: parsing is synchronous
+  // and local, so the row can land on the same frame as the keystroke instead
+  // of waiting on the network.
+  const parsedFilters = useMemo(() => {
+    return parseFilterQuery(value)
+  }, [value])
+
+  // The entity pills scope the search to a single type, where a link out to
+  // browsing artworks is off-topic.
+  const shouldShowSuggestedFilters =
+    !!parsedFilters && selectedPill === TOP_PILL
+
+  const suggestedFiltersHref = parsedFilters
+    ? buildUrlForCollectApp(parsedFilters.filters)
+    : ""
+
   const formattedOptions: SuggestionItemOptionProps[] = [
+    ...(shouldShowSuggestedFilters
+      ? [
+          {
+            text: value,
+            value: value,
+            subtitle: "",
+            imageUrl: "",
+            showAuctionResultsButton: false,
+            href: suggestedFiltersHref,
+            typename: SUGGESTED_FILTERS_TYPENAME,
+            item_id: "suggested-filters",
+            // Entity rows are numbered by their edge index and the footer
+            // already owns -1; prepending must not renumber the entities.
+            item_number: -2,
+            item_type: "filter-suggestion",
+          },
+        ]
+      : []),
     ...edges.flatMap((edge, index) => {
       const option = edge?.node
       if (!option) return []
@@ -418,6 +459,18 @@ export const SearchBarInput: FC<
         }
         renderOption={option => {
           if (!value) return <></>
+
+          if (option.typename === SUGGESTED_FILTERS_TYPENAME && parsedFilters) {
+            return (
+              <SuggestedFiltersItem
+                parsed={parsedFilters}
+                href={suggestedFiltersHref}
+                onClick={event => {
+                  handleSuggestionClick(option, event)
+                }}
+              />
+            )
+          }
 
           if (option.typename === "Footer") {
             return (
