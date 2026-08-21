@@ -52,8 +52,8 @@ const NAVIGATING = {
   artworks: false,
   auction: false,
   about: false,
-  social: false,
   editorial: false,
+  social: false,
 }
 
 describe("ArtistCombinedNav", () => {
@@ -66,6 +66,23 @@ describe("ArtistCombinedNav", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: mockTrackEvent,
     }))
+  })
+
+  it("renders the tabs in order, with Social last", () => {
+    render(<ArtistCombinedNav waitUntil={waitUntil} navigating={NAVIGATING} />)
+
+    const labels = screen
+      .getAllByRole("button")
+      .map(tab => tab.textContent)
+      .filter(Boolean)
+
+    expect(labels).toEqual([
+      "Artworks",
+      "Auction Results",
+      "About",
+      "Editorial",
+      "Social",
+    ])
   })
 
   it("renders editorial tab and jumps to editorial section", async () => {
