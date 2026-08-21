@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
@@ -27,6 +27,12 @@ jest.mock(
   }),
 )
 
+const mockJumpTo = jest.fn()
+jest.mock("Utils/Hooks/useJump", () => ({
+  ...jest.requireActual("Utils/Hooks/useJump"),
+  useJump: () => ({ jumpTo: mockJumpTo }),
+}))
+
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()
 
@@ -43,6 +49,7 @@ beforeAll(() => {
 
 beforeEach(() => {
   trackEvent.mockClear()
+  mockJumpTo.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -257,6 +264,54 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       expect(
         screen.queryByText(/Courtesy of the Museum/),
+      ).not.toBeInTheDocument()
+    })
+  })
+
+  describe("Social link", () => {
+    it("scrolls to the social section and tracks the click", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          internalID: "artist-id",
+          instagramHandle: "pablopicasso",
+        }),
+      })
+
+      fireEvent.click(screen.getByLabelText("Scroll to social section"))
+
+      expect(mockJumpTo).toHaveBeenCalledWith("artistSocialTop")
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedHeader",
+          context_module: "artistHeader",
+          context_page_owner_type: "artist",
+          subject: "social",
+        }),
+      )
+    })
+
+    it("renders the Instagram handle prefixed with an @", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          instagramHandle: "pablopicasso",
+        }),
+      })
+
+      expect(screen.getByText("@pablopicasso")).toBeInTheDocument()
+    })
+
+    it("does not render the link when the artist has no handle", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          instagramHandle: null,
+        }),
+      })
+
+      expect(
+        screen.queryByLabelText("Scroll to social section"),
       ).not.toBeInTheDocument()
     })
   })

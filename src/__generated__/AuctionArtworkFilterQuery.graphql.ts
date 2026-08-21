@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<642cb0d47e33ee22ce91fd0e7ed81d90>>
+ * @generated SignedSource<<0a1fcf65726c919e63ac9049dfe02028>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,6 +56,7 @@ export type FilterArtworksInput = {
   inquireableOnly?: boolean | null | undefined;
   keyword?: string | null | undefined;
   keywordMatchExact?: boolean | null | undefined;
+  keywordTypoTolerance?: boolean | null | undefined;
   last?: number | null | undefined;
   locationCities?: ReadonlyArray<string | null | undefined> | null | undefined;
   locationId?: string | null | undefined;

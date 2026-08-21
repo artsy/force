@@ -631,6 +631,11 @@ type Alert {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -2075,7 +2080,7 @@ type ArticleFeaturedArtistNotificationItem {
   ): ArtistConnection
 }
 
-union ArticleHero = ArticleFeatureSection
+union ArticleHero = ArticleFeatureSection | ArticleImageSection
 
 type ArticleImageSection {
   caption: String
@@ -2595,6 +2600,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -2720,6 +2730,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
       FOUNDATIONS
     ]
   ): [ArtistInsight!]!
+
+  """
+  Artist's Instagram handle, without a leading @
+  """
+  instagramHandle: String
 
   """
   Instagram media for display on an artist page.
@@ -3230,6 +3245,11 @@ type ArtistPartnerEdge {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -3477,6 +3497,11 @@ type ArtistSeries implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -4647,6 +4672,14 @@ interface ArtworkContextGrid {
   title: String
 }
 
+"""
+The surface an artwork was created from.
+"""
+enum ArtworkCreatedSurface {
+  CMS
+  OS
+}
+
 input ArtworkDuplicateMergeFieldOverridesInput {
   availability: String
   date: String
@@ -4790,6 +4823,38 @@ type ArtworkError {
   requestError: RequestError
 }
 
+type ArtworkFieldVisibility {
+  artistName: Boolean
+  artworkTitle: Boolean
+  availability: Boolean
+  certificateOfAuthenticity: Boolean
+  dimensions: Boolean
+  editionAvailability: Boolean
+  editionInventoryCount: Boolean
+  editionPrice: Boolean
+  editionSize: Boolean
+  location: Boolean
+  medium: Boolean
+  price: Boolean
+  year: Boolean
+}
+
+input ArtworkFieldVisibilityInput {
+  artistName: Boolean
+  artworkTitle: Boolean
+  availability: Boolean
+  certificateOfAuthenticity: Boolean
+  dimensions: Boolean
+  editionAvailability: Boolean
+  editionInventoryCount: Boolean
+  editionPrice: Boolean
+  editionSize: Boolean
+  location: Boolean
+  medium: Boolean
+  price: Boolean
+  year: Boolean
+}
+
 union ArtworkFigures = Image | Video
 
 union ArtworkFilterFacet = Gene | Tag
@@ -4883,6 +4948,11 @@ type ArtworkFilterNode {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -4953,6 +5023,50 @@ type ArtworkFilterNode {
   The display title for this filtered connection
   """
   title: String!
+}
+
+type ArtworkFilterSuggestion {
+  """
+  Values the parser rejected as invalid.
+  """
+  dropped: [ArtworkFilterSuggestionDropped!]!
+
+  """
+  True when parsing failed and the query fell back to a plain keyword search.
+  """
+  fellOpen: Boolean
+
+  """
+  Validated hard filters to pass to artworksConnection.
+  """
+  filters: ArtworkFilterSuggestionFilters
+
+  """
+  Leftover 'vibe' text to use as a keyword search.
+  """
+  keyword: String
+}
+
+type ArtworkFilterSuggestionDropped {
+  field: String
+  value: String
+}
+
+type ArtworkFilterSuggestionFilters {
+  acquireable: Boolean
+  artistNationalities: [String]
+  atAuction: Boolean
+  attributionClass: [String]
+  colors: [String]
+  forSale: Boolean
+  framed: Boolean
+  geneIDs: [String]
+  inquireable: Boolean
+  majorPeriods: [String]
+  offerable: Boolean
+  priceRange: String
+  signed: Boolean
+  sizes: [ArtworkSizes]
 }
 
 union ArtworkHighlight = Article | Show
@@ -6793,6 +6907,41 @@ type AuctionsUser implements AuctionsNode {
   The user's id
   """
   userId: ID!
+}
+
+type AuthenticatePrivateViewingRoomFailure {
+  mutationError: GravityMutationError
+}
+
+input AuthenticatePrivateViewingRoomMutationInput {
+  clientMutationId: String
+
+  """
+  The room's passcode.
+  """
+  passcode: String!
+
+  """
+  The slug of the private viewing room.
+  """
+  slug: String!
+}
+
+type AuthenticatePrivateViewingRoomMutationPayload {
+  clientMutationId: String
+
+  """
+  On success: the private viewing room's contents. On error: the error that occurred (e.g. an incorrect passcode).
+  """
+  privateViewingRoomOrError: AuthenticatePrivateViewingRoomResponseOrError
+}
+
+union AuthenticatePrivateViewingRoomResponseOrError =
+  | AuthenticatePrivateViewingRoomFailure
+  | AuthenticatePrivateViewingRoomSuccess
+
+type AuthenticatePrivateViewingRoomSuccess {
+  privateViewingRoom: PrivateViewingRoomContents
 }
 
 enum AuthenticationProvider {
@@ -13562,6 +13711,23 @@ type Conversation implements Node {
   ): MeOrdersConnection
 
   """
+  The current (collector) user's partner offers for this conversation's artwork.
+  """
+  collectorPartnerOffersConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    Filter by offer type(s). Gravity defaults to all of the user's partner offers when omitted.
+    """
+    offerType: [PartnerOfferTypeEnum]
+    page: Int
+    size: Int
+  ): PartnerOfferToCollectorConnection
+
+  """
   The collector profile of the user who initiated the conversation. Do not use this field for Partners
   """
   collectorResume: CollectorResume
@@ -14093,6 +14259,36 @@ type CreateArtistSuccess {
 
 union CreateArtistSuccessOrErrorType = CreateArtistFailure | CreateArtistSuccess
 
+type CreateArtnetImportFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateArtnetImportMutationInput {
+  clientMutationId: String
+
+  """
+  The ID of the partner whose Artnet inventory to import.
+  """
+  partnerID: String!
+}
+
+type CreateArtnetImportMutationPayload {
+  """
+  On success: the queued import details. On error: the error that occurred.
+  """
+  artnetImportOrError: CreateArtnetImportResponseOrError
+  clientMutationId: String
+}
+
+union CreateArtnetImportResponseOrError =
+  | CreateArtnetImportFailure
+  | CreateArtnetImportSuccess
+
+type CreateArtnetImportSuccess {
+  artnetImportID: String
+  queued: Boolean
+}
+
 type CreateArtworkFailure {
   mutationError: GravityMutationError
 }
@@ -14321,6 +14517,11 @@ input CreateArtworkMutationInput {
   """
   artsyListing: Boolean
   clientMutationId: String
+
+  """
+  The surface the artwork is being created from. Defaults to CMS.
+  """
+  createdSurface: ArtworkCreatedSurface
 
   """
   The S3 bucket where the artwork image is stored.
@@ -14908,7 +15109,7 @@ type CreateMailchimpCampaignFailure {
 
 input CreateMailchimpCampaignInput {
   """
-  Artwork IDs to associate with the campaign for tracking (mutually exclusive with partnerShowId)
+  Artwork IDs to associate with the campaign for tracking
   """
   artworkIds: [String!]
   clientMutationId: String
@@ -14927,11 +15128,6 @@ input CreateMailchimpCampaignInput {
   The internal ID of the Mailchimp account to use
   """
   mailchimpAccountId: String!
-
-  """
-  Partner show ID to associate with the campaign for tracking (mutually exclusive with artworkIds)
-  """
-  partnerShowId: String
 
   """
   The email preview text
@@ -15305,7 +15501,7 @@ input CreatePartnerListMutationInput {
   fairID: String
 
   """
-  The type of list (show, fair, or other).
+  The type of list (show, fair, private_viewing_room, or other).
   """
   listType: PartnerListTypeEnum
 
@@ -18156,6 +18352,11 @@ interface EntityWithFilterArtworksConnectionInterface {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -18627,6 +18828,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -19416,6 +19622,11 @@ input FilterArtworksInput {
   When true, will only return exact keyword match
   """
   keywordMatchExact: Boolean
+
+  """
+  When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+  """
+  keywordTypoTolerance: Boolean
   last: Int
   locationCities: [String]
   locationId: String
@@ -20208,6 +20419,11 @@ type Gene implements Node & Searchable {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -23028,11 +23244,6 @@ type MailchimpCampaign {
   partnerId: String
 
   """
-  The partner show associated with this campaign, if any
-  """
-  partnerShowId: String
-
-  """
   The email preview text
   """
   previewText: String
@@ -23365,6 +23576,11 @@ type MarketingCollection implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -25101,6 +25317,13 @@ type Mutation {
   ): AssignArtistToPartnerMutationPayload
 
   """
+  Authenticates against a passcode-protected private viewing room, returning its contents on success.
+  """
+  authenticatePrivateViewingRoom(
+    input: AuthenticatePrivateViewingRoomMutationInput!
+  ): AuthenticatePrivateViewingRoomMutationPayload
+
+  """
   Initiate the Instagram OAuth flow and return the authorization URL
   """
   authorizeInstagramAccount(
@@ -25490,6 +25713,13 @@ type Mutation {
   Create an artist, used for MyCollection. use CreateCanonicalArtistMutation for all other cases
   """
   createArtist(input: CreateArtistMutationInput!): CreateArtistMutationPayload
+
+  """
+  Kicks off a background job to pull a gallery's Artnet inventory and create corresponding Artsy artwork records.
+  """
+  createArtnetImport(
+    input: CreateArtnetImportMutationInput!
+  ): CreateArtnetImportMutationPayload
 
   """
   Creates a new artwork, optionally with associated images.
@@ -26267,6 +26497,13 @@ type Mutation {
   publishNavigationDraft(
     input: PublishNavigationDraftInput!
   ): PublishNavigationDraftPayload
+
+  """
+  Publishes (or updates and republishes) a private viewing room for a partner list.
+  """
+  publishPartnerListPublication(
+    input: PublishPartnerListPublicationMutationInput!
+  ): PublishPartnerListPublicationMutationPayload
   publishViewingRoom(input: PublishViewingRoomInput!): PublishViewingRoomPayload
 
   """
@@ -26501,6 +26738,13 @@ type Mutation {
   unlinkAuthentication(
     input: UnlinkAuthenticationMutationInput!
   ): UnlinkAuthenticationMutationPayload
+
+  """
+  Unpublishes a partner list's private viewing room. Does not delete the publication.
+  """
+  unpublishPartnerListPublication(
+    input: UnpublishPartnerListPublicationMutationInput!
+  ): UnpublishPartnerListPublicationMutationPayload
   unpublishViewingRoom(
     input: UnpublishViewingRoomInput!
   ): UnpublishViewingRoomPayload
@@ -28724,6 +28968,11 @@ type Partner implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -29289,6 +29538,11 @@ type PartnerArtist {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -29583,6 +29837,11 @@ type PartnerArtistEdge {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -30146,6 +30405,21 @@ type PartnerList {
   listType: PartnerListTypeEnum!
   name: String!
   partnerShowID: String
+
+  """
+  Whether this list's private viewing room publication is gated by a passcode. Null if no publication exists yet.
+  """
+  passcodeProtected: Boolean
+
+  """
+  The private viewing room publication for this list, if one exists (only applies to private_viewing_room lists). Not resolvable through partnerListsConnection.
+  """
+  publication: PartnerListPublication
+
+  """
+  Whether this list's private viewing room publication is live. Null if no publication exists yet.
+  """
+  published: Boolean
   startAt(
     format: String
 
@@ -30229,9 +30503,91 @@ type PartnerListEdge {
   node: PartnerList
 }
 
+type PartnerListPublication {
+  applyBrand: Boolean
+
+  """
+  Per-field visibility toggles for artworks in the room. Any key the gallery hasn't set is null.
+  """
+  artworkFieldVisibility: ArtworkFieldVisibility
+
+  """
+  Number of artworks currently snapshotted into this publication.
+  """
+  artworksCount: Int!
+  createdAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  description: String
+
+  """
+  Optional heading shown on the published room.
+  """
+  heading: String
+
+  """
+  Public-facing path for this private viewing room.
+  """
+  href: String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+  lastPublishedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  partnerListID: String
+
+  """
+  Plain-text passcode gating this room, if one is set.
+  """
+  passcode: String
+  passcodeProtected: Boolean
+  published: Boolean
+  publishedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  Whether the gallery name is shown on the public page.
+  """
+  showGalleryName: Boolean
+  slug: String
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+}
+
 enum PartnerListTypeEnum {
   FAIR
   OTHER
+  PRIVATE_VIEWING_ROOM
   SHOW
 }
 
@@ -30392,6 +30748,11 @@ type PartnerOfferToCollector implements Node {
   internalID: ID!
   isActive: Boolean
   isAvailable: Boolean
+
+  """
+  Whether the collector already has an order created from this partner offer in a purchased buyer state (submitted, approved, or completed).
+  """
+  isPurchased: Boolean!
   note: String
   partnerId: String
   priceWithDiscount: Money
@@ -31053,6 +31414,81 @@ union PricingBreakdownLineUnion =
   | TaxLine
   | TotalLine
 
+type PrivateViewingRoom {
+  applyBrand: Boolean
+  artworks: [PrivateViewingRoomArtwork!]
+  brandKit: BrandKit
+  description: String
+
+  """
+  The gallery's name, omitted when the gallery has chosen to hide it (show_gallery_name).
+  """
+  galleryName: String
+  heading: String
+
+  """
+  Whether this room requires a passcode to view.
+  """
+  passcodeRequired: Boolean!
+}
+
+type PrivateViewingRoomArtwork {
+  artistName: String
+  artworkID: String
+  artworkTitle: String
+  availability: String
+  coaByAuthenticatingBody: Boolean
+  coaByGallery: Boolean
+  dimensions: String
+
+  """
+  One entry per edition set on this artwork, each independently visibility-gated. Null/empty when the artwork has no edition sets.
+  """
+  editionInfo: [PrivateViewingRoomArtworkEditionInfo!]
+  imageURL: String
+
+  """
+  The artwork's public location (city/state/country/postal code), pinned as of the room's last publish.
+  """
+  location: String
+  medium: String
+
+  """
+  The pinned price as a formatted Money object. Null when there's no pinned price or currency (resolveMinorAndCurrencyFieldsToMoney returns null rather than throwing).
+  """
+  price: Money
+  priceCents: Int
+  priceCurrency: String
+  year: String
+}
+
+type PrivateViewingRoomArtworkEditionInfo {
+  availability: String
+  editionSetID: String!
+  editionSize: String
+  inventoryCount: Int
+
+  """
+  The pinned price for this edition set as a formatted Money object. Null when there's no pinned price or currency (resolveMinorAndCurrencyFieldsToMoney returns null rather than throwing).
+  """
+  price: Money
+  priceCents: Int
+  priceCurrency: String
+}
+
+type PrivateViewingRoomContents {
+  applyBrand: Boolean
+  artworks: [PrivateViewingRoomArtwork!]
+  brandKit: BrandKit
+  description: String
+
+  """
+  The gallery's name, omitted when the gallery has chosen to hide it (show_gallery_name).
+  """
+  galleryName: String
+  heading: String
+}
+
 type Profile {
   bio: String
   cached: Int
@@ -31162,6 +31598,65 @@ union PublishNavigationDraftResponseOrError =
 
 type PublishNavigationDraftSuccess {
   navigationVersion: NavigationVersion!
+}
+
+type PublishPartnerListPublicationFailure {
+  mutationError: GravityMutationError
+}
+
+input PublishPartnerListPublicationMutationInput {
+  """
+  Whether to apply the gallery's brand kit to the room.
+  """
+  applyBrand: Boolean
+
+  """
+  Per-field visibility toggles for artworks in the room.
+  """
+  artworkFieldVisibility: ArtworkFieldVisibilityInput
+  clientMutationId: String
+
+  """
+  Plain-text description shown on the published room.
+  """
+  description: String
+
+  """
+  Optional heading shown on the published room.
+  """
+  heading: String
+
+  """
+  The ID of the partner list to publish as a viewing room.
+  """
+  partnerListID: String!
+
+  """
+  Passcode to gate the room. Pass an empty string to clear a previously set passcode.
+  """
+  passcode: String
+
+  """
+  Whether to show the gallery name on the public page.
+  """
+  showGalleryName: Boolean
+}
+
+type PublishPartnerListPublicationMutationPayload {
+  clientMutationId: String
+
+  """
+  On success: the published partner list publication. On error: the error that occurred.
+  """
+  partnerListPublicationOrError: PublishPartnerListPublicationResponseOrError
+}
+
+union PublishPartnerListPublicationResponseOrError =
+  | PublishPartnerListPublicationFailure
+  | PublishPartnerListPublicationSuccess
+
+type PublishPartnerListPublicationSuccess {
+  partnerListPublication: PartnerListPublication
 }
 
 type PublishViewingRoomFailure {
@@ -31570,6 +32065,16 @@ type Query {
     """
     status: ArtworkDuplicatePairStatus
   ): ArtworkDuplicatePairConnection
+
+  """
+  Interpret a natural-language search query into validated artwork filters.
+  """
+  artworkFilterSuggestions(
+    """
+    The natural-language search query.
+    """
+    query: String!
+  ): ArtworkFilterSuggestion
   artworkImport(id: String!): ArtworkImport
 
   """
@@ -31601,6 +32106,26 @@ type Query {
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
+
+  """
+  A connection of artworks matching an uploaded query image, using a pure vector (neural) image search.
+  """
+  artworksByImageConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    S3 bucket of the uploaded query image.
+    """
+    s3Bucket: String!
+
+    """
+    S3 key of the uploaded query image.
+    """
+    s3Key: String!
+  ): ArtworkConnection
 
   """
   Artworks Elastic Search results
@@ -31690,6 +32215,11 @@ type Query {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -32300,6 +32830,11 @@ type Query {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -33183,6 +33718,11 @@ type Query {
   ): PriceInsightConnection
 
   """
+  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
+  """
+  privateViewingRoom(slug: String!): PrivateViewingRoom
+
+  """
   A Profile
   """
   profile(
@@ -33415,6 +33955,7 @@ type Query {
     """
     visibleToPublic: Boolean
   ): SearchableConnection
+  searchDropdown: SearchDropdown!
 
   """
   A ShippingPreset
@@ -35365,6 +35906,10 @@ type SearchCriteriaLabel {
   value: String!
 }
 
+type SearchDropdown {
+  trending(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches
+}
+
 enum SearchEntity {
   ARTICLE
   ARTIST
@@ -36079,6 +36624,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -36940,6 +37490,11 @@ type Tag implements Node {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -37218,6 +37773,47 @@ type TrendingArtists {
   artists: [Artist]
 }
 
+type TrendingSearchArtist {
+  artist: Artist
+  internalID: String!
+  rank: Int!
+}
+
+type TrendingSearchArtwork {
+  artwork: Artwork
+  internalID: String!
+  rank: Int!
+}
+
+"""
+The rolling window a trending ranking was computed over.
+"""
+enum TrendingSearchPeriod {
+  ONE_DAY
+  SEVEN_DAYS
+  THIRTY_DAYS
+}
+
+"""
+Trending artists and artworks over a rolling window.
+"""
+type TrendingSearches {
+  artists(
+    """
+    Limits the number of results returned.
+    """
+    first: Int
+  ): [TrendingSearchArtist!]
+  artworks(
+    """
+    Limits the number of results returned.
+    """
+    first: Int
+  ): [TrendingSearchArtwork!]
+  label: String!
+  period: TrendingSearchPeriod!
+}
+
 enum TriggerCampaignID {
   ART_QUIZ
 }
@@ -37270,6 +37866,36 @@ input UnlinkAuthenticationMutationInput {
 type UnlinkAuthenticationMutationPayload {
   clientMutationId: String
   me: Me!
+}
+
+type UnpublishPartnerListPublicationFailure {
+  mutationError: GravityMutationError
+}
+
+input UnpublishPartnerListPublicationMutationInput {
+  clientMutationId: String
+
+  """
+  The ID of the partner list to unpublish.
+  """
+  partnerListID: String!
+}
+
+type UnpublishPartnerListPublicationMutationPayload {
+  clientMutationId: String
+
+  """
+  On success: the unpublished partner list publication. On error: the error that occurred.
+  """
+  partnerListPublicationOrError: UnpublishPartnerListPublicationResponseOrError
+}
+
+union UnpublishPartnerListPublicationResponseOrError =
+  | UnpublishPartnerListPublicationFailure
+  | UnpublishPartnerListPublicationSuccess
+
+type UnpublishPartnerListPublicationSuccess {
+  partnerListPublication: PartnerListPublication
 }
 
 type UnpublishViewingRoomFailure {
@@ -37344,6 +37970,11 @@ input UpdateArtistMutationInput {
   groupIndicator: ArtistGroupIndicator
   hometown: String
   id: String!
+
+  """
+  Artist's Instagram handle. A leading @ or a profile URL is accepted.
+  """
+  instagramHandle: String
   last: String
   location: String
   middle: String
@@ -38444,6 +39075,11 @@ type UpdateMyPasswordMutationPayload {
 
 input UpdateMyProfileInput {
   """
+  Whether the user consents to receiving marketing emails from Artsy. Sets agreed_to_receive_emails_at in Gravity (idempotent; never cleared).
+  """
+  agreedToReceiveEmails: Boolean
+
+  """
   Number of artworks purchased per year.
   """
   artworksPerYear: String
@@ -39062,7 +39698,7 @@ input UpdatePartnerListMutationInput {
   id: String!
 
   """
-  The type of list (show, fair, or other).
+  The type of list (show, fair, private_viewing_room, or other).
   """
   listType: PartnerListTypeEnum
 
@@ -41329,6 +41965,16 @@ type Viewer {
     """
     status: ArtworkDuplicatePairStatus
   ): ArtworkDuplicatePairConnection
+
+  """
+  Interpret a natural-language search query into validated artwork filters.
+  """
+  artworkFilterSuggestions(
+    """
+    The natural-language search query.
+    """
+    query: String!
+  ): ArtworkFilterSuggestion
   artworkImport(id: String!): ArtworkImport
 
   """
@@ -41360,6 +42006,26 @@ type Viewer {
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use!"
     )
+
+  """
+  A connection of artworks matching an uploaded query image, using a pure vector (neural) image search.
+  """
+  artworksByImageConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    S3 bucket of the uploaded query image.
+    """
+    s3Bucket: String!
+
+    """
+    S3 key of the uploaded query image.
+    """
+    s3Key: String!
+  ): ArtworkConnection
 
   """
   Artworks Elastic Search results
@@ -41449,6 +42115,11 @@ type Viewer {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -41848,6 +42519,11 @@ type Viewer {
     When true, will only return exact keyword match
     """
     keywordMatchExact: Boolean
+
+    """
+    When true and a `keyword` search returns no results, retries once with typo tolerance. Ignored with `keywordMatchExact`.
+    """
+    keywordTypoTolerance: Boolean
     last: Int
     locationCities: [String]
     locationId: String
@@ -42644,6 +43320,11 @@ type Viewer {
   ): PreviewSavedSearch
 
   """
+  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
+  """
+  privateViewingRoom(slug: String!): PrivateViewingRoom
+
+  """
   A Profile
   """
   profile(
@@ -42876,6 +43557,7 @@ type Viewer {
     """
     visibleToPublic: Boolean
   ): SearchableConnection
+  searchDropdown: SearchDropdown!
 
   """
   A ShippingPreset
