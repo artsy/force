@@ -7,6 +7,7 @@ import {
   SkeletonBox,
   Text,
 } from "@artsy/palette"
+import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistSocialRailQuery } from "__generated__/ArtistSocialRailQuery.graphql"
@@ -43,10 +44,6 @@ const ArtistSocialRail: React.FC<
       }
     })
 
-  if (!media.length) {
-    return null
-  }
-
   return (
     <Box>
       <Flex
@@ -58,11 +55,15 @@ const ArtistSocialRail: React.FC<
         <Text variant="lg-display">Social</Text>
       </Flex>
 
-      <Shelf>
-        {media.map(item => {
-          return <ArtistSocialRailTile key={item.internalID} tile={item} />
-        })}
-      </Shelf>
+      {media.length === 0 ? (
+        <ArtistOverviewEmpty />
+      ) : (
+        <Shelf>
+          {media.map(item => {
+            return <ArtistSocialRailTile key={item.internalID} tile={item} />
+          })}
+        </Shelf>
+      )}
     </Box>
   )
 }

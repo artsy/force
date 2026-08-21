@@ -63,6 +63,12 @@ describe("ArtistSocialRail", () => {
       "href",
       "https://www.instagram.com/p/second",
     )
+
+    expect(
+      screen.queryByText(
+        "We’ll update this area when more information is available.",
+      ),
+    ).not.toBeInTheDocument()
   })
 
   it("renders a skeleton behind each tile until its image loads", () => {
@@ -91,13 +97,22 @@ describe("ArtistSocialRail", () => {
     expect(screen.queryByTestId("tile-skeleton")).not.toBeInTheDocument()
   })
 
-  it("renders nothing when there is no Instagram media", () => {
+  it("renders the empty state when there is no Instagram media", () => {
     renderWithRelay({
       Artist: () => ({
         instagramMedia: [],
       }),
     })
 
-    expect(screen.queryByText("Social")).not.toBeInTheDocument()
+    expect(screen.getByText("Social")).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        "We’ll update this area when more information is available.",
+      ),
+    ).toBeInTheDocument()
+    expect(screen.getByText("Become a partner.")).toHaveAttribute(
+      "href",
+      "/gallery-partnerships",
+    )
   })
 })
