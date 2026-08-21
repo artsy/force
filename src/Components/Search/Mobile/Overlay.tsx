@@ -75,6 +75,32 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     }
   }, [debouncedValue, selectedPill.searchEntityName])
 
+  // Dismiss the keyboard as soon as the user drags the overlay content
+  // (Eigen's keyboardDismissMode="on-drag"). On iOS the keyboard overlays
+  // the fixed-position overlay without resizing it, leaving the bottom half
+  // of the content unreachable while the keyboard is up. Listens on document
+  // because ModalBase portals its content in after mount; the content element
+  // is resolved at event time.
+  useEffect(() => {
+    const handleTouchMove = (event: TouchEvent) => {
+      const input = inputRef.current
+
+      if (!input || document.activeElement !== input) return
+
+      const content = document.getElementById(OVERLAY_CONTENT_ID)
+
+      if (content?.contains(event.target as Node)) {
+        input.blur()
+      }
+    }
+
+    document.addEventListener("touchmove", handleTouchMove, { passive: true })
+
+    return () => {
+      document.removeEventListener("touchmove", handleTouchMove)
+    }
+  }, [])
+
   const refetch = useCallback(
     (value: string, entity?: string) => {
       const entities = entity ? [entity] : []
