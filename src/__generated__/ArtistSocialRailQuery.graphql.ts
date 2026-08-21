@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c0402f07af79dc6f2a5cae206ddb488>>
+ * @generated SignedSource<<6904f2a13ec45042ec3c7985c67e859c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -128,7 +128,7 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 300
+                        "value": 375
                       },
                       {
                         "kind": "Literal",
@@ -156,7 +156,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:300,width:300)"
+                    "storageKey": "cropped(height:375,width:300)"
                   }
                 ],
                 "storageKey": null
@@ -177,12 +177,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ee5d8ad5e7e2c404ef6d898c5548381f",
+    "cacheID": "de26e83aab27a521d4303974df9cfa25",
     "id": null,
     "metadata": {},
     "name": "ArtistSocialRailQuery",
     "operationKind": "query",
-    "text": "query ArtistSocialRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistSocialRail_artist\n    id\n  }\n}\n\nfragment ArtistSocialRail_artist on Artist {\n  instagramMedia(first: 20) {\n    internalID\n    permalink\n    caption\n    image {\n      cropped(width: 300, height: 300) {\n        src\n        srcSet\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistSocialRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistSocialRail_artist\n    id\n  }\n}\n\nfragment ArtistSocialRail_artist on Artist {\n  instagramMedia(first: 20) {\n    internalID\n    permalink\n    caption\n    image {\n      cropped(width: 300, height: 375) {\n        src\n        srcSet\n      }\n    }\n  }\n}\n"
   }
 };
 })();
