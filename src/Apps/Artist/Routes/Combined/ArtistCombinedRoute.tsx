@@ -35,8 +35,8 @@ const ArtistCombinedRoute: React.FC<
     "market",
     "auction",
     "about",
-    "social",
     "editorial",
+    "social",
   ])
 
   const { theme } = useTheme()
@@ -158,18 +158,21 @@ const ArtistCombinedRoute: React.FC<
 
       <Separator my={4} />
 
+      <Section id="artistEditorialTop">
+        <ArtistEditorialNewsGridQueryRenderer
+          id={artist.internalID}
+          onReady={() => markReady("editorial")}
+        />
+      </Section>
+
+      <Separator my={4} />
+
       <Section id="artistSocialTop">
         <ArtistSocialRailQueryRenderer
           id={artist.internalID}
           lazyLoad={lazy.social}
           onReady={() => markReady("social")}
         />
-      </Section>
-
-      <Separator my={4} />
-
-      <Section id="artistEditorialTop">
-        <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
       </Section>
     </SectionNavProvider>
   )
