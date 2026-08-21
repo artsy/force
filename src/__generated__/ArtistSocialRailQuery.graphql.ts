@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<840320de913ed94c36c66dca6f107049>>
+ * @generated SignedSource<<9c0402f07af79dc6f2a5cae206ddb488>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInstagramRailQuery$variables = {
+export type ArtistSocialRailQuery$variables = {
   id: string;
 };
-export type ArtistInstagramRailQuery$data = {
+export type ArtistSocialRailQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistInstagramRail_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistSocialRail_artist">;
   } | null | undefined;
 };
-export type ArtistInstagramRailQuery = {
-  response: ArtistInstagramRailQuery$data;
-  variables: ArtistInstagramRailQuery$variables;
+export type ArtistSocialRailQuery = {
+  response: ArtistSocialRailQuery$data;
+  variables: ArtistSocialRailQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -43,7 +43,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistInstagramRailQuery",
+    "name": "ArtistSocialRailQuery",
     "selections": [
       {
         "alias": null,
@@ -56,7 +56,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistInstagramRail_artist"
+            "name": "ArtistSocialRail_artist"
           }
         ],
         "storageKey": null
@@ -69,7 +69,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistInstagramRailQuery",
+    "name": "ArtistSocialRailQuery",
     "selections": [
       {
         "alias": null,
@@ -177,16 +177,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6e3a3a927aab939d8590f04019c2a875",
+    "cacheID": "ee5d8ad5e7e2c404ef6d898c5548381f",
     "id": null,
     "metadata": {},
-    "name": "ArtistInstagramRailQuery",
+    "name": "ArtistSocialRailQuery",
     "operationKind": "query",
-    "text": "query ArtistInstagramRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistInstagramRail_artist\n    id\n  }\n}\n\nfragment ArtistInstagramRail_artist on Artist {\n  instagramMedia(first: 20) {\n    internalID\n    permalink\n    caption\n    image {\n      cropped(width: 300, height: 300) {\n        src\n        srcSet\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistSocialRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistSocialRail_artist\n    id\n  }\n}\n\nfragment ArtistSocialRail_artist on Artist {\n  instagramMedia(first: 20) {\n    internalID\n    permalink\n    caption\n    image {\n      cropped(width: 300, height: 300) {\n        src\n        srcSet\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6c32b3e4022473c2bdc2f0f3001412df";
+(node as any).hash = "c3d316d7ec3c9b090fe17b557706093a";
 
 export default node;

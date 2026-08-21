@@ -52,7 +52,7 @@ const NAVIGATING = {
   artworks: false,
   auction: false,
   about: false,
-  instagram: false,
+  social: false,
   editorial: false,
 }
 
@@ -85,19 +85,19 @@ describe("ArtistCombinedNav", () => {
     })
   })
 
-  it("renders the Instagram tab and jumps to the Instagram section", async () => {
+  it("renders the Social tab and jumps to the Social section", async () => {
     render(<ArtistCombinedNav waitUntil={waitUntil} navigating={NAVIGATING} />)
 
-    fireEvent.click(screen.getByText("Instagram"))
+    fireEvent.click(screen.getByText("Social"))
 
     await waitFor(() => {
-      expect(waitUntil).toHaveBeenCalledWith("instagram")
-      expect(mockJumpTo).toHaveBeenCalledWith("artistInstagramTop")
+      expect(waitUntil).toHaveBeenCalledWith("social")
+      expect(mockJumpTo).toHaveBeenCalledWith("artistSocialTop")
       expect(mockTrackEvent).toHaveBeenCalledWith({
         action: "clickedHeader",
         context_module: "artistHeader",
         context_page_owner_type: "artist",
-        subject: "instagram",
+        subject: "social",
       })
     })
   })

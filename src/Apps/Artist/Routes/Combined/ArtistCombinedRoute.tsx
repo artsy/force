@@ -6,8 +6,8 @@ import {
 import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 import { ArtistCombinedNav } from "Apps/Artist/Routes/Combined/Components/ArtistCombinedNav"
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
-import { ArtistInstagramRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistInstagramRail"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
+import { ArtistSocialRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistSocialRail"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
 import { useRouter } from "System/Hooks/useRouter"
@@ -35,7 +35,7 @@ const ArtistCombinedRoute: React.FC<
     "market",
     "auction",
     "about",
-    "instagram",
+    "social",
     "editorial",
   ])
 
@@ -158,11 +158,11 @@ const ArtistCombinedRoute: React.FC<
 
       <Separator my={4} />
 
-      <Section id="artistInstagramTop">
-        <ArtistInstagramRailQueryRenderer
+      <Section id="artistSocialTop">
+        <ArtistSocialRailQueryRenderer
           id={artist.internalID}
-          lazyLoad={lazy.instagram}
-          onReady={() => markReady("instagram")}
+          lazyLoad={lazy.social}
+          onReady={() => markReady("social")}
         />
       </Section>
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f633ca5fb0fbf7632cd8cf3cc548515>>
+ * @generated SignedSource<<e8dd3b7e8a5b1a37c45ae39b20abf5b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInstagramRailTestQuery$variables = Record<PropertyKey, never>;
-export type ArtistInstagramRailTestQuery$data = {
+export type ArtistSocialRailTestQuery$variables = Record<PropertyKey, never>;
+export type ArtistSocialRailTestQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistInstagramRail_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistSocialRail_artist">;
   } | null | undefined;
 };
-export type ArtistInstagramRailTestQuery = {
-  response: ArtistInstagramRailTestQuery$data;
-  variables: ArtistInstagramRailTestQuery$variables;
+export type ArtistSocialRailTestQuery = {
+  response: ArtistSocialRailTestQuery$data;
+  variables: ArtistSocialRailTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -46,7 +46,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistInstagramRailTestQuery",
+    "name": "ArtistSocialRailTestQuery",
     "selections": [
       {
         "alias": null,
@@ -59,7 +59,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistInstagramRail_artist"
+            "name": "ArtistSocialRail_artist"
           }
         ],
         "storageKey": "artist(id:\"test\")"
@@ -72,7 +72,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtistInstagramRailTestQuery",
+    "name": "ArtistSocialRailTestQuery",
     "selections": [
       {
         "alias": null,
@@ -180,7 +180,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8029bef538590aa4799aea42b1e0b83d",
+    "cacheID": "c9163300e9da617e9439bae381749ce3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -221,13 +221,13 @@ return {
         "artist.instagramMedia.permalink": (v1/*: any*/)
       }
     },
-    "name": "ArtistInstagramRailTestQuery",
+    "name": "ArtistSocialRailTestQuery",
     "operationKind": "query",
-    "text": "query ArtistInstagramRailTestQuery {\n  artist(id: \"test\") {\n    ...ArtistInstagramRail_artist\n    id\n  }\n}\n\nfragment ArtistInstagramRail_artist on Artist {\n  instagramMedia(first: 20) {\n    internalID\n    permalink\n    caption\n    image {\n      cropped(width: 300, height: 300) {\n        src\n        srcSet\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistSocialRailTestQuery {\n  artist(id: \"test\") {\n    ...ArtistSocialRail_artist\n    id\n  }\n}\n\nfragment ArtistSocialRail_artist on Artist {\n  instagramMedia(first: 20) {\n    internalID\n    permalink\n    caption\n    image {\n      cropped(width: 300, height: 300) {\n        src\n        srcSet\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8eecceee4b8fefea426ff556b901a188";
+(node as any).hash = "5fd25e03267b78f524fd30b1c7f6fe07";
 
 export default node;
