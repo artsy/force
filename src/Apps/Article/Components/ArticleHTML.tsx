@@ -39,17 +39,24 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
 
 /**
  * Looks for links and if they are internal and a supported entity type,
- * inserts the relevant tooltip.
+ * inserts the relevant tooltip. If they are external, open them in a
+ * new window
  */
 const transformNode = (node: Element, i: number) => {
   if (node.tagName !== "A") return
 
-  const { href } = node as HTMLAnchorElement
+  const anchor = node as HTMLAnchorElement
 
   try {
-    const uri = new URL(href)
+    const uri = new URL(anchor.href)
+    const isExternalLink = !uri.hostname.includes("artsy.net")
+    anchor.dataset.linkChecked = "true" // convenience for testing
 
-    if (!uri.hostname.includes("artsy.net")) return
+    if (isExternalLink) {
+      anchor.target = "_blank"
+      anchor.rel = "noopener"
+      return
+    }
 
     const [_, entity, id] = uri.pathname.split("/")
 
@@ -66,7 +73,7 @@ const transformNode = (node: Element, i: number) => {
     if (isArtistHeading) {
       return (
         <Flex alignItems="center" gap={1} key={[i, id].join("-")}>
-          <ArticleTooltip entity={entity} id={id} href={href}>
+          <ArticleTooltip entity={entity} id={id} href={anchor.href}>
             {node.textContent}
           </ArticleTooltip>
 
@@ -82,7 +89,7 @@ const transformNode = (node: Element, i: number) => {
     if (isPartnerHeading) {
       return (
         <Flex alignItems="center" gap={1} key={[i, id].join("-")}>
-          <ArticleTooltip entity={entity} id={id} href={href}>
+          <ArticleTooltip entity={entity} id={id} href={anchor.href}>
             {node.textContent}
           </ArticleTooltip>
 
@@ -100,7 +107,7 @@ const transformNode = (node: Element, i: number) => {
         key={[i, id].join("-")}
         entity={entity}
         id={id}
-        href={href}
+        href={anchor.href}
       >
         {node.textContent}
       </ArticleTooltip>
