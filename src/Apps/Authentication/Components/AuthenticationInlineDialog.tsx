@@ -69,7 +69,7 @@ const AuthenticationInlineDialogContents: FC<
 
   return (
     <>
-      <MetaTags title={pageTitle} pathname={location.pathname} />
+      <MetaTags title={pageTitle} pathname={location.pathname} blockRobots />
 
       <Flex
         alignItems="center"
