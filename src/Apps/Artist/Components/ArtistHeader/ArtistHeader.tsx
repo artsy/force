@@ -2,16 +2,13 @@ import {
   ActionType,
   type ClickedArtistArtworkImage,
   type ClickedCV,
-  type ClickedHeader,
   type ClickedVerifiedRepresentative,
   ContextModule,
   OwnerType,
   type ToggledArtistBio,
 } from "@artsy/cohesion"
-import InstagramIcon from "@artsy/icons/InstagramIcon"
 import {
   Box,
-  Clickable,
   Column,
   Flex,
   GridColumns,
@@ -28,6 +25,7 @@ import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
+import { ArtistHeaderSocialLink } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSocialLink"
 import {
   ArtistStylesAndTechniques,
   useHasArtistStylesAndTechniques,
@@ -41,7 +39,6 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { useJump } from "Utils/Hooks/useJump"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -230,7 +227,9 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                     <>
                       <Spacer y={1} />
 
-                      <ArtistHeaderSocialLink />
+                      <ArtistHeaderSocialLink
+                        instagramHandle={artist.instagramHandle}
+                      />
                     </>
                   )}
                 </>
@@ -248,7 +247,11 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                   />
                 </ProgressiveOnboardingFollowArtist>
 
-                {!!artist.instagramHandle && <ArtistHeaderSocialLink />}
+                {!!artist.instagramHandle && (
+                  <ArtistHeaderSocialLink
+                    instagramHandle={artist.instagramHandle}
+                  />
+                )}
               </>
             )}
           </Flex>
@@ -356,43 +359,6 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
         </Column>
       )}
     </GridColumns>
-  )
-}
-
-/**
- * Must match the `<Section id>` the Social rail is mounted under in
- * ArtistCombinedRoute, since `jumpTo` resolves it as a DOM id.
- */
-const SOCIAL_SECTION_ID = "artistSocialTop"
-
-const ArtistHeaderSocialLink: React.FC = () => {
-  const { jumpTo } = useJump()
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerType } = useAnalyticsContext()
-
-  const handleClick = () => {
-    const payload: ClickedHeader = {
-      action: ActionType.clickedHeader,
-      context_module: ContextModule.artistHeader,
-      context_page_owner_type: contextPageOwnerType,
-      subject: "social",
-    }
-
-    trackEvent(payload)
-
-    jumpTo(SOCIAL_SECTION_ID)
-  }
-
-  return (
-    <Clickable
-      onClick={handleClick}
-      aria-label="Scroll to social section"
-      width="fit-content"
-    >
-      <Stack gap={0.5} flexDirection="row" alignItems="center">
-        <InstagramIcon size={24} fill="mono100" display="block" />
-      </Stack>
-    </Clickable>
   )
 }
 

@@ -27,12 +27,6 @@ jest.mock(
   }),
 )
 
-const mockJumpTo = jest.fn()
-jest.mock("Utils/Hooks/useJump", () => ({
-  ...jest.requireActual("Utils/Hooks/useJump"),
-  useJump: () => ({ jumpTo: mockJumpTo }),
-}))
-
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()
 
@@ -49,7 +43,6 @@ beforeAll(() => {
 
 beforeEach(() => {
   trackEvent.mockClear()
-  mockJumpTo.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -269,7 +262,7 @@ describe("ArtistHeaderFragmentContainer", () => {
   })
 
   describe("Social link", () => {
-    it("scrolls to the social section and tracks the click", () => {
+    it("links to the artist’s Instagram profile in a new tab", () => {
       renderWithRelay({
         Artist: () => ({
           name: "Pablo Picasso",
@@ -278,9 +271,27 @@ describe("ArtistHeaderFragmentContainer", () => {
         }),
       })
 
-      fireEvent.click(screen.getByLabelText("Scroll to social section"))
+      const link = screen.getByLabelText("Visit pablopicasso on Instagram")
 
-      expect(mockJumpTo).toHaveBeenCalledWith("artistSocialTop")
+      expect(link).toHaveAttribute(
+        "href",
+        "https://www.instagram.com/pablopicasso",
+      )
+      expect(link).toHaveAttribute("target", "_blank")
+      expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"))
+    })
+
+    it("tracks the click", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          internalID: "artist-id",
+          instagramHandle: "pablopicasso",
+        }),
+      })
+
+      fireEvent.click(screen.getByLabelText("Visit pablopicasso on Instagram"))
+
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           action: "clickedHeader",
@@ -291,17 +302,6 @@ describe("ArtistHeaderFragmentContainer", () => {
       )
     })
 
-    it("renders the Instagram handle prefixed with an @", () => {
-      renderWithRelay({
-        Artist: () => ({
-          name: "Pablo Picasso",
-          instagramHandle: "pablopicasso",
-        }),
-      })
-
-      expect(screen.getByText("@pablopicasso")).toBeInTheDocument()
-    })
-
     it("does not render the link when the artist has no handle", () => {
       renderWithRelay({
         Artist: () => ({
@@ -310,9 +310,7 @@ describe("ArtistHeaderFragmentContainer", () => {
         }),
       })
 
-      expect(
-        screen.queryByLabelText("Scroll to social section"),
-      ).not.toBeInTheDocument()
+      expect(screen.queryByLabelText(/on Instagram$/)).not.toBeInTheDocument()
     })
   })
 
