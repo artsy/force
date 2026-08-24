@@ -1,4 +1,5 @@
 import { Box, Separator, Spacer, Spinner, Text, useTheme } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -30,7 +31,11 @@ const ArtistCombinedRoute: React.FC<
 
   const { jumpTo } = useJump()
 
-  const hasSocial = !!artist.instagramHandle
+  const isInstagramFeedEnabled = useFlag(
+    "hack16_connect-instagram-feed-artist-pages",
+  )
+
+  const hasSocial = isInstagramFeedEnabled && !!artist.instagramHandle
 
   const { lazy, markReady, waitUntil, navigating } = useSectionReadiness([
     "artworks",
