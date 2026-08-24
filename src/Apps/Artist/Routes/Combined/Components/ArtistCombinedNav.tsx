@@ -56,8 +56,12 @@ export const ArtistCombinedNav = ({
   navigating,
   hasSocial,
 }: ArtistCombinedNavProps) => {
-  const navItems = ARTIST_COMBINED_NAV_ITEMS.filter(item => {
-    return item.section !== "social" || hasSocial
+  const visibleNavItems = ARTIST_COMBINED_NAV_ITEMS.filter(item => {
+    if (item.section === "social") {
+      return hasSocial
+    }
+
+    return true
   })
 
   const backdrop = useStickyBackdrop()
@@ -102,7 +106,7 @@ export const ArtistCombinedNav = ({
               <AppContainer>
                 <HorizontalPadding pb={2}>
                   <RouteTabs data-test="navigationTabs" pt={2}>
-                    {navItems.map((item, index) => {
+                    {visibleNavItems.map((item, index) => {
                       return (
                         <BaseTab
                           key={item.section}

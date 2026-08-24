@@ -68,7 +68,7 @@ describe("ArtistCombinedNav", () => {
     }))
   })
 
-  it("renders the tabs in order, with Social last", () => {
+  it("renders the tabs in order they are defined in ARTIST_COMBINED_NAV_ITEMS", () => {
     render(
       <ArtistCombinedNav
         waitUntil={waitUntil}

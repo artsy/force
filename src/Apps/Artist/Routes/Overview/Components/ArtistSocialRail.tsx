@@ -34,10 +34,13 @@ const ArtistSocialRail: React.FC<
   React.PropsWithChildren<ArtistSocialRailProps>
 > = ({ artist }) => {
   const media: SocialRailTile[] = (artist.instagramMedia ?? [])
-    .filter((item): item is NonNullable<typeof item> => !!item?.image?.cropped)
+    .filter(
+      (item): item is NonNullable<typeof item> & { internalID: string } =>
+        !!item?.internalID && !!item.image?.cropped,
+    )
     .map(item => {
       return {
-        internalID: item.internalID ?? "",
+        internalID: item.internalID,
         permalink: item.permalink,
         caption: item.caption,
         src: item.image?.cropped?.src ?? "",
