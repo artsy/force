@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdf4e57f365f2aa154319ceb60272d14>>
+ * @generated SignedSource<<dd2775bbad5a7bb04caf2cfb894d4217>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCombinedRoute_artist$data = {
+  readonly instagramHandle: string | null | undefined;
   readonly internalID: string;
   readonly " $fragmentType": "ArtistCombinedRoute_artist";
 };
@@ -31,12 +32,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "instagramHandle",
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "75e758c777cd6c21a2dfdcf330b2f98c";
+(node as any).hash = "ad63fb797f99f10f6e54875170a0fc80";
 
 export default node;

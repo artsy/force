@@ -26,6 +26,7 @@ import { Rail } from "Components/Rail/Rail"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useTrackFeatureVariantOnMount } from "System/Hooks/useTrackFeatureVariant"
+import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistEditorialNewsGridQuery } from "__generated__/ArtistEditorialNewsGridQuery.graphql"
@@ -288,23 +289,26 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
+interface ArtistEditorialNewsGridQueryRendererProps {
+  id: string
+  onReady?: () => void
+}
+
 export const ArtistEditorialNewsGridQueryRenderer: FC<
-  React.PropsWithChildren<{
-    id: string
-  }>
-> = ({ id }) => {
+  React.PropsWithChildren<ArtistEditorialNewsGridQueryRendererProps>
+> = ({ id, onReady }) => {
   return (
     <ClientSuspense fallback={PLACEHOLDER}>
-      <ArtistEditorialNewsGridContent id={id} />
+      <ArtistEditorialNewsGridContent id={id} onReady={onReady} />
     </ClientSuspense>
   )
 }
 
 const ArtistEditorialNewsGridContent: FC<
-  React.PropsWithChildren<{
-    id: string
-  }>
-> = ({ id }) => {
+  React.PropsWithChildren<ArtistEditorialNewsGridQueryRendererProps>
+> = ({ id, onReady }) => {
+  const { handleReady } = useSectionReady({ onReady })
+
   const data = useLazyLoadQuery<ArtistEditorialNewsGridQuery>(
     graphql`
       query ArtistEditorialNewsGridQuery($id: String!) {
@@ -316,6 +320,8 @@ const ArtistEditorialNewsGridContent: FC<
     { id },
     { fetchPolicy: "store-or-network" },
   )
+
+  handleReady()
 
   if (!data.artist) return null
 
