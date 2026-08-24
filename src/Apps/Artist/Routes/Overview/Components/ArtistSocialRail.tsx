@@ -7,7 +7,7 @@ import {
   SkeletonBox,
   Text,
 } from "@artsy/palette"
-import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
+import { ArtistSocialRailEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistSocialRailEmpty"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
 import type { ArtistSocialRailQuery } from "__generated__/ArtistSocialRailQuery.graphql"
@@ -57,7 +57,7 @@ const ArtistSocialRail: React.FC<
       </Flex>
 
       {media.length === 0 ? (
-        <ArtistOverviewEmpty />
+        <ArtistSocialRailEmpty />
       ) : (
         <Shelf>
           {media.map(item => {

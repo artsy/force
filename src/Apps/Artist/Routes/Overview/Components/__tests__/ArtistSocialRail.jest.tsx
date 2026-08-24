@@ -106,13 +106,8 @@ describe("ArtistSocialRail", () => {
 
     expect(screen.getByText("Social")).toBeInTheDocument()
     expect(
-      screen.getByText(
-        "We’ll update this area when more information is available.",
-      ),
+      screen.getByText("We’ll update this area when new posts are available."),
     ).toBeInTheDocument()
-    expect(screen.getByText("Become a partner.")).toHaveAttribute(
-      "href",
-      "/gallery-partnerships",
-    )
+    expect(screen.queryByText("Become a partner.")).not.toBeInTheDocument()
   })
 })
