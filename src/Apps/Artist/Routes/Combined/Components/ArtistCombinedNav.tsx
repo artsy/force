@@ -15,6 +15,7 @@ import { useTracking } from "react-tracking"
 interface ArtistCombinedNavProps {
   waitUntil: (section: string) => Promise<void>
   navigating: Record<string, boolean>
+  hasSocial: boolean
 }
 
 const ARTIST_COMBINED_NAV_ITEMS = [
@@ -53,7 +54,12 @@ const ARTIST_COMBINED_NAV_ITEMS = [
 export const ArtistCombinedNav = ({
   waitUntil,
   navigating,
+  hasSocial,
 }: ArtistCombinedNavProps) => {
+  const navItems = ARTIST_COMBINED_NAV_ITEMS.filter(item => {
+    return item.section !== "social" || hasSocial
+  })
+
   const backdrop = useStickyBackdrop()
 
   const { jumpTo } = useJump()
@@ -96,7 +102,7 @@ export const ArtistCombinedNav = ({
               <AppContainer>
                 <HorizontalPadding pb={2}>
                   <RouteTabs data-test="navigationTabs" pt={2}>
-                    {ARTIST_COMBINED_NAV_ITEMS.map((item, index) => {
+                    {navItems.map((item, index) => {
                       return (
                         <BaseTab
                           key={item.section}

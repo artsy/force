@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<749ccbffc688ae6bec3940322a121f4b>>
+ * @generated SignedSource<<cfd66b739114baa9e918230c125ce5d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -90,6 +90,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "instagramHandle",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -99,12 +106,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "93520d76d73f823c971fcf269aa06063",
+    "cacheID": "3a6dcbb58f94717dabcd86090974f0ae",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistAuctionResultsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistAuctionResultsQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n}\n"
+    "text": "query artistRoutes_ArtistAuctionResultsQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n  instagramHandle\n}\n"
   }
 };
 })();

@@ -69,7 +69,13 @@ describe("ArtistCombinedNav", () => {
   })
 
   it("renders the tabs in order, with Social last", () => {
-    render(<ArtistCombinedNav waitUntil={waitUntil} navigating={NAVIGATING} />)
+    render(
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={NAVIGATING}
+        hasSocial
+      />,
+    )
 
     const labels = screen
       .getAllByRole("button")
@@ -86,7 +92,13 @@ describe("ArtistCombinedNav", () => {
   })
 
   it("renders editorial tab and jumps to editorial section", async () => {
-    render(<ArtistCombinedNav waitUntil={waitUntil} navigating={NAVIGATING} />)
+    render(
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={NAVIGATING}
+        hasSocial
+      />,
+    )
 
     fireEvent.click(screen.getByText("Editorial"))
 
@@ -103,7 +115,13 @@ describe("ArtistCombinedNav", () => {
   })
 
   it("renders the Social tab and jumps to the Social section", async () => {
-    render(<ArtistCombinedNav waitUntil={waitUntil} navigating={NAVIGATING} />)
+    render(
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={NAVIGATING}
+        hasSocial
+      />,
+    )
 
     fireEvent.click(screen.getByText("Social"))
 
@@ -117,5 +135,27 @@ describe("ArtistCombinedNav", () => {
         subject: "social",
       })
     })
+  })
+
+  it("omits the Social tab when the artist has no Instagram handle", () => {
+    render(
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={NAVIGATING}
+        hasSocial={false}
+      />,
+    )
+
+    const labels = screen
+      .getAllByRole("button")
+      .map(tab => tab.textContent)
+      .filter(Boolean)
+
+    expect(labels).toEqual([
+      "Artworks",
+      "Auction Results",
+      "About",
+      "Editorial",
+    ])
   })
 })

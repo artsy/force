@@ -30,6 +30,8 @@ const ArtistCombinedRoute: React.FC<
 
   const { jumpTo } = useJump()
 
+  const hasSocial = !!artist.instagramHandle
+
   const { lazy, markReady, waitUntil, navigating } = useSectionReadiness([
     "artworks",
     "market",
@@ -102,7 +104,11 @@ const ArtistCombinedRoute: React.FC<
         </Box>
       )}
 
-      <ArtistCombinedNav waitUntil={waitUntil} navigating={navigating} />
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={navigating}
+        hasSocial={hasSocial}
+      />
 
       <Spacer y={2} />
 
@@ -165,15 +171,19 @@ const ArtistCombinedRoute: React.FC<
         />
       </Section>
 
-      <Separator my={4} />
+      {hasSocial && (
+        <>
+          <Separator my={4} />
 
-      <Section id="artistSocialTop">
-        <ArtistSocialRailQueryRenderer
-          id={artist.internalID}
-          lazyLoad={lazy.social}
-          onReady={() => markReady("social")}
-        />
-      </Section>
+          <Section id="artistSocialTop">
+            <ArtistSocialRailQueryRenderer
+              id={artist.internalID}
+              lazyLoad={lazy.social}
+              onReady={() => markReady("social")}
+            />
+          </Section>
+        </>
+      )}
     </SectionNavProvider>
   )
 }
@@ -184,6 +194,7 @@ export const ArtistCombinedRouteFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistCombinedRoute_artist on Artist {
         internalID
+        instagramHandle
       }
     `,
   },
