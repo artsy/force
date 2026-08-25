@@ -2,9 +2,9 @@ import { ContextModule } from "@artsy/cohesion"
 import { Box, Image, Text } from "@artsy/palette"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { RouterLink } from "System/Components/RouterLink"
+import { maxDimensionsByArea } from "Utils/resized"
 import type { TrendingSearchesQuery } from "__generated__/TrendingSearchesQuery.graphql"
 import type { FC, MouseEvent } from "react"
-import styled from "styled-components"
 
 export type TrendingArtworkNode = NonNullable<
   NonNullable<
@@ -14,9 +14,12 @@ export type TrendingArtworkNode = NonNullable<
   >[number]["artwork"]
 >
 
-export const ARTWORK_IMAGE_HEIGHT = 200
-// Cards keep at least this width; the rail scrolls when space runs out.
-export const ARTWORK_CARD_FLEX = "1 0 160px"
+// ShelfArtwork's equal-area sizing, scaled down to this compact panel
+const ARTWORK_IMAGE_ROW_HEIGHT = 200
+const ARTWORK_IMAGE_AREA = 160 * 160
+// Keep in sync with resized(width:) in TrendingSearches' query
+const ARTWORK_CARD_MAX_WIDTH = 240
+const ARTWORK_CARD_FALLBACK_WIDTH = Math.sqrt(ARTWORK_IMAGE_AREA)
 
 export interface TrendingArtworkCardProps {
   artwork: TrendingArtworkNode
@@ -34,21 +37,29 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
     return null
   }
 
+  const { width, aspectRatio } = getTrendingCardLayout(image)
+
   return (
-    <Box flex={ARTWORK_CARD_FLEX} minWidth={0}>
+    <Box width={width} maxWidth={ARTWORK_CARD_MAX_WIDTH} flexShrink={0}>
       <RouterLink to={href} onClick={onClick} display="block">
-        <Box width="100%" height={ARTWORK_IMAGE_HEIGHT}>
-          <CardImage
-            src={image.src}
-            srcSet={image.srcSet}
-            width={image.width}
-            height={image.height}
-            alt={artwork.title ?? ""}
-            // Native attribute, not Palette's lazyLoad prop: the prop swaps in
-            // a wrapper Box that receives this styled component's className,
-            // breaking the object-fit sizing on the actual img
-            loading="lazy"
-          />
+        {/* Mixed aspect ratios share a bottom baseline, like ShelfArtwork */}
+        <Box
+          height={ARTWORK_IMAGE_ROW_HEIGHT}
+          display="flex"
+          alignItems="flex-end"
+          overflow="hidden"
+        >
+          <Box width="100%" style={{ aspectRatio }} bg="mono10">
+            <Image
+              src={image.src}
+              srcSet={image.srcSet}
+              width="100%"
+              height="100%"
+              alt={artwork.title ?? ""}
+              lazyLoad
+              style={{ display: "block", objectFit: "cover" }}
+            />
+          </Box>
         </Box>
       </RouterLink>
 
@@ -70,10 +81,11 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
           display="block"
           textDecoration="none"
         >
+          {/* Single-line text keeps card heights uniform across tabs */}
           <Text variant="sm-display" overflowEllipsis pr={4}>
             {artwork.artistNames}
           </Text>
-          <Text variant="xs" color="mono60">
+          <Text variant="xs" color="mono60" overflowEllipsis>
             {artwork.title}
             {artwork.date ? `, ${artwork.date}` : ""}
           </Text>
@@ -83,7 +95,7 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
             </Text>
           )}
           {artwork.saleMessage && (
-            <Text variant="xs" fontWeight="bold" mt={0.5}>
+            <Text variant="xs" fontWeight="bold" mt={0.5} overflowEllipsis>
               {artwork.saleMessage}
             </Text>
           )}
@@ -93,11 +105,26 @@ export const TrendingArtworkCard: FC<TrendingArtworkCardProps> = ({
   )
 }
 
-// Bottom-left anchored so rows of mixed aspect ratios share a baseline
-const CardImage = styled(Image)`
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: bottom left;
-`
+interface TrendingCardLayout {
+  width: number
+  aspectRatio: string
+}
+
+/** Missing or zero dimensions fall back to a neutral square. */
+export const getTrendingCardLayout = (image: {
+  width: number | null | undefined
+  height: number | null | undefined
+}): TrendingCardLayout => {
+  if (!image.width || !image.height) {
+    return { width: ARTWORK_CARD_FALLBACK_WIDTH, aspectRatio: "1 / 1" }
+  }
+
+  return {
+    width: maxDimensionsByArea({
+      area: ARTWORK_IMAGE_AREA,
+      width: image.width,
+      height: image.height,
+    }).width,
+    aspectRatio: `${image.width} / ${image.height}`,
+  }
+}
