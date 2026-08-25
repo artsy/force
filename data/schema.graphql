@@ -2765,6 +2765,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   isPublic: Boolean!
   isShareable: Boolean
   last: String
+
+  """
+  The most recent published article featuring this artist
+  """
+  latestArticle: Article
   location: String
   marketingCollections(
     after: String
