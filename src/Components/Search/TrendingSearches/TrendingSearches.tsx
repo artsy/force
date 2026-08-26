@@ -309,6 +309,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
 
           <ScrollRail
             contentKey={`artists-${activeIndex}`}
+            scrollResetKey={activeIndex}
             shouldShowScrollBar={false}
           >
             {artists.map((artist, index) => {
@@ -341,6 +342,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
 
           <ScrollRail
             contentKey={`artworks-${activeIndex}`}
+            scrollResetKey={activeIndex}
             alignItems="flex-start"
           >
             {artworks.map((artwork, index) => {
@@ -389,6 +391,8 @@ interface ScrollRailProps {
   children: ReactNode
   /** Changes whenever the rail's content changes, to re-measure overflow */
   contentKey: string
+  /** Changes when the rail should scroll back to the start (tab switch) */
+  scrollResetKey?: string | number
   alignItems?: FlexProps["alignItems"]
   gap?: FlexProps["gap"]
   /** Whether to show the scroll indicator when content overflows */
@@ -400,6 +404,7 @@ interface ScrollRailProps {
 const ScrollRail: FC<ScrollRailProps> = ({
   children,
   contentKey,
+  scrollResetKey,
   alignItems,
   gap = 2,
   shouldShowScrollBar = true,
@@ -419,6 +424,12 @@ const ScrollRail: FC<ScrollRailProps> = ({
 
   // …and when the rail resizes (viewport changes)
   useResizeObserver({ target: element, onResize: updateScrollability })
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: scrollResetKey drives the reset
+  useEffect(() => {
+    // Optional-chained: jsdom doesn't implement scrollTo
+    element?.scrollTo?.({ left: 0 })
+  }, [element, scrollResetKey])
 
   return (
     <>
@@ -644,6 +655,7 @@ export const TRENDING_WINDOW_FRAGMENT = graphql`
           name
         }
         image {
+          # Keep in sync with ARTWORK_CARD_MAX_WIDTH in TrendingArtworkCard
           resized(
             width: 240
             height: 280
