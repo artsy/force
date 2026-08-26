@@ -1,4 +1,5 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
@@ -27,6 +28,7 @@ jest.mock(
   }),
 )
 
+const mockUseFlag = useFlag as jest.Mock
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()
 
@@ -43,6 +45,7 @@ beforeAll(() => {
 
 beforeEach(() => {
   trackEvent.mockClear()
+  mockUseFlag.mockReturnValue(false)
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -258,6 +261,78 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(
         screen.queryByText(/Courtesy of the Museum/),
       ).not.toBeInTheDocument()
+    })
+  })
+
+  describe("Social link", () => {
+    beforeEach(() => {
+      mockUseFlag.mockImplementation(flag => {
+        return flag === "hack16_connect-instagram-feed-artist-pages"
+      })
+    })
+
+    it("links to the artist’s Instagram profile in a new tab", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          internalID: "artist-id",
+          instagramHandle: "pablopicasso",
+        }),
+      })
+
+      const link = screen.getByLabelText("Visit pablopicasso on Instagram")
+
+      expect(link).toHaveAttribute(
+        "href",
+        "https://www.instagram.com/pablopicasso",
+      )
+      expect(link).toHaveAttribute("target", "_blank")
+      expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"))
+    })
+
+    it("tracks the click", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          internalID: "artist-id",
+          instagramHandle: "pablopicasso",
+        }),
+      })
+
+      fireEvent.click(screen.getByLabelText("Visit pablopicasso on Instagram"))
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedHeader",
+          context_module: "artistHeader",
+          context_page_owner_type: "artist",
+          subject: "social",
+        }),
+      )
+    })
+
+    it("does not render the link when the artist has no handle", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          instagramHandle: null,
+        }),
+      })
+
+      expect(screen.queryByLabelText(/on Instagram$/)).not.toBeInTheDocument()
+    })
+
+    it("does not render the link when the feature flag is off", () => {
+      mockUseFlag.mockReturnValue(false)
+
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          instagramHandle: "pablopicasso",
+        }),
+      })
+
+      expect(screen.queryByLabelText(/on Instagram$/)).not.toBeInTheDocument()
     })
   })
 

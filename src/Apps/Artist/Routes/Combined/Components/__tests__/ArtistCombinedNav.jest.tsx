@@ -48,6 +48,14 @@ jest.mock("Components/Sticky/useStickyBackdrop", () => ({
   })),
 }))
 
+const NAVIGATING = {
+  artworks: false,
+  auction: false,
+  about: false,
+  editorial: false,
+  social: false,
+}
+
 describe("ArtistCombinedNav", () => {
   const waitUntil = jest.fn().mockResolvedValue(undefined)
 
@@ -60,16 +68,35 @@ describe("ArtistCombinedNav", () => {
     }))
   })
 
+  it("renders the tabs in order they are defined in ARTIST_COMBINED_NAV_ITEMS", () => {
+    render(
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={NAVIGATING}
+        hasSocial
+      />,
+    )
+
+    const labels = screen
+      .getAllByRole("button")
+      .map(tab => tab.textContent)
+      .filter(Boolean)
+
+    expect(labels).toEqual([
+      "Artworks",
+      "Auction Results",
+      "About",
+      "Editorial",
+      "Social",
+    ])
+  })
+
   it("renders editorial tab and jumps to editorial section", async () => {
     render(
       <ArtistCombinedNav
         waitUntil={waitUntil}
-        navigating={{
-          artworks: false,
-          auction: false,
-          about: false,
-          editorial: false,
-        }}
+        navigating={NAVIGATING}
+        hasSocial
       />,
     )
 
@@ -85,5 +112,50 @@ describe("ArtistCombinedNav", () => {
         subject: "editorial",
       })
     })
+  })
+
+  it("renders the Social tab and jumps to the Social section", async () => {
+    render(
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={NAVIGATING}
+        hasSocial
+      />,
+    )
+
+    fireEvent.click(screen.getByText("Social"))
+
+    await waitFor(() => {
+      expect(waitUntil).toHaveBeenCalledWith("social")
+      expect(mockJumpTo).toHaveBeenCalledWith("artistSocialTop")
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "clickedHeader",
+        context_module: "artistHeader",
+        context_page_owner_type: "artist",
+        subject: "social",
+      })
+    })
+  })
+
+  it("omits the Social tab when the artist has no Instagram handle", () => {
+    render(
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={NAVIGATING}
+        hasSocial={false}
+      />,
+    )
+
+    const labels = screen
+      .getAllByRole("button")
+      .map(tab => tab.textContent)
+      .filter(Boolean)
+
+    expect(labels).toEqual([
+      "Artworks",
+      "Auction Results",
+      "About",
+      "Editorial",
+    ])
   })
 })

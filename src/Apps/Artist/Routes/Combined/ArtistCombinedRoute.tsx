@@ -1,4 +1,5 @@
 import { Box, Separator, Spacer, Spinner, Text, useTheme } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import {
   ArtistAuctionResultsQueryRenderer,
   useScrollToTopOfAuctionResults,
@@ -7,6 +8,7 @@ import { MarketStatsQueryRenderer } from "Apps/Artist/Routes/AuctionResults/Comp
 import { ArtistCombinedNav } from "Apps/Artist/Routes/Combined/Components/ArtistCombinedNav"
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { ArtistOverviewQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistOverview"
+import { ArtistSocialRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistSocialRail"
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
 import { useRouter } from "System/Hooks/useRouter"
@@ -29,12 +31,19 @@ const ArtistCombinedRoute: React.FC<
 
   const { jumpTo } = useJump()
 
+  const isInstagramFeedEnabled = useFlag(
+    "hack16_connect-instagram-feed-artist-pages",
+  )
+
+  const hasSocial = isInstagramFeedEnabled && !!artist.instagramHandle
+
   const { lazy, markReady, waitUntil, navigating } = useSectionReadiness([
     "artworks",
     "market",
     "auction",
     "about",
     "editorial",
+    "social",
   ])
 
   const { theme } = useTheme()
@@ -100,7 +109,11 @@ const ArtistCombinedRoute: React.FC<
         </Box>
       )}
 
-      <ArtistCombinedNav waitUntil={waitUntil} navigating={navigating} />
+      <ArtistCombinedNav
+        waitUntil={waitUntil}
+        navigating={navigating}
+        hasSocial={hasSocial}
+      />
 
       <Spacer y={2} />
 
@@ -157,8 +170,25 @@ const ArtistCombinedRoute: React.FC<
       <Separator my={4} />
 
       <Section id="artistEditorialTop">
-        <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
+        <ArtistEditorialNewsGridQueryRenderer
+          id={artist.internalID}
+          onReady={() => markReady("editorial")}
+        />
       </Section>
+
+      {hasSocial && (
+        <>
+          <Separator my={4} />
+
+          <Section id="artistSocialTop">
+            <ArtistSocialRailQueryRenderer
+              id={artist.internalID}
+              lazyLoad={lazy.social}
+              onReady={() => markReady("social")}
+            />
+          </Section>
+        </>
+      )}
     </SectionNavProvider>
   )
 }
@@ -169,6 +199,7 @@ export const ArtistCombinedRouteFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistCombinedRoute_artist on Artist {
         internalID
+        instagramHandle
       }
     `,
   },
