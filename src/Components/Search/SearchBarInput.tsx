@@ -43,6 +43,7 @@ import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
 import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
 import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
+import { useTypewriterPlaceholder } from "./hooks/useTypewriterPlaceholder"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
 import { searchResultsHref } from "./utils/searchResultsHref"
@@ -56,6 +57,19 @@ export interface SearchBarInputProps {
 // always swap without a visible size jump
 const SEARCH_DROPDOWN_MAX_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`
 const SEARCH_DROPDOWN_MIN_WIDTH = 600
+
+/**
+ * Cycled through the placeholder to show the phrasing the zero-result fallback
+ * can serve. Each spans a different filter the parse understands.
+ */
+const NL_PLACEHOLDER_EXAMPLES = [
+  "works under $3,000",
+  "blue abstract paintings",
+  "large prints under $10,000",
+  "unique works by japanese artists",
+  "photography from the 1970s",
+  "framed drawings under $5,000",
+]
 
 export const SearchBarInput: FC<
   React.PropsWithChildren<SearchBarInputProps>
@@ -328,6 +342,18 @@ export const SearchBarInput: FC<
   // Kill switch: with the flag off, the search dropdown behaves as it did
   // before the trending panel existed.
   const isTrendingEnabled = useFlag("onyx_trending-searches")
+  const isNLSearchEnabled = useFlag("onyx_nl-search")
+
+  // Typing stops once they're in the box — a moving placeholder is noise at
+  // that point, and they've already got the idea
+  const typedExample = useTypewriterPlaceholder({
+    phrases: NL_PLACEHOLDER_EXAMPLES,
+    isEnabled: isNLSearchEnabled && !isFocused && !value,
+  })
+
+  const placeholder = isNLSearchEnabled
+    ? `Try “${typedExample}”`
+    : "Search by artist, gallery, style, theme, tag, etc."
 
   // Show trending only when focused with an empty/too-short query.
   const isTrendingVisible =
@@ -404,7 +430,7 @@ export const SearchBarInput: FC<
           forwardRef={ref}
           key={match.location.pathname}
           value={value}
-          placeholder="Search by artist, gallery, style, theme, tag, etc."
+          placeholder={placeholder}
           spellCheck={false}
           options={shouldStartSearching(value) ? formattedOptions : []}
           defaultValue={value}
