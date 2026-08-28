@@ -6,6 +6,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useTracking } from "react-tracking"
 import { SearchBarInput } from "../SearchBarInput"
+import { parseFilterQuery } from "../utils/parseFilterQuery"
 
 jest.mock("@unleash/proxy-client-react", () => ({ useFlag: jest.fn() }))
 
@@ -47,6 +48,12 @@ jest.mock("@artsy/palette", () => ({
 }))
 
 jest.mock("System/Hooks/useRouter", () => ({ useRouter: jest.fn() }))
+
+jest.mock("../utils/parseFilterQuery", () => ({
+  parseFilterQuery: jest.fn(
+    jest.requireActual("../utils/parseFilterQuery").parseFilterQuery,
+  ),
+}))
 
 jest.mock("Utils/Hooks/useClientQuery", () => ({ useClientQuery: jest.fn() }))
 jest.mock("react-tracking")
@@ -513,6 +520,21 @@ describe("SearchBarInput", () => {
       expect(row()).not.toBeInTheDocument()
     })
 
+    it("does not parse the query at all when the feature flag is off", () => {
+      // While this is a partial rollout, users who can't see the row shouldn't
+      // pay to parse every debounced keystroke
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(parseFilterQuery).not.toHaveBeenCalled()
+    })
+
+    it("parses the query when the feature flag is on", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(parseFilterQuery).toHaveBeenCalledWith("warhol prints under 5000")
+    })
+
     it("renders the parsed filters and links to the collect page", () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
@@ -548,12 +570,22 @@ describe("SearchBarInput", () => {
       expect(texts).toEqual(["banksy", "Prints"])
     })
 
-    it("renders no detail line when the filters are the headline", () => {
+    it("makes the filters the headline when the query leaves no keyword", () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="prints between 1k and 5k" />)
 
-      expect(row()).toHaveTextContent("Prints")
-      expect(row()).toHaveTextContent("in $1,000–$5,000")
+      // No "in" line: there is no free text for the filters to qualify
+      expect(row()).toHaveTextContent("Prints · $1,000–$5,000")
+      expect(row()).not.toHaveTextContent("in ")
+    })
+
+    it("does not promote a filter into the keyword slot", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="unique prints under 10000" />)
+
+      // Previously rendered as keyword "Prints" filtered "in Under $10,000"
+      expect(row()).toHaveTextContent("Prints · Unique · Under $10,000")
+      expect(row()).not.toHaveTextContent("in Unique")
     })
 
     it.each([

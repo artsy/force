@@ -110,14 +110,20 @@ export const SearchBarInput: FC<
   // and disappearing per keystroke while the entity results lag behind shifts
   // every option index under the user's cursor. Matching the entity list's
   // cadence keeps the list stable to click and arrow through.
+  //
+  // Gated on the flag inside the memo rather than at the render site: while
+  // this is a partial rollout most users can't see the row, and shouldn't pay
+  // to parse every debounced keystroke — nor to build the href below.
   const parsedFilters = useMemo(() => {
+    if (!isSuggestedFiltersEnabled) return null
+
     return parseFilterQuery(debouncedValue)
-  }, [debouncedValue])
+  }, [debouncedValue, isSuggestedFiltersEnabled])
 
   // The entity pills scope the search to a single type, where a link out to
   // browsing artworks is off-topic.
   const shouldShowSuggestedFilters =
-    isSuggestedFiltersEnabled && !!parsedFilters && selectedPill === TOP_PILL
+    !!parsedFilters && selectedPill === TOP_PILL
 
   const suggestedFiltersHref = parsedFilters
     ? buildUrlForCollectApp(parsedFilters.filters)
@@ -473,19 +479,19 @@ export const SearchBarInput: FC<
             if (!value) return <></>
 
             if (option.kind === "suggestedFilters" && parsedFilters) {
-            return (
-              <SuggestedFiltersItem
-                parsed={parsedFilters}
-                href={suggestedFiltersHref}
-                query={debouncedValue}
-                onClick={event => {
-                  handleSuggestionClick(option, event)
-                }}
-              />
-            )
-          }
+              return (
+                <SuggestedFiltersItem
+                  parsed={parsedFilters}
+                  href={suggestedFiltersHref}
+                  query={debouncedValue}
+                  onClick={event => {
+                    handleSuggestionClick(option, event)
+                  }}
+                />
+              )
+            }
 
-          if (option.kind === "footer") {
+            if (option.kind === "footer") {
               return (
                 <SearchBarFooter
                   query={value}

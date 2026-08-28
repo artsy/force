@@ -11,6 +11,7 @@ const ICON_TILE_SIZE = 48
 // Off the theme space scale (1 = 10px, 2 = 20px), so set directly
 const ROW_PADDING_Y = "16px"
 const ICON_GAP = "14px"
+const LABEL_SEPARATOR = " · "
 
 interface SuggestedFiltersItemProps {
   parsed: ParsedFilterQuery
@@ -38,10 +39,16 @@ export const SuggestedFiltersItem: FC<SuggestedFiltersItemProps> = ({
     event.stopPropagation()
   }
 
-  // With no leftover text the filters themselves are the headline
-  const [firstLabel, ...restLabels] = parsed.labels
-  const title = parsed.keyword || firstLabel
-  const detail = parsed.keyword ? parsed.labels : restLabels
+  /*
+   * The two lines mean different things: the headline is what you're looking
+   * for, the second line is where it's filtered to. When the whole query became
+   * filters there is no "what", so the filters are the headline and the "in"
+   * line is dropped — borrowing the first filter up to the headline made
+   * "unique prints under 10000" read as the keyword "Prints" filtered "in
+   * Under $10,000".
+   */
+  const title = parsed.keyword || parsed.labels.join(LABEL_SEPARATOR)
+  const detail = parsed.keyword ? parsed.labels.join(LABEL_SEPARATOR) : null
 
   return (
     <SuggestedFiltersLink
@@ -67,9 +74,9 @@ export const SuggestedFiltersItem: FC<SuggestedFiltersItemProps> = ({
             {highlightMatchedTokens(title, query)}
           </Text>
 
-          {detail.length > 0 && (
+          {detail && (
             <Text variant="xs" color="mono60" mt="2px" overflowEllipsis>
-              in {highlightMatchedTokens(detail.join(" · "), query)}
+              in {highlightMatchedTokens(detail, query)}
             </Text>
           )}
         </Flex>
