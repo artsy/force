@@ -3,22 +3,13 @@ import type { FC } from "react"
 import styled, { keyframes } from "styled-components"
 
 /**
- * Two dots drifting together and apart, marking the row as a derived
- * suggestion rather than a search result.
+ * Two dots drifting together and apart, marking the row as a suggestion.
  *
- * The static form of this mark ships in @artsy/icons as `Eclipse`, but this
- * component keeps its own paths rather than importing it, for two reasons:
- *
- *  - The two shapes animate in opposite directions, which needs them addressed
- *    individually. The generated icon renders two unlabelled <path> elements,
- *    so importing it would mean targeting `path:nth-child(n)` — silently wrong
- *    if the export order ever changes.
- *  - The viewBox has to be wider than the artwork to give the drift room; a
- *    square icon canvas clips it.
- *
- * The animation lives here rather than in the icon on purpose: SMIL inside the
- * SVG animates on web but is silently dropped on native, and it cannot be
- * disabled for prefers-reduced-motion.
+ * The static mark ships in @artsy/icons as `Eclipse`, but isn't imported here:
+ * the shapes animate in opposite directions so they need addressing
+ * individually, and the viewBox must be wider than the artwork to give the
+ * drift room. SMIL inside the SVG would drop silently on native and couldn't
+ * honour prefers-reduced-motion.
  */
 export const SuggestedFiltersIcon: FC = () => {
   return (
@@ -81,8 +72,7 @@ const Disc = styled(Dot)`
   animation-name: ${driftLeft};
 `
 
-// A true hole rather than a background-coloured fill, so the mark works on any
-// surface — and matches the asset going into @artsy/icons
+// A true hole rather than a background-coloured fill, so it works anywhere
 const Ring = styled(Dot)`
   animation-name: ${driftRight};
 `

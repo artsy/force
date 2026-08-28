@@ -2,10 +2,8 @@ import { Highlight } from "Components/Search/SuggestionItem/Highlight"
 import type { ReactNode } from "react"
 
 /**
- * Colours the words of `text` that the user actually typed, matching how the
- * entity rows highlight their server-provided fragments. The suggested-filters
- * row is parsed client-side, so there are no OpenSearch <em> fragments to reuse
- * — see parseHighlightFragments for that path.
+ * Colours the words the user typed. The entity rows use server-provided <em>
+ * fragments instead — see parseHighlightFragments; this row is parsed locally.
  */
 export const highlightMatchedTokens = (
   text: string,

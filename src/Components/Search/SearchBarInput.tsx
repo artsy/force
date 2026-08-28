@@ -15,6 +15,8 @@ import styled from "styled-components"
 
 import {
   ActionType,
+  ContextModule,
+  type RailViewed,
   type SearchedWithNoResults,
   type SearchedWithResults,
   type SelectedItemFromSearch,
@@ -105,15 +107,9 @@ export const SearchBarInput: FC<
 
   const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
 
-  // Parsed from `debouncedValue`, not `value`. Parsing is synchronous, so `value`
-  // would land the row a beat sooner — but the row is prepended, so appearing
-  // and disappearing per keystroke while the entity results lag behind shifts
-  // every option index under the user's cursor. Matching the entity list's
-  // cadence keeps the list stable to click and arrow through.
-  //
-  // Gated on the flag inside the memo rather than at the render site: while
-  // this is a partial rollout most users can't see the row, and shouldn't pay
-  // to parse every debounced keystroke — nor to build the href below.
+  // Debounced, not live: the row is prepended, so appearing per keystroke
+  // shifts option indices under the cursor. Gated here rather than at render
+  // so users who can't see the row don't pay to parse.
   const parsedFilters = useMemo(() => {
     if (!isSuggestedFiltersEnabled) return null
 
@@ -142,6 +138,8 @@ export const SearchBarInput: FC<
             href: suggestedFiltersHref,
             typename: "SuggestedFilters",
             item_id: "suggested-filters",
+            // Position within its own context module, not the entity ranking
+            item_number: 0,
             item_type: "filter-suggestion",
           },
         ]
@@ -303,23 +301,25 @@ export const SearchBarInput: FC<
   }
 
   const trackSelection = (option: SuggestionItemOptionProps) => {
-    // Only real search results belong in this event. The footer has never been
-    // tracked here, and the suggested-filters row is not an entity in a ranked
-    // list — emitting it with a synthetic item_number would pollute the
-    // dataset. Its own viewed/clicked events land in a follow-up PR, so clicks
-    // on the row are deliberately untracked for now.
-    if (option.kind === undefined || option.kind === "entity") {
-      const analyticsEvent: SelectedItemFromSearch = {
-        action: ActionType.selectedItemFromSearch,
-        context_module: selectedPill.analyticsContextModule,
-        destination_path: option.href,
-        query: value,
-        item_id: option.item_id!,
-        item_number: option.item_number!,
-        item_type: option.item_type!,
-      }
-      tracking.trackEvent(analyticsEvent)
+    // The "See all results" footer has never been tracked here
+    if (option.kind === "footer") return
+
+    // Its own module, so the row's clicks are separable from entity results
+    const contextModule =
+      option.kind === "suggestedFilters"
+        ? ContextModule.suggestedFilters
+        : selectedPill.analyticsContextModule
+
+    const analyticsEvent: SelectedItemFromSearch = {
+      action: ActionType.selectedItemFromSearch,
+      context_module: contextModule,
+      destination_path: option.href,
+      query: value,
+      item_id: option.item_id!,
+      item_number: option.item_number!,
+      item_type: option.item_type!,
     }
+    tracking.trackEvent(analyticsEvent)
   }
 
   const handleSelect = (option: SuggestionItemOptionProps) => {
@@ -357,6 +357,34 @@ export const SearchBarInput: FC<
     resetValue()
     redirect(`${option.href}/auction-results`)
   }
+
+  // Once per focus session, not per keystroke: the row changes as the query is
+  // refined, and counting each appearance would inflate the CTR denominator.
+  const hasTrackedSuggestedFiltersRef = useRef(false)
+
+  useEffect(() => {
+    if (!isFocused) {
+      hasTrackedSuggestedFiltersRef.current = false
+      return
+    }
+
+    if (!shouldShowSuggestedFilters) return
+    if (hasTrackedSuggestedFiltersRef.current) return
+
+    hasTrackedSuggestedFiltersRef.current = true
+
+    const event: RailViewed = {
+      action: ActionType.railViewed,
+      context_module: ContextModule.suggestedFilters,
+      context_screen: contextPageOwnerType,
+    }
+    tracking.trackEvent(event)
+  }, [
+    isFocused,
+    shouldShowSuggestedFilters,
+    contextPageOwnerType,
+    tracking.trackEvent,
+  ])
 
   const handleFocus = () => {
     // Skip Palette's programmatic post-selection refocus (see closeDropdown)

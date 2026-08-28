@@ -602,19 +602,59 @@ describe("SearchBarInput", () => {
       expect(row()).not.toBeInTheDocument()
     })
 
-    it("does not emit selectedItemFromSearch on click", async () => {
-      // Tracking for this row lands in a follow-up PR. Until then it must not
-      // masquerade as an entity in the existing event.
+    it("tracks the click under its own context module", async () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
       await userEvent.click(row() as HTMLElement)
 
-      expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect(mockTrackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
           action: ActionType.selectedItemFromSearch,
+          context_module: ContextModule.suggestedFilters,
+          item_id: "suggested-filters",
+          item_number: 0,
           item_type: "filter-suggestion",
         }),
+      )
+    })
+
+    it("leaves entity clicks reporting the selected pill", async () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: ActionType.selectedItemFromSearch,
+          context_module: ContextModule.topTab,
+        }),
+      )
+    })
+
+    it("tracks one impression per focus session", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      fireEvent.focus(screen.getByRole("textbox"))
+
+      const impressions = mockTrackEvent.mock.calls.filter(([event]) => {
+        return (
+          event.action === ActionType.railViewed &&
+          event.context_module === ContextModule.suggestedFilters
+        )
+      })
+
+      expect(impressions).toHaveLength(1)
+    })
+
+    it("does not track an impression before the dropdown is focused", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(mockTrackEvent).not.toHaveBeenCalledWith(
+        expect.objectContaining({ action: ActionType.railViewed }),
       )
     })
   })

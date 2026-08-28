@@ -16,10 +16,7 @@ const LABEL_SEPARATOR = " · "
 interface SuggestedFiltersItemProps {
   parsed: ParsedFilterQuery
   href: string
-  /**
-   * The query the filters were parsed from — not the live input value, so the
-   * highlighted terms always correspond to what produced this row.
-   */
+  /** The query the filters were parsed from, not the live input value */
   query: string
   onClick: (event?: MouseEvent<HTMLElement>) => void
 }
@@ -39,14 +36,9 @@ export const SuggestedFiltersItem: FC<SuggestedFiltersItemProps> = ({
     event.stopPropagation()
   }
 
-  /*
-   * The two lines mean different things: the headline is what you're looking
-   * for, the second line is where it's filtered to. When the whole query became
-   * filters there is no "what", so the filters are the headline and the "in"
-   * line is dropped — borrowing the first filter up to the headline made
-   * "unique prints under 10000" read as the keyword "Prints" filtered "in
-   * Under $10,000".
-   */
+  // Headline is the free text, second line is what it's filtered to. With no
+  // free text the filters become the headline — promoting just the first one
+  // made "unique prints under 10000" read as "Prints" in "Under $10,000".
   const title = parsed.keyword || parsed.labels.join(LABEL_SEPARATOR)
   const detail = parsed.keyword ? parsed.labels.join(LABEL_SEPARATOR) : null
 
@@ -85,11 +77,8 @@ export const SuggestedFiltersItem: FC<SuggestedFiltersItemProps> = ({
   )
 }
 
-/**
- * Tinted so the row reads as a suggestion rather than another result. Its
- * resting state is the entity rows' hover colour, so hover goes one step
- * darker.
- */
+// Tinted so the row reads as a suggestion. Its resting state is the entity
+// rows' hover colour, so hover goes a step darker.
 const SuggestedFiltersLink = styled(SuggestionItemLink)`
   background-color: ${themeGet("colors.mono5")};
   padding-top: ${ROW_PADDING_Y};
@@ -99,12 +88,8 @@ const SuggestedFiltersLink = styled(SuggestionItemLink)`
     background-color: ${themeGet("colors.mono10")};
   }
 
-  /*
-   * Matched terms are marked up with <Highlight>, a styled <strong>, so they
-   * pick up the UA stylesheet's bold. The design distinguishes them by colour
-   * alone — and at this row's 20px title, bold reads far heavier than it does
-   * on the 16px entity rows. Colour is carried by Highlight itself.
-   */
+  /* <Highlight> is a <strong>; the design distinguishes matches by colour
+     alone, and bold reads far heavier at this row's 20px title */
   strong {
     font-weight: inherit;
   }

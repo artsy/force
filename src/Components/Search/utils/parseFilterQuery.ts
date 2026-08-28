@@ -10,12 +10,8 @@ import {
 } from "./filterQueryVocabulary"
 
 /**
- * `medium` rather than `additionalGeneIDs` is deliberate, and not a mismatch
- * with MediumFilter. `buildCollectUrlFragmentFromState`
- * (Apps/Collect/Utils/urlBuilder) destructures `medium` into the
- * `/collect/:medium` path segment, and this parser's medium slugs come from
- * FILTER_CATEGORIES — exactly the set of valid path segments. It also means one
- * medium per query: see the multi-medium guard in `parseFilterQuery`.
+ * `medium`, not `additionalGeneIDs`: urlBuilder turns it into the
+ * `/collect/:medium` path segment. Hence one medium per query.
  */
 export type SuggestedFilters = Pick<
   ArtworkFilters,
@@ -47,11 +43,7 @@ const hasMoneyMarker = (raw: string): boolean => {
   return MONEY_MARKER.test(raw.trim())
 }
 
-/**
- * Artist life dates, work dates and exhibition years all look like this. Real
- * production examples: "jack dowling (american, 1931-2021)",
- * "yun hyong-keun 1977-1978", "untitled 1980-1990".
- */
+/** Artist life dates and work dates: "jack dowling (american, 1931-2021)" */
 const YEAR_RANGE = { min: 1000, max: 2100 }
 
 const isYearLike = (amount: number): boolean => {
@@ -59,10 +51,8 @@ const isYearLike = (amount: number): boolean => {
 }
 
 /**
- * Below this, a bare range is edition or lot numbering rather than a price.
- * Production examples: "edition 5-10", "1-54" (an art fair), "50-50 collective",
- * "chen qiang 23-20". Only applies to bare ranges — "under 50" still parses,
- * because the operator establishes the intent.
+ * Below this a bare range is edition or lot numbering: "edition 5-10", "1-54"
+ * (a fair). Bare ranges only — "under 50" still parses.
  */
 const MIN_PLAUSIBLE_BARE_PRICE = 100
 
