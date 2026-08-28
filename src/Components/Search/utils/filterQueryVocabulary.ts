@@ -85,6 +85,38 @@ export const STOPWORDS = new Set([
   "works",
 ])
 
+/**
+ * Words that invert intent. The parser can only express positive filters, so a
+ * negated term is unrepresentable — we withhold the whole suggestion rather than
+ * filter on the very thing the user excluded ("no prints" must not mean Prints).
+ */
+export const NEGATORS = new Set([
+  "except",
+  "excluding",
+  "no",
+  "non",
+  "not",
+  "without",
+])
+
+/**
+ * Phrases where a vocabulary word belongs to a proper noun — a fair, a gallery,
+ * an exhibition title — rather than describing a medium. Seeded from 30 days of
+ * production search logs.
+ *
+ * This is a mitigation, not a fix: the set of names containing a medium word is
+ * unbounded, so new collisions will appear. Add them here as they surface.
+ */
+export const COLLISION_PHRASES = [
+  "art basel",
+  "design miami",
+  "film noir",
+  "installation view",
+  "poster boy",
+  "print club",
+  "the painting of modern life",
+]
+
 export const normalizePhrase = (phrase: string): string => {
   return phrase.toLowerCase().replace(/\s+/g, " ").trim()
 }

@@ -492,4 +492,98 @@ describe("SearchBarInput", () => {
       query: "andy",
     })
   })
+
+  describe("suggested filters row", () => {
+    // Both flags on: the row ships behind its own flag, and the surrounding
+    // suite runs with the trending panel enabled
+    const enableSuggestedFilters = () => {
+      ;(useFlag as jest.Mock).mockImplementation((flag: string) => {
+        return (
+          flag === "onyx_trending-searches" || flag === "onyx_suggested-filters"
+        )
+      })
+    }
+
+    const row = () => screen.queryByTestId("suggestedFiltersRow")
+
+    it("does not render when the feature flag is off", () => {
+      // beforeEach leaves onyx_suggested-filters off
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(row()).not.toBeInTheDocument()
+    })
+
+    it("renders the parsed filters and links to the collect page", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      // toHaveTextContent flattens the <Highlight> wrappers around matched terms
+      expect(row()).toHaveTextContent("warhol")
+      expect(row()).toHaveTextContent("in Prints · Under $5,000")
+
+      const href = row()?.getAttribute("href")
+      expect(href).toContain("/collect/prints")
+      expect(href).toContain("keyword=warhol")
+    })
+
+    it("highlights every term the user typed, including inside derived labels", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      const highlighted = row()?.querySelectorAll("strong")
+      const texts = Array.from(highlighted ?? []).map(node => node.textContent)
+
+      // "prints" lights up the Prints label; "under" and "5000" light up the
+      // formatted price label, since those are the words that were typed
+      expect(texts).toEqual(["warhol", "Prints", "Under", "$5,000"])
+    })
+
+    it("leaves terms the user did not type unhighlighted", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="banksy prints" />)
+
+      const highlighted = row()?.querySelectorAll("strong")
+      const texts = Array.from(highlighted ?? []).map(node => node.textContent)
+
+      expect(texts).toEqual(["banksy", "Prints"])
+    })
+
+    it("renders no detail line when the filters are the headline", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="prints between 1k and 5k" />)
+
+      expect(row()).toHaveTextContent("Prints")
+      expect(row()).toHaveTextContent("in $1,000–$5,000")
+    })
+
+    it.each([
+      ["no prints", "negated intent"],
+      ["warhol 1962-1964", "a date range, not a price"],
+      ["prints and photography", "two mediums"],
+      ["design miami", "a medium word inside a fair name"],
+      ["paintings under £5000", "non-USD"],
+      ["warhol", "a bare entity name"],
+    ])("does not render for %p — %s", query => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm={query} />)
+
+      expect(row()).not.toBeInTheDocument()
+    })
+
+    it("does not emit selectedItemFromSearch on click", async () => {
+      // Tracking for this row lands in a follow-up PR. Until then it must not
+      // masquerade as an entity in the existing event.
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      await userEvent.click(row() as HTMLElement)
+
+      expect(mockTrackEvent).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: ActionType.selectedItemFromSearch,
+          item_type: "filter-suggestion",
+        }),
+      )
+    })
+  })
 })
