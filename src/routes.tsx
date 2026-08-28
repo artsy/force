@@ -63,6 +63,7 @@ import { userRoutes } from "./Apps/User/userRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { recommendedArtistsRoutes } from "Apps/RecommendedArtists/recommendedArtistsRoutes"
 import { artworkRecommendationsRoutes } from "./Apps/ArtworkRecommendations/artworkRecommendationsRoutes"
+import { inspiredByYourSavesRoutes } from "./Apps/InspiredByYourSaves/inspiredByYourSavesRoutes"
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
@@ -96,6 +97,7 @@ const ROUTES = buildAppRoutes([
   geneRoutes,
   homeRoutes,
   identityVerificationRoutes,
+  inspiredByYourSavesRoutes,
   institutionPartnershipsRoutes,
   invoiceRoutes,
   jobsRoutes,
