@@ -34146,6 +34146,11 @@ type Query {
     id: String!
   ): Tag
   targetSupply: TargetSupply
+
+  """
+  Artists and artworks trending on Artsy over a rolling window, ranked by search and view activity.
+  """
+  trendingSearches(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches
   user(
     """
     Email to search for user by
@@ -35968,6 +35973,9 @@ type SearchCriteriaLabel {
 }
 
 type SearchDropdown {
+  """
+  Artists and artworks trending on Artsy over a rolling window, ranked by search and view activity.
+  """
   trending(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches
 }
 
@@ -43697,6 +43705,11 @@ type Viewer {
     id: String!
   ): Tag
   targetSupply: TargetSupply
+
+  """
+  Artists and artworks trending on Artsy over a rolling window, ranked by search and view activity.
+  """
+  trendingSearches(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches
   user(
     """
     Email to search for user by
