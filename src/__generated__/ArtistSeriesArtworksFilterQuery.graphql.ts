@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<99d32fd32570b89126362defa0fbfd58>>
+ * @generated SignedSource<<5b5f7fe0fa165fc265dae492f7fd8560>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,7 @@ export type FilterArtworksInput = {
   color?: string | null | undefined;
   colors?: ReadonlyArray<string | null | undefined> | null | undefined;
   completenessTier?: ReadonlyArray<string | null | undefined> | null | undefined;
+  curatorsPick?: boolean | null | undefined;
   dimensionRange?: string | null | undefined;
   disableNotForSaleSorting?: boolean | null | undefined;
   excludeArtworkIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
@@ -53,6 +54,7 @@ export type FilterArtworksInput = {
   includeMediumFilterInAggregation?: boolean | null | undefined;
   includeNonArtsyListed?: boolean | null | undefined;
   includeUnpublished?: boolean | null | undefined;
+  increasedInterest?: boolean | null | undefined;
   inquireableOnly?: boolean | null | undefined;
   keyword?: string | null | undefined;
   keywordMatchExact?: boolean | null | undefined;

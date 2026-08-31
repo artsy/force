@@ -5,7 +5,14 @@ import { DefaultSuggestion } from "./DefaultSuggestion"
 import { SuggestionItemLink } from "./SuggestionItemLink"
 import type { SearchHighlightData } from "./parseHighlightFragments"
 
+/**
+ * Distinguishes the synthetic dropdown rows from real search results. Absent
+ * means an entity row, so existing option builders need no change.
+ */
+export type SuggestionItemKind = "entity" | "footer" | "suggestedFilters"
+
 export interface SuggestionItemOptionProps {
+  kind?: SuggestionItemKind
   text: string
   value: string
   subtitle: string

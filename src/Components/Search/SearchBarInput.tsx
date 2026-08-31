@@ -7,6 +7,7 @@ import {
   type FocusEvent,
   type MouseEvent,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -14,10 +15,13 @@ import styled from "styled-components"
 
 import {
   ActionType,
+  ContextModule,
+  type RailViewed,
   type SearchedWithNoResults,
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
+import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { Z } from "Apps/Components/constants"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
@@ -35,6 +39,7 @@ import { useDebounce } from "use-debounce"
 import { SearchBarFooter } from "./SearchBarFooter"
 import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { StaticSearchContainer } from "./StaticSearchContainer"
+import { SuggestedFiltersItem } from "./SuggestedFiltersItem"
 import {
   SuggestionItem,
   type SuggestionItemOptionProps,
@@ -45,6 +50,7 @@ import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
+import { parseFilterQuery } from "./utils/parseFilterQuery"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
@@ -99,12 +105,51 @@ export const SearchBarInput: FC<
 
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
+  const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
+
+  // Debounced, not live: the row is prepended, so appearing per keystroke
+  // shifts option indices under the cursor. Gated here rather than at render
+  // so users who can't see the row don't pay to parse.
+  const parsedFilters = useMemo(() => {
+    if (!isSuggestedFiltersEnabled) return null
+
+    return parseFilterQuery(debouncedValue)
+  }, [debouncedValue, isSuggestedFiltersEnabled])
+
+  // The entity pills scope the search to a single type, where a link out to
+  // browsing artworks is off-topic.
+  const shouldShowSuggestedFilters =
+    !!parsedFilters && selectedPill === TOP_PILL
+
+  const suggestedFiltersHref = parsedFilters
+    ? buildUrlForCollectApp(parsedFilters.filters)
+    : ""
+
   const formattedOptions: SuggestionItemOptionProps[] = [
+    ...(shouldShowSuggestedFilters
+      ? [
+          {
+            kind: "suggestedFilters" as const,
+            text: value,
+            value: value,
+            subtitle: "",
+            imageUrl: "",
+            showAuctionResultsButton: false,
+            href: suggestedFiltersHref,
+            typename: "SuggestedFilters",
+            item_id: "suggested-filters",
+            // Position within its own context module, not the entity ranking
+            item_number: 0,
+            item_type: "filter-suggestion",
+          },
+        ]
+      : []),
     ...edges.flatMap((edge, index) => {
       const option = edge?.node
       if (!option) return []
       return [
         {
+          kind: "entity" as const,
           text: option.displayLabel ?? "Unknown",
           value: option.displayLabel ?? "unknown",
           subtitle:
@@ -124,6 +169,7 @@ export const SearchBarInput: FC<
       ]
     }),
     {
+      kind: "footer" as const,
       text: value,
       value: value,
       subtitle: "",
@@ -255,19 +301,25 @@ export const SearchBarInput: FC<
   }
 
   const trackSelection = (option: SuggestionItemOptionProps) => {
-    // Only track if this is an actual search result, not the footer
-    if (option.typename !== "Footer") {
-      const analyticsEvent: SelectedItemFromSearch = {
-        action: ActionType.selectedItemFromSearch,
-        context_module: selectedPill.analyticsContextModule,
-        destination_path: option.href,
-        query: value,
-        item_id: option.item_id!,
-        item_number: option.item_number!,
-        item_type: option.item_type!,
-      }
-      tracking.trackEvent(analyticsEvent)
+    // The "See all results" footer has never been tracked here
+    if (option.kind === "footer") return
+
+    // Its own module, so the row's clicks are separable from entity results
+    const contextModule =
+      option.kind === "suggestedFilters"
+        ? ContextModule.suggestedFilters
+        : selectedPill.analyticsContextModule
+
+    const analyticsEvent: SelectedItemFromSearch = {
+      action: ActionType.selectedItemFromSearch,
+      context_module: contextModule,
+      destination_path: option.href,
+      query: value,
+      item_id: option.item_id!,
+      item_number: option.item_number!,
+      item_type: option.item_type!,
     }
+    tracking.trackEvent(analyticsEvent)
   }
 
   const handleSelect = (option: SuggestionItemOptionProps) => {
@@ -305,6 +357,34 @@ export const SearchBarInput: FC<
     resetValue()
     redirect(`${option.href}/auction-results`)
   }
+
+  // Once per focus session, not per keystroke: the row changes as the query is
+  // refined, and counting each appearance would inflate the CTR denominator.
+  const hasTrackedSuggestedFiltersRef = useRef(false)
+
+  useEffect(() => {
+    if (!isFocused) {
+      hasTrackedSuggestedFiltersRef.current = false
+      return
+    }
+
+    if (!shouldShowSuggestedFilters) return
+    if (hasTrackedSuggestedFiltersRef.current) return
+
+    hasTrackedSuggestedFiltersRef.current = true
+
+    const event: RailViewed = {
+      action: ActionType.railViewed,
+      context_module: ContextModule.suggestedFilters,
+      context_screen: contextPageOwnerType,
+    }
+    tracking.trackEvent(event)
+  }, [
+    isFocused,
+    shouldShowSuggestedFilters,
+    contextPageOwnerType,
+    tracking.trackEvent,
+  ])
 
   const handleFocus = () => {
     // Skip Palette's programmatic post-selection refocus (see closeDropdown)
@@ -426,7 +506,20 @@ export const SearchBarInput: FC<
           renderOption={option => {
             if (!value) return <></>
 
-            if (option.typename === "Footer") {
+            if (option.kind === "suggestedFilters" && parsedFilters) {
+              return (
+                <SuggestedFiltersItem
+                  parsed={parsedFilters}
+                  href={suggestedFiltersHref}
+                  query={debouncedValue}
+                  onClick={event => {
+                    handleSuggestionClick(option, event)
+                  }}
+                />
+              )
+            }
+
+            if (option.kind === "footer") {
               return (
                 <SearchBarFooter
                   query={value}

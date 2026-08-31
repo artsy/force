@@ -641,6 +641,11 @@ type Alert {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -684,6 +689,11 @@ type Alert {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -2610,6 +2620,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -2653,6 +2668,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -3265,6 +3285,11 @@ type ArtistPartnerEdge {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -3308,6 +3333,11 @@ type ArtistPartnerEdge {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -3517,6 +3547,11 @@ type ArtistSeries implements Node {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -3560,6 +3595,11 @@ type ArtistSeries implements Node {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -3783,6 +3823,105 @@ type ArtistsWithAlertCountsEdge {
   """
   node: Artist
   totalAlertCount: Int
+}
+
+"""
+Artnet record of an artwork.
+"""
+type ArtnetArtwork {
+  artnetEditionSets: [ArtnetEditionSet]
+  artnetId: String
+
+  """
+  Artnet availability vocabulary, e.g. For Sale or Price on Request.
+  """
+  availability: String
+  createdAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+
+  """
+  Medium names + materials for this artwork, e.g. Paintings, Oil.
+  """
+  mediums: [String]
+  priceCurrency: String
+  priceFrom: Money
+  priceTo: Money
+
+  """
+  Whether the artwork is published on Artnet.
+  """
+  published: Boolean
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+}
+
+"""
+An Artnet edition set.
+"""
+type ArtnetEditionSet {
+  artnetId: String
+
+  """
+  Artnet availability vocabulary, e.g. For Sale or Price on Request.
+  """
+  availability: String
+
+  """
+  The corresponding CatalogEditionSet, if this edition set has been matched to one.
+  """
+  catalogEditionSetId: String
+  createdAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+  label: String
+  priceCurrency: String
+  priceFrom: Money
+  priceTo: Money
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
 }
 
 type ArtsyShippingOptInMutationFailure {
@@ -4968,6 +5107,11 @@ type ArtworkFilterNode {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -5011,6 +5155,11 @@ type ArtworkFilterNode {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -8243,6 +8392,10 @@ type CareerHighlight implements Node {
 }
 
 type CatalogArtwork {
+  """
+  Artnet record of this catalog artwork.
+  """
+  artnetArtwork: ArtnetArtwork
   artworkId: String
   availability: String
 
@@ -18373,6 +18526,11 @@ interface EntityWithFilterArtworksConnectionInterface {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -18416,6 +18574,11 @@ interface EntityWithFilterArtworksConnectionInterface {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     inquireableOnly: Boolean
     keyword: String
 
@@ -18848,6 +19011,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -18891,6 +19059,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -19643,6 +19816,11 @@ input FilterArtworksInput {
   Filter by artwork completeness tiers. Accepts multiple values.
   """
   completenessTier: [String]
+
+  """
+  When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+  """
+  curatorsPick: Boolean
   dimensionRange: String
 
   """
@@ -19686,6 +19864,11 @@ input FilterArtworksInput {
   """
   includeNonArtsyListed: Boolean
   includeUnpublished: Boolean
+
+  """
+  When true, will only return artworks carrying the Increased Interest collector signal.
+  """
+  increasedInterest: Boolean
   inquireableOnly: Boolean
   keyword: String
 
@@ -20439,6 +20622,11 @@ type Gene implements Node & Searchable {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -20482,6 +20670,11 @@ type Gene implements Node & Searchable {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -23596,6 +23789,11 @@ type MarketingCollection implements Node {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -23639,6 +23837,11 @@ type MarketingCollection implements Node {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -28978,6 +29181,11 @@ type Partner implements Node {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -29021,6 +29229,11 @@ type Partner implements Node {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -29548,6 +29761,11 @@ type PartnerArtist {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -29591,6 +29809,11 @@ type PartnerArtist {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -29847,6 +30070,11 @@ type PartnerArtistEdge {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -29890,6 +30118,11 @@ type PartnerArtistEdge {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -32225,6 +32458,11 @@ type Query {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -32268,6 +32506,11 @@ type Query {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -32835,6 +33078,11 @@ type Query {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -32883,6 +33131,11 @@ type Query {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -34146,6 +34399,11 @@ type Query {
     id: String!
   ): Tag
   targetSupply: TargetSupply
+
+  """
+  Artists and artworks trending on Artsy over a rolling window, ranked by search and view activity.
+  """
+  trendingSearches(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches
   user(
     """
     Email to search for user by
@@ -35968,6 +36226,9 @@ type SearchCriteriaLabel {
 }
 
 type SearchDropdown {
+  """
+  Artists and artworks trending on Artsy over a rolling window, ranked by search and view activity.
+  """
   trending(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches
 }
 
@@ -36634,6 +36895,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -36677,6 +36943,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -37504,6 +37775,11 @@ type Tag implements Node {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -37547,6 +37823,11 @@ type Tag implements Node {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -42129,6 +42410,11 @@ type Viewer {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -42172,6 +42458,11 @@ type Viewer {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -42528,6 +42819,11 @@ type Viewer {
     Filter by artwork completeness tiers. Accepts multiple values.
     """
     completenessTier: [String]
+
+    """
+    When true, will only return artworks carrying the Curators' Pick collector signal. Cannot be combined with `marketingCollectionID`.
+    """
+    curatorsPick: Boolean
     dimensionRange: String
 
     """
@@ -42576,6 +42872,11 @@ type Viewer {
     """
     includeNonArtsyListed: Boolean
     includeUnpublished: Boolean
+
+    """
+    When true, will only return artworks carrying the Increased Interest collector signal.
+    """
+    increasedInterest: Boolean
     input: FilterArtworksInput
     inquireableOnly: Boolean
     keyword: String
@@ -43697,6 +43998,11 @@ type Viewer {
     id: String!
   ): Tag
   targetSupply: TargetSupply
+
+  """
+  Artists and artworks trending on Artsy over a rolling window, ranked by search and view activity.
+  """
+  trendingSearches(period: TrendingSearchPeriod = ONE_DAY): TrendingSearches
   user(
     """
     Email to search for user by

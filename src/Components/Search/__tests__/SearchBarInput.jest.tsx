@@ -6,6 +6,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useTracking } from "react-tracking"
 import { SearchBarInput } from "../SearchBarInput"
+import { parseFilterQuery } from "../utils/parseFilterQuery"
 
 jest.mock("@unleash/proxy-client-react", () => ({ useFlag: jest.fn() }))
 
@@ -47,6 +48,12 @@ jest.mock("@artsy/palette", () => ({
 }))
 
 jest.mock("System/Hooks/useRouter", () => ({ useRouter: jest.fn() }))
+
+jest.mock("../utils/parseFilterQuery", () => ({
+  parseFilterQuery: jest.fn(
+    jest.requireActual("../utils/parseFilterQuery").parseFilterQuery,
+  ),
+}))
 
 jest.mock("Utils/Hooks/useClientQuery", () => ({ useClientQuery: jest.fn() }))
 jest.mock("react-tracking")
@@ -490,6 +497,165 @@ describe("SearchBarInput", () => {
       action_type: ActionType.pastedIntoSearchInput,
       context_module: ContextModule.topTab,
       query: "andy",
+    })
+  })
+
+  describe("suggested filters row", () => {
+    // Both flags on: the row ships behind its own flag, and the surrounding
+    // suite runs with the trending panel enabled
+    const enableSuggestedFilters = () => {
+      ;(useFlag as jest.Mock).mockImplementation((flag: string) => {
+        return (
+          flag === "onyx_trending-searches" || flag === "onyx_suggested-filters"
+        )
+      })
+    }
+
+    const row = () => screen.queryByTestId("suggestedFiltersRow")
+
+    it("does not render when the feature flag is off", () => {
+      // beforeEach leaves onyx_suggested-filters off
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(row()).not.toBeInTheDocument()
+    })
+
+    it("does not parse the query at all when the feature flag is off", () => {
+      // While this is a partial rollout, users who can't see the row shouldn't
+      // pay to parse every debounced keystroke
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(parseFilterQuery).not.toHaveBeenCalled()
+    })
+
+    it("parses the query when the feature flag is on", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(parseFilterQuery).toHaveBeenCalledWith("warhol prints under 5000")
+    })
+
+    it("renders the parsed filters and links to the collect page", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      // toHaveTextContent flattens the <Highlight> wrappers around matched terms
+      expect(row()).toHaveTextContent("warhol")
+      expect(row()).toHaveTextContent("in Prints · Under $5,000")
+
+      const href = row()?.getAttribute("href")
+      expect(href).toContain("/collect/prints")
+      expect(href).toContain("keyword=warhol")
+    })
+
+    it("highlights every term the user typed, including inside derived labels", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      const highlighted = row()?.querySelectorAll("strong")
+      const texts = Array.from(highlighted ?? []).map(node => node.textContent)
+
+      // "prints" lights up the Prints label; "under" and "5000" light up the
+      // formatted price label, since those are the words that were typed
+      expect(texts).toEqual(["warhol", "Prints", "Under", "$5,000"])
+    })
+
+    it("leaves terms the user did not type unhighlighted", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="banksy prints" />)
+
+      const highlighted = row()?.querySelectorAll("strong")
+      const texts = Array.from(highlighted ?? []).map(node => node.textContent)
+
+      expect(texts).toEqual(["banksy", "Prints"])
+    })
+
+    it("makes the filters the headline when the query leaves no keyword", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="prints between 1k and 5k" />)
+
+      // No "in" line: there is no free text for the filters to qualify
+      expect(row()).toHaveTextContent("Prints · $1,000–$5,000")
+      expect(row()).not.toHaveTextContent("in ")
+    })
+
+    it("does not promote a filter into the keyword slot", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="unique prints under 10000" />)
+
+      // Previously rendered as keyword "Prints" filtered "in Under $10,000"
+      expect(row()).toHaveTextContent("Prints · Unique · Under $10,000")
+      expect(row()).not.toHaveTextContent("in Unique")
+    })
+
+    it.each([
+      ["no prints", "negated intent"],
+      ["warhol 1962-1964", "a date range, not a price"],
+      ["prints and photography", "two mediums"],
+      ["design miami", "a medium word inside a fair name"],
+      ["paintings under £5000", "non-USD"],
+      ["warhol", "a bare entity name"],
+    ])("does not render for %p — %s", query => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm={query} />)
+
+      expect(row()).not.toBeInTheDocument()
+    })
+
+    it("tracks the click under its own context module", async () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      await userEvent.click(row() as HTMLElement)
+
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: ActionType.selectedItemFromSearch,
+          context_module: ContextModule.suggestedFilters,
+          item_id: "suggested-filters",
+          item_number: 0,
+          item_type: "filter-suggestion",
+        }),
+      )
+    })
+
+    it("leaves entity clicks reporting the selected pill", async () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      await userEvent.click(screen.getByRole("link", { name: "Andy Warhol" }))
+
+      expect(mockTrackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: ActionType.selectedItemFromSearch,
+          context_module: ContextModule.topTab,
+        }),
+      )
+    })
+
+    it("tracks one impression per focus session", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      fireEvent.focus(screen.getByRole("textbox"))
+
+      const impressions = mockTrackEvent.mock.calls.filter(([event]) => {
+        return (
+          event.action === ActionType.railViewed &&
+          event.context_module === ContextModule.suggestedFilters
+        )
+      })
+
+      expect(impressions).toHaveLength(1)
+    })
+
+    it("does not track an impression before the dropdown is focused", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      expect(mockTrackEvent).not.toHaveBeenCalledWith(
+        expect.objectContaining({ action: ActionType.railViewed }),
+      )
     })
   })
 })
