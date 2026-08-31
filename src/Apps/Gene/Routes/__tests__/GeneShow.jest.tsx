@@ -1,7 +1,7 @@
-import { screen } from "@testing-library/react"
 import { GeneShowFragmentContainer } from "Apps/Gene/Routes/GeneShow"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { screen } from "@testing-library/react"
 import type { GeneShowTestQuery } from "__generated__/GeneShowTestQuery.graphql"
 import { graphql } from "react-relay"
 
@@ -41,22 +41,34 @@ describe("GeneShow", () => {
     expect(screen.getByText("Display Name")).toBeInTheDocument()
   })
 
+  it("renders fallback title correctly", () => {
+    renderWithRelay({
+      Gene: () => ({
+        name: "Example Gene",
+        displayName: "",
+      }),
+    })
+
+    expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument()
+    expect(screen.getAllByText("Example Gene")).toHaveLength(2)
+  })
+
   it("renders meta description and title from query", () => {
     renderWithRelay({
       Gene: () => ({
-        meta: { description: "Example Gene meta description." },
-        displayName: "Example Gene Display Name",
-        name: "Example Gene Name",
+        meta: { description: "Gene Meta Description" },
+        displayName: "Display Name",
+        name: "name",
       }),
     })
 
     expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
       "content",
-      "Example Gene meta description. Browse Example Gene Name art on Artsy.",
+      "Gene Meta Description",
     )
     expect(document.querySelector('meta[name="title"]')).toHaveAttribute(
       "content",
-      "Example Gene Display Name - Art & Prints for Sale | Artsy",
+      "Display Name | Artsy",
     )
   })
 
@@ -71,11 +83,11 @@ describe("GeneShow", () => {
 
     expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
       "content",
-      "Browse Design art on Artsy.",
+      "Explore Design art on Artsy. Browse works by size, price, and medium.",
     )
     expect(document.querySelector('meta[name="title"]')).toHaveAttribute(
       "content",
-      "Design - Art & Prints for Sale | Artsy",
+      "Design | Artsy",
     )
   })
 })

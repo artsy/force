@@ -10,32 +10,17 @@ interface GeneMetaProps {
 const GeneMeta: React.FC<React.PropsWithChildren<GeneMetaProps>> = ({
   gene,
 }) => {
-  const title = buildTitle(gene)
-  const description = buildDescription(gene)
+  const fallbackDescription = `Explore ${gene.name} art on Artsy. Browse works by size, price, and medium.`
+  const title = `${gene.displayName || gene.name} | Artsy`
 
   return (
     <MetaTags
       title={title}
-      description={description}
+      description={gene.meta.description || fallbackDescription}
       pathname={gene.href}
       imageURL={gene.image?.cropped?.src}
     />
   )
-}
-
-function buildTitle(gene: GeneMeta_gene$data): string {
-  return `${gene.displayName || gene.name} - Art & Prints for Sale | Artsy`
-}
-
-function buildDescription(gene: GeneMeta_gene$data): string {
-  const description = [
-    gene.meta.description,
-    `Browse ${gene.name} art on Artsy.`,
-  ]
-    .filter(Boolean)
-    .join(" ")
-
-  return description
 }
 
 export const GeneMetaFragmentContainer = createFragmentContainer(GeneMeta, {
