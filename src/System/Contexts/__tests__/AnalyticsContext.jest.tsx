@@ -7,4 +7,10 @@ describe("pathToOwnerType", () => {
       OwnerType.artworkRecommendations,
     )
   })
+
+  it("maps inspired by your saves to the based on your recent saves owner type", () => {
+    expect(pathToOwnerType("/inspired-by-your-saves")).toBe(
+      OwnerType.basedOnYourRecentSaves,
+    )
+  })
 })

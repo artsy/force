@@ -22,6 +22,7 @@ import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingA
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { HomeRecommendedArtistsRailQueryRenderer } from "Apps/Home/Components/HomeRecommendedArtistsRail"
 import { HomeArtworkRecommendationsRailQueryRenderer } from "Apps/Home/Components/HomeArtworkRecommendationsRail"
+import { HomeBasedOnYourRecentSavesRailQueryRenderer } from "Apps/Home/Components/HomeBasedOnYourRecentSavesRail"
 import { HOME_RAIL_POSITION_Y } from "Apps/Home/homeRailPositionY"
 
 interface HomeAppProps {
@@ -70,6 +71,10 @@ export const HomeApp: React.FC<React.PropsWithChildren<HomeAppProps>> = ({
 
           <HomeArtworkRecommendationsRailQueryRenderer
             railPositionY={HOME_RAIL_POSITION_Y.artworkRecommendations}
+          />
+
+          <HomeBasedOnYourRecentSavesRailQueryRenderer
+            railPositionY={HOME_RAIL_POSITION_Y.basedOnYourRecentSaves}
           />
 
           <ArtworkGridContextProvider hideSignals>
