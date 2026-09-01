@@ -38,6 +38,7 @@ union AIAgentEvent =
   | AIAgentTurnComplete
 
 input AIAgentMessageInput {
+  artworkIDs: [String!]
   content: String!
   role: AIAgentRole!
 }
