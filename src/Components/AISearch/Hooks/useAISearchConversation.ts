@@ -90,7 +90,14 @@ const toHistory = (messages: AISearchMessage[]): AISearchHistoryEntry[] => {
       return acc
     }
 
-    return [...acc, { role: "ASSISTANT", content: message.text }]
+    return [
+      ...acc,
+      {
+        role: "ASSISTANT",
+        content: message.text,
+        artworkIDs: message.artworkIDs,
+      },
+    ]
   }, [])
 }
 
