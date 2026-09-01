@@ -1,10 +1,23 @@
-import { Flex, ModalDialog, Spinner, Text, useToasts } from "@artsy/palette"
+import {
+  Flex,
+  ModalDialog,
+  ResponsiveBox,
+  Text,
+  useToasts,
+} from "@artsy/palette"
 import { FileDropzone } from "Components/FileUpload/FileDropzone"
 import { getErrorMessage } from "Components/FileUpload/utils/getErrorMessage"
+import { ImageSearchUploadContent } from "Components/Search/ImageSearch/ImageSearchUploadContent"
+import { ImageSearchThumbnail } from "Components/Search/ImageSearch/ImageSearchThumbnail"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useRouter } from "System/Hooks/useRouter"
-import { type FC, useState } from "react"
+import { type FC, useEffect, useState } from "react"
 import type { FileRejection } from "react-dropzone"
+import {
+  createImageSearchPreviewURL,
+  revokeImageSearchPreviewURL,
+  setImageSearchPreview,
+} from "./imageSearchPreview"
 import { uploadImageToS3 } from "./uploadImageToS3"
 
 const ALLOWED_MIME_TYPES = [
@@ -23,11 +36,21 @@ interface SearchByImageModalProps {
 export const SearchByImageModal: FC<
   React.PropsWithChildren<SearchByImageModalProps>
 > = ({ onClose }) => {
-  const { router } = useRouter()
+  const { match, router } = useRouter()
   const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
 
   const [isUploading, setIsUploading] = useState(false)
+  const [previewURL, setPreviewURL] = useState("")
+
+  useEffect(() => {
+    const isImageSearchRoute = match?.location.pathname === "/image-search"
+    const isRouteResolved = match && "elements" in match
+
+    if (isUploading && isImageSearchRoute && isRouteResolved) {
+      onClose()
+    }
+  }, [isUploading, match, onClose])
 
   const handleDrop = async (files: File[]) => {
     const file = files[0]
@@ -36,6 +59,9 @@ export const SearchByImageModal: FC<
       return
     }
 
+    const nextPreviewURL = createImageSearchPreviewURL(file)
+
+    setPreviewURL(nextPreviewURL)
     setIsUploading(true)
 
     try {
@@ -50,11 +76,13 @@ export const SearchByImageModal: FC<
         s3Bucket: asset.s3Bucket,
       })
 
-      onClose()
+      setImageSearchPreview({ ...asset, url: nextPreviewURL })
 
       router.push(`/image-search?${params.toString()}`)
     } catch (error) {
       console.error("SearchByImageModal: failed to upload image", error)
+      revokeImageSearchPreviewURL(nextPreviewURL)
+      setPreviewURL("")
       setIsUploading(false)
       sendToast({
         message: "Something went wrong. Please try another image.",
@@ -79,35 +107,82 @@ export const SearchByImageModal: FC<
 
   return (
     <ModalDialog
-      title="Search by image"
+      title="Find Art with Artsy Lens"
       onClose={onClose}
-      dialogProps={{ width: 650 }}
+      dialogProps={{ width: ["100%", 650], height: ["100%", "auto"] }}
+      height={["100%", "auto"]}
+      m={[0, 2]}
     >
-      {isUploading ? (
-        <Flex flexDirection="column" alignItems="center" py={4}>
-          <Spinner />
+      <Flex
+        flexDirection="column"
+        height="100%"
+        justifyContent={["center", "flex-start"]}
+      >
+        {isUploading ? (
+          <Flex width="100%" flexDirection="column" alignItems="center" py={2}>
+            <ResponsiveBox
+              aspectWidth={1}
+              aspectHeight={1}
+              width="100%"
+              maxWidth={400}
+            >
+              <ImageSearchThumbnail
+                src={previewURL}
+                isLoading
+                position="absolute"
+                width="100%"
+                height="100%"
+                borderRadius={10}
+              />
+            </ResponsiveBox>
 
-          <Text variant="sm-display" color="mono60" mt={2}>
-            Uploading image…
-          </Text>
-        </Flex>
-      ) : (
-        <FileDropzone
-          title="Drag an image here"
-          subtitle="We’ll use it to search for similar artworks."
-          buttonText="upload a file"
-          allFiles={[]}
-          maxTotalSize={MAX_TOTAL_SIZE_MB}
-          allowedMimeTypes={ALLOWED_MIME_TYPES}
-          onDrop={handleDrop}
-          onReject={handleReject}
-          border="1px dashed"
-          borderColor="mono30"
-          borderRadius={5}
-          p={4}
-          textAlign="center"
-        />
-      )}
+            <Text variant="sm-display" mt={2}>
+              Searching for matches…
+            </Text>
+          </Flex>
+        ) : (
+          <FileDropzone
+            title="Drag an image here"
+            subtitle="We’ll use it to search for similar artworks."
+            buttonText="upload a file"
+            desktopButtonLabel="or"
+            desktopButtonText="Upload a Photo"
+            desktopButtonVariant="primaryBlack"
+            desktopContent={
+              <ImageSearchUploadContent
+                description={
+                  <>
+                    Drag a photo here or choose one from your files.
+                    <br />
+                    We’ll find similar artworks.
+                  </>
+                }
+              />
+            }
+            mobileButtonLabel="or"
+            mobileButtonText="Upload a Photo"
+            mobileButtonVariant="primaryBlack"
+            mobileContent={
+              <ImageSearchUploadContent
+                description={
+                  <>
+                    Choose a photo from your files.
+                    <br />
+                    We’ll find similar artworks.
+                  </>
+                }
+              />
+            }
+            mobileSubtitle={null}
+            allFiles={[]}
+            maxTotalSize={MAX_TOTAL_SIZE_MB}
+            allowedMimeTypes={ALLOWED_MIME_TYPES}
+            onDrop={handleDrop}
+            onReject={handleReject}
+            textAlign="center"
+          />
+        )}
+      </Flex>
     </ModalDialog>
   )
 }

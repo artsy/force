@@ -1,4 +1,10 @@
-import { Box, type BoxProps, Button, Text } from "@artsy/palette"
+import {
+  Box,
+  type BoxProps,
+  Button,
+  type ButtonProps,
+  Text,
+} from "@artsy/palette"
 import { concatDropzoneErrors } from "Components/FileUpload/utils/concatDropzoneErrors"
 import { validateTotalMaxSize } from "Components/FileUpload/utils/validateTotalMaxSize"
 import { Media } from "Utils/Responsive"
@@ -14,6 +20,15 @@ export interface FileDropzoneProps extends BoxProps {
   allFiles: DropzoneFile[]
   maxTotalSize: number
   allowedMimeTypes: string[]
+  desktopButtonLabel?: React.ReactNode
+  desktopButtonText?: string
+  desktopButtonVariant?: ButtonProps["variant"]
+  desktopContent?: React.ReactNode
+  mobileButtonLabel?: React.ReactNode
+  mobileButtonText?: string
+  mobileButtonVariant?: ButtonProps["variant"]
+  mobileContent?: React.ReactNode
+  mobileSubtitle?: React.ReactNode
   onDrop: (files: File[]) => void
   onReject: (rejections: FileRejection[]) => void
 }
@@ -27,6 +42,15 @@ export const FileDropzone: React.FC<
   allFiles,
   maxTotalSize,
   allowedMimeTypes,
+  desktopButtonLabel,
+  desktopButtonText,
+  desktopButtonVariant,
+  desktopContent,
+  mobileButtonLabel,
+  mobileButtonText,
+  mobileButtonVariant,
+  mobileContent,
+  mobileSubtitle,
   onDrop,
   onReject,
   ...rest
@@ -73,40 +97,56 @@ export const FileDropzone: React.FC<
         <Box {...rest} data-test-id="file-dropzone" {...getRootProps()}>
           <input data-testid="file-dropzone-input" {...getInputProps()} />
 
-          <Text variant="lg-display">{title}</Text>
-          {subtitle && (
-            <Text variant={["xs", "sm-display"]} color="mono60" mt={1}>
-              {subtitle}
+          {desktopContent ?? (
+            <>
+              <Text variant="lg-display">{title}</Text>
+              {subtitle && (
+                <Text variant={["xs", "sm-display"]} color="mono60" mt={1}>
+                  {subtitle}
+                </Text>
+              )}
+            </>
+          )}
+          {desktopButtonLabel && (
+            <Text variant="xs" color="mono60" textAlign="center" mb={1}>
+              {desktopButtonLabel}
             </Text>
           )}
           <Button
             ref={buttonRef}
             width={["100%", "auto"]}
             type="button"
-            mt={[2, 2]}
-            variant="secondaryBlack"
+            mt={desktopContent ? 0 : 2}
+            variant={desktopButtonVariant ?? "secondaryBlack"}
             onClick={open}
           >
-            Or {buttonText}
+            {desktopButtonText ?? `Or ${buttonText}`}
           </Button>
         </Box>
       </Media>
 
       <Media at="xs">
+        {mobileContent}
+
         <input data-testid="file-dropzone-input" {...getInputProps()} />
 
+        {mobileButtonLabel && (
+          <Text variant="xs" color="mono60" textAlign="center" mb={1}>
+            {mobileButtonLabel}
+          </Text>
+        )}
         <Button
           ref={buttonRef}
           width={["100%", "auto"]}
           type="button"
-          variant="secondaryBlack"
+          variant={mobileButtonVariant ?? "secondaryBlack"}
           onClick={open}
         >
-          {buttonText}
+          {mobileButtonText ?? buttonText}
         </Button>
-        {subtitle && (
+        {(mobileSubtitle !== undefined ? mobileSubtitle : subtitle) && (
           <Text variant={["xs", "sm-display"]} color="mono60" mt={1}>
-            {subtitle}
+            {mobileSubtitle !== undefined ? mobileSubtitle : subtitle}
           </Text>
         )}
       </Media>

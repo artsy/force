@@ -1,7 +1,6 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
-import { Box, LabeledInput, useDidMount } from "@artsy/palette"
-import { type FC, useState } from "react"
-import { OverlayRefetchContainer } from "./Overlay"
+import { LabeledInput, useDidMount } from "@artsy/palette"
+import { ARTSY_LENS_WEB_FLAG } from "Components/Search/ImageSearch/constants"
 import { SearchByImageButton } from "Components/Search/ImageSearch/SearchByImageButton"
 import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -10,7 +9,9 @@ import type {
   MobileSearchBarSuggestQuery,
   MobileSearchBarSuggestQuery$data,
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
+import { type FC, useState } from "react"
 import { graphql } from "react-relay"
+import { OverlayRefetchContainer } from "./Overlay"
 
 interface MobileSearchBarProps {
   viewer: NonNullable<MobileSearchBarSuggestQuery$data["viewer"]>
@@ -20,7 +21,10 @@ interface MobileSearchBarProps {
 export const MobileSearchBar: FC<
   React.PropsWithChildren<MobileSearchBarProps>
 > = ({ viewer, onClose }) => {
+  const { featureFlags } = useSystemContext()
   const [overlayDisplayed, setOverlayDisplayed] = useState(false)
+  const isArtsyLensEnabled =
+    featureFlags?.isEnabled(ARTSY_LENS_WEB_FLAG) ?? false
 
   const displayOverlay = () => {
     setOverlayDisplayed(true)
@@ -41,25 +45,18 @@ export const MobileSearchBar: FC<
         />
       )}
 
-      <Box position="relative">
-        <LabeledInput
-          placeholder="Search Artsy"
-          label={<SearchIcon fill="mono60" aria-hidden size={22} />}
-          onClick={displayOverlay}
-          height={40}
-        />
-
-        <Box
-          position="absolute"
-          top={0}
-          bottom={0}
-          right={40}
-          display="flex"
-          alignItems="center"
-        >
-          <SearchByImageButton />
-        </Box>
-      </Box>
+      <LabeledInput
+        placeholder="Search Artsy"
+        label={
+          isArtsyLensEnabled ? (
+            <SearchByImageButton />
+          ) : (
+            <SearchIcon fill="mono60" aria-hidden size={22} />
+          )
+        }
+        onClick={displayOverlay}
+        height={40}
+      />
     </>
   )
 }

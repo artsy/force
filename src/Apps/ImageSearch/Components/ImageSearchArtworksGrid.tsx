@@ -1,9 +1,10 @@
-import { Stack } from "@artsy/palette"
+import { Button, Stack } from "@artsy/palette"
 import { IMAGE_SEARCH_SECTION_ID } from "Apps/ImageSearch/ImageSearchApp"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
-import { EmptyState } from "Components/EmptyState"
+import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer } from "Components/Pagination"
+import { SearchByImageModal } from "Components/Search/ImageSearch/SearchByImageModal"
 import { useRouter } from "System/Hooks/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
 import type { ImageSearchArtworksGrid_viewer$data } from "__generated__/ImageSearchArtworksGrid_viewer.graphql"
@@ -28,6 +29,7 @@ export const ImageSearchArtworksGrid: FC<
   const { jumpTo } = useJump()
 
   const [isLoading, setIsLoading] = useState(false)
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
 
   const connection = viewer.artworksByImageConnection
 
@@ -53,10 +55,26 @@ export const ImageSearchArtworksGrid: FC<
 
   if (!connection || (connection.totalCount ?? 0) === 0) {
     return (
-      <EmptyState
-        title="No results found."
-        description="Try searching with a different image."
-      />
+      <Stack gap={2} alignItems="flex-start">
+        <ArtworkGridEmptyState />
+
+        <Button
+          variant="secondaryBlack"
+          onClick={() => {
+            setIsUploadModalOpen(true)
+          }}
+        >
+          Upload a new image
+        </Button>
+
+        {isUploadModalOpen && (
+          <SearchByImageModal
+            onClose={() => {
+              setIsUploadModalOpen(false)
+            }}
+          />
+        )}
+      </Stack>
     )
   }
 

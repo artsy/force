@@ -1,5 +1,8 @@
 import loadable from "@loadable/component"
+import { ARTSY_LENS_WEB_FLAG } from "Components/Search/ImageSearch/constants"
 import type { RouteProps } from "System/Router/Route"
+import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
+import { HttpError } from "found"
 import { graphql } from "react-relay"
 
 const ImageSearchApp = loadable(
@@ -26,6 +29,17 @@ export const imageSearchRoutes: RouteProps[] = [
       ImageSearchApp.preload()
     },
     prepareVariables,
+    render: renderArgs => {
+      const isArtsyLensEnabled =
+        renderArgs.match.context.featureFlags?.isEnabled(ARTSY_LENS_WEB_FLAG) ??
+        false
+
+      if (!isArtsyLensEnabled) {
+        throw new HttpError(404)
+      }
+
+      return defaultErrorRender(renderArgs)
+    },
     query: graphql`
       query imageSearchRoutes_TopLevelQuery(
         $first: Int = 30
