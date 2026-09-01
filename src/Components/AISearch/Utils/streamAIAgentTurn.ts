@@ -98,6 +98,13 @@ export const trimHistory = (
     return new TextEncoder().encode(text).length
   }
 
+  // The server weighs a replayed entry by its prose and its ids.
+  const entryBytes = (entry: AISearchHistoryEntry) => {
+    return (entry.artworkIDs ?? []).reduce((sum, id) => {
+      return sum + byteLength(id)
+    }, byteLength(entry.content))
+  }
+
   let trimmed =
     history.length > MAX_HISTORY_MESSAGES
       ? history.slice(history.length - MAX_HISTORY_MESSAGES)
@@ -106,7 +113,7 @@ export const trimHistory = (
   let totalBytes =
     byteLength(message) +
     trimmed.reduce((sum, entry) => {
-      return sum + byteLength(entry.content)
+      return sum + entryBytes(entry)
     }, 0)
 
   while (totalBytes > MAX_HISTORY_BYTES && trimmed.length > 0) {
@@ -114,7 +121,7 @@ export const trimHistory = (
     const dropped = trimmed.slice(0, dropCount)
 
     totalBytes -= dropped.reduce((sum, entry) => {
-      return sum + byteLength(entry.content)
+      return sum + entryBytes(entry)
     }, 0)
     trimmed = trimmed.slice(dropCount)
   }
@@ -143,7 +150,14 @@ export const streamAIAgentTurn = async ({
       conversationID,
       message,
       history: trimHistory(history, message).map(entry => {
-        return { role: entry.role, content: entry.content }
+        const shouldSendArtworkIDs =
+          entry.role === "ASSISTANT" && !!entry.artworkIDs?.length
+
+        return {
+          role: entry.role,
+          content: entry.content,
+          ...(shouldSendArtworkIDs ? { artworkIDs: entry.artworkIDs } : {}),
+        }
       }),
     },
   }

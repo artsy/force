@@ -72,4 +72,5 @@ export type AISearchRole = "USER" | "ASSISTANT"
 export interface AISearchHistoryEntry {
   role: AISearchRole
   content: string
+  artworkIDs?: string[]
 }
