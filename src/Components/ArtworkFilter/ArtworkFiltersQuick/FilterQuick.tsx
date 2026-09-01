@@ -18,7 +18,7 @@ import {
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import type { MultiSelectArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
-import { type FC, useMemo } from "react"
+import { type FC, useCallback, useMemo } from "react"
 
 interface FilterQuickProps
   extends Omit<DropdownProps, "dropdown" | "children"> {
@@ -26,6 +26,10 @@ interface FilterQuickProps
   name: keyof MultiSelectArtworkFilters
   options: { name: string; value: string }[]
   slice?: Slice
+  /** Show the applied values instead of the label: "Painting", not "Medium • 1" */
+  labelAppliedValues?: boolean
+  /** For slices whose names aren't display-ready — periods arrive as "1990" */
+  formatOptionName?: (name: string) => string
 }
 
 export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
@@ -33,6 +37,8 @@ export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
   label,
   options: _options,
   slice,
+  labelAppliedValues,
+  formatOptionName,
   ...rest
 }) => {
   const { selectedFiltersCounts, aggregations = [] } = useArtworkFilterContext()
@@ -55,6 +61,28 @@ export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
 
     return aggregation.counts
   }, [_options, aggregations, slice])
+
+  const displayName = useCallback(
+    (name: string): string => {
+      return formatOptionName ? formatOptionName(name) : name
+    },
+    [formatOptionName],
+  )
+
+  // Walks `currentValue`, so the pill names the value applied first rather than
+  // whichever comes first in `options`. Names come from `options`, so the pill
+  // reads "Work on Paper", not "work-on-paper".
+  const appliedLabels = useMemo(() => {
+    if (!labelAppliedValues) return undefined
+
+    return currentValue.flatMap(value => {
+      const option = options.find(option => {
+        return option.value === value
+      })
+
+      return option ? [displayName(option.name)] : []
+    })
+  }, [labelAppliedValues, options, currentValue, displayName])
 
   const handleSelect = (value: string) => (selected: boolean) => {
     const nextValue = selected
@@ -90,7 +118,7 @@ export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
                     onSelect={handleSelect(value)}
                     selected={currentValue.includes(value)}
                   >
-                    {name}
+                    {displayName(name)}
                   </Checkbox>
                 )
               })}
@@ -104,7 +132,12 @@ export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
     >
       {props => {
         return (
-          <FilterQuickDropdownAnchor label={label} count={count} {...props} />
+          <FilterQuickDropdownAnchor
+            label={label}
+            count={count}
+            appliedLabels={appliedLabels}
+            {...props}
+          />
         )
       }}
     </Dropdown>
@@ -114,21 +147,27 @@ export const FilterQuick: FC<React.PropsWithChildren<FilterQuickProps>> = ({
 interface FilterQuickDropdownAnchorProps extends DropdownActions {
   label: string
   count: number
+  /** When present, replaces the label and the pill reads as selected */
+  appliedLabels?: string[]
 }
 
 export const FilterQuickDropdownAnchor: FC<
   React.PropsWithChildren<FilterQuickDropdownAnchorProps>
-> = ({ anchorProps, anchorRef, label, count, visible }) => {
+> = ({ anchorProps, anchorRef, label, count, appliedLabels, visible }) => {
+  const hasAppliedLabels = !!appliedLabels?.length
+
   return (
     <Pill
       ref={anchorRef as any}
       size="small"
+      selected={hasAppliedLabels}
       Icon={visible ? ChevronSmallUpIcon : ChevronSmallDownIcon}
       iconPosition="right"
       {...anchorProps}
     >
-      {label}
-      {count > 0 && (
+      {hasAppliedLabels ? formatAppliedLabels(appliedLabels, count) : label}
+
+      {!hasAppliedLabels && count > 0 && (
         <Box as="span" color="blue100">
           {" "}
           • {count}
@@ -136,6 +175,24 @@ export const FilterQuickDropdownAnchor: FC<
       )}
     </Pill>
   )
+}
+
+/**
+ * Only the first value is named; joining them all overflows the row. The
+ * remainder is counted off `count` rather than the named labels, so a value
+ * `options` can't name still shows up in the total.
+ */
+const formatAppliedLabels = (
+  appliedLabels: string[],
+  count: number,
+): string => {
+  const [first] = appliedLabels
+
+  if (count <= 1) {
+    return first
+  }
+
+  return `${first} +${count - 1}`
 }
 
 interface FilterQuickDropdownPanelProps extends BoxProps {

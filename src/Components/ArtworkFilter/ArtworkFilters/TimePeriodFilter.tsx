@@ -15,8 +15,10 @@ export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
-export const getTimePeriodToDisplay = period =>
-  isNaN(period) ? period : `${period}s`
+export const getTimePeriodToDisplay = period => {
+  // Decades get an "s"; named periods ("Late 19th Century") are already labels
+  return Number.isNaN(Number(period)) ? period : `${period}s`
+}
 
 export const TimePeriodFilter: FC<
   React.PropsWithChildren<TimePeriodFilterProps>
@@ -84,7 +86,7 @@ export const TimePeriodFilter: FC<
   )
 }
 
-const allowedPeriods = [
+export const allowedPeriods = [
   "2020",
   "2010",
   "2000",
@@ -103,3 +105,11 @@ const allowedPeriods = [
   "Early 19th Century",
   "18th Century & Earlier",
 ]
+
+/**
+ * `allowedPeriods` in the shape the quick filters take. Names stay raw, as the
+ * MAJOR_PERIOD aggregation returns them, so callers format both sources alike.
+ */
+export const TIME_PERIOD_OPTIONS = allowedPeriods.map(period => {
+  return { name: period, value: period }
+})
