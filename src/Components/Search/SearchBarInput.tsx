@@ -21,7 +21,6 @@ import {
   type SearchedWithResults,
   type SelectedItemFromSearch,
 } from "@artsy/cohesion"
-import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { Z } from "Apps/Components/constants"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
@@ -50,6 +49,7 @@ import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
+import { buildSuggestedFiltersUrl } from "./utils/buildSuggestedFiltersUrl"
 import { parseFilterQuery } from "./utils/parseFilterQuery"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
@@ -122,7 +122,7 @@ export const SearchBarInput: FC<
     !!parsedFilters && selectedPill === TOP_PILL
 
   const suggestedFiltersHref = parsedFilters
-    ? buildUrlForCollectApp(parsedFilters.filters)
+    ? buildSuggestedFiltersUrl(parsedFilters)
     : ""
 
   const formattedOptions: SuggestionItemOptionProps[] = [

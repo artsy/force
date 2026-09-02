@@ -1,3 +1,5 @@
+import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { FILTER_VOCABULARY } from "../filterQueryVocabulary"
 import { parseFilterQuery } from "../parseFilterQuery"
 
 /**
@@ -6,6 +8,37 @@ import { parseFilterQuery } from "../parseFilterQuery"
  * replace them with invented equivalents.
  */
 describe("parseFilterQuery", () => {
+  describe("only suggests mediums the filter UI can name", () => {
+    // Both the pill and the drawer's MediumFilter name an applied medium out
+    // of MEDIUM_OPTIONS; a value outside them filters results invisibly.
+    const nameableMediums = new Set(
+      MEDIUM_OPTIONS.map(option => {
+        return option.value
+      }),
+    )
+
+    const vocabularyMediums = [
+      ...new Set(
+        [...FILTER_VOCABULARY.values()]
+          .filter(entry => {
+            return entry.type === "medium"
+          })
+          .map(entry => {
+            return entry.value
+          }),
+      ),
+    ]
+
+    it.each(vocabularyMediums)("%s is in MEDIUM_OPTIONS", medium => {
+      expect(nameableMediums.has(medium)).toBe(true)
+    })
+
+    it("does not suggest a medium the Medium filter cannot display", () => {
+      // Valid as a /collect path segment, absent from MEDIUM_OPTIONS
+      expect(parseFilterQuery("warhol posters")?.filters.medium).toBeUndefined()
+    })
+  })
+
   describe("suggests filters", () => {
     it("combines a medium, a price and a leftover artist name", () => {
       const result = parseFilterQuery("warhol prints under 5000")

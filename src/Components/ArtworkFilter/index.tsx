@@ -68,6 +68,10 @@ import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCou
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
+  /** Replaces the default quick-filter pill row in the sticky bar */
+  QuickFilters?: JSX.Element
+  /** The fields `QuickFilters` covers, so "All Filters" doesn't double-count */
+  quickFilterFields?: string[]
   offset?: number
   // Input variables passed to FilterArtworkConnection `input` argument
   relayRefetchInputVariables?: object
@@ -124,6 +128,8 @@ export const BaseArtworkFilter: React.FC<
 > = ({
   children,
   Filters,
+  QuickFilters,
+  quickFilterFields = ARTWORK_FILTERS_QUICK_FIELDS,
   offset,
   relay,
   relayRefetchInputVariables = {},
@@ -195,12 +201,12 @@ export const BaseArtworkFilter: React.FC<
   const quickArtworkFiltersCount = useMemo(() => {
     return Object.entries(filterContext.selectedFiltersCounts || {}).reduce(
       (acc, [field, count]) => {
-        if (!ARTWORK_FILTERS_QUICK_FIELDS.includes(field)) return acc
+        if (!quickFilterFields.includes(field)) return acc
         return acc + count
       },
       0,
     )
-  }, [filterContext.selectedFiltersCounts])
+  }, [filterContext.selectedFiltersCounts, quickFilterFields])
 
   const extendedFiltersCount =
     revisedArtworkFiltersCount - quickArtworkFiltersCount
@@ -433,9 +439,11 @@ export const BaseArtworkFilter: React.FC<
                             </Pill>
                           </Flex>
 
-                          <ArtworkFiltersQuick
-                            featuredKeywords={featuredKeywords}
-                          />
+                          {QuickFilters ?? (
+                            <ArtworkFiltersQuick
+                              featuredKeywords={featuredKeywords}
+                            />
+                          )}
                         </Flex>
                       </HorizontalOverflow>
 

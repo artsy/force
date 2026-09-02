@@ -150,19 +150,20 @@ const buildVocabulary = (): Map<string, VocabularyEntry> => {
     add(deslugify(value), entry)
   })
 
-  // Superset of slugs valid as a /collect/:medium path segment. Where a slug
-  // already came from MEDIUM_OPTIONS, keep that label so "print" and "prints"
-  // don't render as two different things.
+  // Reuse the MEDIUM_OPTIONS label so "print" and "prints" don't render as two
+  // different things.
   const mediumLabels = new Map(
     [...vocabulary.values()].map(entry => [entry.value, entry.label]),
   )
 
   Object.entries(FILTER_CATEGORIES).forEach(([name, value]) => {
-    const entry: VocabularyEntry = {
-      type: "medium",
-      value,
-      label: mediumLabels.get(value) ?? name,
-    }
+    const label = mediumLabels.get(value)
+
+    // Skip slugs the Medium filter has no option for ("poster", "textiles"):
+    // they filter results that no pill or checkbox can name or untick.
+    if (!label) return
+
+    const entry: VocabularyEntry = { type: "medium", value, label }
 
     add(name, entry)
     add(deslugify(value), entry)

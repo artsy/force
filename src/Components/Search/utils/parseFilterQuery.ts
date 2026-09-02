@@ -1,4 +1,5 @@
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { formatPriceRangeLabel } from "Components/ArtworkFilter/Utils/formatPriceRangeLabel"
 import {
   COLLISION_PHRASES,
   FILTER_VOCABULARY,
@@ -10,8 +11,9 @@ import {
 } from "./filterQueryVocabulary"
 
 /**
- * `medium`, not `additionalGeneIDs`: urlBuilder turns it into the
- * `/collect/:medium` path segment. Hence one medium per query.
+ * `medium` holds a single gene slug; `buildSuggestedFiltersUrl` sends it on as
+ * a one-element `additionalGeneIDs`. Widening it to several mediums is possible
+ * now the URL is no longer a `/collect/:medium` path — see the cap below.
  */
 export type SuggestedFilters = Pick<
   ArtworkFilters,
@@ -254,29 +256,6 @@ const trimStopwords = (words: string[]): string[] => {
   return words.slice(first, words.length - fromEnd)
 }
 
-const formatPriceLabel = (range: string): string => {
-  const [min, max] = range.split("-")
-  const format = (amount: string) => {
-    return CURRENCY_FORMATTER.format(Number(amount))
-  }
-
-  if (min === "*") {
-    return `Under ${format(max)}`
-  }
-
-  if (max === "*") {
-    return `${format(min)} and up`
-  }
-
-  return `${format(min)}–${format(max)}`
-}
-
-const CURRENCY_FORMATTER = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-})
-
 /**
  * Parses artwork-filter intent out of a raw search query, entirely on the
  * client. Returns null when there's nothing worth suggesting.
@@ -322,8 +301,10 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
     ),
   ]
 
-  // The collect URL carries a single medium as its path segment, so a second
-  // one would be dropped without the user seeing it go
+  // Only one medium is carried, so a second would be dropped without the user
+  // seeing it go. The `/collect/:medium` path segment that forced this is gone
+  // — `additionalGeneIDs` takes a list — so "prints and paintings" could be
+  // supported by widening `medium`, the pill already renders "Prints +1".
   if (mediumValues.length > 1) return null
 
   const medium = mediumEntries[0]
@@ -353,7 +334,7 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
   const labels = [
     medium?.label,
     ...attributionEntries.map(entry => entry.label),
-    priceRange ? formatPriceLabel(priceRange) : undefined,
+    priceRange ? formatPriceRangeLabel(priceRange) : undefined,
   ].filter(Boolean) as string[]
 
   return {

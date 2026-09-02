@@ -535,7 +535,7 @@ describe("SearchBarInput", () => {
       expect(parseFilterQuery).toHaveBeenCalledWith("warhol prints under 5000")
     })
 
-    it("renders the parsed filters and links to the collect page", () => {
+    it("renders the parsed filters and links to the search results page", () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
@@ -544,8 +544,10 @@ describe("SearchBarInput", () => {
       expect(row()).toHaveTextContent("in Prints · Under $5,000")
 
       const href = row()?.getAttribute("href")
-      expect(href).toContain("/collect/prints")
-      expect(href).toContain("keyword=warhol")
+      expect(href).toContain("/search?")
+      expect(href).toContain("term=warhol&")
+      expect(href).toContain("additional_gene_ids%5B0%5D=prints")
+      expect(href).toContain("price_range=%2A-5000")
     })
 
     it("highlights every term the user typed, including inside derived labels", () => {
