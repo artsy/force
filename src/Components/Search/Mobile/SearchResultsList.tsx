@@ -1,5 +1,7 @@
 import {
   ActionType,
+  ContextModule,
+  type RailViewed,
   type SearchedWithNoResults,
   type SearchedWithResults,
   type SelectedItemFromSearch,
@@ -10,15 +12,19 @@ import {
   SuggestionItem,
   type SuggestionItemOptionProps,
 } from "Components/Search/SuggestionItem/SuggestionItem"
-import type { PillType } from "Components/Search/constants"
+import { SuggestedFiltersItem } from "Components/Search/SuggestedFiltersItem"
+import { TOP_PILL, type PillType } from "Components/Search/constants"
 import { useRecentSearches } from "Components/Search/hooks/useRecentSearches"
+import { buildSuggestedFiltersUrl } from "Components/Search/utils/buildSuggestedFiltersUrl"
+import { parseFilterQuery } from "Components/Search/utils/parseFilterQuery"
 import {
   type SearchNodeOption,
   formatOptions,
 } from "Components/Search/utils/formatOptions"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
-import { type FC, useEffect } from "react"
+import { useFlag } from "@unleash/proxy-client-react"
+import { type FC, useEffect, useMemo, useRef } from "react"
 import {
   type RelayPaginationProp,
   createPaginationContainer,
@@ -32,20 +38,52 @@ interface SearchResultsListProps {
   relay: RelayPaginationProp
   viewer: SearchResultsList_viewer$data
   query: string
+  /** Debounced, so the suggested-filters row doesn't flicker per keystroke */
+  debouncedQuery: string
   selectedPill: PillType
   onClose: () => void
 }
 
 const ENTITIES_PER_SCROLL = 10
 
-const SearchResultsList: FC<
+export const SearchResultsList: FC<
   React.PropsWithChildren<SearchResultsListProps>
-> = ({ relay, viewer, query, selectedPill, onClose }) => {
+> = ({ relay, viewer, query, debouncedQuery, selectedPill, onClose }) => {
   const tracking = useTracking()
   const { addRecentSearchFromOption } = useRecentSearches()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const edges = viewer.searchConnection?.edges ?? []
+
+  const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
+
+  // Gated here, so users who can't see the row don't pay to parse
+  const parsedFilters = useMemo(() => {
+    if (!isSuggestedFiltersEnabled) return null
+
+    return parseFilterQuery(debouncedQuery)
+  }, [debouncedQuery, isSuggestedFiltersEnabled])
+
+  // The entity pills scope to a single type, where browsing artworks is off-topic
+  const shouldShowSuggestedFilters =
+    !!parsedFilters && selectedPill === TOP_PILL
+
+  // Once per overlay session; per keystroke would inflate the CTR denominator
+  const hasTrackedSuggestedFiltersRef = useRef(false)
+
+  useEffect(() => {
+    if (!shouldShowSuggestedFilters) return
+    if (hasTrackedSuggestedFiltersRef.current) return
+
+    hasTrackedSuggestedFiltersRef.current = true
+
+    const event: RailViewed = {
+      action: ActionType.railViewed,
+      context_module: ContextModule.suggestedFilters,
+      context_screen: contextPageOwnerType,
+    }
+    tracking.trackEvent(event)
+  }, [shouldShowSuggestedFilters, contextPageOwnerType, tracking.trackEvent])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -89,12 +127,73 @@ const SearchResultsList: FC<
     }) as SearchNodeOption[],
   )
 
+  const suggestedFiltersHref = parsedFilters
+    ? buildSuggestedFiltersUrl(parsedFilters)
+    : ""
+
+  // Shared by the tracking event and the recent-searches entry, as on desktop
+  const suggestedFiltersOption: SuggestionItemOptionProps = {
+    kind: "suggestedFilters",
+    text: debouncedQuery,
+    value: debouncedQuery,
+    subtitle: "",
+    imageUrl: "",
+    showAuctionResultsButton: false,
+    href: suggestedFiltersHref,
+    typename: "SuggestedFilters",
+    item_id: "suggested-filters",
+    // Position within its own context module, not the entity ranking
+    item_number: 0,
+    item_type: "filter-suggestion",
+  }
+
+  const handleSuggestedFiltersClick = () => {
+    const event: SelectedItemFromSearch = {
+      action: ActionType.selectedItemFromSearch,
+      // Its own module, separable from entity results
+      context_module: ContextModule.suggestedFilters,
+      destination_path: suggestedFiltersOption.href,
+      query: debouncedQuery,
+      item_id: suggestedFiltersOption.item_id!,
+      item_number: suggestedFiltersOption.item_number!,
+      item_type: suggestedFiltersOption.item_type!,
+    }
+
+    tracking.trackEvent(event)
+    addRecentSearchFromOption(suggestedFiltersOption)
+    onClose()
+  }
+
+  // Kept in the loading and empty states: with no entity match, this is the
+  // only answer left
+  const suggestedFiltersRow =
+    shouldShowSuggestedFilters && parsedFilters ? (
+      <SuggestedFiltersItem
+        parsed={parsedFilters}
+        href={suggestedFiltersHref}
+        query={debouncedQuery}
+        onClick={handleSuggestedFiltersClick}
+      />
+    ) : null
+
   if (!viewer.searchConnection) {
-    return <ContentPlaceholder />
+    return (
+      <>
+        {suggestedFiltersRow}
+
+        <ContentPlaceholder />
+      </>
+    )
   }
 
   if (formattedOptions.length === 0) {
-    return <NoResults query={query} mt={4} mx={2} />
+    return (
+      <>
+        {suggestedFiltersRow}
+
+        <NoResults query={query} mt={4} mx={2} />
+      </>
+    )
   }
 
   const handleLoadMore = () => {
@@ -133,6 +232,8 @@ const SearchResultsList: FC<
 
   return (
     <>
+      {suggestedFiltersRow}
+
       {formattedOptions.map((option, index) => {
         return (
           <SuggestionItem
