@@ -186,6 +186,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
           <SearchResultsListPaginationContainer
             viewer={viewer}
             query={inputValue}
+            debouncedQuery={debouncedValue}
             selectedPill={selectedPill}
             onClose={onClose}
           />

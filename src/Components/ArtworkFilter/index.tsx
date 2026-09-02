@@ -211,6 +211,12 @@ export const BaseArtworkFilter: React.FC<
   const extendedFiltersCount =
     revisedArtworkFiltersCount - quickArtworkFiltersCount
 
+  // Count only what the button hides, or a pill's filter reads as active twice.
+  // `sort` stays counted — this button opens it too.
+  const mobileFiltersCount = QuickFilters
+    ? appliedFiltersTotalCount - quickArtworkFiltersCount
+    : appliedFiltersTotalCount
+
   /**
    * Check to see if the current filter is different from the previous filter
    * and trigger a reload.
@@ -341,10 +347,10 @@ export const BaseArtworkFilter: React.FC<
                     <FilterIcon />
                     <Text variant="xs">
                       Sort & Filter
-                      {appliedFiltersTotalCount > 0 && (
+                      {mobileFiltersCount > 0 && (
                         <Box as="span" color="brand">
                           {" "}
-                          • {appliedFiltersTotalCount}
+                          • {mobileFiltersCount}
                         </Box>
                       )}
                     </Text>
@@ -364,6 +370,17 @@ export const BaseArtworkFilter: React.FC<
             )
           }}
         </Sticky>
+
+        {/* Opt-in: a page arriving pre-filtered needs the cause on screen */}
+        {QuickFilters && (
+          <>
+            <Spacer y={2} />
+
+            <FullBleed>
+              <HorizontalOverflow px={2}>{QuickFilters}</HorizontalOverflow>
+            </FullBleed>
+          </>
+        )}
 
         <Spacer y={4} />
 
