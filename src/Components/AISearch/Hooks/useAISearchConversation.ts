@@ -113,7 +113,7 @@ export const useAISearchConversation = () => {
 
   const abortRef = useRef<AbortController | null>(null)
 
-  // localStorage is unavailable during SSR, so hydrate after mount.
+  // localStorage is unavailable during SSR, so hydrate after mount
   useEffect(() => {
     setConversations(readAISearchConversations())
   }, [])
