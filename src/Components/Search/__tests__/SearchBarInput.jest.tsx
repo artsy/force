@@ -659,5 +659,93 @@ describe("SearchBarInput", () => {
         expect.objectContaining({ action: ActionType.railViewed }),
       )
     })
+
+    describe("submitting with Enter", () => {
+      // The row renders off the debounced value, so Enter has to parse the
+      // live term or the whole query goes out as a keyword and returns nothing
+      const submit = async () => {
+        await userEvent.type(screen.getByRole("textbox"), "{Enter}")
+      }
+
+      it("navigates to the filtered page rather than the raw term", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith(
+          expect.stringContaining("additional_gene_ids"),
+        )
+        expect(mockPush).not.toHaveBeenCalledWith(
+          "/search?term=warhol%20prints%20under%205000",
+        )
+      })
+
+      it("records the filtered page as the recent search", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        const [recent] = JSON.parse(
+          localStorage.getItem("artsy.recentSearches")!,
+        )
+
+        expect(recent.label).toEqual("warhol prints under 5000")
+        expect(recent.href).toContain("additional_gene_ids")
+      })
+
+      it("tracks the submit under the suggested filters module", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        expect(mockTrackEvent).toHaveBeenCalledWith(
+          expect.objectContaining({
+            action: ActionType.selectedItemFromSearch,
+            context_module: ContextModule.suggestedFilters,
+            item_id: "suggested-filters",
+          }),
+        )
+      })
+
+      it("falls back to the raw term when the query does not parse", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="andy" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith("/search?term=andy")
+      })
+
+      it("leaves a name-shaped query as a plain search", async () => {
+        // "paris photo" is a fair: one medium beside free text is the shape
+        // entity names take, and the raw term already finds them
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="paris photo" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith("/search?term=paris%20photo")
+      })
+
+      it("still offers the row for a query it will not submit to", () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="paris photo" />)
+
+        expect(row()).toBeInTheDocument()
+      })
+
+      it("leaves the raw term alone when the feature flag is off", async () => {
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith(
+          "/search?term=warhol%20prints%20under%205000",
+        )
+      })
+    })
   })
 })

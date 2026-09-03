@@ -10,17 +10,19 @@ import type { ParsedFilterQuery } from "./parseFilterQuery"
  * page's Medium filter reads, so the pill shows as applied.
  */
 export const buildSuggestedFiltersUrl = (parsed: ParsedFilterQuery): string => {
-  const { medium, priceRange, attributionClass } = parsed.filters
+  const { medium, priceRange, attributionClass, artistNationalities } =
+    parsed.filters
 
   const params = {
     // Free text only: the term doubles as the artworks keyword, and searching
     // the filter words too returns nothing ("warhol prints under 5000" -> 0,
-    // "warhol" plus the same filters -> ~1,500). With no free text the leading
-    // label stands in, keeping the heading readable. A row always carries one
-    // or the other, so there is deliberately no raw-query fallback here.
-    term: parsed.keyword || parsed.labels[0],
+    // "warhol" plus the same filters -> ~1,500). With no free text `termLabel`
+    // stands in, keeping the heading readable. A row always carries one or the
+    // other, so there is deliberately no raw-query fallback here.
+    term: parsed.keyword || parsed.termLabel,
     additionalGeneIDs: medium ? [medium] : undefined,
     attributionClass,
+    artistNationalities,
     priceRange,
   }
 

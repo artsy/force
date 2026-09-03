@@ -20,7 +20,7 @@ describe("SuggestedFiltersItem", () => {
   })
 
   const parsed = (keyword: string, labels: string[]): ParsedFilterQuery => {
-    return { filters: {}, keyword, labels }
+    return { filters: {}, keyword, labels, termLabel: labels[0] }
   }
 
   const renderRow = ({

@@ -64,4 +64,24 @@ describe("buildSuggestedFiltersUrl", () => {
     expect(url).not.toContain("between")
     expect(url).not.toContain("1k")
   })
+
+  it("sends one param per nationality the demonym stands for", () => {
+    const url = urlFor("korean paintings under 5k")
+
+    expect(url).toContain("artist_nationalities[0]=Korean")
+    expect(url).toContain("artist_nationalities[1]=South Korean")
+  })
+
+  it("never stands the nationality in as the term", () => {
+    const url = urlFor("chinese photography")
+
+    expect(url).toContain("term=Photography&")
+    expect(url).toContain("artist_nationalities[0]=Chinese")
+  })
+
+  it("omits nationalities the query didn't ask for", () => {
+    expect(urlFor("warhol prints under 5000")).not.toContain(
+      "artist_nationalities",
+    )
+  })
 })
