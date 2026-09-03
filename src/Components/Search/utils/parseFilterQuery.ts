@@ -31,6 +31,8 @@ export interface ParsedFilterQuery {
   keyword: string
   /** Human labels in display order: nationality, medium, rarity, price */
   labels: string[]
+  /** The leading nationality labels, which read as a subject of their own */
+  nationalityLabels: string[]
   /**
    * Stands in as the search term when there is no free text. The medium is the
    * only label that reads as one: a rarity or a nationality repeated as a
@@ -405,6 +407,7 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
     },
     keyword,
     labels,
+    nationalityLabels,
     termLabel: medium?.label ?? labels[0],
   }
 }
