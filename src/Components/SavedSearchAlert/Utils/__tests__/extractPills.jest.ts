@@ -2,12 +2,14 @@ import type { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext
 import {
   excludeDefaultCriteria,
   extractPillFromAggregation,
+  extractPillsFromCriteria,
   extractPillsFromDefaultCriteria,
 } from "Components/SavedSearchAlert/Utils/extractPills"
 import type {
   SavedSearchDefaultCriteria,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
+import { DEFAULT_METRIC } from "Utils/metrics"
 
 describe("extractPillFromAggregation", () => {
   it("returns pills", () => {
@@ -61,6 +63,30 @@ describe("extractPillFromAggregation", () => {
       },
       { displayValue: "NFT", value: "nft", field: "additionalGeneIDs" },
     ])
+  })
+})
+
+describe("extractPillsFromCriteria", () => {
+  // Without a pill the keyword only shows as a count on "All Filters", so
+  // there is nothing naming it and nothing to untick
+  it("names an applied keyword", () => {
+    const result = extractPillsFromCriteria({
+      criteria: { keyword: "warhol" },
+      metric: DEFAULT_METRIC,
+    })
+
+    expect(result).toEqual([
+      { field: "keyword", value: "warhol", displayValue: "warhol" },
+    ])
+  })
+
+  it("omits an empty keyword", () => {
+    const result = extractPillsFromCriteria({
+      criteria: { keyword: "" },
+      metric: DEFAULT_METRIC,
+    })
+
+    expect(result).toEqual([])
   })
 })
 

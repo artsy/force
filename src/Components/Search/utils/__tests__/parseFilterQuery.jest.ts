@@ -277,6 +277,31 @@ describe("parseFilterQuery", () => {
     })
   })
 
+  describe("only stands a medium in as the search term", () => {
+    // The term doubles as the artworks keyword, so a rarity standing in costs
+    // almost every result the filters were meant to return: "unique under 5k"
+    // returns 628 against ~838,000 for the same filters alone
+    it.each(["unique under 5k", "limited edition under 10k"])(
+      "returns null for %p",
+      query => {
+        expect(parseFilterQuery(query)).toBeNull()
+      },
+    )
+
+    it("still suggests a rarity when free text carries the term", () => {
+      const result = parseFilterQuery("banksy limited edition under 10k")
+
+      expect(result?.filters.attributionClass).toEqual(["limited edition"])
+      expect(result?.keyword).toEqual("banksy")
+    })
+
+    it("stands the medium in ahead of the rarity", () => {
+      expect(parseFilterQuery("unique prints under 5k")?.termLabel).toEqual(
+        "Prints",
+      )
+    })
+  })
+
   describe("does not read a nationality out of a movement or a material", () => {
     it.each([
       ["african american photography", "photography", "african american"],

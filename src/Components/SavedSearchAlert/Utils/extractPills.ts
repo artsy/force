@@ -113,6 +113,16 @@ export const extractPillsFromCriteria = ({
     }
 
     switch (paramName) {
+      case "keyword": {
+        if (paramValue) {
+          result = {
+            field: paramName,
+            value: String(paramValue),
+            displayValue: String(paramValue),
+          }
+        }
+        break
+      }
       case "width":
       case "height": {
         if (paramValue && isCustomValue(paramValue)) {

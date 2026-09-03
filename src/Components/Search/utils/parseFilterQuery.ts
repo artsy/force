@@ -31,6 +31,12 @@ export interface ParsedFilterQuery {
   keyword: string
   /** Human labels in display order: nationality, medium, rarity, price */
   labels: string[]
+  /**
+   * Stands in as the search term when there is no free text. The medium is the
+   * only label that reads as one: a rarity or a nationality repeated as a
+   * keyword throws away most of the results the filters already cover.
+   */
+  termLabel: string
 }
 
 interface PricePattern {
@@ -373,7 +379,7 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
     !shouldSuggestFilters({
       filterCount,
       nationalityCount: nationalityLabels.length,
-      hasNameableFilter: !!medium || attributionClass.length > 0,
+      hasMedium: !!medium,
       keyword,
     })
   ) {
@@ -399,6 +405,7 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
     },
     keyword,
     labels,
+    termLabel: medium?.label ?? labels[0],
   }
 }
 
@@ -415,19 +422,20 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
 const shouldSuggestFilters = ({
   filterCount,
   nationalityCount,
-  hasNameableFilter,
+  hasMedium,
   keyword,
 }: {
   filterCount: number
   nationalityCount: number
-  hasNameableFilter: boolean
+  hasMedium: boolean
   keyword: string
 }): boolean => {
   if (filterCount === 0) return false
 
   if (keyword.length > 0) return true
 
-  // With no free text a filter label becomes the search term, and a price
-  // doesn't read as one
-  return hasNameableFilter && filterCount + nationalityCount >= 2
+  // With no free text the medium becomes the search term. Standing a rarity in
+  // instead costs almost every result the filters were meant to return
+  // ("unique under 5k" -> 628, the same filters alone -> ~838,000).
+  return hasMedium && filterCount + nationalityCount >= 2
 }

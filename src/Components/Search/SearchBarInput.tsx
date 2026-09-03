@@ -51,6 +51,7 @@ import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
 import { buildSuggestedFiltersUrl } from "./utils/buildSuggestedFiltersUrl"
 import { parseFilterQuery } from "./utils/parseFilterQuery"
+import { shouldSubmitToFilters } from "./utils/shouldSubmitToFilters"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
@@ -128,20 +129,10 @@ export const SearchBarInput: FC<
   const formattedOptions: SuggestionItemOptionProps[] = [
     ...(shouldShowSuggestedFilters
       ? [
-          {
-            kind: "suggestedFilters" as const,
-            text: value,
-            value: value,
-            subtitle: "",
-            imageUrl: "",
-            showAuctionResultsButton: false,
+          buildSuggestedFiltersOption({
+            query: value,
             href: suggestedFiltersHref,
-            typename: "SuggestedFilters",
-            item_id: "suggested-filters",
-            // Position within its own context module, not the entity ranking
-            item_number: 0,
-            item_type: "filter-suggestion",
-          },
+          }),
         ]
       : []),
     ...edges.flatMap((edge, index) => {
@@ -295,9 +286,27 @@ export const SearchBarInput: FC<
     const term = value.trim()
     if (!term) return
 
-    addRecentSearch({ label: term, href: encodedSearchURL })
+    // The row renders off the debounced value, so submitting before it appears
+    // would send the whole query as a keyword and return nothing. Parsing the
+    // live term keeps Enter on the destination the row points at, but only for
+    // the queries `shouldSubmitToFilters` trusts — the rest stay a search.
+    const candidate =
+      isSuggestedFiltersEnabled && selectedPill === TOP_PILL
+        ? parseFilterQuery(term)
+        : null
+
+    const parsed =
+      candidate && shouldSubmitToFilters(candidate) ? candidate : null
+
+    const href = parsed ? buildSuggestedFiltersUrl(parsed) : encodedSearchURL
+
+    if (parsed) {
+      trackSelection(buildSuggestedFiltersOption({ query: term, href }))
+    }
+
+    addRecentSearch({ label: term, href })
     closeDropdown()
-    redirect(encodedSearchURL)
+    redirect(href)
   }
 
   const trackSelection = (option: SuggestionItemOptionProps) => {
@@ -573,6 +582,31 @@ export const SearchBarInput: FC<
       </Box>
     </ManageArtworkForSavesProvider>
   )
+}
+
+// Shared by the dropdown row and the Enter submit, so both record the same
+// selection against the suggested-filters module
+const buildSuggestedFiltersOption = ({
+  query,
+  href,
+}: {
+  query: string
+  href: string
+}): SuggestionItemOptionProps => {
+  return {
+    kind: "suggestedFilters" as const,
+    text: query,
+    value: query,
+    subtitle: "",
+    imageUrl: "",
+    showAuctionResultsButton: false,
+    href,
+    typename: "SuggestedFilters",
+    item_id: "suggested-filters",
+    // Position within its own context module, not the entity ranking
+    item_number: 0,
+    item_type: "filter-suggestion",
+  }
 }
 
 // Same box shadow as Palette's AutocompleteInput dropdown, so the trending
