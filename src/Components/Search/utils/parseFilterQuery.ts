@@ -1,8 +1,10 @@
 import type { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterTypes"
+import { formatPriceRangeLabel } from "Components/ArtworkFilter/Utils/formatPriceRangeLabel"
 import {
   COLLISION_PHRASES,
   FILTER_VOCABULARY,
   MAX_PHRASE_WORDS,
+  NATIONALITY_COLLISION_PHRASES,
   NEGATORS,
   STOPWORDS,
   type VocabularyEntry,
@@ -10,20 +12,33 @@ import {
 } from "./filterQueryVocabulary"
 
 /**
- * `medium`, not `additionalGeneIDs`: urlBuilder turns it into the
- * `/collect/:medium` path segment. Hence one medium per query.
+ * `medium` holds a single gene slug; `buildSuggestedFiltersUrl` sends it on as
+ * a one-element `additionalGeneIDs`. Widening it to several mediums is possible
+ * now the URL is no longer a `/collect/:medium` path — see the cap below.
  */
 export type SuggestedFilters = Pick<
   ArtworkFilters,
-  "medium" | "priceRange" | "attributionClass" | "keyword"
+  | "medium"
+  | "priceRange"
+  | "attributionClass"
+  | "artistNationalities"
+  | "keyword"
 >
 
 export interface ParsedFilterQuery {
   filters: SuggestedFilters
   /** Everything the parser didn't consume; goes into the keyword filter */
   keyword: string
-  /** Human labels in display order: medium, rarity, price */
+  /** Human labels in display order: nationality, medium, rarity, price */
   labels: string[]
+  /** The leading nationality labels, which read as a subject of their own */
+  nationalityLabels: string[]
+  /**
+   * Stands in as the search term when there is no free text. The medium is the
+   * only label that reads as one: a rarity or a nationality repeated as a
+   * keyword throws away most of the results the filters already cover.
+   */
+  termLabel: string
 }
 
 interface PricePattern {
@@ -188,7 +203,19 @@ interface PhraseAccumulator {
   hasNegatedMatch: boolean
 }
 
-const extractVocabulary = (tokens: string[]): PhraseAccumulator => {
+const extractVocabulary = ({
+  tokens,
+  allowNationality,
+}: {
+  tokens: string[]
+  allowNationality: boolean
+}): PhraseAccumulator => {
+  const isUsable = (entry: VocabularyEntry | undefined): boolean => {
+    if (!entry) return false
+
+    return allowNationality || entry.type !== "artistNationality"
+  }
+
   return tokens.reduce<PhraseAccumulator>(
     (acc, _token, index) => {
       if (index < acc.skipUntil) return acc
@@ -207,7 +234,7 @@ const extractVocabulary = (tokens: string[]): PhraseAccumulator => {
           return { size, entry: FILTER_VOCABULARY.get(phrase) }
         })
         .find(({ entry }) => {
-          return !!entry
+          return isUsable(entry)
         })
 
       if (!hit?.entry) {
@@ -254,29 +281,6 @@ const trimStopwords = (words: string[]): string[] => {
   return words.slice(first, words.length - fromEnd)
 }
 
-const formatPriceLabel = (range: string): string => {
-  const [min, max] = range.split("-")
-  const format = (amount: string) => {
-    return CURRENCY_FORMATTER.format(Number(amount))
-  }
-
-  if (min === "*") {
-    return `Under ${format(max)}`
-  }
-
-  if (max === "*") {
-    return `${format(min)} and up`
-  }
-
-  return `${format(min)}–${format(max)}`
-}
-
-const CURRENCY_FORMATTER = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-})
-
 /**
  * Parses artwork-filter intent out of a raw search query, entirely on the
  * client. Returns null when there's nothing worth suggesting.
@@ -305,7 +309,12 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
   const { priceRange, rest } = extractPrice(clean(query))
 
   const tokens = rest.split(/\s+/).filter(Boolean)
-  const { matches, leftover, hasNegatedMatch } = extractVocabulary(tokens)
+  const { matches, leftover, hasNegatedMatch } = extractVocabulary({
+    tokens,
+    allowNationality: !NATIONALITY_COLLISION_PHRASES.some(phrase => {
+      return normalizedQuery.includes(phrase)
+    }),
+  })
 
   // Only positive filters are expressible, so an exclusion can't be honoured —
   // and filtering *to* the excluded value is worse than staying quiet
@@ -322,11 +331,31 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
     ),
   ]
 
-  // The collect URL carries a single medium as its path segment, so a second
-  // one would be dropped without the user seeing it go
+  // Only one medium is carried, so a second would be dropped without the user
+  // seeing it go. The `/collect/:medium` path segment that forced this is gone
+  // — `additionalGeneIDs` takes a list — so "prints and paintings" could be
+  // supported by widening `medium`, the pill already renders "Prints +1".
   if (mediumValues.length > 1) return null
 
   const medium = mediumEntries[0]
+
+  const nationalityEntries = matches.filter(entry => {
+    return entry.type === "artistNationality"
+  })
+  const nationalityLabels = [
+    ...new Set(
+      nationalityEntries.map(entry => {
+        return entry.label
+      }),
+    ),
+  ]
+  const artistNationalities = [
+    ...new Set(
+      nationalityEntries.flatMap(entry => {
+        return entry.values ?? [entry.value]
+      }),
+    ),
+  ]
 
   const attributionEntries = matches.filter(entry => {
     return entry.type === "attributionClass"
@@ -348,12 +377,22 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
   const filterCount =
     (medium ? 1 : 0) + (priceRange ? 1 : 0) + attributionClass.length
 
-  if (!shouldSuggestFilters({ filterCount, keyword })) return null
+  if (
+    !shouldSuggestFilters({
+      filterCount,
+      nationalityCount: nationalityLabels.length,
+      hasMedium: !!medium,
+      keyword,
+    })
+  ) {
+    return null
+  }
 
   const labels = [
+    ...nationalityLabels,
     medium?.label,
     ...attributionEntries.map(entry => entry.label),
-    priceRange ? formatPriceLabel(priceRange) : undefined,
+    priceRange ? formatPriceRangeLabel(priceRange) : undefined,
   ].filter(Boolean) as string[]
 
   return {
@@ -361,10 +400,15 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
       medium: medium?.value,
       priceRange,
       attributionClass: attributionClass.length ? attributionClass : undefined,
+      artistNationalities: artistNationalities.length
+        ? artistNationalities
+        : undefined,
       keyword: keyword || undefined,
     },
     keyword,
     labels,
+    nationalityLabels,
+    termLabel: medium?.label ?? labels[0],
   }
 }
 
@@ -372,15 +416,29 @@ export const parseFilterQuery = (query: string): ParsedFilterQuery | null => {
  * A single recognized filter with no keyword ("prints") is better served by the
  * gene/collection entity the backend already returns, so hold the row back
  * until there's either free text to carry over or a second filter.
+ *
+ * A nationality never counts as that filter on its own: demonyms turn up
+ * inside titles, artist names and subject matter far more often than they
+ * state an artist's nationality, so one has to arrive alongside a medium,
+ * rarity or price to be trusted.
  */
 const shouldSuggestFilters = ({
   filterCount,
+  nationalityCount,
+  hasMedium,
   keyword,
 }: {
   filterCount: number
+  nationalityCount: number
+  hasMedium: boolean
   keyword: string
 }): boolean => {
   if (filterCount === 0) return false
 
-  return keyword.length > 0 || filterCount >= 2
+  if (keyword.length > 0) return true
+
+  // With no free text the medium becomes the search term. Standing a rarity in
+  // instead costs almost every result the filters were meant to return
+  // ("unique under 5k" -> 628, the same filters alone -> ~838,000).
+  return hasMedium && filterCount + nationalityCount >= 2
 }

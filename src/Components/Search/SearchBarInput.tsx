@@ -16,12 +16,12 @@ import styled from "styled-components"
 import {
   ActionType,
   ContextModule,
-  type RailViewed,
   type SearchedWithNoResults,
   type SearchedWithResults,
+  type SearchedWithSuggestedFilter,
   type SelectedItemFromSearch,
+  type SelectedSuggestedFilter,
 } from "@artsy/cohesion"
-import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { Z } from "Apps/Components/constants"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
@@ -50,7 +50,12 @@ import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
-import { parseFilterQuery } from "./utils/parseFilterQuery"
+import { buildSuggestedFiltersUrl } from "./utils/buildSuggestedFiltersUrl"
+import {
+  type ParsedFilterQuery,
+  parseFilterQuery,
+} from "./utils/parseFilterQuery"
+import { shouldSubmitToFilters } from "./utils/shouldSubmitToFilters"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 
@@ -122,26 +127,16 @@ export const SearchBarInput: FC<
     !!parsedFilters && selectedPill === TOP_PILL
 
   const suggestedFiltersHref = parsedFilters
-    ? buildUrlForCollectApp(parsedFilters.filters)
+    ? buildSuggestedFiltersUrl(parsedFilters)
     : ""
 
   const formattedOptions: SuggestionItemOptionProps[] = [
     ...(shouldShowSuggestedFilters
       ? [
-          {
-            kind: "suggestedFilters" as const,
-            text: value,
-            value: value,
-            subtitle: "",
-            imageUrl: "",
-            showAuctionResultsButton: false,
+          buildSuggestedFiltersOption({
+            query: value,
             href: suggestedFiltersHref,
-            typename: "SuggestedFilters",
-            item_id: "suggested-filters",
-            // Position within its own context module, not the entity ranking
-            item_number: 0,
-            item_type: "filter-suggestion",
-          },
+          }),
         ]
       : []),
     ...edges.flatMap((edge, index) => {
@@ -295,24 +290,51 @@ export const SearchBarInput: FC<
     const term = value.trim()
     if (!term) return
 
-    addRecentSearch({ label: term, href: encodedSearchURL })
+    // The row renders off the debounced value, so submitting before it appears
+    // would send the whole query as a keyword and return nothing. Parsing the
+    // live term keeps Enter on the destination the row points at, but only for
+    // the queries `shouldSubmitToFilters` trusts — the rest stay a search.
+    const candidate =
+      isSuggestedFiltersEnabled && selectedPill === TOP_PILL
+        ? parseFilterQuery(term)
+        : null
+
+    const parsed =
+      candidate && shouldSubmitToFilters(candidate) ? candidate : null
+
+    const href = parsed ? buildSuggestedFiltersUrl(parsed) : encodedSearchURL
+
+    if (parsed) {
+      trackSelection(buildSuggestedFiltersOption({ query: term, href }), parsed)
+    }
+
+    addRecentSearch({ label: term, href })
     closeDropdown()
-    redirect(encodedSearchURL)
+    redirect(href)
   }
 
-  const trackSelection = (option: SuggestionItemOptionProps) => {
+  const trackSelection = (
+    option: SuggestionItemOptionProps,
+    parsed?: ParsedFilterQuery | null,
+  ) => {
     // The "See all results" footer has never been tracked here
     if (option.kind === "footer") return
 
-    // Its own module, so the row's clicks are separable from entity results
-    const contextModule =
-      option.kind === "suggestedFilters"
-        ? ContextModule.suggestedFilters
-        : selectedPill.analyticsContextModule
+    // The row has its own event, carrying the filters it was parsed into
+    if (option.kind === "suggestedFilters" && parsed) {
+      const selectedEvent: SelectedSuggestedFilter = {
+        action: ActionType.selectedSuggestedFilter,
+        context_module: ContextModule.suggestedFilters,
+        filters: JSON.stringify(parsed.filters),
+        query: value,
+      }
+      tracking.trackEvent(selectedEvent)
+      return
+    }
 
     const analyticsEvent: SelectedItemFromSearch = {
       action: ActionType.selectedItemFromSearch,
-      context_module: contextModule,
+      context_module: selectedPill.analyticsContextModule,
       destination_path: option.href,
       query: value,
       item_id: option.item_id!,
@@ -323,7 +345,7 @@ export const SearchBarInput: FC<
   }
 
   const handleSelect = (option: SuggestionItemOptionProps) => {
-    trackSelection(option)
+    trackSelection(option, parsedFilters)
     // The “See all results” footer row records the raw query + results page,
     // the same entry a plain Enter submit records
     addRecentSearchFromOption(option)
@@ -337,7 +359,7 @@ export const SearchBarInput: FC<
     option: SuggestionItemOptionProps,
     event?: MouseEvent<HTMLElement>,
   ) => {
-    trackSelection(option)
+    trackSelection(option, parsedFilters)
     addRecentSearchFromOption(option)
     if (isModifiedClick(event)) return
     closeDropdown()
@@ -358,31 +380,43 @@ export const SearchBarInput: FC<
     redirect(`${option.href}/auction-results`)
   }
 
-  // Once per focus session, not per keystroke: the row changes as the query is
-  // refined, and counting each appearance would inflate the CTR denominator.
-  const hasTrackedSuggestedFiltersRef = useRef(false)
+  // Once per distinct filter set, not per keystroke: "chinese photo" and
+  // "chinese photography" parse to the same filters, so refining a query
+  // records the intent once rather than once a letter.
+  const trackedFilterSetsRef = useRef(new Set<string>())
 
   useEffect(() => {
     if (!isFocused) {
-      hasTrackedSuggestedFiltersRef.current = false
+      trackedFilterSetsRef.current.clear()
       return
     }
 
-    if (!shouldShowSuggestedFilters) return
-    if (hasTrackedSuggestedFiltersRef.current) return
+    if (!shouldShowSuggestedFilters || !parsedFilters) return
 
-    hasTrackedSuggestedFiltersRef.current = true
+    const filters = JSON.stringify(parsedFilters.filters)
 
-    const event: RailViewed = {
-      action: ActionType.railViewed,
+    if (trackedFilterSetsRef.current.has(filters)) return
+
+    trackedFilterSetsRef.current.add(filters)
+
+    const event: SearchedWithSuggestedFilter = {
+      action: ActionType.searchedWithSuggestedFilter,
       context_module: ContextModule.suggestedFilters,
-      context_screen: contextPageOwnerType,
+      context_owner_type: contextPageOwnerType,
+      context_owner_id: contextPageOwnerId,
+      context_owner_slug: contextPageOwnerSlug,
+      filters,
+      query: debouncedValue,
     }
     tracking.trackEvent(event)
   }, [
     isFocused,
     shouldShowSuggestedFilters,
+    parsedFilters,
+    debouncedValue,
     contextPageOwnerType,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
     tracking.trackEvent,
   ])
 
@@ -573,6 +607,31 @@ export const SearchBarInput: FC<
       </Box>
     </ManageArtworkForSavesProvider>
   )
+}
+
+// Shared by the dropdown row and the Enter submit, so both record the same
+// selection against the suggested-filters module
+const buildSuggestedFiltersOption = ({
+  query,
+  href,
+}: {
+  query: string
+  href: string
+}): SuggestionItemOptionProps => {
+  return {
+    kind: "suggestedFilters" as const,
+    text: query,
+    value: query,
+    subtitle: "",
+    imageUrl: "",
+    showAuctionResultsButton: false,
+    href,
+    typename: "SuggestedFilters",
+    item_id: "suggested-filters",
+    // Position within its own context module, not the entity ranking
+    item_number: 0,
+    item_type: "filter-suggestion",
+  }
 }
 
 // Same box shadow as Palette's AutocompleteInput dropdown, so the trending

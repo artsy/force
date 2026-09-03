@@ -535,7 +535,7 @@ describe("SearchBarInput", () => {
       expect(parseFilterQuery).toHaveBeenCalledWith("warhol prints under 5000")
     })
 
-    it("renders the parsed filters and links to the collect page", () => {
+    it("renders the parsed filters and links to the search results page", () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
@@ -544,8 +544,10 @@ describe("SearchBarInput", () => {
       expect(row()).toHaveTextContent("in Prints · Under $5,000")
 
       const href = row()?.getAttribute("href")
-      expect(href).toContain("/collect/prints")
-      expect(href).toContain("keyword=warhol")
+      expect(href).toContain("/search?")
+      expect(href).toContain("term=warhol&")
+      expect(href).toContain("additional_gene_ids%5B0%5D=prints")
+      expect(href).toContain("price_range=%2A-5000")
     })
 
     it("highlights every term the user typed, including inside derived labels", () => {
@@ -602,7 +604,7 @@ describe("SearchBarInput", () => {
       expect(row()).not.toBeInTheDocument()
     })
 
-    it("tracks the click under its own context module", async () => {
+    it("tracks the click with the filters it parsed", async () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
@@ -610,11 +612,14 @@ describe("SearchBarInput", () => {
 
       expect(mockTrackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
-          action: ActionType.selectedItemFromSearch,
+          action: ActionType.selectedSuggestedFilter,
           context_module: ContextModule.suggestedFilters,
-          item_id: "suggested-filters",
-          item_number: 0,
-          item_type: "filter-suggestion",
+          filters: JSON.stringify({
+            medium: "prints",
+            priceRange: "*-5000",
+            keyword: "warhol",
+          }),
+          query: "warhol prints under 5000",
         }),
       )
     })
@@ -633,20 +638,42 @@ describe("SearchBarInput", () => {
       )
     })
 
-    it("tracks one impression per focus session", () => {
+    const impressions = () => {
+      return mockTrackEvent.mock.calls.filter(([event]) => {
+        return event.action === ActionType.searchedWithSuggestedFilter
+      })
+    }
+
+    it("tracks the appearance with the filters it parsed", () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
       fireEvent.focus(screen.getByRole("textbox"))
 
-      const impressions = mockTrackEvent.mock.calls.filter(([event]) => {
-        return (
-          event.action === ActionType.railViewed &&
-          event.context_module === ContextModule.suggestedFilters
-        )
-      })
+      expect(impressions()).toHaveLength(1)
+      expect(impressions()[0][0]).toEqual(
+        expect.objectContaining({
+          context_module: ContextModule.suggestedFilters,
+          filters: JSON.stringify({
+            medium: "prints",
+            priceRange: "*-5000",
+            keyword: "warhol",
+          }),
+          query: "warhol prints under 5000",
+        }),
+      )
+    })
 
-      expect(impressions).toHaveLength(1)
+    it("tracks one impression per distinct filter set", async () => {
+      // "prints under 5000" parses the same either way, so refining the query
+      // records the intent once rather than once a letter
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      fireEvent.focus(screen.getByRole("textbox"))
+      await userEvent.type(screen.getByRole("textbox"), "!")
+
+      expect(impressions()).toHaveLength(1)
     })
 
     it("does not track an impression before the dropdown is focused", () => {
@@ -654,8 +681,98 @@ describe("SearchBarInput", () => {
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
       expect(mockTrackEvent).not.toHaveBeenCalledWith(
-        expect.objectContaining({ action: ActionType.railViewed }),
+        expect.objectContaining({
+          action: ActionType.searchedWithSuggestedFilter,
+        }),
       )
+    })
+
+    describe("submitting with Enter", () => {
+      // The row renders off the debounced value, so Enter has to parse the
+      // live term or the whole query goes out as a keyword and returns nothing
+      const submit = async () => {
+        await userEvent.type(screen.getByRole("textbox"), "{Enter}")
+      }
+
+      it("navigates to the filtered page rather than the raw term", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith(
+          expect.stringContaining("additional_gene_ids"),
+        )
+        expect(mockPush).not.toHaveBeenCalledWith(
+          "/search?term=warhol%20prints%20under%205000",
+        )
+      })
+
+      it("records the filtered page as the recent search", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        const [recent] = JSON.parse(
+          localStorage.getItem("artsy.recentSearches")!,
+        )
+
+        expect(recent.label).toEqual("warhol prints under 5000")
+        expect(recent.href).toContain("additional_gene_ids")
+      })
+
+      it("tracks the submit as a suggested filter selection", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        expect(mockTrackEvent).toHaveBeenCalledWith(
+          expect.objectContaining({
+            action: ActionType.selectedSuggestedFilter,
+            context_module: ContextModule.suggestedFilters,
+            query: "warhol prints under 5000",
+          }),
+        )
+      })
+
+      it("falls back to the raw term when the query does not parse", async () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="andy" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith("/search?term=andy")
+      })
+
+      it("leaves a name-shaped query as a plain search", async () => {
+        // "paris photo" is a fair: one medium beside free text is the shape
+        // entity names take, and the raw term already finds them
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="paris photo" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith("/search?term=paris%20photo")
+      })
+
+      it("still offers the row for a query it will not submit to", () => {
+        enableSuggestedFilters()
+        render(<SearchBarInput searchTerm="paris photo" />)
+
+        expect(row()).toBeInTheDocument()
+      })
+
+      it("leaves the raw term alone when the feature flag is off", async () => {
+        render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+        await submit()
+
+        expect(mockPush).toHaveBeenCalledWith(
+          "/search?term=warhol%20prints%20under%205000",
+        )
+      })
     })
   })
 })

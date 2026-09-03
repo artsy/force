@@ -1,4 +1,9 @@
+import { useFlag } from "@unleash/proxy-client-react"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
+import {
+  SEARCH_RESULTS_FILTER_PILL_FIELDS,
+  SearchResultsFilterPills,
+} from "Apps/Search/Components/SearchResultsFilterPills"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import type {
@@ -25,6 +30,9 @@ export const SearchResultsArtworksRoute: React.FC<
 > = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
+
+  // Same flag as the dropdown row that lands here
+  const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
   const [searchFilterKey, setSearchFilterKey] = useState(
     match.location.query.term,
   )
@@ -69,6 +77,12 @@ export const SearchResultsArtworksRoute: React.FC<
           { value: "year", text: "Artwork Year (Ascending)" },
         ]}
         Filters={<SearchResultsArtworksFilters />}
+        {...(isSuggestedFiltersEnabled
+          ? {
+              QuickFilters: <SearchResultsFilterPills />,
+              quickFilterFields: SEARCH_RESULTS_FILTER_PILL_FIELDS,
+            }
+          : {})}
         userPreferredMetric={userPreferences?.metric}
       />
     </ArtworkGridContextProvider>

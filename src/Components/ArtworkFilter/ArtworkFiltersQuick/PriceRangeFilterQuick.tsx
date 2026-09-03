@@ -6,17 +6,27 @@ import {
   FilterQuickDropdownAnchor,
   FilterQuickDropdownPanel,
 } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
+import { formatPriceRangeLabel } from "Components/ArtworkFilter/Utils/formatPriceRangeLabel"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import type { FC } from "react"
 
 export interface PriceRangeFilterQuickProps
-  extends Omit<DropdownProps, "dropdown" | "children"> {}
+  extends Omit<DropdownProps, "dropdown" | "children"> {
+  label?: string
+  /**
+   * Renders the applied range in place of the label, in a pill that reads as
+   * selected — "Under $5,000" rather than "Price Range • 1".
+   */
+  labelAppliedValues?: boolean
+}
 
 export const PriceRangeFilterQuick: FC<
   React.PropsWithChildren<PriceRangeFilterQuickProps>
-> = props => {
-  const { count, filters, range, histogram, onPriceRangeUpdate } =
+> = ({ label = "Price Range", labelAppliedValues, ...props }) => {
+  const { count, field, filters, range, histogram, onPriceRangeUpdate } =
     usePriceRangeFilter()
+
+  const appliedLabel = labelAppliedValues ? formatPriceRangeLabel(field) : null
 
   const handleClear = () => {
     filters.setFilter("priceRange", initialArtworkFilterState.priceRange)
@@ -54,8 +64,9 @@ export const PriceRangeFilterQuick: FC<
       {props => {
         return (
           <FilterQuickDropdownAnchor
-            label="Price Range"
+            label={label}
             count={count}
+            appliedLabels={appliedLabel ? [appliedLabel] : undefined}
             {...props}
           />
         )

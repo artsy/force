@@ -14,6 +14,7 @@ export interface SearchCriteriaAttributes {
   framed?: boolean | null
   height?: string | null
   inquireableOnly?: boolean | null
+  keyword?: string | null
   locationCities?: string[] | null
   majorPeriods?: string[] | null
   materialsTerms?: string[] | null

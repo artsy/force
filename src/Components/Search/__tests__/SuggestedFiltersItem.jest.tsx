@@ -19,24 +19,36 @@ describe("SuggestedFiltersItem", () => {
     })
   })
 
-  const parsed = (keyword: string, labels: string[]): ParsedFilterQuery => {
-    return { filters: {}, keyword, labels }
+  const parsed = (
+    keyword: string,
+    labels: string[],
+    nationalityLabels: string[] = [],
+  ): ParsedFilterQuery => {
+    return {
+      filters: {},
+      keyword,
+      labels,
+      nationalityLabels,
+      termLabel: labels[0],
+    }
   }
 
   const renderRow = ({
     keyword,
     labels,
+    nationalityLabels,
     query,
     onClick = jest.fn(),
   }: {
     keyword: string
     labels: string[]
+    nationalityLabels?: string[]
     query: string
     onClick?: () => void
   }) => {
     render(
       <SuggestedFiltersItem
-        parsed={parsed(keyword, labels)}
+        parsed={parsed(keyword, labels, nationalityLabels)}
         href="/collect/prints"
         query={query}
         onClick={onClick}
@@ -94,6 +106,45 @@ describe("SuggestedFiltersItem", () => {
 
       expect(row).toHaveTextContent("Prints · $1,000–$5,000")
       expect(row).not.toHaveTextContent("in ")
+    })
+  })
+
+  describe("when a nationality leads the query", () => {
+    // A demonym is a subject and a medium is a container, so the preposition
+    // reads the way language does — unlike a rarity or a price
+    it("puts the nationality in the headline and the rest behind “in”", () => {
+      const row = renderRow({
+        keyword: "",
+        labels: ["Chinese", "Photography"],
+        nationalityLabels: ["Chinese"],
+        query: "chinese photography",
+      })
+
+      expect(row).toHaveTextContent("Chinese")
+      expect(row).toHaveTextContent("in Photography")
+    })
+
+    it("keeps the remaining filters together behind the preposition", () => {
+      const row = renderRow({
+        keyword: "",
+        labels: ["Korean", "Painting", "Under $5,000"],
+        nationalityLabels: ["Korean"],
+        query: "korean paintings under 5k",
+      })
+
+      expect(row).toHaveTextContent("in Painting · Under $5,000")
+    })
+
+    it("leaves the free text in the headline when there is some", () => {
+      const row = renderRow({
+        keyword: "warhol",
+        labels: ["Chinese", "Prints"],
+        nationalityLabels: ["Chinese"],
+        query: "chinese warhol prints",
+      })
+
+      expect(row).toHaveTextContent("warhol")
+      expect(row).toHaveTextContent("in Chinese · Prints")
     })
   })
 

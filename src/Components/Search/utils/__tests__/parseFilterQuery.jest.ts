@@ -1,3 +1,5 @@
+import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { FILTER_VOCABULARY } from "../filterQueryVocabulary"
 import { parseFilterQuery } from "../parseFilterQuery"
 
 /**
@@ -6,6 +8,37 @@ import { parseFilterQuery } from "../parseFilterQuery"
  * replace them with invented equivalents.
  */
 describe("parseFilterQuery", () => {
+  describe("only suggests mediums the filter UI can name", () => {
+    // Both the pill and the drawer's MediumFilter name an applied medium out
+    // of MEDIUM_OPTIONS; a value outside them filters results invisibly.
+    const nameableMediums = new Set(
+      MEDIUM_OPTIONS.map(option => {
+        return option.value
+      }),
+    )
+
+    const vocabularyMediums = [
+      ...new Set(
+        [...FILTER_VOCABULARY.values()]
+          .filter(entry => {
+            return entry.type === "medium"
+          })
+          .map(entry => {
+            return entry.value
+          }),
+      ),
+    ]
+
+    it.each(vocabularyMediums)("%s is in MEDIUM_OPTIONS", medium => {
+      expect(nameableMediums.has(medium)).toBe(true)
+    })
+
+    it("does not suggest a medium the Medium filter cannot display", () => {
+      // Valid as a /collect path segment, absent from MEDIUM_OPTIONS
+      expect(parseFilterQuery("warhol posters")?.filters.medium).toBeUndefined()
+    })
+  })
+
   describe("suggests filters", () => {
     it("combines a medium, a price and a leftover artist name", () => {
       const result = parseFilterQuery("warhol prints under 5000")
@@ -180,6 +213,153 @@ describe("parseFilterQuery", () => {
 
     it("returns null when nothing but stopwords is left", () => {
       expect(parseFilterQuery("a an the of")).toBeNull()
+    })
+  })
+
+  describe("artist nationality", () => {
+    it("reads a nationality alongside a medium", () => {
+      const result = parseFilterQuery("chinese photography")
+
+      expect(result?.filters.artistNationalities).toEqual(["Chinese"])
+      expect(result?.filters.medium).toEqual("photography")
+      expect(result?.labels).toEqual(["Chinese", "Photography"])
+    })
+
+    it("sends every value a demonym the aggregation splits stands for", () => {
+      const result = parseFilterQuery("korean paintings under 5k")
+
+      expect(result?.filters.artistNationalities).toEqual([
+        "Korean",
+        "South Korean",
+      ])
+      expect(result?.filters.medium).toEqual("painting")
+      expect(result?.filters.priceRange).toEqual("*-5000")
+    })
+
+    it("names the nationality ahead of the other filters", () => {
+      expect(parseFilterQuery("chinese prints under 5k")?.labels).toEqual([
+        "Chinese",
+        "Prints",
+        "Under $5,000",
+      ])
+    })
+
+    it.each([
+      ["south korean prints", "Korean"],
+      ["argentinian prints", "Argentine"],
+      ["filipino prints", "Philippine"],
+      ["slovenian prints", "Slovene"],
+    ])("resolves %p to the aggregation's own %p", (query, label) => {
+      expect(parseFilterQuery(query)?.labels).toContain(label)
+    })
+
+    it("does not invert a negated nationality", () => {
+      expect(parseFilterQuery("prints not chinese")).toBeNull()
+    })
+  })
+
+  describe("only trusts a nationality another filter backs up", () => {
+    // Demonyms turn up in titles, artist names and subject matter far more
+    // often than they state a nationality
+    it.each([
+      ["chinese", "a bare demonym"],
+      ["chinese ceramics", "free text the parser cannot name a filter from"],
+      ["american warhol", "an artist name"],
+      ["jack dowling (american, 1931-2021)", "artist life dates (production)"],
+    ])("returns null for %p — %s", query => {
+      expect(parseFilterQuery(query)).toBeNull()
+    })
+
+    it("does not let a price alone back a nationality", () => {
+      // With no free text a label becomes the search term, and "Under $5,000"
+      // does not read as one
+      expect(parseFilterQuery("chinese under 5k")).toBeNull()
+    })
+  })
+
+  describe("only stands a medium in as the search term", () => {
+    // The term doubles as the artworks keyword, so a rarity standing in costs
+    // almost every result the filters were meant to return: "unique under 5k"
+    // returns 628 against ~838,000 for the same filters alone
+    it.each(["unique under 5k", "limited edition under 10k"])(
+      "returns null for %p",
+      query => {
+        expect(parseFilterQuery(query)).toBeNull()
+      },
+    )
+
+    it("still suggests a rarity when free text carries the term", () => {
+      const result = parseFilterQuery("banksy limited edition under 10k")
+
+      expect(result?.filters.attributionClass).toEqual(["limited edition"])
+      expect(result?.keyword).toEqual("banksy")
+    })
+
+    it("stands the medium in ahead of the rarity", () => {
+      expect(parseFilterQuery("unique prints under 5k")?.termLabel).toEqual(
+        "Prints",
+      )
+    })
+  })
+
+  describe("does not read a nationality out of a movement or a material", () => {
+    it.each([
+      ["african american photography", "photography", "african american"],
+      ["native american prints", "prints", "native american"],
+      ["indian ink drawings", "drawing", "indian ink"],
+      ["latin american sculpture", "sculpture", "latin american"],
+    ])(
+      "withholds the nationality in %p but still reads the medium",
+      (query, medium, keyword) => {
+        const result = parseFilterQuery(query)
+
+        expect(result?.filters.artistNationalities).toBeUndefined()
+        expect(result?.filters.medium).toEqual(medium)
+        expect(result?.keyword).toEqual(keyword)
+      },
+    )
+
+    it.each(["english paintings", "georgian prints", "other sculpture"])(
+      "does not read the excluded demonym in %p as a nationality",
+      query => {
+        expect(
+          parseFilterQuery(query)?.filters.artistNationalities,
+        ).toBeUndefined()
+      },
+    )
+  })
+
+  describe("only suggests nationalities the filter UI can name", () => {
+    // extractPills and the drawer's FilterSelect both match the
+    // ARTIST_NATIONALITY aggregation on an exact value; anything else filters
+    // results with no pill to untick
+    const nationalityValues = [
+      ...new Set(
+        [...FILTER_VOCABULARY.values()]
+          .filter(entry => {
+            return entry.type === "artistNationality"
+          })
+          .flatMap(entry => {
+            return entry.values ?? []
+          }),
+      ),
+    ]
+
+    it.each(nationalityValues)("%s is title-cased verbatim", value => {
+      expect(value).toMatch(/^[A-Z]/)
+    })
+
+    it("indexes every nationality with at least one value", () => {
+      expect(nationalityValues.length).toBeGreaterThan(0)
+      expect(
+        [...FILTER_VOCABULARY.values()]
+          .filter(entry => {
+            return entry.type === "artistNationality"
+          })
+          .every(entry => {
+            return (entry.values?.length ?? 0) > 0
+          }),
+      ).toBe(true)
     })
   })
 
