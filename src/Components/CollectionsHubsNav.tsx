@@ -2,6 +2,7 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { cropped } from "Utils/resized"
+import type { CollectionsHubsNav_genes$data } from "__generated__/CollectionsHubsNav_genes.graphql"
 import type { CollectionsHubsNav_marketingCollections$data } from "__generated__/CollectionsHubsNav_marketingCollections.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,6 +10,14 @@ import { useTracking } from "react-tracking"
 
 interface CollectionsHubsNavProps {
   marketingCollections: CollectionsHubsNav_marketingCollections$data
+  genes: CollectionsHubsNav_genes$data
+}
+
+interface HubTile {
+  key: string
+  href: string
+  title: string | null | undefined
+  image: { src: string; srcSet: string } | null | undefined
 }
 
 // TODO: Move this into collect app
@@ -17,19 +26,37 @@ export const CollectionsHubsNav: FC<
 > = props => {
   const { trackEvent } = useTracking()
 
+  const collectionTiles: HubTile[] = props.marketingCollections.map(
+    collection => ({
+      key: `collection-${collection.slug}`,
+      href: `/collection/${collection.slug}`,
+      title: collection.title,
+      image: collection.thumbnail
+        ? cropped(collection.thumbnail, { width: 387, height: 218 })
+        : null,
+    }),
+  )
+
+  const geneTiles: HubTile[] = props.genes
+    .filter(gene => !!gene)
+    .map(gene => ({
+      key: `gene-${gene.slug}`,
+      href: `/gene/${gene.slug}`,
+      title: gene.name,
+      image: gene.image?.cropped ?? null,
+    }))
+
+  const tiles = [...collectionTiles, ...geneTiles].slice(0, 6)
+
   return (
     <GridColumns as="aside">
-      {props.marketingCollections.slice(0, 6).map(hub => {
-        const image = hub.thumbnail
-          ? cropped(hub.thumbnail, { width: 387, height: 218 })
-          : null
-
+      {tiles.map(hub => {
         return (
-          <Column span={[6, 4, 2]} key={hub.slug}>
+          <Column span={[6, 4, 2]} key={hub.key}>
             <RouterLink
               display="block"
               textDecoration="none"
-              to={`/collection/${hub.slug}`}
+              to={hub.href}
               onClick={() => {
                 trackEvent({
                   action_type: DeprecatedSchema.ActionType.Click,
@@ -37,7 +64,7 @@ export const CollectionsHubsNav: FC<
                   context_module:
                     DeprecatedSchema.ContextModule.CollectionHubEntryPoint,
                   type: DeprecatedSchema.Type.Thumbnail,
-                  destination_path: `/collection/${hub.slug}`,
+                  destination_path: hub.href,
                 })
               }}
             >
@@ -47,9 +74,9 @@ export const CollectionsHubsNav: FC<
                 maxWidth="100%"
                 bg="mono10"
               >
-                {image && (
+                {hub.image && (
                   <Image
-                    {...image}
+                    {...hub.image}
                     width="100%"
                     height="100%"
                     alt=""
@@ -80,6 +107,22 @@ export const CollectionsHubsNavFragmentContainer = createFragmentContainer(
         slug
         title
         thumbnail
+      }
+    `,
+    genes: graphql`
+      fragment CollectionsHubsNav_genes on Gene @relay(plural: true) {
+        slug
+        name
+        image {
+          cropped(
+            width: 387
+            height: 218
+            version: ["big_and_tall", "square500", "tall"]
+          ) {
+            src
+            srcSet
+          }
+        }
       }
     `,
   },

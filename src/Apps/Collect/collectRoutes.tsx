@@ -125,17 +125,18 @@ export function initializeVariablesWithFilterState(params, props) {
 function getArtworkFilterQuery() {
   return graphql`
     query collectRoutes_ArtworkFilterQuery {
-      marketingCollections(
+      marketingCollections(slugs: ["contemporary", "emerging-art"]) {
+        ...Collect_marketingCollections
+      }
+      genes(
         slugs: [
-          "contemporary"
           "painting"
-          "street-art"
+          "graffiti-and-street-art"
           "photography"
-          "emerging-art"
           "20th-century-art"
         ]
       ) {
-        ...Collect_marketingCollections
+        ...Collect_genes
       }
     }
   `

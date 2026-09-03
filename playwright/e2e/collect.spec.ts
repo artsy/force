@@ -15,6 +15,8 @@ test.describe("/collect", () => {
     await expect(page.locator("h1").first()).toContainText(
       "Collect art and design online",
     )
+
+    await expect(page.locator("aside a")).toHaveCount(6)
   })
 
   test("renders medium-specific content", async ({ page }) => {
