@@ -604,7 +604,7 @@ describe("SearchBarInput", () => {
       expect(row()).not.toBeInTheDocument()
     })
 
-    it("tracks the click under its own context module", async () => {
+    it("tracks the click with the filters it parsed", async () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
@@ -612,11 +612,14 @@ describe("SearchBarInput", () => {
 
       expect(mockTrackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
-          action: ActionType.selectedItemFromSearch,
+          action: ActionType.selectedSuggestedFilter,
           context_module: ContextModule.suggestedFilters,
-          item_id: "suggested-filters",
-          item_number: 0,
-          item_type: "filter-suggestion",
+          filters: JSON.stringify({
+            medium: "prints",
+            priceRange: "*-5000",
+            keyword: "warhol",
+          }),
+          query: "warhol prints under 5000",
         }),
       )
     })
@@ -635,20 +638,42 @@ describe("SearchBarInput", () => {
       )
     })
 
-    it("tracks one impression per focus session", () => {
+    const impressions = () => {
+      return mockTrackEvent.mock.calls.filter(([event]) => {
+        return event.action === ActionType.searchedWithSuggestedFilter
+      })
+    }
+
+    it("tracks the appearance with the filters it parsed", () => {
       enableSuggestedFilters()
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
       fireEvent.focus(screen.getByRole("textbox"))
 
-      const impressions = mockTrackEvent.mock.calls.filter(([event]) => {
-        return (
-          event.action === ActionType.railViewed &&
-          event.context_module === ContextModule.suggestedFilters
-        )
-      })
+      expect(impressions()).toHaveLength(1)
+      expect(impressions()[0][0]).toEqual(
+        expect.objectContaining({
+          context_module: ContextModule.suggestedFilters,
+          filters: JSON.stringify({
+            medium: "prints",
+            priceRange: "*-5000",
+            keyword: "warhol",
+          }),
+          query: "warhol prints under 5000",
+        }),
+      )
+    })
 
-      expect(impressions).toHaveLength(1)
+    it("tracks one impression per distinct filter set", async () => {
+      // "prints under 5000" parses the same either way, so refining the query
+      // records the intent once rather than once a letter
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="warhol prints under 5000" />)
+
+      fireEvent.focus(screen.getByRole("textbox"))
+      await userEvent.type(screen.getByRole("textbox"), "!")
+
+      expect(impressions()).toHaveLength(1)
     })
 
     it("does not track an impression before the dropdown is focused", () => {
@@ -656,7 +681,9 @@ describe("SearchBarInput", () => {
       render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
       expect(mockTrackEvent).not.toHaveBeenCalledWith(
-        expect.objectContaining({ action: ActionType.railViewed }),
+        expect.objectContaining({
+          action: ActionType.searchedWithSuggestedFilter,
+        }),
       )
     })
 
@@ -695,7 +722,7 @@ describe("SearchBarInput", () => {
         expect(recent.href).toContain("additional_gene_ids")
       })
 
-      it("tracks the submit under the suggested filters module", async () => {
+      it("tracks the submit as a suggested filter selection", async () => {
         enableSuggestedFilters()
         render(<SearchBarInput searchTerm="warhol prints under 5000" />)
 
@@ -703,9 +730,9 @@ describe("SearchBarInput", () => {
 
         expect(mockTrackEvent).toHaveBeenCalledWith(
           expect.objectContaining({
-            action: ActionType.selectedItemFromSearch,
+            action: ActionType.selectedSuggestedFilter,
             context_module: ContextModule.suggestedFilters,
-            item_id: "suggested-filters",
+            query: "warhol prints under 5000",
           }),
         )
       })

@@ -143,26 +143,29 @@ describe("SearchResultsList", () => {
         />,
       )
 
-      const railViewed = mockTrackEvent.mock.calls.filter(([event]) => {
-        return event.action === ActionType.railViewed
+      const impressions = mockTrackEvent.mock.calls.filter(([event]) => {
+        return event.action === ActionType.searchedWithSuggestedFilter
       })
 
-      expect(railViewed).toHaveLength(1)
-      expect(railViewed[0][0]).toMatchObject({
+      expect(impressions).toHaveLength(1)
+      expect(impressions[0][0]).toMatchObject({
         context_module: ContextModule.suggestedFilters,
+        query: QUERY,
+      })
+      expect(JSON.parse(impressions[0][0].filters)).toMatchObject({
+        medium: "prints",
       })
     })
 
-    it("tracks its own context module on click, and closes the overlay", () => {
+    it("tracks the click with its filters, and closes the overlay", () => {
       renderList()
       row()?.click()
 
       expect(mockTrackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
-          action: ActionType.selectedItemFromSearch,
+          action: ActionType.selectedSuggestedFilter,
           context_module: ContextModule.suggestedFilters,
-          item_id: "suggested-filters",
-          item_type: "filter-suggestion",
+          query: QUERY,
         }),
       )
       expect(mockOnClose).toHaveBeenCalled()

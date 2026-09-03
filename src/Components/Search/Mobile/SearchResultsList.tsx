@@ -1,10 +1,11 @@
 import {
   ActionType,
   ContextModule,
-  type RailViewed,
   type SearchedWithNoResults,
   type SearchedWithResults,
+  type SearchedWithSuggestedFilter,
   type SelectedItemFromSearch,
+  type SelectedSuggestedFilter,
 } from "@artsy/cohesion"
 import { Flex, Spinner } from "@artsy/palette"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
@@ -68,22 +69,39 @@ export const SearchResultsList: FC<
   const shouldShowSuggestedFilters =
     !!parsedFilters && selectedPill === TOP_PILL
 
-  // Once per overlay session; per keystroke would inflate the CTR denominator
-  const hasTrackedSuggestedFiltersRef = useRef(false)
+  // Once per distinct filter set, not per keystroke: "chinese photo" and
+  // "chinese photography" parse the same, so refining a query records the
+  // intent once. Matches the desktop search bar.
+  const trackedFilterSetsRef = useRef(new Set<string>())
 
   useEffect(() => {
-    if (!shouldShowSuggestedFilters) return
-    if (hasTrackedSuggestedFiltersRef.current) return
+    if (!shouldShowSuggestedFilters || !parsedFilters) return
 
-    hasTrackedSuggestedFiltersRef.current = true
+    const filters = JSON.stringify(parsedFilters.filters)
 
-    const event: RailViewed = {
-      action: ActionType.railViewed,
+    if (trackedFilterSetsRef.current.has(filters)) return
+
+    trackedFilterSetsRef.current.add(filters)
+
+    const event: SearchedWithSuggestedFilter = {
+      action: ActionType.searchedWithSuggestedFilter,
       context_module: ContextModule.suggestedFilters,
-      context_screen: contextPageOwnerType,
+      context_owner_type: contextPageOwnerType,
+      context_owner_id: contextPageOwnerId,
+      context_owner_slug: contextPageOwnerSlug,
+      filters,
+      query: debouncedQuery,
     }
     tracking.trackEvent(event)
-  }, [shouldShowSuggestedFilters, contextPageOwnerType, tracking.trackEvent])
+  }, [
+    shouldShowSuggestedFilters,
+    parsedFilters,
+    debouncedQuery,
+    contextPageOwnerType,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    tracking.trackEvent,
+  ])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -148,15 +166,13 @@ export const SearchResultsList: FC<
   }
 
   const handleSuggestedFiltersClick = () => {
-    const event: SelectedItemFromSearch = {
-      action: ActionType.selectedItemFromSearch,
-      // Its own module, separable from entity results
+    if (!parsedFilters) return
+
+    const event: SelectedSuggestedFilter = {
+      action: ActionType.selectedSuggestedFilter,
       context_module: ContextModule.suggestedFilters,
-      destination_path: suggestedFiltersOption.href,
+      filters: JSON.stringify(parsedFilters.filters),
       query: debouncedQuery,
-      item_id: suggestedFiltersOption.item_id!,
-      item_number: suggestedFiltersOption.item_number!,
-      item_type: suggestedFiltersOption.item_type!,
     }
 
     tracking.trackEvent(event)

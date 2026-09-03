@@ -36,11 +36,7 @@ export const SuggestedFiltersItem: FC<SuggestedFiltersItemProps> = ({
     event.stopPropagation()
   }
 
-  // Headline is the free text, second line is what it's filtered to. With no
-  // free text the filters become the headline — promoting just the first one
-  // made "unique prints under 10000" read as "Prints" in "Under $10,000".
-  const title = parsed.keyword || parsed.labels.join(LABEL_SEPARATOR)
-  const detail = parsed.keyword ? parsed.labels.join(LABEL_SEPARATOR) : null
+  const { title, detail } = getRowText(parsed)
 
   return (
     <SuggestedFiltersLink
@@ -75,6 +71,34 @@ export const SuggestedFiltersItem: FC<SuggestedFiltersItemProps> = ({
       </Flex>
     </SuggestedFiltersLink>
   )
+}
+
+// Headline is the free text, second line is what it's filtered to. With no
+// free text a nationality takes the headline — "Chinese" in "Photography"
+// reads the way language does. Nothing else does: promoting the first label
+// made "unique prints under 10000" read as "Prints" in "Under $10,000", so
+// every other case keeps the filters on one line.
+const getRowText = (
+  parsed: ParsedFilterQuery,
+): { title: string; detail: string | null } => {
+  const { keyword, labels, nationalityLabels } = parsed
+
+  if (keyword) {
+    return { title: keyword, detail: labels.join(LABEL_SEPARATOR) }
+  }
+
+  if (nationalityLabels.length > 0) {
+    const rest = labels.filter(label => {
+      return !nationalityLabels.includes(label)
+    })
+
+    return {
+      title: nationalityLabels.join(LABEL_SEPARATOR),
+      detail: rest.join(LABEL_SEPARATOR),
+    }
+  }
+
+  return { title: labels.join(LABEL_SEPARATOR), detail: null }
 }
 
 // Tinted so the row reads as a suggestion. Its resting state is the entity
