@@ -1,9 +1,8 @@
 import type { CreateTokenCardData } from "@stripe/stripe-js"
-import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import type { utilsValidatePhoneNumberQuery } from "__generated__/utilsValidatePhoneNumberQuery.graphql"
 import { debounce } from "lodash"
-import { useCallback, useEffect, useState } from "react"
 import { fetchQuery, graphql } from "react-relay"
+import type { Environment } from "relay-runtime"
 import * as Yup from "yup"
 
 export interface Address {
@@ -28,8 +27,6 @@ export const emptyAddress: Address = {
   phoneNumber: "",
 }
 
-const relayEnvironment = createRelaySSREnvironment()
-
 type PhoneNumber = {
   national: string
   regionCode: string
@@ -39,6 +36,7 @@ const phoneValidator = debounce(
   async (
     { national, regionCode }: PhoneNumber,
     resolve: (value: boolean) => void,
+    relayEnvironment: Environment,
   ) => {
     if (!national || national.length < 5 || !regionCode) {
       return resolve(false)
@@ -79,42 +77,18 @@ const phoneValidator = debounce(
 /**
  * Validates a phone number using GraphQL API
  * @param phoneNumber Object with national number and region code
+ * @param relayEnvironment Relay environment used to run the validation query.
+ *   Injected by the caller (e.g. via `useRelayEnvironment()`) so tests can
+ *   supply a mock environment instead of hitting the network.
  * @returns Promise that resolves to boolean indicating if phone number is valid
  */
 export const validatePhoneNumber = (
   phoneNumber: PhoneNumber,
+  relayEnvironment: Environment,
 ): Promise<boolean> => {
   return new Promise(resolve => {
-    phoneValidator(phoneNumber, resolve)
+    phoneValidator(phoneNumber, resolve, relayEnvironment)
   })
-}
-
-/**
- * React hook for phone number validation
- * @param national The national phone number
- * @param regionCode The region/country code
- * @returns Boolean indicating if phone number is valid
- */
-export const useValidatePhoneNumber = ({
-  national,
-  regionCode,
-}: PhoneNumber) => {
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true)
-
-  const validate = useCallback(async () => {
-    const isValid = await validatePhoneNumber({
-      national,
-      regionCode,
-    })
-
-    setIsPhoneNumberValid(isValid)
-  }, [national, regionCode])
-
-  useEffect(() => {
-    validate()
-  }, [validate])
-
-  return isPhoneNumberValid
 }
 
 export const toStripeAddress = (address: Address): CreateTokenCardData => {
@@ -142,7 +116,14 @@ export const handlePhoneNumberChange = (
   setFieldValue("phoneNumber", e.target.value.replace(/[a-zA-Z]/g, ""))
 }
 
-export const richPhoneValidators = {
+/**
+ * Builds the rich phone-number Yup validators, closing over the Relay
+ * environment used to run the async validation query. Callers obtain the
+ * environment from React context (`useRelayEnvironment()`) and build the schema
+ * in-component (typically memoized), which keeps validation testable with a
+ * mock environment.
+ */
+export const getRichPhoneValidators = (relayEnvironment: Environment) => ({
   phoneNumber: Yup.string()
     .matches(/^[^a-zA-Z]*$/, "Please enter a valid phone number")
     .test({
@@ -152,14 +133,17 @@ export const richPhoneValidators = {
         if (!national || national.length === 0) {
           return true
         }
-        return validatePhoneNumber({
-          national: `${national}`,
-          regionCode: `${context.parent.phoneNumberCountryCode}`,
-        })
+        return validatePhoneNumber(
+          {
+            national: `${national}`,
+            regionCode: `${context.parent.phoneNumberCountryCode}`,
+          },
+          relayEnvironment,
+        )
       },
     }),
   phoneNumberCountryCode: Yup.string(),
-}
+})
 
 export const phoneInitialValuesFromMe = (
   mePhoneNumber:
@@ -177,13 +161,19 @@ export const phoneInitialValuesFromMe = (
   }
 }
 
-export const richRequiredPhoneValidators = {
-  phoneNumber: richPhoneValidators.phoneNumber.required(
-    "Phone number is required",
-  ),
-  phoneNumberCountryCode: richPhoneValidators.phoneNumberCountryCode.required(
-    "Phone number country code is required",
-  ),
+export const getRichRequiredPhoneValidators = (
+  relayEnvironment: Environment,
+) => {
+  const richPhoneValidators = getRichPhoneValidators(relayEnvironment)
+
+  return {
+    phoneNumber: richPhoneValidators.phoneNumber.required(
+      "Phone number is required",
+    ),
+    phoneNumberCountryCode: richPhoneValidators.phoneNumberCountryCode.required(
+      "Phone number country code is required",
+    ),
+  }
 }
 
 const usPostalCodeRegexp = /^[0-9]{5}(?:-[0-9]{4})?$/
