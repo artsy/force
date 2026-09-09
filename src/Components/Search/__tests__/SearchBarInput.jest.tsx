@@ -49,6 +49,11 @@ jest.mock("@artsy/palette", () => ({
 
 jest.mock("System/Hooks/useRouter", () => ({ useRouter: jest.fn() }))
 
+// Its real timers would fire mid-test and trigger act warnings
+jest.mock("../hooks/useTypewriterPlaceholder", () => ({
+  useTypewriterPlaceholder: ({ fallback }: { fallback: string }) => fallback,
+}))
+
 jest.mock("../utils/parseFilterQuery", () => ({
   parseFilterQuery: jest.fn(
     jest.requireActual("../utils/parseFilterQuery").parseFilterQuery,

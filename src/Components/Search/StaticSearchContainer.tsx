@@ -2,6 +2,7 @@ import { Box, type BoxProps } from "@artsy/palette"
 import type { FC } from "react"
 
 import { NavBarSearchInputContainer } from "./NavBarSearchInputContainer"
+import { SEARCH_PLACEHOLDER } from "./constants"
 
 /**
  * Displays during SSR render.
@@ -20,9 +21,7 @@ export const StaticSearchContainer: FC<
 
       <Box display={["none", "block"]} {...rest}>
         <NavBarSearchInputContainer
-          placeholder={
-            searchQuery || "Search by artist, gallery, style, theme, tag, etc."
-          }
+          placeholder={searchQuery || SEARCH_PLACEHOLDER}
           defaultValue={searchQuery}
         />
       </Box>
