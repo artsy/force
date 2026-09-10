@@ -5,9 +5,9 @@ const OnboardingDialog = loadable(
   () =>
     import(
       /* webpackChunkName: "onboardingBundle" */
-      "Components/Onboarding/Components/OnboardingDialog"
+      "Components/Onboarding/Components/OnboardingDialogPOC"
     ),
-  { resolveComponent: component => component.OnboardingDialog },
+  { resolveComponent: component => component.OnboardingDialogPOC },
 )
 
 interface UseOnboarding {
@@ -25,6 +25,7 @@ export const useOnboarding = ({ onClose }: UseOnboarding) => {
     setIsVisible(false)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: hideDialog is stable, only calls setIsVisible
   const dialogComponent = useMemo(() => {
     return (
       <>

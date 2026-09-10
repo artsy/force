@@ -39,6 +39,7 @@ import { Media } from "Utils/Responsive"
 import { track } from "react-tracking"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
+import { OnboardingTooltipPOC } from "./OnboardingTooltipPOC"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
@@ -203,6 +204,18 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
               <Flex display={["none", "flex"]} ml={2} alignItems="stretch">
                 <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
                   {DESKTOP_TOP_TIER.map(id => {
+                    if (id === "priceDatabase") {
+                      return (
+                        <OnboardingTooltipPOC key={id}>
+                          <NavBarDesktopItem
+                            item={NAV_ITEMS[id]}
+                            navigationData={navigationData}
+                            handleClick={handleClick}
+                          />
+                        </OnboardingTooltipPOC>
+                      )
+                    }
+
                     return (
                       <NavBarDesktopItem
                         key={id}
