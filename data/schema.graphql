@@ -19479,6 +19479,28 @@ type FairEdge {
   node: Fair
 }
 
+type FairEvent {
+  description: String
+  endAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  internalID: ID!
+  name: String
+  startAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+}
+
 type FairExhibitor {
   """
   Exhibitor name
@@ -23459,6 +23481,11 @@ type ItineraryStop {
     """
     timezone: String
   ): String
+
+  """
+  The event this stop names inside its show or fair, when any
+  """
+  event: ItineraryStopEvent
   eventID: String
 
   """
@@ -23513,6 +23540,8 @@ enum ItineraryStopCategory {
   MUSEUM
   SHOW
 }
+
+union ItineraryStopEvent = FairEvent | ShowEventType
 
 """
 What kind of event a stop names
