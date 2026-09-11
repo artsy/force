@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import { SystemContextConsumer } from "System/Contexts/SystemContext"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { setupClientRouter } from "System/Router/clientRouter"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -82,7 +83,7 @@ describe("clientRouter", () => {
         "found window cache",
       ],
     ]
-    window.__RELAY_HYDRATION_DATA__ = JSON.stringify(relayBootstrap)
+    window.__RELAY_HYDRATION_DATA__ = relayBootstrap as unknown as SSRCache
 
     const { ClientRouter } = await setupClientRouter({
       history: {

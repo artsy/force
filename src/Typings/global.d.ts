@@ -1,5 +1,6 @@
 import type Braze from "@braze/web-sdk"
 import React from "react"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 
 declare global {
   interface Document {
@@ -23,7 +24,7 @@ declare global {
     __getPublicPath: () => string
     __BOOTSTRAP__?: any
     __googleMapsCallback?: () => void
-    __RELAY_HYDRATION_DATA__: string
+    __RELAY_HYDRATION_DATA__?: SSRCache
     _sift: any
     analytics: any
     braze?: typeof Braze

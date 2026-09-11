@@ -189,7 +189,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
  * @param cache RelayQueryResponseCache
  */
 export function hydrateCacheFromSSR(queryResponseCache) {
-  const ssrData = JSON.parse(window.__RELAY_HYDRATION_DATA__ || "{}")
+  const ssrData = window.__RELAY_HYDRATION_DATA__ ?? []
 
   if (!isEmpty(ssrData)) {
     try {

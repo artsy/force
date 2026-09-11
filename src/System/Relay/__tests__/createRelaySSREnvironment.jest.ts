@@ -1,4 +1,5 @@
 import { hydrateCacheFromSSR } from "System/Relay/createRelaySSREnvironment"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import { QueryResponseCache } from "relay-runtime"
 
 const retryMiddlewareMock = jest.fn(
@@ -22,7 +23,7 @@ describe("#hydrateCacheFromSSR", () => {
   }) as any as { _responses: Map<any, any> }
 
   it("does not update cache if no ssr data", () => {
-    window.__RELAY_HYDRATION_DATA__
+    window.__RELAY_HYDRATION_DATA__ = undefined
     hydrateCacheFromSSR(relayResponseCache)
     expect(relayResponseCache._responses.size).toBe(0)
   })
@@ -38,7 +39,7 @@ describe("#hydrateCacheFromSSR", () => {
         { id: 1 },
       ],
     ]
-    window.__RELAY_HYDRATION_DATA__ = JSON.stringify(request)
+    window.__RELAY_HYDRATION_DATA__ = request as unknown as SSRCache
     hydrateCacheFromSSR(relayResponseCache)
     expect(relayResponseCache._responses.size).toBe(2)
     expect(relayResponseCache._responses.get(request[0][0]).payload.id).toBe(0)
