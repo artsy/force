@@ -162,16 +162,16 @@ jest.mock("Components/Address/utils", () => {
   return {
     ...jest.requireActual("Components/Address/utils"),
     validatePhoneNumber: jest.fn().mockResolvedValue(true),
-    richPhoneValidators: {
+    getRichPhoneValidators: () => ({
       phoneNumber: Yup.string(),
       phoneNumberCountryCode: Yup.string(),
-    },
-    richRequiredPhoneValidators: {
+    }),
+    getRichRequiredPhoneValidators: () => ({
       phoneNumber: Yup.string().required("Phone number is required"),
       phoneNumberCountryCode: Yup.string().required(
         "Phone number country code is required",
       ),
-    },
+    }),
   }
 })
 

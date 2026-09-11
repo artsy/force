@@ -5,6 +5,13 @@ import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/
 import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import type { FormikContextWithAddress } from "Components/Address/AddressFormFields"
+import { autoResolvePhoneValidation } from "DevTools/autoResolvePhoneValidation"
+import { RelayEnvironmentProvider } from "react-relay"
+import { createMockEnvironment } from "relay-test-utils"
+
+// The form reads the Relay environment via useRelayEnvironment() for async
+// phone validation, so exercise the real hooks against a mock environment.
+jest.unmock("react-relay")
 
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation",
@@ -52,6 +59,16 @@ const mockProps = {
   onSaveAddress: mockOnSaveAddress,
 }
 
+const renderAddAddressForm = (props = mockProps) => {
+  const env = createMockEnvironment()
+  autoResolvePhoneValidation(env)
+  return render(
+    <RelayEnvironmentProvider environment={env}>
+      <AddAddressForm {...props} />
+    </RelayEnvironmentProvider>,
+  )
+}
+
 describe("AddAddressForm", () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -73,7 +90,7 @@ describe("AddAddressForm", () => {
   })
 
   it("renders the add address form with setAsDefault checkbox", () => {
-    render(<AddAddressForm {...mockProps} />)
+    renderAddAddressForm()
 
     expect(screen.getByText("Add address")).toBeInTheDocument()
     expect(screen.getByPlaceholderText("Add full name")).toBeInTheDocument()
@@ -98,7 +115,7 @@ describe("AddAddressForm", () => {
       },
     })
 
-    render(<AddAddressForm {...mockProps} />)
+    renderAddAddressForm()
 
     // Fill out the form
     await userEvent.type(
@@ -179,7 +196,7 @@ describe("AddAddressForm", () => {
       },
     })
 
-    render(<AddAddressForm {...mockProps} />)
+    renderAddAddressForm()
 
     // Fill out the form
     await userEvent.type(
@@ -252,7 +269,7 @@ describe("AddAddressForm", () => {
   })
 
   it("allows checking and unchecking the setAsDefault checkbox", async () => {
-    render(<AddAddressForm {...mockProps} />)
+    renderAddAddressForm()
 
     const checkbox = screen.getByTestId("setAsDefault")
 
@@ -269,7 +286,7 @@ describe("AddAddressForm", () => {
   })
 
   it("calls setUserAddressMode(null) when cancel button is clicked", async () => {
-    render(<AddAddressForm {...mockProps} />)
+    renderAddAddressForm()
 
     await userEvent.click(screen.getByText("Cancel"))
 
@@ -286,7 +303,7 @@ describe("AddAddressForm", () => {
       },
     })
 
-    render(<AddAddressForm {...mockProps} />)
+    renderAddAddressForm()
 
     // Fill out the form
     await userEvent.type(
@@ -329,7 +346,7 @@ describe("AddAddressForm", () => {
       },
     })
 
-    render(<AddAddressForm {...mockProps} />)
+    renderAddAddressForm()
 
     // Fill out the form
     await userEvent.type(

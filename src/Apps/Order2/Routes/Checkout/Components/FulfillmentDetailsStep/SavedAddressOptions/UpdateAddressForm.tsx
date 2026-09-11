@@ -11,7 +11,7 @@ import {
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
 import {
   type ProcessedUserAddress,
-  deliveryAddressValidationSchema,
+  getDeliveryAddressValidationSchema,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
@@ -26,7 +26,8 @@ import {
 import createLogger from "Utils/logger"
 import type { Order2CheckoutContext_order$data } from "__generated__/Order2CheckoutContext_order.graphql"
 import { Form, Formik } from "formik"
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import { useRelayEnvironment } from "react-relay"
 
 const logger = createLogger("UpdateAddressForm")
 
@@ -68,6 +69,11 @@ export const UpdateAddressForm = ({
     useOrder2UnsetOrderFulfillmentOptionMutation()
   const { setUserAddressMode, orderData, checkoutTracking } =
     useCheckoutContext()
+  const relayEnvironment = useRelayEnvironment()
+  const validationSchema = useMemo(
+    () => getDeliveryAddressValidationSchema(relayEnvironment),
+    [relayEnvironment],
+  )
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<{
@@ -192,7 +198,7 @@ export const UpdateAddressForm = ({
   return (
     <Formik<FormikContextWithAddress>
       initialValues={initialValues}
-      validationSchema={deliveryAddressValidationSchema}
+      validationSchema={validationSchema}
       onSubmit={handleSubmitAddress}
       validateOnMount
       initialTouched={{

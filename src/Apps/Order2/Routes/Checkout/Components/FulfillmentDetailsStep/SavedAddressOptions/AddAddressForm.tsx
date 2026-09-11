@@ -1,7 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Button, Spacer } from "@artsy/palette"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
-import { deliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
+import { getDeliveryAddressValidationSchema } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useScrollToFieldErrorOnSubmit } from "Apps/Order2/Routes/Checkout/Hooks/useScrollToFieldErrorOnSubmit"
 import { useOrder2CreateUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2CreateUserAddressMutation"
@@ -12,6 +12,8 @@ import {
 } from "Components/Address/AddressFormFields"
 import createLogger from "Utils/logger"
 import { Form, Formik } from "formik"
+import { useMemo } from "react"
+import { useRelayEnvironment } from "react-relay"
 
 const logger = createLogger("AddAddressForm")
 
@@ -30,6 +32,12 @@ export const AddAddressForm = ({
   const createUserAddress = useOrder2CreateUserAddressMutation()
   const updateUserDefaultAddress = useOrder2UpdateUserDefaultAddressMutation()
   const { setUserAddressMode, checkoutTracking } = useCheckoutContext()
+
+  const relayEnvironment = useRelayEnvironment()
+  const validationSchema = useMemo(
+    () => getDeliveryAddressValidationSchema(relayEnvironment),
+    [relayEnvironment],
+  )
 
   const handleSetAsDefault = async (addressID: string) => {
     await updateUserDefaultAddress.submitMutation({
@@ -89,7 +97,7 @@ export const AddAddressForm = ({
   return (
     <Formik<FormikContextWithAddress>
       initialValues={initialValues}
-      validationSchema={deliveryAddressValidationSchema}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => {
