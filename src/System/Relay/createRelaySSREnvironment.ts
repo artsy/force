@@ -32,6 +32,7 @@ const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
 const isServer = typeof window === "undefined"
 const isDevelopment = getENV("NODE_ENV") === "development"
+const isTest = process.env.NODE_ENV === "test"
 
 // Only log on the client during development
 const loggingEnabled = !isServer && isDevelopment
@@ -145,19 +146,22 @@ export function createRelaySSREnvironment(config: Config = {}) {
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),
     // Keep retries closest to fetch so cache/SSR/error middlewares only see the final response.
     // SSR gets a tighter budget because it shares the request timeout with route matching and rendering.
-    retryMiddleware({
-      fetchTimeout: isServer ? 8000 : 15000,
-      retryDelays: isServer ? [500] : [500, 1500],
-      statusCodes: [502, 503, 504],
-      beforeRetry: ({ attempt, delay, lastError, req }) => {
-        const operationName =
-          "operation" in req ? req.operation.name : "batched request"
+    // Skipped in tests: delayed retries keep failing requests pending long enough
+    // to outlast `waitFor`, and tests never want real network retries anyway.
+    !isTest &&
+      retryMiddleware({
+        fetchTimeout: isServer ? 8000 : 15000,
+        retryDelays: isServer ? [500] : [500, 1500],
+        statusCodes: [502, 503, 504],
+        beforeRetry: ({ attempt, delay, lastError, req }) => {
+          const operationName =
+            "operation" in req ? req.operation.name : "batched request"
 
-        logger.warn(
-          `Relay retry attempt=${attempt} delay=${delay}ms op=${operationName} reason=${lastError?.message ?? "status"}`,
-        )
-      },
-    }),
+          logger.warn(
+            `Relay retry attempt=${attempt} delay=${delay}ms op=${operationName} reason=${lastError?.message ?? "status"}`,
+          )
+        },
+      }),
   ]
 
   // TODO: The `noThrow` option is used since we do our own error handling,
