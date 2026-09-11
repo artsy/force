@@ -130,7 +130,7 @@ sequenceDiagram
     Server->>Server: Store responses in SSR cache
     Server->>HTML: Inject __RELAY_HYDRATION_DATA__
     HTML->>Client: HTML with embedded cache data
-    Client->>Hydration: Parse __RELAY_HYDRATION_DATA__
+    Client->>Hydration: Read __RELAY_HYDRATION_DATA__
     Hydration->>Cache: Populate QueryResponseCache
     Cache->>Client: Ready for SPA navigation
 
