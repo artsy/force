@@ -7853,6 +7853,8 @@ type BrandKit {
     """
     timezone: String
   ): String
+  writingLanguage: String
+  writingSample: String
 }
 
 type BulkAddArtworksToPartnerListFailure {
@@ -14967,6 +14969,16 @@ input CreateBrandKitInput {
   Text color hex code (e.g. #FF0000)
   """
   textColor: String
+
+  """
+  Language used for generated artwork descriptions
+  """
+  writingLanguage: String
+
+  """
+  Writing sample used to match tone in generated descriptions
+  """
+  writingSample: String
 }
 
 type CreateBrandKitPayload {
@@ -19467,6 +19479,28 @@ type FairEdge {
   node: Fair
 }
 
+type FairEvent {
+  description: String
+  endAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  internalID: ID!
+  name: String
+  startAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+}
+
 type FairExhibitor {
   """
   Exhibitor name
@@ -20517,6 +20551,7 @@ type FollowedShowConnection {
   Information to aid in pagination.
   """
   pageInfo: PageInfo!
+  totalCount: Int
 }
 
 """
@@ -21053,6 +21088,38 @@ Meta tags for Gene pages
 """
 type GeneMeta {
   description: String!
+}
+
+type GenerateArtworkDescriptionFailure {
+  mutationError: GravityMutationError
+}
+
+input GenerateArtworkDescriptionInput {
+  clientMutationId: String
+
+  """
+  The internal ID of the artwork to generate a description for
+  """
+  id: String!
+}
+
+type GenerateArtworkDescriptionPayload {
+  """
+  On success: the generated artwork description
+  """
+  artworkDescriptionOrError: GenerateArtworkDescriptionResponseOrError
+  clientMutationId: String
+}
+
+union GenerateArtworkDescriptionResponseOrError =
+  | GenerateArtworkDescriptionFailure
+  | GenerateArtworkDescriptionSuccess
+
+type GenerateArtworkDescriptionSuccess {
+  """
+  AI-generated artwork description suggestion. Not saved to the artwork until the user applies it.
+  """
+  generatedDescription: String!
 }
 
 type GravityARImage {
@@ -23286,6 +23353,234 @@ enum InvoiceState {
 }
 
 """
+A connection to a list of items.
+"""
+type ItinerariesConnection {
+  """
+  A list of edges.
+  """
+  edges: [ItinerariesEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An edge in a connection.
+"""
+type ItinerariesEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: Itinerary
+}
+
+type Itinerary {
+  authorName: String
+  citySlug: String!
+  description: String
+  heroImage: Image
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  The itinerary's UUID
+  """
+  internalID: String!
+  isCurated: Boolean!
+  publishedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  sections: [ItinerarySection!]!
+  sectionsCount: Int!
+  shareToken: String
+
+  """
+  Only published, curated guides have a slug. Null otherwise.
+  """
+  slug: String
+  subtitle: String
+  title: String!
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  visibility: ItineraryVisibility!
+}
+
+type ItineraryMutationFailure {
+  mutationError: GravityMutationError
+}
+
+union ItineraryMutationResponseOrError =
+  | ItineraryMutationFailure
+  | ItineraryMutationSuccess
+
+type ItineraryMutationSuccess {
+  itinerary: Itinerary
+}
+
+type ItinerarySection {
+  internalID: String!
+
+  """
+  An editorial note about the section, shown under its title
+  """
+  note: String
+  position: Int!
+  stops: [ItineraryStop!]!
+  stopsCount: Int!
+
+  """
+  An opaque display string for the section, e.g. "Day 1", "Morning", or "Peckham"
+  """
+  title: String
+}
+
+type ItinerarySectionMutationFailure {
+  mutationError: GravityMutationError
+}
+
+union ItinerarySectionMutationResponseOrError =
+  | ItinerarySectionMutationFailure
+  | ItinerarySectionMutationSuccess
+
+type ItinerarySectionMutationSuccess {
+  itinerarySection: ItinerarySection
+}
+
+type ItineraryStop {
+  address: String
+  category: ItineraryStopCategory
+  endAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  The event this stop names inside its show or fair, when any
+  """
+  event: ItineraryStopEvent
+  eventID: String
+
+  """
+  SHOW_EVENT on a show stop, FAIR_EVENT on a fair stop; null when the stop names no event.
+  """
+  eventType: ItineraryStopEventType
+  imageURL: String
+  internalID: String!
+  isFreeAdmission: Boolean
+
+  """
+  The Show, gallery location, or Fair this stop refers to, if any. A stop without an `item_id` (e.g. a café) resolves to null.
+  """
+  item: ItineraryStopItem
+
+  """
+  What kind of item this stop points at, if any
+  """
+  itemType: ItineraryStopItemType
+  latitude: Float
+  longitude: Float
+  note: String
+  position: Int!
+
+  """
+  Where the curator found this stop
+  """
+  sourceURL: String
+  startAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  IANA identifier saying which wall clock startAt and endAt were written against, e.g. Europe/London. Pass it to those fields as `timezone` to render the time the curator meant.
+  """
+  timeZone: String
+
+  """
+  The editorial override for this stop's display title
+  """
+  title: String
+}
+
+enum ItineraryStopCategory {
+  FAIR
+  GALLERY
+  MUSEUM
+  SHOW
+}
+
+union ItineraryStopEvent = FairEvent | ShowEventType
+
+"""
+What kind of event a stop names
+"""
+enum ItineraryStopEventType {
+  FAIR_EVENT
+  SHOW_EVENT
+}
+
+union ItineraryStopItem = Fair | Location | Show
+
+"""
+What kind of item a stop points at
+"""
+enum ItineraryStopItemType {
+  FAIR
+  LOCATION
+  SHOW
+}
+
+type ItineraryStopMutationFailure {
+  mutationError: GravityMutationError
+}
+
+union ItineraryStopMutationResponseOrError =
+  | ItineraryStopMutationFailure
+  | ItineraryStopMutationSuccess
+
+type ItineraryStopMutationSuccess {
+  itineraryStop: ItineraryStop
+}
+
+enum ItineraryVisibility {
+  PRIVATE
+  PUBLIC
+  UNLISTED
+}
+
+"""
 Represents untyped JSON
 """
 scalar JSON
@@ -23441,6 +23736,7 @@ type Location {
   Union returning opening hours in formatted structure or a string
   """
   openingHours: OpeningHoursUnion
+  partner: Partner
   phone: String
   pier: String
   postalCode: String
@@ -24615,6 +24911,23 @@ type Me implements Node {
   """
   isEmailConfirmed: Boolean!
   isIdentityVerified: Boolean
+
+  """
+  A connection of the current user's own City Guide itineraries, of any visibility
+  """
+  itinerariesConnection(
+    after: String
+    before: String
+
+    """
+    Only itineraries for this city
+    """
+    citySlug: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): ItinerariesConnection
 
   """
   List of lab features for this user
@@ -26144,6 +26457,11 @@ type Mutation {
   ): CreateSubmissionMutationPayload
 
   """
+  Copy an itinerary into the caller's account. `shareToken` is needed for an unlisted source.
+  """
+  copyItinerary(input: copyItineraryInput!): copyItineraryPayload
+
+  """
   Create an account request
   """
   createAccountRequest(
@@ -26349,6 +26667,25 @@ type Mutation {
   createInvoicePayment(
     input: CreateInvoicePaymentInput!
   ): CreateInvoicePaymentPayload
+
+  """
+  Create an itinerary.
+  """
+  createItinerary(input: createItineraryInput!): createItineraryPayload
+
+  """
+  Create a section in an itinerary.
+  """
+  createItinerarySection(
+    input: createItinerarySectionInput!
+  ): createItinerarySectionPayload
+
+  """
+  Add a stop to a section. A stop points at a show, a location or a fair, or is a custom place with its own title and coordinates.
+  """
+  createItineraryStop(
+    input: createItineraryStopInput!
+  ): createItineraryStopPayload
 
   """
   Create a Mailchimp campaign draft for a partner from pre-rendered HTML
@@ -26648,6 +26985,25 @@ type Mutation {
   ): DeleteInstagramAccountPayload
 
   """
+  Delete an itinerary.
+  """
+  deleteItinerary(input: deleteItineraryInput!): deleteItineraryPayload
+
+  """
+  Delete a section and its stops.
+  """
+  deleteItinerarySection(
+    input: deleteItinerarySectionInput!
+  ): deleteItinerarySectionPayload
+
+  """
+  Delete a stop by its id.
+  """
+  deleteItineraryStop(
+    input: deleteItineraryStopInput!
+  ): deleteItineraryStopPayload
+
+  """
   Disconnect a Mailchimp account from a partner
   """
   deleteMailchimpAccount(
@@ -26893,6 +27249,13 @@ type Mutation {
   followShow(input: FollowShowInput!): FollowShowPayload
 
   """
+  Generate an AI artwork description without saving it to the artwork
+  """
+  generateArtworkDescription(
+    input: GenerateArtworkDescriptionInput!
+  ): GenerateArtworkDescriptionPayload
+
+  """
   Links a 3rd party account
   """
   linkAuthentication(
@@ -26959,6 +27322,11 @@ type Mutation {
   myCollectionUpdateArtwork(
     input: MyCollectionUpdateArtworkInput!
   ): MyCollectionUpdateArtworkPayload
+
+  """
+  Publish an itinerary. Needs the publish ability.
+  """
+  publishItinerary(input: publishItineraryInput!): publishItineraryPayload
 
   """
   Publish a draft navigation version. Accepts either a groupID (for backward compatibility) or versionID (preferred for admin workflows).
@@ -27209,6 +27577,11 @@ type Mutation {
   ): UnlinkAuthenticationMutationPayload
 
   """
+  Unpublish an itinerary. Also revokes its share link, so it becomes private. Needs the publish ability.
+  """
+  unpublishItinerary(input: unpublishItineraryInput!): unpublishItineraryPayload
+
+  """
   Unpublishes a partner list's private viewing room. Does not delete the publication.
   """
   unpublishPartnerListPublication(
@@ -27370,6 +27743,25 @@ type Mutation {
   updateInstallShotForPartnerShow(
     input: UpdateInstallShotForPartnerShowMutationInput!
   ): UpdateInstallShotForPartnerShowMutationPayload
+
+  """
+  Update an itinerary. Pass `generateShareToken` or `revokeShareToken` to manage its share link.
+  """
+  updateItinerary(input: updateItineraryInput!): updateItineraryPayload
+
+  """
+  Update a section. `position` moves it among its itinerary's sections.
+  """
+  updateItinerarySection(
+    input: updateItinerarySectionInput!
+  ): updateItinerarySectionPayload
+
+  """
+  Update a stop. `position` moves it among its section's stops. `isFreeAdmission: null` clears the override.
+  """
+  updateItineraryStop(
+    input: updateItineraryStopInput!
+  ): updateItineraryStopPayload
 
   """
   Updates the user's collections in batch.
@@ -33723,6 +34115,43 @@ type Query {
     partnerId: String!
   ): InstagramPostConnection
   invoice(token: String!): Invoice
+
+  """
+  A connection of City Guide itineraries
+  """
+  itinerariesConnection(
+    after: String
+    before: String
+
+    """
+    Only itineraries for this city
+    """
+    citySlug: String
+    first: Int
+
+    """
+    Only curated (editorial) or only personal itineraries
+    """
+    isCurated: Boolean
+    last: Int
+    page: Int
+    size: Int
+  ): ItinerariesConnection
+
+  """
+  A City Guide itinerary
+  """
+  itinerary(
+    """
+    The internal ID or slug of the Itinerary
+    """
+    id: String!
+
+    """
+    The share token for an unlisted itinerary. Gravity returns 404 without it, so a caller who is neither the owner nor holding the token cannot tell an unlisted guide from one that does not exist.
+    """
+    shareToken: String
+  ): Itinerary
   job(id: ID!): Job!
   jobs: [Job!]!
 
@@ -37319,6 +37748,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   isFollowed: Boolean
 
   """
+  Is entry to this show free? Null means this is genuinely unknown, not that admission isn't free.
+  """
+  isFreeAdmission: Boolean
+
+  """
   Does the show exist soley online
   """
   isOnlineExclusive: Boolean!
@@ -39018,6 +39452,16 @@ input UpdateBrandKitInput {
   Text color hex code (e.g. #FF0000)
   """
   textColor: String
+
+  """
+  Language used for generated artwork descriptions
+  """
+  writingLanguage: String
+
+  """
+  Writing sample used to match tone in generated descriptions
+  """
+  writingSample: String
 }
 
 type UpdateBrandKitLogoFailure {
@@ -43470,6 +43914,43 @@ type Viewer {
     partnerId: String!
   ): InstagramPostConnection
   invoice(token: String!): Invoice
+
+  """
+  A connection of City Guide itineraries
+  """
+  itinerariesConnection(
+    after: String
+    before: String
+
+    """
+    Only itineraries for this city
+    """
+    citySlug: String
+    first: Int
+
+    """
+    Only curated (editorial) or only personal itineraries
+    """
+    isCurated: Boolean
+    last: Int
+    page: Int
+    size: Int
+  ): ItinerariesConnection
+
+  """
+  A City Guide itinerary
+  """
+  itinerary(
+    """
+    The internal ID or slug of the Itinerary
+    """
+    id: String!
+
+    """
+    The share token for an unlisted itinerary. Gravity returns 404 without it, so a caller who is neither the owner nor holding the token cannot tell an unlisted guide from one that does not exist.
+    """
+    shareToken: String
+  ): Itinerary
   job(id: ID!): Job!
   jobs: [Job!]!
 
@@ -44672,6 +45153,21 @@ enum contactType {
   PARTNER
 }
 
+input copyItineraryInput {
+  clientMutationId: String
+  id: String!
+
+  """
+  The share token of the itinerary being copied, required to copy an unlisted itinerary the caller does not own
+  """
+  shareToken: String
+}
+
+type copyItineraryPayload {
+  clientMutationId: String
+  responseOrError: ItineraryMutationResponseOrError
+}
+
 input createAlertInput {
   acquireable: Boolean
   additionalGeneIDs: [String]
@@ -44752,6 +45248,67 @@ union createHeroUnitResponseOrError =
 
 type createHeroUnitSuccess {
   heroUnit: HeroUnit
+}
+
+input createItineraryInput {
+  authorName: String
+  citySlug: String!
+  clientMutationId: String
+  description: String
+  isCurated: Boolean
+  subtitle: String
+  title: String!
+}
+
+type createItineraryPayload {
+  clientMutationId: String
+  responseOrError: ItineraryMutationResponseOrError
+}
+
+input createItinerarySectionInput {
+  clientMutationId: String
+  itineraryID: String!
+
+  """
+  Free-text note shown with the section.
+  """
+  note: String
+  title: String
+}
+
+type createItinerarySectionPayload {
+  clientMutationId: String
+  responseOrError: ItinerarySectionMutationResponseOrError
+}
+
+input createItineraryStopInput {
+  address: String
+  category: ItineraryStopCategory
+  clientMutationId: String
+  endAt: String
+  eventID: String
+  eventType: ItineraryStopEventType
+  imageURL: String
+  isFreeAdmission: Boolean
+  itemID: String
+  itemType: ItineraryStopItemType
+  itinerarySectionID: String!
+  latitude: Float
+  longitude: Float
+  note: String
+  sourceURL: String
+  startAt: String
+
+  """
+  IANA time zone identifier, e.g. Europe/London.
+  """
+  timeZone: String
+  title: String
+}
+
+type createItineraryStopPayload {
+  clientMutationId: String
+  responseOrError: ItineraryStopMutationResponseOrError
 }
 
 type createOrderedSetFailure {
@@ -44913,6 +45470,36 @@ type deleteHeroUnitSuccess {
   heroUnit: HeroUnit
 }
 
+input deleteItineraryInput {
+  clientMutationId: String
+  id: String!
+}
+
+type deleteItineraryPayload {
+  clientMutationId: String
+  responseOrError: ItineraryMutationResponseOrError
+}
+
+input deleteItinerarySectionInput {
+  clientMutationId: String
+  id: String!
+}
+
+type deleteItinerarySectionPayload {
+  clientMutationId: String
+  responseOrError: ItinerarySectionMutationResponseOrError
+}
+
+input deleteItineraryStopInput {
+  clientMutationId: String
+  id: String!
+}
+
+type deleteItineraryStopPayload {
+  clientMutationId: String
+  responseOrError: ItineraryStopMutationResponseOrError
+}
+
 type deleteOrderedSetFailure {
   mutationError: GravityMutationError
 }
@@ -45050,6 +45637,16 @@ type dimensions {
 
 type partnerBiographyBlurb {
   text: String
+}
+
+input publishItineraryInput {
+  clientMutationId: String
+  id: String!
+}
+
+type publishItineraryPayload {
+  clientMutationId: String
+  responseOrError: ItineraryMutationResponseOrError
 }
 
 type purchases {
@@ -45209,6 +45806,16 @@ type submitOrderPayload {
   orderOrError: OrderMutationResponse
 }
 
+input unpublishItineraryInput {
+  clientMutationId: String
+  id: String!
+}
+
+type unpublishItineraryPayload {
+  clientMutationId: String
+  responseOrError: ItineraryMutationResponseOrError
+}
+
 input unsetOrderFulfillmentOptionInput {
   clientMutationId: String
 
@@ -45336,6 +45943,88 @@ union updateHeroUnitResponseOrError =
 
 type updateHeroUnitSuccess {
   heroUnit: HeroUnit
+}
+
+input updateItineraryInput {
+  authorName: String
+  citySlug: String
+  clientMutationId: String
+  description: String
+
+  """
+  Generate a new share token for this itinerary, replacing any existing one
+  """
+  generateShareToken: Boolean
+  id: String!
+  isCurated: Boolean
+
+  """
+  Revoke this itinerary's current share token, if any
+  """
+  revokeShareToken: Boolean
+  subtitle: String
+  title: String
+}
+
+type updateItineraryPayload {
+  clientMutationId: String
+  responseOrError: ItineraryMutationResponseOrError
+}
+
+input updateItinerarySectionInput {
+  clientMutationId: String
+  id: String!
+
+  """
+  Free-text note shown with the section.
+  """
+  note: String
+
+  """
+  Reorders the section among its itinerary's sections via acts_as_list's insert_at. There is no separate reposition mutation for sections.
+  """
+  position: Int
+  title: String
+}
+
+type updateItinerarySectionPayload {
+  clientMutationId: String
+  responseOrError: ItinerarySectionMutationResponseOrError
+}
+
+input updateItineraryStopInput {
+  address: String
+  category: ItineraryStopCategory
+  clientMutationId: String
+  endAt: String
+  eventID: String
+  eventType: ItineraryStopEventType
+  id: String!
+  imageURL: String
+  isFreeAdmission: Boolean
+  itemID: String
+  itemType: ItineraryStopItemType
+  latitude: Float
+  longitude: Float
+  note: String
+
+  """
+  Reorders the stop among its section's stops via acts_as_list's insert_at. There is no separate reposition mutation for stops.
+  """
+  position: Int
+  sourceURL: String
+  startAt: String
+
+  """
+  IANA time zone identifier, e.g. Europe/London.
+  """
+  timeZone: String
+  title: String
+}
+
+type updateItineraryStopPayload {
+  clientMutationId: String
+  responseOrError: ItineraryStopMutationResponseOrError
 }
 
 input updateMeCollectionsMutationInput {
