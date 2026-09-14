@@ -37,7 +37,7 @@ export const CollectionsHubsNav: FC<
     }),
   )
 
-  const geneTiles: HubTile[] = props.genes
+  const geneTiles: HubTile[] = (props.genes ?? [])
     .filter(gene => !!gene)
     .map(gene => ({
       key: `gene-${gene.slug}`,
