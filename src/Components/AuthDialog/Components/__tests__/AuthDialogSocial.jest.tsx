@@ -30,8 +30,11 @@ jest.mock(
 
 const mockAuthDialogContext = (intent?: Intent) => {
   ;(useAuthDialogContext as jest.Mock).mockReturnValue({
+    // The social buttons are always rendered from the Welcome view, so mode
+    // is never "SignUp" at this point — the eligibility check must not
+    // depend on mode.
     state: {
-      mode: "SignUp",
+      mode: "Welcome",
       options: {},
       analytics: { intent },
     },
@@ -43,7 +46,7 @@ describe("AuthDialogSocial", () => {
     jest.clearAllMocks()
   })
 
-  it("does not skip onboarding for a sign up without a commercial intent", () => {
+  it("does not skip onboarding without a commercial intent", () => {
     mockAuthDialogContext(undefined)
 
     render(<AuthDialogSocial />)
@@ -52,7 +55,7 @@ describe("AuthDialogSocial", () => {
     expect(href).not.toContain("skip-onboarding")
   })
 
-  it("skips onboarding for a sign up with a commercial intent", () => {
+  it("skips onboarding when there is a commercial intent", () => {
     mockAuthDialogContext(Intent.makeOffer)
 
     render(<AuthDialogSocial />)

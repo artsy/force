@@ -4,7 +4,7 @@ import GoogleIcon from "@artsy/icons/GoogleIcon"
 import { Button, Stack } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
-import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
+import { isCommercialAuthIntent } from "Components/AuthDialog/Utils/isCommercialAuthIntent"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
 import type { FC } from "react"
@@ -24,8 +24,6 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
     appendOnboarding: false,
   })
 
-  const { isElligibleForOnboarding } = useElligibleForOnboarding()
-
   // These params are handled by the routes in the Passport app,
   // they get pushed onto the session and then handled when the social
   // service redirects back to Force.
@@ -36,7 +34,9 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
       "context-module": analytics.contextModule,
       "signup-intent": analytics.intent,
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
-      "skip-onboarding": isElligibleForOnboarding ? undefined : true,
+      "skip-onboarding": isCommercialAuthIntent(analytics.intent)
+        ? true
+        : undefined,
       trigger: analytics.trigger,
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
