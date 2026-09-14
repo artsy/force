@@ -97,6 +97,28 @@ if (typeof window !== "undefined") {
 }
 
 if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
+  // `fetch` isn't polyfilled in Jest, so any component that reaches the real
+  // Relay network layer fails with `ReferenceError: fetch is not defined`,
+  // which react-relay-network-modern's cache middleware logs via `console.log`.
+  // Tests intentionally never hit the network, so drop just that message.
+  const originalLog = console.log
+
+  beforeEach(() => {
+    // eslint-disable-next-line no-console
+    if (console.log !== originalLog) return
+
+    jest.spyOn(console, "log").mockImplementation((...args) => {
+      if (
+        args[0] instanceof ReferenceError &&
+        args[0].message === "fetch is not defined"
+      ) {
+        return
+      }
+
+      originalLog(...args)
+    })
+  })
+
   const originalLoggers = {
     error: console.error,
     warn: console.warn,

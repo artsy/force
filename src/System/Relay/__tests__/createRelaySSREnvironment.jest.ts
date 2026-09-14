@@ -47,12 +47,30 @@ describe("#hydrateCacheFromSSR", () => {
 })
 
 describe("#createRelaySSREnvironment", () => {
+  const originalNodeEnv = process.env.NODE_ENV
+
   beforeEach(() => {
     retryMiddlewareMock.mockClear()
     jest.resetModules()
   })
 
+  afterEach(() => {
+    process.env.NODE_ENV = originalNodeEnv
+  })
+
+  it("skips retryMiddleware in the test environment", () => {
+    const {
+      createRelaySSREnvironment,
+    } = require("System/Relay/createRelaySSREnvironment")
+
+    createRelaySSREnvironment()
+
+    expect(retryMiddlewareMock).not.toHaveBeenCalled()
+  })
+
   it("configures retryMiddleware with the client retry policy", () => {
+    process.env.NODE_ENV = "production"
+
     const {
       createRelaySSREnvironment,
     } = require("System/Relay/createRelaySSREnvironment")
