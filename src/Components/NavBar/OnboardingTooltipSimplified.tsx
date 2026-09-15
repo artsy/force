@@ -20,7 +20,7 @@ export const OnboardingTooltipSimplified: FC<
     <ProgressiveOnboardingPopover
       name="onboarding-interests-simplified"
       placement="bottom"
-      zIndex={Z.globalNav + 1}
+      zIndex={Z.onboardingPopover}
       onClose={clearOnboardingInterestsPending}
       popover={<Text variant="xs">{pendingInterests.join(", ")}</Text>}
     >

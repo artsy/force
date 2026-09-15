@@ -13,18 +13,13 @@ export const ONBOARDING_INTERESTS = [
 
 // Yup 0.32's types expect a mutable array; `ONBOARDING_INTERESTS` is `as const`
 // (readonly), so we spread into a new array to satisfy .oneOf()'s signature.
-// Purely a type-level fix — behavior is identical either way.
-const interestSchema = Yup.string()
-  .oneOf([...ONBOARDING_INTERESTS])
+export const pendingInterestsSchema = Yup.array()
+  .of(
+    Yup.string()
+      .oneOf([...ONBOARDING_INTERESTS])
+      .required(),
+  )
   .required()
-
-const asInterest = (value: unknown): string | null => {
-  try {
-    return interestSchema.validateSync(value)
-  } catch {
-    return null
-  }
-}
 
 const readPending = (): string[] => {
   try {
@@ -32,14 +27,8 @@ const readPending = (): string[] => {
 
     if (!raw) return []
 
-    const parsed: unknown = JSON.parse(raw)
-
-    if (!Array.isArray(parsed)) return []
-
-    return parsed.flatMap(entry => {
-      const interest = asInterest(entry)
-
-      return interest ? [interest] : []
+    return pendingInterestsSchema.validateSync(JSON.parse(raw), {
+      strict: true,
     })
   } catch {
     return []
