@@ -288,9 +288,6 @@ describe("lifecycle", () => {
     })
 
     it("sets the after-auth action on the session", () => {
-      // Express's default query parser turns the bracket-notation query
-      // AuthDialogSocial builds (e.g. afterSignUpAction[action]=buyNow) into
-      // a nested object, not a JSON string.
       req.query.afterSignUpAction = {
         action: "buyNow",
         kind: "artworks",
