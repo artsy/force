@@ -1,49 +1,33 @@
-import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
-import { Box, Flex, Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
+import type { AIAgentActivity } from "Components/AISearch/Utils/aiSearchTypes"
 import { themeGet } from "@styled-system/theme-get"
 import type { FC } from "react"
 import styled, { keyframes } from "styled-components"
 
-const THINKING_STATUS = "Thinking…"
+const ACTIVITY_LABELS: Record<AIAgentActivity, string> = {
+  THINKING: "Thinking…",
+  SEARCHING_ARTWORKS: "Searching for artworks…",
+  SEARCHING_ARTISTS: "Searching for artists…",
+  SEARCHING_SHOWS: "Searching for shows…",
+  SEARCHING_FAIRS: "Searching for fairs…",
+  FINDING_RECOMMENDATIONS: "Finding recommendations…",
+  LOADING_ARTWORK_DETAILS: "Looking at the artwork…",
+  SEARCHING_ARTSY: "Searching Artsy…",
+}
 
 interface AISearchStatusListProps {
-  /** Tool-call summaries, appended as the agent streams them */
-  statuses: string[]
-  isComplete: boolean
+  activity: AIAgentActivity | null
 }
 
 export const AISearchStatusList: FC<AISearchStatusListProps> = ({
-  statuses,
-  isComplete,
+  activity,
 }) => {
-  // Tool calls only start arriving a beat into the turn; keep the shimmer up
-  // until the first one lands so the response never looks stalled.
-  const visible =
-    statuses.length === 0 && !isComplete ? [THINKING_STATUS] : statuses
-
   return (
-    <Box>
-      {visible.map((status, index) => {
-        const isActive = !isComplete && index === visible.length - 1
-
-        return (
-          // Summaries repeat verbatim across tool calls, so index-key here
-          <Flex key={index} alignItems="center" py="2px">
-            <Box width={18} height={18} mr={1} flexShrink={0}>
-              {!isActive && <CheckmarkIcon fill="mono40" />}
-            </Box>
-
-            {isActive ? (
-              <ShimmerText variant="sm-display">{status}</ShimmerText>
-            ) : (
-              <Text variant="sm-display" color="mono60">
-                {status}
-              </Text>
-            )}
-          </Flex>
-        )
-      })}
-    </Box>
+    <Flex alignItems="center" py="2px">
+      <ShimmerText variant="sm-display">
+        {ACTIVITY_LABELS[activity ?? "THINKING"]}
+      </ShimmerText>
+    </Flex>
   )
 }
 

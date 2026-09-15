@@ -1,12 +1,17 @@
 import { Box, Flex, Text } from "@artsy/palette"
 import { AISparklesIcon } from "Components/AISearch/AISparklesIcon"
 import { AISearchArtistsRail } from "Components/AISearch/Components/AISearchArtistsRail"
-import { AISearchArtworksRail } from "Components/AISearch/Components/AISearchArtworksRail"
+import {
+  AISearchArtworksRail,
+  AISearchArtworksRailPlaceholder,
+} from "Components/AISearch/Components/AISearchArtworksRail"
 import { AISearchResultFooter } from "Components/AISearch/Components/AISearchResultFooter"
 import { AISearchStatusList } from "Components/AISearch/Components/AISearchStatusList"
 import type { AISearchMessage as AISearchMessageType } from "Components/AISearch/Hooks/useAISearchConversation"
 import { getAISearchViewAll } from "Components/AISearch/Utils/aiSearchViewAllHref"
 import type { FC } from "react"
+
+const ARTWORKS_RAIL_TITLE = "Works from the results"
 
 interface AISearchMessageProps {
   message: AISearchMessageType
@@ -23,10 +28,16 @@ export const AISearchMessage: FC<AISearchMessageProps> = ({ message }) => {
     )
   }
 
-  const { artistIDs, artworkIDs, artworkFilters, errorMessage, phase, text } =
-    message
+  const {
+    artistIDs,
+    artworkIDs,
+    artworkFilters,
+    errorMessage,
+    isPreparingArtworkResults,
+    phase,
+    text,
+  } = message
 
-  const isSettled = phase === "RESULT" || phase === "ERROR"
   const viewAll = phase === "RESULT" ? getAISearchViewAll(artworkFilters) : null
 
   return (
@@ -36,15 +47,20 @@ export const AISearchMessage: FC<AISearchMessageProps> = ({ message }) => {
       </Box>
 
       <Box flex={1} minWidth={0}>
-        <AISearchStatusList
-          statuses={message.statuses}
-          isComplete={isSettled}
-        />
+        {phase === "THINKING" && (
+          <AISearchStatusList activity={message.activity} />
+        )}
 
         {!!text && (
           <Text variant="sm-display" mt={2} style={{ whiteSpace: "pre-wrap" }}>
             {text}
           </Text>
+        )}
+
+        {phase === "STREAMING" && isPreparingArtworkResults && (
+          <Box mt={4}>
+            <AISearchArtworksRailPlaceholder title={ARTWORKS_RAIL_TITLE} />
+          </Box>
         )}
 
         {phase === "ERROR" && !!errorMessage && (
@@ -57,7 +73,7 @@ export const AISearchMessage: FC<AISearchMessageProps> = ({ message }) => {
           <Box mt={4}>
             <AISearchArtworksRail
               artworkIDs={artworkIDs}
-              title="Works from the results"
+              title={ARTWORKS_RAIL_TITLE}
             />
           </Box>
         )}

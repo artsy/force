@@ -29,17 +29,23 @@ export interface AIAgentTextDelta {
   text: string
 }
 
+export type AIAgentActivity =
+  | "THINKING"
+  | "SEARCHING_ARTWORKS"
+  | "SEARCHING_ARTISTS"
+  | "SEARCHING_SHOWS"
+  | "SEARCHING_FAIRS"
+  | "FINDING_RECOMMENDATIONS"
+  | "LOADING_ARTWORK_DETAILS"
+  | "SEARCHING_ARTSY"
+
 export interface AIAgentToolCall {
   __typename: "AIAgentToolCall"
-  toolName: string
-  summary: string | null
+  activity: AIAgentActivity
 }
 
 export interface AIAgentToolResult {
   __typename: "AIAgentToolResult"
-  toolName: string
-  ok: boolean
-  summary: string | null
 }
 
 export interface AIAgentTurnComplete {

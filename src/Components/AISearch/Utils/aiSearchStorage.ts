@@ -15,7 +15,6 @@ export interface StoredAISearchMessage {
   id: string
   role: "USER" | "ASSISTANT"
   text: string
-  statuses?: string[]
   artworkIDs?: string[]
   artistIDs?: string[]
   artworkFilters?: AISearchArtworkFilters | null

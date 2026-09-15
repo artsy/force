@@ -7,6 +7,7 @@ import {
   writeAISearchConversation,
 } from "Components/AISearch/Utils/aiSearchStorage"
 import type {
+  AIAgentActivity,
   AIAgentEvent,
   AISearchArtworkFilters,
   AISearchHistoryEntry,
@@ -15,7 +16,12 @@ import { streamAIAgentTurn } from "Components/AISearch/Utils/streamAIAgentTurn"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useCallback, useEffect, useRef, useState } from "react"
 
-const DEFAULT_STATUS = "Querying Artsy…"
+const ARTWORK_RESULT_ACTIVITIES = new Set<AIAgentActivity>([
+  "SEARCHING_ARTWORKS",
+  "FINDING_RECOMMENDATIONS",
+  "LOADING_ARTWORK_DETAILS",
+  "SEARCHING_ARTSY",
+])
 
 const STOP_REASON_MESSAGES: Record<string, string> = {
   aborted: "That took too long, so I stopped. Try narrowing the request.",
@@ -35,8 +41,10 @@ export interface AISearchAssistantMessage {
   role: "ASSISTANT"
   /** The agent's prose, accumulated from text deltas */
   text: string
-  /** One row per tool call, rendered as the "thinking" checklist */
-  statuses: string[]
+  /** Stable server activity; converted to user-facing copy when rendered */
+  activity: AIAgentActivity | null
+  /** Whether to reserve space for an artwork rail before the turn completes */
+  isPreparingArtworkResults: boolean
   phase: "THINKING" | "STREAMING" | "RESULT" | "ERROR"
   artworkIDs: string[]
   artistIDs: string[]
@@ -55,7 +63,6 @@ const toStoredMessage = (message: AISearchMessage): StoredAISearchMessage => {
     id: message.id,
     role: "ASSISTANT",
     text: message.text,
-    statuses: message.statuses,
     artworkIDs: message.artworkIDs,
     artistIDs: message.artistIDs,
     artworkFilters: message.artworkFilters,
@@ -71,7 +78,8 @@ const fromStoredMessage = (message: StoredAISearchMessage): AISearchMessage => {
     id: message.id,
     role: "ASSISTANT",
     text: message.text,
-    statuses: message.statuses ?? [],
+    activity: null,
+    isPreparingArtworkResults: false,
     phase: "RESULT",
     artworkIDs: message.artworkIDs ?? [],
     artistIDs: message.artistIDs ?? [],
@@ -165,7 +173,8 @@ export const useAISearchConversation = () => {
         id: assistantId,
         role: "ASSISTANT",
         text: "",
-        statuses: [],
+        activity: "THINKING",
+        isPreparingArtworkResults: false,
         phase: "THINKING",
         artworkIDs: [],
         artistIDs: [],
@@ -195,34 +204,24 @@ export const useAISearchConversation = () => {
       const handleEvent = (event: AIAgentEvent) => {
         switch (event.__typename) {
           case "AIAgentToolCall": {
-            const status = event.summary ?? DEFAULT_STATUS
-            const lastStatus = assistant.statuses[assistant.statuses.length - 1]
-
-            // The agent calls `query_artsy` repeatedly, often with an
-            // identical summary — don't stutter the checklist.
-            if (status === lastStatus) {
-              return
-            }
-
-            update({ statuses: [...assistant.statuses, status] })
+            update({
+              activity: event.activity,
+              isPreparingArtworkResults:
+                assistant.isPreparingArtworkResults ||
+                ARTWORK_RESULT_ACTIVITIES.has(event.activity),
+            })
             return
           }
 
           case "AIAgentToolResult": {
-            // `summary` on a failed result is the raw GraphQL error text the
-            // agent's own query produced ("Field \"priceMin\" of type
-            // \"Money\" must have a selection of subfields…"). That's for us,
-            // not the user: the retry surfaces as the next tool call anyway.
-            if (!event.ok) {
-              console.log(`[Debug] ${event.toolName} failed: ${event.summary}`)
-            }
-
+            update({ activity: "THINKING" })
             return
           }
 
           case "AIAgentTextDelta": {
             update({
               text: assistant.text + event.text,
+              activity: null,
               phase: "STREAMING",
             })
             return
@@ -250,6 +249,8 @@ export const useAISearchConversation = () => {
 
             if (!message) {
               update({
+                activity: null,
+                isPreparingArtworkResults: false,
                 phase: "ERROR",
                 errorMessage:
                   STOP_REASON_MESSAGES[event.stopReason] ??
@@ -260,6 +261,8 @@ export const useAISearchConversation = () => {
 
             update({
               text: message,
+              activity: null,
+              isPreparingArtworkResults: false,
               phase: "RESULT",
               artworkIDs,
               artistIDs,
@@ -292,6 +295,8 @@ export const useAISearchConversation = () => {
         console.error("[AISearch] turn failed", error)
 
         update({
+          activity: null,
+          isPreparingArtworkResults: false,
           phase: "ERROR",
           errorMessage:
             error instanceof Error && error.message
@@ -308,8 +313,14 @@ export const useAISearchConversation = () => {
           ) {
             update(
               assistant.text
-                ? { phase: "RESULT" }
+                ? {
+                    activity: null,
+                    isPreparingArtworkResults: false,
+                    phase: "RESULT",
+                  }
                 : {
+                    activity: null,
+                    isPreparingArtworkResults: false,
                     phase: "ERROR",
                     errorMessage: STOP_REASON_MESSAGES.error,
                   },

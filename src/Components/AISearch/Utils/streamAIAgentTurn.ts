@@ -67,13 +67,7 @@ const DOCUMENT = `
         text
       }
       ... on AIAgentToolCall {
-        toolName
-        summary
-      }
-      ... on AIAgentToolResult {
-        toolName
-        ok
-        summary
+        activity
       }
       ... on ${TURN_COMPLETE} {
         ${TURN_COMPLETE_FIELDS}

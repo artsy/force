@@ -95,7 +95,6 @@ export const AISearchArtworksRail: FC<AISearchArtworksRailProps> = ({
                   <ShelfArtworkFragmentContainer
                     key={artwork.internalID}
                     artwork={artwork}
-                    lazyLoad
                   />
                 )
               })
@@ -107,7 +106,9 @@ export const AISearchArtworksRail: FC<AISearchArtworksRailProps> = ({
   )
 }
 
-const AISearchArtworksRailPlaceholder: FC<{ title: string }> = ({ title }) => {
+export const AISearchArtworksRailPlaceholder: FC<{ title: string }> = ({
+  title,
+}) => {
   return (
     <Skeleton>
       <Rail
