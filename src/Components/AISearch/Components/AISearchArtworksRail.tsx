@@ -1,4 +1,7 @@
 import { Skeleton } from "@artsy/palette"
+import { AISearchArtworksRailWithDebug } from "Components/AISearch/Components/AISearchArtworksRailWithDebug"
+import type { AISearchDebugEntry } from "Components/AISearch/Utils/aiSearchTypes"
+import { isAIAgentDebugEnabled } from "Components/AISearch/Utils/isAIAgentDebugEnabled"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -17,17 +20,23 @@ interface AISearchArtworksRailProps {
   artworkIDs: string[]
   title: string
   subTitle?: string
+  debugEntries?: AISearchDebugEntry[]
 }
 
 export const AISearchArtworksRail: FC<AISearchArtworksRailProps> = ({
   artworkIDs,
   title,
   subTitle,
+  debugEntries = [],
 }) => {
   const placeholder = <AISearchArtworksRailPlaceholder title={title} />
 
   useEffect(() => {
-    console.log("[Debug] artworks rail: requesting artworksConnection", {
+    if (!isAIAgentDebugEnabled()) {
+      return
+    }
+
+    console.log("[AISearch] artworks rail: requesting artworksConnection", {
       artworkIDs,
       first: artworkIDs.length,
     })
@@ -51,7 +60,6 @@ export const AISearchArtworksRail: FC<AISearchArtworksRailProps> = ({
       variables={{ artworkIDs, first: artworkIDs.length }}
       render={({ props, error }) => {
         if (error) {
-          console.log("[Debug] artworks rail: query errored", error)
           console.error(error)
           return null
         }
@@ -73,34 +81,43 @@ export const AISearchArtworksRail: FC<AISearchArtworksRailProps> = ({
 
         // artworksConnection is Elasticsearch-backed, so an internalID that
         // resolves fine through artworksLoader can still miss the index.
-        console.log("[Debug] artworks rail: response", {
-          requested: artworkIDs.length,
-          returned: artworks.length,
-          returnedIDs: artworks.map(artwork => {
-            return artwork.internalID
-          }),
-        })
+        if (isAIAgentDebugEnabled()) {
+          console.log("[AISearch] artworks rail: response", {
+            requested: artworkIDs.length,
+            returned: artworks.length,
+            returnedIDs: artworks.map(artwork => {
+              return artwork.internalID
+            }),
+          })
+        }
 
         if (artworks.length === 0) {
           return null
         }
 
-        return (
-          <Rail
-            title={title}
-            subTitle={subTitle}
-            getItems={() => {
-              return artworks.map(artwork => {
-                return (
-                  <ShelfArtworkFragmentContainer
-                    key={artwork.internalID}
-                    artwork={artwork}
-                  />
-                )
-              })
-            }}
-          />
-        )
+        const getItems = () => {
+          return artworks.map(artwork => {
+            return (
+              <ShelfArtworkFragmentContainer
+                key={artwork.internalID}
+                artwork={artwork}
+              />
+            )
+          })
+        }
+
+        if (debugEntries.length > 0) {
+          return (
+            <AISearchArtworksRailWithDebug
+              title={title}
+              subTitle={subTitle}
+              entries={debugEntries}
+              getItems={getItems}
+            />
+          )
+        }
+
+        return <Rail title={title} subTitle={subTitle} getItems={getItems} />
       }}
     />
   )

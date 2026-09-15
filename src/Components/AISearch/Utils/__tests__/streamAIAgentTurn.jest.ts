@@ -17,6 +17,16 @@ jest.mock("Utils/getENV", () => {
   return { getENV: () => "xapp-token" }
 })
 
+jest.mock("Components/AISearch/Utils/isAIAgentDebugEnabled", () => {
+  return { isAIAgentDebugEnabled: () => mockIsDebugEnabled }
+})
+
+let mockIsDebugEnabled = false
+
+beforeEach(() => {
+  mockIsDebugEnabled = false
+})
+
 const ARTWORK_ID = "5f5a5b5c5d5e5f6061626364"
 
 const userEntry = (content: string): AISearchHistoryEntry => {
@@ -121,11 +131,15 @@ describe("streamAIAgentTurn", () => {
       onEvent: () => {},
     })
 
-    return JSON.parse(fetchMock.mock.calls[0][1].body).variables.input
+    return JSON.parse(fetchMock.mock.calls[0][1].body)
+  }
+
+  const runForInput = async (history: AISearchHistoryEntry[]) => {
+    return (await run(history)).variables.input
   }
 
   it("replays the cards an assistant turn showed, so a follow-up can resolve against them", async () => {
-    const input = await run([
+    const input = await runForInput([
       { role: "USER", content: "Show me Warhol" },
       {
         role: "ASSISTANT",
@@ -145,7 +159,7 @@ describe("streamAIAgentTurn", () => {
   })
 
   it("omits the field entirely when a turn showed no cards", async () => {
-    const input = await run([
+    const input = await runForInput([
       { role: "USER", content: "Who is Banksy?" },
       { role: "ASSISTANT", content: "A street artist.", artworkIDs: [] },
     ])
@@ -157,10 +171,32 @@ describe("streamAIAgentTurn", () => {
   })
 
   it("never sends ids on a user turn, which rendered no cards", async () => {
-    const input = await run([
+    const input = await runForInput([
       { role: "USER", content: "Show me Warhol", artworkIDs: [ARTWORK_ID] },
     ])
 
     expect(input.history).toEqual([{ role: "USER", content: "Show me Warhol" }])
+  })
+
+  describe("debug mode", () => {
+    it("asks for the agent's queries and opts into them once debug is on", async () => {
+      mockIsDebugEnabled = true
+
+      const body = await run([])
+
+      expect(body.variables.input.includeDebugToolCalls).toBe(true)
+      expect(body.query).toContain("debugSummary")
+      expect(body.query).toContain("... on AIAgentToolResult")
+    })
+
+    // Asking a metaphysics that predates the debug fields for them is a
+    // validation error that kills the turn, so normal traffic must not.
+    it("leaves the document and input alone when debug is off", async () => {
+      const body = await run([])
+
+      expect(body.variables.input.includeDebugToolCalls).toBeUndefined()
+      expect(body.query).not.toContain("debugSummary")
+      expect(body.query).not.toContain("... on AIAgentToolResult")
+    })
   })
 })

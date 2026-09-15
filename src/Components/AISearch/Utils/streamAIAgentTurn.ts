@@ -2,6 +2,7 @@ import type {
   AIAgentEvent,
   AISearchHistoryEntry,
 } from "Components/AISearch/Utils/aiSearchTypes"
+import { isAIAgentDebugEnabled } from "Components/AISearch/Utils/isAIAgentDebugEnabled"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
 import { getENV } from "Utils/getENV"
 
@@ -59,7 +60,19 @@ const TURN_COMPLETE_FIELDS = [
   HAS_ARTISTS_AND_FILTERS ? ARTISTS_AND_FILTERS_FIELDS : "",
 ].join("")
 
-const DOCUMENT = `
+const DEBUG_TOOL_CALL_FIELDS = `
+  toolName
+  debugSummary
+`
+
+const DEBUG_TOOL_RESULT_FIELDS = `
+  toolName
+  ok
+  debugSummary
+`
+
+const buildDocument = (isDebug: boolean) => {
+  return `
   subscription AISearchAgentTurn($input: AIAgentTurnInput!) {
     aiAgentTurn(input: $input) {
       __typename
@@ -68,6 +81,14 @@ const DOCUMENT = `
       }
       ... on AIAgentToolCall {
         activity
+        ${isDebug ? DEBUG_TOOL_CALL_FIELDS : ""}
+      }
+      ${
+        isDebug
+          ? `... on AIAgentToolResult {
+        ${DEBUG_TOOL_RESULT_FIELDS}
+      }`
+          : ""
       }
       ... on ${TURN_COMPLETE} {
         ${TURN_COMPLETE_FIELDS}
@@ -75,6 +96,7 @@ const DOCUMENT = `
     }
   }
 `
+}
 
 export interface StreamAIAgentTurnParams {
   conversationID: string
@@ -145,10 +167,13 @@ export const streamAIAgentTurn = async ({
   signal,
   onEvent,
 }: StreamAIAgentTurnParams): Promise<void> => {
+  const isDebug = isAIAgentDebugEnabled()
+
   const variables = {
     input: {
       conversationID,
       message,
+      ...(isDebug ? { includeDebugToolCalls: true } : {}),
       history: trimHistory(history, message).map(entry => {
         const shouldSendArtworkIDs =
           entry.role === "ASSISTANT" && !!entry.artworkIDs?.length
@@ -172,7 +197,7 @@ export const streamAIAgentTurn = async ({
       "X-USER-ID": userID,
       "X-ACCESS-TOKEN": accessToken,
     },
-    body: JSON.stringify({ query: DOCUMENT, variables }),
+    body: JSON.stringify({ query: buildDocument(isDebug), variables }),
   })
 
   if (!isEventStream(response)) {
@@ -211,8 +236,8 @@ export const streamAIAgentTurn = async ({
         }
 
         // Text deltas arrive token-by-token and would drown the console.
-        if (event.__typename !== "AIAgentTextDelta") {
-          console.log("[Debug] SSE event", event)
+        if (isDebug && event.__typename !== "AIAgentTextDelta") {
+          console.log("[AISearch] SSE event", event)
         }
 
         onEvent(event)

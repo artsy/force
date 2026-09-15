@@ -50,6 +50,7 @@ export const DEFAULT_CACHE_TIME: any = 3600
 export const DISABLE_IMAGE_PROXY: any = false
 export const EDITORIAL_PATHS: any =
   "^/article|^/2016-year-in-art|^/venice-biennale|^/gender-equality|^/series|^/video|^/news"
+export const ENABLE_AI_AGENT_DEBUG: any = true
 export const ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH: any = true
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_PREFETCH: any = true

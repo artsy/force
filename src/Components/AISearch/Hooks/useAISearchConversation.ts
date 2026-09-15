@@ -6,12 +6,18 @@ import {
   readAISearchConversations,
   writeAISearchConversation,
 } from "Components/AISearch/Utils/aiSearchStorage"
+import {
+  appendDebugCall,
+  settleDebugResult,
+} from "Components/AISearch/Utils/aiSearchDebugEntries"
 import type {
   AIAgentActivity,
   AIAgentEvent,
   AISearchArtworkFilters,
+  AISearchDebugEntry,
   AISearchHistoryEntry,
 } from "Components/AISearch/Utils/aiSearchTypes"
+import { isAIAgentDebugEnabled } from "Components/AISearch/Utils/isAIAgentDebugEnabled"
 import { streamAIAgentTurn } from "Components/AISearch/Utils/streamAIAgentTurn"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -49,6 +55,7 @@ export interface AISearchAssistantMessage {
   artworkIDs: string[]
   artistIDs: string[]
   artworkFilters: AISearchArtworkFilters | null
+  debugEntries: AISearchDebugEntry[]
   errorMessage?: string
 }
 
@@ -84,6 +91,7 @@ const fromStoredMessage = (message: StoredAISearchMessage): AISearchMessage => {
     artworkIDs: message.artworkIDs ?? [],
     artistIDs: message.artistIDs ?? [],
     artworkFilters: message.artworkFilters ?? null,
+    debugEntries: [],
   }
 }
 
@@ -186,6 +194,7 @@ export const useAISearchConversation = () => {
         artworkIDs: [],
         artistIDs: [],
         artworkFilters: null,
+        debugEntries: [],
       }
 
       const priorMessages = messages
@@ -216,12 +225,22 @@ export const useAISearchConversation = () => {
               isPreparingArtworkResults:
                 assistant.isPreparingArtworkResults ||
                 ARTWORK_RESULT_ACTIVITIES.has(event.activity),
+              debugEntries: appendDebugCall({
+                entries: assistant.debugEntries,
+                event,
+              }),
             })
             return
           }
 
           case "AIAgentToolResult": {
-            update({ activity: "THINKING" })
+            update({
+              activity: "THINKING",
+              debugEntries: settleDebugResult({
+                entries: assistant.debugEntries,
+                event,
+              }),
+            })
             return
           }
 
@@ -242,15 +261,17 @@ export const useAISearchConversation = () => {
               return artist.internalID
             })
 
-            console.log("[Debug] turn complete", {
-              stopReason: event.stopReason,
-              toolCallCount: event.toolCallCount,
-              artworkCount: artworkIDs.length,
-              artworkIDs,
-              artistCount: artistIDs.length,
-              artistIDs,
-              artworkFilters: event.artworkFilters,
-            })
+            if (isAIAgentDebugEnabled()) {
+              console.log("[AISearch] turn complete", {
+                stopReason: event.stopReason,
+                toolCallCount: event.toolCallCount,
+                artworkCount: artworkIDs.length,
+                artworkIDs,
+                artistCount: artistIDs.length,
+                artistIDs,
+                artworkFilters: event.artworkFilters,
+              })
+            }
 
             const message = event.message ?? assistant.text
 

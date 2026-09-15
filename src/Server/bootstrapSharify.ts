@@ -41,6 +41,7 @@ export const bootstrapSharify = () => {
       "CURRENT_USER",
       "DISABLE_IMAGE_PROXY",
       "EDITORIAL_PATHS",
+      "ENABLE_AI_AGENT_DEBUG",
       "ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH",
       "ENABLE_NEW_AUCTIONS_FILTER",
       "ENABLE_PREFETCH",

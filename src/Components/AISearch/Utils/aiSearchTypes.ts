@@ -42,10 +42,28 @@ export type AIAgentActivity =
 export interface AIAgentToolCall {
   __typename: "AIAgentToolCall"
   activity: AIAgentActivity
+  toolName?: string
+  debugSummary?: string | null
 }
 
 export interface AIAgentToolResult {
   __typename: "AIAgentToolResult"
+  toolName?: string
+  ok?: boolean
+  debugSummary?: string | null
+}
+
+/**
+ * One developer-facing row of what the agent did during a turn, assembled from
+ * a tool call and the result that settles it.
+ */
+export interface AISearchDebugEntry {
+  id: string
+  toolName: string
+  activity: AIAgentActivity
+  query: string
+  resultSummary: string | null
+  status: "PENDING" | "OK" | "FAILED"
 }
 
 export interface AIAgentTurnComplete {
