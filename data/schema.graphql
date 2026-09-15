@@ -31,6 +31,20 @@ type AI {
   ): AIPromptTemplateConnection
 }
 
+"""
+A stable, client-safe description of what the agent is currently doing.
+"""
+enum AIAgentActivity {
+  FINDING_RECOMMENDATIONS
+  LOADING_ARTWORK_DETAILS
+  SEARCHING_ARTISTS
+  SEARCHING_ARTSY
+  SEARCHING_ARTWORKS
+  SEARCHING_FAIRS
+  SEARCHING_SHOWS
+  THINKING
+}
+
 union AIAgentEvent =
   | AIAgentTextDelta
   | AIAgentToolCall
@@ -54,13 +68,27 @@ type AIAgentTextDelta {
 
 type AIAgentToolCall {
   """
-  Human-readable label, e.g. "Searching artists…".
+  Stable, client-safe activity for rendering localized progress UI.
+  """
+  activity: AIAgentActivity!
+
+  """
+  Developer-facing tool arguments, populated only when debug mode is enabled.
+  """
+  debugSummary: String
+
+  """
+  Generic human-readable label, e.g. "Searching for artists…".
   """
   summary: String
   toolName: String!
 }
 
 type AIAgentToolResult {
+  """
+  Developer-facing failure detail, populated only when debug mode is enabled.
+  """
+  debugSummary: String
   ok: Boolean!
   summary: String
   toolName: String!
@@ -86,6 +114,11 @@ input AIAgentTurnInput {
   Prior turns, owned and replayed by the client.
   """
   history: [AIAgentMessageInput!]
+
+  """
+  Request developer-facing tool-call details. Honored only where the server enables debug mode; ignored elsewhere.
+  """
+  includeDebugToolCalls: Boolean
 
   """
   The new user message.
@@ -1437,6 +1470,11 @@ Sales stats of a partner
 """
 type AnalyticsPartnerSalesStats {
   orderCount: Int!
+
+  """
+  Percentage (0-100) of orders/offers the partner responded to
+  """
+  orderResponseRate: Float
 
   """
   Order response time in seconds
@@ -8637,6 +8675,22 @@ enum ChannelType {
 }
 
 type City {
+  """
+  A connection of City Guide events for this city
+  """
+  cityGuideEventsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+
+    """
+    Limit to events with this status
+    """
+    status: CityGuideEventStatus
+  ): CityGuideEventsConnection
   coordinates: LatLng
   fairsConnection(
     after: String
@@ -8684,6 +8738,122 @@ type City {
   ): ShowConnection
   slug: String!
   sponsoredContent: CitySponsoredContent
+}
+
+type CityGuideEvent {
+  citySlug: String!
+  description: String
+  endAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String!
+  heroImage: Image
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  The city guide event's UUID
+  """
+  internalID: String!
+  itineraries: [CityGuideEventItinerary!]!
+  publishedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  slug: String!
+  startAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String!
+  subtitle: String
+  timeZone: String
+  title: String!
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String!
+}
+
+type CityGuideEventItinerary {
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  The attachment's own UUID, not the itinerary's
+  """
+  internalID: String!
+  itinerary: Itinerary!
+  position: Int!
+}
+
+enum CityGuideEventStatus {
+  """
+  Already ended
+  """
+  CLOSED
+
+  """
+  Started, hasn't ended
+  """
+  CURRENT
+
+  """
+  Hasn't started yet
+  """
+  UPCOMING
+}
+
+"""
+A connection to a list of items.
+"""
+type CityGuideEventsConnection {
+  """
+  A list of edges.
+  """
+  edges: [CityGuideEventsEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An edge in a connection.
+"""
+type CityGuideEventsEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: CityGuideEvent
 }
 
 type CitySponsoredContent {
@@ -23416,6 +23586,11 @@ type Itinerary {
   Only published, curated guides have a slug. Null otherwise.
   """
   slug: String
+
+  """
+  How many stops the itinerary has in total. Nullable because the listing endpoint only began sending it recently; fall back to summing the sections when it is absent.
+  """
+  stopsCount: Int
   subtitle: String
   title: String!
   updatedAt(
@@ -29079,6 +29254,11 @@ enum OrderSellerStateEnum {
   COMPLETED
 
   """
+  Order has expired
+  """
+  EXPIRED
+
+  """
   Order is incomplete (not actionable by seller)
   """
   INCOMPLETE
@@ -29919,6 +30099,11 @@ type Partner implements Node {
   initials(length: Int = 3): String
 
   """
+  Aggregate metrics for the partner's unanswered inquiries, composed from Impulse conversations and Gravity collector profiles. Only resolvable for a single partner (e.g. `partner(id:)` on that partner's own CMS homepage) — not selectable under any list or connection field, such as partnersConnection.
+  """
+  inquiryMetrics: PartnerInquiryMetrics
+
+  """
   Inquiry Request details
   """
   inquiryRequest(
@@ -30024,7 +30209,17 @@ type Partner implements Node {
     first: Int
     last: Int
     page: Int
+
+    """
+    Filter by seller states
+    """
+    sellerState: [OrderSellerStateEnum]
     size: Int
+
+    """
+    Sort order for returned orders
+    """
+    sort: PartnerOrdersSortEnum
   ): PartnerOrdersConnection
 
   """
@@ -31240,6 +31435,18 @@ type PartnerGenomeGenesConnectionEdge {
   node: PartnerGenomeGene
 }
 
+type PartnerInquiryMetrics {
+  """
+  Number of confirmed buyers whose inquiries are still awaiting a response from the partner. Only scanned within the first 50 unanswered conversations returned by Impulse, so for partners with more unanswered conversations than that, this is a lower bound rather than an exact count.
+  """
+  confirmedBuyersWaitingCount: Int
+
+  """
+  Number of inquiries still awaiting a response from the partner
+  """
+  unansweredCount: Int
+}
+
 type PartnerInquiryRequest {
   collectorProfile: InquirerCollectorProfile
 
@@ -31735,6 +31942,13 @@ type PartnerOrdersEdge {
   The item at the end of the edge
   """
   node: Order
+}
+
+enum PartnerOrdersSortEnum {
+  STATE_EXPIRES_AT_ASC
+  STATE_EXPIRES_AT_DESC
+  STATE_UPDATED_AT_ASC
+  STATE_UPDATED_AT_DESC
 }
 
 """
@@ -33298,6 +33512,16 @@ type Query {
     """
     slug: String
   ): City
+
+  """
+  A City Guide event, e.g. "London Art Week"
+  """
+  cityGuideEvent(
+    """
+    The internal ID or slug of the City Guide Event
+    """
+    id: String!
+  ): CityGuideEvent
   collection(
     """
     The ID or slug of the Collection
@@ -43286,6 +43510,16 @@ type Viewer {
     """
     slug: String
   ): City
+
+  """
+  A City Guide event, e.g. "London Art Week"
+  """
+  cityGuideEvent(
+    """
+    The internal ID or slug of the City Guide Event
+    """
+    id: String!
+  ): CityGuideEvent
   collection(
     """
     The ID or slug of the Collection

@@ -4,6 +4,7 @@ import GoogleIcon from "@artsy/icons/GoogleIcon"
 import { Button, Stack } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
+import { isCommercialAuthIntent } from "Components/AuthDialog/Utils/isCommercialAuthIntent"
 import { getENV } from "Utils/getENV"
 import { stringify } from "qs"
 import type { FC } from "react"
@@ -33,6 +34,9 @@ export const AuthDialogSocial: FC<React.PropsWithChildren<unknown>> = () => {
       "context-module": analytics.contextModule,
       "signup-intent": analytics.intent,
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
+      "skip-onboarding": isCommercialAuthIntent(analytics.intent)
+        ? true
+        : undefined,
       trigger: analytics.trigger,
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
