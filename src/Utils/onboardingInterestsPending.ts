@@ -1,12 +1,46 @@
 import { useSyncExternalStore } from "react"
+import * as Yup from "yup"
 
 const PENDING_KEY = "onboarding-interests-pending"
+
+export const ONBOARDING_INTERESTS = [
+  "Buying art",
+  "Discovering art for inspiration",
+  "Reading about art and artists",
+  "Tracking prices and results at auction",
+  "Browsing for fun",
+] as const
+
+// Yup 0.32's types expect a mutable array; `ONBOARDING_INTERESTS` is `as const`
+// (readonly), so we spread into a new array to satisfy .oneOf()'s signature.
+// Purely a type-level fix — behavior is identical either way.
+const interestSchema = Yup.string()
+  .oneOf([...ONBOARDING_INTERESTS])
+  .required()
+
+const asInterest = (value: unknown): string | null => {
+  try {
+    return interestSchema.validateSync(value)
+  } catch {
+    return null
+  }
+}
 
 const readPending = (): string[] => {
   try {
     const raw = sessionStorage.getItem(PENDING_KEY)
 
-    return raw ? JSON.parse(raw) : []
+    if (!raw) return []
+
+    const parsed: unknown = JSON.parse(raw)
+
+    if (!Array.isArray(parsed)) return []
+
+    return parsed.flatMap(entry => {
+      const interest = asInterest(entry)
+
+      return interest ? [interest] : []
+    })
   } catch {
     return []
   }

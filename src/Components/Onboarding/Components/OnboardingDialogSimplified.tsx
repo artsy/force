@@ -1,14 +1,10 @@
 import { Box, Button, Checkbox, Spacer, Text } from "@artsy/palette"
 import { OnboardingModal } from "Components/Onboarding/Components/OnboardingModal"
-import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
+import {
+  ONBOARDING_INTERESTS,
+  markOnboardingInterestsPending,
+} from "Utils/onboardingInterestsPending"
 import { type FC, useState } from "react"
-
-const INTERESTS = [
-  "Buying art",
-  "Discovering art for inspiration",
-  "Reading about art and artists",
-  "Tracking prices and results at auction",
-]
 
 const SOURCES = [
   "Search engine",
@@ -53,7 +49,7 @@ export const OnboardingDialogSimplified: FC<
 
         {step === 0 && (
           <Box>
-            {INTERESTS.map(interest => {
+            {ONBOARDING_INTERESTS.map(interest => {
               return (
                 <Box key={interest} mb={2}>
                   <Checkbox
