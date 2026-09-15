@@ -235,6 +235,7 @@ export const beforeSocialAuth =
     req.session.sign_up_intent = req.query["signup-intent"]
     req.session.sign_up_referer = req.query["signup-referer"]
     req.session.trigger = req.query["trigger"]
+    req.session.afterSignUpAction = req.query["afterSignUpAction"]
     // accepted_terms_of_service and agreed_to_receive_emails use underscores
     req.session.accepted_terms_of_service =
       req.query["accepted_terms_of_service"]
@@ -460,6 +461,15 @@ export const ssoAndRedirectBack = async (
   const linkingError = req.session.linkingError
   delete req.session.linkedProvider
   delete req.session.linkingError
+
+  const afterSignUpAction = req.session.afterSignUpAction
+  delete req.session.afterSignUpAction
+
+  if (afterSignUpAction) {
+    res.cookie("afterSignUpAction", JSON.stringify(afterSignUpAction), {
+      httpOnly: false,
+    })
+  }
 
   if (req.xhr) {
     return res.send({
