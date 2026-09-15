@@ -1,15 +1,6 @@
-import { Intent } from "@artsy/cohesion"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { isCommercialAuthIntent } from "Components/AuthDialog/Utils/isCommercialAuthIntent"
 import { useMemo } from "react"
-
-export const COMMERCIAL_AUTH_INTENTS = [
-  Intent.bid,
-  Intent.buyNow,
-  Intent.createAlert,
-  Intent.inquire,
-  Intent.makeOffer,
-  Intent.registerToBid,
-]
 
 export const useElligibleForOnboarding = () => {
   const {
@@ -21,7 +12,7 @@ export const useElligibleForOnboarding = () => {
       // Only trigger onboarding for sign ups...
       mode === "SignUp" &&
       // ...without a commercial intent
-      !(analytics.intent && COMMERCIAL_AUTH_INTENTS.includes(analytics.intent))
+      !isCommercialAuthIntent(analytics.intent)
     )
   }, [analytics.intent, mode])
 
