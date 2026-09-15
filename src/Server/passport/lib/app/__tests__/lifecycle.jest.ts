@@ -287,24 +287,6 @@ describe("lifecycle", () => {
       })
     })
 
-    it("sets the after-auth action on the session", () => {
-      req.query.afterSignUpAction = {
-        action: "buyNow",
-        kind: "artworks",
-        objectId: "andy-warhol-skull",
-        secondaryObjectId: "edition-set-id",
-      }
-
-      lifecycle.beforeSocialAuth("facebook")(req, res, next)
-
-      expect(req.session.afterSignUpAction).toEqual({
-        action: "buyNow",
-        kind: "artworks",
-        objectId: "andy-warhol-skull",
-        secondaryObjectId: "edition-set-id",
-      })
-    })
-
     it("sets google auth scopes", () => {
       lifecycle.beforeSocialAuth("google")(req, res, next)
 
@@ -708,44 +690,6 @@ describe("lifecycle", () => {
 
       expect(mockRequestGravity).not.toHaveBeenCalled()
       expect(res.redirect).toHaveBeenCalledWith("/about")
-    })
-
-    it("replays a stashed after-auth action as a client-readable cookie", async () => {
-      req.user = { accessToken: "token" }
-      req.query["redirect-to"] = "/artwork/andy-warhol-skull"
-      req.session.afterSignUpAction = {
-        action: "buyNow",
-        kind: "artworks",
-        objectId: "andy-warhol-skull",
-      }
-      mockRequestGravity.mockResolvedValue({
-        body: { trust_token: "foo-trust-token" },
-      })
-
-      await lifecycle.ssoAndRedirectBack(req, res, next)
-
-      expect(res.cookie).toHaveBeenCalledWith(
-        "afterSignUpAction",
-        JSON.stringify({
-          action: "buyNow",
-          kind: "artworks",
-          objectId: "andy-warhol-skull",
-        }),
-        { httpOnly: false },
-      )
-      expect(req.session.afterSignUpAction).toBeUndefined()
-    })
-
-    it("doesn't set an after-auth action cookie when none was stashed", async () => {
-      req.user = { accessToken: "token" }
-      req.query["redirect-to"] = "/artwork/andy-warhol-skull"
-      mockRequestGravity.mockResolvedValue({
-        body: { trust_token: "foo-trust-token" },
-      })
-
-      await lifecycle.ssoAndRedirectBack(req, res, next)
-
-      expect(res.cookie).not.toHaveBeenCalled()
     })
   })
 })

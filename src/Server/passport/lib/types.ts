@@ -54,7 +54,6 @@ export type LinkingTokenData =
 export interface PassportSession {
   accepted_terms_of_service?: unknown
   acquisitionInitiative?: unknown
-  afterSignUpAction?: unknown
   agreed_to_receive_emails?: unknown
   contextModule?: unknown
   linkingError?: boolean
