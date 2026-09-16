@@ -9302,6 +9302,21 @@ type CollectorResume {
   isCollectorFollowingPartner: Boolean!
 
   """
+  Notes this partner has made about this collector.
+  """
+  notesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): PartnerUserNoteConnection
+
+  """
+  ID of the partner responding to the conversation
+  """
+  partnerId: String!
+
+  """
   non-bnmo Collector's purchase history
   """
   purchases: purchases
@@ -16406,6 +16421,41 @@ type CreatePartnerShowSuccess {
   show: Show
 }
 
+type CreatePartnerUserNoteFailure {
+  mutationError: GravityMutationError
+}
+
+input CreatePartnerUserNoteInput {
+  """
+  Note text.
+  """
+  body: String!
+  clientMutationId: String
+
+  """
+  ID of the partner.
+  """
+  partnerId: String!
+
+  """
+  ID of the collector the note is about.
+  """
+  userId: String!
+}
+
+union CreatePartnerUserNoteOrError =
+  | CreatePartnerUserNoteFailure
+  | CreatePartnerUserNoteSuccess
+
+type CreatePartnerUserNotePayload {
+  clientMutationId: String
+  partnerUserNoteOrError: CreatePartnerUserNoteOrError
+}
+
+type CreatePartnerUserNoteSuccess {
+  partnerUserNote: PartnerUserNote
+}
+
 type CreatePurchaseFailure {
   mutationError: GravityMutationError
 }
@@ -17857,6 +17907,32 @@ union DeletePartnerShowResponseOrError =
 
 type DeletePartnerShowSuccess {
   show: Show
+}
+
+type DeletePartnerUserNoteFailure {
+  mutationError: GravityMutationError
+}
+
+input DeletePartnerUserNoteInput {
+  clientMutationId: String
+
+  """
+  ID of the note to delete.
+  """
+  id: String!
+}
+
+union DeletePartnerUserNoteOrError =
+  | DeletePartnerUserNoteFailure
+  | DeletePartnerUserNoteSuccess
+
+type DeletePartnerUserNotePayload {
+  clientMutationId: String
+  partnerUserNoteOrError: DeletePartnerUserNoteOrError
+}
+
+type DeletePartnerUserNoteSuccess {
+  partnerUserNote: PartnerUserNote
 }
 
 type DeletePurchaseFailure {
@@ -19537,6 +19613,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
   When true, the fair is considered evergreen and not bound to specific dates.
   """
   isEvergreen: Boolean!
+
+  """
+  Whether this item occurs in any of the current user's personal itineraries. False when signed out.
+  """
+  isOnMyItineraries: Boolean
   isPublished: Boolean
   links(format: Format): String
   location: Location
@@ -19548,6 +19629,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     size: Int
   ): [MarketingCollection]!
   mobileImage: Image
+
+  """
+  Personal itineraries containing this item, with every matching stop ID. Details are fetched only when selected. Empty when signed out.
+  """
+  myItineraryStopMemberships: [ItineraryStopMembership!]
   name: String
   organizer: FairOrganizer
   profile: Profile
@@ -23629,6 +23715,10 @@ type ItineraryMutationSuccess {
 }
 
 type ItinerarySection {
+  """
+  A globally unique ID.
+  """
+  id: ID!
   internalID: String!
 
   """
@@ -23681,11 +23771,21 @@ type ItineraryStop {
   eventType: ItineraryStopEventType
 
   """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
   The stop's uploaded image; null until Gemini processing finishes.
   """
   image: Image
   internalID: String!
   isFreeAdmission: Boolean
+
+  """
+  Whether this stop occurs in any of the current user's personal itineraries. Matches Artsy items by type and ID (including events of that item), and custom stops by exact title and address. False when signed out.
+  """
+  isOnMyItineraries: Boolean
 
   """
   The Show, gallery location, or Fair this stop refers to, if any. A stop without an `item_id` (e.g. a café) resolves to null.
@@ -23698,6 +23798,16 @@ type ItineraryStop {
   itemType: ItineraryStopItemType
   latitude: Float
   longitude: Float
+
+  """
+  The current user's personal itineraries containing this stop, newest first. Uses the same matching rules as isOnMyItineraries. Details are fetched only when this field is selected. Empty when signed out.
+  """
+  myItineraries: [Itinerary!]
+
+  """
+  The current user's personal itineraries containing an equivalent stop, with every matching stop ID grouped by itinerary. Empty when signed out.
+  """
+  myItineraryStopMemberships: [ItineraryStopMembership!]
   note: String
   position: Int!
 
@@ -23751,6 +23861,14 @@ enum ItineraryStopItemType {
   FAIR
   LOCATION
   SHOW
+}
+
+"""
+A personal itinerary containing an equivalent stop, including every matching stop ID.
+"""
+type ItineraryStopMembership {
+  itineraryID: String!
+  stopIDs: [String!]!
 }
 
 type ItineraryStopMutationFailure {
@@ -26995,6 +27113,13 @@ type Mutation {
   ): CreatePartnerShowEventMutationPayload
 
   """
+  Creates a partner's note about a collector.
+  """
+  createPartnerUserNote(
+    input: CreatePartnerUserNoteInput!
+  ): CreatePartnerUserNotePayload
+
+  """
   Create a purchase
   """
   createPurchase(input: createPurchaseInput!): createPurchasePayload
@@ -27316,6 +27441,13 @@ type Mutation {
   deletePartnerShowEvent(
     input: DeletePartnerShowEventMutationInput!
   ): DeletePartnerShowEventMutationPayload
+
+  """
+  Deletes a partner's note about a collector.
+  """
+  deletePartnerUserNote(
+    input: DeletePartnerUserNoteInput!
+  ): DeletePartnerUserNotePayload
 
   """
   Deletes a purchase
@@ -28153,6 +28285,13 @@ type Mutation {
   updatePartnerShowEvent(
     input: UpdatePartnerShowEventMutationInput!
   ): UpdatePartnerShowEventMutationPayload
+
+  """
+  Updates a partner's note about a collector.
+  """
+  updatePartnerUserNote(
+    input: UpdatePartnerUserNoteInput!
+  ): UpdatePartnerUserNotePayload
 
   """
   Updates a profile.
@@ -30412,6 +30551,21 @@ type Partner implements Node {
   type: String
 
   """
+  A connection of notes this partner has made about collectors.
+  """
+  userNotesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    Only return notes about this collector.
+    """
+    userId: String
+  ): PartnerUserNoteConnection
+
+  """
   Returns VAT number or a fallback message based on the partner's VAT status.
   """
   vatInformation: String
@@ -32067,6 +32221,87 @@ enum PartnerShowPartnerType {
 }
 
 union PartnerTypes = ExternalPartner | Partner
+
+"""
+A partner's private note about a collector.
+"""
+type PartnerUserNote {
+  body: String!
+  createdAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+  partnerId: String!
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  ID of the partner user who last touched this note.
+  """
+  updatedByUserId: String!
+
+  """
+  Name of the partner user who last touched this note. Null if that user has since been deleted or has no name.
+  """
+  updatedByUserName: String
+
+  """
+  ID of the collector this note is about.
+  """
+  userId: String!
+}
+
+"""
+A connection to a list of items.
+"""
+type PartnerUserNoteConnection {
+  """
+  A list of edges.
+  """
+  edges: [PartnerUserNoteEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An edge in a connection.
+"""
+type PartnerUserNoteEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: PartnerUserNote
+}
 
 enum PartnersAggregation {
   CATEGORY
@@ -34458,6 +34693,21 @@ type Query {
     """
     shareToken: String
   ): Itinerary
+
+  """
+  A single City Guide itinerary stop. Uses the parent itinerary's read permissions.
+  """
+  itineraryStop(
+    """
+    The stop's internal ID
+    """
+    id: String!
+
+    """
+    The parent itinerary's share token, when unlisted
+    """
+    shareToken: String
+  ): ItineraryStop
   job(id: ID!): Job!
   jobs: [Job!]!
 
@@ -34880,6 +35130,16 @@ type Query {
     size: Int
   ): PartnerShowDocumentConnection
     @deprecated(reason: "Prefer `partner.documentsConnection`")
+
+  """
+  A partner's note about a collector.
+  """
+  partnerUserNote(
+    """
+    The ID of the PartnerUserNote.
+    """
+    id: String!
+  ): PartnerUserNote
 
   """
   A list of Partners
@@ -38059,6 +38319,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   isFreeAdmission: Boolean
 
   """
+  Whether this item occurs in any of the current user's personal itineraries. False when signed out.
+  """
+  isOnMyItineraries: Boolean
+
+  """
   Does the show exist soley online
   """
   isOnlineExclusive: Boolean!
@@ -38087,6 +38352,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   An image representing the show, or a sharable image from an artwork in the show
   """
   metaImage: Image
+
+  """
+  Personal itineraries containing this item, with every matching stop ID. Details are fetched only when selected. Empty when signed out.
+  """
+  myItineraryStopMemberships: [ItineraryStopMembership!]
 
   """
   The exhibition title
@@ -41620,6 +41890,36 @@ type UpdatePartnerSuccess {
   partner: Partner
 }
 
+type UpdatePartnerUserNoteFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdatePartnerUserNoteInput {
+  """
+  Note text.
+  """
+  body: String!
+  clientMutationId: String
+
+  """
+  ID of the note to update.
+  """
+  id: String!
+}
+
+union UpdatePartnerUserNoteOrError =
+  | UpdatePartnerUserNoteFailure
+  | UpdatePartnerUserNoteSuccess
+
+type UpdatePartnerUserNotePayload {
+  clientMutationId: String
+  partnerUserNoteOrError: UpdatePartnerUserNoteOrError
+}
+
+type UpdatePartnerUserNoteSuccess {
+  partnerUserNote: PartnerUserNote
+}
+
 type UpdateProfileFailure {
   mutationError: GravityMutationError
 }
@@ -44267,6 +44567,21 @@ type Viewer {
     """
     shareToken: String
   ): Itinerary
+
+  """
+  A single City Guide itinerary stop. Uses the parent itinerary's read permissions.
+  """
+  itineraryStop(
+    """
+    The stop's internal ID
+    """
+    id: String!
+
+    """
+    The parent itinerary's share token, when unlisted
+    """
+    shareToken: String
+  ): ItineraryStop
   job(id: ID!): Job!
   jobs: [Job!]!
 
@@ -44633,6 +44948,16 @@ type Viewer {
     size: Int
   ): PartnerShowDocumentConnection
     @deprecated(reason: "Prefer `partner.documentsConnection`")
+
+  """
+  A partner's note about a collector.
+  """
+  partnerUserNote(
+    """
+    The ID of the PartnerUserNote.
+    """
+    id: String!
+  ): PartnerUserNote
 
   """
   A list of Partners
@@ -45675,6 +46000,16 @@ input createItineraryStopInput {
   latitude: Float
   longitude: Float
   note: String
+
+  """
+  The source stop's parent itinerary share token, when unlisted
+  """
+  sourceShareToken: String
+
+  """
+  Copy the processed image from a readable stop. Other stop fields must be supplied separately. Cannot be combined with imageURL.
+  """
+  sourceStopID: String
   sourceURL: String
   startAt: String
 
