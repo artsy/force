@@ -1,4 +1,4 @@
-import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 import { initializeVariablesWithFilterState } from "Apps/Collect/collectRoutes"
 import { ArtworkFilter } from "Components/ArtworkFilter"
@@ -9,7 +9,6 @@ import type {
 import { ArtworkFilterPlaceholder } from "Components/ArtworkFilter/ArtworkFilterPlaceholder"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { LazyArtworkGrid } from "Components/ArtworkGrid/LazyArtworkGrid"
-import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "Components/CollectionsHubsNav"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Components/RouterLink"
@@ -17,24 +16,18 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilterQuery.graphql"
-import type { Collect_genes$data } from "__generated__/Collect_genes.graphql"
-import type { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
 import type { Match, Router } from "found"
 import type * as React from "react"
 import { useMemo } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { type Color, type Medium, getMetadata } from "./Utils/getMetadata"
 
 export interface CollectAppProps {
   match: Match
   router: Router
-  marketingCollections: Collect_marketingCollections$data
-  genes: Collect_genes$data
 }
 
 export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
-  marketingCollections,
-  genes,
   match: { location, params },
 }) => {
   const { silentReplace, match } = useRouter()
@@ -80,13 +73,6 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
               <RouterLink to="/collections">Browse by collection</RouterLink>
             </Text>
           </Flex>
-
-          <Separator my={4} />
-
-          <CollectionsHubsNav
-            marketingCollections={marketingCollections}
-            genes={genes}
-          />
 
           <Spacer y={6} />
         </Box>
@@ -171,17 +157,3 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
     </>
   )
 }
-
-export const CollectAppFragmentContainer = createFragmentContainer(CollectApp, {
-  marketingCollections: graphql`
-    fragment Collect_marketingCollections on MarketingCollection
-    @relay(plural: true) {
-      ...CollectionsHubsNav_marketingCollections
-    }
-  `,
-  genes: graphql`
-    fragment Collect_genes on Gene @relay(plural: true) {
-      ...CollectionsHubsNav_genes
-    }
-  `,
-})

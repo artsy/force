@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("/collect", () => {
   test("renders collect page content", async ({ page }) => {
@@ -15,8 +15,6 @@ test.describe("/collect", () => {
     await expect(page.locator("h1").first()).toContainText(
       "Collect art and design online",
     )
-
-    await expect(page.locator("aside a")).toHaveCount(6)
   })
 
   test("renders medium-specific content", async ({ page }) => {
