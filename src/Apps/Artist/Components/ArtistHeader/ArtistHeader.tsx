@@ -365,7 +365,11 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   ArtistHeader,
   {
     artist: graphql`
-      fragment ArtistHeader_artist on Artist {
+      fragment ArtistHeader_artist on Artist
+      @argumentDefinitions(
+        saleStartYear: { type: "Int!" }
+        saleEndYear: { type: "Int!" }
+      ) {
         internalID
         slug
         name
@@ -386,6 +390,39 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
+        }
+        recentAuctionResultsConnection: auctionResultsConnection(
+          first: 10
+          sort: DATE_DESC
+          saleStartYear: $saleStartYear
+          saleEndYear: $saleEndYear
+          includeUnknownPrices: false
+        ) {
+          edges {
+            node {
+              internalID
+              title
+              dateText
+              saleDate
+              images {
+                thumbnail {
+                  cropped(width: 130, height: 130, version: ["square140"]) {
+                    src
+                    srcSet
+                    width
+                    height
+                  }
+                }
+              }
+              priceRealized {
+                display
+                centsUSD
+              }
+              performance {
+                mid
+              }
+            }
+          }
         }
         ...ArtistHeaderEditorial_artist
         ...ArtistStylesAndTechniques_artist
