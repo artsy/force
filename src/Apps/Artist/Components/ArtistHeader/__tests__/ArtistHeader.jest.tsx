@@ -442,6 +442,59 @@ describe("ArtistHeaderFragmentContainer", () => {
     })
   })
 
+  describe("Recent auction results", () => {
+    const auctionResult = {
+      internalID: "auction-result-1",
+      title: "Poinsettias (F. & S. IIIA.50)",
+      dateText: null,
+      images: { thumbnail: null },
+      priceRealized: { display: "$16,510", centsUSD: 1651000 },
+    }
+
+    it("renders the rail instead of career highlights when results exist", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          slug: "pablo-picasso",
+          insights: [
+            { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
+          ],
+          recentAuctionResultsConnection: {
+            edges: [{ node: auctionResult }],
+          },
+        }),
+      })
+
+      expect(screen.getByText("Recent Auction Results")).toBeInTheDocument()
+      expect(
+        screen.getByText("Poinsettias (F. & S. IIIA.50)"),
+      ).toBeInTheDocument()
+      expect(screen.getByText("View More")).toBeInTheDocument()
+      expect(screen.getByText("View More").closest("a")).toHaveAttribute(
+        "href",
+        "/artist/pablo-picasso/auction-results?scroll_to_market_signals=true",
+      )
+      expect(screen.queryByText("Insight 0")).not.toBeInTheDocument()
+    })
+
+    it("renders career highlights instead when there are no results", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          insights: [
+            { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
+          ],
+          recentAuctionResultsConnection: { edges: [] },
+        }),
+      })
+
+      expect(screen.getByText("Insight 0")).toBeInTheDocument()
+      expect(
+        screen.queryByText("Recent Auction Results"),
+      ).not.toBeInTheDocument()
+    })
+  })
+
   describe("Career highlights", () => {
     it("renders career highlights when insights are available", () => {
       renderWithRelay({
@@ -495,6 +548,7 @@ describe("ArtistHeaderFragmentContainer", () => {
         Artist: () => ({
           name: "Pablo Picasso",
           articlesConnection: { totalCount: 0, edges: [] },
+          recentAuctionResultsConnection: { edges: [] },
           insights: [
             { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
             { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
@@ -529,6 +583,7 @@ describe("ArtistHeaderFragmentContainer", () => {
               },
             ],
           },
+          recentAuctionResultsConnection: { edges: [] },
           insights: [
             { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
             { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
@@ -566,6 +621,7 @@ describe("ArtistHeaderFragmentContainer", () => {
               },
             ],
           },
+          recentAuctionResultsConnection: { edges: [] },
           insights: [
             // Not renderable: no description and no entities. It should be
             // filtered out before slicing rather than occupying a slot.
