@@ -17,6 +17,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type { CollectArtworkFilterQuery } from "__generated__/CollectArtworkFilterQuery.graphql"
+import type { Collect_genes$data } from "__generated__/Collect_genes.graphql"
 import type { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
 import type { Match, Router } from "found"
 import type * as React from "react"
@@ -28,10 +29,12 @@ export interface CollectAppProps {
   match: Match
   router: Router
   marketingCollections: Collect_marketingCollections$data
+  genes: Collect_genes$data
 }
 
 export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
   marketingCollections,
+  genes,
   match: { location, params },
 }) => {
   const { silentReplace, match } = useRouter()
@@ -80,7 +83,10 @@ export const CollectApp: React.FC<React.PropsWithChildren<CollectAppProps>> = ({
 
           <Separator my={4} />
 
-          <CollectionsHubsNav marketingCollections={marketingCollections} />
+          <CollectionsHubsNav
+            marketingCollections={marketingCollections}
+            genes={genes}
+          />
 
           <Spacer y={6} />
         </Box>
@@ -171,6 +177,11 @@ export const CollectAppFragmentContainer = createFragmentContainer(CollectApp, {
     fragment Collect_marketingCollections on MarketingCollection
     @relay(plural: true) {
       ...CollectionsHubsNav_marketingCollections
+    }
+  `,
+  genes: graphql`
+    fragment Collect_genes on Gene @relay(plural: true) {
+      ...CollectionsHubsNav_genes
     }
   `,
 })

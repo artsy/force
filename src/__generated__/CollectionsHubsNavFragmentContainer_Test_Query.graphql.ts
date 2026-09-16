@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24d6e82510b5b3ea4f38baccad452c80>>
+ * @generated SignedSource<<453acf263ff0e4e67ca094ae206d0499>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,18 +10,18 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type collectRoutes_ArtworkFilterQuery$variables = Record<PropertyKey, never>;
-export type collectRoutes_ArtworkFilterQuery$data = {
+export type CollectionsHubsNavFragmentContainer_Test_Query$variables = Record<PropertyKey, never>;
+export type CollectionsHubsNavFragmentContainer_Test_Query$data = {
   readonly genes: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"Collect_genes">;
+    readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubsNav_genes">;
   } | null | undefined> | null | undefined;
   readonly marketingCollections: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"Collect_marketingCollections">;
+    readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubsNav_marketingCollections">;
   }>;
 };
-export type collectRoutes_ArtworkFilterQuery = {
-  response: collectRoutes_ArtworkFilterQuery$data;
-  variables: collectRoutes_ArtworkFilterQuery$variables;
+export type CollectionsHubsNavFragmentContainer_Test_Query = {
+  response: CollectionsHubsNavFragmentContainer_Test_Query$data;
+  variables: CollectionsHubsNavFragmentContainer_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -41,9 +41,7 @@ v1 = [
     "name": "slugs",
     "value": [
       "painting",
-      "graffiti-and-street-art",
-      "photography",
-      "20th-century-art"
+      "graffiti-and-street-art"
     ]
   }
 ],
@@ -86,13 +84,37 @@ v6 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "collectRoutes_ArtworkFilterQuery",
+    "name": "CollectionsHubsNavFragmentContainer_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -105,7 +127,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "Collect_marketingCollections"
+            "name": "CollectionsHubsNav_marketingCollections"
           }
         ],
         "storageKey": "marketingCollections(slugs:[\"contemporary\",\"emerging-art\"])"
@@ -121,10 +143,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "Collect_genes"
+            "name": "CollectionsHubsNav_genes"
           }
         ],
-        "storageKey": "genes(slugs:[\"painting\",\"graffiti-and-street-art\",\"photography\",\"20th-century-art\"])"
+        "storageKey": "genes(slugs:[\"painting\",\"graffiti-and-street-art\"])"
       }
     ],
     "type": "Query",
@@ -134,7 +156,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "collectRoutes_ArtworkFilterQuery",
+    "name": "CollectionsHubsNavFragmentContainer_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -231,21 +253,55 @@ return {
           },
           (v6/*: any*/)
         ],
-        "storageKey": "genes(slugs:[\"painting\",\"graffiti-and-street-art\",\"photography\",\"20th-century-art\"])"
+        "storageKey": "genes(slugs:[\"painting\",\"graffiti-and-street-art\"])"
       }
     ]
   },
   "params": {
-    "cacheID": "079002a0b46b590f378b17bb09ac91ff",
+    "cacheID": "06821d53c783b84e174bee583913c20f",
     "id": null,
-    "metadata": {},
-    "name": "collectRoutes_ArtworkFilterQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "genes": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Gene"
+        },
+        "genes.id": (v7/*: any*/),
+        "genes.image": (v8/*: any*/),
+        "genes.image.cropped": (v9/*: any*/),
+        "genes.image.cropped.src": (v10/*: any*/),
+        "genes.image.cropped.srcSet": (v10/*: any*/),
+        "genes.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "genes.slug": (v7/*: any*/),
+        "marketingCollections": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "MarketingCollection"
+        },
+        "marketingCollections.id": (v7/*: any*/),
+        "marketingCollections.slug": (v10/*: any*/),
+        "marketingCollections.thumbnailImage": (v8/*: any*/),
+        "marketingCollections.thumbnailImage.cropped": (v9/*: any*/),
+        "marketingCollections.thumbnailImage.cropped.src": (v10/*: any*/),
+        "marketingCollections.thumbnailImage.cropped.srcSet": (v10/*: any*/),
+        "marketingCollections.title": (v10/*: any*/)
+      }
+    },
+    "name": "CollectionsHubsNavFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query collectRoutes_ArtworkFilterQuery {\n  marketingCollections(slugs: [\"contemporary\", \"emerging-art\"]) {\n    ...Collect_marketingCollections\n    id\n  }\n  genes(slugs: [\"painting\", \"graffiti-and-street-art\", \"photography\", \"20th-century-art\"]) {\n    ...Collect_genes\n    id\n  }\n}\n\nfragment Collect_genes on Gene {\n  ...CollectionsHubsNav_genes\n}\n\nfragment Collect_marketingCollections on MarketingCollection {\n  ...CollectionsHubsNav_marketingCollections\n}\n\nfragment CollectionsHubsNav_genes on Gene {\n  slug\n  name\n  image {\n    cropped(width: 387, height: 218, version: [\"big_and_tall\", \"square500\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectionsHubsNav_marketingCollections on MarketingCollection {\n  slug\n  title\n  thumbnailImage {\n    cropped(width: 387, height: 218) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CollectionsHubsNavFragmentContainer_Test_Query {\n  marketingCollections(slugs: [\"contemporary\", \"emerging-art\"]) {\n    ...CollectionsHubsNav_marketingCollections\n    id\n  }\n  genes(slugs: [\"painting\", \"graffiti-and-street-art\"]) {\n    ...CollectionsHubsNav_genes\n    id\n  }\n}\n\nfragment CollectionsHubsNav_genes on Gene {\n  slug\n  name\n  image {\n    cropped(width: 387, height: 218, version: [\"big_and_tall\", \"square500\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectionsHubsNav_marketingCollections on MarketingCollection {\n  slug\n  title\n  thumbnailImage {\n    cropped(width: 387, height: 218) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6ad80d0a0bd38e56d5eb3e935ccfe109";
+(node as any).hash = "7618eac9cea68539ca7aac8c0fc417d3";
 
 export default node;
