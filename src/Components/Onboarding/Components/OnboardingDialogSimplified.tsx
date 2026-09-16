@@ -1,10 +1,18 @@
 import { Box, Button, Checkbox, Spacer, Text } from "@artsy/palette"
 import { OnboardingModal } from "Components/Onboarding/Components/OnboardingModal"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import {
+  clearOneTapEmailOptInPending,
+  peekOneTapEmailOptInPending,
+} from "Utils/oneTapEmailOptIn"
 import {
   ONBOARDING_INTERESTS,
   markOnboardingInterestsPending,
 } from "Utils/onboardingInterestsPending"
-import { type FC, useState } from "react"
+import { type FC, useEffect, useState } from "react"
+
+const GEO_LOOKUP_TIMEOUT_MS = 5000
 
 const SOURCES = [
   "Search engine",
@@ -21,9 +29,62 @@ interface OnboardingDialogSimplifiedProps {
 export const OnboardingDialogSimplified: FC<
   React.PropsWithChildren<OnboardingDialogSimplifiedProps>
 > = ({ onClose, onHide }) => {
-  const [step, setStep] = useState<0 | 1>(0)
+  // One Tap has no consent UI at sign-up, so we surface an extra welcome
+  // step here, mirroring the same check OnboardingWelcome used.
+  const [isOneTapSignup] = useState(() => peekOneTapEmailOptInPending())
+
+  const steps = isOneTapSignup
+    ? (["welcome", "interests", "source"] as const)
+    : (["interests", "source"] as const)
+
+  const [stepIndex, setStepIndex] = useState(0)
+  const currentStep = steps[stepIndex]
+
   const [interests, setInterests] = useState<string[]>([])
   const [source, setSource] = useState<string | null>(null)
+
+  // Consent logic relocated from OnboardingWelcome.tsx: One Tap sign-ups skip the normal signup form's consent step, so we capture it here
+  const { isAutomaticallySubscribed, loading: isCountryLoading } =
+    useCountryCode({ skip: !isOneTapSignup })
+
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+
+  const [userChoice, setUserChoice] = useState<boolean | null>(null)
+  const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
+
+  const [hasGeoTimedOut, setHasGeoTimedOut] = useState(false)
+  useEffect(() => {
+    if (!isOneTapSignup) {
+      return
+    }
+
+    const timeout = setTimeout(() => {
+      setHasGeoTimedOut(true)
+    }, GEO_LOOKUP_TIMEOUT_MS)
+
+    return () => clearTimeout(timeout)
+  }, [isOneTapSignup])
+
+  // Block the CTA until the region default is known, or else a fast click persists the wrong default
+  const isConsentPending = isOneTapSignup && isCountryLoading && !hasGeoTimedOut
+  const showEmailOptIn = isOneTapSignup && (!isCountryLoading || hasGeoTimedOut)
+
+  const persistEmailOptIn = () => {
+    if (!isOneTapSignup) {
+      return
+    }
+
+    if (agreedToReceiveEmails) {
+      submitUpdateMyUserProfile({ agreedToReceiveEmails: true }).catch(err => {
+        console.error(
+          "[OnboardingDialogSimplified] Failed to save email preference",
+          err,
+        )
+      })
+    }
+
+    clearOneTapEmailOptInPending()
+  }
 
   const toggleInterest = (interest: string) => {
     setInterests(current => {
@@ -31,6 +92,10 @@ export const OnboardingDialogSimplified: FC<
         ? current.filter(existing => existing !== interest)
         : [...current, interest]
     })
+  }
+
+  const goToNextStep = () => {
+    setStepIndex(current => current + 1)
   }
 
   const handleFinish = () => {
@@ -42,12 +107,29 @@ export const OnboardingDialogSimplified: FC<
     <OnboardingModal onClose={onClose}>
       <Box p={4} width="100%">
         <Text variant="lg-display" mb={4}>
-          {step === 0
-            ? "What are you most interested in?"
-            : "How did you hear about Artsy?"}
+          {currentStep === "welcome" && "Welcome to Artsy"}
+          {currentStep === "interests" && "What are you most interested in?"}
+          {currentStep === "source" && "How did you hear about Artsy?"}
         </Text>
 
-        {step === 0 && (
+        {currentStep === "welcome" && (
+          <Box>
+            {showEmailOptIn && (
+              <Checkbox
+                selected={agreedToReceiveEmails}
+                onSelect={setUserChoice}
+              >
+                <Text variant="xs">
+                  Subscribe to email to hear about our products, services,
+                  editorials, and other promotional content. Unsubscribe at any
+                  time.
+                </Text>
+              </Checkbox>
+            )}
+          </Box>
+        )}
+
+        {currentStep === "interests" && (
           <Box>
             {ONBOARDING_INTERESTS.map(interest => {
               return (
@@ -64,7 +146,7 @@ export const OnboardingDialogSimplified: FC<
           </Box>
         )}
 
-        {step === 1 && (
+        {currentStep === "source" && (
           <Box>
             {SOURCES.map(option => {
               return (
@@ -83,15 +165,30 @@ export const OnboardingDialogSimplified: FC<
 
         <Spacer y={4} />
 
-        {step === 0 ? (
+        {currentStep === "welcome" && (
           <Button
             width="100%"
-            disabled={interests.length === 0}
-            onClick={() => setStep(1)}
+            disabled={isConsentPending}
+            onClick={() => {
+              persistEmailOptIn()
+              goToNextStep()
+            }}
           >
             Next
           </Button>
-        ) : (
+        )}
+
+        {currentStep === "interests" && (
+          <Button
+            width="100%"
+            disabled={interests.length === 0}
+            onClick={goToNextStep}
+          >
+            Next
+          </Button>
+        )}
+
+        {currentStep === "source" && (
           <Button width="100%" disabled={!source} onClick={handleFinish}>
             Finish
           </Button>
