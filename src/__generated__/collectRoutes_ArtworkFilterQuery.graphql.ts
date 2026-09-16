@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42fd9611f35c0d5bff700f955e788582>>
+ * @generated SignedSource<<24d6e82510b5b3ea4f38baccad452c80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,6 +55,32 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 218
+},
+v4 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 387
+},
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+],
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -129,11 +155,28 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "thumbnail",
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "thumbnailImage",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  (v3/*: any*/),
+                  (v4/*: any*/)
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v5/*: any*/),
+                "storageKey": "cropped(height:218,width:387)"
+              }
+            ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": "marketingCollections(slugs:[\"contemporary\",\"emerging-art\"])"
       },
@@ -164,11 +207,7 @@ return {
               {
                 "alias": null,
                 "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 218
-                  },
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "version",
@@ -178,50 +217,31 @@ return {
                       "tall"
                     ]
                   },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 387
-                  }
+                  (v4/*: any*/)
                 ],
                 "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v5/*: any*/),
                 "storageKey": "cropped(height:218,version:[\"big_and_tall\",\"square500\",\"tall\"],width:387)"
               }
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": "genes(slugs:[\"painting\",\"graffiti-and-street-art\",\"photography\",\"20th-century-art\"])"
       }
     ]
   },
   "params": {
-    "cacheID": "697674abd7318e7d53c92bb8164f5f34",
+    "cacheID": "079002a0b46b590f378b17bb09ac91ff",
     "id": null,
     "metadata": {},
     "name": "collectRoutes_ArtworkFilterQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_ArtworkFilterQuery {\n  marketingCollections(slugs: [\"contemporary\", \"emerging-art\"]) {\n    ...Collect_marketingCollections\n    id\n  }\n  genes(slugs: [\"painting\", \"graffiti-and-street-art\", \"photography\", \"20th-century-art\"]) {\n    ...Collect_genes\n    id\n  }\n}\n\nfragment Collect_genes on Gene {\n  ...CollectionsHubsNav_genes\n}\n\nfragment Collect_marketingCollections on MarketingCollection {\n  ...CollectionsHubsNav_marketingCollections\n}\n\nfragment CollectionsHubsNav_genes on Gene {\n  slug\n  name\n  image {\n    cropped(width: 387, height: 218, version: [\"big_and_tall\", \"square500\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectionsHubsNav_marketingCollections on MarketingCollection {\n  slug\n  title\n  thumbnail\n}\n"
+    "text": "query collectRoutes_ArtworkFilterQuery {\n  marketingCollections(slugs: [\"contemporary\", \"emerging-art\"]) {\n    ...Collect_marketingCollections\n    id\n  }\n  genes(slugs: [\"painting\", \"graffiti-and-street-art\", \"photography\", \"20th-century-art\"]) {\n    ...Collect_genes\n    id\n  }\n}\n\nfragment Collect_genes on Gene {\n  ...CollectionsHubsNav_genes\n}\n\nfragment Collect_marketingCollections on MarketingCollection {\n  ...CollectionsHubsNav_marketingCollections\n}\n\nfragment CollectionsHubsNav_genes on Gene {\n  slug\n  name\n  image {\n    cropped(width: 387, height: 218, version: [\"big_and_tall\", \"square500\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectionsHubsNav_marketingCollections on MarketingCollection {\n  slug\n  title\n  thumbnailImage {\n    cropped(width: 387, height: 218) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

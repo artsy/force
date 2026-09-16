@@ -1,7 +1,6 @@
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
-import { cropped } from "Utils/resized"
 import type { CollectionsHubsNav_genes$data } from "__generated__/CollectionsHubsNav_genes.graphql"
 import type { CollectionsHubsNav_marketingCollections$data } from "__generated__/CollectionsHubsNav_marketingCollections.graphql"
 import type { FC } from "react"
@@ -13,11 +12,15 @@ interface CollectionsHubsNavProps {
   genes: CollectionsHubsNav_genes$data
 }
 
+type HubTileImage = NonNullable<
+  CollectionsHubsNav_marketingCollections$data[number]["thumbnailImage"]
+>["cropped"]
+
 interface HubTile {
   key: string
   href: string
   title: string | null | undefined
-  image: { src: string; srcSet: string } | null | undefined
+  image: HubTileImage
 }
 
 // TODO: Move this into collect app
@@ -31,9 +34,7 @@ export const CollectionsHubsNav: FC<
       key: `collection-${collection.slug}`,
       href: `/collection/${collection.slug}`,
       title: collection.title,
-      image: collection.thumbnail
-        ? cropped(collection.thumbnail, { width: 387, height: 218 })
-        : null,
+      image: collection.thumbnailImage?.cropped ?? null,
     }),
   )
 
@@ -106,7 +107,12 @@ export const CollectionsHubsNavFragmentContainer = createFragmentContainer(
       @relay(plural: true) {
         slug
         title
-        thumbnail
+        thumbnailImage {
+          cropped(width: 387, height: 218) {
+            src
+            srcSet
+          }
+        }
       }
     `,
     genes: graphql`
