@@ -15,6 +15,7 @@ import { isEmpty } from "lodash"
 import type { Environment as IEnvironment } from "react-relay"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
+import type { SSRCache } from "react-relay-network-modern-ssr/lib/server"
 import {
   RelayNetworkLayer,
   cacheMiddleware,
@@ -40,7 +41,7 @@ const loggingEnabled = !isServer && isDevelopment
 const USER_AGENT = "Reaction/Migration"
 
 interface Config {
-  cache?: object
+  cache?: SSRCache
   checkStatus?: boolean
   metaphysicsEndpoint?: string
   relayNetwork?: INetwork
@@ -56,7 +57,7 @@ export interface RelaySSREnvironment extends Environment {
 
 export function createRelaySSREnvironment(config: Config = {}) {
   const {
-    cache = {},
+    cache = [],
     checkStatus,
     metaphysicsEndpoint = getMetaphysicsEndpoint(),
     relayNetwork,
@@ -193,7 +194,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
  * @param cache RelayQueryResponseCache
  */
 export function hydrateCacheFromSSR(queryResponseCache) {
-  const ssrData = JSON.parse(window.__RELAY_HYDRATION_DATA__ || "{}")
+  const ssrData = window.__RELAY_HYDRATION_DATA__ ?? []
 
   if (!isEmpty(ssrData)) {
     try {
