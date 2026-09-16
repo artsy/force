@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4af5947058c41d6411f6e5d622186907>>
+ * @generated SignedSource<<4f14b861d4f48891a9da8e385f05352a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,20 +10,20 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectionsHubsNav_marketingCollections$data = ReadonlyArray<{
-  readonly slug: string;
-  readonly thumbnailImage: {
+export type CollectionsHubsNav_genes$data = ReadonlyArray<{
+  readonly image: {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
     } | null | undefined;
   } | null | undefined;
-  readonly title: string;
-  readonly " $fragmentType": "CollectionsHubsNav_marketingCollections";
+  readonly name: string | null | undefined;
+  readonly slug: string;
+  readonly " $fragmentType": "CollectionsHubsNav_genes";
 }>;
-export type CollectionsHubsNav_marketingCollections$key = ReadonlyArray<{
-  readonly " $data"?: CollectionsHubsNav_marketingCollections$data;
-  readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubsNav_marketingCollections">;
+export type CollectionsHubsNav_genes$key = ReadonlyArray<{
+  readonly " $data"?: CollectionsHubsNav_genes$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubsNav_genes">;
 }>;
 
 const node: ReaderFragment = {
@@ -32,7 +32,7 @@ const node: ReaderFragment = {
   "metadata": {
     "plural": true
   },
-  "name": "CollectionsHubsNav_marketingCollections",
+  "name": "CollectionsHubsNav_genes",
   "selections": [
     {
       "alias": null,
@@ -45,7 +45,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
+      "name": "name",
       "storageKey": null
     },
     {
@@ -53,7 +53,7 @@ const node: ReaderFragment = {
       "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
-      "name": "thumbnailImage",
+      "name": "image",
       "plural": false,
       "selections": [
         {
@@ -63,6 +63,15 @@ const node: ReaderFragment = {
               "kind": "Literal",
               "name": "height",
               "value": 218
+            },
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "big_and_tall",
+                "square500",
+                "tall"
+              ]
             },
             {
               "kind": "Literal",
@@ -90,16 +99,16 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:218,width:387)"
+          "storageKey": "cropped(height:218,version:[\"big_and_tall\",\"square500\",\"tall\"],width:387)"
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "MarketingCollection",
+  "type": "Gene",
   "abstractKey": null
 };
 
-(node as any).hash = "bc2896fa7c11e79167bb9f26a7266cf5";
+(node as any).hash = "e715b3087d917747728bdc6189ab6dad";
 
 export default node;
