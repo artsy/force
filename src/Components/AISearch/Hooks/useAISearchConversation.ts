@@ -1,4 +1,8 @@
 import {
+  appendDebugCall,
+  settleDebugResult,
+} from "Components/AISearch/Utils/aiSearchDebugEntries"
+import {
   type StoredAISearchConversation,
   type StoredAISearchMessage,
   buildConversationTitle,
@@ -6,10 +10,6 @@ import {
   readAISearchConversations,
   writeAISearchConversation,
 } from "Components/AISearch/Utils/aiSearchStorage"
-import {
-  appendDebugCall,
-  settleDebugResult,
-} from "Components/AISearch/Utils/aiSearchDebugEntries"
 import type {
   AIAgentActivity,
   AIAgentEvent,
@@ -34,6 +34,9 @@ const STOP_REASON_MESSAGES: Record<string, string> = {
   error: "Something went wrong on my end. Try again?",
   max_iterations:
     "I ran out of steps before I could answer. Try a narrower request.",
+  rate_limited:
+    "That's all the questions I can take for now. Check back a little later " +
+    "and we'll pick this up.",
 }
 
 export interface AISearchUserMessage {
