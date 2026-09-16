@@ -23705,6 +23705,10 @@ type ItineraryMutationSuccess {
 }
 
 type ItinerarySection {
+  """
+  A globally unique ID.
+  """
+  id: ID!
   internalID: String!
 
   """
@@ -23757,6 +23761,11 @@ type ItineraryStop {
   eventType: ItineraryStopEventType
 
   """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
   The stop's uploaded image; null until Gemini processing finishes.
   """
   image: Image
@@ -23784,6 +23793,11 @@ type ItineraryStop {
   The current user's personal itineraries containing this stop, newest first. Uses the same matching rules as isOnMyItineraries. Details are fetched only when this field is selected. Empty when signed out.
   """
   myItineraries: [Itinerary!]
+
+  """
+  The current user's personal itineraries containing an equivalent stop, with every matching stop ID grouped by itinerary. Empty when signed out.
+  """
+  myItineraryStopMemberships: [ItineraryStopMembership!]
   note: String
   position: Int!
 
@@ -23837,6 +23851,14 @@ enum ItineraryStopItemType {
   FAIR
   LOCATION
   SHOW
+}
+
+"""
+A personal itinerary containing an equivalent stop, including every matching stop ID.
+"""
+type ItineraryStopMembership {
+  itineraryID: String!
+  stopIDs: [String!]!
 }
 
 type ItineraryStopMutationFailure {
