@@ -55,20 +55,20 @@ describe("AISearchMessage", () => {
       expect(screen.queryByText(/Debug:/)).not.toBeInTheDocument()
     })
 
-    it("appears once a text-only turn has settled", () => {
+    it("stays hidden on a settled turn with no results to show", () => {
       renderMessage(
         assistantMessage({ phase: "RESULT", text: "Warhol was a painter." }),
       )
 
-      expect(screen.getByText("Debug: 1 query")).toBeInTheDocument()
+      expect(screen.queryByText(/Debug:/)).not.toBeInTheDocument()
     })
 
-    it("appears on a failed turn, where the queries explain the failure", () => {
+    it("stays hidden on a failed turn", () => {
       renderMessage(
         assistantMessage({ phase: "ERROR", errorMessage: "Something broke." }),
       )
 
-      expect(screen.getByText("Debug: 1 query")).toBeInTheDocument()
+      expect(screen.queryByText(/Debug:/)).not.toBeInTheDocument()
     })
   })
 })

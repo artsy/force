@@ -5,7 +5,6 @@ import {
   AISearchArtworksRail,
   AISearchArtworksRailPlaceholder,
 } from "Components/AISearch/Components/AISearchArtworksRail"
-import { AISearchDebugPanel } from "Components/AISearch/Components/AISearchDebugPanel"
 import { AISearchResultFooter } from "Components/AISearch/Components/AISearchResultFooter"
 import { AISearchStatusList } from "Components/AISearch/Components/AISearchStatusList"
 import type { AISearchMessage as AISearchMessageType } from "Components/AISearch/Hooks/useAISearchConversation"
@@ -43,7 +42,6 @@ export const AISearchMessage: FC<AISearchMessageProps> = ({ message }) => {
   const viewAll = phase === "RESULT" ? getAISearchViewAll(artworkFilters) : null
 
   const hasArtworksRail = phase === "RESULT" && artworkIDs.length > 0
-  const hasSettled = phase === "RESULT" || phase === "ERROR"
 
   return (
     <Flex>
@@ -97,10 +95,6 @@ export const AISearchMessage: FC<AISearchMessageProps> = ({ message }) => {
               title="Artists to explore"
             />
           </Box>
-        )}
-
-        {hasSettled && !hasArtworksRail && (
-          <AISearchDebugPanel entries={debugEntries} />
         )}
       </Box>
     </Flex>

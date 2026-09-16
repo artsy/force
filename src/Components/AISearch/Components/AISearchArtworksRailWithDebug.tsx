@@ -1,6 +1,5 @@
 import { Box, Clickable, Flex, Shelf, Spacer, Text } from "@artsy/palette"
 import { AISearchDebugEntryList } from "Components/AISearch/Components/AISearchDebugEntryList"
-import { debugLabel } from "Components/AISearch/Components/AISearchDebugPanel"
 import type { AISearchDebugEntry } from "Components/AISearch/Utils/aiSearchTypes"
 import { type FC, Fragment, useState } from "react"
 
@@ -77,4 +76,8 @@ export const AISearchArtworksRailWithDebug: FC<
       </Shelf>
     </Box>
   )
+}
+
+const debugLabel = (count: number): string => {
+  return `Debug: ${count} ${count === 1 ? "query" : "queries"}`
 }
