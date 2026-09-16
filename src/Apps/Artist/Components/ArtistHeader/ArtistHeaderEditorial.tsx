@@ -17,10 +17,18 @@ import { graphql, useFragment } from "react-relay"
 
 interface ArtistHeaderEditorialProps {
   artist: ArtistHeaderEditorial_artist$key
+  /**
+   * The preceding module in the right rail (e.g. Career Highlights) usually
+   * has no bottom border of its own, so this divides it from Editorial. The
+   * Recent Auction Results rail already ends with its own progress dots, so
+   * this border is skipped there instead of stacking two separators.
+   */
+  showTopBorder?: boolean
 }
 
 export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
   artist: artistRef,
+  showTopBorder = true,
 }) => {
   const artist = useFragment(fragment, artistRef)
 
@@ -38,8 +46,10 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         flexDirection="row"
         justifyContent="space-between"
         alignItems="top"
-        borderTop="solid 1px"
-        borderColor={["mono10", "mono60"]}
+        {...(showTopBorder && {
+          borderTop: "solid 1px",
+          borderColor: ["mono10", "mono60"],
+        })}
         pt={2}
       >
         <Text variant="sm-display">

@@ -36,7 +36,12 @@ beforeEach(() => {
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
-    return <ArtistHeaderEditorial artist={props.artist} />
+    return (
+      <ArtistHeaderEditorial
+        artist={props.artist}
+        showTopBorder={props.showTopBorder}
+      />
+    )
   },
   query: graphql`
     query ArtistHeaderEditorial_Test_Query @relay_test_operation {
@@ -111,5 +116,32 @@ describe("ArtistHeaderEditorial", () => {
       "href",
       "/artist/pablo-picasso/articles",
     )
+  })
+
+  it("shows a top border by default", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: { totalCount: 1, edges: [article(1)] },
+      }),
+    })
+
+    const heading = screen.getByText("Artsy Editorial Featuring Pablo Picasso")
+    expect(heading.parentElement).toHaveStyle({ borderTopStyle: "solid" })
+  })
+
+  it("omits the top border when preceded by the auction results rail", () => {
+    renderWithRelay(
+      {
+        Artist: () => ({
+          name: "Pablo Picasso",
+          articlesConnection: { totalCount: 1, edges: [article(1)] },
+        }),
+      },
+      { showTopBorder: false },
+    )
+
+    const heading = screen.getByText("Artsy Editorial Featuring Pablo Picasso")
+    expect(heading.parentElement).not.toHaveStyle({ borderTopStyle: "solid" })
   })
 })
