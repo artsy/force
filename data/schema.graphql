@@ -9302,6 +9302,21 @@ type CollectorResume {
   isCollectorFollowingPartner: Boolean!
 
   """
+  Notes this partner has made about this collector.
+  """
+  notesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): PartnerUserNoteConnection
+
+  """
+  ID of the partner responding to the conversation
+  """
+  partnerId: String!
+
+  """
   non-bnmo Collector's purchase history
   """
   purchases: purchases
@@ -32179,7 +32194,7 @@ union PartnerTypes = ExternalPartner | Partner
 A partner's private note about a collector.
 """
 type PartnerUserNote {
-  body: String
+  body: String!
   createdAt(
     format: String
 
@@ -32198,7 +32213,7 @@ type PartnerUserNote {
   A type-specific ID likely used as a database ID.
   """
   internalID: ID!
-  partnerId: String
+  partnerId: String!
   updatedAt(
     format: String
 
@@ -32211,12 +32226,17 @@ type PartnerUserNote {
   """
   ID of the partner user who last touched this note.
   """
-  updatedByUserId: String
+  updatedByUserId: String!
+
+  """
+  Name of the partner user who last touched this note. Null if that user has since been deleted or has no name.
+  """
+  updatedByUserName: String
 
   """
   ID of the collector this note is about.
   """
-  userId: String
+  userId: String!
 }
 
 """
