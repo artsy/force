@@ -371,7 +371,12 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             )
           )}
 
-          {hasEditorial && <ArtistHeaderEditorial artist={artist} />}
+          {hasEditorial && (
+            <ArtistHeaderEditorial
+              artist={artist}
+              showTopBorder={!hasRecentAuctionResults}
+            />
+          )}
         </Column>
       )}
     </GridColumns>
