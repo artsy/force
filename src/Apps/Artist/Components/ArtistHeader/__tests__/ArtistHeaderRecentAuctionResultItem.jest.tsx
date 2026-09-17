@@ -104,12 +104,12 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     })
   })
 
-  it("blends letterbox padding around a contained image into the card, not the no-image grey", () => {
+  it("uses a white mat behind the image, not the no-image grey", () => {
     const { container } = renderItem()
 
     const image = container.querySelector("img")
     expect(image?.parentElement).toHaveStyle({
-      backgroundColor: "#F7F7F7",
+      backgroundColor: "#FFFFFF",
     })
   })
 
