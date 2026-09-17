@@ -6,7 +6,7 @@ import { graphql } from "react-relay"
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
   {
-    resolveComponent: component => component.CollectAppFragmentContainer,
+    resolveComponent: component => component.CollectApp,
   },
 )
 const CollectionsApp = loadable(
@@ -30,7 +30,6 @@ export const collectRoutes: RouteProps[] = [
       CollectApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
-    query: getArtworkFilterQuery(),
   },
   {
     path: "/collect/color/:color?",
@@ -39,7 +38,6 @@ export const collectRoutes: RouteProps[] = [
       CollectApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
-    query: getArtworkFilterQuery(),
   },
   {
     path: "/collections",
@@ -120,24 +118,4 @@ export function initializeVariablesWithFilterState(params, props) {
     sort: "-decayed_merch",
     shouldFetchCounts: !!props.context.user,
   }
-}
-
-function getArtworkFilterQuery() {
-  return graphql`
-    query collectRoutes_ArtworkFilterQuery {
-      marketingCollections(slugs: ["contemporary", "emerging-art"]) {
-        ...Collect_marketingCollections
-      }
-      genes(
-        slugs: [
-          "painting"
-          "graffiti-and-street-art"
-          "photography"
-          "20th-century-art"
-        ]
-      ) {
-        ...Collect_genes
-      }
-    }
-  `
 }
