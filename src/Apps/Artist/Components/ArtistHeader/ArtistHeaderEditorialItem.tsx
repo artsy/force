@@ -11,6 +11,8 @@ import type { ArtistHeaderEditorialItem_article$key } from "__generated__/Artist
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
+const CARD_WIDTH = 381
+
 interface ArtistHeaderEditorialItemProps {
   article: ArtistHeaderEditorialItem_article$key
 }
@@ -31,10 +33,14 @@ export const ArtistHeaderEditorialItem: React.FC<
     <Stack
       flexDirection="row"
       gap={[1, 2]}
-      pr={[1, 0]}
+      flexShrink={0}
+      width={CARD_WIDTH}
       as={RouterLink}
       to={article.href}
       textDecoration="none"
+      bg="mono5"
+      p={1}
+      borderRadius="5px"
       onClick={() => {
         const trackingEvent: ClickedArticleGroup = {
           action: ActionType.clickedArticleGroup,
@@ -49,7 +55,7 @@ export const ArtistHeaderEditorialItem: React.FC<
         trackEvent(trackingEvent)
       }}
     >
-      <Box width={[125, 100]} flexShrink={0} bg="mono10">
+      <Box width={100} flexShrink={0} bg="mono10">
         {thumbnail && (
           <ResponsiveBox
             aspectWidth={1}
@@ -69,7 +75,7 @@ export const ArtistHeaderEditorialItem: React.FC<
         )}
       </Box>
 
-      <Box>
+      <Box textAlign="right" flex={1} minWidth={0}>
         <Text
           variant={["sm-display", "sm-display", "sm-display", "md"]}
           lineClamp={2}
@@ -95,7 +101,7 @@ const fragment = graphql`
     title
     publishedAt(format: "MMM D, YYYY")
     thumbnailImage {
-      small: cropped(width: 125, height: 125) {
+      small: cropped(width: 100, height: 100) {
         src
         srcSet
       }

@@ -98,7 +98,7 @@ describe("ArtistHeaderEditorial", () => {
     expect(screen.queryByText("View All")).not.toBeInTheDocument()
   })
 
-  it("renders a View All link when there are more than one article", () => {
+  it("renders an underlined View All link when there are more than one article", () => {
     renderWithRelay({
       Artist: () => ({
         name: "Pablo Picasso",
@@ -112,10 +112,43 @@ describe("ArtistHeaderEditorial", () => {
 
     const viewAll = screen.getByText("View All")
     expect(viewAll).toBeInTheDocument()
+    expect(viewAll).toHaveStyle({ textDecoration: "underline" })
     expect(viewAll.closest("a")).toHaveAttribute(
       "href",
       "/artist/pablo-picasso/articles",
     )
+  })
+
+  it("renders the shared scrollable rail with hover arrows and a progress bar, not dots", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: {
+          totalCount: 2,
+          edges: [article(1), article(2)],
+        },
+      }),
+    })
+
+    expect(
+      screen.getByRole("button", { name: "See previous editorial articles" }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole("button", { name: "See more editorial articles" }),
+    ).toBeInTheDocument()
+    expect(screen.getByRole("scrollbar")).toBeInTheDocument()
+  })
+
+  it("renders the heading at the size/line-height matching the design's Core/sm Text spec", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: { totalCount: 1, edges: [article(1)] },
+      }),
+    })
+
+    const heading = screen.getByText("Artsy Editorial Featuring Pablo Picasso")
+    expect(heading).toHaveStyle({ fontSize: "16px", lineHeight: "26px" })
   })
 
   it("shows a top border by default", () => {
@@ -143,5 +176,32 @@ describe("ArtistHeaderEditorial", () => {
 
     const heading = screen.getByText("Artsy Editorial Featuring Pablo Picasso")
     expect(heading.parentElement).not.toHaveStyle({ borderTopStyle: "solid" })
+  })
+
+  it("gives each article card the same chrome as an auction result card", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: { totalCount: 1, edges: [article(1)] },
+      }),
+    })
+
+    const card = screen.getByText("Article 1").closest("a")
+    expect(card).toHaveStyle({
+      backgroundColor: "#F7F7F7",
+      borderRadius: "5px",
+    })
+  })
+
+  it("right-aligns each card's text, matching the design", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: { totalCount: 1, edges: [article(1)] },
+      }),
+    })
+
+    const title = screen.getByText("Article 1")
+    expect(title.parentElement).toHaveStyle({ textAlign: "right" })
   })
 })

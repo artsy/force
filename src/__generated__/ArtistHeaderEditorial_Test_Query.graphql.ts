@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d60690dc7d19f0dc985d72611b0a85d2>>
+ * @generated SignedSource<<6860de47c7ce74d9c111937b1d1263c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -201,12 +201,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 125
+                                "value": 100
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 125
+                                "value": 100
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -229,7 +229,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:125,width:125)"
+                            "storageKey": "cropped(height:100,width:100)"
                           }
                         ],
                         "storageKey": null
@@ -251,7 +251,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6b638b45cee9960246caed14e0c21bfc",
+    "cacheID": "eb116bbd76e72dbd958f1c4859815996",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -312,7 +312,7 @@ return {
     },
     "name": "ArtistHeaderEditorial_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeaderEditorial_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeaderEditorial_artist\n    id\n  }\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 125, height: 125) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistHeaderEditorial_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeaderEditorial_artist\n    id\n  }\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
