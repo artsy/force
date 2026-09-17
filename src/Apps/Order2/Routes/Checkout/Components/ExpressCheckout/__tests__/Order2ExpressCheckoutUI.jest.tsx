@@ -67,6 +67,7 @@ const mockSetExpressCheckoutState = jest.fn()
 const mockSetCheckoutMode = jest.fn()
 const mockSetConfirmationToken = jest.fn()
 const mockEditFulfillmentDetails = jest.fn()
+const mockRequestFulfillmentRestart = jest.fn()
 
 const mockMessages = {
   EXPRESS_CHECKOUT: { error: null },
@@ -89,6 +90,7 @@ const mockCheckoutContext = {
   setCheckoutMode: mockSetCheckoutMode,
   setConfirmationToken: mockSetConfirmationToken,
   editStep: mockEditFulfillmentDetails,
+  requestFulfillmentRestart: mockRequestFulfillmentRestart,
   setSectionErrorMessage: mockSetSectionErrorMessage,
   messages: { ...mockMessages },
 } as any
@@ -755,6 +757,10 @@ describe("ExpressCheckoutUI", () => {
     expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
     expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
     expect(window.location.reload).not.toHaveBeenCalled()
+    expect(mockEditFulfillmentDetails).toHaveBeenCalledWith(
+      "FULFILLMENT_DETAILS",
+    )
+    expect(mockRequestFulfillmentRestart).toHaveBeenCalled()
   })
 
   it("on desktop, closes the express UI without unsetting fulfillment when the user cancels without changes", async () => {
@@ -770,8 +776,9 @@ describe("ExpressCheckoutUI", () => {
     // No unset mutations should have been issued
     expect(env.mock.getAllOperations()).toHaveLength(0)
 
-    // Step should not have been rewound
+    // Step should not have been rewound, nor shipping recalculated
     expect(mockEditFulfillmentDetails).not.toHaveBeenCalled()
+    expect(mockRequestFulfillmentRestart).not.toHaveBeenCalled()
 
     // Express UI state is still cleared
     expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
@@ -829,6 +836,13 @@ describe("ExpressCheckoutUI", () => {
       expect(mockSetCheckoutMode).toHaveBeenCalledWith("standard")
       expect(mockSetExpressCheckoutState).toHaveBeenCalledWith(null)
       expect(window.location.reload).not.toHaveBeenCalled()
+
+      // Shipping is recalculated so the collector isn't left with a collapsed
+      // shipping method step.
+      expect(mockEditFulfillmentDetails).toHaveBeenCalledWith(
+        "FULFILLMENT_DETAILS",
+      )
+      expect(mockRequestFulfillmentRestart).toHaveBeenCalled()
     },
   )
 

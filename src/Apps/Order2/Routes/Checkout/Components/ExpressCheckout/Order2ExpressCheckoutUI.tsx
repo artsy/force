@@ -22,13 +22,13 @@ import {
   validateAndExtractOrderResponse,
 } from "Apps/Order/Components/ExpressCheckout/Util/mutationHandling"
 import { SectionHeading } from "Apps/Order2/Components/SectionHeading"
+import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
 import type { ExpressCheckoutPaymentMethod } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import { CheckoutStepName } from "Apps/Order2/Routes/Checkout/CheckoutContext/types"
 import {
   CheckoutErrorBanner,
   fallbackError,
 } from "Apps/Order2/Routes/Checkout/Components/CheckoutErrorBanner"
-import { TermsAndConditions } from "Apps/Order2/Components/TermsAndConditions"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { fetchAndSetConfirmationToken } from "Apps/Order2/Utils/confirmationTokenUtils"
 import { LocalCheckoutError } from "Apps/Order2/Utils/errors"
@@ -112,6 +112,7 @@ export const Order2ExpressCheckoutUI: React.FC<
     checkoutTracking,
     setConfirmationToken,
     editStep,
+    requestFulfillmentRestart,
     setSectionErrorMessage,
     messages,
     expressCheckoutPaymentMethods,
@@ -274,6 +275,9 @@ export const Order2ExpressCheckoutUI: React.FC<
       // Reset local state
       setExpressCheckoutType(null)
       editStep(CheckoutStepName.FULFILLMENT_DETAILS)
+      // The order no longer has a fulfillment option, so shipping has to be
+      // recalculated before the collector can continue.
+      requestFulfillmentRestart()
       setCheckoutMode("standard")
       setExpressCheckoutState(null)
     }
