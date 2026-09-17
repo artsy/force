@@ -2,10 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { OnboardingDialogSimplified } from "Components/Onboarding/Components/OnboardingDialogSimplified"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import {
-  clearOneTapEmailOptInPending,
-  peekOneTapEmailOptInPending,
-} from "Utils/oneTapEmailOptIn"
+import { peekOneTapEmailOptInPending } from "Utils/oneTapEmailOptIn"
 import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
 
 const mockOnClose = jest.fn()
