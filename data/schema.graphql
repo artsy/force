@@ -7868,8 +7868,6 @@ type BrandKit {
   ): String
   ctaColor: String
   fontFamily: String
-  fontStyle: String
-  fontWeight: String
 
   """
   A globally unique ID.
@@ -15146,16 +15144,6 @@ input CreateBrandKitInput {
   Font family name
   """
   fontFamily: String
-
-  """
-  Font style
-  """
-  fontStyle: String
-
-  """
-  Font weight
-  """
-  fontWeight: String
 
   """
   The partner ID to create the brand kit for
@@ -40030,16 +40018,6 @@ input UpdateBrandKitInput {
   Font family name
   """
   fontFamily: String
-
-  """
-  Font style
-  """
-  fontStyle: String
-
-  """
-  Font weight
-  """
-  fontWeight: String
 
   """
   The internal ID of the brand kit to update
