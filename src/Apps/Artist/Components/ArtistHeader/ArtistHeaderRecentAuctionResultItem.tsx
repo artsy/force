@@ -1,6 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
-import { Box, Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
+import { Box, Flex, Image, Text } from "@artsy/palette"
 import type { RecentAuctionResult } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
@@ -9,8 +9,8 @@ import { DateTime, type LocaleOptions } from "luxon"
 import type { FC, MouseEvent } from "react"
 import { useState } from "react"
 
-const CELL_WIDTH = 175
-const CELL_HEIGHT = 190
+const IMAGE_FRAME_SIZE = 75
+const CELL_WIDTH = 250
 
 export interface ArtistHeaderRecentAuctionResultItemProps {
   auctionResult: RecentAuctionResult
@@ -26,6 +26,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
   const [hasImageError, setHasImageError] = useState(false)
 
   const image = auctionResult.images?.thumbnail?.resized
+  const hasImage = !!image?.src && !hasImageError
   const title = [auctionResult.title, auctionResult.dateText]
     .filter(Boolean)
     .join(", ")
@@ -64,19 +65,27 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
       to={`/auction-result/${auctionResult.internalID}`}
       onClick={handleClick}
       display="flex"
-      flexDirection="column"
+      flexDirection="row"
       alignItems="center"
       textDecoration="none"
       flexShrink={0}
       width={CELL_WIDTH}
-      height={CELL_HEIGHT}
       p={1}
       gap={1}
       bg="mono5"
       borderRadius="5px"
     >
-      <ResponsiveBox aspectWidth={1} aspectHeight={1} maxWidth="100%">
-        {image?.src && !hasImageError ? (
+      <Box
+        width={IMAGE_FRAME_SIZE}
+        height={IMAGE_FRAME_SIZE}
+        flexShrink={0}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        overflow="hidden"
+        bg={hasImage ? "mono0" : "mono10"}
+      >
+        {hasImage ? (
           <Image
             src={image.src}
             srcSet={image.srcSet}
@@ -86,35 +95,35 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
             lazyLoad
             // Image's own lazyLoad skeleton defaults to mono10, which
             // would otherwise stay visible as letterbox padding behind
-            // a contain-fit image that doesn't fill the square — blend
-            // it into the card instead, matching the card's own bg.
-            bg="mono5"
+            // a contain-fit image that doesn't fill the frame — match
+            // the frame's own white mat instead.
+            bg="mono0"
             style={{ objectFit: "contain" }}
             onError={() => setHasImageError(true)}
           />
         ) : (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="100%"
-            bg="mono10"
-          >
-            <NoArtIcon height={24} width={24} fill="mono60" />
-          </Box>
+          <NoArtIcon height={24} width={24} fill="mono60" />
         )}
-      </ResponsiveBox>
+      </Box>
 
-      <Box width="100%">
-        {saleDate && (
-          <Text variant="xs" color="mono100">
-            {saleDate}
+      <Flex
+        flexDirection="column"
+        justifyContent="space-between"
+        height={IMAGE_FRAME_SIZE}
+        flex={1}
+        minWidth={0}
+      >
+        <Box>
+          {saleDate && (
+            <Text variant="xs" color="mono100">
+              {saleDate}
+            </Text>
+          )}
+
+          <Text variant="xs" color="mono60" lineClamp={2}>
+            {title}
           </Text>
-        )}
-
-        <Text variant="xs" color="mono60" lineClamp={1}>
-          {title}
-        </Text>
+        </Box>
 
         {(() => {
           if (isPriceHidden) {
@@ -128,7 +137,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
           return (
             <Flex alignItems="center" gap={0.5}>
               {salePrice ? (
-                <Text variant="xs" fontWeight="medium" color="mono100">
+                <Text variant="xs" fontWeight="bold" color="mono100">
                   {salePrice}
                 </Text>
               ) : (
@@ -151,7 +160,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
             </Flex>
           )
         })()}
-      </Box>
+      </Flex>
     </RouterLink>
   )
 }
