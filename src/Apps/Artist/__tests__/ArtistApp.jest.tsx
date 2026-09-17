@@ -29,7 +29,7 @@ describe("ArtistApp", () => {
     query: graphql`
       query ArtistAppTestQuery @relay_test_operation {
         artist(id: "example") {
-          ...ArtistApp_artist @arguments(saleStartYear: 2025, saleEndYear: 2026)
+          ...ArtistApp_artist
         }
       }
     `,

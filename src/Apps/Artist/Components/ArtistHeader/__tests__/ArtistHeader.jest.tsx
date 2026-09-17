@@ -51,7 +51,6 @@ const { renderWithRelay } = setupTestWrapperTL({
     query ArtistHeader_Test_Query @relay_test_operation {
       artist(id: "example") {
         ...ArtistHeader_artist
-          @arguments(saleStartYear: 2025, saleEndYear: 2026)
       }
     }
   `,
