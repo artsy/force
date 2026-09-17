@@ -11,7 +11,7 @@ import type { ArtistHeaderEditorialItem_article$key } from "__generated__/Artist
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
-const CARD_WIDTH = 381
+const CARD_WIDTH = 380
 
 interface ArtistHeaderEditorialItemProps {
   article: ArtistHeaderEditorialItem_article$key

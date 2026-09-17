@@ -22,11 +22,6 @@ const renderRail = (count: number) => {
   return { container, viewport }
 }
 
-// jsdom never computes real layout, so scrollWidth/clientWidth are always
-// 0 — these tests fake realistic scroll metrics directly on the underlying
-// element (the same node the component reads from) and fire a scroll
-// event to trigger the component's listener, since setting properties via
-// defineProperty doesn't dispatch one on its own.
 const setScrollMetrics = (
   element: HTMLElement,
   metrics: { scrollLeft: number; scrollWidth: number; clientWidth: number },
@@ -46,9 +41,6 @@ describe("ScrollableCardRail", () => {
 
     const cells = container.querySelectorAll("li")
     expect(cells).toHaveLength(2)
-    // Swiper's own default is a responsive [10px, 20px] gap — this
-    // flattens it to a consistent 10px instead, and the last cell keeps
-    // no trailing padding.
     expect(cells[0]).toHaveStyle({ paddingRight: "10px" })
     expect(cells[1]).not.toHaveStyle({ paddingRight: "10px" })
   })
@@ -100,8 +92,6 @@ describe("ScrollableCardRail", () => {
       })
       fireEvent.scroll(viewport)
 
-      // jsdom doesn't implement scrollBy at all, so there's nothing for
-      // jest.spyOn to wrap — assign a stub directly instead.
       const scrollBySpy = jest.fn()
       viewport.scrollBy = scrollBySpy
 
