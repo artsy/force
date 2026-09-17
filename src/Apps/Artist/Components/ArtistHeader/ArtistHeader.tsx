@@ -393,8 +393,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistHeader_artist on Artist
       @argumentDefinitions(
-        saleStartYear: { type: "Int!" }
-        saleEndYear: { type: "Int!" }
+        saleStartYear: { type: "Int" }
+        saleEndYear: { type: "Int" }
       ) {
         internalID
         slug
