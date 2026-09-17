@@ -432,7 +432,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
               saleDate
               images {
                 thumbnail {
-                  resized(width: 130, height: 130, version: ["square140"]) {
+                  resized(width: 130, height: 130) {
                     src
                     srcSet
                   }
