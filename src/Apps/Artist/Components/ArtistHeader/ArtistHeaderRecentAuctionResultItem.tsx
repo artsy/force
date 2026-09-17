@@ -14,7 +14,6 @@ const CELL_WIDTH = 250
 
 export interface ArtistHeaderRecentAuctionResultItemProps {
   auctionResult: RecentAuctionResult
-  /** Hide the price behind a sign-up prompt for signed-out visitors. */
   isPriceGated?: boolean
 }
 
@@ -39,11 +38,6 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
   const performanceValue = auctionResult.performance?.mid
   const isPerformanceNegative = performanceValue?.[0] === "-"
 
-  // The full auction-result page requires an account for any visitor,
-  // independent of the rail's own "first few prices are visible to
-  // everyone" teaser above — so this matches the same behavior the full
-  // Auction Results tab uses: show the sign-up dialog in place, rather
-  // than navigating logged-out visitors to a page they can't view.
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (user) return
 
@@ -93,10 +87,6 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
             height="100%"
             alt=""
             lazyLoad
-            // Image's own lazyLoad skeleton defaults to mono10, which
-            // would otherwise stay visible as letterbox padding behind
-            // a contain-fit image that doesn't fill the frame — match
-            // the frame's own white mat instead.
             bg="mono0"
             style={{ objectFit: "contain" }}
             onError={() => setHasImageError(true)}

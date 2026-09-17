@@ -15,11 +15,6 @@ export type RecentAuctionResult = NonNullable<
   NonNullable<RecentAuctionResultEdge>["node"]
 >
 
-// The first few items are visible to everyone (including signed-out
-// visitors and search crawlers) so the page still carries real commercial
-// signal above the fold. Items past this point nudge signed-out visitors
-// to sign up, matching the "teaser, then gate" pattern used elsewhere
-// (e.g. Career Highlights/Market Insights vs. the full Auction Results tab).
 export const VISIBLE_PRICE_COUNT = 3
 
 export interface ArtistHeaderRecentAuctionResultsProps {
@@ -38,7 +33,7 @@ export const ArtistHeaderRecentAuctionResults: FC<
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text variant="sm-display">Recent Auction Results</Text>
+        <Text variant="sm">Recent Auction Results</Text>
 
         <Text
           variant="xs"

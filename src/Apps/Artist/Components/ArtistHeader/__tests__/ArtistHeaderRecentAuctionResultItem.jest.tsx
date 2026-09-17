@@ -200,10 +200,6 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     })
   })
 
-  // The full auction-result page requires an account for any visitor, so
-  // a signed-out click should never navigate there — regardless of
-  // whether this particular card's price is gated, since that's purely
-  // about what's visible on the rail itself, not click-through access.
   describe("clicking through while signed out", () => {
     it("prevents navigation and shows the auth dialog for a non-gated item", () => {
       renderItem()

@@ -20,28 +20,9 @@ import styled from "styled-components"
 
 export interface ScrollableCardRailProps {
   children: JSX.Element[]
-  /** Used to build the prev/next button aria-labels, e.g. "auction results". */
   itemsLabel: string
 }
 
-// Shared by ArtistHeaderRecentAuctionResults and ArtistHeaderEditorial: a
-// horizontally-scrollable row of cards with hover-reveal prev/next arrows
-// and a scrollbar-style progress indicator, matching the same interaction
-// pattern across both rails in the artist page's top-of-fold right rail.
-//
-// Built on Swiper rather than the Rail/Shelf component used by full-width
-// rails elsewhere — Shelf wraps its content in FullBleed (expands to 100vw
-// once mounted), which breaks a narrow sidebar column.
-//
-// Deliberately doesn't drive navigation via Swiper's own
-// initialIndex/onChange: Swiper derives its index from overall scroll
-// *percentage* across the total cell count, which is fine when one
-// full-width cell fills the viewport, but breaks down once several cards
-// are visible at once — right at the end, the last cell can't scroll to a
-// "start-aligned" position (there's no more room), so the scroll gets
-// clamped and Swiper's percentage-based guess lands on the wrong index,
-// desyncing the buttons. Scrolling the real DOM node directly (the same
-// node ShelfScrollBar tracks) sidesteps that entirely.
 export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
   children,
   itemsLabel,
@@ -112,22 +93,10 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
   )
 }
 
-// Swiper's own button-driven navigation calls scrollIntoView() with no
-// smooth behavior, and its scroll container has no scroll-behavior CSS
-// either, so it jumps instantly. Shelf's arrows glide because Shelf's own
-// scrollTo explicitly passes behavior: "smooth" — Swiper spreads
-// unrecognized props onto its scroll container, so this CSS-only override
-// gets the same result without forking Palette.
 const SmoothSwiper = styled(Swiper)`
   scroll-behavior: smooth;
 `
 
-// Swiper's default Cell applies a responsive gap ([1, 2], i.e. 10px on
-// mobile but 20px on desktop) between cards. Both current consumers'
-// cards use a flat 10px gap internally, so flatten this to match instead
-// of letting it grow on desktop. Swiper still passes the original value
-// through as the `pr` prop (or undefined for the last cell, to avoid
-// trailing whitespace) — override only its value here.
 const FlatGapSwiperCell: ForwardRefExoticComponent<BoxProps> = forwardRef(
   (props, ref) => {
     return (

@@ -8,12 +8,6 @@ import { graphql, useFragment } from "react-relay"
 
 interface ArtistHeaderEditorialProps {
   artist: ArtistHeaderEditorial_artist$key
-  /**
-   * The preceding module in the right rail (e.g. Career Highlights) usually
-   * has no bottom border of its own, so this divides it from Editorial. The
-   * Recent Auction Results rail already ends with its own progress dots, so
-   * this border is skipped there instead of stacking two separators.
-   */
   showTopBorder?: boolean
 }
 
