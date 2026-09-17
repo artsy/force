@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77fad2e0774c72b98a158dd1902c4bba>>
+ * @generated SignedSource<<9543c00cb51282399628cfc231ec5c8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,11 +51,9 @@ export type ArtistHeader_artist$data = {
         readonly dateText: string | null | undefined;
         readonly images: {
           readonly thumbnail: {
-            readonly cropped: {
-              readonly height: number;
+            readonly resized: {
               readonly src: string;
               readonly srcSet: string;
-              readonly width: number;
             } | null | undefined;
           } | null | undefined;
         } | null | undefined;
@@ -145,24 +143,10 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "height",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v9 = [
+v7 = [
   (v5/*: any*/)
 ];
 return {
@@ -411,9 +395,9 @@ return {
                               "value": 130
                             }
                           ],
-                          "concreteType": "CroppedImageUrl",
+                          "concreteType": "ResizedImageUrl",
                           "kind": "LinkedField",
-                          "name": "cropped",
+                          "name": "resized",
                           "plural": false,
                           "selections": [
                             (v5/*: any*/),
@@ -423,11 +407,9 @@ return {
                               "kind": "ScalarField",
                               "name": "srcSet",
                               "storageKey": null
-                            },
-                            (v6/*: any*/),
-                            (v7/*: any*/)
+                            }
                           ],
-                          "storageKey": "cropped(height:130,version:[\"square140\"],width:130)"
+                          "storageKey": "resized(height:130,version:[\"square140\"],width:130)"
                         }
                       ],
                       "storageKey": null
@@ -515,7 +497,7 @@ return {
           "selections": [
             (v0/*: any*/),
             (v2/*: any*/),
-            (v8/*: any*/),
+            (v6/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -550,7 +532,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v9/*: any*/),
+                      "selections": (v7/*: any*/),
                       "storageKey": "cropped(height:30,width:30)"
                     },
                     {
@@ -571,7 +553,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v9/*: any*/),
+                      "selections": (v7/*: any*/),
                       "storageKey": "cropped(height:60,width:60)"
                     }
                   ],
@@ -596,7 +578,7 @@ return {
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
-        (v8/*: any*/),
+        (v6/*: any*/),
         (v4/*: any*/),
         {
           "alias": null,
@@ -629,8 +611,20 @@ return {
               "name": "url",
               "storageKey": "url(version:[\"larger\",\"larger\"])"
             },
-            (v6/*: any*/),
-            (v7/*: any*/)
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            }
           ],
           "storageKey": null
         },
@@ -648,6 +642,6 @@ return {
 };
 })();
 
-(node as any).hash = "029a676e1ec8ce7ed21c0836ddf2cdd3";
+(node as any).hash = "696a80d8f43f65a627656f2f68dc6f1c";
 
 export default node;

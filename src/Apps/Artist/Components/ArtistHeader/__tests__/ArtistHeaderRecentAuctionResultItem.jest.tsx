@@ -24,11 +24,9 @@ const baseAuctionResult: RecentAuctionResult = {
   dateText: null,
   images: {
     thumbnail: {
-      cropped: {
+      resized: {
         src: "https://example.com/image.jpg",
         srcSet: "https://example.com/image.jpg 1x",
-        width: 165,
-        height: 165,
       },
     },
   },
@@ -96,6 +94,32 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     fireEvent.error(image as HTMLImageElement)
 
     expect(container.querySelector("img")).not.toBeInTheDocument()
+  })
+
+  it("fits the whole image within its box, preserving aspect ratio, rather than cropping or stretching it", () => {
+    const { container } = renderItem()
+
+    expect(container.querySelector("img")).toHaveStyle({
+      objectFit: "contain",
+    })
+  })
+
+  it("blends letterbox padding around a contained image into the card, not the no-image grey", () => {
+    const { container } = renderItem()
+
+    const image = container.querySelector("img")
+    expect(image?.parentElement).toHaveStyle({
+      backgroundColor: "#F7F7F7",
+    })
+  })
+
+  it("keeps a darker grey background behind the no-image glyph", () => {
+    const { container } = renderItem({ images: { thumbnail: null } })
+
+    const svg = container.querySelector("svg")
+    expect(svg?.parentElement?.parentElement).toHaveStyle({
+      backgroundColor: "#E7E7E7",
+    })
   })
 
   it("shows the formatted sale date when present", () => {
