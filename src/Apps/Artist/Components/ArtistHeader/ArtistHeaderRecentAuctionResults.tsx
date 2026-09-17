@@ -33,7 +33,7 @@ export const ArtistHeaderRecentAuctionResults: FC<
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text variant="sm">Recent Auction Results</Text>
+        <Text variant="sm-display">Recent Auction Results</Text>
 
         <Text
           variant="xs"
