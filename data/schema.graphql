@@ -4991,6 +4991,10 @@ input ArtworkDuplicateMergeFieldOverridesInput {
 }
 
 type ArtworkDuplicatePair {
+  """
+  The Artnet import that found (or claimed) this pair, if any.
+  """
+  artnetImportID: String
   artwork1: Artwork
   artwork2: Artwork
   createdAt(
@@ -5012,9 +5016,24 @@ type ArtworkDuplicatePair {
   ): String
 
   """
+  The artwork already in the partner's inventory that the imported artwork potentially duplicates, if this pair is import-scoped.
+  """
+  existingArtwork: Artwork
+
+  """
+  True when both sides of an import-scoped pair came from the same Artnet import — the 'existing' side isn't actually pre-existing inventory, just the sibling artwork the detector found second.
+  """
+  existingArtworkAlsoImported: Boolean!
+
+  """
   A globally unique ID.
   """
   id: ID!
+
+  """
+  The artwork that came from the Artnet import, if this pair is import-scoped.
+  """
+  importedArtwork: Artwork
 
   """
   A type-specific ID.
@@ -18234,6 +18253,10 @@ type DetectArtworkDuplicatesFailure {
 }
 
 input DetectArtworkDuplicatesMutationInput {
+  """
+  Scope detection to an Artnet import's created artworks vs. the partner's whole inventory
+  """
+  artnetImportID: String
   clientMutationId: String
 
   """
@@ -18257,6 +18280,7 @@ union DetectArtworkDuplicatesResponseOrError =
   | DetectArtworkDuplicatesSuccess
 
 type DetectArtworkDuplicatesSuccess {
+  artnetImportID: String
   detectionVersion: String
   partnerId: String
   status: String
@@ -29916,6 +29940,11 @@ type Partner implements Node {
   """
   artworkDuplicatePairsConnection(
     after: String
+
+    """
+    Filter to pairs found by an import-scoped detection run
+    """
+    artnetImportID: String
     before: String
 
     """
@@ -33481,6 +33510,11 @@ type Query {
   """
   artworkDuplicatePairsConnection(
     after: String
+
+    """
+    Filter to pairs found by an import-scoped detection run
+    """
+    artnetImportID: String
     before: String
 
     """
@@ -43556,6 +43590,11 @@ type Viewer {
   """
   artworkDuplicatePairsConnection(
     after: String
+
+    """
+    Filter to pairs found by an import-scoped detection run
+    """
+    artnetImportID: String
     before: String
 
     """
