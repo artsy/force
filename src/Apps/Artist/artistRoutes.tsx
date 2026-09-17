@@ -1,6 +1,10 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
 import { canonicalSlugRedirect } from "System/Router/Utils/canonicalSlugRedirect"
+import {
+  type RenderArgs,
+  renderRouteError,
+} from "System/Router/Utils/renderRouteError"
 import { RedirectException } from "found"
 import { compact } from "lodash"
 import { stringify } from "qs"
@@ -131,7 +135,10 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ match }) => {
+        render: ({ match, props, error }: RenderArgs) => {
+          if (error) return renderRouteError(error)
+          if (!props) return
+
           const basePath = `/artist/${match.params.artistID}`
           const queryString = stringify(
             rewriteAuctionResultsParamsToNamespace(match.location.query),
@@ -152,7 +159,10 @@ export const artistRoutes: RouteProps[] = [
             }
           }
         `,
-        render: ({ match }) => {
+        render: ({ match, props, error }: RenderArgs) => {
+          if (error) return renderRouteError(error)
+          if (!props) return
+
           const redirectUrl = `/artist/${match.params.artistID}#JUMP--artistAboutTop`
           throw new RedirectException(redirectUrl, 301)
         },
@@ -230,7 +240,17 @@ export const artistRoutes: RouteProps[] = [
       {
         // Redirect all unhandled tabs to the artist page.
         path: ":tab?",
-        render: ({ match }) => {
+        query: graphql`
+          query artistRoutes_ArtistTabQuery($artistID: String!) @cacheable {
+            artist(id: $artistID) @principalField {
+              slug
+            }
+          }
+        `,
+        render: ({ match, props, error }: RenderArgs) => {
+          if (error) return renderRouteError(error)
+          if (!props) return
+
           throw new RedirectException(
             `/artist/${match.params.artistID}${match.location.search}`,
             301,
