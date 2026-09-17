@@ -37,6 +37,25 @@ describe("ArtistHeaderRecentAuctionResults", () => {
     )
   })
 
+  it("uses the same horizontal gap between cards as the card's own vertical gap", () => {
+    const { container } = render(
+      <MockBoot>
+        <ArtistHeaderRecentAuctionResults
+          artistSlug="pablo-picasso"
+          auctionResults={[0, 1].map(makeAuctionResult)}
+        />
+      </MockBoot>,
+    )
+
+    const cells = container.querySelectorAll("li")
+    expect(cells).toHaveLength(2)
+    // Swiper's own default is a responsive [10px, 20px] gap — this
+    // matches the card's own flat 10px image-to-text gap instead, and
+    // the last cell keeps no trailing padding.
+    expect(cells[0]).toHaveStyle({ paddingRight: "10px" })
+    expect(cells[1]).not.toHaveStyle({ paddingRight: "10px" })
+  })
+
   it("shows the price for the first three items and gates the rest for signed-out visitors", () => {
     const auctionResults = [0, 1, 2, 3, 4].map(makeAuctionResult)
 

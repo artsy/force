@@ -25,7 +25,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
   const { showAuthDialog } = useAuthDialog()
   const [hasImageError, setHasImageError] = useState(false)
 
-  const image = auctionResult.images?.thumbnail?.cropped
+  const image = auctionResult.images?.thumbnail?.resized
   const title = [auctionResult.title, auctionResult.dateText]
     .filter(Boolean)
     .join(", ")
@@ -75,12 +75,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
       bg="mono5"
       borderRadius="5px"
     >
-      <ResponsiveBox
-        aspectWidth={1}
-        aspectHeight={1}
-        maxWidth="100%"
-        bg="mono10"
-      >
+      <ResponsiveBox aspectWidth={1} aspectHeight={1} maxWidth="100%">
         {image?.src && !hasImageError ? (
           <Image
             src={image.src}
@@ -89,6 +84,12 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
             height="100%"
             alt=""
             lazyLoad
+            // Image's own lazyLoad skeleton defaults to mono10, which
+            // would otherwise stay visible as letterbox padding behind
+            // a contain-fit image that doesn't fill the square — blend
+            // it into the card instead, matching the card's own bg.
+            bg="mono5"
+            style={{ objectFit: "contain" }}
             onError={() => setHasImageError(true)}
           />
         ) : (
@@ -97,6 +98,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
             justifyContent="center"
             alignItems="center"
             height="100%"
+            bg="mono10"
           >
             <NoArtIcon height={24} width={24} fill="mono60" />
           </Box>

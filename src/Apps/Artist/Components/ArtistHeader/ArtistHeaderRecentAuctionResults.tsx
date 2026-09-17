@@ -1,16 +1,25 @@
 import {
   Box,
+  type BoxProps,
   ShelfNext,
   ShelfPrevious,
   ShelfScrollBar,
   Stack,
   Swiper,
+  SwiperCell,
   Text,
 } from "@artsy/palette"
 import { ArtistHeaderRecentAuctionResultItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResultItem"
 import { RouterLink } from "System/Components/RouterLink"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
-import { type FC, useEffect, useRef, useState } from "react"
+import {
+  type FC,
+  type ForwardRefExoticComponent,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import styled from "styled-components"
 
 type RecentAuctionResultsConnection = NonNullable<
@@ -133,7 +142,7 @@ export const ArtistHeaderRecentAuctionResults: FC<
         </Nav>
 
         <Box ref={swiperWrapperRef}>
-          <SmoothSwiper>
+          <SmoothSwiper Cell={AuctionResultSwiperCell}>
             {auctionResults.map((auctionResult, index) => {
               return (
                 <ArtistHeaderRecentAuctionResultItem
@@ -161,6 +170,19 @@ export const ArtistHeaderRecentAuctionResults: FC<
 const SmoothSwiper = styled(Swiper)`
   scroll-behavior: smooth;
 `
+
+// Swiper's default Cell applies a responsive gap ([1, 2], i.e. 10px on
+// mobile but 20px on desktop) between cards, which doesn't match this
+// card's own flat 10px image-to-text gap. Swiper still passes that
+// original value through as the `pr` prop (or undefined for the last
+// cell, to avoid trailing whitespace) — override only its value here.
+const AuctionResultSwiperCell: ForwardRefExoticComponent<BoxProps> = forwardRef(
+  (props, ref) => {
+    return (
+      <SwiperCell {...props} ref={ref as any} pr={props.pr ? 1 : undefined} />
+    )
+  },
+)
 
 const RailOverlay = styled(Box)`
   position: relative;
