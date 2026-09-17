@@ -139,7 +139,7 @@ describe("ArtistHeaderEditorial", () => {
     expect(screen.getByRole("scrollbar")).toBeInTheDocument()
   })
 
-  it("renders the heading at the size/line-height matching the design's Core/sm Text spec", () => {
+  it("renders the heading at the size/line-height matching the sm-display Text spec", () => {
     renderWithRelay({
       Artist: () => ({
         name: "Pablo Picasso",
@@ -148,7 +148,7 @@ describe("ArtistHeaderEditorial", () => {
     })
 
     const heading = screen.getByText("Artsy Editorial Featuring Pablo Picasso")
-    expect(heading).toHaveStyle({ fontSize: "16px", lineHeight: "26px" })
+    expect(heading).toHaveStyle({ fontSize: "16px", lineHeight: "20px" })
   })
 
   it("shows a top border by default", () => {

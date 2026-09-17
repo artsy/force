@@ -35,7 +35,9 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         })}
         pt={2}
       >
-        <Text variant="sm">Artsy Editorial Featuring {artist.name}</Text>
+        <Text variant="sm-display">
+          Artsy Editorial Featuring {artist.name}
+        </Text>
 
         {totalCount > 1 && (
           <Text
