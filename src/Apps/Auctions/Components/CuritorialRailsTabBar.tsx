@@ -3,12 +3,11 @@ import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/Hom
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type * as React from "react"
 import { AuctionsZeroState } from "./AuctionsZeroState"
-import { StandoutLotsRailQueryRenderer } from "./StandoutLotsRail"
 import { TrendingLotsRailQueryRenderer } from "./TrendingLotsRail"
 
 export const CuritorialRailsTabBar: React.FC<
   React.PropsWithChildren<unknown>
-> = ({}) => {
+> = () => {
   const { user } = useSystemContext()
 
   return (
@@ -23,9 +22,6 @@ export const CuritorialRailsTabBar: React.FC<
           <HomeAuctionLotsForYouRailQueryRenderer />
         </Tab>
       )}
-      <Tab name="Curators’ Picks">
-        <StandoutLotsRailQueryRenderer />
-      </Tab>
       <Tab name="Trending Lots">
         <TrendingLotsRailQueryRenderer />
       </Tab>
