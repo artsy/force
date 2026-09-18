@@ -100,8 +100,13 @@ export const OnboardingDialogSimplified: FC<
     onHide()
   }
 
+  const handleClose = () => {
+    persistEmailOptIn()
+    onClose()
+  }
+
   return (
-    <OnboardingModal onClose={onClose}>
+    <OnboardingModal onClose={handleClose}>
       <Box p={4} width="100%">
         <Text variant="lg-display" mb={4}>
           {currentStep === "welcome" && "Welcome to Artsy"}
