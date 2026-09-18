@@ -3464,6 +3464,11 @@ type ArtistPartnerEdge {
   isUseDefaultBiography: Boolean
 
   """
+  Whether Artsy has verified that this partner represents this artist.
+  """
+  isVerifiedRepresentative: Boolean
+
+  """
   The item at the end of the edge
   """
   node: Artist
@@ -4991,6 +4996,10 @@ input ArtworkDuplicateMergeFieldOverridesInput {
 }
 
 type ArtworkDuplicatePair {
+  """
+  The Artnet import that found (or claimed) this pair, if any.
+  """
+  artnetImportID: String
   artwork1: Artwork
   artwork2: Artwork
   createdAt(
@@ -5012,9 +5021,24 @@ type ArtworkDuplicatePair {
   ): String
 
   """
+  The artwork already in the partner's inventory that the imported artwork potentially duplicates, if this pair is import-scoped.
+  """
+  existingArtwork: Artwork
+
+  """
+  True when both sides of an import-scoped pair came from the same Artnet import — the 'existing' side isn't actually pre-existing inventory, just the sibling artwork the detector found second.
+  """
+  existingArtworkAlsoImported: Boolean!
+
+  """
   A globally unique ID.
   """
   id: ID!
+
+  """
+  The artwork that came from the Artnet import, if this pair is import-scoped.
+  """
+  importedArtwork: Artwork
 
   """
   A type-specific ID.
@@ -6316,6 +6340,13 @@ type ArtworksCollectionsBatchUpdateSuccess {
   artwork: Artwork
   counts: ArtworksCollectionsBatchUpdateCounts
   removedFromCollections: [Collection]
+}
+
+enum ArtworksForUserBackfillSource {
+  """
+  Biddable lots with the most bids, as shown on /auctions
+  """
+  TRENDING_LOTS
 }
 
 enum AssetType {
@@ -7868,8 +7899,6 @@ type BrandKit {
   ): String
   ctaColor: String
   fontFamily: String
-  fontStyle: String
-  fontWeight: String
 
   """
   A globally unique ID.
@@ -8741,8 +8770,25 @@ type City {
 }
 
 type CityGuideEvent {
+  articles: [CityGuideEventArticle!]!
   citySlug: String!
   description: String
+  displayEndAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  displayStartAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
   endAt(
     format: String
 
@@ -8791,6 +8837,22 @@ type CityGuideEvent {
     """
     timezone: String
   ): String!
+  video: Video
+}
+
+type CityGuideEventArticle {
+  article: Article!
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  The attachment's own UUID, not the article's
+  """
+  internalID: String!
+  position: Int!
 }
 
 type CityGuideEventItinerary {
@@ -8826,7 +8888,7 @@ enum CityGuideEventStatus {
   CLOSED
 
   """
-  Started, hasn't ended
+  Within the event's display window
   """
   CURRENT
 
@@ -15148,16 +15210,6 @@ input CreateBrandKitInput {
   fontFamily: String
 
   """
-  Font style
-  """
-  fontStyle: String
-
-  """
-  Font weight
-  """
-  fontWeight: String
-
-  """
   The partner ID to create the brand kit for
   """
   partnerId: String!
@@ -18246,6 +18298,10 @@ type DetectArtworkDuplicatesFailure {
 }
 
 input DetectArtworkDuplicatesMutationInput {
+  """
+  Scope detection to an Artnet import's created artworks vs. the partner's whole inventory
+  """
+  artnetImportID: String
   clientMutationId: String
 
   """
@@ -18269,6 +18325,7 @@ union DetectArtworkDuplicatesResponseOrError =
   | DetectArtworkDuplicatesSuccess
 
 type DetectArtworkDuplicatesSuccess {
+  artnetImportID: String
   detectionVersion: String
   partnerId: String
   status: String
@@ -19613,6 +19670,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
   When true, the fair is considered evergreen and not bound to specific dates.
   """
   isEvergreen: Boolean!
+
+  """
+  Whether this item occurs in any of the current user's personal itineraries. False when signed out.
+  """
+  isOnMyItineraries: Boolean
   isPublished: Boolean
   links(format: Format): String
   location: Location
@@ -19624,6 +19686,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     size: Int
   ): [MarketingCollection]!
   mobileImage: Image
+
+  """
+  Personal itineraries containing this item, with every matching stop ID. Details are fetched only when selected. Empty when signed out.
+  """
+  myItineraryStopMemberships: [ItineraryStopMembership!]
   name: String
   organizer: FairOrganizer
   profile: Profile
@@ -21348,12 +21415,34 @@ type GeneMeta {
   description: String!
 }
 
+input GenerateArtworkDescriptionDocumentInput {
+  """
+  Original filename of the document.
+  """
+  fileName: String
+
+  """
+  S3 bucket of the uploaded document.
+  """
+  s3Bucket: String!
+
+  """
+  S3 key of the uploaded document.
+  """
+  s3Key: String!
+}
+
 type GenerateArtworkDescriptionFailure {
   mutationError: GravityMutationError
 }
 
 input GenerateArtworkDescriptionInput {
   clientMutationId: String
+
+  """
+  S3 documents (DOC, DOCX, or PDF) to include as additional context for description generation.
+  """
+  documents: [GenerateArtworkDescriptionDocumentInput!]
 
   """
   The internal ID of the artwork to generate a description for
@@ -23646,6 +23735,11 @@ type Itinerary {
   authorName: String
   citySlug: String!
   description: String
+
+  """
+  Whether the guide is editorially featured, to be surfaced ahead of its peers.
+  """
+  featured: Boolean!
   heroImage: Image
 
   """
@@ -26877,6 +26971,13 @@ type Mutation {
   ): createCityGuideEventPayload
 
   """
+  Attach an editorial article to a city guide event, at the end of its list. Returns the event with its articles in their new order.
+  """
+  createCityGuideEventArticle(
+    input: createCityGuideEventArticleInput!
+  ): createCityGuideEventArticlePayload
+
+  """
   Attach a curated itinerary to a city guide event, at the end of its list. Returns the event with its itineraries in their new order.
   """
   createCityGuideEventItinerary(
@@ -27258,6 +27359,13 @@ type Mutation {
   deleteCityGuideEvent(
     input: deleteCityGuideEventInput!
   ): deleteCityGuideEventPayload
+
+  """
+  Detach an article from a city guide event. Returns the event with its remaining articles.
+  """
+  deleteCityGuideEventArticle(
+    input: deleteCityGuideEventArticleInput!
+  ): deleteCityGuideEventArticlePayload
 
   """
   Detach an itinerary from a city guide event. The itinerary itself is left alone. Returns the event with its remaining itineraries.
@@ -27742,6 +27850,13 @@ type Mutation {
   ): RemoveAssetFromConsignmentSubmissionPayload
 
   """
+  Remove a city guide event's video. The underlying Video record is left alone — delete it separately with deleteVideo if desired.
+  """
+  removeCityGuideEventVideo(
+    input: removeCityGuideEventVideoInput!
+  ): removeCityGuideEventVideoPayload
+
+  """
   Removes an installation shot from a partner show.
   """
   removeInstallShotFromPartnerShow(
@@ -27858,6 +27973,13 @@ type Mutation {
   sendIdentityVerificationEmail(
     input: SendIdentityVerificationEmailMutationInput!
   ): SendIdentityVerificationEmailMutationPayload
+
+  """
+  Set (or replace) a city guide event's video. Needs the editorial or content-manager role. The Video must already exist — create it with createVideo first.
+  """
+  setCityGuideEventVideo(
+    input: setCityGuideEventVideoInput!
+  ): setCityGuideEventVideoPayload
 
   """
   Set fulfillment option on an order
@@ -28038,6 +28160,13 @@ type Mutation {
   updateCityGuideEvent(
     input: updateCityGuideEventInput!
   ): updateCityGuideEventPayload
+
+  """
+  Move an article within its city guide event's list. Returns the event with its articles in their new order.
+  """
+  updateCityGuideEventArticle(
+    input: updateCityGuideEventArticleInput!
+  ): updateCityGuideEventArticlePayload
 
   """
   Move an itinerary within its city guide event's list. Returns the event with its itineraries in their new order.
@@ -29896,6 +30025,11 @@ type Partner implements Node {
   """
   artworkDuplicatePairsConnection(
     after: String
+
+    """
+    Filter to pairs found by an import-scoped detection run
+    """
+    artnetImportID: String
     before: String
 
     """
@@ -33461,6 +33595,11 @@ type Query {
   """
   artworkDuplicatePairsConnection(
     after: String
+
+    """
+    Filter to pairs found by an import-scoped detection run
+    """
+    artnetImportID: String
     before: String
 
     """
@@ -33716,6 +33855,11 @@ type Query {
     The ID of the marketing collection to be used for backfill
     """
     backfillMarketingCollectionID: String
+
+    """
+    Where backfill artworks come from. Defaults to the marketing collection, or the backfill set.
+    """
+    backfillSource: ArtworksForUserBackfillSource
     before: String
     excludeArtworkIds: [String] = []
     excludeDislikedArtworks: Boolean = false
@@ -34658,6 +34802,11 @@ type Query {
     Only itineraries for this city
     """
     citySlug: String
+
+    """
+    Only featured, or only unfeatured, itineraries
+    """
+    featured: Boolean
     first: Int
 
     """
@@ -38309,6 +38458,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   isFreeAdmission: Boolean
 
   """
+  Whether this item occurs in any of the current user's personal itineraries. False when signed out.
+  """
+  isOnMyItineraries: Boolean
+
+  """
   Does the show exist soley online
   """
   isOnlineExclusive: Boolean!
@@ -38337,6 +38491,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   An image representing the show, or a sharable image from an artwork in the show
   """
   metaImage: Image
+
+  """
+  Personal itineraries containing this item, with every matching stop ID. Details are fetched only when selected. Empty when signed out.
+  """
+  myItineraryStopMemberships: [ItineraryStopMembership!]
 
   """
   The exhibition title
@@ -39988,16 +40147,6 @@ input UpdateBrandKitInput {
   Font family name
   """
   fontFamily: String
-
-  """
-  Font style
-  """
-  fontStyle: String
-
-  """
-  Font weight
-  """
-  fontWeight: String
 
   """
   The internal ID of the brand kit to update
@@ -43536,6 +43685,11 @@ type Viewer {
   """
   artworkDuplicatePairsConnection(
     after: String
+
+    """
+    Filter to pairs found by an import-scoped detection run
+    """
+    artnetImportID: String
     before: String
 
     """
@@ -43791,6 +43945,11 @@ type Viewer {
     The ID of the marketing collection to be used for backfill
     """
     backfillMarketingCollectionID: String
+
+    """
+    Where backfill artworks come from. Defaults to the marketing collection, or the backfill set.
+    """
+    backfillSource: ArtworksForUserBackfillSource
     before: String
     excludeArtworkIds: [String] = []
     excludeDislikedArtworks: Boolean = false
@@ -44522,6 +44681,11 @@ type Viewer {
     Only itineraries for this city
     """
     citySlug: String
+
+    """
+    Only featured, or only unfeatured, itineraries
+    """
+    featured: Boolean
     first: Int
 
     """
@@ -45846,6 +46010,24 @@ type createBuyerOfferPayload {
   offerOrError: OfferMutationResponse
 }
 
+input createCityGuideEventArticleInput {
+  """
+  The Positron article's id.
+  """
+  articleID: String!
+
+  """
+  The event's id or slug.
+  """
+  cityGuideEventID: String!
+  clientMutationId: String
+}
+
+type createCityGuideEventArticlePayload {
+  clientMutationId: String
+  responseOrError: CityGuideEventMutationResponseOrError
+}
+
 input createCityGuideEventInput {
   """
   A featured city's slug, e.g. london-united-kingdom.
@@ -45853,6 +46035,16 @@ input createCityGuideEventInput {
   citySlug: String!
   clientMutationId: String
   description: String
+
+  """
+  Display until (ISO 8601). Null defaults to endAt.
+  """
+  displayEndAt: String
+
+  """
+  Display from (ISO 8601). Null defaults to startAt.
+  """
+  displayStartAt: String
 
   """
   ISO 8601 datetime. Must not be before `startAt`.
@@ -45930,6 +46122,11 @@ input createItineraryInput {
   citySlug: String!
   clientMutationId: String
   description: String
+
+  """
+  Mark the guide as editorially featured. Needs the content_manager role.
+  """
+  featured: Boolean
 
   """
   URL of an image already uploaded to S3, from which Gravity builds the itinerary's hero `ArImage`
@@ -46122,6 +46319,20 @@ input deleteAlertInput {
 type deleteAlertPayload {
   clientMutationId: String
   responseOrError: DeleteAlertResponseOrError
+}
+
+input deleteCityGuideEventArticleInput {
+  clientMutationId: String
+
+  """
+  The attachment's id (not the article's).
+  """
+  id: String!
+}
+
+type deleteCityGuideEventArticlePayload {
+  clientMutationId: String
+  responseOrError: CityGuideEventMutationResponseOrError
 }
 
 input deleteCityGuideEventInput {
@@ -46421,6 +46632,39 @@ type rejectSellerOfferPayload {
   orderOrError: OrderMutationResponse
 }
 
+input removeCityGuideEventVideoInput {
+  clientMutationId: String
+
+  """
+  The event's id or slug.
+  """
+  id: String!
+}
+
+type removeCityGuideEventVideoPayload {
+  clientMutationId: String
+  responseOrError: CityGuideEventMutationResponseOrError
+}
+
+input setCityGuideEventVideoInput {
+  clientMutationId: String
+
+  """
+  The event's id or slug.
+  """
+  id: String!
+
+  """
+  The Gravity Video's id.
+  """
+  videoID: String!
+}
+
+type setCityGuideEventVideoPayload {
+  clientMutationId: String
+  responseOrError: CityGuideEventMutationResponseOrError
+}
+
 input setOrderFulfillmentOptionInput {
   clientMutationId: String
   fulfillmentOption: FulfillmentOptionInput!
@@ -46662,6 +46906,25 @@ type updateBuyerOfferPayload {
   offerOrError: OfferMutationResponse
 }
 
+input updateCityGuideEventArticleInput {
+  clientMutationId: String
+
+  """
+  The attachment's id (not the article's).
+  """
+  id: String!
+
+  """
+  Zero-based position among the event's articles, via acts_as_list's insert_at.
+  """
+  position: Int!
+}
+
+type updateCityGuideEventArticlePayload {
+  clientMutationId: String
+  responseOrError: CityGuideEventMutationResponseOrError
+}
+
 input updateCityGuideEventInput {
   """
   A featured city's slug, e.g. london-united-kingdom.
@@ -46669,6 +46932,16 @@ input updateCityGuideEventInput {
   citySlug: String
   clientMutationId: String
   description: String
+
+  """
+  Display until (ISO 8601). Null defaults to endAt.
+  """
+  displayEndAt: String
+
+  """
+  Display from (ISO 8601). Null defaults to startAt.
+  """
+  displayStartAt: String
 
   """
   ISO 8601 datetime. Must not be before `startAt`.
@@ -46760,6 +47033,11 @@ input updateItineraryInput {
   citySlug: String
   clientMutationId: String
   description: String
+
+  """
+  Mark the guide as editorially featured. Needs the content_manager role.
+  """
+  featured: Boolean
 
   """
   Generate a new share token for this itinerary, replacing any existing one

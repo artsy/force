@@ -228,6 +228,7 @@ describe("SavedAddressOptions", () => {
           state: CheckoutStepState.ACTIVE,
         },
       ],
+      fulfillmentRestartToken: 0,
     } as any
 
     mockUseCheckoutContext.mockReturnValue(mockCheckoutContext)
@@ -864,6 +865,46 @@ describe("SavedAddressOptions", () => {
       })
 
       renderSavedAddressOptions({ hasDeliveryAddress: false })
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      expect(onSelectAddress).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("Auto-save when a fulfillment restart is requested", () => {
+    it("re-runs the auto-save when the restart token changes", async () => {
+      const { rerender } = renderSavedAddressOptions({
+        hasDeliveryAddress: false,
+      })
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledTimes(1)
+      })
+
+      // Express checkout was canceled: the order lost its fulfillment option,
+      // so the step asks for shipping to be recalculated.
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        fulfillmentRestartToken: 1,
+      })
+
+      rerender(buildSavedAddressOptions({ hasDeliveryAddress: false }))
+
+      await waitFor(() => {
+        expect(onSelectAddress).toHaveBeenCalledTimes(2)
+      })
+      expect(onSelectAddress).toHaveBeenLastCalledWith(mockUSAddress1)
+    })
+
+    it("does not re-run the auto-save when a delivery address is still confirmed", async () => {
+      const { rerender } = renderSavedAddressOptions()
+
+      mockUseCheckoutContext.mockReturnValue({
+        ...mockCheckoutContext,
+        fulfillmentRestartToken: 1,
+      })
+
+      rerender(buildSavedAddressOptions())
 
       await new Promise(resolve => setTimeout(resolve, 50))
       expect(onSelectAddress).not.toHaveBeenCalled()

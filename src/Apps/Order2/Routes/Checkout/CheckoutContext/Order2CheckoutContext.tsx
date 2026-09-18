@@ -69,6 +69,7 @@ export interface Order2CheckoutModel {
   expressCheckoutState: "submit" | "active" | null
   expressCheckoutPaymentMethods: ExpressCheckoutPaymentMethod[] | null
   steps: CheckoutStep[]
+  fulfillmentRestartToken: number
   activeFulfillmentDetailsTab: FulfillmentDetailsTab | null
   confirmationToken: ConfirmationTokenState
   savePaymentMethod: boolean
@@ -97,6 +98,7 @@ export interface Order2CheckoutModel {
    * Use this when a user clicks Edit on a completed step.
    */
   editStep: Action<this, CheckoutStepName>
+  requestFulfillmentRestart: Action<this>
   setActiveFulfillmentDetailsTab: Action<this, FulfillmentDetailsTab | null>
   setLoadingComplete: Action<this>
   setConfirmationToken: Action<
@@ -133,6 +135,7 @@ export const Order2CheckoutContext: ReturnType<
   savePaymentMethod: true,
   checkoutMode: "standard",
   steps: [],
+  fulfillmentRestartToken: 0,
   userAddressMode: null,
   messages: {},
   artworkPath: "/",
@@ -240,6 +243,10 @@ export const Order2CheckoutContext: ReturnType<
     state.steps = applyDeliveryOptionLogic(state.steps as CheckoutStep[])
   }),
 
+  requestFulfillmentRestart: action(state => {
+    state.fulfillmentRestartToken = state.fulfillmentRestartToken + 1
+  }),
+
   redirectToOrderDetails: action(state => {
     const orderID = state.orderData.internalID
     const orderDetailsURL = `/orders/${orderID}/details`
@@ -303,6 +310,7 @@ export const Order2CheckoutContextProvider: React.FC<
     savedPaymentMethod: null,
     checkoutMode: "standard",
     steps: [],
+    fulfillmentRestartToken: 0,
     messages: {},
 
     // Override with initialState values
@@ -384,6 +392,7 @@ const initialStateForOrder = (
       : null,
     savePaymentMethod: true,
     steps,
+    fulfillmentRestartToken: 0,
     checkoutMode: (savedCheckoutMode === "express"
       ? "express"
       : "standard") as CheckoutMode,

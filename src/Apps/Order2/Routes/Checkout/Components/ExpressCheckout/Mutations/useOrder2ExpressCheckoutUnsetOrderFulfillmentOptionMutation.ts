@@ -16,6 +16,8 @@ export const useOrder2ExpressCheckoutUnsetOrderFulfillmentOptionMutation =
                 ... on OrderMutationSuccess {
                   order {
                     ...Order2ExpressCheckoutUI_order
+                    ...Order2CheckoutContext_order
+                    ...Order2CheckoutApp_order
                     internalID
                     fulfillmentOptions {
                       amount {
