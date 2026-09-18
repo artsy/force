@@ -45,19 +45,26 @@ import {
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
 import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
-import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
+import {
+  type PillType,
+  SEARCH_DEBOUNCE_DELAY,
+  SEARCH_PLACEHOLDER,
+  SEARCH_PLACEHOLDER_SUGGESTIONS,
+  TOP_PILL,
+} from "./constants"
 import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
+import { useTypewriterPlaceholder } from "./hooks/useTypewriterPlaceholder"
+import { buildSuggestedFiltersUrl } from "./utils/buildSuggestedFiltersUrl"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
-import { buildSuggestedFiltersUrl } from "./utils/buildSuggestedFiltersUrl"
 import {
   type ParsedFilterQuery,
   parseFilterQuery,
 } from "./utils/parseFilterQuery"
-import { shouldSubmitToFilters } from "./utils/shouldSubmitToFilters"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
+import { shouldSubmitToFilters } from "./utils/shouldSubmitToFilters"
 
 export interface SearchBarInputProps {
   searchTerm: string
@@ -111,6 +118,15 @@ export const SearchBarInput: FC<
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
   const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
+
+  // Deliberately keeps animating while focused; only typing pauses it
+  const placeholder = useTypewriterPlaceholder({
+    phrases: SEARCH_PLACEHOLDER_SUGGESTIONS,
+    fallback: SEARCH_PLACEHOLDER,
+    isEnabled: isSuggestedFiltersEnabled && !value,
+    prefix: "Try “",
+    suffix: "”",
+  })
 
   // Debounced, not live: the row is prepended, so appearing per keystroke
   // shifts option indices under the cursor. Gated here rather than at render
@@ -518,7 +534,9 @@ export const SearchBarInput: FC<
           forwardRef={ref}
           key={match.location.pathname}
           value={value}
-          placeholder="Search by artist, gallery, style, theme, tag, etc."
+          placeholder={placeholder}
+          // Stable name for screen readers while the placeholder animates
+          aria-label="Search Artsy"
           spellCheck={false}
           options={shouldStartSearching(value) ? formattedOptions : []}
           defaultValue={value}
