@@ -14,6 +14,8 @@ import {
 import { type Address, emptyAddress } from "Components/Address/utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { Formik } from "formik"
+import type { Environment } from "relay-runtime"
+import { createMockEnvironment } from "relay-test-utils"
 import * as Yup from "yup"
 
 describe("AddressFormFields", () => {
@@ -112,7 +114,11 @@ describe("AddressFormFields", () => {
             phoneNumber: "",
           }}
           validationSchema={Yup.object().shape({
-            ...addressFormFieldsValidator({ withPhoneNumber: true }),
+            ...addressFormFieldsValidator({
+              withPhoneNumber: true,
+              relayEnvironment:
+                createMockEnvironment() as unknown as Environment,
+            }),
           })}
         >
           {formikBag => (
