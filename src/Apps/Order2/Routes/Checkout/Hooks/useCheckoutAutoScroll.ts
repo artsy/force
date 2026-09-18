@@ -21,7 +21,8 @@ const stepWithIndex = (
 }
 
 export const useCheckoutAutoScroll = () => {
-  const { isLoading, steps } = useCheckoutContext()
+  const { isLoading, steps, expressCheckoutPaymentMethods } =
+    useCheckoutContext()
   const { scrollToStep } = useScrollToStep()
 
   // Combined steps (FULFILLMENT_DETAILS + DELIVERY_OPTION) are ACTIVE
@@ -41,18 +42,28 @@ export const useCheckoutAutoScroll = () => {
 
   const initialScrollComplete = useRef(false)
 
+  const expressCheckoutAvailable =
+    expressCheckoutPaymentMethods && expressCheckoutPaymentMethods.length > 0
+
   // Scroll to active step when loading completes
   useEffect(() => {
     if (initialScrollComplete.current) {
       return
     }
+
     if (justLoaded) {
-      if (activeStep && activeStepIndex > 0) {
+      if (!expressCheckoutAvailable && activeStep && activeStepIndex > 0) {
         scrollToStep(activeStep.name)
       }
       initialScrollComplete.current = true
     }
-  }, [justLoaded, activeStep, scrollToStep, activeStepIndex])
+  }, [
+    justLoaded,
+    activeStep,
+    scrollToStep,
+    activeStepIndex,
+    expressCheckoutAvailable,
+  ])
 
   // Auto-scroll as user advances through steps
   useEffect(() => {
