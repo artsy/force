@@ -23735,6 +23735,11 @@ type Itinerary {
   authorName: String
   citySlug: String!
   description: String
+
+  """
+  Whether the guide is editorially featured, to be surfaced ahead of its peers.
+  """
+  featured: Boolean!
   heroImage: Image
 
   """
@@ -34797,6 +34802,11 @@ type Query {
     Only itineraries for this city
     """
     citySlug: String
+
+    """
+    Only featured, or only unfeatured, itineraries
+    """
+    featured: Boolean
     first: Int
 
     """
@@ -44671,6 +44681,11 @@ type Viewer {
     Only itineraries for this city
     """
     citySlug: String
+
+    """
+    Only featured, or only unfeatured, itineraries
+    """
+    featured: Boolean
     first: Int
 
     """
@@ -46109,6 +46124,11 @@ input createItineraryInput {
   description: String
 
   """
+  Mark the guide as editorially featured. Needs the content_manager role.
+  """
+  featured: Boolean
+
+  """
   URL of an image already uploaded to S3, from which Gravity builds the itinerary's hero `ArImage`
   """
   imageURL: String
@@ -47013,6 +47033,11 @@ input updateItineraryInput {
   citySlug: String
   clientMutationId: String
   description: String
+
+  """
+  Mark the guide as editorially featured. Needs the content_manager role.
+  """
+  featured: Boolean
 
   """
   Generate a new share token for this itinerary, replacing any existing one
