@@ -92,11 +92,11 @@ export const ArtworkActions: React.FC<
     />
   )
 
-  const InspectImagesButton = (
+  const InspectArtworkButton = (
     <UtilButton
-      name="inspectImages"
-      href={`${getENV("TOOLS_URL")}/artworks/${artwork.slug}/images`}
-      label="Inspect images"
+      name="inspectArtwork"
+      href={`${getENV("TOOLS_URL")}/artworks/${artwork.slug}`}
+      label="Inspect artwork"
       Component={UtilButtonLink}
     />
   )
@@ -134,9 +134,9 @@ export const ArtworkActions: React.FC<
       content: EditButton,
     },
     {
-      name: "inspectImages",
+      name: "inspectArtwork",
       condition: isAdmin,
-      content: InspectImagesButton,
+      content: InspectArtworkButton,
     },
   ]
 

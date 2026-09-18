@@ -77,7 +77,7 @@ describe("ArtworkActions", () => {
       renderWithRelay()
 
       expect(screen.getByText("Edit")).toBeInTheDocument()
-      expect(screen.getByText("Inspect images")).toBeInTheDocument()
+      expect(screen.getByText("Inspect artwork")).toBeInTheDocument()
       expect(screen.queryByText("More")).not.toBeInTheDocument()
     })
 
@@ -93,7 +93,7 @@ describe("ArtworkActions", () => {
       expect(screen.getByText("View in room")).toBeInTheDocument()
       expect(screen.getByText("Download")).toBeInTheDocument()
       expect(screen.queryByText("Edit")).not.toBeInTheDocument()
-      expect(screen.queryByText("Inspect images")).not.toBeInTheDocument()
+      expect(screen.queryByText("Inspect artwork")).not.toBeInTheDocument()
       expect(screen.queryByText("More")).not.toBeInTheDocument()
     })
 
@@ -211,7 +211,7 @@ describe("ArtworkActions", () => {
       // These are hidden in the More menu on xs breakpoint
       expect(screen.queryByText("Download")).not.toBeInTheDocument()
       expect(screen.queryByText("Edit")).not.toBeInTheDocument()
-      expect(screen.queryByText("Inspect images")).not.toBeInTheDocument()
+      expect(screen.queryByText("Inspect artwork")).not.toBeInTheDocument()
     })
 
     it("shows no More icon if there are <= 3 actions", () => {
@@ -226,7 +226,7 @@ describe("ArtworkActions", () => {
       expect(screen.getByText("View in room")).toBeInTheDocument()
       expect(screen.queryByText("Download")).not.toBeInTheDocument()
       expect(screen.queryByText("Edit")).not.toBeInTheDocument()
-      expect(screen.queryByText("Inspect images")).not.toBeInTheDocument()
+      expect(screen.queryByText("Inspect artwork")).not.toBeInTheDocument()
       // Verify no More button - check that all action buttons have text
       // (excluding Close buttons from popovers)
       const actionButtons = screen.getAllByRole("button").filter(button => {
