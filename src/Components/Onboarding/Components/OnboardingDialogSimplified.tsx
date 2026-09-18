@@ -95,6 +95,7 @@ export const OnboardingDialogSimplified: FC<
   }
 
   const handleFinish = () => {
+    persistEmailOptIn()
     markOnboardingInterestsPending(interests)
     onHide()
   }
@@ -166,7 +167,6 @@ export const OnboardingDialogSimplified: FC<
             width="100%"
             disabled={isConsentPending}
             onClick={() => {
-              persistEmailOptIn()
               goToNextStep()
             }}
           >
