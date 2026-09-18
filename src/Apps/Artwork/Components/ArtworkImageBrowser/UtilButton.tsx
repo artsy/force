@@ -27,7 +27,7 @@ interface UtilButtonProps {
     | "download"
     | "edit"
     | "heart"
-    | "inspectImages"
+    | "inspectArtwork"
     | "more"
     | "share"
     | "viewInRoom"
@@ -74,7 +74,7 @@ export const UtilButton = React.forwardRef(
           return EditIcon
         case "heart":
           return HeartStrokeIcon
-        case "inspectImages":
+        case "inspectArtwork":
           return MagicMagnifyingGlassIcon
         case "more":
           return MoreIcon
