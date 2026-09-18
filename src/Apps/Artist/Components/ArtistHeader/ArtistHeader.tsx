@@ -26,6 +26,7 @@ import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
+import { ArtistHeaderRecentAuctionResults } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { ArtistHeaderSocialLink } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSocialLink"
 import {
   ArtistStylesAndTechniques,
@@ -40,6 +41,7 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { extractNodes } from "Utils/extractNodes"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -62,6 +64,11 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   )
   const instagramHandle = isInstagramFeedEnabled ? artist.instagramHandle : null
 
+  const recentAuctionResults = extractNodes(
+    artist.recentAuctionResultsConnection,
+  )
+  const hasRecentAuctionResults = recentAuctionResults.length > 0
+
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
   const biographyText = artist.biographyBlurb?.text
@@ -76,7 +83,10 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasInsights = insights.length > 0
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
   const hasRightDetails =
-    hasVerifiedRepresentatives || hasInsights || hasEditorial
+    hasVerifiedRepresentatives ||
+    hasInsights ||
+    hasEditorial ||
+    hasRecentAuctionResults
   const hasSomething =
     hasImage || hasBio || hasRightDetails || hasStylesAndTechniques
 
@@ -342,23 +352,35 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             </>
           )}
 
-          {hasInsights && (
-            <Box display={["none", "block"]}>
-              {insights
-                .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
-                .map((insight, index) => {
-                  return (
-                    <ArtistCareerHighlightFragmentContainer
-                      key={insight.kind ?? index}
-                      insight={insight}
-                      contextModule={ContextModule.artistHeader}
-                    />
-                  )
-                })}
-            </Box>
+          {hasRecentAuctionResults ? (
+            <ArtistHeaderRecentAuctionResults
+              artistSlug={artist.slug}
+              auctionResults={recentAuctionResults}
+            />
+          ) : (
+            hasInsights && (
+              <Box display={["none", "block"]}>
+                {insights
+                  .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
+                  .map((insight, index) => {
+                    return (
+                      <ArtistCareerHighlightFragmentContainer
+                        key={insight.kind ?? index}
+                        insight={insight}
+                        contextModule={ContextModule.artistHeader}
+                      />
+                    )
+                  })}
+              </Box>
+            )
           )}
 
-          {hasEditorial && <ArtistHeaderEditorial artist={artist} />}
+          {hasEditorial && (
+            <ArtistHeaderEditorial
+              artist={artist}
+              showTopBorder={!hasRecentAuctionResults}
+            />
+          )}
         </Column>
       )}
     </GridColumns>
@@ -369,7 +391,11 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   ArtistHeader,
   {
     artist: graphql`
-      fragment ArtistHeader_artist on Artist {
+      fragment ArtistHeader_artist on Artist
+      @argumentDefinitions(
+        saleStartYear: { type: "Int" }
+        saleEndYear: { type: "Int" }
+      ) {
         internalID
         slug
         name
@@ -390,6 +416,37 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
+        }
+        recentAuctionResultsConnection: auctionResultsConnection(
+          first: 10
+          sort: DATE_DESC
+          saleStartYear: $saleStartYear
+          saleEndYear: $saleEndYear
+          includeUnknownPrices: false
+        ) {
+          edges {
+            node {
+              internalID
+              title
+              dateText
+              saleDate
+              images {
+                thumbnail {
+                  resized(width: 130, height: 130) {
+                    src
+                    srcSet
+                  }
+                }
+              }
+              priceRealized {
+                display
+                centsUSD
+              }
+              performance {
+                mid
+              }
+            }
+          }
         }
         ...ArtistHeaderEditorial_artist
         ...ArtistStylesAndTechniques_artist
