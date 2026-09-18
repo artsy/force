@@ -30,14 +30,16 @@ jest.mock("Utils/onboardingInterestsPending", () => ({
 
 const mockUseCountryCode = useCountryCode as jest.Mock
 const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
+const mockSubmit = jest.fn().mockResolvedValue({})
 const mockPeek = peekOneTapEmailOptInPending as jest.Mock
 const mockMarkInterestsPending = markOnboardingInterestsPending as jest.Mock
 
 describe("OnboardingDialogSimplified", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockSubmit.mockResolvedValue({})
     mockUseUpdateMyUserProfile.mockReturnValue({
-      submitUpdateMyUserProfile: jest.fn().mockResolvedValue({}),
+      submitUpdateMyUserProfile: mockSubmit,
     })
     mockUseCountryCode.mockReturnValue({
       isAutomaticallySubscribed: true,
@@ -97,5 +99,33 @@ describe("OnboardingDialogSimplified", () => {
 
     expect(mockMarkInterestsPending).toHaveBeenCalledWith(["Buying art"])
     expect(mockOnHide).toHaveBeenCalled()
+  })
+
+  it("does not persist the email opt-in when advancing past the welcome step", () => {
+    mockPeek.mockReturnValue(true)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByText("Next"))
+
+    expect(mockSubmit).not.toHaveBeenCalled()
+  })
+
+  it("persists the email opt-in only when the flow is finished", () => {
+    mockPeek.mockReturnValue(true)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByText("Next"))
+    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Next"))
+    fireEvent.click(screen.getByText("Search engine"))
+    fireEvent.click(screen.getByText("Finish"))
+
+    expect(mockSubmit).toHaveBeenCalledWith({ agreedToReceiveEmails: true })
   })
 })
