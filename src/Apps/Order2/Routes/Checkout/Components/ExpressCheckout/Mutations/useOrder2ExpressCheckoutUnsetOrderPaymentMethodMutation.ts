@@ -15,6 +15,8 @@ export const useOrder2ExpressCheckoutUnsetOrderPaymentMethodMutation = () => {
               ... on OrderMutationSuccess {
                 order {
                   ...Order2ExpressCheckoutUI_order
+                  ...Order2CheckoutContext_order
+                  ...Order2CheckoutApp_order
                 }
               }
               ... on OrderMutationError {

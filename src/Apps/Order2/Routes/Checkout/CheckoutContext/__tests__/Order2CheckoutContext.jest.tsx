@@ -162,6 +162,7 @@ describe("Order2CheckoutContext", () => {
         confirmationToken: null,
         savePaymentMethod: true,
         checkoutMode: "standard",
+        fulfillmentRestartToken: 0,
         orderData: expect.objectContaining({
           internalID: "order-id",
         }),
@@ -414,6 +415,27 @@ describe("Order2CheckoutContext", () => {
           getState().steps.find(step => step.name === CheckoutStepName.PAYMENT)
             ?.state,
         ).toBe(CheckoutStepState.UPCOMING)
+      })
+    })
+
+    describe("requestFulfillmentRestart", () => {
+      it("increments the restart token without touching the steps", async () => {
+        const { getState, actions } = await setup()
+
+        const stepsBefore = getState().steps
+
+        act(() => {
+          actions.requestFulfillmentRestart()
+        })
+
+        expect(getState().fulfillmentRestartToken).toBe(1)
+        expect(getState().steps).toEqual(stepsBefore)
+
+        act(() => {
+          actions.requestFulfillmentRestart()
+        })
+
+        expect(getState().fulfillmentRestartToken).toBe(2)
       })
     })
 

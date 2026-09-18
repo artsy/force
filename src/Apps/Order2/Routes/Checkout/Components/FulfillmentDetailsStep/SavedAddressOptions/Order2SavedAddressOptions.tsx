@@ -80,6 +80,7 @@ export const SavedAddressOptions = ({
     isFulfillmentDetailsSaving,
     checkoutTracking,
     steps,
+    fulfillmentRestartToken,
   } = useCheckoutContext()
 
   const { isMissingPostalCode: hasMissingPostalCodeError } =
@@ -132,13 +133,20 @@ export const SavedAddressOptions = ({
   }, [userAddressMode, previousUserAddressMode, scrollToStep])
 
   // Auto-submit the first valid address when no delivery address is confirmed.
-  // This covers two cases:
+  // This covers three cases:
   // 1. Initial load: no fulfillment details saved yet.
   // 2. Switching back from the Pickup tab: Palette's Tabs unmounts inactive tab
   //    content, so this component is mounted fresh when the user clicks Delivery.
   //    The parent passes hasDeliveryAddress=false when the saved fulfillment type
   //    is PICKUP, so the effect fires on mount as if no address were set.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: when step first becomes active
+  // 3. Canceling express checkout: the order is rewound to no fulfillment
+  //    option, which collapses the shipping method step. This component stays
+  //    mounted and the step stays ACTIVE throughout, so the express flow bumps
+  //    fulfillmentRestartToken to re-run the auto-submit and recalculate
+  //    shipping. The token is deliberately the trigger rather than
+  //    hasDeliveryAddress: that flips false mid-submit while the form unsets
+  //    the old fulfillment option, which would race the in-flight submission.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: when step first becomes active, or a restart is requested
   useEffect(() => {
     if (!isStepActive || hasDeliveryAddress) return
     const firstValid =
@@ -151,7 +159,7 @@ export const SavedAddressOptions = ({
         onSelectAddress(firstValid)
       }
     }
-  }, [isStepActive])
+  }, [isStepActive, fulfillmentRestartToken])
 
   const loneInvalidAddress =
     savedAddresses.length === 1 && initialSelectedAddress?.isValid === false
