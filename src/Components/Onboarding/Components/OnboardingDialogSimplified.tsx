@@ -29,8 +29,6 @@ interface OnboardingDialogSimplifiedProps {
 export const OnboardingDialogSimplified: FC<
   React.PropsWithChildren<OnboardingDialogSimplifiedProps>
 > = ({ onClose, onHide }) => {
-  // One Tap has no consent UI at sign-up, so we surface an extra welcome
-  // step here, mirroring the same check OnboardingWelcome used.
   const [isOneTapSignup] = useState(() => peekOneTapEmailOptInPending())
 
   const steps = isOneTapSignup
@@ -43,7 +41,6 @@ export const OnboardingDialogSimplified: FC<
   const [interests, setInterests] = useState<string[]>([])
   const [source, setSource] = useState<string | null>(null)
 
-  // Consent logic relocated from OnboardingWelcome.tsx: One Tap sign-ups skip the normal signup form's consent step, so we capture it here
   const { isAutomaticallySubscribed, loading: isCountryLoading } =
     useCountryCode({ skip: !isOneTapSignup })
 
@@ -65,7 +62,6 @@ export const OnboardingDialogSimplified: FC<
     return () => clearTimeout(timeout)
   }, [isOneTapSignup])
 
-  // Block the CTA until the region default is known, or else a fast click persists the wrong default
   const isConsentPending = isOneTapSignup && isCountryLoading && !hasGeoTimedOut
   const showEmailOptIn = isOneTapSignup && (!isCountryLoading || hasGeoTimedOut)
 
