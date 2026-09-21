@@ -8,11 +8,6 @@ import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending
 const mockOnClose = jest.fn()
 const mockOnHide = jest.fn()
 
-jest.mock("Components/Onboarding/Components/OnboardingModal", () => ({
-  OnboardingModal: ({ children }: { children: React.ReactNode }) => (
-    <div>{children}</div>
-  ),
-}))
 jest.mock("Components/AuthDialog/Hooks/useCountryCode", () => ({
   useCountryCode: jest.fn(),
 }))
@@ -66,7 +61,7 @@ describe("OnboardingDialogSimplified", () => {
       <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
     )
 
-    expect(screen.getByText("Welcome to Artsy")).toBeInTheDocument()
+    expect(screen.getByText("Welcome to Artsy!")).toBeInTheDocument()
   })
 
   it("advances welcome -> interests -> source for a One Tap sign-up", () => {
@@ -85,7 +80,7 @@ describe("OnboardingDialogSimplified", () => {
     ).toBeInTheDocument()
   })
 
-  it("calls markOnboardingInterestsPending and onHide when Finish is clicked", () => {
+  it("calls markOnboardingInterestsPending and onHide when Continue is clicked", () => {
     mockPeek.mockReturnValue(false)
 
     render(
@@ -94,8 +89,8 @@ describe("OnboardingDialogSimplified", () => {
 
     fireEvent.click(screen.getByText("Buying art"))
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Search engine"))
-    fireEvent.click(screen.getByText("Finish"))
+    fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
+    fireEvent.click(screen.getByText("Continue"))
 
     expect(mockMarkInterestsPending).toHaveBeenCalledWith(["Buying art"])
     expect(mockOnHide).toHaveBeenCalled()
@@ -123,8 +118,8 @@ describe("OnboardingDialogSimplified", () => {
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Buying art"))
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Search engine"))
-    fireEvent.click(screen.getByText("Finish"))
+    fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
+    fireEvent.click(screen.getByText("Continue"))
 
     expect(mockSubmit).toHaveBeenCalledWith({ agreedToReceiveEmails: true })
   })

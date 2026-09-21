@@ -1,25 +1,18 @@
-import { Box, Button, Checkbox, Spacer, Text } from "@artsy/palette"
-import { OnboardingModal } from "Components/Onboarding/Components/OnboardingModal"
+import { ModalBase } from "@artsy/palette"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { OnboardingInterestsStep } from "Components/Onboarding/Components/OnboardingInterestsStep"
+import { OnboardingSimplifiedWelcomeStep } from "Components/Onboarding/Components/OnboardingSimplifiedWelcomeStep"
+import { OnboardingSourceStep } from "Components/Onboarding/Components/OnboardingSourceStep"
+import { OnboardingStepShell } from "Components/Onboarding/Components/OnboardingStepShell"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
 import {
   clearOneTapEmailOptInPending,
   peekOneTapEmailOptInPending,
 } from "Utils/oneTapEmailOptIn"
-import {
-  ONBOARDING_INTERESTS,
-  markOnboardingInterestsPending,
-} from "Utils/onboardingInterestsPending"
 import { type FC, useEffect, useState } from "react"
 
 const GEO_LOOKUP_TIMEOUT_MS = 5000
-
-const SOURCES = [
-  "Search engine",
-  "Social media",
-  "A friend or family member",
-  "Other",
-]
 
 interface OnboardingDialogSimplifiedProps {
   onClose(): void
@@ -37,6 +30,7 @@ export const OnboardingDialogSimplified: FC<
 
   const [stepIndex, setStepIndex] = useState(0)
   const currentStep = steps[stepIndex]
+  const isLastStep = stepIndex === steps.length - 1
 
   const [interests, setInterests] = useState<string[]>([])
   const [source, setSource] = useState<string | null>(null)
@@ -94,6 +88,10 @@ export const OnboardingDialogSimplified: FC<
     setStepIndex(current => current + 1)
   }
 
+  const goBack = () => {
+    setStepIndex(current => Math.max(0, current - 1))
+  }
+
   const handleFinish = () => {
     persistEmailOptIn()
     markOnboardingInterestsPending(interests)
@@ -105,96 +103,85 @@ export const OnboardingDialogSimplified: FC<
     onClose()
   }
 
+  const handleCta = () => {
+    if (isLastStep) {
+      handleFinish()
+      return
+    }
+
+    goToNextStep()
+  }
+
+  const getCtaLabel = () => {
+    if (currentStep === "source") {
+      return "Continue"
+    }
+
+    return "Next"
+  }
+
+  const getIsCtaDisabled = () => {
+    if (currentStep === "welcome") {
+      return isConsentPending
+    }
+
+    if (currentStep === "interests") {
+      return interests.length === 0
+    }
+
+    return !source
+  }
+
+  const renderCurrentStep = () => {
+    if (currentStep === "welcome") {
+      return (
+        <OnboardingSimplifiedWelcomeStep
+          agreedToReceiveEmails={agreedToReceiveEmails}
+          shouldShowEmailOptIn={showEmailOptIn}
+          onToggleEmailOptIn={setUserChoice}
+        />
+      )
+    }
+
+    if (currentStep === "interests") {
+      return (
+        <OnboardingInterestsStep
+          selectedInterests={interests}
+          onToggleInterest={toggleInterest}
+        />
+      )
+    }
+
+    return (
+      <OnboardingSourceStep
+        selectedSource={source}
+        onSelectSource={setSource}
+      />
+    )
+  }
+
   return (
-    <OnboardingModal onClose={handleClose}>
-      <Box p={4} width="100%">
-        <Text variant="lg-display" mb={4}>
-          {currentStep === "welcome" && "Welcome to Artsy"}
-          {currentStep === "interests" && "What are you most interested in?"}
-          {currentStep === "source" && "How did you hear about Artsy?"}
-        </Text>
-
-        {currentStep === "welcome" && (
-          <Box>
-            {showEmailOptIn && (
-              <Checkbox
-                selected={agreedToReceiveEmails}
-                onSelect={setUserChoice}
-              >
-                <Text variant="xs">
-                  Subscribe to email to hear about our products, services,
-                  editorials, and other promotional content. Unsubscribe at any
-                  time.
-                </Text>
-              </Checkbox>
-            )}
-          </Box>
-        )}
-
-        {currentStep === "interests" && (
-          <Box>
-            {ONBOARDING_INTERESTS.map(interest => {
-              return (
-                <Box key={interest} mb={2}>
-                  <Checkbox
-                    selected={interests.includes(interest)}
-                    onSelect={() => toggleInterest(interest)}
-                  >
-                    {interest}
-                  </Checkbox>
-                </Box>
-              )
-            })}
-          </Box>
-        )}
-
-        {currentStep === "source" && (
-          <Box>
-            {SOURCES.map(option => {
-              return (
-                <Box key={option} mb={2}>
-                  <Checkbox
-                    selected={source === option}
-                    onSelect={() => setSource(option)}
-                  >
-                    {option}
-                  </Checkbox>
-                </Box>
-              )
-            })}
-          </Box>
-        )}
-
-        <Spacer y={4} />
-
-        {currentStep === "welcome" && (
-          <Button
-            width="100%"
-            disabled={isConsentPending}
-            onClick={() => {
-              goToNextStep()
-            }}
-          >
-            Next
-          </Button>
-        )}
-
-        {currentStep === "interests" && (
-          <Button
-            width="100%"
-            disabled={interests.length === 0}
-            onClick={goToNextStep}
-          >
-            Next
-          </Button>
-        )}
-
-        {currentStep === "source" && (
-          <Button width="100%" disabled={!source} onClick={handleFinish}>
-            Finish
-          </Button>
-        )}
-      </Box>
-    </OnboardingModal>
+    <ModalBase
+      onClose={handleClose}
+      style={{ backgroundColor: "rgba(229, 229, 229, 0.5)" }}
+      dialogProps={{
+        bg: "mono0",
+        width: ["100%", 440],
+        height: ["100%", 600],
+        maxHeight: [null, "100%"],
+      }}
+    >
+      <OnboardingStepShell
+        activeIndex={stepIndex}
+        amount={steps.length}
+        ctaLabel={getCtaLabel()}
+        isCtaDisabled={getIsCtaDisabled()}
+        onClose={handleClose}
+        onCta={handleCta}
+        onBack={stepIndex === 0 ? undefined : goBack}
+      >
+        {renderCurrentStep()}
+      </OnboardingStepShell>
+    </ModalBase>
   )
 }
