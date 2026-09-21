@@ -9,7 +9,7 @@ const { GlobalStyles } = injectGlobalStyles()
 
 const relayEnvironment = createRelaySSREnvironment({
   metaphysicsEndpoint: "https://metaphysics-staging.artsy.net/v2",
-  cache: JSON.parse(window.__RELAY_HYDRATION_DATA__ || "{}"),
+  cache: window.__RELAY_HYDRATION_DATA__ ?? [],
 })
 
 export const decorators = [
@@ -20,7 +20,7 @@ export const decorators = [
       routeConfig: makeRouteConfig(
         <>
           <Route path="*" Component={Tracked} />
-        </>
+        </>,
       ),
     })
 
