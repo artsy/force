@@ -9,11 +9,17 @@ import {
 } from "@artsy/palette"
 import { ArtistSocialRailEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistSocialRailEmpty"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ErrorWithMetadata } from "Utils/errors"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
+import createLogger from "Utils/logger"
 import type { ArtistSocialRailQuery } from "__generated__/ArtistSocialRailQuery.graphql"
 import type { ArtistSocialRail_artist$data } from "__generated__/ArtistSocialRail_artist.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+
+const logger = createLogger(
+  "Apps/Artist/Routes/Overview/Components/ArtistSocialRail",
+)
 
 const TILE_WIDTH = 300
 const TILE_HEIGHT = 375
@@ -81,6 +87,22 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
+  /**
+   * Tiles are cropped from expiring signed source urls, so a broken image is
+   * our only signal that a source is no longer fetchable. The reported `src`
+   * keeps the cause recoverable.
+   */
+  const handleError = () => {
+    setIsLoaded(true)
+
+    logger.error(
+      new ErrorWithMetadata("[ArtistSocialRail] Gemini image failed to load", {
+        instagramPostId: tile.internalID,
+        src: tile.src,
+      }),
+    )
+  }
+
   return (
     <a
       href={tile.permalink ?? undefined}
@@ -106,7 +128,7 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
           height={TILE_HEIGHT}
           lazyLoad
           onLoad={() => setIsLoaded(true)}
-          onError={() => setIsLoaded(true)}
+          onError={handleError}
           style={{ display: "block" }}
         />
       </Box>
