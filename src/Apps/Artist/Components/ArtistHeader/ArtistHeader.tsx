@@ -20,7 +20,6 @@ import {
   Stack,
   Text,
 } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { ArtistHeaderEditorial } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderEditorial"
 import {
   ArtistHeaderImageFragmentContainer,
@@ -57,10 +56,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
-  const isInstagramFeedEnabled = useFlag(
-    "hack16_connect-instagram-feed-artist-pages",
-  )
-  const instagramHandle = isInstagramFeedEnabled ? artist.instagramHandle : null
+  const instagramHandle = artist.instagramHandle ?? null
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)

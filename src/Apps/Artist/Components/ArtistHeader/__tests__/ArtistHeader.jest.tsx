@@ -1,5 +1,4 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { useFlag } from "@unleash/proxy-client-react"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
@@ -28,7 +27,6 @@ jest.mock(
   }),
 )
 
-const mockUseFlag = useFlag as jest.Mock
 const mockUseTracking = useTracking as jest.Mock
 const trackEvent = jest.fn()
 
@@ -45,7 +43,6 @@ beforeAll(() => {
 
 beforeEach(() => {
   trackEvent.mockClear()
-  mockUseFlag.mockReturnValue(false)
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -265,12 +262,6 @@ describe("ArtistHeaderFragmentContainer", () => {
   })
 
   describe("Social link", () => {
-    beforeEach(() => {
-      mockUseFlag.mockImplementation(flag => {
-        return flag === "hack16_connect-instagram-feed-artist-pages"
-      })
-    })
-
     it("links to the artist’s Instagram profile in a new tab", () => {
       renderWithRelay({
         Artist: () => ({
@@ -316,19 +307,6 @@ describe("ArtistHeaderFragmentContainer", () => {
         Artist: () => ({
           name: "Pablo Picasso",
           instagramHandle: null,
-        }),
-      })
-
-      expect(screen.queryByLabelText(/on Instagram$/)).not.toBeInTheDocument()
-    })
-
-    it("does not render the link when the feature flag is off", () => {
-      mockUseFlag.mockReturnValue(false)
-
-      renderWithRelay({
-        Artist: () => ({
-          name: "Pablo Picasso",
-          instagramHandle: "pablopicasso",
         }),
       })
 
