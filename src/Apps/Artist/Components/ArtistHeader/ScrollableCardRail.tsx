@@ -8,6 +8,7 @@ import {
   Stack,
   Swiper,
   SwiperCell,
+  THEME,
 } from "@artsy/palette"
 import {
   type FC,
@@ -18,6 +19,7 @@ import {
   useState,
 } from "react"
 import styled from "styled-components"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 export interface ScrollableCardRailProps {
   children: JSX.Element[]
@@ -35,6 +37,13 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
   const [atEnd, setAtEnd] = useState(false)
   const [offset, setOffset] = useState(0)
   const [mounted, setMounted] = useState(false)
+
+  // Full-bleed's 50%/-50vw math assumes the rail is horizontally centered
+  // in the viewport, true only once GridColumns collapses to one column on
+  // mobile. At wider breakpoints the rail sits in an off-center sidebar
+  // column, so the same treatment there pushes its contents off-screen.
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const fullBleedEnabled = mounted && !!isMobile
 
   useEffect(() => {
     const element = swiperWrapperRef.current
@@ -95,8 +104,11 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
           />
         </Nav>
 
-        <FullBleed enabled={mounted}>
-          <SwiperWrapper ref={swiperWrapperRef} $edgeOffset={offset}>
+        <FullBleed enabled={fullBleedEnabled}>
+          <SwiperWrapper
+            ref={swiperWrapperRef}
+            $edgeOffset={fullBleedEnabled ? offset : 0}
+          >
             <SmoothSwiper Cell={FlatGapSwiperCell}>{children}</SmoothSwiper>
           </SwiperWrapper>
         </FullBleed>
