@@ -1,5 +1,7 @@
-import { Flex, Pill, Text } from "@artsy/palette"
+import { Flex, Input, Pill, Text } from "@artsy/palette"
 import type { FC } from "react"
+
+export const OTHER_SOURCE = "Other"
 
 export const ONBOARDING_SOURCES = [
   "Search engine (Google, etc.)",
@@ -7,17 +9,19 @@ export const ONBOARDING_SOURCES = [
   "Art fair or gallery",
   "Friend or family",
   "AI assistant (ChatGPT, etc.)",
-  "Other",
+  OTHER_SOURCE,
 ] as const
 
 interface OnboardingSourceStepProps {
   selectedSource: string | null
+  otherText: string
   onSelectSource(source: string): void
+  onChangeOtherText(text: string): void
 }
 
 export const OnboardingSourceStep: FC<
   React.PropsWithChildren<OnboardingSourceStepProps>
-> = ({ selectedSource, onSelectSource }) => {
+> = ({ selectedSource, otherText, onSelectSource, onChangeOtherText }) => {
   return (
     <Flex flexDirection="column" pt={2}>
       <Text variant="lg-display">How did you hear about Artsy?</Text>
@@ -41,6 +45,22 @@ export const OnboardingSourceStep: FC<
           )
         })}
       </Flex>
+
+      {/* Sits outside the pill stack because that stack is `flex-start`, which
+       * would collapse the input to its content width. */}
+      {selectedSource === OTHER_SOURCE && (
+        <Input
+          // Clicking the pill is what reveals this, so the user is already
+          // headed here.
+          autoFocus
+          placeholder="Tell us more"
+          value={otherText}
+          mt={2}
+          onChange={event => {
+            onChangeOtherText(event.currentTarget.value)
+          }}
+        />
+      )}
     </Flex>
   )
 }

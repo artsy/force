@@ -4,10 +4,6 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import { Box, Button, Clickable, Flex, ProgressBar } from "@artsy/palette"
 import type { FC } from "react"
 
-// The design fills the in-progress segment by a small fixed amount rather than
-// leaving it empty, so the current step reads as started but incomplete.
-const ACTIVE_SEGMENT_FILL_PERCENT = 11.72
-
 interface OnboardingStepShellProps {
   activeIndex: number
   amount: number
@@ -15,7 +11,6 @@ interface OnboardingStepShellProps {
   isCtaDisabled: boolean
   onClose(): void
   onCta(): void
-  /** Omitted on the first step, which renders no back button */
   onBack?(): void
 }
 
@@ -32,10 +27,8 @@ export const OnboardingStepShell: FC<
   children,
 }) => {
   return (
-    <Flex flexDirection="column" width="100%" height="100%" bg="mono0">
+    <Flex flexDirection="column" width="100%" bg="mono0">
       <Box flexShrink={0} pt={2} px={2}>
-        {/* With no back button this leaves two children, which `space-between`
-         * renders as logo-left / close-right, matching the first step. */}
         <Flex alignItems="center" justifyContent="space-between">
           {onBack && (
             <Clickable onClick={onBack} aria-label="Go back">
@@ -55,11 +48,9 @@ export const OnboardingStepShell: FC<
             return (
               <ProgressBar
                 key={index}
-                percentComplete={getSegmentFillPercent({ index, activeIndex })}
+                percentComplete={index <= activeIndex ? 100 : 0}
                 highlight="blue100"
                 transition="transform 250ms"
-                // `ProgressBar` spreads these after its own defaults, so they
-                // override its 2px height and hardcoded `mono30` track.
                 bg="mono10"
                 height="3px"
                 borderRadius="50px"
@@ -91,22 +82,4 @@ export const OnboardingStepShell: FC<
       </Box>
     </Flex>
   )
-}
-
-const getSegmentFillPercent = ({
-  index,
-  activeIndex,
-}: {
-  index: number
-  activeIndex: number
-}) => {
-  if (index < activeIndex) {
-    return 100
-  }
-
-  if (index === activeIndex) {
-    return ACTIVE_SEGMENT_FILL_PERCENT
-  }
-
-  return 0
 }

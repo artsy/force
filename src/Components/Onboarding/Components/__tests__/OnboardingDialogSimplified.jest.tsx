@@ -96,6 +96,76 @@ describe("OnboardingDialogSimplified", () => {
     expect(mockOnHide).toHaveBeenCalled()
   })
 
+  describe("the “Other” source option", () => {
+    const goToSourceStep = () => {
+      mockPeek.mockReturnValue(false)
+
+      render(
+        <OnboardingDialogSimplified
+          onClose={mockOnClose}
+          onHide={mockOnHide}
+        />,
+      )
+
+      fireEvent.click(screen.getByText("Buying art"))
+      fireEvent.click(screen.getByText("Next"))
+    }
+
+    it("does not render the text input until Other is selected", () => {
+      goToSourceStep()
+
+      expect(screen.queryByPlaceholderText("Tell us more")).toBeNull()
+
+      fireEvent.click(screen.getByText("Other"))
+
+      expect(screen.getByPlaceholderText("Tell us more")).toBeInTheDocument()
+    })
+
+    it("keeps Continue disabled while the text input is empty", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+
+      expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled()
+    })
+
+    it("enables Continue once text is entered", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+      fireEvent.change(screen.getByPlaceholderText("Tell us more"), {
+        target: { value: "The grapevine" },
+      })
+
+      expect(screen.getByRole("button", { name: "Continue" })).toBeEnabled()
+    })
+
+    it("ignores whitespace-only text", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+      fireEvent.change(screen.getByPlaceholderText("Tell us more"), {
+        target: { value: "   " },
+      })
+
+      expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled()
+    })
+
+    it("clears the text when another source is selected", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+      fireEvent.change(screen.getByPlaceholderText("Tell us more"), {
+        target: { value: "The grapevine" },
+      })
+
+      fireEvent.click(screen.getByText("Friend or family"))
+      fireEvent.click(screen.getByText("Other"))
+
+      expect(screen.getByPlaceholderText("Tell us more")).toHaveValue("")
+    })
+  })
+
   it("does not persist the email opt-in when advancing past the welcome step", () => {
     mockPeek.mockReturnValue(true)
 
