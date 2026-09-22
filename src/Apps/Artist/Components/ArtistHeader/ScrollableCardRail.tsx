@@ -1,6 +1,7 @@
 import {
   Box,
   type BoxProps,
+  FullBleed,
   ShelfNext,
   ShelfPrevious,
   ShelfScrollBar,
@@ -27,10 +28,13 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
   children,
   itemsLabel,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const swiperWrapperRef = useRef<HTMLDivElement>(null)
   const [viewport, setViewport] = useState<HTMLDivElement | null>(null)
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
+  const [offset, setOffset] = useState(0)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     const element = swiperWrapperRef.current
@@ -48,14 +52,22 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
       )
     }
 
+    const updateOffset = () => {
+      setOffset(containerRef.current?.getBoundingClientRect().x ?? 0)
+      setMounted(true)
+    }
+
     updateEdges()
+    updateOffset()
 
     element.addEventListener("scroll", updateEdges, { passive: true })
     window.addEventListener("resize", updateEdges)
+    window.addEventListener("resize", updateOffset)
 
     return () => {
       element.removeEventListener("scroll", updateEdges)
       window.removeEventListener("resize", updateEdges)
+      window.removeEventListener("resize", updateOffset)
     }
   }, [])
 
@@ -68,7 +80,7 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
 
   return (
     <Stack gap={1}>
-      <RailOverlay>
+      <RailOverlay ref={containerRef}>
         <Nav as="nav">
           <Previous
             aria-label={`See previous ${itemsLabel}`}
@@ -83,9 +95,11 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
           />
         </Nav>
 
-        <Box ref={swiperWrapperRef}>
-          <SmoothSwiper Cell={FlatGapSwiperCell}>{children}</SmoothSwiper>
-        </Box>
+        <FullBleed enabled={mounted}>
+          <SwiperWrapper ref={swiperWrapperRef} $edgeOffset={offset}>
+            <SmoothSwiper Cell={FlatGapSwiperCell}>{children}</SmoothSwiper>
+          </SwiperWrapper>
+        </FullBleed>
       </RailOverlay>
 
       <ShelfScrollBar viewport={viewport} />
@@ -95,6 +109,16 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
 
 const SmoothSwiper = styled(Swiper)`
   scroll-behavior: smooth;
+`
+
+const SwiperWrapper = styled(Box)<{ $edgeOffset: number }>`
+  li:first-child {
+    padding-left: ${props => props.$edgeOffset}px;
+  }
+
+  li:last-child {
+    padding-right: ${props => props.$edgeOffset}px;
+  }
 `
 
 const FlatGapSwiperCell: ForwardRefExoticComponent<BoxProps> = forwardRef(
