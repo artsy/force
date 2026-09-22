@@ -192,16 +192,4 @@ describe("ArtistHeaderEditorial", () => {
       borderRadius: "5px",
     })
   })
-
-  it("right-aligns each card's text, matching the design", () => {
-    renderWithRelay({
-      Artist: () => ({
-        name: "Pablo Picasso",
-        articlesConnection: { totalCount: 1, edges: [article(1)] },
-      }),
-    })
-
-    const title = screen.getByText("Article 1")
-    expect(title.parentElement).toHaveStyle({ textAlign: "right" })
-  })
 })

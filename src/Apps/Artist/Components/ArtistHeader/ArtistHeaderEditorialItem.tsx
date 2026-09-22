@@ -75,17 +75,14 @@ export const ArtistHeaderEditorialItem: React.FC<
         )}
       </Box>
 
-      <Box textAlign="right" flex={1} minWidth={0}>
-        <Text
-          variant={["sm-display", "sm-display", "sm-display", "md"]}
-          lineClamp={2}
-        >
+      <Box flex={1} minWidth={0}>
+        <Text variant="sm-display" lineClamp={2}>
           {article.title}
         </Text>
 
-        <Text variant={["xs", "xs", "xs", "sm"]}>By {article.byline}</Text>
+        <Text variant="xs">By {article.byline}</Text>
 
-        <Text variant={["xs", "xs", "xs", "sm"]} color="mono60">
+        <Text variant="xs" color="mono60">
           {article.publishedAt}
         </Text>
       </Box>
