@@ -38,10 +38,6 @@ export const ScrollableCardRail: FC<ScrollableCardRailProps> = ({
   const [offset, setOffset] = useState(0)
   const [mounted, setMounted] = useState(false)
 
-  // Full-bleed's 50%/-50vw math assumes the rail is horizontally centered
-  // in the viewport, true only once GridColumns collapses to one column on
-  // mobile. At wider breakpoints the rail sits in an off-center sidebar
-  // column, so the same treatment there pushes its contents off-screen.
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
   const fullBleedEnabled = mounted && !!isMobile
 
