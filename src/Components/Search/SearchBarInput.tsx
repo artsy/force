@@ -103,6 +103,7 @@ export const SearchBarInput: FC<
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   const [isFocused, setIsFocused] = useState(false)
+  const [hasFocused, setHasFocused] = useState(false)
   // Request tracking / cancellation
   const [requestId, setRequestId] = useState(0)
   const lastRequestIdRef = useRef<number | null>(null)
@@ -119,11 +120,11 @@ export const SearchBarInput: FC<
 
   const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
 
-  // Deliberately keeps animating while focused; only typing pauses it
+  // Stops for good on first focus; WCAG 2.2.2 wants a way to stop motion over 5s
   const placeholder = useTypewriterPlaceholder({
     phrases: SEARCH_PLACEHOLDER_SUGGESTIONS,
     fallback: SEARCH_PLACEHOLDER,
-    isEnabled: isSuggestedFiltersEnabled && !value,
+    isEnabled: isSuggestedFiltersEnabled && !value && !hasFocused,
     prefix: "Try “",
     suffix: "”",
   })
@@ -441,6 +442,7 @@ export const SearchBarInput: FC<
     if (Date.now() < suppressFocusUntilRef.current) return
 
     setIsFocused(true)
+    setHasFocused(true)
     tracking.trackEvent({
       action_type: ActionType.focusedOnSearchInput,
       context_module: selectedPill.analyticsContextModule,

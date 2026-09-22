@@ -50,8 +50,13 @@ jest.mock("@artsy/palette", () => ({
 jest.mock("System/Hooks/useRouter", () => ({ useRouter: jest.fn() }))
 
 // Its real timers would fire mid-test and trigger act warnings
+const mockUseTypewriterPlaceholder = jest.fn(
+  ({ fallback }: { fallback: string; isEnabled: boolean }) => fallback,
+)
+
 jest.mock("../hooks/useTypewriterPlaceholder", () => ({
-  useTypewriterPlaceholder: ({ fallback }: { fallback: string }) => fallback,
+  useTypewriterPlaceholder: (props: { fallback: string; isEnabled: boolean }) =>
+    mockUseTypewriterPlaceholder(props),
 }))
 
 jest.mock("../utils/parseFilterQuery", () => ({
@@ -111,6 +116,15 @@ const TRENDING_DROPDOWN = {
   oneDay: trendingWindow("Today"),
   sevenDays: trendingWindow("Past 7 Days"),
   thirtyDays: trendingWindow("Past 30 Days"),
+}
+
+// beforeEach only turns on the trending panel
+const enableSuggestedFilters = () => {
+  ;(useFlag as jest.Mock).mockImplementation((flag: string) => {
+    return (
+      flag === "onyx_trending-searches" || flag === "onyx_suggested-filters"
+    )
+  })
 }
 
 describe("SearchBarInput", () => {
@@ -505,17 +519,58 @@ describe("SearchBarInput", () => {
     })
   })
 
-  describe("suggested filters row", () => {
-    // Both flags on: the row ships behind its own flag, and the surrounding
-    // suite runs with the trending panel enabled
-    const enableSuggestedFilters = () => {
-      ;(useFlag as jest.Mock).mockImplementation((flag: string) => {
-        return (
-          flag === "onyx_trending-searches" || flag === "onyx_suggested-filters"
-        )
-      })
+  describe("typewriter placeholder", () => {
+    const lastHookProps = () => {
+      const { calls } = mockUseTypewriterPlaceholder.mock
+      return calls[calls.length - 1][0]
     }
 
+    it("animates while the input is empty and has never been focused", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="" />)
+
+      expect(lastHookProps()).toEqual(
+        expect.objectContaining({ isEnabled: true }),
+      )
+    })
+
+    it("does not animate when the feature flag is off", () => {
+      render(<SearchBarInput searchTerm="" />)
+
+      expect(lastHookProps()).toEqual(
+        expect.objectContaining({ isEnabled: false }),
+      )
+    })
+
+    it("does not animate over a typed query", () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="andy" />)
+
+      expect(lastHookProps()).toEqual(
+        expect.objectContaining({ isEnabled: false }),
+      )
+    })
+
+    it("stops for good on first focus", async () => {
+      enableSuggestedFilters()
+      render(<SearchBarInput searchTerm="" />)
+
+      await userEvent.click(screen.getByRole("textbox"))
+
+      expect(lastHookProps()).toEqual(
+        expect.objectContaining({ isEnabled: false }),
+      )
+
+      // Blurring does not bring it back
+      await userEvent.tab()
+
+      expect(lastHookProps()).toEqual(
+        expect.objectContaining({ isEnabled: false }),
+      )
+    })
+  })
+
+  describe("suggested filters row", () => {
     const row = () => screen.queryByTestId("suggestedFiltersRow")
 
     it("does not render when the feature flag is off", () => {

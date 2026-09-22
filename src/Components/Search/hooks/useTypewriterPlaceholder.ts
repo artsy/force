@@ -15,7 +15,7 @@ interface UseTypewriterPlaceholderProps {
   suffix?: string
 }
 
-/** Types, holds, and erases each phrase in turn, looping forever */
+/** Types, holds, and erases each phrase once, then settles on the fallback */
 export const useTypewriterPlaceholder = ({
   phrases,
   fallback,
@@ -60,6 +60,13 @@ export const useTypewriterPlaceholder = ({
 
     const erase = (length: number) => {
       const phrase = phrases[phraseIndex]
+      const isLastPhrase = phraseIndex === phrases.length - 1
+
+      if (length === 0 && isLastPhrase) {
+        setPlaceholder(fallback)
+        return
+      }
+
       display(phrase.slice(0, length))
 
       if (length > 0) {
@@ -67,7 +74,7 @@ export const useTypewriterPlaceholder = ({
         return
       }
 
-      phraseIndex = (phraseIndex + 1) % phrases.length
+      phraseIndex += 1
       timeoutId = setTimeout(() => type(1), TYPEWRITER_GAP_DELAY)
     }
 

@@ -79,12 +79,11 @@ describe("useTypewriterPlaceholder", () => {
     expect(result.current).toEqual("")
   })
 
-  it("cycles to the next phrase and wraps around", () => {
+  it("plays each phrase once, then stops on the fallback", () => {
     const { result } = setup()
 
-    // Enters and exits with the first character typed, so cycles chain
-    // without timing drift
-    const cycle = (phrase: string) => {
+    // Enters with the first character already on screen
+    const typeHoldErase = (phrase: string) => {
       advance(TYPEWRITER_TYPE_DELAY * (phrase.length - 1))
       expect(result.current).toEqual(phrase)
 
@@ -92,16 +91,19 @@ describe("useTypewriterPlaceholder", () => {
       expect(result.current).toEqual(phrase.slice(0, -1))
 
       advance(TYPEWRITER_ERASE_DELAY * (phrase.length - 1))
-      expect(result.current).toEqual("")
-
-      advance(TYPEWRITER_GAP_DELAY)
     }
 
-    cycle("Cats")
+    typeHoldErase("Cats")
+    expect(result.current).toEqual("")
+
+    advance(TYPEWRITER_GAP_DELAY)
     expect(result.current).toEqual("D")
 
-    cycle("Dog")
-    expect(result.current).toEqual("C")
+    typeHoldErase("Dog")
+    expect(result.current).toEqual(FALLBACK)
+
+    advance(10000)
+    expect(result.current).toEqual(FALLBACK)
   })
 
   it("resets to the fallback when disabled mid-animation", () => {
