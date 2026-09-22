@@ -14,13 +14,14 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { getDisplaySaleDate } from "Apps/Artist/Utils/getDisplaySaleDate"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { DateTime, type LocaleOptions } from "luxon"
+import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 
@@ -458,12 +459,4 @@ const getProps = (props: Props) => {
     salePriceUSD,
     estimatedPrice,
   }
-}
-
-const getDisplaySaleDate = (saleDate: string | null | undefined) => {
-  if (!saleDate) return null
-
-  return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(
-    DateTime.DATE_MED as LocaleOptions,
-  )
 }

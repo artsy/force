@@ -2,10 +2,10 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { Box, Flex, Image, Text } from "@artsy/palette"
 import type { RecentAuctionResult } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
+import { getDisplaySaleDate } from "Apps/Artist/Utils/getDisplaySaleDate"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
-import { DateTime, type LocaleOptions } from "luxon"
 import type { FC, MouseEvent } from "react"
 import { useState } from "react"
 
@@ -152,13 +152,5 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
         })()}
       </Flex>
     </RouterLink>
-  )
-}
-
-const getDisplaySaleDate = (saleDate: string | null | undefined) => {
-  if (!saleDate) return null
-
-  return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(
-    DateTime.DATE_MED as LocaleOptions,
   )
 }
