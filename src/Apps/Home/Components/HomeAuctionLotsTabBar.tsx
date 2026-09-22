@@ -5,9 +5,8 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Flex, Spacer, Tab, Tabs, Text } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { HomeAuctionLotsForYouRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsForYouRail"
-import { HomeAuctionLotsRailQueryRenderer } from "Apps/Home/Components/HomeAuctionLotsRail"
 import { trackEvent } from "Server/analytics/helpers"
 import { RouterLink } from "System/Components/RouterLink"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -44,18 +43,9 @@ export const HomeAuctionLotsTabBar: React.FC<
         </RouterLink>
       </Flex>
       <Spacer y={4} />
-      <Tabs>
-        {!user ? null : (
-          <Tab name="Lots for You">
-            <HomeAuctionLotsForYouRailQueryRenderer
-              railPositionY={railPositionY}
-            />
-          </Tab>
-        )}
-        <Tab name="Curators’ Picks">
-          <HomeAuctionLotsRailQueryRenderer railPositionY={railPositionY} />
-        </Tab>
-      </Tabs>
+      {!!user && (
+        <HomeAuctionLotsForYouRailQueryRenderer railPositionY={railPositionY} />
+      )}
     </>
   )
 }
