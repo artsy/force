@@ -64,17 +64,17 @@ export const OnboardingStepShell: FC<
         </Flex>
       </Box>
 
-      <Box flex={1} minHeight={0} overflowY="auto" px={2}>
+      <Box flex={1} minHeight={0} overflowY="auto" px={2} pb={2}>
         {children}
       </Box>
 
       <Box
         flexShrink={0}
         bg="mono0"
-        pt={2}
-        pb={2}
+        borderTop="1px solid"
+        borderColor="mono10"
+        py={2}
         px={2}
-        style={{ boxShadow: "0px -2px 6px rgba(0, 0, 0, 0.1)" }}
       >
         <Button width="100%" disabled={isCtaDisabled} onClick={onCta}>
           {ctaLabel}

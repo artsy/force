@@ -88,13 +88,9 @@ export const OnboardingDialogSimplified: FC<
     })
   }
 
-  // Single-select: clicking the active pill re-selects it rather than clearing,
-  // so `source` never returns to null once an answer is picked.
   const handleSelectSource = (nextSource: string) => {
     setSource(nextSource)
 
-    // Drop any free text if they move off "Other", so a stale answer can't be
-    // reported later.
     if (nextSource !== OTHER_SOURCE) {
       setOtherSourceText("")
     }
@@ -193,8 +189,6 @@ export const OnboardingDialogSimplified: FC<
       dialogProps={{
         bg: "mono0",
         width: ["100%", 440],
-        // `auto` so the modal grows when the "Other" input appears; the floor
-        // keeps every step at the design height so it doesn't resize per step.
         height: ["100%", "auto"],
         minHeight: [null, 600],
         maxHeight: ["100%", "90%"],

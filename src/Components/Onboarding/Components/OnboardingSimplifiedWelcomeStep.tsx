@@ -3,7 +3,6 @@ import type { FC } from "react"
 
 interface OnboardingSimplifiedWelcomeStepProps {
   agreedToReceiveEmails: boolean
-  /** Hidden until the geo lookup resolves, so the default is never wrong */
   shouldShowEmailOptIn: boolean
   onToggleEmailOptIn(selected: boolean): void
 }
@@ -12,13 +11,15 @@ export const OnboardingSimplifiedWelcomeStep: FC<
   React.PropsWithChildren<OnboardingSimplifiedWelcomeStepProps>
 > = ({ agreedToReceiveEmails, shouldShowEmailOptIn, onToggleEmailOptIn }) => {
   return (
-    <Flex flexDirection="column" gap={2} height="100%" justifyContent="center">
-      <Text variant="xl">Welcome to Artsy!</Text>
+    <Flex flexDirection="column" gap={4} height="100%" justifyContent="center">
+      <Flex flexDirection="column" gap={2}>
+        <Text variant="xl">Welcome to Artsy!</Text>
 
-      <Text variant="sm">
-        Discover emerging artists, trending shows, gallery openings, art to
-        discover in cities around the world — straight to your inbox.
-      </Text>
+        <Text variant="sm">
+          Discover and buy art you love from leading galleries and artists
+          around the world, all in one place.
+        </Text>
+      </Flex>
 
       {shouldShowEmailOptIn && (
         <Box bg="mono5" borderRadius="5px" p={1}>

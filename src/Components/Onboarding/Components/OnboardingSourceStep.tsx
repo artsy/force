@@ -46,12 +46,8 @@ export const OnboardingSourceStep: FC<
         })}
       </Flex>
 
-      {/* Sits outside the pill stack because that stack is `flex-start`, which
-       * would collapse the input to its content width. */}
       {selectedSource === OTHER_SOURCE && (
         <Input
-          // Clicking the pill is what reveals this, so the user is already
-          // headed here.
           autoFocus
           placeholder="Tell us more"
           value={otherText}
