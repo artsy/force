@@ -13,7 +13,7 @@ import {
   clearOneTapEmailOptInPending,
   peekOneTapEmailOptInPending,
 } from "Utils/oneTapEmailOptIn"
-import { type FC, useEffect, useState } from "react"
+import { type FC, useEffect, useMemo, useState } from "react"
 
 const GEO_LOOKUP_TIMEOUT_MS = 5000
 
@@ -124,15 +124,9 @@ export const OnboardingDialogSimplified: FC<
     goToNextStep()
   }
 
-  const getCtaLabel = () => {
-    if (currentStep === "source") {
-      return "Continue"
-    }
+  const ctaLabel = currentStep === "source" ? "Continue" : "Next"
 
-    return "Next"
-  }
-
-  const getIsCtaDisabled = () => {
+  const isCtaDisabled = useMemo(() => {
     if (currentStep === "welcome") {
       return isConsentPending
     }
@@ -150,7 +144,7 @@ export const OnboardingDialogSimplified: FC<
     }
 
     return false
-  }
+  }, [currentStep, isConsentPending, interests, source, otherSourceText])
 
   const renderCurrentStep = () => {
     if (currentStep === "welcome") {
@@ -197,8 +191,8 @@ export const OnboardingDialogSimplified: FC<
       <OnboardingStepShell
         activeIndex={stepIndex}
         amount={steps.length}
-        ctaLabel={getCtaLabel()}
-        isCtaDisabled={getIsCtaDisabled()}
+        ctaLabel={ctaLabel}
+        isCtaDisabled={isCtaDisabled}
         onClose={handleClose}
         onCta={handleCta}
         onBack={stepIndex === 0 ? undefined : goBack}
