@@ -21,12 +21,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/cohesion@npm:4.402.0":
-  version: 4.402.0
-  resolution: "@artsy/cohesion@npm:4.402.0"
+"@artsy/cohesion@npm:4.407.0":
+  version: 4.407.0
+  resolution: "@artsy/cohesion@npm:4.407.0"
   dependencies:
     core-js: "npm:3"
-  checksum: 10c0/aa3a8c816b68eb8c3bee3cb28a7abc1ffff89a891010842cde13a5e733c08f71664213a22984b403bd5554a05e87653e11b124a5778edefa47ba80a4ff63885a
+  checksum: 10c0/ed2dc69dc54f6f630ff25bddd3e7a4fb7e16d745931313dad936a5027769f6b37718f6d84ecdbb112945d52a24cac5fedc9e1a3279d9e99aad79eb40c85abdfa
   languageName: node
   linkType: hard
 
@@ -9437,7 +9437,7 @@ __metadata:
   resolution: "force@workspace:."
   dependencies:
     "@artaio/arta-browser": "npm:^2.16.1"
-    "@artsy/cohesion": "npm:4.402.0"
+    "@artsy/cohesion": "npm:4.407.0"
     "@artsy/detect-responsive-traits": "npm:^0.2.0"
     "@artsy/dismissible": "npm:^0.9.0"
     "@artsy/express-reloadable": "npm:^1.7.0"

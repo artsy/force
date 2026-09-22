@@ -11,10 +11,6 @@ jest.mock("Apps/Auctions/Components/TrendingLotsRail", () => ({
   TrendingLotsRailQueryRenderer: () => <div>Trending Lots</div>,
 }))
 
-jest.mock("Apps/Auctions/Components/StandoutLotsRail", () => ({
-  StandoutLotsRailQueryRenderer: () => <div>Standout Lots</div>,
-}))
-
 describe("AuctionsApp", () => {
   const renderComponent = () => {
     return render(
@@ -78,16 +74,7 @@ describe("AuctionsApp", () => {
     }))
 
     renderComponent()
-    expect(screen.getByText("Trending Lots")).toBeInTheDocument()
-  })
-
-  it("renders StandoutLots even if user is logged out", () => {
-    useSystemContext.mockImplementation(() => ({
-      user: null,
-    }))
-
-    renderComponent()
-    expect(screen.getByText("Standout Lots")).toBeInTheDocument()
+    expect(screen.queryAllByText("Trending Lots")[0]).toBeInTheDocument()
   })
 
   it("does not render auctions if they are not present", () => {

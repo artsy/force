@@ -1,4 +1,10 @@
 import {
+  ActionType,
+  type ClickedSocialPost,
+  ContextModule,
+  type PageOwnerType,
+} from "@artsy/cohesion"
+import {
   Box,
   Flex,
   Image,
@@ -8,12 +14,21 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArtistSocialRailEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistSocialRailEmpty"
+import { useRailImpressionTracking } from "Components/RailImpression/useRailImpressionTracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSectionReady } from "Utils/Hooks/useSectionReadiness"
+import { ErrorWithMetadata } from "Utils/errors"
+import createLogger from "Utils/logger"
 import type { ArtistSocialRailQuery } from "__generated__/ArtistSocialRailQuery.graphql"
 import type { ArtistSocialRail_artist$data } from "__generated__/ArtistSocialRail_artist.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+
+const logger = createLogger(
+  "Apps/Artist/Routes/Overview/Components/ArtistSocialRail",
+)
 
 const TILE_WIDTH = 300
 const TILE_HEIGHT = 375
@@ -48,8 +63,14 @@ const ArtistSocialRail: React.FC<
       }
     })
 
+  const { railImpressionRef } = useRailImpressionTracking({
+    contextModule: ContextModule.socialRail,
+    // The empty state isn't a rail; only count an impression once there are posts.
+    disabled: media.length === 0,
+  })
+
   return (
-    <Box>
+    <Box ref={railImpressionRef} data-testid="artist-social-rail">
       <Flex
         justifyContent="space-between"
         alignItems="center"
@@ -80,12 +101,46 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
   tile,
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
+
+  const handleClick = () => {
+    const payload: ClickedSocialPost = {
+      action: ActionType.clickedSocialPost,
+      context_module: ContextModule.socialRail,
+      context_page_owner_type: contextPageOwnerType as PageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_path: tile.permalink ?? undefined,
+      service: "instagram",
+    }
+
+    trackEvent(payload)
+  }
+
+  /**
+   * Tiles are cropped from expiring signed source urls, so a broken image is
+   * our only signal that a source is no longer fetchable. The reported `src`
+   * keeps the cause recoverable.
+   */
+  const handleError = () => {
+    setIsLoaded(true)
+
+    logger.error(
+      new ErrorWithMetadata("[ArtistSocialRail] Gemini image failed to load", {
+        instagramPostId: tile.internalID,
+        src: tile.src,
+      }),
+    )
+  }
 
   return (
     <a
       href={tile.permalink ?? undefined}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
     >
       <Box position="relative" width={TILE_WIDTH} height={TILE_HEIGHT}>
         {!isLoaded && (
@@ -106,7 +161,7 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
           height={TILE_HEIGHT}
           lazyLoad
           onLoad={() => setIsLoaded(true)}
-          onError={() => setIsLoaded(true)}
+          onError={handleError}
           style={{ display: "block" }}
         />
       </Box>
