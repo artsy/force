@@ -8,11 +8,6 @@ import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending
 const mockOnClose = jest.fn()
 const mockOnHide = jest.fn()
 
-jest.mock("Components/Onboarding/Components/OnboardingModal", () => ({
-  OnboardingModal: ({ children }: { children: React.ReactNode }) => (
-    <div>{children}</div>
-  ),
-}))
 jest.mock("Components/AuthDialog/Hooks/useCountryCode", () => ({
   useCountryCode: jest.fn(),
 }))
@@ -66,7 +61,7 @@ describe("OnboardingDialogSimplified", () => {
       <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
     )
 
-    expect(screen.getByText("Welcome to Artsy")).toBeInTheDocument()
+    expect(screen.getByText("Welcome to Artsy!")).toBeInTheDocument()
   })
 
   it("advances welcome -> interests -> source for a One Tap sign-up", () => {
@@ -85,7 +80,7 @@ describe("OnboardingDialogSimplified", () => {
     ).toBeInTheDocument()
   })
 
-  it("calls markOnboardingInterestsPending and onHide when Finish is clicked", () => {
+  it("calls markOnboardingInterestsPending and onHide when Continue is clicked", () => {
     mockPeek.mockReturnValue(false)
 
     render(
@@ -94,11 +89,83 @@ describe("OnboardingDialogSimplified", () => {
 
     fireEvent.click(screen.getByText("Buying art"))
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Search engine"))
-    fireEvent.click(screen.getByText("Finish"))
+    fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
+    fireEvent.click(screen.getByText("Continue"))
 
     expect(mockMarkInterestsPending).toHaveBeenCalledWith(["Buying art"])
     expect(mockOnHide).toHaveBeenCalled()
+  })
+
+  describe("the “Other” source option", () => {
+    const goToSourceStep = () => {
+      mockPeek.mockReturnValue(false)
+
+      render(
+        <OnboardingDialogSimplified
+          onClose={mockOnClose}
+          onHide={mockOnHide}
+        />,
+      )
+
+      fireEvent.click(screen.getByText("Buying art"))
+      fireEvent.click(screen.getByText("Next"))
+    }
+
+    it("does not render the text input until Other is selected", () => {
+      goToSourceStep()
+
+      expect(screen.queryByPlaceholderText("Tell us more")).toBeNull()
+
+      fireEvent.click(screen.getByText("Other"))
+
+      expect(screen.getByPlaceholderText("Tell us more")).toBeInTheDocument()
+    })
+
+    it("keeps Continue disabled while the text input is empty", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+
+      expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled()
+    })
+
+    it("enables Continue once text is entered", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+      fireEvent.change(screen.getByPlaceholderText("Tell us more"), {
+        target: { value: "The grapevine" },
+      })
+
+      expect(screen.getByRole("button", { name: "Continue" })).toBeEnabled()
+    })
+
+    it("ignores whitespace-only text", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+      fireEvent.change(screen.getByPlaceholderText("Tell us more"), {
+        target: { value: "   " },
+      })
+
+      expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled()
+    })
+
+    it("retains the text when switching away and back to 'Other'", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+      fireEvent.change(screen.getByPlaceholderText("Tell us more"), {
+        target: { value: "The grapevine" },
+      })
+
+      fireEvent.click(screen.getByText("Friend or family"))
+      fireEvent.click(screen.getByText("Other"))
+
+      expect(screen.getByPlaceholderText("Tell us more")).toHaveValue(
+        "The grapevine",
+      )
+    })
   })
 
   it("does not persist the email opt-in when advancing past the welcome step", () => {
@@ -123,8 +190,8 @@ describe("OnboardingDialogSimplified", () => {
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Buying art"))
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Search engine"))
-    fireEvent.click(screen.getByText("Finish"))
+    fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
+    fireEvent.click(screen.getByText("Continue"))
 
     expect(mockSubmit).toHaveBeenCalledWith({ agreedToReceiveEmails: true })
   })
