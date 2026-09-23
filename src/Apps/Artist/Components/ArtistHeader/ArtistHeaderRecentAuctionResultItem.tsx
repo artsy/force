@@ -37,7 +37,6 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
       : auctionResult.priceRealized?.display
   const isPriceHidden = isPriceGated && !user
   const performanceValue = auctionResult.performance?.mid
-  const isPerformanceNegative = performanceValue?.[0] === "-"
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (user) return
@@ -116,42 +115,58 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
           </Text>
         </Box>
 
-        {(() => {
-          if (isPriceHidden) {
-            return (
-              <Text variant="xs" style={{ textDecoration: "underline" }}>
-                Sign up to see price
-              </Text>
-            )
-          }
-
-          return (
-            <Flex alignItems="center" gap={0.5}>
-              {salePrice ? (
-                <Text variant="xs" fontWeight="bold" color="mono100">
-                  {salePrice}
-                </Text>
-              ) : (
-                <Text variant="xs">
-                  <i>Price not available</i>
-                </Text>
-              )}
-
-              {!!performanceValue && (
-                <Text
-                  variant="xs"
-                  color={isPerformanceNegative ? "red100" : "green100"}
-                >
-                  {isPerformanceNegative
-                    ? performanceValue
-                    : `+${performanceValue}`}{" "}
-                  est
-                </Text>
-              )}
-            </Flex>
-          )
-        })()}
+        <AuctionResultPrice
+          isPriceHidden={isPriceHidden}
+          salePrice={salePrice}
+          performanceValue={performanceValue}
+        />
       </Flex>
     </RouterLink>
+  )
+}
+
+interface AuctionResultPriceProps {
+  isPriceHidden: boolean
+  salePrice?: string | null
+  performanceValue?: string | null
+}
+
+const AuctionResultPrice: FC<AuctionResultPriceProps> = ({
+  isPriceHidden,
+  salePrice,
+  performanceValue,
+}) => {
+  if (isPriceHidden) {
+    return (
+      <Text variant="xs" style={{ textDecoration: "underline" }}>
+        Sign up to see price
+      </Text>
+    )
+  }
+
+  const isPerformanceNegative = performanceValue?.[0] === "-"
+
+  return (
+    <Flex alignItems="center" gap={0.5}>
+      {salePrice ? (
+        <Text variant="xs" fontWeight="bold" color="mono100">
+          {salePrice}
+        </Text>
+      ) : (
+        <Text variant="xs">
+          <i>Price not available</i>
+        </Text>
+      )}
+
+      {!!performanceValue && (
+        <Text
+          variant="xs"
+          color={isPerformanceNegative ? "red100" : "green100"}
+        >
+          {isPerformanceNegative ? performanceValue : `+${performanceValue}`}{" "}
+          est
+        </Text>
+      )}
+    </Flex>
   )
 }
