@@ -1,6 +1,7 @@
 import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import { Stack } from "@artsy/palette"
 import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { useArtistRecentAuctionResults } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import {
   ArtistSeriesRailPlaceholder,
   ArtistSeriesRailQueryRenderer,
@@ -74,6 +75,7 @@ export const ArtistOverview: React.FC<
   React.PropsWithChildren<ArtistOverviewProps>
 > = ({ artist }) => {
   const { trackEvent } = useTracking()
+  const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
 
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
@@ -81,7 +83,8 @@ export const ArtistOverview: React.FC<
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
   const hasCareerHighlights =
     Array.isArray(artist.insights) &&
-    artist.insights.length > getArtistHeaderNumberOfInsights({ hasEditorial })
+    artist.insights.length >
+      getArtistHeaderNumberOfInsights({ hasEditorial, hasRecentAuctionResults })
   const hasArtistSeries = (artist.artistSeriesConnection?.totalCount ?? 0) > 0
   const hasCurrentShows = (artist.showsConnection?.totalCount ?? 0) > 0
   const hasRelatedArtists = (artist.counts?.relatedArtists ?? 0) > 0

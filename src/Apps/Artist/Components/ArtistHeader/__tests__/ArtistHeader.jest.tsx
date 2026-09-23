@@ -1,5 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { ArtistRecentAuctionResultsProvider } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
@@ -46,7 +47,17 @@ beforeEach(() => {
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: ArtistHeaderFragmentContainer,
+  Component: (props: any) => {
+    return (
+      <ArtistRecentAuctionResultsProvider
+        value={{
+          hasRecentAuctionResults: props.hasRecentAuctionResults ?? false,
+        }}
+      >
+        <ArtistHeaderFragmentContainer {...props} />
+      </ArtistRecentAuctionResultsProvider>
+    )
+  },
   query: graphql`
     query ArtistHeader_Test_Query($saleStartYear: Int, $saleEndYear: Int)
     @relay_test_operation {
@@ -452,19 +463,22 @@ describe("ArtistHeaderFragmentContainer", () => {
     }
 
     it("renders the rail instead of career highlights when results exist", () => {
-      renderWithRelay({
-        Artist: () => ({
-          name: "Pablo Picasso",
-          slug: "pablo-picasso",
-          href: "/artist/pablo-picasso",
-          insights: [
-            { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
-          ],
-          recentAuctionResultsConnection: {
-            edges: [{ node: auctionResult }],
-          },
-        }),
-      })
+      renderWithRelay(
+        {
+          Artist: () => ({
+            name: "Pablo Picasso",
+            slug: "pablo-picasso",
+            href: "/artist/pablo-picasso",
+            insights: [
+              { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
+            ],
+            recentAuctionResultsConnection: {
+              edges: [{ node: auctionResult }],
+            },
+          }),
+        },
+        { hasRecentAuctionResults: true },
+      )
 
       expect(screen.getByText("Recent Auction Results")).toBeInTheDocument()
       expect(
@@ -485,7 +499,6 @@ describe("ArtistHeaderFragmentContainer", () => {
           insights: [
             { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
           ],
-          recentAuctionResultsConnection: { edges: [] },
         }),
       })
 
@@ -549,7 +562,6 @@ describe("ArtistHeaderFragmentContainer", () => {
         Artist: () => ({
           name: "Pablo Picasso",
           articlesConnection: { totalCount: 0, edges: [] },
-          recentAuctionResultsConnection: { edges: [] },
           insights: [
             { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
             { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
@@ -584,7 +596,6 @@ describe("ArtistHeaderFragmentContainer", () => {
               },
             ],
           },
-          recentAuctionResultsConnection: { edges: [] },
           insights: [
             { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
             { kind: "REVIEWED", label: "Insight 1", entities: ["MoMA"] },
@@ -622,7 +633,6 @@ describe("ArtistHeaderFragmentContainer", () => {
               },
             ],
           },
-          recentAuctionResultsConnection: { edges: [] },
           insights: [
             // Not renderable: no description and no entities. It should be
             // filtered out before slicing rather than occupying a slot.

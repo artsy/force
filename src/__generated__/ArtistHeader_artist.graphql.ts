@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dcbc9975320598f68f3f8868da9adcf>>
+ * @generated SignedSource<<77c028194d78471d63d4b80f71baad6d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,13 +45,6 @@ export type ArtistHeader_artist$data = {
   readonly instagramHandle: string | null | undefined;
   readonly internalID: string;
   readonly name: string | null | undefined;
-  readonly recentAuctionResultsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly slug: string;
   readonly verifiedRepresentatives: ReadonlyArray<{
     readonly partner: {
@@ -124,16 +117,7 @@ v5 = [
   }
 ];
 return {
-  "argumentDefinitions": [
-    {
-      "kind": "RootArgument",
-      "name": "saleEndYear"
-    },
-    {
-      "kind": "RootArgument",
-      "name": "saleStartYear"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistHeader_artist",
@@ -263,71 +247,6 @@ return {
         }
       ],
       "storageKey": "articlesConnection(first:3,sort:\"PUBLISHED_AT_DESC\")"
-    },
-    {
-      "alias": "recentAuctionResultsConnection",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "allowUnspecifiedSaleDates",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 10
-        },
-        {
-          "kind": "Literal",
-          "name": "includeUnknownPrices",
-          "value": false
-        },
-        {
-          "kind": "Variable",
-          "name": "saleEndYear",
-          "variableName": "saleEndYear"
-        },
-        {
-          "kind": "Variable",
-          "name": "saleStartYear",
-          "variableName": "saleStartYear"
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "DATE_DESC"
-        }
-      ],
-      "concreteType": "AuctionResultConnection",
-      "kind": "LinkedField",
-      "name": "auctionResultsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "AuctionResultEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "AuctionResult",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                (v0/*: any*/)
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     },
     {
       "args": null,
@@ -513,6 +432,6 @@ return {
 };
 })();
 
-(node as any).hash = "f7f6702db26b896052d319093125791d";
+(node as any).hash = "63c1325bdffaf2d7c8e647dea1764326";
 
 export default node;

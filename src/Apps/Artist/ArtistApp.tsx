@@ -1,8 +1,10 @@
 import { Spacer } from "@artsy/palette"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { ArtistRecentAuctionResultsProvider } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
+import { extractNodes } from "Utils/extractNodes"
 import type { ArtistApp_artist$key } from "__generated__/ArtistApp_artist.graphql"
 import { graphql, useFragment } from "react-relay"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
@@ -19,8 +21,11 @@ export const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 
   useScrollToOpenArtistAuthModal({ name: artist.name })
 
+  const hasRecentAuctionResults =
+    extractNodes(artist.recentAuctionResultsConnection).length > 0
+
   return (
-    <>
+    <ArtistRecentAuctionResultsProvider value={{ hasRecentAuctionResults }}>
       <ArtistMetaFragmentContainer artist={artist} />
 
       <Analytics contextPageOwnerId={artist.internalID}>
@@ -33,7 +38,7 @@ export const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 
         {children}
       </Analytics>
-    </>
+    </ArtistRecentAuctionResultsProvider>
   )
 }
 
@@ -43,5 +48,19 @@ const artistAppLayoutFragment = graphql`
     ...ArtistHeader_artist
     internalID
     name
+    recentAuctionResultsConnection: auctionResultsConnection(
+      first: 10
+      sort: DATE_DESC
+      saleStartYear: $saleStartYear
+      saleEndYear: $saleEndYear
+      includeUnknownPrices: false
+      allowUnspecifiedSaleDates: false
+    ) {
+      edges {
+        node {
+          internalID
+        }
+      }
+    }
   }
 `

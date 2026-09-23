@@ -28,6 +28,7 @@ import {
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
 import { ArtistHeaderRecentAuctionResults } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { ArtistHeaderSocialLink } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSocialLink"
+import { useArtistRecentAuctionResults } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import {
   ArtistStylesAndTechniques,
   useHasArtistStylesAndTechniques,
@@ -41,7 +42,6 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
-import { extractNodes } from "Utils/extractNodes"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -61,10 +61,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
   const instagramHandle = artist.instagramHandle ?? null
 
-  const recentAuctionResults = extractNodes(
-    artist.recentAuctionResultsConnection,
-  )
-  const hasRecentAuctionResults = recentAuctionResults.length > 0
+  const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
@@ -356,7 +353,13 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           {!hasRecentAuctionResults && hasInsights && (
             <Box display={["none", "block"]}>
               {insights
-                .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
+                .slice(
+                  0,
+                  getArtistHeaderNumberOfInsights({
+                    hasEditorial,
+                    hasRecentAuctionResults,
+                  }),
+                )
                 .map((insight, index) => {
                   return (
                     <ArtistCareerHighlightFragmentContainer
@@ -405,20 +408,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
-        }
-        recentAuctionResultsConnection: auctionResultsConnection(
-          first: 10
-          sort: DATE_DESC
-          saleStartYear: $saleStartYear
-          saleEndYear: $saleEndYear
-          includeUnknownPrices: false
-          allowUnspecifiedSaleDates: false
-        ) {
-          edges {
-            node {
-              internalID
-            }
-          }
         }
         ...ArtistHeaderRecentAuctionResults_artist
         ...ArtistHeaderEditorial_artist
@@ -476,9 +465,13 @@ export const ARTIST_HEADER_NUMBER_OF_INSIGHTS_WITH_EDITORIAL = 2
 
 export const getArtistHeaderNumberOfInsights = ({
   hasEditorial,
+  hasRecentAuctionResults,
 }: {
   hasEditorial: boolean
+  hasRecentAuctionResults: boolean
 }): number => {
+  if (hasRecentAuctionResults) return 0
+
   return hasEditorial
     ? ARTIST_HEADER_NUMBER_OF_INSIGHTS_WITH_EDITORIAL
     : ARTIST_HEADER_NUMBER_OF_INSIGHTS
