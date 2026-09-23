@@ -1,8 +1,10 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtistHeaderRecentAuctionResultItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResultItem"
-import type { RecentAuctionResult } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
-import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+
+jest.unmock("react-relay")
 
 let mockUser: { id: string } | null = null
 const mockShowAuthDialog = jest.fn()
@@ -31,11 +33,13 @@ jest.mock("Components/AuthDialog", () => {
   }
 })
 
-const baseAuctionResult: RecentAuctionResult = {
+const baseAuctionResult = {
   internalID: "auction-result-1",
   slug: "auction-result-1-slug",
   title: "Poinsettias (F. & S. IIIA.50)",
   dateText: null,
+  saleDate: null,
+  performance: null,
   images: {
     thumbnail: {
       resized: {
@@ -48,19 +52,30 @@ const baseAuctionResult: RecentAuctionResult = {
     display: "$16,510",
     centsUSD: 1651000,
   },
-} as RecentAuctionResult
+}
 
-const renderItem = (
-  auctionResult: Partial<RecentAuctionResult> = {},
-  isPriceGated?: boolean,
-) => {
-  return render(
-    <MockBoot>
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
+    return (
       <ArtistHeaderRecentAuctionResultItem
-        auctionResult={{ ...baseAuctionResult, ...auctionResult }}
-        isPriceGated={isPriceGated}
+        auctionResult={props.auctionResult}
+        isPriceGated={props.isPriceGated}
       />
-    </MockBoot>,
+    )
+  },
+  query: graphql`
+    query ArtistHeaderRecentAuctionResultItem_Test_Query @relay_test_operation {
+      auctionResult(id: "example") {
+        ...ArtistHeaderRecentAuctionResultItem_auctionResult
+      }
+    }
+  `,
+})
+
+const renderItem = (auctionResult: object = {}, isPriceGated?: boolean) => {
+  return renderWithRelay(
+    { AuctionResult: () => ({ ...baseAuctionResult, ...auctionResult }) },
+    { isPriceGated },
   )
 }
 

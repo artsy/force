@@ -38,14 +38,9 @@ export const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
 }
 
 const artistAppLayoutFragment = graphql`
-  fragment ArtistApp_artist on Artist
-  @argumentDefinitions(
-    saleStartYear: { type: "Int" }
-    saleEndYear: { type: "Int" }
-  ) {
+  fragment ArtistApp_artist on Artist {
     ...ArtistMeta_artist
     ...ArtistHeader_artist
-      @arguments(saleStartYear: $saleStartYear, saleEndYear: $saleEndYear)
     internalID
     name
   }

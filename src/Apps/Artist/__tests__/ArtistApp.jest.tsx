@@ -27,7 +27,8 @@ describe("ArtistApp", () => {
   const { renderWithRelay } = setupTestWrapperTL<ArtistAppTestQuery>({
     Component: ArtistApp,
     query: graphql`
-      query ArtistAppTestQuery @relay_test_operation {
+      query ArtistAppTestQuery($saleStartYear: Int, $saleEndYear: Int)
+      @relay_test_operation {
         artist(id: "example") {
           ...ArtistApp_artist
         }

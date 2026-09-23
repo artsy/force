@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<731eca1f4ce7f102d89484d017a83b9a>>
+ * @generated SignedSource<<ef3e3288145c5ceaca8a2f86c2705d78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,18 +22,7 @@ export type ArtistApp_artist$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "saleEndYear"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "saleStartYear"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistApp_artist",
@@ -44,18 +33,7 @@ const node: ReaderFragment = {
       "name": "ArtistMeta_artist"
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "saleEndYear",
-          "variableName": "saleEndYear"
-        },
-        {
-          "kind": "Variable",
-          "name": "saleStartYear",
-          "variableName": "saleStartYear"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistHeader_artist"
     },
@@ -78,6 +56,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8127343effedd1de9c537b92de9b8859";
+(node as any).hash = "fa8eff2f41a68dfe4464e29bac0091ee";
 
 export default node;

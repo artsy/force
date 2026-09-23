@@ -115,7 +115,6 @@ export const artistRoutes: RouteProps[] = [
         artist(id: $artistID) @principalField {
           slug
           ...ArtistApp_artist
-            @arguments(saleStartYear: $saleStartYear, saleEndYear: $saleEndYear)
           ...ArtistCombinedRoute_artist
         }
       }

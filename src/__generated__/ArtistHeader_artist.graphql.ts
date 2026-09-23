@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<729b350655c8594b1bc0792b2eac03d9>>
+ * @generated SignedSource<<7dcbc9975320598f68f3f8868da9adcf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,26 +48,7 @@ export type ArtistHeader_artist$data = {
   readonly recentAuctionResultsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly dateText: string | null | undefined;
-        readonly images: {
-          readonly thumbnail: {
-            readonly resized: {
-              readonly src: string;
-              readonly srcSet: string;
-            } | null | undefined;
-          } | null | undefined;
-        } | null | undefined;
         readonly internalID: string;
-        readonly performance: {
-          readonly mid: string | null | undefined;
-        } | null | undefined;
-        readonly priceRealized: {
-          readonly centsUSD: number | null | undefined;
-          readonly display: string | null | undefined;
-        } | null | undefined;
-        readonly saleDate: string | null | undefined;
-        readonly slug: string | null | undefined;
-        readonly title: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -89,7 +70,7 @@ export type ArtistHeader_artist$data = {
       } | null | undefined;
     };
   }>;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist" | "ArtistStylesAndTechniques_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist" | "ArtistHeaderRecentAuctionResults_artist" | "ArtistStylesAndTechniques_artist">;
   readonly " $fragmentType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$key = {
@@ -130,36 +111,26 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "src",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v7 = [
-  (v5/*: any*/)
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  }
 ];
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "saleEndYear"
     },
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "saleStartYear"
     }
   ],
@@ -348,118 +319,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
-                (v1/*: any*/),
-                (v4/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "dateText",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "saleDate",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "AuctionLotImages",
-                  "kind": "LinkedField",
-                  "name": "images",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "thumbnail",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": [
-                            {
-                              "kind": "Literal",
-                              "name": "height",
-                              "value": 130
-                            },
-                            {
-                              "kind": "Literal",
-                              "name": "width",
-                              "value": 130
-                            }
-                          ],
-                          "concreteType": "ResizedImageUrl",
-                          "kind": "LinkedField",
-                          "name": "resized",
-                          "plural": false,
-                          "selections": [
-                            (v5/*: any*/),
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "srcSet",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": "resized(height:130,width:130)"
-                        }
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "AuctionResultPriceRealized",
-                  "kind": "LinkedField",
-                  "name": "priceRealized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "display",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "centsUSD",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "AuctionLotPerformance",
-                  "kind": "LinkedField",
-                  "name": "performance",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "mid",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
+                (v0/*: any*/)
               ],
               "storageKey": null
             }
@@ -468,6 +328,11 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistHeaderRecentAuctionResults_artist"
     },
     {
       "args": null,
@@ -497,7 +362,7 @@ return {
           "selections": [
             (v0/*: any*/),
             (v2/*: any*/),
-            (v6/*: any*/),
+            (v4/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -532,7 +397,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v7/*: any*/),
+                      "selections": (v5/*: any*/),
                       "storageKey": "cropped(height:30,width:30)"
                     },
                     {
@@ -553,7 +418,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v7/*: any*/),
+                      "selections": (v5/*: any*/),
                       "storageKey": "cropped(height:60,width:60)"
                     }
                   ],
@@ -578,8 +443,14 @@ return {
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
-        (v6/*: any*/),
         (v4/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -642,6 +513,6 @@ return {
 };
 })();
 
-(node as any).hash = "464a1d37ca5fc30762d24fea2ccb9156";
+(node as any).hash = "f7f6702db26b896052d319093125791d";
 
 export default node;

@@ -349,11 +349,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           )}
 
           {hasRecentAuctionResults ? (
-            <ArtistHeaderRecentAuctionResults
-              artistID={artist.internalID}
-              artistSlug={artist.slug}
-              auctionResults={recentAuctionResults}
-            />
+            <ArtistHeaderRecentAuctionResults artist={artist} />
           ) : (
             hasInsights && (
               <Box display={["none", "block"]}>
@@ -388,11 +384,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   ArtistHeader,
   {
     artist: graphql`
-      fragment ArtistHeader_artist on Artist
-      @argumentDefinitions(
-        saleStartYear: { type: "Int" }
-        saleEndYear: { type: "Int" }
-      ) {
+      fragment ArtistHeader_artist on Artist {
         internalID
         slug
         name
@@ -425,28 +417,10 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           edges {
             node {
               internalID
-              slug
-              title
-              dateText
-              saleDate
-              images {
-                thumbnail {
-                  resized(width: 130, height: 130) {
-                    src
-                    srcSet
-                  }
-                }
-              }
-              priceRealized {
-                display
-                centsUSD
-              }
-              performance {
-                mid
-              }
             }
           }
         }
+        ...ArtistHeaderRecentAuctionResults_artist
         ...ArtistHeaderEditorial_artist
         ...ArtistStylesAndTechniques_artist
         verifiedRepresentatives {

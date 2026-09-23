@@ -1,15 +1,10 @@
-import { fireEvent, render, screen } from "@testing-library/react"
-import {
-  ArtistHeaderRecentAuctionResults,
-  type RecentAuctionResult,
-} from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
-import { MockBoot } from "DevTools/MockBoot"
+import { fireEvent, screen } from "@testing-library/react"
+import { ArtistHeaderRecentAuctionResults } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
+import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-jest.mock("System/Hooks/useSystemContext", () => ({
-  useSystemContext: () => ({ user: null }),
-}))
-
+jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -18,31 +13,64 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
     contextPageOwnerType: "artist",
   })),
 }))
+jest.mock("System/Hooks/useSystemContext", () => ({
+  useSystemContext: () => ({ user: null }),
+}))
 
 const trackEvent = jest.fn()
 ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 
-const makeAuctionResult = (index: number): RecentAuctionResult => {
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
+    return <ArtistHeaderRecentAuctionResults artist={props.artist} />
+  },
+  query: graphql`
+    query ArtistHeaderRecentAuctionResults_Test_Query(
+      $saleStartYear: Int
+      $saleEndYear: Int
+    ) @relay_test_operation {
+      artist(id: "example") {
+        ...ArtistHeaderRecentAuctionResults_artist
+      }
+    }
+  `,
+})
+
+const makeAuctionResult = (index: number) => {
   return {
-    internalID: `auction-result-${index}`,
-    title: `Lot ${index}`,
-    dateText: null,
-    images: { thumbnail: null },
-    priceRealized: { display: `$${index}`, centsUSD: index + 1 },
-  } as RecentAuctionResult
+    node: {
+      internalID: `auction-result-${index}`,
+      title: `Lot ${index}`,
+      dateText: null,
+      saleDate: null,
+      performance: null,
+      images: { thumbnail: null },
+      priceRealized: { display: `$${index}`, centsUSD: index + 1 },
+    },
+  }
+}
+
+const renderRail = (count: number) => {
+  return renderWithRelay({
+    Artist: () => ({
+      internalID: "artist-id",
+      slug: "pablo-picasso",
+      recentAuctionResultsConnection: {
+        edges: Array.from({ length: count }, (_, index) => {
+          return makeAuctionResult(index)
+        }),
+      },
+    }),
+  })
 }
 
 describe("ArtistHeaderRecentAuctionResults", () => {
+  beforeEach(() => {
+    trackEvent.mockClear()
+  })
+
   it("renders the header with a View More link", () => {
-    render(
-      <MockBoot>
-        <ArtistHeaderRecentAuctionResults
-          artistID="artist-id"
-          artistSlug="pablo-picasso"
-          auctionResults={[makeAuctionResult(0)]}
-        />
-      </MockBoot>,
-    )
+    renderRail(1)
 
     expect(screen.getByText("Recent Auction Results")).toBeInTheDocument()
     expect(screen.getByText("View More").closest("a")).toHaveAttribute(
@@ -51,16 +79,14 @@ describe("ArtistHeaderRecentAuctionResults", () => {
     )
   })
 
+  it("renders nothing when there are no results", () => {
+    renderRail(0)
+
+    expect(screen.queryByText("Recent Auction Results")).not.toBeInTheDocument()
+  })
+
   it("tracks a click on the View More link", () => {
-    render(
-      <MockBoot>
-        <ArtistHeaderRecentAuctionResults
-          artistID="artist-id"
-          artistSlug="pablo-picasso"
-          auctionResults={[makeAuctionResult(0)]}
-        />
-      </MockBoot>,
-    )
+    renderRail(1)
 
     fireEvent.click(screen.getByText("View More"))
 
@@ -78,17 +104,7 @@ describe("ArtistHeaderRecentAuctionResults", () => {
   })
 
   it("shows the price for the first three items and gates the rest for signed-out visitors", () => {
-    const auctionResults = [0, 1, 2, 3, 4].map(makeAuctionResult)
-
-    render(
-      <MockBoot>
-        <ArtistHeaderRecentAuctionResults
-          artistID="artist-id"
-          artistSlug="pablo-picasso"
-          auctionResults={auctionResults}
-        />
-      </MockBoot>,
-    )
+    renderRail(5)
 
     expect(screen.getByText("$0")).toBeInTheDocument()
     expect(screen.getByText("$1")).toBeInTheDocument()

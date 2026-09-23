@@ -48,7 +48,8 @@ beforeEach(() => {
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArtistHeaderFragmentContainer,
   query: graphql`
-    query ArtistHeader_Test_Query @relay_test_operation {
+    query ArtistHeader_Test_Query($saleStartYear: Int, $saleEndYear: Int)
+    @relay_test_operation {
       artist(id: "example") {
         ...ArtistHeader_artist
       }

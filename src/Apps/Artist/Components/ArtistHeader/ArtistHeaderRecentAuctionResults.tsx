@@ -9,31 +9,22 @@ import { ArtistHeaderRecentAuctionResultItem } from "Apps/Artist/Components/Arti
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
+import { extractNodes } from "Utils/extractNodes"
+import type { ArtistHeaderRecentAuctionResults_artist$key } from "__generated__/ArtistHeaderRecentAuctionResults_artist.graphql"
 import type { FC } from "react"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
-
-type RecentAuctionResultsConnection = NonNullable<
-  ArtistHeader_artist$data["recentAuctionResultsConnection"]
->
-type RecentAuctionResultEdge = NonNullable<
-  RecentAuctionResultsConnection["edges"]
->[number]
-export type RecentAuctionResult = NonNullable<
-  NonNullable<RecentAuctionResultEdge>["node"]
->
 
 export const VISIBLE_PRICE_COUNT = 3
 
 export interface ArtistHeaderRecentAuctionResultsProps {
-  artistID: string
-  artistSlug: string
-  auctionResults: RecentAuctionResult[]
+  artist: ArtistHeaderRecentAuctionResults_artist$key
 }
 
 export const ArtistHeaderRecentAuctionResults: FC<
   ArtistHeaderRecentAuctionResultsProps
-> = ({ artistID, artistSlug, auctionResults }) => {
+> = ({ artist: artistRef }) => {
+  const artist = useFragment(fragment, artistRef)
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
   const { trackEvent } = useTracking()
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
@@ -47,13 +38,17 @@ export const ArtistHeaderRecentAuctionResults: FC<
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
       destination_page_owner_type: OwnerType.artistAuctionResults,
-      destination_page_owner_id: artistID,
-      destination_page_owner_slug: artistSlug,
+      destination_page_owner_id: artist.internalID,
+      destination_page_owner_slug: artist.slug,
       type: "viewAll",
     }
 
     trackEvent(trackingEvent)
   }
+
+  const auctionResults = extractNodes(artist.recentAuctionResultsConnection)
+
+  if (auctionResults.length === 0) return null
 
   return (
     <Stack gap={1}>
@@ -70,7 +65,7 @@ export const ArtistHeaderRecentAuctionResults: FC<
           color="mono60"
           flexShrink={0}
           as={RouterLink}
-          to={`/artist/${artistSlug}/auction-results?scroll_to_market_signals=true`}
+          to={`/artist/${artist.slug}/auction-results?scroll_to_market_signals=true`}
           onClick={handleViewMoreClick}
         >
           View More
@@ -91,3 +86,25 @@ export const ArtistHeaderRecentAuctionResults: FC<
     </Stack>
   )
 }
+
+const fragment = graphql`
+  fragment ArtistHeaderRecentAuctionResults_artist on Artist {
+    internalID
+    slug
+    recentAuctionResultsConnection: auctionResultsConnection(
+      first: 10
+      sort: DATE_DESC
+      saleStartYear: $saleStartYear
+      saleEndYear: $saleEndYear
+      includeUnknownPrices: false
+      allowUnspecifiedSaleDates: false
+    ) {
+      edges {
+        node {
+          internalID
+          ...ArtistHeaderRecentAuctionResultItem_auctionResult
+        }
+      }
+    }
+  }
+`

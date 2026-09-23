@@ -7,14 +7,15 @@ import {
 } from "@artsy/cohesion"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { Box, Flex, Image, Text } from "@artsy/palette"
-import type { RecentAuctionResult } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { getDisplaySaleDate } from "Apps/Artist/Utils/getDisplaySaleDate"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import type { ArtistHeaderRecentAuctionResultItem_auctionResult$key } from "__generated__/ArtistHeaderRecentAuctionResultItem_auctionResult.graphql"
 import type { FC, MouseEvent } from "react"
 import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const IMAGE_FRAME_SIZE = 75
@@ -22,13 +23,14 @@ const TEXT_COLUMN_HEIGHT = IMAGE_FRAME_SIZE + 5
 const CELL_WIDTH = 250
 
 export interface ArtistHeaderRecentAuctionResultItemProps {
-  auctionResult: RecentAuctionResult
+  auctionResult: ArtistHeaderRecentAuctionResultItem_auctionResult$key
   isPriceGated?: boolean
 }
 
 export const ArtistHeaderRecentAuctionResultItem: FC<
   ArtistHeaderRecentAuctionResultItemProps
-> = ({ auctionResult, isPriceGated = false }) => {
+> = ({ auctionResult: auctionResultRef, isPriceGated = false }) => {
+  const auctionResult = useFragment(fragment, auctionResultRef)
   const { user } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
   const { trackEvent } = useTracking()
@@ -149,6 +151,31 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
     </RouterLink>
   )
 }
+
+const fragment = graphql`
+  fragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {
+    internalID
+    slug
+    title
+    dateText
+    saleDate
+    images {
+      thumbnail {
+        resized(width: 130, height: 130) {
+          src
+          srcSet
+        }
+      }
+    }
+    priceRealized {
+      display
+      centsUSD
+    }
+    performance {
+      mid
+    }
+  }
+`
 
 interface AuctionResultPriceProps {
   isPriceHidden: boolean
