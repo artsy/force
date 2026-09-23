@@ -1,13 +1,26 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import {
   ArtistHeaderRecentAuctionResults,
   type RecentAuctionResult,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { MockBoot } from "DevTools/MockBoot"
+import { useTracking } from "react-tracking"
 
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({ user: null }),
 }))
+
+jest.mock("react-tracking")
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "4d8b92b34eb68a1b2c0003f4",
+    contextPageOwnerSlug: "pablo-picasso",
+    contextPageOwnerType: "artist",
+  })),
+}))
+
+const trackEvent = jest.fn()
+;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 
 const makeAuctionResult = (index: number): RecentAuctionResult => {
   return {
@@ -24,6 +37,7 @@ describe("ArtistHeaderRecentAuctionResults", () => {
     render(
       <MockBoot>
         <ArtistHeaderRecentAuctionResults
+          artistID="artist-id"
           artistSlug="pablo-picasso"
           auctionResults={[makeAuctionResult(0)]}
         />
@@ -37,12 +51,39 @@ describe("ArtistHeaderRecentAuctionResults", () => {
     )
   })
 
+  it("tracks a click on the View More link", () => {
+    render(
+      <MockBoot>
+        <ArtistHeaderRecentAuctionResults
+          artistID="artist-id"
+          artistSlug="pablo-picasso"
+          auctionResults={[makeAuctionResult(0)]}
+        />
+      </MockBoot>,
+    )
+
+    fireEvent.click(screen.getByText("View More"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedAuctionResultItem",
+      context_module: "artistHeader",
+      context_page_owner_type: "artist",
+      context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+      context_page_owner_slug: "pablo-picasso",
+      destination_page_owner_type: "artistAuctionResults",
+      destination_page_owner_id: "artist-id",
+      destination_page_owner_slug: "pablo-picasso",
+      type: "viewAll",
+    })
+  })
+
   it("shows the price for the first three items and gates the rest for signed-out visitors", () => {
     const auctionResults = [0, 1, 2, 3, 4].map(makeAuctionResult)
 
     render(
       <MockBoot>
         <ArtistHeaderRecentAuctionResults
+          artistID="artist-id"
           artistSlug="pablo-picasso"
           auctionResults={auctionResults}
         />

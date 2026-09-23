@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e7edd1ac96fc9c3ddd53098ce427537b>>
+ * @generated SignedSource<<729b350655c8594b1bc0792b2eac03d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -66,6 +66,7 @@ export type ArtistHeader_artist$data = {
           readonly display: string | null | undefined;
         } | null | undefined;
         readonly saleDate: string | null | undefined;
+        readonly slug: string | null | undefined;
         readonly title: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -348,6 +349,7 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
+                (v1/*: any*/),
                 (v4/*: any*/),
                 {
                   "alias": null,
@@ -640,6 +642,6 @@ return {
 };
 })();
 
-(node as any).hash = "560a326867264076231214f0e322203e";
+(node as any).hash = "464a1d37ca5fc30762d24fea2ccb9156";
 
 export default node;

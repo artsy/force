@@ -1,13 +1,21 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import {
+  ActionType,
+  type ClickedAuctionResultItem,
+  ContextModule,
+  Intent,
+  OwnerType,
+} from "@artsy/cohesion"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 import { Box, Flex, Image, Text } from "@artsy/palette"
 import type { RecentAuctionResult } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { getDisplaySaleDate } from "Apps/Artist/Utils/getDisplaySaleDate"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { FC, MouseEvent } from "react"
 import { useState } from "react"
+import { useTracking } from "react-tracking"
 
 const IMAGE_FRAME_SIZE = 75
 const TEXT_COLUMN_HEIGHT = IMAGE_FRAME_SIZE + 5
@@ -23,6 +31,9 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
 > = ({ auctionResult, isPriceGated = false }) => {
   const { user } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
   const [hasImageError, setHasImageError] = useState(false)
 
   const image = auctionResult.images?.thumbnail?.resized
@@ -39,6 +50,20 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
   const performanceValue = auctionResult.performance?.mid
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const trackingEvent: ClickedAuctionResultItem = {
+      action: ActionType.clickedAuctionResultItem,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_page_owner_type: OwnerType.auctionResult,
+      destination_page_owner_id: auctionResult.internalID,
+      destination_page_owner_slug: auctionResult.slug ?? undefined,
+      type: "thumbnail",
+    }
+
+    trackEvent(trackingEvent)
+
     if (user) return
 
     event.preventDefault()

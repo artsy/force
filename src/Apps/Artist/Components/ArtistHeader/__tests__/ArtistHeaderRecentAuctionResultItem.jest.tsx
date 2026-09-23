@@ -2,9 +2,22 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { ArtistHeaderRecentAuctionResultItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResultItem"
 import type { RecentAuctionResult } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { MockBoot } from "DevTools/MockBoot"
+import { useTracking } from "react-tracking"
 
 let mockUser: { id: string } | null = null
 const mockShowAuthDialog = jest.fn()
+
+jest.mock("react-tracking")
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "4d8b92b34eb68a1b2c0003f4",
+    contextPageOwnerSlug: "pablo-picasso",
+    contextPageOwnerType: "artist",
+  })),
+}))
+
+const trackEvent = jest.fn()
+;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 
 jest.mock("System/Hooks/useSystemContext", () => ({
   useSystemContext: () => ({ user: mockUser }),
@@ -20,6 +33,7 @@ jest.mock("Components/AuthDialog", () => {
 
 const baseAuctionResult: RecentAuctionResult = {
   internalID: "auction-result-1",
+  slug: "auction-result-1-slug",
   title: "Poinsettias (F. & S. IIIA.50)",
   dateText: null,
   images: {
@@ -54,6 +68,25 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
   beforeEach(() => {
     mockUser = null
     mockShowAuthDialog.mockClear()
+    trackEvent.mockClear()
+  })
+
+  it("tracks a click on the item", () => {
+    renderItem()
+
+    fireEvent.click(screen.getByRole("link"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedAuctionResultItem",
+      context_module: "artistHeader",
+      context_page_owner_type: "artist",
+      context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+      context_page_owner_slug: "pablo-picasso",
+      destination_page_owner_type: "auctionResult",
+      destination_page_owner_id: "auction-result-1",
+      destination_page_owner_slug: "auction-result-1-slug",
+      type: "thumbnail",
+    })
   })
 
   it("links to the auction result page", () => {

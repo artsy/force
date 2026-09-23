@@ -49,6 +49,8 @@ export const ArtistHeaderEditorialItem: React.FC<
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
           destination_page_owner_type: OwnerType.article,
+          destination_page_owner_id: article.internalID,
+          destination_page_owner_slug: article.slug ?? undefined,
           type: "thumbnail",
         }
 
@@ -93,6 +95,7 @@ export const ArtistHeaderEditorialItem: React.FC<
 const fragment = graphql`
   fragment ArtistHeaderEditorialItem_article on Article {
     internalID
+    slug
     href
     byline
     title

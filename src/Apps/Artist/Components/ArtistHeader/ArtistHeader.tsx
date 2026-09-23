@@ -350,6 +350,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
 
           {hasRecentAuctionResults ? (
             <ArtistHeaderRecentAuctionResults
+              artistID={artist.internalID}
               artistSlug={artist.slug}
               auctionResults={recentAuctionResults}
             />
@@ -424,6 +425,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           edges {
             node {
               internalID
+              slug
               title
               dateText
               saleDate

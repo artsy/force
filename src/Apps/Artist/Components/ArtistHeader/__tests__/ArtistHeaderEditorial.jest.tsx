@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtistHeaderEditorial } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderEditorial"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
@@ -55,6 +55,7 @@ const { renderWithRelay } = setupTestWrapperTL({
 const article = (index: number) => ({
   node: {
     internalID: `article-${index}`,
+    slug: `article-${index}-slug`,
     href: `/article/article-${index}`,
     title: `Article ${index}`,
     byline: "Artsy Editorial",
@@ -117,6 +118,58 @@ describe("ArtistHeaderEditorial", () => {
       "href",
       "/artist/pablo-picasso/articles",
     )
+  })
+
+  it("tracks a click on an article card", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: { totalCount: 1, edges: [article(1)] },
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Article 1"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArticleGroup",
+      context_module: "artistHeader",
+      context_page_owner_type: "artist",
+      context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+      context_page_owner_slug: "pablo-picasso",
+      destination_page_owner_type: "article",
+      destination_page_owner_id: "article-1",
+      destination_page_owner_slug: "article-1-slug",
+      type: "thumbnail",
+    })
+  })
+
+  it("tracks a click on the View All link", () => {
+    renderWithRelay({
+      Artist: () => ({
+        internalID: "artist-id",
+        slug: "pablo-picasso",
+        name: "Pablo Picasso",
+        href: "/artist/pablo-picasso",
+        articlesConnection: {
+          totalCount: 2,
+          edges: [article(1), article(2)],
+        },
+      }),
+    })
+
+    fireEvent.click(screen.getByText("View All"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArticleGroup",
+      context_module: "artistHeader",
+      context_page_owner_type: "artist",
+      context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+      context_page_owner_slug: "pablo-picasso",
+      destination_page_owner_type: "articles",
+      destination_page_owner_id: "artist-id",
+      destination_page_owner_slug: "pablo-picasso",
+      type: "viewAll",
+    })
   })
 
   it("renders the shared Shelf rail with hover arrows and a progress bar, not dots", () => {

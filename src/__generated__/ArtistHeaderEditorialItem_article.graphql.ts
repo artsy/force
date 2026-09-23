@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b321000e8a5de08f40d09bb91789e36b>>
+ * @generated SignedSource<<f13835a17546ef14e76653caa02deaeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ArtistHeaderEditorialItem_article$data = {
   readonly href: string | null | undefined;
   readonly internalID: string;
   readonly publishedAt: string | null | undefined;
+  readonly slug: string | null | undefined;
   readonly thumbnailImage: {
     readonly small: {
       readonly src: string;
@@ -40,6 +41,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -128,6 +136,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7c34fa346d0a2d1a6149b7180c2bf51a";
+(node as any).hash = "3c026b6e4bb3a238f59c976224b3865a";
 
 export default node;
