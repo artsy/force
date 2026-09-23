@@ -19,7 +19,8 @@ import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const IMAGE_FRAME_SIZE = 75
-const TEXT_COLUMN_HEIGHT = IMAGE_FRAME_SIZE + 5
+const TEXT_LEADING_OFFSET = 5
+const TEXT_COLUMN_HEIGHT = IMAGE_FRAME_SIZE + TEXT_LEADING_OFFSET
 const CELL_WIDTH = 250
 
 export interface ArtistHeaderRecentAuctionResultItemProps {
@@ -160,7 +161,7 @@ const fragment = graphql`
     saleDate
     images {
       thumbnail {
-        resized(width: 130, height: 130) {
+        resized(width: 75, height: 75) {
           src
           srcSet
         }

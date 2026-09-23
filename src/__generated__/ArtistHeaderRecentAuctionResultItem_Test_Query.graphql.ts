@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<443291a90c7c22bb335c382cd8efaf15>>
+ * @generated SignedSource<<832076cd830acc59972ea65be7c3f667>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -145,12 +145,12 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 130
+                        "value": 75
                       },
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 130
+                        "value": 75
                       }
                     ],
                     "concreteType": "ResizedImageUrl",
@@ -173,7 +173,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "resized(height:130,width:130)"
+                    "storageKey": "resized(height:75,width:75)"
                   }
                 ],
                 "storageKey": null
@@ -237,7 +237,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "da9b5112e716658505c3f8643a77f992",
+    "cacheID": "0d973c925de2bdf2d159692994e26e15",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -297,7 +297,7 @@ return {
     },
     "name": "ArtistHeaderRecentAuctionResultItem_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeaderRecentAuctionResultItem_Test_Query {\n  auctionResult(id: \"example\") {\n    ...ArtistHeaderRecentAuctionResultItem_auctionResult\n    id\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  slug\n  title\n  dateText\n  saleDate\n  images {\n    thumbnail {\n      resized(width: 130, height: 130) {\n        src\n        srcSet\n      }\n    }\n  }\n  priceRealized {\n    display\n    centsUSD\n  }\n  performance {\n    mid\n  }\n}\n"
+    "text": "query ArtistHeaderRecentAuctionResultItem_Test_Query {\n  auctionResult(id: \"example\") {\n    ...ArtistHeaderRecentAuctionResultItem_auctionResult\n    id\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  slug\n  title\n  dateText\n  saleDate\n  images {\n    thumbnail {\n      resized(width: 75, height: 75) {\n        src\n        srcSet\n      }\n    }\n  }\n  priceRealized {\n    display\n    centsUSD\n  }\n  performance {\n    mid\n  }\n}\n"
   }
 };
 })();

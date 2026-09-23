@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c7d3c14ebb15d99d85624e18db1cabd>>
+ * @generated SignedSource<<5c2ec696cad670adf1eba24035a577d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,12 +101,12 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 130
+                  "value": 75
                 },
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 130
+                  "value": 75
                 }
               ],
               "concreteType": "ResizedImageUrl",
@@ -129,7 +129,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": "resized(height:130,width:130)"
+              "storageKey": "resized(height:75,width:75)"
             }
           ],
           "storageKey": null
@@ -185,6 +185,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3323264af008bad169eb30dada244e78";
+(node as any).hash = "4b8f7f575093776b09ee99c816a0ad89";
 
 export default node;

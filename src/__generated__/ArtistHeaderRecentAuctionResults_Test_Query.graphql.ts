@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c625ce7d3e7c15e743781c4f17d91460>>
+ * @generated SignedSource<<5cc91f44ff154b195a3cd07e182e9854>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -237,12 +237,12 @@ return {
                                   {
                                     "kind": "Literal",
                                     "name": "height",
-                                    "value": 130
+                                    "value": 75
                                   },
                                   {
                                     "kind": "Literal",
                                     "name": "width",
-                                    "value": 130
+                                    "value": 75
                                   }
                                 ],
                                 "concreteType": "ResizedImageUrl",
@@ -265,7 +265,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "storageKey": "resized(height:130,width:130)"
+                                "storageKey": "resized(height:75,width:75)"
                               }
                             ],
                             "storageKey": null
@@ -333,7 +333,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "85db688b566ba377ff8bdeb901b6d46c",
+    "cacheID": "5c756b0ef52e778711a6d632391904dd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -415,7 +415,7 @@ return {
     },
     "name": "ArtistHeaderRecentAuctionResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeaderRecentAuctionResults_Test_Query(\n  $saleStartYear: Int\n  $saleEndYear: Int\n) {\n  artist(id: \"example\") {\n    ...ArtistHeaderRecentAuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  slug\n  title\n  dateText\n  saleDate\n  images {\n    thumbnail {\n      resized(width: 130, height: 130) {\n        src\n        srcSet\n      }\n    }\n  }\n  priceRealized {\n    display\n    centsUSD\n  }\n  performance {\n    mid\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResults_artist on Artist {\n  internalID\n  slug\n  href\n  recentAuctionResultsConnection: auctionResultsConnection(first: 10, sort: DATE_DESC, saleStartYear: $saleStartYear, saleEndYear: $saleEndYear, includeUnknownPrices: false, allowUnspecifiedSaleDates: false) {\n    edges {\n      node {\n        internalID\n        ...ArtistHeaderRecentAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistHeaderRecentAuctionResults_Test_Query(\n  $saleStartYear: Int\n  $saleEndYear: Int\n) {\n  artist(id: \"example\") {\n    ...ArtistHeaderRecentAuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  slug\n  title\n  dateText\n  saleDate\n  images {\n    thumbnail {\n      resized(width: 75, height: 75) {\n        src\n        srcSet\n      }\n    }\n  }\n  priceRealized {\n    display\n    centsUSD\n  }\n  performance {\n    mid\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResults_artist on Artist {\n  internalID\n  slug\n  href\n  recentAuctionResultsConnection: auctionResultsConnection(first: 10, sort: DATE_DESC, saleStartYear: $saleStartYear, saleEndYear: $saleEndYear, includeUnknownPrices: false, allowUnspecifiedSaleDates: false) {\n    edges {\n      node {\n        internalID\n        ...ArtistHeaderRecentAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
