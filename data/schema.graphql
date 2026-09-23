@@ -8717,21 +8717,14 @@ enum ChannelType {
 
 type City {
   """
-  A connection of City Guide events for this city
+  This city's attached editorial articles, in order.
   """
-  cityGuideEventsConnection(
-    after: String
-    before: String
-    first: Int
-    last: Int
-    page: Int
-    size: Int
+  cityArticles: [CityArticle!]!
 
-    """
-    Limit to events with this status
-    """
-    status: CityGuideEventStatus
-  ): CityGuideEventsConnection
+  """
+  This city's attached videos, in order.
+  """
+  cityVideos: [CityVideo!]!
   coordinates: LatLng
   fairsConnection(
     after: String
@@ -8781,79 +8774,9 @@ type City {
   sponsoredContent: CitySponsoredContent
 }
 
-type CityGuideEvent {
-  articles: [CityGuideEventArticle!]!
-  citySlug: String!
-  description: String
-  displayEndAt(
-    format: String
-
-    """
-    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    """
-    timezone: String
-  ): String
-  displayStartAt(
-    format: String
-
-    """
-    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    """
-    timezone: String
-  ): String
-  endAt(
-    format: String
-
-    """
-    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    """
-    timezone: String
-  ): String!
-  heroImage: Image
-
-  """
-  A globally unique ID.
-  """
-  id: ID!
-
-  """
-  The city guide event's UUID
-  """
-  internalID: String!
-  itineraries: [CityGuideEventItinerary!]!
-  publishedAt(
-    format: String
-
-    """
-    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    """
-    timezone: String
-  ): String
-  slug: String!
-  startAt(
-    format: String
-
-    """
-    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    """
-    timezone: String
-  ): String!
-  subtitle: String
-  timeZone: String
-  title: String!
-  updatedAt(
-    format: String
-
-    """
-    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    """
-    timezone: String
-  ): String!
-  video: Video
-}
-
-type CityGuideEventArticle {
+type CityArticle {
   article: Article!
+  citySlug: String!
 
   """
   A globally unique ID.
@@ -8867,79 +8790,20 @@ type CityGuideEventArticle {
   position: Int!
 }
 
-type CityGuideEventItinerary {
-  """
-  A globally unique ID.
-  """
-  id: ID!
-
-  """
-  The attachment's own UUID, not the itinerary's
-  """
-  internalID: String!
-  itinerary: Itinerary!
-  position: Int!
-}
-
-type CityGuideEventMutationFailure {
+type CityArticleMutationFailure {
   mutationError: GravityMutationError
 }
 
-union CityGuideEventMutationResponseOrError =
-  | CityGuideEventMutationFailure
-  | CityGuideEventMutationSuccess
+union CityArticleMutationResponseOrError =
+  | CityArticleMutationFailure
+  | CityArticleMutationSuccess
 
-type CityGuideEventMutationSuccess {
-  cityGuideEvent: CityGuideEvent
-}
-
-enum CityGuideEventStatus {
+type CityArticleMutationSuccess {
   """
-  Already ended
+  The city's articles, in their new order.
   """
-  CLOSED
-
-  """
-  Within the event's display window
-  """
-  CURRENT
-
-  """
-  Hasn't started yet
-  """
-  UPCOMING
-}
-
-"""
-A connection to a list of items.
-"""
-type CityGuideEventsConnection {
-  """
-  A list of edges.
-  """
-  edges: [CityGuideEventsEdge]
-  pageCursors: PageCursors!
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: PageInfo!
-  totalCount: Int
-}
-
-"""
-An edge in a connection.
-"""
-type CityGuideEventsEdge {
-  """
-  A cursor for use in pagination
-  """
-  cursor: String!
-
-  """
-  The item at the end of the edge
-  """
-  node: CityGuideEvent
+  articles: [CityArticle!]!
+  citySlug: String!
 }
 
 type CitySponsoredContent {
@@ -8954,6 +8818,39 @@ type CitySponsoredContent {
     sort: ShowSorts
     status: EventStatus
   ): ShowConnection
+}
+
+type CityVideo {
+  citySlug: String!
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  The attachment's own UUID, not the video's
+  """
+  internalID: String!
+  position: Int!
+  video: Video!
+}
+
+type CityVideoMutationFailure {
+  mutationError: GravityMutationError
+}
+
+union CityVideoMutationResponseOrError =
+  | CityVideoMutationFailure
+  | CityVideoMutationSuccess
+
+type CityVideoMutationSuccess {
+  citySlug: String!
+
+  """
+  The city's videos, in their new order.
+  """
+  videos: [CityVideo!]!
 }
 
 """
@@ -19460,6 +19357,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
   ): String
   bannerSize: String
   cached: Int
+
+  """
+  The City Guide city nearest to this fair's location, if one is within range
+  """
+  cityGuideCity: City
   contact(format: Format): String
   counts: FairCounts
   endAt(
@@ -23851,6 +23753,11 @@ type ItinerarySectionMutationSuccess {
 type ItineraryStop {
   address: String
   category: ItineraryStopCategory
+
+  """
+  Opening hours to display: the editor's lines, else the linked show's or location's schedules
+  """
+  displayOpeningHours: [FormattedDaySchedules!]!
   endAt(
     format: String
 
@@ -23910,6 +23817,11 @@ type ItineraryStop {
   """
   myItineraryStopMemberships: [ItineraryStopMembership!]
   note: String
+
+  """
+  The stop's own editor-entered opening hours; empty unless the curator set them, even when the linked item has its own schedule.
+  """
+  openingHours: [FormattedDaySchedules!]!
   position: Int!
 
   """
@@ -23937,9 +23849,17 @@ type ItineraryStop {
 }
 
 enum ItineraryStopCategory {
+  BAR
+  CAFE
   FAIR
   GALLERY
+  HOTEL
+  LANDMARK
   MUSEUM
+  OTHER
+  PARK
+  RESTAURANT
+  SHOP
   SHOW
 }
 
@@ -23970,6 +23890,11 @@ input ItineraryStopInput {
   latitude: Float
   longitude: Float
   note: String
+
+  """
+  The stop's opening hours.
+  """
+  openingHours: [ItineraryStopOpeningHoursInput!]
 
   """
   The source stop's parent itinerary share token, when unlisted
@@ -24019,6 +23944,11 @@ union ItineraryStopMutationResponseOrError =
 
 type ItineraryStopMutationSuccess {
   itineraryStop: ItineraryStop
+}
+
+input ItineraryStopOpeningHoursInput {
+  days: String!
+  hours: String!
 }
 
 enum ItineraryVisibility {
@@ -27023,25 +26953,14 @@ type Mutation {
   ): CreateCatalogArtworkDocumentMutationPayload
 
   """
-  Create a city guide event. Needs the editorial or content-manager role.
+  Attach an editorial article to a city, at the end of its list. Needs the editorial or content_manager role.
   """
-  createCityGuideEvent(
-    input: createCityGuideEventInput!
-  ): createCityGuideEventPayload
+  createCityArticle(input: createCityArticleInput!): createCityArticlePayload
 
   """
-  Attach an editorial article to a city guide event, at the end of its list. Returns the event with its articles in their new order.
+  Attach a video to a city, at the end of its list. Needs the editorial or content_manager role.
   """
-  createCityGuideEventArticle(
-    input: createCityGuideEventArticleInput!
-  ): createCityGuideEventArticlePayload
-
-  """
-  Attach a curated itinerary to a city guide event, at the end of its list. Returns the event with its itineraries in their new order.
-  """
-  createCityGuideEventItinerary(
-    input: createCityGuideEventItineraryInput!
-  ): createCityGuideEventItineraryPayload
+  createCityVideo(input: createCityVideoInput!): createCityVideoPayload
 
   """
   Create a collection
@@ -27413,25 +27332,14 @@ type Mutation {
   ): DeleteCatalogArtworkDocumentMutationPayload
 
   """
-  Delete a city guide event and its itinerary attachments. The itineraries themselves are left alone.
+  Detach an article from a city. Needs the editorial or content_manager role.
   """
-  deleteCityGuideEvent(
-    input: deleteCityGuideEventInput!
-  ): deleteCityGuideEventPayload
+  deleteCityArticle(input: deleteCityArticleInput!): deleteCityArticlePayload
 
   """
-  Detach an article from a city guide event. Returns the event with its remaining articles.
+  Detach a video from a city. Needs the editorial or content_manager role.
   """
-  deleteCityGuideEventArticle(
-    input: deleteCityGuideEventArticleInput!
-  ): deleteCityGuideEventArticlePayload
-
-  """
-  Detach an itinerary from a city guide event. The itinerary itself is left alone. Returns the event with its remaining itineraries.
-  """
-  deleteCityGuideEventItinerary(
-    input: deleteCityGuideEventItineraryInput!
-  ): deleteCityGuideEventItineraryPayload
+  deleteCityVideo(input: deleteCityVideoInput!): deleteCityVideoPayload
 
   """
   Delete a collection
@@ -27832,13 +27740,6 @@ type Mutation {
   ): MyCollectionUpdateArtworkPayload
 
   """
-  Publish a city guide event, making it visible to everyone. Needs the editorial or content-manager role.
-  """
-  publishCityGuideEvent(
-    input: publishCityGuideEventInput!
-  ): publishCityGuideEventPayload
-
-  """
   Publish an itinerary. Needs the publish ability.
   """
   publishItinerary(input: publishItineraryInput!): publishItineraryPayload
@@ -27907,13 +27808,6 @@ type Mutation {
     """
     input: RemoveAssetFromConsignmentSubmissionInput!
   ): RemoveAssetFromConsignmentSubmissionPayload
-
-  """
-  Remove a city guide event's video. The underlying Video record is left alone — delete it separately with deleteVideo if desired.
-  """
-  removeCityGuideEventVideo(
-    input: removeCityGuideEventVideoInput!
-  ): removeCityGuideEventVideoPayload
 
   """
   Removes an installation shot from a partner show.
@@ -28034,13 +27928,6 @@ type Mutation {
   ): SendIdentityVerificationEmailMutationPayload
 
   """
-  Set (or replace) a city guide event's video. Needs the editorial or content-manager role. The Video must already exist — create it with createVideo first.
-  """
-  setCityGuideEventVideo(
-    input: setCityGuideEventVideoInput!
-  ): setCityGuideEventVideoPayload
-
-  """
   Set fulfillment option on an order
   """
   setOrderFulfillmentOption(
@@ -28106,13 +27993,6 @@ type Mutation {
   ): UnlinkAuthenticationMutationPayload
 
   """
-  Unpublish a city guide event, hiding it from everyone but editors. Needs the editorial or content-manager role.
-  """
-  unpublishCityGuideEvent(
-    input: unpublishCityGuideEventInput!
-  ): unpublishCityGuideEventPayload
-
-  """
   Unpublish an itinerary. Also revokes its share link, so it becomes private. Needs the publish ability.
   """
   unpublishItinerary(input: unpublishItineraryInput!): unpublishItineraryPayload
@@ -28153,6 +28033,13 @@ type Mutation {
   Update the artist
   """
   updateArtist(input: UpdateArtistMutationInput!): UpdateArtistMutationPayload
+
+  """
+  Update an artist's social handles.
+  """
+  updateArtistSocials(
+    input: UpdateArtistSocialsMutationInput!
+  ): UpdateArtistSocialsMutationPayload
 
   """
   Updates an artwork.
@@ -28214,25 +28101,14 @@ type Mutation {
   ): UpdateCatalogEditionSetPayload
 
   """
-  Update a city guide event. Only the fields sent are changed.
+  Move an article within its city's list. Needs the editorial or content_manager role.
   """
-  updateCityGuideEvent(
-    input: updateCityGuideEventInput!
-  ): updateCityGuideEventPayload
+  updateCityArticle(input: updateCityArticleInput!): updateCityArticlePayload
 
   """
-  Move an article within its city guide event's list. Returns the event with its articles in their new order.
+  Move a video within its city's list. Needs the editorial or content_manager role.
   """
-  updateCityGuideEventArticle(
-    input: updateCityGuideEventArticleInput!
-  ): updateCityGuideEventArticlePayload
-
-  """
-  Move an itinerary within its city guide event's list. Returns the event with its itineraries in their new order.
-  """
-  updateCityGuideEventItinerary(
-    input: updateCityGuideEventItineraryInput!
-  ): updateCityGuideEventItineraryPayload
+  updateCityVideo(input: updateCityVideoInput!): updateCityVideoPayload
 
   """
   Update a collection
@@ -28910,6 +28786,11 @@ type NavigationPill {
   Icon file name
   """
   icon: String
+
+  """
+  Whether this link should be displayed as featured
+  """
+  isFeatured: Boolean!
 
   """
   The context module for analytics
@@ -34018,16 +33899,6 @@ type Query {
     """
     slug: String
   ): City
-
-  """
-  A City Guide event, e.g. "London Art Week"
-  """
-  cityGuideEvent(
-    """
-    The internal ID or slug of the City Guide Event
-    """
-    id: String!
-  ): CityGuideEvent
   collection(
     """
     The ID or slug of the Collection
@@ -38199,6 +38070,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   city: String
 
   """
+  The City Guide city nearest to this show's location (fair location, then show location), if one is within range
+  """
+  cityGuideCity: City
+
+  """
   An object that represents some of the numbers you might want to highlight
   """
   counts: ShowCounts
@@ -39744,7 +39620,7 @@ input UpdateArtistMutationInput {
   id: String!
 
   """
-  Artist's Instagram handle. A leading @ or a profile URL is accepted.
+  Artist's Instagram handle. A leading @ or a profile URL is accepted. `updateArtistSocials` updates the same field and is additionally permitted for verified representatives.
   """
   instagramHandle: String
   last: String
@@ -39769,6 +39645,36 @@ type UpdateArtistMutationPayload {
 }
 
 union UpdateArtistResponseOrError = UpdateArtistFailure | UpdateArtistSuccess
+
+type UpdateArtistSocialsFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtistSocialsMutationInput {
+  clientMutationId: String
+  id: String!
+
+  """
+  Artist's Instagram handle.
+  """
+  instagramHandle: String
+}
+
+type UpdateArtistSocialsMutationPayload {
+  """
+  On success: the updated artist
+  """
+  artistOrError: UpdateArtistSocialsResponseOrError
+  clientMutationId: String
+}
+
+union UpdateArtistSocialsResponseOrError =
+  | UpdateArtistSocialsFailure
+  | UpdateArtistSocialsSuccess
+
+type UpdateArtistSocialsSuccess {
+  artist: Artist
+}
 
 type UpdateArtistSuccess {
   artist: Artist
@@ -44086,16 +43992,6 @@ type Viewer {
     """
     slug: String
   ): City
-
-  """
-  A City Guide event, e.g. "London Art Week"
-  """
-  cityGuideEvent(
-    """
-    The internal ID or slug of the City Guide Event
-    """
-    id: String!
-  ): CityGuideEvent
   collection(
     """
     The ID or slug of the Collection
@@ -46080,86 +45976,40 @@ type createBuyerOfferPayload {
   offerOrError: OfferMutationResponse
 }
 
-input createCityGuideEventArticleInput {
+input createCityArticleInput {
   """
   The Positron article's id.
   """
   articleID: String!
 
   """
-  The event's id or slug.
-  """
-  cityGuideEventID: String!
-  clientMutationId: String
-}
-
-type createCityGuideEventArticlePayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
-}
-
-input createCityGuideEventInput {
-  """
-  A featured city's slug, e.g. london-united-kingdom.
+  The city slug, e.g. london-united-kingdom.
   """
   citySlug: String!
   clientMutationId: String
-  description: String
-
-  """
-  Display until (ISO 8601). Null defaults to endAt.
-  """
-  displayEndAt: String
-
-  """
-  Display from (ISO 8601). Null defaults to startAt.
-  """
-  displayStartAt: String
-
-  """
-  ISO 8601 datetime. Must not be before `startAt`.
-  """
-  endAt: String!
-
-  """
-  URL of an image already uploaded to S3, from which Gravity builds the event's hero `ArImage`
-  """
-  imageURL: String
-
-  """
-  ISO 8601 datetime, e.g. 2026-10-05T00:00:00Z.
-  """
-  startAt: String!
-  subtitle: String
-
-  """
-  IANA time zone identifier, e.g. Europe/London.
-  """
-  timeZone: String
-  title: String!
 }
 
-input createCityGuideEventItineraryInput {
+type createCityArticlePayload {
+  clientMutationId: String
+  responseOrError: CityArticleMutationResponseOrError
+}
+
+input createCityVideoInput {
   """
-  The event's id or slug.
+  The city slug, e.g. london-united-kingdom.
   """
-  cityGuideEventID: String!
+  citySlug: String!
   clientMutationId: String
 
   """
-  The itinerary's id or slug. Must be a curated guide.
+  The Gravity Video's id.
   """
-  itineraryID: String!
+  videoID: String!
 }
 
-type createCityGuideEventItineraryPayload {
+type createCityVideoPayload {
   clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
-}
-
-type createCityGuideEventPayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
+  responseOrError: CityVideoMutationResponseOrError
 }
 
 input createCollectionInput {
@@ -46247,6 +46097,11 @@ input createItineraryStopInput {
   latitude: Float
   longitude: Float
   note: String
+
+  """
+  The stop's opening hours.
+  """
+  openingHours: [ItineraryStopOpeningHoursInput!]
 
   """
   The source stop's parent itinerary share token, when unlisted
@@ -46391,7 +46246,7 @@ type deleteAlertPayload {
   responseOrError: DeleteAlertResponseOrError
 }
 
-input deleteCityGuideEventArticleInput {
+input deleteCityArticleInput {
   clientMutationId: String
 
   """
@@ -46400,37 +46255,23 @@ input deleteCityGuideEventArticleInput {
   id: String!
 }
 
-type deleteCityGuideEventArticlePayload {
+type deleteCityArticlePayload {
   clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
+  responseOrError: CityArticleMutationResponseOrError
 }
 
-input deleteCityGuideEventInput {
+input deleteCityVideoInput {
   clientMutationId: String
 
   """
-  The event's id or slug.
-  """
-  id: String!
-}
-
-input deleteCityGuideEventItineraryInput {
-  clientMutationId: String
-
-  """
-  The attachment's id (not the itinerary's).
+  The attachment's id (not the video's).
   """
   id: String!
 }
 
-type deleteCityGuideEventItineraryPayload {
+type deleteCityVideoPayload {
   clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
-}
-
-type deleteCityGuideEventPayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
+  responseOrError: CityVideoMutationResponseOrError
 }
 
 input deleteCollectionInput {
@@ -46642,20 +46483,6 @@ type partnerBiographyBlurb {
   text: String
 }
 
-input publishCityGuideEventInput {
-  clientMutationId: String
-
-  """
-  The event's id or slug.
-  """
-  id: String!
-}
-
-type publishCityGuideEventPayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
-}
-
 input publishItineraryInput {
   clientMutationId: String
   id: String!
@@ -46700,39 +46527,6 @@ input rejectSellerOfferInput {
 type rejectSellerOfferPayload {
   clientMutationId: String
   orderOrError: OrderMutationResponse
-}
-
-input removeCityGuideEventVideoInput {
-  clientMutationId: String
-
-  """
-  The event's id or slug.
-  """
-  id: String!
-}
-
-type removeCityGuideEventVideoPayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
-}
-
-input setCityGuideEventVideoInput {
-  clientMutationId: String
-
-  """
-  The event's id or slug.
-  """
-  id: String!
-
-  """
-  The Gravity Video's id.
-  """
-  videoID: String!
-}
-
-type setCityGuideEventVideoPayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
 }
 
 input setOrderFulfillmentOptionInput {
@@ -46856,20 +46650,6 @@ type submitOrderPayload {
   orderOrError: OrderMutationResponse
 }
 
-input unpublishCityGuideEventInput {
-  clientMutationId: String
-
-  """
-  The event's id or slug.
-  """
-  id: String!
-}
-
-type unpublishCityGuideEventPayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
-}
-
 input unpublishItineraryInput {
   clientMutationId: String
   id: String!
@@ -46976,7 +46756,7 @@ type updateBuyerOfferPayload {
   offerOrError: OfferMutationResponse
 }
 
-input updateCityGuideEventArticleInput {
+input updateCityArticleInput {
   clientMutationId: String
 
   """
@@ -46985,84 +46765,33 @@ input updateCityGuideEventArticleInput {
   id: String!
 
   """
-  Zero-based position among the event's articles, via acts_as_list's insert_at.
+  Zero-based position among the city's articles, via acts_as_list's insert_at.
   """
   position: Int!
 }
 
-type updateCityGuideEventArticlePayload {
+type updateCityArticlePayload {
   clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
+  responseOrError: CityArticleMutationResponseOrError
 }
 
-input updateCityGuideEventInput {
-  """
-  A featured city's slug, e.g. london-united-kingdom.
-  """
-  citySlug: String
+input updateCityVideoInput {
   clientMutationId: String
-  description: String
 
   """
-  Display until (ISO 8601). Null defaults to endAt.
-  """
-  displayEndAt: String
-
-  """
-  Display from (ISO 8601). Null defaults to startAt.
-  """
-  displayStartAt: String
-
-  """
-  ISO 8601 datetime. Must not be before `startAt`.
-  """
-  endAt: String
-
-  """
-  The event's id or slug.
+  The attachment's id (not the video's).
   """
   id: String!
 
   """
-  URL of an image already uploaded to S3, from which Gravity builds the event's hero `ArImage`. Pass `null` to clear the current hero image.
-  """
-  imageURL: String
-
-  """
-  ISO 8601 datetime, e.g. 2026-10-05T00:00:00Z.
-  """
-  startAt: String
-  subtitle: String
-
-  """
-  IANA time zone identifier, e.g. Europe/London.
-  """
-  timeZone: String
-  title: String
-}
-
-input updateCityGuideEventItineraryInput {
-  clientMutationId: String
-
-  """
-  The attachment's id (not the itinerary's).
-  """
-  id: String!
-
-  """
-  Zero-based position among the event's itineraries, via acts_as_list's insert_at.
+  Zero-based position among the city's videos, via acts_as_list's insert_at.
   """
   position: Int!
 }
 
-type updateCityGuideEventItineraryPayload {
+type updateCityVideoPayload {
   clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
-}
-
-type updateCityGuideEventPayload {
-  clientMutationId: String
-  responseOrError: CityGuideEventMutationResponseOrError
+  responseOrError: CityVideoMutationResponseOrError
 }
 
 input updateCollectionInput {
@@ -47174,6 +46903,11 @@ input updateItineraryStopInput {
   latitude: Float
   longitude: Float
   note: String
+
+  """
+  Replaces the stop's opening hours. Omit to leave them unchanged; pass `[]` to clear them.
+  """
+  openingHours: [ItineraryStopOpeningHoursInput!]
 
   """
   Reorders the stop among its section's stops via acts_as_list's insert_at. There is no separate reposition mutation for stops.
