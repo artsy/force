@@ -10,6 +10,7 @@ import type { FC, MouseEvent } from "react"
 import { useState } from "react"
 
 const IMAGE_FRAME_SIZE = 75
+const TEXT_COLUMN_HEIGHT = IMAGE_FRAME_SIZE + 5
 const CELL_WIDTH = 250
 
 export interface ArtistHeaderRecentAuctionResultItemProps {
@@ -99,7 +100,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
       <Flex
         flexDirection="column"
         justifyContent="space-between"
-        height={IMAGE_FRAME_SIZE}
+        height={TEXT_COLUMN_HEIGHT}
         flex={1}
         minWidth={0}
       >
