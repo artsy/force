@@ -119,7 +119,7 @@ describe("ArtistHeaderEditorial", () => {
     )
   })
 
-  it("renders the shared scrollable rail with hover arrows and a progress bar, not dots", () => {
+  it("renders the shared Shelf rail with hover arrows and a progress bar, not dots", () => {
     renderWithRelay({
       Artist: () => ({
         name: "Pablo Picasso",
@@ -131,10 +131,10 @@ describe("ArtistHeaderEditorial", () => {
     })
 
     expect(
-      screen.getByRole("button", { name: "See previous editorial articles" }),
+      screen.getByRole("button", { name: "Previous page" }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: "See more editorial articles" }),
+      screen.getByRole("button", { name: "Next page" }),
     ).toBeInTheDocument()
     expect(screen.getByRole("scrollbar")).toBeInTheDocument()
   })

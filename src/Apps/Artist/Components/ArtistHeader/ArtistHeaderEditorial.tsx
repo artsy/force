@@ -1,7 +1,7 @@
-import { Stack, Text } from "@artsy/palette"
+import { Shelf, Stack, Text, THEME } from "@artsy/palette"
 import { ArtistHeaderEditorialItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderEditorialItem"
-import { ScrollableCardRail } from "Apps/Artist/Components/ArtistHeader/ScrollableCardRail"
 import { RouterLink } from "System/Components/RouterLink"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistHeaderEditorial_artist$key } from "__generated__/ArtistHeaderEditorial_artist.graphql"
 import { graphql, useFragment } from "react-relay"
@@ -16,6 +16,7 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
   showTopBorder = true,
 }) => {
   const artist = useFragment(fragment, artistRef)
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   const articles = extractNodes(artist.articlesConnection)
   const totalCount = artist.articlesConnection?.totalCount ?? 0
@@ -53,7 +54,7 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         )}
       </Stack>
 
-      <ScrollableCardRail itemsLabel="editorial articles">
+      <Shelf alignItems="stretch" gap={1} fullBleed={!!isMobile}>
         {articles.map(article => {
           return (
             <ArtistHeaderEditorialItem
@@ -62,7 +63,7 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
             />
           )
         })}
-      </ScrollableCardRail>
+      </Shelf>
     </Stack>
   )
 }

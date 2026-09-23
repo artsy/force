@@ -1,7 +1,7 @@
-import { Stack, Text } from "@artsy/palette"
+import { Shelf, Stack, Text, THEME } from "@artsy/palette"
 import { ArtistHeaderRecentAuctionResultItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResultItem"
-import { ScrollableCardRail } from "Apps/Artist/Components/ArtistHeader/ScrollableCardRail"
 import { RouterLink } from "System/Components/RouterLink"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import type { FC } from "react"
 
@@ -25,6 +25,8 @@ export interface ArtistHeaderRecentAuctionResultsProps {
 export const ArtistHeaderRecentAuctionResults: FC<
   ArtistHeaderRecentAuctionResultsProps
 > = ({ artistSlug, auctionResults }) => {
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
+
   return (
     <Stack gap={1}>
       <Stack
@@ -46,7 +48,7 @@ export const ArtistHeaderRecentAuctionResults: FC<
         </Text>
       </Stack>
 
-      <ScrollableCardRail itemsLabel="auction results">
+      <Shelf gap={1} fullBleed={!!isMobile}>
         {auctionResults.map((auctionResult, index) => {
           return (
             <ArtistHeaderRecentAuctionResultItem
@@ -56,7 +58,7 @@ export const ArtistHeaderRecentAuctionResults: FC<
             />
           )
         })}
-      </ScrollableCardRail>
+      </Shelf>
     </Stack>
   )
 }
