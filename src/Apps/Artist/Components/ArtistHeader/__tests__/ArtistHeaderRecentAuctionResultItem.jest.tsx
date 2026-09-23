@@ -72,7 +72,13 @@ const { renderWithRelay } = setupTestWrapperTL({
   `,
 })
 
-const renderItem = (auctionResult: object = {}, isPriceGated?: boolean) => {
+const renderItem = ({
+  auctionResult = {},
+  isPriceGated,
+}: {
+  auctionResult?: object
+  isPriceGated?: boolean
+} = {}) => {
   return renderWithRelay(
     { AuctionResult: () => ({ ...baseAuctionResult, ...auctionResult }) },
     { isPriceGated },
@@ -114,7 +120,7 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
   })
 
   it("renders the title without a date when dateText is absent", () => {
-    renderItem({ dateText: null })
+    renderItem({ auctionResult: { dateText: null } })
 
     expect(
       screen.getByText("Poinsettias (F. & S. IIIA.50)"),
@@ -122,13 +128,17 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
   })
 
   it("appends dateText to the title when present", () => {
-    renderItem({ title: "Tête de jeune fille", dateText: "1945" })
+    renderItem({
+      auctionResult: { title: "Tête de jeune fille", dateText: "1945" },
+    })
 
     expect(screen.getByText("Tête de jeune fille, 1945")).toBeInTheDocument()
   })
 
   it("renders a fallback icon when there is no image", () => {
-    const { container } = renderItem({ images: { thumbnail: null } })
+    const { container } = renderItem({
+      auctionResult: { images: { thumbnail: null } },
+    })
 
     expect(container.querySelector("img")).not.toBeInTheDocument()
     expect(container.querySelector("svg")).toBeInTheDocument()
@@ -147,17 +157,19 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
   })
 
   it("shows the formatted sale date when present", () => {
-    renderItem({ saleDate: "2023-11-22T00:00:00+00:00" })
+    renderItem({ auctionResult: { saleDate: "2023-11-22T00:00:00+00:00" } })
 
     expect(screen.getByText("Nov 22, 2023")).toBeInTheDocument()
   })
 
   it("orders content as date, title, price, then performance", () => {
     const { container } = renderItem({
-      title: "Tête de jeune fille",
-      dateText: "1945",
-      saleDate: "2023-11-22T00:00:00+00:00",
-      performance: { mid: "12%" },
+      auctionResult: {
+        title: "Tête de jeune fille",
+        dateText: "1945",
+        saleDate: "2023-11-22T00:00:00+00:00",
+        performance: { mid: "12%" },
+      },
     })
 
     const text = container.textContent ?? ""
@@ -172,13 +184,13 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
   })
 
   it("prefixes a positive performance delta with a plus sign", () => {
-    renderItem({ performance: { mid: "12%" } })
+    renderItem({ auctionResult: { performance: { mid: "12%" } } })
 
     expect(screen.getByText("+12% est")).toBeInTheDocument()
   })
 
   it("shows a negative performance delta with its minus sign", () => {
-    renderItem({ performance: { mid: "-12%" } })
+    renderItem({ auctionResult: { performance: { mid: "-12%" } } })
 
     expect(screen.getByText("-12% est")).toBeInTheDocument()
   })
@@ -191,13 +203,15 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     })
 
     it("treats a zero-cent price as unavailable", () => {
-      renderItem({ priceRealized: { display: "$0", centsUSD: 0 } })
+      renderItem({
+        auctionResult: { priceRealized: { display: "$0", centsUSD: 0 } },
+      })
 
       expect(screen.getByText("Price not available")).toBeInTheDocument()
     })
 
     it("shows a price-not-available message when there is no price", () => {
-      renderItem({ priceRealized: null })
+      renderItem({ auctionResult: { priceRealized: null } })
 
       expect(screen.getByText("Price not available")).toBeInTheDocument()
     })
@@ -205,7 +219,7 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     it("shows the price when gated but the viewer is signed in", () => {
       mockUser = { id: "logged-in-user" }
 
-      renderItem({}, true)
+      renderItem({ isPriceGated: true })
 
       expect(screen.getByText("$16,510")).toBeInTheDocument()
     })
@@ -213,7 +227,7 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
 
   describe("when gated and signed out", () => {
     it("shows a sign-up prompt instead of the price", () => {
-      renderItem({}, true)
+      renderItem({ isPriceGated: true })
 
       expect(screen.getByText("Sign up to see price")).toBeInTheDocument()
       expect(screen.queryByText("$16,510")).not.toBeInTheDocument()
@@ -237,7 +251,7 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     })
 
     it("prevents navigation and shows the auth dialog for a gated item", () => {
-      renderItem({}, true)
+      renderItem({ isPriceGated: true })
 
       const isNotPrevented = fireEvent.click(screen.getByRole("link"))
 
@@ -246,7 +260,7 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     })
 
     it("shows the auth dialog when clicking the sign-up prompt text itself", () => {
-      renderItem({}, true)
+      renderItem({ isPriceGated: true })
 
       fireEvent.click(screen.getByText("Sign up to see price"))
 
@@ -258,7 +272,7 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     it("navigates without showing the auth dialog, gated or not", () => {
       mockUser = { id: "logged-in-user" }
 
-      renderItem({}, true)
+      renderItem({ isPriceGated: true })
 
       const isNotPrevented = fireEvent.click(screen.getByRole("link"))
 

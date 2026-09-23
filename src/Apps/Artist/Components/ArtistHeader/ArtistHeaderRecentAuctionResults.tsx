@@ -65,7 +65,7 @@ export const ArtistHeaderRecentAuctionResults: FC<
           color="mono60"
           flexShrink={0}
           as={RouterLink}
-          to={`/artist/${artist.slug}/auction-results?scroll_to_market_signals=true`}
+          to={`${artist.href}/auction-results?scroll_to_market_signals=true`}
           onClick={handleViewMoreClick}
         >
           View More
@@ -91,6 +91,7 @@ const fragment = graphql`
   fragment ArtistHeaderRecentAuctionResults_artist on Artist {
     internalID
     slug
+    href
     recentAuctionResultsConnection: auctionResultsConnection(
       first: 10
       sort: DATE_DESC

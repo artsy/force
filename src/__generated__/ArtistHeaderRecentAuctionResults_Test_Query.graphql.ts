@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4e36072d423b98ffe537a648760c971>>
+ * @generated SignedSource<<c625ce7d3e7c15e743781c4f17d91460>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -65,15 +65,15 @@ v5 = {
 },
 v6 = {
   "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v7 = {
-  "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 },
 v8 = {
   "enumValues": null,
@@ -130,6 +130,13 @@ return {
         "selections": [
           (v3/*: any*/),
           (v4/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
           {
             "alias": "recentAuctionResultsConnection",
             "args": [
@@ -326,7 +333,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3f6d468dde44601440b9d9a3c8398687",
+    "cacheID": "85db688b566ba377ff8bdeb901b6d46c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -336,8 +343,9 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.id": (v6/*: any*/),
-        "artist.internalID": (v6/*: any*/),
+        "artist.href": (v6/*: any*/),
+        "artist.id": (v7/*: any*/),
+        "artist.internalID": (v7/*: any*/),
         "artist.recentAuctionResultsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -356,8 +364,8 @@ return {
           "plural": false,
           "type": "AuctionResult"
         },
-        "artist.recentAuctionResultsConnection.edges.node.dateText": (v7/*: any*/),
-        "artist.recentAuctionResultsConnection.edges.node.id": (v6/*: any*/),
+        "artist.recentAuctionResultsConnection.edges.node.dateText": (v6/*: any*/),
+        "artist.recentAuctionResultsConnection.edges.node.id": (v7/*: any*/),
         "artist.recentAuctionResultsConnection.edges.node.images": {
           "enumValues": null,
           "nullable": true,
@@ -378,14 +386,14 @@ return {
         },
         "artist.recentAuctionResultsConnection.edges.node.images.thumbnail.resized.src": (v8/*: any*/),
         "artist.recentAuctionResultsConnection.edges.node.images.thumbnail.resized.srcSet": (v8/*: any*/),
-        "artist.recentAuctionResultsConnection.edges.node.internalID": (v6/*: any*/),
+        "artist.recentAuctionResultsConnection.edges.node.internalID": (v7/*: any*/),
         "artist.recentAuctionResultsConnection.edges.node.performance": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AuctionLotPerformance"
         },
-        "artist.recentAuctionResultsConnection.edges.node.performance.mid": (v7/*: any*/),
+        "artist.recentAuctionResultsConnection.edges.node.performance.mid": (v6/*: any*/),
         "artist.recentAuctionResultsConnection.edges.node.priceRealized": {
           "enumValues": null,
           "nullable": true,
@@ -398,16 +406,16 @@ return {
           "plural": false,
           "type": "Float"
         },
-        "artist.recentAuctionResultsConnection.edges.node.priceRealized.display": (v7/*: any*/),
-        "artist.recentAuctionResultsConnection.edges.node.saleDate": (v7/*: any*/),
-        "artist.recentAuctionResultsConnection.edges.node.slug": (v7/*: any*/),
-        "artist.recentAuctionResultsConnection.edges.node.title": (v7/*: any*/),
-        "artist.slug": (v6/*: any*/)
+        "artist.recentAuctionResultsConnection.edges.node.priceRealized.display": (v6/*: any*/),
+        "artist.recentAuctionResultsConnection.edges.node.saleDate": (v6/*: any*/),
+        "artist.recentAuctionResultsConnection.edges.node.slug": (v6/*: any*/),
+        "artist.recentAuctionResultsConnection.edges.node.title": (v6/*: any*/),
+        "artist.slug": (v7/*: any*/)
       }
     },
     "name": "ArtistHeaderRecentAuctionResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeaderRecentAuctionResults_Test_Query(\n  $saleStartYear: Int\n  $saleEndYear: Int\n) {\n  artist(id: \"example\") {\n    ...ArtistHeaderRecentAuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  slug\n  title\n  dateText\n  saleDate\n  images {\n    thumbnail {\n      resized(width: 130, height: 130) {\n        src\n        srcSet\n      }\n    }\n  }\n  priceRealized {\n    display\n    centsUSD\n  }\n  performance {\n    mid\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResults_artist on Artist {\n  internalID\n  slug\n  recentAuctionResultsConnection: auctionResultsConnection(first: 10, sort: DATE_DESC, saleStartYear: $saleStartYear, saleEndYear: $saleEndYear, includeUnknownPrices: false, allowUnspecifiedSaleDates: false) {\n    edges {\n      node {\n        internalID\n        ...ArtistHeaderRecentAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistHeaderRecentAuctionResults_Test_Query(\n  $saleStartYear: Int\n  $saleEndYear: Int\n) {\n  artist(id: \"example\") {\n    ...ArtistHeaderRecentAuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  slug\n  title\n  dateText\n  saleDate\n  images {\n    thumbnail {\n      resized(width: 130, height: 130) {\n        src\n        srcSet\n      }\n    }\n  }\n  priceRealized {\n    display\n    centsUSD\n  }\n  performance {\n    mid\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResults_artist on Artist {\n  internalID\n  slug\n  href\n  recentAuctionResultsConnection: auctionResultsConnection(first: 10, sort: DATE_DESC, saleStartYear: $saleStartYear, saleEndYear: $saleEndYear, includeUnknownPrices: false, allowUnspecifiedSaleDates: false) {\n    edges {\n      node {\n        internalID\n        ...ArtistHeaderRecentAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

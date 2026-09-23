@@ -45,7 +45,10 @@ const makeAuctionResult = (index: number) => {
       saleDate: null,
       performance: null,
       images: { thumbnail: null },
-      priceRealized: { display: `$${index}`, centsUSD: index + 1 },
+      priceRealized: {
+        display: `$${index + 1}`,
+        centsUSD: (index + 1) * 100,
+      },
     },
   }
 }
@@ -55,6 +58,7 @@ const renderRail = (count: number) => {
     Artist: () => ({
       internalID: "artist-id",
       slug: "pablo-picasso",
+      href: "/artist/pablo-picasso",
       recentAuctionResultsConnection: {
         edges: Array.from({ length: count }, (_, index) => {
           return makeAuctionResult(index)
@@ -106,11 +110,11 @@ describe("ArtistHeaderRecentAuctionResults", () => {
   it("shows the price for the first three items and gates the rest for signed-out visitors", () => {
     renderRail(5)
 
-    expect(screen.getByText("$0")).toBeInTheDocument()
     expect(screen.getByText("$1")).toBeInTheDocument()
     expect(screen.getByText("$2")).toBeInTheDocument()
-    expect(screen.queryByText("$3")).not.toBeInTheDocument()
+    expect(screen.getByText("$3")).toBeInTheDocument()
     expect(screen.queryByText("$4")).not.toBeInTheDocument()
+    expect(screen.queryByText("$5")).not.toBeInTheDocument()
     expect(screen.getAllByText("Sign up to see price")).toHaveLength(2)
   })
 })

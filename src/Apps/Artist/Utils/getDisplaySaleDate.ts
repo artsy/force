@@ -1,6 +1,8 @@
 import { DateTime, type LocaleOptions } from "luxon"
 
-export const getDisplaySaleDate = (saleDate: string | null | undefined) => {
+export const getDisplaySaleDate = (
+  saleDate: string | null | undefined,
+): string | null => {
   if (!saleDate) return null
 
   return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(

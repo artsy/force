@@ -456,6 +456,7 @@ describe("ArtistHeaderFragmentContainer", () => {
         Artist: () => ({
           name: "Pablo Picasso",
           slug: "pablo-picasso",
+          href: "/artist/pablo-picasso",
           insights: [
             { kind: "COLLECTED", label: "Insight 0", entities: ["MoMA"] },
           ],

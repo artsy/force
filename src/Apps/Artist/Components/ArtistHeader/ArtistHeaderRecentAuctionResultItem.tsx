@@ -44,10 +44,9 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
     .filter(Boolean)
     .join(", ")
   const saleDate = getDisplaySaleDate(auctionResult.saleDate)
-  const salePrice =
-    (auctionResult.priceRealized?.centsUSD ?? 0) === 0
-      ? null
-      : auctionResult.priceRealized?.display
+  const salePrice = auctionResult.priceRealized?.centsUSD
+    ? auctionResult.priceRealized.display
+    : null
   const isPriceHidden = isPriceGated && !user
   const performanceValue = auctionResult.performance?.mid
 
@@ -196,7 +195,7 @@ const AuctionResultPrice: FC<AuctionResultPriceProps> = ({
     )
   }
 
-  const isPerformanceNegative = performanceValue?.[0] === "-"
+  const isPerformanceNegative = performanceValue?.startsWith("-")
 
   return (
     <Flex alignItems="center" gap={0.5}>

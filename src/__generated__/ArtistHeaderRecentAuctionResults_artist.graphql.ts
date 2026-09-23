@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3305f897a487496c17843b0a72fff38>>
+ * @generated SignedSource<<8d61153d30ffc36b652a8a32240edb00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistHeaderRecentAuctionResults_artist$data = {
+  readonly href: string | null | undefined;
   readonly internalID: string;
   readonly recentAuctionResultsConnection: {
     readonly edges: ReadonlyArray<{
@@ -57,6 +58,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
       "storageKey": null
     },
     {
@@ -135,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "c1e7d91de8304ef5c2f5ab5362f1fe60";
+(node as any).hash = "ebaabd7914f969866193fb4117fbfac5";
 
 export default node;

@@ -66,7 +66,6 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
             variant="xs"
             color="mono60"
             flexShrink={0}
-            textDecoration="underline"
             as={RouterLink}
             to={`${artist.href}/articles`}
             onClick={handleViewAllClick}
