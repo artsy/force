@@ -16,6 +16,7 @@ import {
   type HTMLProps,
   Pill,
   ReadMore,
+  Separator,
   Spacer,
   Stack,
   Text,
@@ -348,32 +349,31 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             </>
           )}
 
-          {hasRecentAuctionResults ? (
+          {hasRecentAuctionResults && (
             <ArtistHeaderRecentAuctionResults artist={artist} />
-          ) : (
-            hasInsights && (
-              <Box display={["none", "block"]}>
-                {insights
-                  .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
-                  .map((insight, index) => {
-                    return (
-                      <ArtistCareerHighlightFragmentContainer
-                        key={insight.kind ?? index}
-                        insight={insight}
-                        contextModule={ContextModule.artistHeader}
-                      />
-                    )
-                  })}
-              </Box>
-            )
           )}
 
-          {hasEditorial && (
-            <ArtistHeaderEditorial
-              artist={artist}
-              showTopBorder={!hasRecentAuctionResults}
-            />
+          {!hasRecentAuctionResults && hasInsights && (
+            <Box display={["none", "block"]}>
+              {insights
+                .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
+                .map((insight, index) => {
+                  return (
+                    <ArtistCareerHighlightFragmentContainer
+                      key={insight.kind ?? index}
+                      insight={insight}
+                      contextModule={ContextModule.artistHeader}
+                    />
+                  )
+                })}
+            </Box>
           )}
+
+          {hasEditorial && !hasRecentAuctionResults && (
+            <Separator borderColor={["mono10", "mono60"]} />
+          )}
+
+          {hasEditorial && <ArtistHeaderEditorial artist={artist} />}
         </Column>
       )}
     </GridColumns>

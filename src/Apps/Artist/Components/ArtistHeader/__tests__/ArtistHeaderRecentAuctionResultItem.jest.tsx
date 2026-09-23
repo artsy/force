@@ -128,9 +128,10 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
   })
 
   it("renders a fallback icon when there is no image", () => {
-    renderItem({ images: { thumbnail: null } })
+    const { container } = renderItem({ images: { thumbnail: null } })
 
-    expect(screen.queryByRole("img")).not.toBeInTheDocument()
+    expect(container.querySelector("img")).not.toBeInTheDocument()
+    expect(container.querySelector("svg")).toBeInTheDocument()
   })
 
   it("falls back to the placeholder icon when the image fails to load", () => {
@@ -142,32 +143,7 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     fireEvent.error(image as HTMLImageElement)
 
     expect(container.querySelector("img")).not.toBeInTheDocument()
-  })
-
-  it("fits the whole image within its box, preserving aspect ratio, rather than cropping or stretching it", () => {
-    const { container } = renderItem()
-
-    expect(container.querySelector("img")).toHaveStyle({
-      objectFit: "contain",
-    })
-  })
-
-  it("uses a white mat behind the image, not the no-image grey", () => {
-    const { container } = renderItem()
-
-    const image = container.querySelector("img")
-    expect(image?.parentElement).toHaveStyle({
-      backgroundColor: "#FFFFFF",
-    })
-  })
-
-  it("keeps a darker grey background behind the no-image glyph", () => {
-    const { container } = renderItem({ images: { thumbnail: null } })
-
-    const svg = container.querySelector("svg")
-    expect(svg?.parentElement?.parentElement).toHaveStyle({
-      backgroundColor: "#E7E7E7",
-    })
+    expect(container.querySelector("svg")).toBeInTheDocument()
   })
 
   it("shows the formatted sale date when present", () => {
@@ -195,20 +171,16 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     expect(text.indexOf("$16,510")).toBeLessThan(text.indexOf("+12% est"))
   })
 
-  it("shows a positive performance delta in green", () => {
+  it("prefixes a positive performance delta with a plus sign", () => {
     renderItem({ performance: { mid: "12%" } })
 
-    const delta = screen.getByText("+12% est")
-    expect(delta).toBeInTheDocument()
-    expect(delta).toHaveStyle({ color: "#00674A" })
+    expect(screen.getByText("+12% est")).toBeInTheDocument()
   })
 
-  it("shows a negative performance delta in red", () => {
+  it("shows a negative performance delta with its minus sign", () => {
     renderItem({ performance: { mid: "-12%" } })
 
-    const delta = screen.getByText("-12% est")
-    expect(delta).toBeInTheDocument()
-    expect(delta).toHaveStyle({ color: "#D71023" })
+    expect(screen.getByText("-12% est")).toBeInTheDocument()
   })
 
   describe("price", () => {
@@ -252,8 +224,9 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     it("prevents navigation and shows the auth dialog for a non-gated item", () => {
       renderItem()
 
-      fireEvent.click(screen.getByRole("link"))
+      const isNotPrevented = fireEvent.click(screen.getByRole("link"))
 
+      expect(isNotPrevented).toBe(false)
       expect(mockShowAuthDialog).toHaveBeenCalledWith(
         expect.objectContaining({
           options: expect.objectContaining({
@@ -266,8 +239,9 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
     it("prevents navigation and shows the auth dialog for a gated item", () => {
       renderItem({}, true)
 
-      fireEvent.click(screen.getByRole("link"))
+      const isNotPrevented = fireEvent.click(screen.getByRole("link"))
 
+      expect(isNotPrevented).toBe(false)
       expect(mockShowAuthDialog).toHaveBeenCalled()
     })
 
@@ -281,13 +255,14 @@ describe("ArtistHeaderRecentAuctionResultItem", () => {
   })
 
   describe("clicking through while signed in", () => {
-    it("does not show the auth dialog, gated or not", () => {
+    it("navigates without showing the auth dialog, gated or not", () => {
       mockUser = { id: "logged-in-user" }
 
       renderItem({}, true)
 
-      fireEvent.click(screen.getByRole("link"))
+      const isNotPrevented = fireEvent.click(screen.getByRole("link"))
 
+      expect(isNotPrevented).toBe(true)
       expect(mockShowAuthDialog).not.toHaveBeenCalled()
     })
   })

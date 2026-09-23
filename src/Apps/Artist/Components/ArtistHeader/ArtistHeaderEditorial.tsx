@@ -16,12 +16,10 @@ import { useTracking } from "react-tracking"
 
 interface ArtistHeaderEditorialProps {
   artist: ArtistHeaderEditorial_artist$key
-  showTopBorder?: boolean
 }
 
 export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
   artist: artistRef,
-  showTopBorder = true,
 }) => {
   const artist = useFragment(fragment, artistRef)
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
@@ -57,10 +55,6 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         flexDirection="row"
         justifyContent="space-between"
         alignItems="top"
-        {...(showTopBorder && {
-          borderTop: "solid 1px",
-          borderColor: ["mono10", "mono60"],
-        })}
         pt={2}
       >
         <Text variant="sm-display">

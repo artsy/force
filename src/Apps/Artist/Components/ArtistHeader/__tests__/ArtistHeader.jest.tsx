@@ -477,40 +477,6 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(screen.queryByText("Insight 0")).not.toBeInTheDocument()
     })
 
-    it("omits the editorial module's top border when the rail is shown above it", () => {
-      renderWithRelay({
-        Artist: () => ({
-          name: "Pablo Picasso",
-          slug: "pablo-picasso",
-          articlesConnection: {
-            totalCount: 1,
-            edges: [
-              {
-                node: {
-                  internalID: "article-1",
-                  href: "/article/article-1",
-                  title: "Article 1",
-                  byline: "Artsy Editorial",
-                  publishedAt: "Jan 1, 2026",
-                  thumbnailImage: null,
-                },
-              },
-            ],
-          },
-          recentAuctionResultsConnection: {
-            edges: [{ node: auctionResult }],
-          },
-        }),
-      })
-
-      const heading = screen.getByText(
-        "Artsy Editorial Featuring Pablo Picasso",
-      )
-      expect(heading.parentElement).not.toHaveStyle({
-        borderTopStyle: "solid",
-      })
-    })
-
     it("renders career highlights instead when there are no results", () => {
       renderWithRelay({
         Artist: () => ({
