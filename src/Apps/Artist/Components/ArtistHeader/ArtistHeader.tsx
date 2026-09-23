@@ -419,6 +419,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           saleStartYear: $saleStartYear
           saleEndYear: $saleEndYear
           includeUnknownPrices: false
+          allowUnspecifiedSaleDates: false
         ) {
           edges {
             node {

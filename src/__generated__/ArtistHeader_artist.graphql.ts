@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c57fd4d272086107007926ddd75fd42b>>
+ * @generated SignedSource<<e7edd1ac96fc9c3ddd53098ce427537b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -295,6 +295,11 @@ return {
     {
       "alias": "recentAuctionResultsConnection",
       "args": [
+        {
+          "kind": "Literal",
+          "name": "allowUnspecifiedSaleDates",
+          "value": false
+        },
         {
           "kind": "Literal",
           "name": "first",
@@ -635,6 +640,6 @@ return {
 };
 })();
 
-(node as any).hash = "5a264337c4eda3cdc9c1e03421a8fb1f";
+(node as any).hash = "560a326867264076231214f0e322203e";
 
 export default node;
