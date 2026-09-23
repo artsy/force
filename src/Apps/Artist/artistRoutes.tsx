@@ -98,7 +98,7 @@ export const artistRoutes: RouteProps[] = [
     render: artistWithCanonicalSlugRedirect,
     prepareVariables: params => {
       const { artistID } = params
-      const currentYear = new Date().getFullYear()
+      const currentYear = new Date().getUTCFullYear()
 
       return {
         artistID,
