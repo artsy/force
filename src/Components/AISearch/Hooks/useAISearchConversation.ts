@@ -48,7 +48,6 @@ export interface AISearchUserMessage {
 export interface AISearchAssistantMessage {
   id: string
   role: "ASSISTANT"
-  /** The agent's prose, accumulated from text deltas */
   text: string
   /** Stable server activity; converted to user-facing copy when rendered */
   activity: AIAgentActivity | null
