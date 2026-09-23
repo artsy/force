@@ -24012,9 +24012,17 @@ type ItineraryStop {
 }
 
 enum ItineraryStopCategory {
+  BAR
+  CAFE
   FAIR
   GALLERY
+  HOTEL
+  LANDMARK
   MUSEUM
+  OTHER
+  PARK
+  RESTAURANT
+  SHOP
   SHOW
 }
 
