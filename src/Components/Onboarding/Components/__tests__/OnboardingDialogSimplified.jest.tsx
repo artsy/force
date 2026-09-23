@@ -151,7 +151,7 @@ describe("OnboardingDialogSimplified", () => {
       expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled()
     })
 
-    it("clears the text when another source is selected", () => {
+    it("retains the text when switching away and back to 'Other'", () => {
       goToSourceStep()
 
       fireEvent.click(screen.getByText("Other"))
@@ -162,7 +162,9 @@ describe("OnboardingDialogSimplified", () => {
       fireEvent.click(screen.getByText("Friend or family"))
       fireEvent.click(screen.getByText("Other"))
 
-      expect(screen.getByPlaceholderText("Tell us more")).toHaveValue("")
+      expect(screen.getByPlaceholderText("Tell us more")).toHaveValue(
+        "The grapevine",
+      )
     })
   })
 

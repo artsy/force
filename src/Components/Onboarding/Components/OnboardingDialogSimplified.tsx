@@ -37,7 +37,7 @@ export const OnboardingDialogSimplified: FC<
 
   const [interests, setInterests] = useState<string[]>([])
   const [source, setSource] = useState<string | null>(null)
-  const [otherSourceText, setOtherSourceText] = useState("")
+  const [otherSourceText, setOtherSourceText] = useState<string | null>(null)
 
   const { isAutomaticallySubscribed, loading: isCountryLoading } =
     useCountryCode({ skip: !isOneTapSignup })
@@ -88,14 +88,6 @@ export const OnboardingDialogSimplified: FC<
     })
   }
 
-  const handleSelectSource = (nextSource: string) => {
-    setSource(nextSource)
-
-    if (nextSource !== OTHER_SOURCE) {
-      setOtherSourceText("")
-    }
-  }
-
   const goToNextStep = () => {
     setStepIndex(current => current + 1)
   }
@@ -140,7 +132,7 @@ export const OnboardingDialogSimplified: FC<
     }
 
     if (source === OTHER_SOURCE) {
-      return otherSourceText.trim().length === 0
+      return !otherSourceText || otherSourceText.trim().length === 0
     }
 
     return false
@@ -169,8 +161,8 @@ export const OnboardingDialogSimplified: FC<
     return (
       <OnboardingSourceStep
         selectedSource={source}
-        otherText={otherSourceText}
-        onSelectSource={handleSelectSource}
+        otherText={otherSourceText ?? ""}
+        onSelectSource={setSource}
         onChangeOtherText={setOtherSourceText}
       />
     )
