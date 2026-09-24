@@ -5,10 +5,9 @@ const PENDING_KEY = "onboarding-interests-pending"
 
 export const ONBOARDING_INTERESTS = [
   "Buying art",
-  "Discovering art for inspiration",
+  "Browsing art for inspiration",
   "Reading about art and artists",
   "Tracking prices and results at auction",
-  "Browsing for fun",
 ] as const
 
 // Yup 0.32's types expect a mutable array; `ONBOARDING_INTERESTS` is `as const`

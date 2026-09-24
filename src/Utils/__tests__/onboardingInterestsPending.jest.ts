@@ -17,10 +17,16 @@ describe("onboardingInterestsPending", () => {
     const { result } = renderHook(() => useOnboardingInterestsPending())
 
     act(() => {
-      markOnboardingInterestsPending(["Buying art", "Browsing for fun"])
+      markOnboardingInterestsPending([
+        "Buying art",
+        "Reading about art and artists",
+      ])
     })
 
-    expect(result.current).toEqual(["Buying art", "Browsing for fun"])
+    expect(result.current).toEqual([
+      "Buying art",
+      "Reading about art and artists",
+    ])
   })
 
   it("clears interests correctly", () => {
