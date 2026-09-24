@@ -199,26 +199,26 @@ const AuctionResultPrice: FC<AuctionResultPriceProps> = ({
   const isPerformanceNegative = performanceValue?.startsWith("-")
 
   return (
-    <Flex alignItems="center" gap={0.5}>
+    <Text variant="xs" overflowEllipsis>
       {salePrice ? (
-        <Text variant="xs" fontWeight="bold" color="mono100">
+        <Text as="span" variant="xs" fontWeight="bold" color="mono100">
           {salePrice}
         </Text>
       ) : (
-        <Text variant="xs">
-          <i>Price not available</i>
-        </Text>
+        <i>Price not available</i>
       )}
 
       {!!performanceValue && (
         <Text
+          as="span"
           variant="xs"
+          ml={0.5}
           color={isPerformanceNegative ? "red100" : "green100"}
         >
           {isPerformanceNegative ? performanceValue : `+${performanceValue}`}{" "}
           est
         </Text>
       )}
-    </Flex>
+    </Text>
   )
 }
