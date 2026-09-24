@@ -148,7 +148,8 @@ describe("cacheHeaderMiddleware", () => {
         }
 
         jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
-          pathname: "/artists?nocache=1",
+          pathname: "/artists",
+          search: "?nocache=1",
         }))
 
         next.mockResolvedValue({ status: 200 })
