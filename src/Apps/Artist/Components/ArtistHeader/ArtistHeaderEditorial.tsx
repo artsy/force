@@ -1,19 +1,18 @@
 import {
-  Box,
-  type BoxProps,
-  ProgressDots,
-  Stack,
-  Swiper,
-  SwiperCell,
-  SwiperRail,
-  Text,
-} from "@artsy/palette"
+  ActionType,
+  type ClickedArticleGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { Shelf, Stack, Text, THEME } from "@artsy/palette"
 import { ArtistHeaderEditorialItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderEditorialItem"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistHeaderEditorial_artist$key } from "__generated__/ArtistHeaderEditorial_artist.graphql"
-import { type ForwardRefExoticComponent, forwardRef, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistHeaderEditorialProps {
   artist: ArtistHeaderEditorial_artist$key
@@ -23,13 +22,31 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
   artist: artistRef,
 }) => {
   const artist = useFragment(fragment, artistRef)
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const articles = extractNodes(artist.articlesConnection)
   const totalCount = artist.articlesConnection?.totalCount ?? 0
 
-  const [activeIndex, setActiveIndex] = useState(0)
-
   if (articles.length === 0) return null
+
+  const handleViewAllClick = () => {
+    const trackingEvent: ClickedArticleGroup = {
+      action: ActionType.clickedArticleGroup,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_type: contextPageOwnerType!,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_page_owner_type: OwnerType.articles,
+      destination_page_owner_id: artist.internalID,
+      destination_page_owner_slug: artist.slug,
+      type: "viewAll",
+    }
+
+    trackEvent(trackingEvent)
+  }
 
   return (
     <Stack gap={2}>
@@ -38,8 +55,6 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         flexDirection="row"
         justifyContent="space-between"
         alignItems="top"
-        borderTop="solid 1px"
-        borderColor={["mono10", "mono60"]}
         pt={2}
       >
         <Text variant="sm-display">
@@ -53,48 +68,31 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
             flexShrink={0}
             as={RouterLink}
             to={`${artist.href}/articles`}
+            onClick={handleViewAllClick}
           >
             View All
           </Text>
         )}
       </Stack>
 
-      <Stack gap={1}>
-        <Swiper
-          snap="center"
-          Cell={ArtistHeaderEditorialSwiperCell}
-          Rail={ArtistHeaderEditorialSwiperRail}
-          initialIndex={activeIndex}
-          onChange={setActiveIndex}
-        >
-          {articles.map(article => {
-            return (
-              <ArtistHeaderEditorialItem
-                key={article.internalID}
-                article={article}
-              />
-            )
-          })}
-        </Swiper>
-
-        {articles.length > 1 && (
-          // This component is primarily whitespace so we can neutralize
-          // the height of the dots to visually balance
-          <Box mb={[0, -25]}>
-            <ProgressDots
-              amount={articles.length}
-              activeIndex={activeIndex}
-              onClick={setActiveIndex}
+      <Shelf alignItems="stretch" gap={1} fullBleed={!!isMobile}>
+        {articles.map(article => {
+          return (
+            <ArtistHeaderEditorialItem
+              key={article.internalID}
+              article={article}
             />
-          </Box>
-        )}
-      </Stack>
+          )
+        })}
+      </Shelf>
     </Stack>
   )
 }
 
 const fragment = graphql`
   fragment ArtistHeaderEditorial_artist on Artist {
+    internalID
+    slug
     name
     href
     articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
@@ -108,22 +106,3 @@ const fragment = graphql`
     }
   }
 `
-
-const ArtistHeaderEditorialSwiperCell: ForwardRefExoticComponent<BoxProps> =
-  forwardRef((props, ref) => {
-    return (
-      <SwiperCell
-        {...props}
-        ref={ref as any}
-        display="inline-flex"
-        width="100%"
-        pr={0}
-      />
-    )
-  })
-
-const ArtistHeaderEditorialSwiperRail: React.FC<
-  React.PropsWithChildren
-> = props => {
-  return <SwiperRail {...props} display="block" style={{ lineHeight: 0 }} />
-}

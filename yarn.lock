@@ -103,9 +103,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/palette-charts@npm:45.10.0":
-  version: 45.10.0
-  resolution: "@artsy/palette-charts@npm:45.10.0"
+"@artsy/palette-charts@npm:45.10.1":
+  version: 45.10.1
+  resolution: "@artsy/palette-charts@npm:45.10.1"
   dependencies:
     "@seznam/compose-react-refs": "npm:^1.0.6"
     d3-interpolate: "npm:^1.3.2"
@@ -117,7 +117,7 @@ __metadata:
     react-dom: ^18
     styled-components: ^6
     styled-system: ^5
-  checksum: 10c0/4afbd5fcb9717e0c3fcadc422a30e5383d2eb090a7fb2d8e503c3523521fa21f583dda1f63f8b83517a332239a986cabbdd037141bd7b409a0a2fa5f6f6755ca
+  checksum: 10c0/7a5789b56287f952ea2e5690914c5cf5a44af9fb407a7e4198aadc5ccc424dca5e11cfeccd8b0b6a2734d2fec759d146571438d5dfc0d5f55719c92eada34799
   languageName: node
   linkType: hard
 
@@ -9446,7 +9446,7 @@ __metadata:
     "@artsy/img": "npm:1.1.3"
     "@artsy/multienv": "npm:^1.2.0"
     "@artsy/palette": "npm:46.10.0"
-    "@artsy/palette-charts": "npm:45.10.0"
+    "@artsy/palette-charts": "npm:45.10.1"
     "@artsy/palette-tokens": "npm:7.3.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
     "@artsy/xapp": "npm:2.0.0"
