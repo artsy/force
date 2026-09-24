@@ -1,4 +1,4 @@
-type NavItemId = "editorial" // will grow to "priceDatabase" | "whatsNew" later
+type NavItemId = "editorial" | "priceDatabase" // will grow to | "whatsNew" later
 
 interface OnboardingTooltipContent {
   title: string
@@ -10,13 +10,18 @@ const EDITORIAL_TOOLTIP: OnboardingTooltipContent = {
   body: "Explore our editorial for news about art and artists.",
 }
 
+const PRICE_DATABASE_TOOLTIP: OnboardingTooltipContent = {
+  title: "Browse the database",
+  body: "Explore 'Price Database' to view auction history results.",
+}
+
 export const getOnboardingTooltipContent = (
   navItemId: NavItemId,
   interests: string[],
-  isOnEditorialPage: boolean,
+  isOnCurrentPage: boolean,
 ): OnboardingTooltipContent | null => {
   if (navItemId === "editorial") {
-    if (isOnEditorialPage) {
+    if (isOnCurrentPage) {
       return null
     }
 
@@ -25,6 +30,18 @@ export const getOnboardingTooltipContent = (
     }
 
     return EDITORIAL_TOOLTIP
+  }
+
+  if (navItemId === "priceDatabase") {
+    if (isOnCurrentPage) {
+      return null
+    }
+
+    if (!interests.includes("Tracking prices and results at auction")) {
+      return null
+    }
+
+    return PRICE_DATABASE_TOOLTIP
   }
 
   return null

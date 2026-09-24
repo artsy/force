@@ -11,7 +11,7 @@ import { getOnboardingTooltipContent } from "Utils/onboardingTooltipTarget"
 import type { FC } from "react"
 
 interface OnboardingTooltipSimplifiedProps {
-  navItemId: "editorial"
+  navItemId: "editorial" | "priceDatabase"
 }
 
 export const OnboardingTooltipSimplified: FC<
@@ -25,12 +25,15 @@ export const OnboardingTooltipSimplified: FC<
     useIsRouteActive("/article", { exact: false }) ||
     useIsRouteActive("/articles", { exact: false })
 
+  const isOnPriceDatabasePage = useIsRouteActive("/price-database", {
+    exact: false,
+  })
+
+  const isOnCurrentPage =
+    navItemId === "editorial" ? isOnEditorialPage : isOnPriceDatabasePage
+
   const content = isLoggedIn
-    ? getOnboardingTooltipContent(
-        navItemId,
-        pendingInterests,
-        isOnEditorialPage,
-      )
+    ? getOnboardingTooltipContent(navItemId, pendingInterests, isOnCurrentPage)
     : null
 
   if (!content) {

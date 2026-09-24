@@ -204,12 +204,9 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
               <Flex display={["none", "flex"]} ml={2} alignItems="stretch">
                 <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
                   {DESKTOP_TOP_TIER.map(id => {
-                    if (id === "editorial") {
+                    if (id === "editorial" || id === "priceDatabase") {
                       return (
-                        <OnboardingTooltipSimplified
-                          key={id}
-                          navItemId="editorial"
-                        >
+                        <OnboardingTooltipSimplified key={id} navItemId={id}>
                           <NavBarDesktopItem
                             item={NAV_ITEMS[id]}
                             navigationData={navigationData}
