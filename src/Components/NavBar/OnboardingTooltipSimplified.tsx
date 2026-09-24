@@ -1,18 +1,39 @@
 import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
+import { useIsRouteActive } from "System/Hooks/useRouter"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import {
   clearOnboardingInterestsPending,
   useOnboardingInterestsPending,
 } from "Utils/onboardingInterestsPending"
+import { getOnboardingTooltipContent } from "Utils/onboardingTooltipTarget"
 import type { FC } from "react"
 
+interface OnboardingTooltipSimplifiedProps {
+  navItemId: "editorial"
+}
+
 export const OnboardingTooltipSimplified: FC<
-  React.PropsWithChildren<unknown>
-> = ({ children }) => {
+  React.PropsWithChildren<OnboardingTooltipSimplifiedProps>
+> = ({ children, navItemId }) => {
+  const { isLoggedIn } = useSystemContext()
+
   const pendingInterests = useOnboardingInterestsPending()
 
-  if (pendingInterests.length === 0) {
+  const isOnEditorialPage =
+    useIsRouteActive("/article", { exact: false }) ||
+    useIsRouteActive("/articles", { exact: false })
+
+  const content = isLoggedIn
+    ? getOnboardingTooltipContent(
+        navItemId,
+        pendingInterests,
+        isOnEditorialPage,
+      )
+    : null
+
+  if (!content) {
     return <>{children}</>
   }
 
@@ -22,7 +43,14 @@ export const OnboardingTooltipSimplified: FC<
       placement="bottom"
       zIndex={Z.onboardingPopover}
       onClose={clearOnboardingInterestsPending}
-      popover={<Text variant="xs">{pendingInterests.join(", ")}</Text>}
+      popover={
+        <>
+          <Text variant="xs" fontWeight="bold">
+            {content.title}
+          </Text>
+          <Text variant="xs">{content.body}</Text>
+        </>
+      }
     >
       {children}
     </ProgressiveOnboardingPopover>

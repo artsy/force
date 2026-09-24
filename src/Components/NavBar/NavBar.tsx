@@ -206,7 +206,10 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
                   {DESKTOP_TOP_TIER.map(id => {
                     if (id === "editorial") {
                       return (
-                        <OnboardingTooltipSimplified key={id}>
+                        <OnboardingTooltipSimplified
+                          key={id}
+                          navItemId="editorial"
+                        >
                           <NavBarDesktopItem
                             item={NAV_ITEMS[id]}
                             navigationData={navigationData}
