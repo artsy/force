@@ -1,9 +1,14 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArticleBodyFragmentContainer } from "Apps/Article/Components/ArticleBody"
+import { ArtworksGridEdges } from "Components/ArtworkGrid/__tests__/ArtworkGridFixture"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
+
+const trackEvent = jest.fn()
 
 jest.mock("../../useArticleTracking", () => ({
   useArticleTracking: () => ({}),
@@ -28,6 +33,11 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArticleBody", () => {
+  beforeEach(() => {
+    trackEvent.mockClear()
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+  })
+
   it("renders the article", () => {
     renderWithRelay({
       Article: () => ({
@@ -137,6 +147,89 @@ describe("ArticleBody", () => {
     })
 
     expect(screen.getByTestId("ArticleSectionEmbed")).toBeInTheDocument()
+  })
+
+  describe("artwork grid", () => {
+    it("renders the artworks", () => {
+      renderWithRelay({
+        Article: () => ({
+          sections: [
+            {
+              __typename: "ArticleSectionArtworkGrid",
+              columns: 3,
+              artworksConnection: { edges: ArtworksGridEdges },
+            },
+          ],
+        }),
+      })
+
+      expect(
+        screen.getByTestId("ArticleSectionArtworkGrid"),
+      ).toBeInTheDocument()
+      expect(
+        screen.getAllByRole("link", { name: /Pinocchio/ }).length,
+      ).toBeGreaterThan(0)
+    })
+
+    it("tracks clicks on artworks", () => {
+      renderWithRelay({
+        Article: () => ({
+          internalID: "article-id",
+          sections: [
+            {
+              __typename: "ArticleSectionArtworkGrid",
+              columns: 3,
+              artworksConnection: {
+                edges: [
+                  {
+                    node: {
+                      internalID: "artwork-id",
+                      slug: "example-artwork",
+                      title: "Example Artwork",
+                      href: "/artwork/example-artwork",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        }),
+      })
+
+      fireEvent.click(
+        screen.getAllByRole("link", { name: /Example Artwork/ })[0],
+      )
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedMainArtworkGrid",
+          context_module: "artworkGrid",
+          context_page_owner_id: "article-id",
+          destination_page_owner_id: "artwork-id",
+          destination_page_owner_slug: "example-artwork",
+          destination_page_owner_type: "artwork",
+          position: 0,
+        }),
+      )
+    })
+
+    it("renders nothing when there are no artworks", () => {
+      renderWithRelay({
+        Article: () => ({
+          sections: [
+            {
+              __typename: "ArticleSectionArtworkGrid",
+              columns: 3,
+              artworksConnection: { edges: [] },
+            },
+          ],
+        }),
+      })
+
+      expect(
+        screen.queryByTestId("ArticleSectionArtworkGrid"),
+      ).not.toBeInTheDocument()
+    })
   })
 
   describe("when author ids are present", () => {

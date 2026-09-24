@@ -1,6 +1,7 @@
 import type { ArticleSection_section$data } from "__generated__/ArticleSection_section.graphql"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { ArticleSectionArtworkGrid } from "./Sections/ArticleSectionArtworkGrid"
 import { ArticleSectionEmbedFragmentContainer } from "./Sections/ArticleSectionEmbed"
 import { ArticleSectionImageCollectionFragmentContainer } from "./Sections/ArticleSectionImageCollection"
 import { ArticleSectionImageSetFragmentContainer } from "./Sections/ArticleSectionImageSet"
@@ -63,6 +64,10 @@ const ArticleSection: FC<React.PropsWithChildren<ArticleSectionProps>> = ({
       return <ArticleSectionEmbedFragmentContainer section={section} />
     }
 
+    case "ArticleSectionArtworkGrid": {
+      return <ArticleSectionArtworkGrid section={section} />
+    }
+
     default:
       return null
   }
@@ -80,6 +85,7 @@ export const ArticleSectionFragmentContainer = createFragmentContainer(
         ...ArticleSectionVideo_section
         ...ArticleSectionSocialEmbed_section
         ...ArticleSectionEmbed_section
+        ...ArticleSectionArtworkGrid_section
       }
     `,
   },
