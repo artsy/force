@@ -1,4 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
+import { ArtistRecentAuctionResultsProvider } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import { ArtistCareerHighlightsFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -7,11 +8,6 @@ import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-
-jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader", () => ({
-  ARTIST_HEADER_NUMBER_OF_INSIGHTS: 0,
-  getArtistHeaderNumberOfInsights: () => 0,
-}))
 
 jest.mock("System/Hooks/useAnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -25,7 +21,14 @@ const { renderWithRelay } = setupTestWrapperTL({
   Component: props => {
     return (
       <MockBoot breakpoint="lg">
-        <ArtistCareerHighlightsFragmentContainer {...(props as any)} />
+        <ArtistRecentAuctionResultsProvider
+          value={{
+            hasRecentAuctionResults:
+              (props as any).hasRecentAuctionResults ?? true,
+          }}
+        >
+          <ArtistCareerHighlightsFragmentContainer {...(props as any)} />
+        </ArtistRecentAuctionResultsProvider>
       </MockBoot>
     )
   },
@@ -311,6 +314,43 @@ describe("ArtistCareerHighlights", () => {
         context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
         context_page_owner_slug: "andy-warhol",
       })
+    })
+  })
+
+  describe("continuing from the career highlights shown in the artist header", () => {
+    const artist = {
+      name: "Test Artist",
+      articlesConnection: { totalCount: 1 },
+      insights: ["SOLO_SHOW", "GROUP_SHOW", "COLLECTED"].map((kind, index) => {
+        return {
+          label: `Insight ${index + 1}`,
+          entities: ["Foo Museum"],
+          kind,
+          description: null,
+        }
+      }),
+    }
+
+    it("shows every highlight when the header shows the auction results rail instead", () => {
+      renderWithRelay(
+        { Artist: () => artist },
+        { hasRecentAuctionResults: true },
+      )
+
+      expect(screen.getByText("Insight 1")).toBeInTheDocument()
+      expect(screen.getByText("Insight 2")).toBeInTheDocument()
+      expect(screen.getByText("Insight 3")).toBeInTheDocument()
+    })
+
+    it("skips the highlights already shown in the header otherwise", () => {
+      renderWithRelay(
+        { Artist: () => artist },
+        { hasRecentAuctionResults: false },
+      )
+
+      expect(screen.queryByText("Insight 1")).not.toBeInTheDocument()
+      expect(screen.queryByText("Insight 2")).not.toBeInTheDocument()
+      expect(screen.getByText("Insight 3")).toBeInTheDocument()
     })
   })
 })

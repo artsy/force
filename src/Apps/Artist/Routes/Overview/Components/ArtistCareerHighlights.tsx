@@ -7,6 +7,7 @@ import {
   SkeletonText,
 } from "@artsy/palette"
 import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { useArtistRecentAuctionResults } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import {
   ArtistCareerHighlightFragmentContainer,
   isRenderableArtistInsight,
@@ -30,6 +31,7 @@ const ArtistCareerHighlights: FC<
   React.PropsWithChildren<ArtistCareerHighlightsProps>
 > = ({ artist }) => {
   const { trackEvent } = useTracking()
+  const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
 
@@ -44,7 +46,7 @@ const ArtistCareerHighlights: FC<
   // header's window leaves a gap and the remainder is misaligned here.
   const allInsights = artist.insights.filter(isRenderableArtistInsight)
   const insights = allInsights.slice(
-    getArtistHeaderNumberOfInsights({ hasEditorial }),
+    getArtistHeaderNumberOfInsights({ hasEditorial, hasRecentAuctionResults }),
   )
   const numOfColumns = insights.length > 4 ? 2 : 1
   const mid = Math.ceil(insights.length / 2)

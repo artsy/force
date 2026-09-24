@@ -11,6 +11,8 @@ import type { ArtistHeaderEditorialItem_article$key } from "__generated__/Artist
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
+const CARD_WIDTH = 380
+
 interface ArtistHeaderEditorialItemProps {
   article: ArtistHeaderEditorialItem_article$key
 }
@@ -31,10 +33,14 @@ export const ArtistHeaderEditorialItem: React.FC<
     <Stack
       flexDirection="row"
       gap={[1, 2]}
-      pr={[1, 0]}
+      flexShrink={0}
+      width={CARD_WIDTH}
       as={RouterLink}
       to={article.href}
       textDecoration="none"
+      bg="mono5"
+      p={1}
+      borderRadius="5px"
       onClick={() => {
         const trackingEvent: ClickedArticleGroup = {
           action: ActionType.clickedArticleGroup,
@@ -43,13 +49,15 @@ export const ArtistHeaderEditorialItem: React.FC<
           context_page_owner_id: contextPageOwnerId,
           context_page_owner_slug: contextPageOwnerSlug,
           destination_page_owner_type: OwnerType.article,
+          destination_page_owner_id: article.internalID,
+          destination_page_owner_slug: article.slug ?? undefined,
           type: "thumbnail",
         }
 
         trackEvent(trackingEvent)
       }}
     >
-      <Box width={[125, 100]} flexShrink={0} bg="mono10">
+      <Box width={100} flexShrink={0} bg="mono10">
         {thumbnail && (
           <ResponsiveBox
             aspectWidth={1}
@@ -69,17 +77,14 @@ export const ArtistHeaderEditorialItem: React.FC<
         )}
       </Box>
 
-      <Box>
-        <Text
-          variant={["sm-display", "sm-display", "sm-display", "md"]}
-          lineClamp={2}
-        >
+      <Box flex={1} minWidth={0}>
+        <Text variant="sm-display" lineClamp={2}>
           {article.title}
         </Text>
 
-        <Text variant={["xs", "xs", "xs", "sm"]}>By {article.byline}</Text>
+        <Text variant="xs">By {article.byline}</Text>
 
-        <Text variant={["xs", "xs", "xs", "sm"]} color="mono60">
+        <Text variant="xs" color="mono60">
           {article.publishedAt}
         </Text>
       </Box>
@@ -90,12 +95,13 @@ export const ArtistHeaderEditorialItem: React.FC<
 const fragment = graphql`
   fragment ArtistHeaderEditorialItem_article on Article {
     internalID
+    slug
     href
     byline
     title
     publishedAt(format: "MMM D, YYYY")
     thumbnailImage {
-      small: cropped(width: 125, height: 125) {
+      small: cropped(width: 100, height: 100) {
         src
         srcSet
       }
