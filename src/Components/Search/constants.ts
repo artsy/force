@@ -90,3 +90,14 @@ export const PILLS: PillType[] = [
 ]
 
 export const SEARCH_DEBOUNCE_DELAY = 150
+
+export const SEARCH_PLACEHOLDER =
+  "Search by artist, gallery, style, theme, tag, etc."
+
+export const SEARCH_PLACEHOLDER_SUGGESTIONS = [
+  "Japanese paintings under $2,000",
+  "Fashion photography",
+  "Unique prints under $500",
+  "Abstract sculpture",
+  "French limited edition prints",
+]

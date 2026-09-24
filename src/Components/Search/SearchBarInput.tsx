@@ -45,19 +45,26 @@ import {
   type SuggestionItemOptionProps,
 } from "./SuggestionItem/SuggestionItem"
 import { TrendingSearches } from "./TrendingSearches/TrendingSearches"
-import { type PillType, SEARCH_DEBOUNCE_DELAY, TOP_PILL } from "./constants"
+import {
+  type PillType,
+  SEARCH_DEBOUNCE_DELAY,
+  SEARCH_PLACEHOLDER,
+  SEARCH_PLACEHOLDER_SUGGESTIONS,
+  TOP_PILL,
+} from "./constants"
 import { useRecentSearches } from "./hooks/useRecentSearches"
 import { useTrendingImpressionSession } from "./hooks/useTrendingImpressionSession"
+import { useTypewriterPlaceholder } from "./hooks/useTypewriterPlaceholder"
+import { buildSuggestedFiltersUrl } from "./utils/buildSuggestedFiltersUrl"
 import { getLabel } from "./utils/getLabel"
 import { isModifiedClick } from "./utils/isModifiedClick"
-import { buildSuggestedFiltersUrl } from "./utils/buildSuggestedFiltersUrl"
 import {
   type ParsedFilterQuery,
   parseFilterQuery,
 } from "./utils/parseFilterQuery"
-import { shouldSubmitToFilters } from "./utils/shouldSubmitToFilters"
 import { searchResultsHref } from "./utils/searchResultsHref"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
+import { shouldSubmitToFilters } from "./utils/shouldSubmitToFilters"
 
 export interface SearchBarInputProps {
   searchTerm: string
@@ -96,6 +103,7 @@ export const SearchBarInput: FC<
   const [debouncedValue] = useDebounce(value, SEARCH_DEBOUNCE_DELAY)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   const [isFocused, setIsFocused] = useState(false)
+  const [hasFocused, setHasFocused] = useState(false)
   // Request tracking / cancellation
   const [requestId, setRequestId] = useState(0)
   const lastRequestIdRef = useRef<number | null>(null)
@@ -111,6 +119,15 @@ export const SearchBarInput: FC<
   const edges = data?.viewer?.searchConnection?.edges ?? []
 
   const isSuggestedFiltersEnabled = useFlag("onyx_suggested-filters")
+
+  // Stops for good on first focus; WCAG 2.2.2 wants a way to stop motion over 5s
+  const placeholder = useTypewriterPlaceholder({
+    phrases: SEARCH_PLACEHOLDER_SUGGESTIONS,
+    fallback: SEARCH_PLACEHOLDER,
+    isEnabled: isSuggestedFiltersEnabled && !value && !hasFocused,
+    prefix: "Try “",
+    suffix: "”",
+  })
 
   // Debounced, not live: the row is prepended, so appearing per keystroke
   // shifts option indices under the cursor. Gated here rather than at render
@@ -425,6 +442,7 @@ export const SearchBarInput: FC<
     if (Date.now() < suppressFocusUntilRef.current) return
 
     setIsFocused(true)
+    setHasFocused(true)
     tracking.trackEvent({
       action_type: ActionType.focusedOnSearchInput,
       context_module: selectedPill.analyticsContextModule,
@@ -518,7 +536,9 @@ export const SearchBarInput: FC<
           forwardRef={ref}
           key={match.location.pathname}
           value={value}
-          placeholder="Search by artist, gallery, style, theme, tag, etc."
+          placeholder={placeholder}
+          // Stable name for screen readers while the placeholder animates
+          aria-label="Search Artsy"
           spellCheck={false}
           options={shouldStartSearching(value) ? formattedOptions : []}
           defaultValue={value}
