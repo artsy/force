@@ -2,8 +2,6 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
-    "downlevelIteration": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
@@ -11,10 +9,11 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "jsx": "react-jsx",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "noUnusedLocals": true,
     "outDir": ".cache/tsc", // Need output directory for incremental type-checking
+    "rootDir": "./src",
     "pretty": true,
     "noErrorTruncation": true,
     "skipLibCheck": true,
@@ -24,7 +23,7 @@
     "types": ["node", "jest", "express", "google-maps"],
     "paths": {
       "package.json": ["./package.json"],
-      "*": ["./*"]
+      "*": ["./src/*"]
     },
     "plugins": [
       {
