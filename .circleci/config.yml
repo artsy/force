@@ -51,7 +51,33 @@ jobs:
     working_directory: /usr/src/app
     steps:
       - checkout
-      - run: git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --verbose
+      - run:
+          name: Scan only changed files
+          command: |
+            git fetch origin main:main
+
+            changed_files=$(git diff --name-only --diff-filter=d origin/main...HEAD)
+
+            if [ -z "$changed_files" ]; then
+              echo "No files changed from main branch"
+              exit 0
+            fi
+
+            echo "Scanning $(echo "$changed_files" | wc -l) changed files"
+            echo "$changed_files" | xargs detect-secrets-hook --baseline .secrets.baseline --verbose
+
+  detect-secrets-full:
+    docker:
+      - image: artsy/detect-secrets:ci # pragma: allowlist secret
+    resource_class: small
+    working_directory: /usr/src/app
+    steps:
+      - checkout
+      - run:
+          name: Full scan of all files
+          command: |
+            echo "Running full scan of all git-tracked files"
+            git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --verbose
 
   test:
     executor: node-executor
@@ -383,3 +409,15 @@ workflows:
               only: /^review-app-.*/
           requires:
             - create_or_update_review_app
+
+  # Daily full secrets scan on main branch
+  scheduled-security-scan:
+    triggers:
+      - schedule:
+          cron: "0 14 * * *" # Daily at 9am NY time (14:00 UTC)
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - detect-secrets-full
