@@ -8,7 +8,9 @@ import {
   useOnboardingInterestsPending,
 } from "Utils/onboardingInterestsPending"
 import { getOnboardingTooltipTarget } from "Utils/onboardingTooltipTarget"
-import type { FC } from "react"
+import { type FC, useEffect, useState } from "react"
+
+const TOOLTIP_APPEAR_DELAY_MS = 300
 
 interface OnboardingTooltipSimplifiedProps {
   navItemId: "whatsNew" | "editorial" | "priceDatabase"
@@ -41,7 +43,21 @@ export const OnboardingTooltipSimplified: FC<
 
   const content = target?.navItemId === navItemId ? target.content : null
 
-  if (!content) {
+  const [isDelayElapsed, setIsDelayElapsed] = useState(false)
+
+  useEffect(() => {
+    if (!content) {
+      return
+    }
+
+    const timeout = setTimeout(() => {
+      setIsDelayElapsed(true)
+    }, TOOLTIP_APPEAR_DELAY_MS)
+
+    return () => clearTimeout(timeout)
+  }, [content])
+
+  if (!content || !isDelayElapsed) {
     return <>{children}</>
   }
 
