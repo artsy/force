@@ -104,7 +104,7 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
         justifyContent="center"
         alignItems="center"
         overflow="hidden"
-        bg={hasImage ? "mono0" : "mono10"}
+        bg="mono10"
       >
         {hasImage ? (
           <Image
@@ -114,7 +114,6 @@ export const ArtistHeaderRecentAuctionResultItem: FC<
             height="100%"
             alt=""
             lazyLoad
-            bg="mono0"
             style={{ objectFit: "contain" }}
             onError={() => setHasImageError(true)}
           />
