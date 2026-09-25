@@ -12,7 +12,7 @@ interface OnboardingTooltipResult {
 
 const WHATS_NEW_TOOLTIP: OnboardingTooltipContent = {
   title: "Explore here",
-  body: "Try browsing 'Whats New' to discover new artworks.",
+  body: "Try browsing ‘What’s New’ to discover new artworks.",
 }
 
 const EDITORIAL_TOOLTIP: OnboardingTooltipContent = {
@@ -22,7 +22,7 @@ const EDITORIAL_TOOLTIP: OnboardingTooltipContent = {
 
 const PRICE_DATABASE_TOOLTIP: OnboardingTooltipContent = {
   title: "Browse the database",
-  body: "Explore 'Price Database' to view auction history results.",
+  body: "Explore ‘Price Database’ to view auction history results.",
 }
 
 interface PageConditions {
