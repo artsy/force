@@ -33946,6 +33946,11 @@ type Query {
     """
     slug: String
   ): City
+
+  """
+  The cities that have a City Guide, in display order.
+  """
+  cityGuideCities: [City!]!
   collection(
     """
     The ID or slug of the Collection
@@ -44039,6 +44044,11 @@ type Viewer {
     """
     slug: String
   ): City
+
+  """
+  The cities that have a City Guide, in display order.
+  """
+  cityGuideCities: [City!]!
   collection(
     """
     The ID or slug of the Collection
