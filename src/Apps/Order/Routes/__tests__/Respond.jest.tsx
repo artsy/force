@@ -109,39 +109,23 @@ class RespondTestPageRTL extends OrderAppTestPageRTL {
     return historyButton || buttons[0] // fallback to first button
   }
 
-  findRadioWithText(text: string) {
-    const radios = screen.queryAllByRole("radio")
-    return radios.filter(radio => {
-      const label =
-        radio.closest("label") ||
-        document.querySelector(`label[for="${radio.id}"]`) ||
-        radio.parentElement
-      return label?.textContent?.includes(text)
-    })
+  async selectRadio(text: string) {
+    await userEvent.click(
+      screen.getByRole("radio", { name: name => name.includes(text) }),
+    )
+    await new Promise(resolve => setTimeout(resolve, 10)) // Small delay for React updates
   }
 
   async selectAcceptRadio() {
-    const radios = this.findRadioWithText("Accept seller's offer")
-    if (radios.length > 0) {
-      await userEvent.click(radios[0])
-      await new Promise(resolve => setTimeout(resolve, 10)) // Small delay for React updates
-    }
+    await this.selectRadio("Accept seller's offer")
   }
 
   async selectDeclineRadio() {
-    const radios = this.findRadioWithText("Decline seller's offer")
-    if (radios.length > 0) {
-      await userEvent.click(radios[0])
-      await new Promise(resolve => setTimeout(resolve, 10)) // Small delay for React updates
-    }
+    await this.selectRadio("Decline seller's offer")
   }
 
   async selectCounterRadio() {
-    const radios = this.findRadioWithText("Send counteroffer")
-    if (radios.length > 0) {
-      await userEvent.click(radios[0])
-      await new Promise(resolve => setTimeout(resolve, 10)) // Small delay for React updates
-    }
+    await this.selectRadio("Send counteroffer")
   }
 }
 
