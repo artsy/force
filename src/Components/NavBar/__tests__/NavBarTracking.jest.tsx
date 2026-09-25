@@ -35,6 +35,7 @@ jest.mock("System/Hooks/useRouter", () => ({
   useRouter: jest.fn(() => ({
     match: { location: { pathname: "/" } },
   })),
+  useIsRouteActive: jest.fn(() => false),
 }))
 
 describe("NavBarTracking", () => {
