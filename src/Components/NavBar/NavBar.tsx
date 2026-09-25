@@ -329,6 +329,21 @@ export const NavBar: React.FC<React.PropsWithChildren<unknown>> = track(
               <NavBarDropdownProvider>
                 <NavBarDropdownArea>
                   {DESKTOP_SECOND_TIER.map(id => {
+                    if (id === "whatsNew") {
+                      return (
+                        <OnboardingTooltipSimplified
+                          key={id}
+                          navItemId="whatsNew"
+                        >
+                          <NavBarDesktopItem
+                            item={NAV_ITEMS[id]}
+                            navigationData={navigationData}
+                            handleClick={handleClick}
+                          />
+                        </OnboardingTooltipSimplified>
+                      )
+                    }
+
                     return (
                       <NavBarDesktopItem
                         key={id}

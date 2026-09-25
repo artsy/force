@@ -1,8 +1,18 @@
-type NavItemId = "editorial" | "priceDatabase" // will grow to | "whatsNew" later
+type NavItemId = "whatsNew" | "editorial" | "priceDatabase"
 
 interface OnboardingTooltipContent {
   title: string
   body: string
+}
+
+interface OnboardingTooltipResult {
+  navItemId: NavItemId
+  content: OnboardingTooltipContent
+}
+
+const WHATS_NEW_TOOLTIP: OnboardingTooltipContent = {
+  title: "Explore here",
+  body: "Try browsing 'Whats New' to discover new artworks.",
 }
 
 const EDITORIAL_TOOLTIP: OnboardingTooltipContent = {
@@ -15,33 +25,36 @@ const PRICE_DATABASE_TOOLTIP: OnboardingTooltipContent = {
   body: "Explore 'Price Database' to view auction history results.",
 }
 
-export const getOnboardingTooltipContent = (
-  navItemId: NavItemId,
+interface PageConditions {
+  isOnHomepage: boolean
+  isOnEditorialPage: boolean
+  isOnPriceDatabasePage: boolean
+}
+
+export const getOnboardingTooltipTarget = (
   interests: string[],
-  isOnCurrentPage: boolean,
-): OnboardingTooltipContent | null => {
-  if (navItemId === "editorial") {
-    if (isOnCurrentPage) {
-      return null
-    }
+  pageConditions: PageConditions,
+): OnboardingTooltipResult | null => {
+  const hasWhatsNewInterest =
+    interests.includes("Buying art") ||
+    interests.includes("Browsing art for inspiration")
 
-    if (!interests.includes("Reading about art and artists")) {
-      return null
-    }
-
-    return EDITORIAL_TOOLTIP
+  if (pageConditions.isOnHomepage && hasWhatsNewInterest) {
+    return { navItemId: "whatsNew", content: WHATS_NEW_TOOLTIP }
   }
 
-  if (navItemId === "priceDatabase") {
-    if (isOnCurrentPage) {
-      return null
-    }
+  if (
+    !pageConditions.isOnEditorialPage &&
+    interests.includes("Reading about art and artists")
+  ) {
+    return { navItemId: "editorial", content: EDITORIAL_TOOLTIP }
+  }
 
-    if (!interests.includes("Tracking prices and results at auction")) {
-      return null
-    }
-
-    return PRICE_DATABASE_TOOLTIP
+  if (
+    !pageConditions.isOnPriceDatabasePage &&
+    interests.includes("Tracking prices and results at auction")
+  ) {
+    return { navItemId: "priceDatabase", content: PRICE_DATABASE_TOOLTIP }
   }
 
   return null

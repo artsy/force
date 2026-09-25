@@ -7,11 +7,11 @@ import {
   clearOnboardingInterestsPending,
   useOnboardingInterestsPending,
 } from "Utils/onboardingInterestsPending"
-import { getOnboardingTooltipContent } from "Utils/onboardingTooltipTarget"
+import { getOnboardingTooltipTarget } from "Utils/onboardingTooltipTarget"
 import type { FC } from "react"
 
 interface OnboardingTooltipSimplifiedProps {
-  navItemId: "editorial" | "priceDatabase"
+  navItemId: "whatsNew" | "editorial" | "priceDatabase"
 }
 
 export const OnboardingTooltipSimplified: FC<
@@ -21,6 +21,8 @@ export const OnboardingTooltipSimplified: FC<
 
   const pendingInterests = useOnboardingInterestsPending()
 
+  const isOnHomepage = useIsRouteActive("/", { exact: true })
+
   const isOnEditorialPage =
     useIsRouteActive("/article", { exact: false }) ||
     useIsRouteActive("/articles", { exact: false })
@@ -29,12 +31,15 @@ export const OnboardingTooltipSimplified: FC<
     exact: false,
   })
 
-  const isOnCurrentPage =
-    navItemId === "editorial" ? isOnEditorialPage : isOnPriceDatabasePage
-
-  const content = isLoggedIn
-    ? getOnboardingTooltipContent(navItemId, pendingInterests, isOnCurrentPage)
+  const target = isLoggedIn
+    ? getOnboardingTooltipTarget(pendingInterests, {
+        isOnHomepage,
+        isOnEditorialPage,
+        isOnPriceDatabasePage,
+      })
     : null
+
+  const content = target?.navItemId === navItemId ? target.content : null
 
   if (!content) {
     return <>{children}</>
