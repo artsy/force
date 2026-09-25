@@ -114,6 +114,76 @@ describe("ArtistHeaderEditorial", () => {
     )
   })
 
+  it("renders the article thumbnail", () => {
+    const { container } = renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: {
+          totalCount: 1,
+          edges: [
+            {
+              node: {
+                ...article(1).node,
+                thumbnailImage: {
+                  small: {
+                    src: "https://example.com/thumbnail.jpg",
+                    srcSet: "https://example.com/thumbnail.jpg 1x",
+                  },
+                },
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(container.querySelector("img")).toHaveAttribute(
+      "src",
+      "https://example.com/thumbnail.jpg",
+    )
+  })
+
+  it("renders no thumbnail when the article does not have one", () => {
+    const { container } = renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: { totalCount: 1, edges: [article(1)] },
+      }),
+    })
+
+    expect(screen.getByText("Article 1")).toBeInTheDocument()
+    expect(container.querySelector("img")).not.toBeInTheDocument()
+  })
+
+  it("removes the thumbnail when it fails to load", () => {
+    const { container } = renderWithRelay({
+      Artist: () => ({
+        name: "Pablo Picasso",
+        articlesConnection: {
+          totalCount: 1,
+          edges: [
+            {
+              node: {
+                ...article(1).node,
+                thumbnailImage: {
+                  small: {
+                    src: "https://example.com/missing.jpg",
+                    srcSet: "https://example.com/missing.jpg 1x",
+                  },
+                },
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    fireEvent.error(container.querySelector("img") as HTMLImageElement)
+
+    expect(screen.getByText("Article 1")).toBeInTheDocument()
+    expect(container.querySelector("img")).not.toBeInTheDocument()
+  })
+
   it("tracks a click on an article card", () => {
     renderWithRelay({
       Artist: () => ({
