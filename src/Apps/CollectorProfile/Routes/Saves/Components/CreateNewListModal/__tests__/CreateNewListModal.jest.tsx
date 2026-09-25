@@ -236,7 +236,7 @@ describe("CreateNewListModal", () => {
         },
       })
 
-      fireEvent.click(screen.getByRole("toggle"))
+      fireEvent.click(screen.getByRole("switch"))
 
       fireEvent.click(screen.getByText("Create List"))
 
