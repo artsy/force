@@ -4,14 +4,17 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Box, Image, ResponsiveBox, Stack, Text } from "@artsy/palette"
+import { Box, Image, Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ArtistHeaderEditorialItem_article$key } from "__generated__/ArtistHeaderEditorialItem_article.graphql"
+import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 const CARD_WIDTH = 380
+// Matches the `cropped` dimensions requested in the fragment
+const THUMBNAIL_SIZE = 100
 
 interface ArtistHeaderEditorialItemProps {
   article: ArtistHeaderEditorialItem_article$key
@@ -27,7 +30,10 @@ export const ArtistHeaderEditorialItem: React.FC<
   const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
     useAnalyticsContext()
 
+  const [hasThumbnailError, setHasThumbnailError] = useState(false)
+
   const thumbnail = article.thumbnailImage?.small
+  const hasThumbnail = !!thumbnail?.src && !hasThumbnailError
 
   return (
     <Stack
@@ -35,6 +41,7 @@ export const ArtistHeaderEditorialItem: React.FC<
       gap={[1, 2]}
       flexShrink={0}
       width={CARD_WIDTH}
+      height="100%"
       as={RouterLink}
       to={article.href}
       textDecoration="none"
@@ -57,25 +64,18 @@ export const ArtistHeaderEditorialItem: React.FC<
         trackEvent(trackingEvent)
       }}
     >
-      <Box width={100} flexShrink={0} bg="mono10">
-        {thumbnail && (
-          <ResponsiveBox
-            aspectWidth={1}
-            aspectHeight={1}
-            maxWidth="100%"
-            bg="mono10"
-          >
-            <Image
-              src={thumbnail.src}
-              srcSet={thumbnail.srcSet}
-              width="100%"
-              height="100%"
-              lazyLoad
-              alt=""
-            />
-          </ResponsiveBox>
-        )}
-      </Box>
+      {hasThumbnail && (
+        <Image
+          src={thumbnail.src}
+          srcSet={thumbnail.srcSet}
+          width={THUMBNAIL_SIZE}
+          height={THUMBNAIL_SIZE}
+          flexShrink={0}
+          lazyLoad
+          alt=""
+          onError={() => setHasThumbnailError(true)}
+        />
+      )}
 
       <Box flex={1} minWidth={0}>
         <Text variant="sm-display" lineClamp={2}>
