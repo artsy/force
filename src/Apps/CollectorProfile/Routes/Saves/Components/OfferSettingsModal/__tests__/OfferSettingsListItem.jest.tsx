@@ -43,7 +43,7 @@ describe("OfferSettingsListItem", () => {
   it("sets field value when the toggle is clicked", () => {
     render(<OfferSettingsListItem item={mockItem} />)
 
-    const toggleButton = screen.getByRole("toggle")
+    const toggleButton = screen.getByRole("switch")
 
     fireEvent.click(toggleButton)
 
