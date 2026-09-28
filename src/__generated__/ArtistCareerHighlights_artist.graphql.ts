@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4758319ad30ddbd33c58e8fa0bb7326>>
+ * @generated SignedSource<<2ccfbe2884cac3b2134e1eb66cd6f614>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,7 +76,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "excludeBlanks",
+          "value": true
+        }
+      ],
       "concreteType": "ArtistInsight",
       "kind": "LinkedField",
       "name": "insights",
@@ -115,13 +121,13 @@ const node: ReaderFragment = {
           "storageKey": "description(format:\"HTML\")"
         }
       ],
-      "storageKey": null
+      "storageKey": "insights(excludeBlanks:true)"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "700ca6b21df6819b4758b21cbb1b2f87";
+(node as any).hash = "bcf489f5f38745410f519df603709b47";
 
 export default node;
