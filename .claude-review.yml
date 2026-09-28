@@ -84,3 +84,8 @@ context: |
   Calibration: an SSR crash is Blocking. Convention and pattern issues are
   Suggestions, never Blocking. Don't claim "tests will fail" — CI covers
   that; suggesting new tests or updated expectations is fine.
+
+# Repos the experimental AI review can read for context (artsy/duchamp#128).
+related_repos:
+  - artsy/metaphysics
+  - artsy/eigen

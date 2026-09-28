@@ -36,9 +36,7 @@ describe("MultipleShippingOptionsForm", () => {
     let standardRadio = screen.getByRole("radio", { name: /Standard/ })
     let expressRadio = screen.getByRole("radio", { name: /Express/ })
     expect(standardRadio).toBeChecked()
-    expect(standardRadio.closest("label")).toHaveStyle(
-      "background-color: mono5",
-    )
+    expect(standardRadio).toHaveStyle("background-color: mono5")
 
     // Simulate address change: new quotes arrive with Express now selected
     const newOptions = [
@@ -71,7 +69,7 @@ describe("MultipleShippingOptionsForm", () => {
     // Both radio button and background highlight should match
     expect(expressRadio).toBeChecked()
     expect(standardRadio).not.toBeChecked()
-    expect(expressRadio.closest("label")).toHaveStyle("background-color: mono5")
+    expect(expressRadio).toHaveStyle("background-color: mono5")
   })
 
   it("syncs background highlight when options update", () => {
@@ -128,9 +126,7 @@ describe("MultipleShippingOptionsForm", () => {
     // Standard should now be checked with background highlight
     expect(standardRadio).toBeChecked()
     expect(expressRadio).not.toBeChecked()
-    expect(standardRadio.closest("label")).toHaveStyle(
-      "background-color: mono5",
-    )
-    expect(expressRadio.closest("label")).toHaveStyle("background-color: mono0")
+    expect(standardRadio).toHaveStyle("background-color: mono5")
+    expect(expressRadio).toHaveStyle("background-color: mono0")
   })
 })
