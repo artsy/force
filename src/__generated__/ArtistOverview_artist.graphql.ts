@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5dd02083222e2182319baf802d7fce3>>
+ * @generated SignedSource<<5c7fbae31fb11fc56e538db00b7cd4fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -105,13 +105,19 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "excludeBlanks",
+          "value": true
+        }
+      ],
       "concreteType": "ArtistInsight",
       "kind": "LinkedField",
       "name": "insights",
       "plural": true,
       "selections": (v0/*: any*/),
-      "storageKey": null
+      "storageKey": "insights(excludeBlanks:true)"
     },
     {
       "alias": null,
@@ -219,6 +225,6 @@ return {
 };
 })();
 
-(node as any).hash = "423f8b1ac84a9c7b27d18ab8c1950caa";
+(node as any).hash = "34f4d63ce1d9a316bf72939b97d7b016";
 
 export default node;
