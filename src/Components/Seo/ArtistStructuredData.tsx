@@ -3,6 +3,7 @@ import { getArtistMeta } from "Apps/Artist/Utils/getArtistMeta"
 import { StructuredData } from "Components/Seo/StructuredData"
 import { useRouter } from "System/Hooks/useRouter"
 import { getENV } from "Utils/getENV"
+import { getInstagramURL } from "Utils/getInstagramURL"
 import { getArtistSubRoute } from "Utils/url"
 import type { ArtistStructuredData_artist$key } from "__generated__/ArtistStructuredData_artist.graphql"
 import compact from "lodash/compact"
@@ -56,6 +57,8 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
   })
 
   const knowsAbout = compact(data.genes?.map(gene => gene?.name))
+
+  const sameAs = compact([getInstagramURL(data.instagramHandle)])
 
   const notableWorks = useMemo(() => {
     return compact(
@@ -174,6 +177,7 @@ export const ArtistStructuredData: React.FC<ArtistStructuredDataProps> = ({
             nationality: data.nationality
               ? { "@type": "Country", name: data.nationality }
               : undefined,
+            sameAs: sameAs.length ? sameAs : undefined,
             url: artistUrl,
           },
           {
@@ -213,6 +217,7 @@ const fragment = graphql`
     gender
     hometown
     nationality
+    instagramHandle
     href
     biographyBlurbPlain: biographyBlurb(format: PLAIN) {
       text
