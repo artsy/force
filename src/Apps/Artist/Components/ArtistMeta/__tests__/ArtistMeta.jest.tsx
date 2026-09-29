@@ -424,6 +424,40 @@ describe("AdminMeta", () => {
       })
     })
 
+    describe("sameAs with instagram handle", () => {
+      beforeEach(() => {
+        mockLocation.pathname = "/artist/andy-warhol"
+      })
+
+      const getPerson = () => {
+        return getStructuredData()?.["@graph"].find(
+          (item: any) => item["@type"] === "Person",
+        )
+      }
+
+      it("renders the instagram profile as sameAs", () => {
+        const artist = {
+          href: "/artist/andy-warhol",
+          instagramHandle: "andywarhol",
+        }
+        renderWithRelay({ Artist: () => artist })
+
+        expect(getPerson()?.sameAs).toEqual([
+          "https://www.instagram.com/andywarhol",
+        ])
+      })
+
+      it("omits sameAs when no instagram handle exists", () => {
+        const artist = {
+          href: "/artist/andy-warhol",
+          instagramHandle: null,
+        }
+        renderWithRelay({ Artist: () => artist })
+
+        expect(getPerson()?.sameAs).toBeUndefined()
+      })
+    })
+
     describe("notable works as VisualArtwork nodes", () => {
       beforeEach(() => {
         mockLocation.pathname = "/artist/andy-warhol"
