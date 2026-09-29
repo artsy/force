@@ -16,7 +16,8 @@ export const ArtistHeaderSocialLink: React.FC<ArtistHeaderSocialLinkProps> = ({
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
 
-  const href = getInstagramURL(instagramHandle)
+  const handle = instagramHandle.trim()
+  const href = getInstagramURL(handle)
 
   const handleClick = () => {
     const payload: ClickedHeader = {
@@ -39,13 +40,13 @@ export const ArtistHeaderSocialLink: React.FC<ArtistHeaderSocialLinkProps> = ({
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleClick}
-      aria-label={`Visit ${instagramHandle} on Instagram`}
+      aria-label={`Visit ${handle} on Instagram`}
       width="fit-content"
     >
       <Stack gap={0.5} flexDirection="row" alignItems="center">
         <InstagramIcon size={24} fill="mono100" display="block" />
         <Text variant="xs" color="mono100">
-          {`@${instagramHandle}`}
+          {`@${handle}`}
         </Text>
       </Stack>
     </RouterLink>
