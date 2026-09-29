@@ -4,6 +4,7 @@ import {
   ContextModule,
   type OnboardingUserInputData,
   type StartedOnboarding,
+  type SubscribedToEmail,
 } from "@artsy/cohesion"
 import { useCallback } from "react"
 import { useTracking } from "react-tracking"
@@ -84,6 +85,14 @@ export const useOnboardingTracking = () => {
     [trackEvent],
   )
 
+  const trackSubscribedToEmail = useCallback(() => {
+    const payload: SubscribedToEmail = {
+      action: ActionType.subscribedToEmail,
+    }
+
+    trackEvent(payload)
+  }, [trackEvent])
+
   const userCompletedOnboarding = useCallback(() => {
     const payload: CompletedOnboarding = {
       action: ActionType.completedOnboarding,
@@ -99,6 +108,7 @@ export const useOnboardingTracking = () => {
     trackQuestionThree,
     trackInterests,
     trackSource,
+    trackSubscribedToEmail,
     userCompletedOnboarding,
   }
 }

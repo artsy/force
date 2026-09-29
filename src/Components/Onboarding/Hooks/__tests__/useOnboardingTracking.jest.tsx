@@ -91,6 +91,12 @@ describe("useOnboardingTracking", () => {
     })
   })
 
+  it("tracks subscribedToEmail", () => {
+    setupHook().trackSubscribedToEmail()
+
+    expect(trackingSpy).toBeCalledWith({ action: "subscribedToEmail" })
+  })
+
   it("tracks userCompletedOnboarding", () => {
     setupHook().userCompletedOnboarding()
 
