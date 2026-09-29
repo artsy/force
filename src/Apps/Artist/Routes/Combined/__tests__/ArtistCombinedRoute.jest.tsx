@@ -1,5 +1,7 @@
 import { render, waitFor } from "@testing-library/react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ArtistCombinedRouteFragmentContainer } from "Apps/Artist/Routes/Combined/ArtistCombinedRoute"
+import { ArtistSocialRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistSocialRail"
 import { useRouter } from "System/Hooks/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
 
@@ -20,7 +22,7 @@ jest.mock("Utils/Hooks/useIntersectionObserver", () => ({
   useIntersectionObserver: () => ({ ref: { current: null } }),
 }))
 jest.mock("@unleash/proxy-client-react", () => ({
-  useFlag: () => false,
+  useFlag: jest.fn(),
 }))
 jest.mock("Apps/Artist/Routes/AuctionResults/ArtistAuctionResults", () => ({
   ArtistAuctionResultsQueryRenderer: () => null,
@@ -40,7 +42,7 @@ jest.mock("Apps/Artist/Routes/Overview/Components/ArtistOverview", () => ({
   ArtistOverviewQueryRenderer: () => null,
 }))
 jest.mock("Apps/Artist/Routes/Overview/Components/ArtistSocialRail", () => ({
-  ArtistSocialRailQueryRenderer: () => null,
+  ArtistSocialRailQueryRenderer: jest.fn(() => null),
 }))
 jest.mock(
   "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter",
@@ -49,6 +51,8 @@ jest.mock(
 
 const mockUseRouter = useRouter as jest.Mock
 const mockUseJump = useJump as jest.Mock
+const mockUseFlag = useFlag as jest.Mock
+const mockSocialRail = ArtistSocialRailQueryRenderer as jest.Mock
 
 const artist = { internalID: "artist-id", instagramHandle: null } as any
 
@@ -65,6 +69,8 @@ describe("ArtistCombinedRoute", () => {
 
   beforeEach(() => {
     jumpTo.mockClear()
+    mockSocialRail.mockClear()
+    mockUseFlag.mockReturnValue(false)
     mockUseJump.mockImplementation(() => ({ jumpTo }))
   })
 
@@ -149,5 +155,34 @@ describe("ArtistCombinedRoute", () => {
     })
 
     replaceState.mockRestore()
+  })
+
+  describe("the social section", () => {
+    beforeEach(() => {
+      setLocation({ hash: "" })
+      mockUseFlag.mockReturnValue(true)
+    })
+
+    it("renders for a valid instagram handle", () => {
+      render(
+        <ArtistCombinedRouteFragmentContainer
+          artist={{ ...artist, instagramHandle: "andywarhol" } as any}
+        />,
+      )
+
+      expect(mockSocialRail).toHaveBeenCalled()
+    })
+
+    it("does not render when the handle is not a bare handle", () => {
+      render(
+        <ArtistCombinedRouteFragmentContainer
+          artist={
+            { ...artist, instagramHandle: "https://instagram.com/foo" } as any
+          }
+        />,
+      )
+
+      expect(mockSocialRail).not.toHaveBeenCalled()
+    })
   })
 })
