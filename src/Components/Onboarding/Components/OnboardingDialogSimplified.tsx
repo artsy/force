@@ -7,6 +7,7 @@ import {
   OnboardingSourceStep,
 } from "Components/Onboarding/Components/OnboardingSourceStep"
 import { OnboardingStepShell } from "Components/Onboarding/Components/OnboardingStepShell"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
 import {
@@ -43,6 +44,8 @@ export const OnboardingDialogSimplified: FC<
     useCountryCode({ skip: !isOneTapSignup })
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+
+  const tracking = useOnboardingTracking()
 
   const [userChoice, setUserChoice] = useState<boolean | null>(null)
   const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
@@ -108,6 +111,10 @@ export const OnboardingDialogSimplified: FC<
   }
 
   const handleCta = () => {
+    if (currentStep === "interests") {
+      tracking.trackInterests(interests)
+    }
+
     if (isLastStep) {
       handleFinish()
       return

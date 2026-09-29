@@ -58,6 +58,19 @@ export const useOnboardingTracking = () => {
     [trackEvent],
   )
 
+  const trackInterests = useCallback(
+    (interests: string[]) => {
+      const payload: OnboardingUserInputData = {
+        action: ActionType.onboardingUserInputData,
+        context_module: ContextModule.onboardingInterests,
+        data_input: JSON.stringify(interests),
+      }
+
+      trackEvent(payload)
+    },
+    [trackEvent],
+  )
+
   const userCompletedOnboarding = useCallback(() => {
     const payload: CompletedOnboarding = {
       action: ActionType.completedOnboarding,
@@ -71,6 +84,7 @@ export const useOnboardingTracking = () => {
     trackQuestionOne,
     trackQuestionTwo,
     trackQuestionThree,
+    trackInterests,
     userCompletedOnboarding,
   }
 }

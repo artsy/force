@@ -71,6 +71,16 @@ describe("useOnboardingTracking", () => {
     })
   })
 
+  it("trackInterests", () => {
+    setupHook().trackInterests(["Buying art", "Browsing for fun"])
+
+    expect(trackingSpy).toBeCalledWith({
+      action: "onboardingUserInputData",
+      context_module: "onboardingInterests",
+      data_input: '["Buying art","Browsing for fun"]',
+    })
+  })
+
   it("tracks userCompletedOnboarding", () => {
     setupHook().userCompletedOnboarding()
 
