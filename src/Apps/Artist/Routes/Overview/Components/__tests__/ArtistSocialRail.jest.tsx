@@ -106,6 +106,29 @@ describe("ArtistSocialRail", () => {
     ).not.toBeInTheDocument()
   })
 
+  it("renders an Instagram watermark on each image", () => {
+    renderWithRelay({
+      Artist: () => ({
+        instagramMedia: [
+          {
+            internalID: "media-1",
+            permalink: "https://www.instagram.com/p/first",
+            caption: "First post",
+            image: { cropped: { src: "https://example.com/1.jpg" } },
+          },
+          {
+            internalID: "media-2",
+            permalink: "https://www.instagram.com/p/second",
+            caption: "Second post",
+            image: { cropped: { src: "https://example.com/2.jpg" } },
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getAllByTestId("tile-instagram-watermark")).toHaveLength(2)
+  })
+
   it("renders a skeleton behind each tile until its image loads", () => {
     renderWithRelay({
       Artist: () => ({
