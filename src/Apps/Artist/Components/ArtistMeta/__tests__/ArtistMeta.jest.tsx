@@ -447,6 +447,16 @@ describe("AdminMeta", () => {
         ])
       })
 
+      it("omits sameAs when the handle is not a bare handle", () => {
+        const artist = {
+          href: "/artist/andy-warhol",
+          instagramHandle: "https://instagram.com/andywarhol",
+        }
+        renderWithRelay({ Artist: () => artist })
+
+        expect(getPerson()?.sameAs).toBeUndefined()
+      })
+
       it("omits sameAs when no instagram handle exists", () => {
         const artist = {
           href: "/artist/andy-warhol",

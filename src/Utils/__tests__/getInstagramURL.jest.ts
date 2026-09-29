@@ -30,6 +30,12 @@ describe("getInstagramHandle", () => {
     expect(getInstagramHandle("andywarhol/")).toBeNull()
   })
 
+  it("rejects an all-periods handle, which resolves to the home page", () => {
+    expect(getInstagramHandle(".")).toBeNull()
+    expect(getInstagramHandle("..")).toBeNull()
+    expect(getInstagramURL("..")).toBeNull()
+  })
+
   it("rejects null, undefined and blank input", () => {
     expect(getInstagramHandle(null)).toBeNull()
     expect(getInstagramHandle(undefined)).toBeNull()
