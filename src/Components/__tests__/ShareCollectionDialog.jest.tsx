@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import {
   ShareCollectionDialog,
-  ShareCollectionDialogProps,
+  type ShareCollectionDialogProps,
 } from "Components/ShareCollectionDialog"
 
 jest.mock("System/Hooks/useSystemContext", () => ({
@@ -64,7 +64,7 @@ describe("ShareCollectionDialog", () => {
 
     expect(screen.getByText("Share “Test Collection”")).toBeInTheDocument()
 
-    const toggle = screen.getByRole("toggle")
+    const toggle = screen.getByRole("switch")
     const inputField = screen.getByRole("textbox")
     const copyButton = screen.getByRole("button", { name: /Copy link/ })
     const openLinkButton = screen.getByRole("link", { name: /Open in new tab/ })
@@ -88,7 +88,7 @@ describe("ShareCollectionDialog", () => {
 
     expect(screen.getByText("Share “Test Collection”")).toBeInTheDocument()
 
-    const toggle = screen.getByRole("toggle")
+    const toggle = screen.getByRole("switch")
     const inputField = screen.getByRole("textbox")
     const copyButton = screen.getByRole("button", { name: /Copy link/ })
     const openLinkButton = screen.getByRole("link", { name: /Open in new tab/ })
@@ -150,7 +150,7 @@ describe("ShareCollectionDialog", () => {
       />,
     )
 
-    const toggle = screen.getByRole("toggle")
+    const toggle = screen.getByRole("switch")
     fireEvent.click(toggle)
 
     expect(mockSubmitMutation).toHaveBeenCalledWith(
@@ -182,7 +182,7 @@ describe("ShareCollectionDialog", () => {
       />,
     )
 
-    const toggle = screen.getByRole("toggle")
+    const toggle = screen.getByRole("switch")
     fireEvent.click(toggle)
 
     await waitFor(() => {

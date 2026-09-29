@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a2a1009abe66d80e2d58084bbf9d0ba>>
+ * @generated SignedSource<<1d3e0dc535c0b98c46e0fd98a6cc3fa9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,9 @@ export type ArtistHeaderEditorial_artist$data = {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
   readonly href: string | null | undefined;
+  readonly internalID: string;
   readonly name: string | null | undefined;
+  readonly slug: string;
   readonly " $fragmentType": "ArtistHeaderEditorial_artist";
 };
 export type ArtistHeaderEditorial_artist$key = {
@@ -29,12 +31,28 @@ export type ArtistHeaderEditorial_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistHeaderEditorial_artist",
   "selections": [
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -96,13 +114,7 @@ const node: ReaderFragment = {
                   "kind": "FragmentSpread",
                   "name": "ArtistHeaderEditorialItem_article"
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                }
+                (v0/*: any*/)
               ],
               "storageKey": null
             }
@@ -116,7 +128,8 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "2989a92b71193f16bbd5f873cf16608c";
+(node as any).hash = "de46277fe757bc24b8d6707602ab147e";
 
 export default node;

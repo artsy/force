@@ -3,6 +3,7 @@
 // - Automatically handles CSRF token, session ID, reCAPTCHA token
 
 import { getENV } from "Utils/getENV"
+import { clearOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
 import { recaptcha } from "Utils/recaptcha"
 import Cookies from "cookies-js"
 
@@ -162,6 +163,8 @@ export const signUp = async (args: {
 }
 
 export const logout = async () => {
+  clearOnboardingInterestsPending()
+
   const logoutUrl = `${getENV("APP_URL")}${getENV("AP").logoutPath}`
 
   const response = await fetch(logoutUrl, {

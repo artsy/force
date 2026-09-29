@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05a35df5085f9b64386221f5085cdb83>>
+ * @generated SignedSource<<8d61153d30ffc36b652a8a32240edb00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,22 +10,23 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistApp_artist$data = {
+export type ArtistHeaderRecentAuctionResults_artist$data = {
+  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null | undefined;
   readonly recentAuctionResultsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderRecentAuctionResultItem_auctionResult">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist" | "ArtistMeta_artist">;
-  readonly " $fragmentType": "ArtistApp_artist";
+  readonly slug: string;
+  readonly " $fragmentType": "ArtistHeaderRecentAuctionResults_artist";
 };
-export type ArtistApp_artist$key = {
-  readonly " $data"?: ArtistApp_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
+export type ArtistHeaderRecentAuctionResults_artist$key = {
+  readonly " $data"?: ArtistHeaderRecentAuctionResults_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderRecentAuctionResults_artist">;
 };
 
 const node: ReaderFragment = (function(){
@@ -49,24 +50,21 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistApp_artist",
+  "name": "ArtistHeaderRecentAuctionResults_artist",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistMeta_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistHeader_artist"
-    },
     (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
       "storageKey": null
     },
     {
@@ -124,7 +122,12 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/)
+                (v0/*: any*/),
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ArtistHeaderRecentAuctionResultItem_auctionResult"
+                }
               ],
               "storageKey": null
             }
@@ -140,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "34ae999db2630c2cdf569b4550ac27e4";
+(node as any).hash = "ebaabd7914f969866193fb4117fbfac5";
 
 export default node;

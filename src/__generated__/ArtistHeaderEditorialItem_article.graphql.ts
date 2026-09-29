@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f02584d46530b70851831aea03035b7>>
+ * @generated SignedSource<<f13835a17546ef14e76653caa02deaeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ArtistHeaderEditorialItem_article$data = {
   readonly href: string | null | undefined;
   readonly internalID: string;
   readonly publishedAt: string | null | undefined;
+  readonly slug: string | null | undefined;
   readonly thumbnailImage: {
     readonly small: {
       readonly src: string;
@@ -40,6 +41,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -90,12 +98,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 125
+              "value": 100
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 125
+              "value": 100
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -118,7 +126,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:125,width:125)"
+          "storageKey": "cropped(height:100,width:100)"
         }
       ],
       "storageKey": null
@@ -128,6 +136,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b1980e299d766d96a40b49aa38ef22e1";
+(node as any).hash = "3c026b6e4bb3a238f59c976224b3865a";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d60690dc7d19f0dc985d72611b0a85d2>>
+ * @generated SignedSource<<9a706d80b39f5e3b836cbc262b1af564>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,29 +33,43 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -102,6 +116,8 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -109,7 +125,7 @@ return {
             "name": "name",
             "storageKey": null
           },
-          (v1/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": [
@@ -152,14 +168,9 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
                       (v1/*: any*/),
+                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -201,12 +212,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 125
+                                "value": 100
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 125
+                                "value": 100
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -229,12 +240,12 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:125,width:125)"
+                            "storageKey": "cropped(height:100,width:100)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -244,14 +255,14 @@ return {
             ],
             "storageKey": "articlesConnection(first:3,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v2/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "6b638b45cee9960246caed14e0c21bfc",
+    "cacheID": "88178d6440b907244a05976dc973d6a5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -279,11 +290,12 @@ return {
           "plural": false,
           "type": "Article"
         },
-        "artist.articlesConnection.edges.node.byline": (v3/*: any*/),
-        "artist.articlesConnection.edges.node.href": (v3/*: any*/),
-        "artist.articlesConnection.edges.node.id": (v4/*: any*/),
-        "artist.articlesConnection.edges.node.internalID": (v4/*: any*/),
-        "artist.articlesConnection.edges.node.publishedAt": (v3/*: any*/),
+        "artist.articlesConnection.edges.node.byline": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.href": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.id": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.internalID": (v6/*: any*/),
+        "artist.articlesConnection.edges.node.publishedAt": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.slug": (v5/*: any*/),
         "artist.articlesConnection.edges.node.thumbnailImage": {
           "enumValues": null,
           "nullable": true,
@@ -296,23 +308,25 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artist.articlesConnection.edges.node.thumbnailImage.small.src": (v5/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v5/*: any*/),
-        "artist.articlesConnection.edges.node.title": (v3/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.small.src": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.title": (v5/*: any*/),
         "artist.articlesConnection.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "artist.href": (v3/*: any*/),
-        "artist.id": (v4/*: any*/),
-        "artist.name": (v3/*: any*/)
+        "artist.href": (v5/*: any*/),
+        "artist.id": (v6/*: any*/),
+        "artist.internalID": (v6/*: any*/),
+        "artist.name": (v5/*: any*/),
+        "artist.slug": (v6/*: any*/)
       }
     },
     "name": "ArtistHeaderEditorial_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeaderEditorial_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeaderEditorial_artist\n    id\n  }\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 125, height: 125) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistHeaderEditorial_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeaderEditorial_artist\n    id\n  }\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  slug\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  internalID\n  slug\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

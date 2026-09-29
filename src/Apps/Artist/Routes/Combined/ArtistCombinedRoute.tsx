@@ -55,29 +55,31 @@ const ArtistCombinedRoute: React.FC<
   const {
     match: { location },
   } = useRouter()
-  const scrolledToHash = useRef(false)
+  // `null` means nothing has been handled yet; `undefined` is the key of a fresh
+  // page load's location. So this must start as `null`, not `undefined`.
+  const handledLocationKey = useRef<string | undefined | null>(null)
 
   // When the page is accessed via a URL that contains a hash to a jump link
   // anchor -- as in the case of the 301 redirects we've set up --
   // we scroll to the appropriate section and clean up the URL.
   //
   // Uses window.history.replaceState instead of router.replace to avoid
-  // triggering an extra pageview from Farce's UPDATE_LOCATION action.
+  // triggering an extra pageview from Farce's UPDATE_LOCATION action. Because
+  // of that, the router's location keeps the hash, so we track which history
+  // entry was handled rather than re-jumping whenever this effect re-runs.
   useEffect(() => {
-    if (scrolledToHash.current) return
+    if (handledLocationKey.current === location.key) return
 
     const scrollToSectionFromHash = async () => {
-      if (scrolledToHash.current) return
-
       if (location.hash === "#JUMP--marketSignalsTop") {
-        scrolledToHash.current = true
+        handledLocationKey.current = location.key
         await waitUntil("auction")
         jumpTo("marketSignalsTop", { offset: 40 })
         // Remove the hash from the URL
         const newPath = location.pathname + location.search
         window.history.replaceState({}, "", newPath)
       } else if (location.hash === "#JUMP--artistAboutTop") {
-        scrolledToHash.current = true
+        handledLocationKey.current = location.key
         await waitUntil("about")
         jumpTo("artistAboutTop", { offset: 40 })
         // Remove the hash from the URL

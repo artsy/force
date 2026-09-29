@@ -52,7 +52,7 @@ describe("EditArtworkListModal", () => {
 
     expect(screen.getByText("Edit your list")).toBeInTheDocument()
     expect(screen.getByText("Shared list")).toBeInTheDocument()
-    expect(screen.getByRole("toggle")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Cancel/ })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Save/ })).toBeInTheDocument()
   })
@@ -114,7 +114,7 @@ describe("EditArtworkListModal", () => {
       target: { value: "Foo Bar!" },
     })
 
-    fireEvent.click(screen.getByRole("toggle"))
+    fireEvent.click(screen.getByRole("switch"))
 
     fireEvent.click(saveButton)
 
