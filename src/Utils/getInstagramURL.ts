@@ -9,5 +9,5 @@ export const getInstagramURL = (
     return null
   }
 
-  return `${INSTAGRAM_BASE_URL}/${trimmed}`
+  return `${INSTAGRAM_BASE_URL}/${encodeURIComponent(trimmed)}`
 }

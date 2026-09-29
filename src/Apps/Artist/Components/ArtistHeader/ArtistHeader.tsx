@@ -59,7 +59,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
-  const instagramHandle = artist.instagramHandle ?? null
+  const instagramHandle = artist.instagramHandle?.trim() || null
 
   const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
 
