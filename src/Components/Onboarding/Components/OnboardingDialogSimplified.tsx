@@ -115,6 +115,13 @@ export const OnboardingDialogSimplified: FC<
       tracking.trackInterests(interests)
     }
 
+    if (currentStep === "source" && source) {
+      const dataInput =
+        source === OTHER_SOURCE ? (otherSourceText ?? "").trim() : source
+
+      tracking.trackSource(dataInput)
+    }
+
     if (isLastStep) {
       handleFinish()
       return

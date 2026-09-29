@@ -81,6 +81,16 @@ describe("useOnboardingTracking", () => {
     })
   })
 
+  it("trackSource", () => {
+    setupHook().trackSource("Search engine (Google, etc.)")
+
+    expect(trackingSpy).toBeCalledWith({
+      action: "onboardingUserInputData",
+      context_module: "onboardingAttribution",
+      data_input: "Search engine (Google, etc.)",
+    })
+  })
+
   it("tracks userCompletedOnboarding", () => {
     setupHook().userCompletedOnboarding()
 
