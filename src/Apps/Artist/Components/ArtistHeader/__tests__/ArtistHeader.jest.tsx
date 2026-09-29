@@ -325,11 +325,29 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(screen.queryByLabelText(/on Instagram$/)).not.toBeInTheDocument()
     })
 
-    it("does not render the link when the handle is blank", () => {
+    it("renders a single @ for a handle stored with a leading @", () => {
       renderWithRelay({
         Artist: () => ({
           name: "Pablo Picasso",
-          instagramHandle: "   ",
+          internalID: "artist-id",
+          instagramHandle: "@pablopicasso",
+        }),
+      })
+
+      const link = screen.getByLabelText("Visit pablopicasso on Instagram")
+
+      expect(link).toHaveAttribute(
+        "href",
+        "https://www.instagram.com/pablopicasso",
+      )
+      expect(screen.getByText("@pablopicasso")).toBeInTheDocument()
+    })
+
+    it("renders nothing when the handle is not a bare handle", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          instagramHandle: "https://instagram.com/pablopicasso",
         }),
       })
 

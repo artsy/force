@@ -43,6 +43,10 @@ import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboard
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
+import {
+  getInstagramHandle,
+  getInstagramURL,
+} from "Utils/getInstagramURL"
 import type { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -59,7 +63,8 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
-  const instagramHandle = artist.instagramHandle?.trim() || null
+  const instagramHandle = getInstagramHandle(artist.instagramHandle)
+  const instagramURL = getInstagramURL(instagramHandle)
 
   const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
 
@@ -232,12 +237,13 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                     )}
                   </Flex>
 
-                  {!!instagramHandle && (
+                  {!!instagramHandle && !!instagramURL && (
                     <>
                       <Spacer y={1} />
 
                       <ArtistHeaderSocialLink
                         instagramHandle={instagramHandle}
+                        href={instagramURL}
                       />
                     </>
                   )}
@@ -256,8 +262,11 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
                   />
                 </ProgressiveOnboardingFollowArtist>
 
-                {!!instagramHandle && (
-                  <ArtistHeaderSocialLink instagramHandle={instagramHandle} />
+                {!!instagramHandle && !!instagramURL && (
+                  <ArtistHeaderSocialLink
+                    instagramHandle={instagramHandle}
+                    href={instagramURL}
+                  />
                 )}
               </>
             )}
