@@ -324,6 +324,17 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       expect(screen.queryByLabelText(/on Instagram$/)).not.toBeInTheDocument()
     })
+
+    it("does not render the link when the handle is blank", () => {
+      renderWithRelay({
+        Artist: () => ({
+          name: "Pablo Picasso",
+          instagramHandle: "   ",
+        }),
+      })
+
+      expect(screen.queryByLabelText(/on Instagram$/)).not.toBeInTheDocument()
+    })
   })
 
   describe("Cover artwork", () => {

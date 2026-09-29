@@ -8,7 +8,14 @@ interface StructuredDataProps {
 }
 
 export const StructuredData = ({ schemaData }: StructuredDataProps) => {
-  const schemaContent = JSON.stringify(schemaData, null, 2)
+  // `JSON.stringify` does not escape `<`, and this string is injected into a
+  // `<script>` tag. A stored value containing `</script>` would close the tag
+  // early and run whatever followed it. `\u003c` is a valid JSON escape, so
+  // parsers still read the same string.
+  const schemaContent = JSON.stringify(schemaData, null, 2).replace(
+    /</g,
+    "\\u003c",
+  )
   const dangerousHtml = { __html: schemaContent }
 
   return (

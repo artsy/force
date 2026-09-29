@@ -45,6 +45,29 @@ describe("StructuredData", () => {
     expect(script?.textContent).toMatch('"foo": "bar"')
   })
 
+  it("escapes < so a stored value cannot break out of the script tag", () => {
+    const schemaData = {
+      "@type": "Person",
+      name: '</script><script>window.pwned = true</script>',
+    }
+    renderComponent({ schemaData })
+
+    const script = document.querySelector("script")
+
+    expect(script?.textContent).not.toMatch("</script>")
+    expect(script?.textContent).toMatch("\\u003c/script")
+  })
+
+  it("still produces JSON that parses back to the original value", () => {
+    const name = 'a < b </script> c'
+    renderComponent({ schemaData: { "@type": "Person", name } })
+
+    const script = document.querySelector("script")
+    const parsed = JSON.parse(script?.textContent || "{}")
+
+    expect(parsed.name).toEqual(name)
+  })
+
   it("sets the context", () => {
     renderComponent()
     const script = document.querySelector("script")
