@@ -12,6 +12,7 @@ import { ArtistSocialRailQueryRenderer } from "Apps/Artist/Routes/Overview/Compo
 import { ArtistArtworkFilterQueryRenderer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { Z } from "Apps/Components/constants"
 import { useRouter } from "System/Hooks/useRouter"
+import { getInstagramHandle } from "Utils/getInstagramURL"
 import { useJump } from "Utils/Hooks/useJump"
 import { Section, SectionNavProvider } from "Utils/Hooks/useSectionNav"
 import { useSectionReadiness } from "Utils/Hooks/useSectionReadiness"
@@ -35,7 +36,8 @@ const ArtistCombinedRoute: React.FC<
     "hack16_connect-instagram-feed-artist-pages",
   )
 
-  const hasSocial = isInstagramFeedEnabled && !!artist.instagramHandle
+  const hasSocial =
+    isInstagramFeedEnabled && !!getInstagramHandle(artist.instagramHandle)
 
   const { lazy, markReady, waitUntil, navigating } = useSectionReadiness([
     "artworks",
