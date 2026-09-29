@@ -47,6 +47,11 @@ export const OnboardingDialogSimplified: FC<
 
   const tracking = useOnboardingTracking()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: fires once when the modal opens
+  useEffect(() => {
+    tracking.userStartedOnboarding()
+  }, [])
+
   const [userChoice, setUserChoice] = useState<boolean | null>(null)
   const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
 
@@ -104,6 +109,7 @@ export const OnboardingDialogSimplified: FC<
   const handleFinish = () => {
     persistEmailOptIn()
     markOnboardingInterestsPending(interests)
+    tracking.userCompletedOnboarding()
     onHide()
   }
 
