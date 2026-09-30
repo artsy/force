@@ -3,8 +3,8 @@ import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { OnboardingDialogSimplified } from "Components/Onboarding/Components/OnboardingDialogSimplified"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { peekOneTapEmailOptInPending } from "Utils/oneTapEmailOptIn"
 import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
+import { peekOneTapEmailOptInPending } from "Utils/oneTapEmailOptIn"
 import { useTracking } from "react-tracking"
 
 const mockOnClose = jest.fn()
@@ -251,14 +251,14 @@ describe("OnboardingDialogSimplified", () => {
       <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
     )
 
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
     fireEvent.click(screen.getByText("Continue"))
 
     expect(setCustomUserAttribute).toHaveBeenCalledWith(
       "onboarding_interests",
-      ["Buying art"],
+      ["Buy art"],
     )
     expect(setCustomUserAttribute).toHaveBeenCalledWith(
       "onboarding_source",
