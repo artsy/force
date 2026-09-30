@@ -68,6 +68,10 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
 
           track.signedUp({ service: "email", userId: user.id })
 
+          if (agreedToReceiveEmails) {
+            track.subscribedToEmail()
+          }
+
           options.onSuccess?.()
         } catch (err) {
           console.error(err)

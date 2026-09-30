@@ -7,6 +7,7 @@ import {
   OnboardingSourceStep,
 } from "Components/Onboarding/Components/OnboardingSourceStep"
 import { OnboardingStepShell } from "Components/Onboarding/Components/OnboardingStepShell"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
 import {
@@ -44,6 +45,13 @@ export const OnboardingDialogSimplified: FC<
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
+  const tracking = useOnboardingTracking()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: fires once when the modal opens
+  useEffect(() => {
+    tracking.userStartedOnboarding()
+  }, [])
+
   const [userChoice, setUserChoice] = useState<boolean | null>(null)
   const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
 
@@ -69,12 +77,16 @@ export const OnboardingDialogSimplified: FC<
     }
 
     if (agreedToReceiveEmails) {
-      submitUpdateMyUserProfile({ agreedToReceiveEmails: true }).catch(err => {
-        console.error(
-          "[OnboardingDialogSimplified] Failed to save email preference",
-          err,
-        )
-      })
+      submitUpdateMyUserProfile({ agreedToReceiveEmails: true })
+        .then(() => {
+          tracking.trackSubscribedToEmail()
+        })
+        .catch(err => {
+          console.error(
+            "[OnboardingDialogSimplified] Failed to save email preference",
+            err,
+          )
+        })
     }
 
     clearOneTapEmailOptInPending()
@@ -88,6 +100,14 @@ export const OnboardingDialogSimplified: FC<
     })
   }
 
+  const getResolvedSource = () => {
+    if (source === OTHER_SOURCE) {
+      return (otherSourceText ?? "").trim()
+    }
+
+    return source ?? ""
+  }
+
   const goToNextStep = () => {
     setStepIndex(current => current + 1)
   }
@@ -99,6 +119,11 @@ export const OnboardingDialogSimplified: FC<
   const handleFinish = () => {
     persistEmailOptIn()
     markOnboardingInterestsPending(interests)
+    tracking.setBrazeOnboardingAttributes({
+      interests,
+      source: getResolvedSource(),
+    })
+    tracking.userCompletedOnboarding()
     onHide()
   }
 
@@ -108,6 +133,14 @@ export const OnboardingDialogSimplified: FC<
   }
 
   const handleCta = () => {
+    if (currentStep === "interests") {
+      tracking.trackInterests(interests)
+    }
+
+    if (currentStep === "source" && source) {
+      tracking.trackSource(getResolvedSource())
+    }
+
     if (isLastStep) {
       handleFinish()
       return

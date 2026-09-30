@@ -12,7 +12,7 @@ export const OnboardingInterestsStep: FC<
 > = ({ selectedInterests, onToggleInterest }) => {
   return (
     <Flex flexDirection="column" pt={2}>
-      <Text variant="lg-display">What are you most interested in?</Text>
+      <Text variant="lg-display">What do you want to do on Artsy?</Text>
 
       <Text variant="xs" color="mono60" mt={0.5}>
         Select all that apply

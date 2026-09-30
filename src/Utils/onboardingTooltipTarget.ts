@@ -36,8 +36,8 @@ export const getOnboardingTooltipTarget = (
   pageConditions: PageConditions,
 ): OnboardingTooltipResult | null => {
   const hasWhatsNewInterest =
-    interests.includes("Buying art") ||
-    interests.includes("Browsing art for inspiration")
+    interests.includes("Buy art") ||
+    interests.includes("Browse art for inspiration")
 
   if (pageConditions.isOnHomepage && hasWhatsNewInterest) {
     return { navItemId: "whatsNew", content: WHATS_NEW_TOOLTIP }
@@ -45,14 +45,14 @@ export const getOnboardingTooltipTarget = (
 
   if (
     !pageConditions.isOnEditorialPage &&
-    interests.includes("Reading about art and artists")
+    interests.includes("Read about art and artists")
   ) {
     return { navItemId: "editorial", content: EDITORIAL_TOOLTIP }
   }
 
   if (
     !pageConditions.isOnPriceDatabasePage &&
-    interests.includes("Tracking prices and results at auction")
+    interests.includes("Track prices and results at auction")
   ) {
     return { navItemId: "priceDatabase", content: PRICE_DATABASE_TOOLTIP }
   }

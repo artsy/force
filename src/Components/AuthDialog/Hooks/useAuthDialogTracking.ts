@@ -7,6 +7,7 @@ import {
   Intent,
   OwnerType,
   type ResetYourPassword,
+  type SubscribedToEmail,
   type SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
 import {
@@ -103,6 +104,14 @@ export const useAuthDialogTracking = () => {
           trigger,
           type: AuthModalType.signup,
           user_id: userId,
+        }
+
+        return trackEvent(payload)
+      },
+
+      subscribedToEmail: () => {
+        const payload: SubscribedToEmail = {
+          action: ActionType.subscribedToEmail,
         }
 
         return trackEvent(payload)

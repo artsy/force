@@ -9,7 +9,7 @@ const noPageConditions = {
 describe("getOnboardingTooltipTarget", () => {
   describe("whatsNew", () => {
     it("returns whatsNew when on the homepage and a matching interest is selected", () => {
-      const target = getOnboardingTooltipTarget(["Buying art"], {
+      const target = getOnboardingTooltipTarget(["Buy art"], {
         ...noPageConditions,
         isOnHomepage: true,
       })
@@ -18,7 +18,7 @@ describe("getOnboardingTooltipTarget", () => {
     })
 
     it("returns null when not on the homepage, even with a matching interest", () => {
-      const target = getOnboardingTooltipTarget(["Buying art"], {
+      const target = getOnboardingTooltipTarget(["Buy art"], {
         ...noPageConditions,
         isOnHomepage: false,
       })
@@ -28,7 +28,7 @@ describe("getOnboardingTooltipTarget", () => {
 
     it("returns null when on the homepage but no matching interest is selected", () => {
       const target = getOnboardingTooltipTarget(
-        ["Reading about art and artists"],
+        ["Read about art and artists"],
         { ...noPageConditions, isOnHomepage: true },
       )
 
@@ -39,7 +39,7 @@ describe("getOnboardingTooltipTarget", () => {
   describe("editorial", () => {
     it("returns editorial when the interest is selected and not on an editorial page", () => {
       const target = getOnboardingTooltipTarget(
-        ["Reading about art and artists"],
+        ["Read about art and artists"],
         noPageConditions,
       )
 
@@ -48,7 +48,7 @@ describe("getOnboardingTooltipTarget", () => {
 
     it("returns null when already on an editorial page", () => {
       const target = getOnboardingTooltipTarget(
-        ["Reading about art and artists"],
+        ["Read about art and artists"],
         { ...noPageConditions, isOnEditorialPage: true },
       )
 
@@ -59,7 +59,7 @@ describe("getOnboardingTooltipTarget", () => {
   describe("priceDatabase", () => {
     it("returns priceDatabase when the interest is selected and not on the price database page", () => {
       const target = getOnboardingTooltipTarget(
-        ["Tracking prices and results at auction"],
+        ["Track prices and results at auction"],
         noPageConditions,
       )
 
@@ -68,7 +68,7 @@ describe("getOnboardingTooltipTarget", () => {
 
     it("returns null when already on the price database page", () => {
       const target = getOnboardingTooltipTarget(
-        ["Tracking prices and results at auction"],
+        ["Track prices and results at auction"],
         { ...noPageConditions, isOnPriceDatabasePage: true },
       )
 
@@ -80,9 +80,9 @@ describe("getOnboardingTooltipTarget", () => {
     it("prioritizes whatsNew over editorial and priceDatabase when all three interests are selected on the homepage", () => {
       const target = getOnboardingTooltipTarget(
         [
-          "Buying art",
-          "Reading about art and artists",
-          "Tracking prices and results at auction",
+          "Buy art",
+          "Read about art and artists",
+          "Track prices and results at auction",
         ],
         { ...noPageConditions, isOnHomepage: true },
       )
@@ -92,10 +92,7 @@ describe("getOnboardingTooltipTarget", () => {
 
     it("falls through to editorial when whatsNew's condition fails but editorial's passes", () => {
       const target = getOnboardingTooltipTarget(
-        [
-          "Reading about art and artists",
-          "Tracking prices and results at auction",
-        ],
+        ["Read about art and artists", "Track prices and results at auction"],
         noPageConditions,
       )
 
@@ -104,7 +101,7 @@ describe("getOnboardingTooltipTarget", () => {
 
     it("falls through to priceDatabase when whatsNew and editorial both fail", () => {
       const target = getOnboardingTooltipTarget(
-        ["Tracking prices and results at auction"],
+        ["Track prices and results at auction"],
         noPageConditions,
       )
 
@@ -122,7 +119,7 @@ describe("getOnboardingTooltipTarget", () => {
   })
 
   it("returns null when nothing qualifies at all", () => {
-    const target = getOnboardingTooltipTarget(["Buying art"], {
+    const target = getOnboardingTooltipTarget(["Buy art"], {
       isOnHomepage: false,
       isOnEditorialPage: true,
       isOnPriceDatabasePage: false,

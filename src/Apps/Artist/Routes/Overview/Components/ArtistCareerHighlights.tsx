@@ -8,10 +8,7 @@ import {
 } from "@artsy/palette"
 import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { useArtistRecentAuctionResults } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
-import {
-  ArtistCareerHighlightFragmentContainer,
-  isRenderableArtistInsight,
-} from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -41,10 +38,7 @@ const ArtistCareerHighlights: FC<
 
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
 
-  // Filter to renderable insights before slicing so the offset matches the
-  // header's, which filters the same way. Otherwise an empty insight in the
-  // header's window leaves a gap and the remainder is misaligned here.
-  const allInsights = artist.insights.filter(isRenderableArtistInsight)
+  const allInsights = artist.insights
   const insights = allInsights.slice(
     getArtistHeaderNumberOfInsights({ hasEditorial, hasRecentAuctionResults }),
   )
@@ -138,7 +132,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         articlesConnection(first: 1) {
           totalCount
         }
-        insights {
+        insights(excludeBlanks: true) {
           ...ArtistCareerHighlight_insight
           kind
           entities

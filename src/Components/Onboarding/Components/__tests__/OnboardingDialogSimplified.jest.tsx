@@ -1,9 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { OnboardingDialogSimplified } from "Components/Onboarding/Components/OnboardingDialogSimplified"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { peekOneTapEmailOptInPending } from "Utils/oneTapEmailOptIn"
 import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
+import { peekOneTapEmailOptInPending } from "Utils/oneTapEmailOptIn"
+import { useTracking } from "react-tracking"
 
 const mockOnClose = jest.fn()
 const mockOnHide = jest.fn()
@@ -22,12 +24,19 @@ jest.mock("Utils/onboardingInterestsPending", () => ({
   ...jest.requireActual("Utils/onboardingInterestsPending"),
   markOnboardingInterestsPending: jest.fn(),
 }))
+jest.mock("react-tracking")
+jest.mock("System/Hooks/useSystemContext")
 
 const mockUseCountryCode = useCountryCode as jest.Mock
 const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
+const mockUseSystemContext = useSystemContext as jest.Mock
 const mockSubmit = jest.fn().mockResolvedValue({})
 const mockPeek = peekOneTapEmailOptInPending as jest.Mock
 const mockMarkInterestsPending = markOnboardingInterestsPending as jest.Mock
+const mockUseTracking = useTracking as jest.Mock
+const trackingSpy = jest.fn()
+const setCustomUserAttribute = jest.fn()
+const requestImmediateDataFlush = jest.fn()
 
 describe("OnboardingDialogSimplified", () => {
   beforeEach(() => {
@@ -40,6 +49,12 @@ describe("OnboardingDialogSimplified", () => {
       isAutomaticallySubscribed: true,
       loading: false,
     })
+    mockUseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
+    mockUseSystemContext.mockReturnValue({ user: { id: "user-123" } })
+    ;(window as any).braze = {
+      getUser: () => ({ setCustomUserAttribute }),
+      requestImmediateDataFlush,
+    }
   })
 
   it("opens directly on the interests step for non One Tap sign-ups", () => {
@@ -50,7 +65,7 @@ describe("OnboardingDialogSimplified", () => {
     )
 
     expect(
-      screen.getByText("What are you most interested in?"),
+      screen.getByText("What do you want to do on Artsy?"),
     ).toBeInTheDocument()
   })
 
@@ -72,7 +87,7 @@ describe("OnboardingDialogSimplified", () => {
     )
 
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
 
     expect(
@@ -87,12 +102,12 @@ describe("OnboardingDialogSimplified", () => {
       <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
     )
 
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
     fireEvent.click(screen.getByText("Continue"))
 
-    expect(mockMarkInterestsPending).toHaveBeenCalledWith(["Buying art"])
+    expect(mockMarkInterestsPending).toHaveBeenCalledWith(["Buy art"])
     expect(mockOnHide).toHaveBeenCalled()
   })
 
@@ -107,7 +122,7 @@ describe("OnboardingDialogSimplified", () => {
         />,
       )
 
-      fireEvent.click(screen.getByText("Buying art"))
+      fireEvent.click(screen.getByText("Buy art"))
       fireEvent.click(screen.getByText("Next"))
     }
 
@@ -166,6 +181,22 @@ describe("OnboardingDialogSimplified", () => {
         "The grapevine",
       )
     })
+
+    it("tracks the typed text rather than the Other label", () => {
+      goToSourceStep()
+
+      fireEvent.click(screen.getByText("Other"))
+      fireEvent.change(screen.getByPlaceholderText("Tell us more"), {
+        target: { value: "  The grapevine  " },
+      })
+      fireEvent.click(screen.getByText("Continue"))
+
+      expect(trackingSpy).toHaveBeenCalledWith({
+        action: "onboardingUserInputData",
+        context_module: "onboardingAttribution",
+        data_input: "The grapevine",
+      })
+    })
   })
 
   it("does not persist the email opt-in when advancing past the welcome step", () => {
@@ -188,11 +219,92 @@ describe("OnboardingDialogSimplified", () => {
     )
 
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
     fireEvent.click(screen.getByText("Continue"))
 
     expect(mockSubmit).toHaveBeenCalledWith({ agreedToReceiveEmails: true })
+  })
+
+  it("fires startedOnboarding once when the modal opens, not on re-render", () => {
+    mockPeek.mockReturnValue(false)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByText("Buy art"))
+    fireEvent.click(screen.getByText("Read about art and artists"))
+
+    const startedEvents = trackingSpy.mock.calls.filter(([event]) => {
+      return event.action === "startedOnboarding"
+    })
+
+    expect(startedEvents).toHaveLength(1)
+  })
+
+  it("writes onboarding answers as Braze custom attributes when finished", () => {
+    mockPeek.mockReturnValue(false)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByText("Buy art"))
+    fireEvent.click(screen.getByText("Next"))
+    fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
+    fireEvent.click(screen.getByText("Continue"))
+
+    expect(setCustomUserAttribute).toHaveBeenCalledWith(
+      "onboarding_interests",
+      ["Buy art"],
+    )
+    expect(setCustomUserAttribute).toHaveBeenCalledWith(
+      "onboarding_source",
+      "Search engine (Google, etc.)",
+    )
+    expect(requestImmediateDataFlush).toHaveBeenCalled()
+  })
+
+  it("does not write Braze attributes when the modal is closed", () => {
+    mockPeek.mockReturnValue(false)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByLabelText("Close"))
+
+    expect(setCustomUserAttribute).not.toHaveBeenCalled()
+  })
+
+  it("fires completedOnboarding when the flow is finished", () => {
+    mockPeek.mockReturnValue(false)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByText("Buy art"))
+    fireEvent.click(screen.getByText("Next"))
+    fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
+    fireEvent.click(screen.getByText("Continue"))
+
+    expect(trackingSpy).toHaveBeenCalledWith({ action: "completedOnboarding" })
+  })
+
+  it("does not fire completedOnboarding when the modal is closed", () => {
+    mockPeek.mockReturnValue(false)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByLabelText("Close"))
+
+    expect(trackingSpy).not.toHaveBeenCalledWith({
+      action: "completedOnboarding",
+    })
   })
 })

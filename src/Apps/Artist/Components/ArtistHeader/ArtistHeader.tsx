@@ -33,10 +33,7 @@ import {
   ArtistStylesAndTechniques,
   useHasArtistStylesAndTechniques,
 } from "Apps/Artist/Components/ArtistHeader/ArtistStylesAndTechniques"
-import {
-  ArtistCareerHighlightFragmentContainer,
-  isRenderableArtistInsight,
-} from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
@@ -59,7 +56,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
-  const instagramHandle = artist.instagramHandle ?? null
+  const instagramHandle = artist.instagramHandle?.trim() || null
 
   const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
 
@@ -73,7 +70,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
       ? `${biographyText} ${biographyCredit}`
       : biographyText
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
-  const insights = artist.insights.filter(isRenderableArtistInsight)
+  const insights = artist.insights
   const hasInsights = insights.length > 0
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
   const hasRightDetails =
@@ -400,7 +397,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           text
           credit
         }
-        insights {
+        insights(excludeBlanks: true) {
           kind
           entities
           description(format: HTML)

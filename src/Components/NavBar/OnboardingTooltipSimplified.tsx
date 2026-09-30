@@ -64,7 +64,7 @@ export const OnboardingTooltipSimplified: FC<
   return (
     <ProgressiveOnboardingPopover
       name="onboarding-interests-simplified"
-      placement="bottom"
+      placement="bottom-start"
       zIndex={Z.onboardingPopover}
       onClose={clearOnboardingInterestsPending}
       popover={
