@@ -173,6 +173,8 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
           opacity={0.6}
           aria-hidden="true"
           data-testid="tile-instagram-watermark"
+          // Keeps the white icon legible on light images.
+          style={{ filter: "drop-shadow(0 0 2px rgba(0, 0, 0, 0.5))" }}
         >
           <InstagramIcon size={24} fill="mono0" display="block" />
         </Box>

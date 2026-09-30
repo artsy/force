@@ -126,7 +126,11 @@ describe("ArtistSocialRail", () => {
       }),
     })
 
-    expect(screen.getAllByTestId("tile-instagram-watermark")).toHaveLength(2)
+    const watermarks = screen.getAllByTestId("tile-instagram-watermark")
+    expect(watermarks).toHaveLength(2)
+    watermarks.forEach(watermark => {
+      expect(watermark).toHaveAttribute("aria-hidden", "true")
+    })
   })
 
   it("renders a skeleton behind each tile until its image loads", () => {
