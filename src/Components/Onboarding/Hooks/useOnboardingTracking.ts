@@ -6,11 +6,14 @@ import {
   type StartedOnboarding,
   type SubscribedToEmail,
 } from "@artsy/cohesion"
+import { setBrazeCustomAttributes } from "Server/analytics/setBrazeCustomAttributes"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useCallback } from "react"
 import { useTracking } from "react-tracking"
 
 export const useOnboardingTracking = () => {
   const { trackEvent } = useTracking()
+  const { user } = useSystemContext()
 
   const userStartedOnboarding = useCallback(() => {
     const payload: StartedOnboarding = {
@@ -101,6 +104,20 @@ export const useOnboardingTracking = () => {
     trackEvent(payload)
   }, [trackEvent])
 
+  const setBrazeOnboardingAttributes = useCallback(
+    ({ interests, source }: { interests: string[]; source: string }) => {
+      if (!user?.id) {
+        return
+      }
+
+      setBrazeCustomAttributes({
+        onboarding_interests: interests,
+        onboarding_source: source,
+      })
+    },
+    [user],
+  )
+
   return {
     userStartedOnboarding,
     trackQuestionOne,
@@ -110,5 +127,6 @@ export const useOnboardingTracking = () => {
     trackSource,
     trackSubscribedToEmail,
     userCompletedOnboarding,
+    setBrazeOnboardingAttributes,
   }
 }

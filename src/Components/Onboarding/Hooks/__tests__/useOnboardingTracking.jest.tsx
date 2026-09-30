@@ -1,11 +1,17 @@
 import { renderHook } from "@testing-library/react-hooks"
+import { setBrazeCustomAttributes } from "Server/analytics/setBrazeCustomAttributes"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useTracking } from "react-tracking"
 import { useOnboardingTracking } from "../useOnboardingTracking"
 
 jest.mock("react-tracking")
+jest.mock("System/Hooks/useSystemContext")
+jest.mock("Server/analytics/setBrazeCustomAttributes")
 
 describe("useOnboardingTracking", () => {
   const mockUseTracking = useTracking as jest.Mock
+  const mockUseSystemContext = useSystemContext as jest.Mock
+  const mockSetBrazeCustomAttributes = setBrazeCustomAttributes as jest.Mock
   const trackingSpy = jest.fn()
 
   const setupHook = () => {
@@ -23,6 +29,10 @@ describe("useOnboardingTracking", () => {
     mockUseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))
+  })
+
+  beforeEach(() => {
+    mockUseSystemContext.mockReturnValue({ user: { id: "user-123" } })
   })
 
   afterEach(() => {
@@ -101,5 +111,30 @@ describe("useOnboardingTracking", () => {
     setupHook().userCompletedOnboarding()
 
     expect(trackingSpy).toBeCalledWith({ action: "completedOnboarding" })
+  })
+
+  describe("setBrazeOnboardingAttributes", () => {
+    it("writes interests and source as Braze custom attributes", () => {
+      setupHook().setBrazeOnboardingAttributes({
+        interests: ["Buying art", "Reading about art and artists"],
+        source: "Search engine (Google, etc.)",
+      })
+
+      expect(mockSetBrazeCustomAttributes).toBeCalledWith({
+        onboarding_interests: ["Buying art", "Reading about art and artists"],
+        onboarding_source: "Search engine (Google, etc.)",
+      })
+    })
+
+    it("does not write attributes when there is no logged-in user", () => {
+      mockUseSystemContext.mockReturnValue({ user: null })
+
+      setupHook().setBrazeOnboardingAttributes({
+        interests: ["Buying art"],
+        source: "Search engine (Google, etc.)",
+      })
+
+      expect(mockSetBrazeCustomAttributes).not.toBeCalled()
+    })
   })
 })

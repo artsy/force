@@ -100,6 +100,14 @@ export const OnboardingDialogSimplified: FC<
     })
   }
 
+  const getResolvedSource = () => {
+    if (source === OTHER_SOURCE) {
+      return (otherSourceText ?? "").trim()
+    }
+
+    return source ?? ""
+  }
+
   const goToNextStep = () => {
     setStepIndex(current => current + 1)
   }
@@ -111,6 +119,10 @@ export const OnboardingDialogSimplified: FC<
   const handleFinish = () => {
     persistEmailOptIn()
     markOnboardingInterestsPending(interests)
+    tracking.setBrazeOnboardingAttributes({
+      interests,
+      source: getResolvedSource(),
+    })
     tracking.userCompletedOnboarding()
     onHide()
   }
@@ -126,10 +138,7 @@ export const OnboardingDialogSimplified: FC<
     }
 
     if (currentStep === "source" && source) {
-      const dataInput =
-        source === OTHER_SOURCE ? (otherSourceText ?? "").trim() : source
-
-      tracking.trackSource(dataInput)
+      tracking.trackSource(getResolvedSource())
     }
 
     if (isLastStep) {
