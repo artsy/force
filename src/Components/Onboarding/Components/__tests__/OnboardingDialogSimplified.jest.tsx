@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { OnboardingDialogSimplified } from "Components/Onboarding/Components/OnboardingDialogSimplified"
+import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { peekOneTapEmailOptInPending } from "Utils/oneTapEmailOptIn"
 import { markOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
@@ -24,14 +25,18 @@ jest.mock("Utils/onboardingInterestsPending", () => ({
   markOnboardingInterestsPending: jest.fn(),
 }))
 jest.mock("react-tracking")
+jest.mock("System/Hooks/useSystemContext")
 
 const mockUseCountryCode = useCountryCode as jest.Mock
 const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
+const mockUseSystemContext = useSystemContext as jest.Mock
 const mockSubmit = jest.fn().mockResolvedValue({})
 const mockPeek = peekOneTapEmailOptInPending as jest.Mock
 const mockMarkInterestsPending = markOnboardingInterestsPending as jest.Mock
 const mockUseTracking = useTracking as jest.Mock
 const trackingSpy = jest.fn()
+const setCustomUserAttribute = jest.fn()
+const requestImmediateDataFlush = jest.fn()
 
 describe("OnboardingDialogSimplified", () => {
   beforeEach(() => {
@@ -45,6 +50,11 @@ describe("OnboardingDialogSimplified", () => {
       loading: false,
     })
     mockUseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
+    mockUseSystemContext.mockReturnValue({ user: { id: "user-123" } })
+    ;(window as any).braze = {
+      getUser: () => ({ setCustomUserAttribute }),
+      requestImmediateDataFlush,
+    }
   })
 
   it("opens directly on the interests step for non One Tap sign-ups", () => {
@@ -232,6 +242,41 @@ describe("OnboardingDialogSimplified", () => {
     })
 
     expect(startedEvents).toHaveLength(1)
+  })
+
+  it("writes onboarding answers as Braze custom attributes when finished", () => {
+    mockPeek.mockReturnValue(false)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Next"))
+    fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
+    fireEvent.click(screen.getByText("Continue"))
+
+    expect(setCustomUserAttribute).toHaveBeenCalledWith(
+      "onboarding_interests",
+      ["Buying art"],
+    )
+    expect(setCustomUserAttribute).toHaveBeenCalledWith(
+      "onboarding_source",
+      "Search engine (Google, etc.)",
+    )
+    expect(requestImmediateDataFlush).toHaveBeenCalled()
+  })
+
+  it("does not write Braze attributes when the modal is closed", () => {
+    mockPeek.mockReturnValue(false)
+
+    render(
+      <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
+    )
+
+    fireEvent.click(screen.getByLabelText("Close"))
+
+    expect(setCustomUserAttribute).not.toHaveBeenCalled()
   })
 
   it("fires completedOnboarding when the flow is finished", () => {
