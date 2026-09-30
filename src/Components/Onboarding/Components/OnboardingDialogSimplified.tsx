@@ -77,14 +77,16 @@ export const OnboardingDialogSimplified: FC<
     }
 
     if (agreedToReceiveEmails) {
-      tracking.trackSubscribedToEmail()
-
-      submitUpdateMyUserProfile({ agreedToReceiveEmails: true }).catch(err => {
-        console.error(
-          "[OnboardingDialogSimplified] Failed to save email preference",
-          err,
-        )
-      })
+      submitUpdateMyUserProfile({ agreedToReceiveEmails: true })
+        .then(() => {
+          tracking.trackSubscribedToEmail()
+        })
+        .catch(err => {
+          console.error(
+            "[OnboardingDialogSimplified] Failed to save email preference",
+            err,
+          )
+        })
     }
 
     clearOneTapEmailOptInPending()
