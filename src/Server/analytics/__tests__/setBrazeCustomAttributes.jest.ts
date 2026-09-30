@@ -73,11 +73,17 @@ describe("setBrazeCustomAttributes", () => {
     )
   })
 
-  it("gives up after the maximum number of attempts", () => {
+  it("stops retrying after the maximum number of attempts", () => {
     setBrazeCustomAttributes({ onboarding_source: "Friend or family" })
 
-    jest.advanceTimersByTime(100 * 25)
+    // Exhaust the retry window (20 * 100ms) while Braze is still unavailable.
+    jest.advanceTimersByTime(2000)
 
+    // Braze loads only after the loop has given up.
+    setBrazeReady()
+    jest.advanceTimersByTime(2000)
+
+    // No further retry picks it up, proving the loop stopped.
     expect(setCustomUserAttribute).not.toHaveBeenCalled()
   })
 })
