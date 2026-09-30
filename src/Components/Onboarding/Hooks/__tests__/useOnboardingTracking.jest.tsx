@@ -71,6 +71,32 @@ describe("useOnboardingTracking", () => {
     })
   })
 
+  it("trackInterests", () => {
+    setupHook().trackInterests(["Buying art", "Browsing for fun"])
+
+    expect(trackingSpy).toBeCalledWith({
+      action: "onboardingUserInputData",
+      context_module: "onboardingInterests",
+      data_input: '["Buying art","Browsing for fun"]',
+    })
+  })
+
+  it("trackSource", () => {
+    setupHook().trackSource("Search engine (Google, etc.)")
+
+    expect(trackingSpy).toBeCalledWith({
+      action: "onboardingUserInputData",
+      context_module: "onboardingAttribution",
+      data_input: "Search engine (Google, etc.)",
+    })
+  })
+
+  it("tracks subscribedToEmail", () => {
+    setupHook().trackSubscribedToEmail()
+
+    expect(trackingSpy).toBeCalledWith({ action: "subscribedToEmail" })
+  })
+
   it("tracks userCompletedOnboarding", () => {
     setupHook().userCompletedOnboarding()
 
