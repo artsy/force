@@ -4,14 +4,12 @@ import * as Yup from "yup"
 const PENDING_KEY = "onboarding-interests-pending"
 
 export const ONBOARDING_INTERESTS = [
-  "Buying art",
-  "Browsing art for inspiration",
-  "Reading about art and artists",
-  "Tracking prices and results at auction",
+  "Buy art",
+  "Browse art for inspiration",
+  "Read about art and artists",
+  "Track prices and results at auction",
 ] as const
 
-// Yup 0.32's types expect a mutable array; `ONBOARDING_INTERESTS` is `as const`
-// (readonly), so we spread into a new array to satisfy .oneOf()'s signature.
 export const pendingInterestsSchema = Yup.array()
   .of(
     Yup.string()
