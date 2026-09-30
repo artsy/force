@@ -54,7 +54,9 @@ export const shouldSkipCDNCache = (req, user, ttl, url) => {
 
 export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
   return next => async req => {
-    const url = isServer ? props?.url : window.location.pathname
+    const url = isServer
+      ? props?.url
+      : `${window.location.pathname}${window.location.search}`
 
     const cacheControlHeader = (() => {
       const foundRoute = findRoutesByPath({ path: url ?? "" })[0]

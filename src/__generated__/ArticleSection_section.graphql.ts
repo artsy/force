@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f492117f4008e47954f340952284351>>
+ * @generated SignedSource<<129e505a7dc23ef417016c6684f9995e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSection_section$data = {
   readonly __typename: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionEmbed_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionSocialEmbed_section" | "ArticleSectionText_section" | "ArticleSectionVideo_section">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionArtworkGrid_section" | "ArticleSectionEmbed_section" | "ArticleSectionImageCollection_section" | "ArticleSectionImageSet_section" | "ArticleSectionSocialEmbed_section" | "ArticleSectionText_section" | "ArticleSectionVideo_section">;
   readonly " $fragmentType": "ArticleSection_section";
 };
 export type ArticleSection_section$key = {
@@ -62,12 +62,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleSectionEmbed_section"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleSectionArtworkGrid_section"
     }
   ],
   "type": "ArticleSections",
   "abstractKey": "__isArticleSections"
 };
 
-(node as any).hash = "24cd95cca65d5e8c03983d43a5f2284c";
+(node as any).hash = "8555d4715d5644358f969f2918772a19";
 
 export default node;
