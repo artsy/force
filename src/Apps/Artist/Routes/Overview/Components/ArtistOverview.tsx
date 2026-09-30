@@ -162,7 +162,7 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
         internalID
         href
         name
-        insights {
+        insights(excludeBlanks: true) {
           __typename
         }
         articlesConnection(first: 1) {

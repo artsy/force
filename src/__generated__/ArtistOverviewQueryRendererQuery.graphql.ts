@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81c74c2c738c1dc3ebd76fbd4dfff729>>
+ * @generated SignedSource<<f3a006f420f81cd797dc8bc6401fbecc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -137,7 +137,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "excludeBlanks",
+                "value": true
+              }
+            ],
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
             "name": "insights",
@@ -145,7 +151,7 @@ return {
             "selections": [
               (v2/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "insights(excludeBlanks:true)"
           },
           {
             "alias": null,
@@ -257,12 +263,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e65a279d198c5d6a1e6cb6ef56819877",
+    "cacheID": "799c70b0b04364e5891e90bb78313cf6",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewQueryRendererQuery",
     "operationKind": "query",
-    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights(excludeBlanks: true) {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

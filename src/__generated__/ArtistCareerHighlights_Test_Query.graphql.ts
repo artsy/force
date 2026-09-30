@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ac2e9e4974f796e3a93034847d22561>>
+ * @generated SignedSource<<26539e299df9a6f6669df1df3e3f24a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -116,7 +116,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "excludeBlanks",
+                "value": true
+              }
+            ],
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
             "name": "insights",
@@ -157,7 +163,7 @@ return {
                 "storageKey": "description(format:\"HTML\")"
               }
             ],
-            "storageKey": null
+            "storageKey": "insights(excludeBlanks:true)"
           },
           {
             "alias": null,
@@ -172,7 +178,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80d1d260c3fc6e4adeb9a3f4382e5ffa",
+    "cacheID": "403924736b2ffd759dc2680cb604c348",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -249,7 +255,7 @@ return {
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  insights(excludeBlanks: true) {\n    ...ArtistCareerHighlight_insight\n    kind\n    entities\n    description(format: HTML)\n  }\n}\n"
   }
 };
 })();

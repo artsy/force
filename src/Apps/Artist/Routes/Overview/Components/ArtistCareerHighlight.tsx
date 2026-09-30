@@ -17,8 +17,6 @@ export const ArtistCareerHighlight: FC<
 > = ({ insight, contextModule, expanded }) => {
   const { trackEvent } = useTracking()
 
-  if (!isRenderableArtistInsight(insight)) return null
-
   const handleToggle = (isExpanded: boolean) => {
     trackEvent({
       action: ActionType.toggledAccordion,
@@ -67,16 +65,6 @@ export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(
     `,
   },
 )
-
-// An insight only renders if it has a description or at least one entity.
-// Both the header and the about section must filter on this before slicing so
-// their offsets stay in sync and an empty insight never burns a display slot.
-export const isRenderableArtistInsight = (insight: {
-  description?: string | null
-  entities?: readonly string[] | null
-}): boolean => {
-  return !!insight.description || (insight.entities?.length ?? 0) > 0
-}
 
 const formatList = (entities: readonly string[]) => {
   if (entities.length === 0) return ""

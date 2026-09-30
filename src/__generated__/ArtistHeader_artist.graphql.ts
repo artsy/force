@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77c028194d78471d63d4b80f71baad6d>>
+ * @generated SignedSource<<74bb87f9fc8038f13d8d9a470b06cebc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -184,7 +184,13 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "excludeBlanks",
+          "value": true
+        }
+      ],
       "concreteType": "ArtistInsight",
       "kind": "LinkedField",
       "name": "insights",
@@ -217,7 +223,7 @@ return {
           "name": "ArtistCareerHighlight_insight"
         }
       ],
-      "storageKey": null
+      "storageKey": "insights(excludeBlanks:true)"
     },
     {
       "alias": null,
@@ -432,6 +438,6 @@ return {
 };
 })();
 
-(node as any).hash = "63c1325bdffaf2d7c8e647dea1764326";
+(node as any).hash = "8f47002939ab29a105a174e297c8a89b";
 
 export default node;
