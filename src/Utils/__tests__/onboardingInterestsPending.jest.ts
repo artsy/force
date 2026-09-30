@@ -17,23 +17,17 @@ describe("onboardingInterestsPending", () => {
     const { result } = renderHook(() => useOnboardingInterestsPending())
 
     act(() => {
-      markOnboardingInterestsPending([
-        "Buying art",
-        "Reading about art and artists",
-      ])
+      markOnboardingInterestsPending(["Buy art", "Read about art and artists"])
     })
 
-    expect(result.current).toEqual([
-      "Buying art",
-      "Reading about art and artists",
-    ])
+    expect(result.current).toEqual(["Buy art", "Read about art and artists"])
   })
 
   it("clears interests correctly", () => {
     const { result } = renderHook(() => useOnboardingInterestsPending())
 
     act(() => {
-      markOnboardingInterestsPending(["Buying art"])
+      markOnboardingInterestsPending(["Buy art"])
       clearOnboardingInterestsPending()
     })
 
@@ -60,10 +54,9 @@ describe("onboardingInterestsPending", () => {
 describe("pendingInterestsSchema", () => {
   it("rejects an array containing an invalid interest", () => {
     expect(() =>
-      pendingInterestsSchema.validateSync(
-        ["Buying art", "Not a real interest"],
-        { strict: true },
-      ),
+      pendingInterestsSchema.validateSync(["Buy art", "Not a real interest"], {
+        strict: true,
+      }),
     ).toThrow()
   })
 })

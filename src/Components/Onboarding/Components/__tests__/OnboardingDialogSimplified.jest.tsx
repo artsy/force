@@ -77,7 +77,7 @@ describe("OnboardingDialogSimplified", () => {
     )
 
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
 
     expect(
@@ -92,12 +92,12 @@ describe("OnboardingDialogSimplified", () => {
       <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
     )
 
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
     fireEvent.click(screen.getByText("Continue"))
 
-    expect(mockMarkInterestsPending).toHaveBeenCalledWith(["Buying art"])
+    expect(mockMarkInterestsPending).toHaveBeenCalledWith(["Buy art"])
     expect(mockOnHide).toHaveBeenCalled()
   })
 
@@ -112,7 +112,7 @@ describe("OnboardingDialogSimplified", () => {
         />,
       )
 
-      fireEvent.click(screen.getByText("Buying art"))
+      fireEvent.click(screen.getByText("Buy art"))
       fireEvent.click(screen.getByText("Next"))
     }
 
@@ -209,7 +209,7 @@ describe("OnboardingDialogSimplified", () => {
     )
 
     fireEvent.click(screen.getByText("Next"))
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
     fireEvent.click(screen.getByText("Continue"))
@@ -224,8 +224,8 @@ describe("OnboardingDialogSimplified", () => {
       <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
     )
 
-    fireEvent.click(screen.getByText("Buying art"))
-    fireEvent.click(screen.getByText("Reading about art and artists"))
+    fireEvent.click(screen.getByText("Buy art"))
+    fireEvent.click(screen.getByText("Read about art and artists"))
 
     const startedEvents = trackingSpy.mock.calls.filter(([event]) => {
       return event.action === "startedOnboarding"
@@ -241,7 +241,7 @@ describe("OnboardingDialogSimplified", () => {
       <OnboardingDialogSimplified onClose={mockOnClose} onHide={mockOnHide} />,
     )
 
-    fireEvent.click(screen.getByText("Buying art"))
+    fireEvent.click(screen.getByText("Buy art"))
     fireEvent.click(screen.getByText("Next"))
     fireEvent.click(screen.getByText("Search engine (Google, etc.)"))
     fireEvent.click(screen.getByText("Continue"))
