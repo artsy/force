@@ -55,7 +55,7 @@ describe("OnboardingDialogSimplified", () => {
     )
 
     expect(
-      screen.getByText("What are you most interested in?"),
+      screen.getByText("What do you want to do on Artsy?"),
     ).toBeInTheDocument()
   })
 
