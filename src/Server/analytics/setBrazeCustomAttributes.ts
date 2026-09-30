@@ -23,14 +23,14 @@ export const setBrazeCustomAttributes = (
   let attempt = 0
 
   const trySet = () => {
-    const braze = (window as any)?.braze
-    const brazeUser = braze?.getUser?.()
+    const braze = window.braze
+    const brazeUser = braze?.getUser()
 
-    if (brazeUser) {
+    if (braze && brazeUser) {
       entries.forEach(([key, value]) => {
         brazeUser.setCustomUserAttribute(key, value)
       })
-      braze.requestImmediateDataFlush?.()
+      braze.requestImmediateDataFlush()
       return
     }
 
