@@ -4,6 +4,7 @@ import {
   ContextModule,
   type PageOwnerType,
 } from "@artsy/cohesion"
+import InstagramIcon from "@artsy/icons/InstagramIcon"
 import {
   Box,
   Flex,
@@ -164,6 +165,19 @@ const ArtistSocialRailTile: React.FC<ArtistSocialRailTileProps> = ({
           onError={handleError}
           style={{ display: "block" }}
         />
+
+        <Box
+          position="absolute"
+          bottom={1}
+          right={1}
+          opacity={0.6}
+          aria-hidden="true"
+          data-testid="tile-instagram-watermark"
+          // Keeps the white icon legible on light images.
+          style={{ filter: "drop-shadow(0 0 2px rgba(0, 0, 0, 0.5))" }}
+        >
+          <InstagramIcon size={24} fill="mono0" display="block" />
+        </Box>
       </Box>
     </a>
   )
