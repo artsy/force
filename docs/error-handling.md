@@ -79,12 +79,17 @@ The content-area boundary. Wraps route content inside the Layout so that nav and
 | Error type              | Caught by                                 | Nav preserved? | HTTP code |
 | ----------------------- | ----------------------------------------- | -------------- | --------- |
 | `@principalField` 404   | Route `render()` via `renderRouteError()` | Yes            | 404       |
+| Query failure           | Route `render()` via `renderRouteError()` | Yes            | 500       |
 | Component crash         | `ContentErrorBoundary`                    | Yes            | 200\*     |
 | Chunk load failure      | Outer `ErrorBoundary` (bubbled up)        | No             | 200\*     |
 | Layout crash            | Outer `ErrorBoundary`                     | No             | 200\*     |
 | Unmatched Express route | `errorHandlerMiddleware`                  | No             | 404       |
 
 \*Client-side -- page already delivered.
+
+### Navigation data
+
+The global navigation query (in `buildAppRoutes`) is non-critical. If it fails (e.g. Metaphysics is unreachable), `AppShell` still renders and the What’s New, Artists and Artworks dropdowns fall back to plain links to their top-level pages.
 
 ## Adding Error Handling to a New Route
 
