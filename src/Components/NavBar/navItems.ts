@@ -10,24 +10,28 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
  * cover the same items.
  */
 
-interface LinkNavItem {
-  type: "link"
+interface BaseNavItem {
   id: string
   label: string
   href: string
   /** Desktop prefetches the route on hover. */
   prefetch?: boolean
-  /** External URL — not a router-aware route, so it isn't prefetched. */
-  external?: boolean
   /** Desktop `data-label` for tracking; defaults to `label` when omitted. */
   dataLabel?: string
 }
 
-interface DropdownNavItem {
+interface LinkNavItem extends BaseNavItem {
+  type: "link"
+  /** External URL — not a router-aware route, so it isn't prefetched. */
+  external?: boolean
+}
+
+/**
+ * Renders as a plain link to `href` when its navigation data is unavailable
+ * (e.g. the navigation query failed).
+ */
+interface DropdownNavItem extends BaseNavItem {
   type: "dropdown"
-  id: string
-  label: string
-  href: string
   menuType: "whatsNew" | "artists" | "artworks"
   navigationKey:
     | "whatsNewNavigation"
@@ -52,6 +56,7 @@ export const NAV_ITEMS = {
     id: "whatsNew",
     label: "What’s New",
     href: "/collection/new-this-week",
+    prefetch: true,
     menuType: "whatsNew",
     navigationKey: "whatsNewNavigation",
     contextModule:
@@ -62,6 +67,7 @@ export const NAV_ITEMS = {
     id: "artists",
     label: "Artists",
     href: "/artists",
+    prefetch: true,
     menuType: "artists",
     navigationKey: "artistsNavigation",
     contextModule:
@@ -72,6 +78,7 @@ export const NAV_ITEMS = {
     id: "artworks",
     label: "Artworks",
     href: "/collect",
+    prefetch: true,
     menuType: "artworks",
     navigationKey: "artworksNavigation",
     contextModule:
