@@ -11,8 +11,8 @@ import {
 } from "@artsy/palette"
 import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
 import {
+  getRichPhoneValidators,
   handlePhoneNumberChange,
-  richPhoneValidators,
 } from "Components/Address/utils"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
@@ -21,7 +21,12 @@ import { countries as countryPhoneOptions } from "Utils/countries"
 import type { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { Form, Formik } from "formik"
 import type * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { useMemo } from "react"
+import {
+  createFragmentContainer,
+  graphql,
+  useRelayEnvironment,
+} from "react-relay"
 import * as Yup from "yup"
 import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
 
@@ -34,6 +39,7 @@ export const SettingsEditSettingsInformation: React.FC<
 > = ({ me }) => {
   const { sendToast } = useToasts()
   const { submitMutation } = useUpdateSettingsInformation()
+  const relayEnvironment = useRelayEnvironment()
   const phoneNumber = me.phoneNumber?.display ?? me.phoneNumber?.originalNumber
   const phoneCountryCode = me.phoneNumber?.regionCode
 
@@ -43,6 +49,24 @@ export const SettingsEditSettingsInformation: React.FC<
   const defaultPhoneCountryCode = phoneCountryCode
     ? phoneCountryCode
     : locationBasedInitialValues.phoneNumberCountryCode || "us"
+
+  const validationSchema = useMemo(() => {
+    const richPhoneValidators = getRichPhoneValidators(relayEnvironment)
+
+    return Yup.object().shape({
+      email: Yup.string()
+        .email("Please enter a valid email.")
+        .required("Please enter a valid email."),
+      // Requires password when email is changed
+      password: passwordValidator.when("email", {
+        is: email => email !== me.email,
+        otherwise: field => field.notRequired(),
+      }),
+      phoneNumber: richPhoneValidators.phoneNumber.notRequired(),
+      phoneNumberCountryCode:
+        richPhoneValidators.phoneNumberCountryCode.notRequired(),
+    })
+  }, [relayEnvironment, me.email])
 
   return (
     <>
@@ -60,19 +84,7 @@ export const SettingsEditSettingsInformation: React.FC<
           priceRangeMin: me.priceRangeMin,
           password: "",
         }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("Please enter a valid email.")
-            .required("Please enter a valid email."),
-          // Requires password when email is changed
-          password: passwordValidator.when("email", {
-            is: email => email !== me.email,
-            otherwise: field => field.notRequired(),
-          }),
-          phoneNumber: richPhoneValidators.phoneNumber.notRequired(),
-          phoneNumberCountryCode:
-            richPhoneValidators.phoneNumberCountryCode.notRequired(),
-        })}
+        validationSchema={validationSchema}
         onSubmit={async (
           {
             email,
