@@ -14,13 +14,19 @@
 import { Spacer } from "@artsy/palette"
 import { ErrorPage } from "Components/ErrorPage"
 import { updateContext } from "Server/context"
+import { getENV } from "Utils/getENV"
 import type { Match } from "found"
 
 export interface RenderArgs {
   Component?: React.ComponentType<any>
   props?: Record<string, any>
   match: Match
-  error?: { status?: number; data?: any } | null
+  error?: {
+    status?: number
+    data?: any
+    message?: string
+    stack?: string
+  } | null
 }
 
 /**
@@ -36,10 +42,19 @@ export function renderRouteError(
 
   const status = error.status || 500
   updateContext("statusCode", status)
+
+  // Mirror `errorHandlerMiddleware`: surface error details while developing.
+  // `ErrorPage` only displays them for 5xx errors.
+  const isDevelopment = getENV("NODE_ENV") === "development"
+  const message = isDevelopment
+    ? error.message || (error.data && String(error.data)) || undefined
+    : undefined
+  const detail = isDevelopment ? error.stack : undefined
+
   return (
     <>
       <Spacer y={4} />
-      <ErrorPage code={status} />
+      <ErrorPage code={status} message={message} detail={detail} />
     </>
   )
 }

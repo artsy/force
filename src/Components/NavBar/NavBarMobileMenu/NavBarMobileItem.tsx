@@ -32,18 +32,17 @@ export const NavBarMobileItem: React.FC<NavBarMobileItemProps> = ({
   if (item.type === "dropdown") {
     const navigationVersion = navigationData?.[item.navigationKey]
 
-    if (!navigationVersion) {
-      return null
+    // Without navigation data, fall through to a plain link
+    if (navigationVersion) {
+      return (
+        <NavBarMobileSubMenu
+          navigationVersion={navigationVersion}
+          menuType={item.menuType}
+        >
+          {item.label}
+        </NavBarMobileSubMenu>
+      )
     }
-
-    return (
-      <NavBarMobileSubMenu
-        navigationVersion={navigationVersion}
-        menuType={item.menuType}
-      >
-        {item.label}
-      </NavBarMobileSubMenu>
-    )
   }
 
   return (
