@@ -50,7 +50,7 @@ const artistAppLayoutFragment = graphql`
     name
     recentAuctionResultsConnection: auctionResultsConnection(
       first: 10
-      sort: DATE_DESC
+      sort: PRICE_AND_DATE_DESC
       saleStartYear: $saleStartYear
       saleEndYear: $saleEndYear
       includeUnknownPrices: false
