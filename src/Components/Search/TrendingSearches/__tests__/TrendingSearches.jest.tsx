@@ -107,11 +107,13 @@ describe("TrendingSearches", () => {
   it("only asks Metaphysics for today's window", () => {
     render(<TrendingSearches />)
 
-    const { query } = (useClientQuery as jest.Mock).mock.calls[0][0]
-    const text = query.params?.text ?? JSON.stringify(query)
-    expect(text).toContain("ONE_DAY")
-    expect(text).not.toContain("SEVEN_DAYS")
-    expect(text).not.toContain("THIRTY_DAYS")
+    // Metaphysics still accepts 7d/30d, so the compiler won't catch them coming back
+    const query = JSON.stringify(
+      (useClientQuery as jest.Mock).mock.calls[0][0].query,
+    )
+    expect(query).toContain("ONE_DAY")
+    expect(query).not.toContain("SEVEN_DAYS")
+    expect(query).not.toContain("THIRTY_DAYS")
   })
 
   it("hides the recent searches section when there are no recent searches", () => {
