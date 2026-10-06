@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<153366be9ccc7f94872ba15f36b68a09>>
+ * @generated SignedSource<<aa05e6a81b80edada60afa94e819f8ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,7 +53,6 @@ export type TrendingSearches_trending$data = {
     } | null | undefined;
     readonly internalID: string;
   }> | null | undefined;
-  readonly label: string;
   readonly " $fragmentType": "TrendingSearches_trending";
 };
 export type TrendingSearches_trending$key = {
@@ -110,13 +109,6 @@ return {
   "metadata": null,
   "name": "TrendingSearches_trending",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "label",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -359,6 +351,6 @@ return {
 };
 })();
 
-(node as any).hash = "009e2901731fde7749256bfb3433d389";
+(node as any).hash = "3a72501b6323bd9ea19cd44561263e59";
 
 export default node;

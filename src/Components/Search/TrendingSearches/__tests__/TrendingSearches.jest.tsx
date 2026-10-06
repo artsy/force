@@ -18,9 +18,8 @@ const BANKSY_ID = "4dd1584de0091e000100207c"
 const RABARAMA_ID = "69ef1a335bdeb20008bcebdc"
 
 // Mirrors the searchDropdown.trending shape served by Metaphysics
-const trendingWindow = (label: string) => {
+const trendingWindow = () => {
   return {
-    label,
     artists: [
       {
         internalID: BANKSY_ID,
@@ -62,9 +61,7 @@ const trendingWindow = (label: string) => {
 
 const mockData = {
   searchDropdown: {
-    oneDay: trendingWindow("Today"),
-    sevenDays: trendingWindow("Past 7 Days"),
-    thirtyDays: trendingWindow("Past 30 Days"),
+    trending: trendingWindow(),
   },
 }
 
@@ -97,14 +94,24 @@ describe("TrendingSearches", () => {
     jest.clearAllMocks()
   })
 
-  it("renders the section labels and the three time-window tabs", () => {
+  it("renders the section labels without time-window tabs", () => {
     render(<TrendingSearches />)
 
     expect(screen.getByText("Trending Artists")).toBeInTheDocument()
     expect(screen.getByText("Trending Artworks")).toBeInTheDocument()
-    expect(screen.getByText("Today")).toBeInTheDocument()
-    expect(screen.getByText("Past 7 Days")).toBeInTheDocument()
-    expect(screen.getByText("Past 30 Days")).toBeInTheDocument()
+    expect(screen.queryByText("Today")).not.toBeInTheDocument()
+    expect(screen.queryByText("Past 7 Days")).not.toBeInTheDocument()
+    expect(screen.queryByText("Past 30 Days")).not.toBeInTheDocument()
+  })
+
+  it("only asks Metaphysics for today's window", () => {
+    render(<TrendingSearches />)
+
+    const { query } = (useClientQuery as jest.Mock).mock.calls[0][0]
+    const text = query.params?.text ?? JSON.stringify(query)
+    expect(text).toContain("ONE_DAY")
+    expect(text).not.toContain("SEVEN_DAYS")
+    expect(text).not.toContain("THIRTY_DAYS")
   })
 
   it("hides the recent searches section when there are no recent searches", () => {
@@ -317,9 +324,7 @@ describe("TrendingSearches", () => {
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: {
         searchDropdown: {
-          oneDay: { label: "Today", artists: [], artworks: [] },
-          sevenDays: { label: "Past 7 Days", artists: [], artworks: [] },
-          thirtyDays: { label: "Past 30 Days", artists: [], artworks: [] },
+          trending: { artists: [], artworks: [] },
         },
       },
       loading: false,
@@ -329,7 +334,6 @@ describe("TrendingSearches", () => {
 
     expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
     expect(screen.queryByText("Trending Artworks")).not.toBeInTheDocument()
-    expect(screen.queryByText("Today")).not.toBeInTheDocument()
     expect(mockTrackEvent).not.toHaveBeenCalledWith(
       expect.objectContaining({ action: ActionType.railViewed }),
     )
@@ -339,9 +343,7 @@ describe("TrendingSearches", () => {
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: {
         searchDropdown: {
-          oneDay: { label: "Today", artists: [], artworks: [] },
-          sevenDays: { label: "Past 7 Days", artists: [], artworks: [] },
-          thirtyDays: { label: "Past 30 Days", artists: [], artworks: [] },
+          trending: { artists: [], artworks: [] },
         },
       },
       loading: false,
@@ -352,6 +354,21 @@ describe("TrendingSearches", () => {
 
     expect(screen.getByText("Recent Searches")).toBeInTheDocument()
     expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+  })
+
+  it("still shows recent searches when trending fails to load", () => {
+    // Metaphysics nulls just this field when Vortex is down
+    ;(useClientQuery as jest.Mock).mockReturnValue({
+      data: { searchDropdown: { trending: null } },
+      loading: false,
+    })
+    seedRecentSearches(["banksy"])
+
+    render(<TrendingSearches />)
+
+    expect(screen.getByText("Recent Searches")).toBeInTheDocument()
+    expect(screen.queryByText("Trending Artists")).not.toBeInTheDocument()
+    expect(screen.queryByText("Trending Artworks")).not.toBeInTheDocument()
   })
 
   it("closes the panel on a plain chip click but not on a modified click", async () => {
@@ -407,40 +424,6 @@ describe("TrendingSearches", () => {
         destination_page_owner_slug: "rabarama-dhyana",
         horizontal_slide_position: expect.any(Number),
         type: "thumbnail",
-      }),
-    )
-  })
-
-  it("switches windows when a tab is clicked", async () => {
-    render(<TrendingSearches />)
-
-    await userEvent.click(screen.getByText("Past 30 Days"))
-
-    expect(
-      screen.getByRole("button", { name: "Past 30 Days" }),
-    ).toHaveAttribute("aria-pressed", "true")
-  })
-
-  it("tracks a time-window switch", async () => {
-    render(<TrendingSearches />)
-
-    await userEvent.click(screen.getByText("Past 30 Days"))
-
-    expect(mockTrackEvent).toHaveBeenCalledWith({
-      action_type: ActionType.tappedNavigationTab,
-      context_module: "trendingSearches",
-      subject: "Past 30 Days",
-    })
-  })
-
-  it("does not track a re-click of the already-active tab", async () => {
-    render(<TrendingSearches />)
-
-    await userEvent.click(screen.getByText("Today"))
-
-    expect(mockTrackEvent).not.toHaveBeenCalledWith(
-      expect.objectContaining({
-        action_type: ActionType.tappedNavigationTab,
       }),
     )
   })
