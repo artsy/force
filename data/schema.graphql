@@ -30742,6 +30742,16 @@ type Partner implements Node {
     """
     priceCurrency: String
   ): ShippingPresetConnection
+
+  """
+  A Show belonging to this partner, scoped so it can only resolve shows owned by this partner. Requires authentication.
+  """
+  show(
+    """
+    The ID of the Show
+    """
+    id: String!
+  ): Show
   showPromoted: Boolean
 
   """
