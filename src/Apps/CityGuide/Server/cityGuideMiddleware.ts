@@ -1,10 +1,9 @@
-import { renderCityGuideOnApp } from "Apps/CityGuide/Server/cityGuideOnApp"
 import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
 import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
-import { Router } from "express"
+import { type NextFunction, Router } from "express"
 
 const CITY_GUIDE_ON_APP_PATH = "/city-guide-on-app/"
 
@@ -50,9 +49,10 @@ cityGuideMiddleware.get(
   },
 )
 
+// Desktop visitors fall through to the page, which is a normal app route
 cityGuideMiddleware.get(
   "/city-guide-on-app",
-  (req: ArtsyRequest, res: ArtsyResponse) => {
+  (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     res.vary("User-Agent")
 
     const storeUrl = getStoreUrl({ req, res })
@@ -62,7 +62,7 @@ cityGuideMiddleware.get(
       return
     }
 
-    res.type("html").send(renderCityGuideOnApp())
+    next()
   },
 )
 
