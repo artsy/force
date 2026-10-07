@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Artsy City Guide</title>
+  <meta name="description" content="Plan your art day with City Guide on the Artsy app.">
+  <meta property="og:title" content="Plan your art day with City Guide on the Artsy app.">
+  <meta property="og:description" content="Download Artsy, then open your link to see it in the app.">
+  <meta property="og:site_name" content="Artsy">
+  <meta name="color-scheme" content="light">
+  <link rel="preconnect" href="__WEBFONT_URL__" crossorigin>
+  <link rel="preload" href="__WEBFONT_URL__/ll-unica77_regular.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: "ll-unica77";
+      src: url("__WEBFONT_URL__/ll-unica77_regular.woff2") format("woff2"),
+           url("__WEBFONT_URL__/ll-unica77_regular.woff") format("woff");
+      font-weight: normal;
+      font-style: normal;
+      font-display: fallback;
+    }
+
+    :root {
+      --mono100: #000000;
+      --mono10: #e7e7e7;
+      --mono0: #ffffff;
+      --space-2: 20px;
+      --space-4: 40px;
+      --font: "ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--mono0);
+      color: var(--mono100);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 26px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1,
+    p {
+      margin: 0;
+      font-weight: 400;
+      text-wrap: balance;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 var(--space-2);
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--mono10);
+    }
+
+    .topbar .container {
+      display: flex;
+      align-items: center;
+      height: 60px;
+    }
+
+    .logo img {
+      width: 88px;
+      height: auto;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: var(--space-2);
+    }
+
+    /* Palette "xl" */
+    h1 {
+      max-width: 15em;
+      font-size: 40px;
+      line-height: 48px;
+      letter-spacing: -0.01em;
+    }
+
+    .qr {
+      width: 140px;
+      height: 140px;
+      margin-top: var(--space-4);
+    }
+
+    .qr img {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Palette "xs" */
+    .instructions {
+      margin-top: var(--space-2);
+      max-width: 26em;
+      font-size: 13px;
+      line-height: 20px;
+    }
+
+    /* Five overlapping phones. Each mockup image is 720 x 1291 and includes its shadow. */
+    .phones {
+      --c: 200px; /* front phone */
+      --i: 170px; /* middle pair */
+      --o: 140px; /* outer pair */
+      --tuck: 55px;
+      margin-top: var(--space-4);
+      padding-bottom: var(--space-4);
+      overflow: hidden;
+    }
+
+    .phones-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone {
+      position: relative;
+      flex: none;
+      display: block;
+      height: auto;
+    }
+
+    .phone--c {
+      z-index: 3;
+      width: var(--c);
+    }
+
+    .phone--i {
+      z-index: 2;
+      width: var(--i);
+    }
+
+    .phone--o {
+      z-index: 1;
+      width: var(--o);
+    }
+
+    .phones-row > :nth-child(1),
+    .phones-row > :nth-child(2) {
+      margin-right: calc(-1 * var(--tuck));
+    }
+
+    .phones-row > :nth-child(4),
+    .phones-row > :nth-child(5) {
+      margin-left: calc(-1 * var(--tuck));
+    }
+
+    @media (max-width: 639px) {
+      .phones {
+        --c: 31vw;
+        --i: 26.35vw;
+        --o: 21.7vw;
+        --tuck: 8.5vw;
+      }
+    }
+
+    @media (max-width: 479px) {
+      h1 {
+        font-size: 32px;
+        line-height: 40px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding-left: var(--space-4);
+        padding-right: var(--space-4);
+      }
+    }
+
+    @media (min-width: 960px) {
+      .hero {
+        padding-top: var(--space-4);
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .phones {
+        --c: 330px;
+        --i: 290px;
+        --o: 250px;
+        --tuck: 90px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <a href="https://www.artsy.net" class="logo" aria-label="Artsy home">
+        <img src="/city-guide-on-app/assets/artsy-logo.svg" alt="Artsy" width="88" height="30">
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <h1>Plan your art day with City&nbsp;Guide on the Artsy app.</h1>
+
+      <div class="qr">
+        <img src="/city-guide-on-app/assets/qr-flowcode.png" alt="QR code to download the Artsy app" width="140" height="140">
+      </div>
+      <p class="instructions">To download the app, open your phone&rsquo;s camera and point it at the QR code.</p>
+    </section>
+
+    <!-- Left to right: London map, Frieze Week guide, London City Guide (front), Add to Itinerary, London itinerary -->
+    <section class="phones" aria-label="Screens from City Guide in the Artsy app">
+      <div class="phones-row">
+        <img class="phone phone--o" src="/city-guide-on-app/assets/v3/map.webp" alt="The City Guide map of London with galleries and museums" width="720" height="1291">
+        <img class="phone phone--i" src="/city-guide-on-app/assets/v3/frieze-week-guide.webp" alt="A Frieze Week London guide by Artsy editors" width="720" height="1291">
+        <img class="phone phone--c" src="/city-guide-on-app/assets/v3/city-guide.webp" alt="City Guide for London in the Artsy app, with guides for Frieze Week" width="720" height="1291">
+        <img class="phone phone--i" src="/city-guide-on-app/assets/v3/add-to-itinerary.webp" alt="Adding a show to an itinerary from the London map" width="720" height="1291">
+        <img class="phone phone--o" src="/city-guide-on-app/assets/v3/itinerary.webp" alt="A London itinerary for Frieze Week in the Artsy app" width="720" height="1291">
+      </div>
+    </section>
+  </main>
+
+  <!-- Same Segment snippet as src/html.ts -->
+  <script type="text/javascript">
+    !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";}}();
+  </script>
+
+  <script>
+    (function () {
+      // Both placeholders are filled in by the server (cityGuideOnApp.ts)
+      var WRITE_KEY = "__SEGMENT_WRITE_KEY__"
+      var CONSENT = __CONSENT_CONFIG__
+
+      // Force turns Segment off when it has no write key
+      if (!WRITE_KEY) {
+        return
+      }
+
+      var query = new URLSearchParams(location.search)
+      var timeZone = ""
+      try {
+        timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ""
+      } catch (e) {}
+
+      // Same rule as useConsentRequired: EU and UK start opted out. California, Brazil and
+      // everywhere else start with everything on, so only the EU needs a branch here.
+      var isEU =
+        timeZone.indexOf("Europe") === 0 ||
+        ["Etc/UTC", "Etc/GMT", "UTC"].indexOf(timeZone) !== -1 ||
+        query.get("geo") === "eu"
+
+      // The saved choice, from the same cookie the consent manager writes on the rest of artsy.net
+      function readSavedPreferences() {
+        var cookie = document.cookie.match(new RegExp("(?:^|; )" + CONSENT.cookieName + "=([^;]*)"))
+        if (!cookie) {
+          return {}
+        }
+        try {
+          var saved = JSON.parse(decodeURIComponent(cookie[1]))
+          return saved && typeof saved === "object" ? saved : {}
+        } catch (e) {
+          return {}
+        }
+      }
+
+      // remapSegmentCategory in categories.ts
+      function categoryOf(destination) {
+        if (CONSENT.destinationMapping[destination.id]) {
+          return CONSENT.destinationMapping[destination.id]
+        }
+        var names = ["performance", "targeting", "functional"]
+        for (var i = 0; i < names.length; i++) {
+          if (CONSENT.segmentCategories[names[i]].indexOf(destination.category) !== -1) {
+            return names[i]
+          }
+        }
+        return CONSENT.defaultCategory
+      }
+
+      // mapCustomPreferences in categories.ts
+      function mapPreferences(destinations, preferences) {
+        var custom = {}
+        Object.keys(preferences).forEach(function (name) {
+          custom[name] = typeof preferences[name] === "boolean" ? preferences[name] : true
+        })
+        var byDestination = {}
+        destinations.concat(CONSENT.customDestinations).forEach(function (destination) {
+          byDestination[destination.id] = custom[categoryOf(destination)]
+        })
+        return { destinationPreferences: byDestination, customPreferences: custom }
+      }
+
+      // Mirrors what ConsentManagerBuilder does when it loads Segment on the rest of the site
+      function loadSegment(destinations) {
+        var saved = readSavedPreferences()
+        var destinationPreferences = saved.destinations
+        var customPreferences = saved.custom
+        var preferences = customPreferences || (isEU ? CONSENT.optIn : CONSENT.optOut)
+
+        var hasNewDestinations =
+          destinationPreferences &&
+          Object.keys(destinationPreferences).length > 0 &&
+          destinations.some(function (destination) {
+            return destinationPreferences[destination.id] === undefined
+          })
+        var hasNoCustomPreferences = Object.keys(customPreferences || {}).every(function (name) {
+          return customPreferences[name] === null || customPreferences[name] === undefined
+        })
+
+        if (hasNoCustomPreferences || hasNewDestinations) {
+          var mapped = mapPreferences(destinations, preferences)
+          destinationPreferences = mapped.destinationPreferences
+          preferences = mapped.customPreferences
+        }
+        if (!destinationPreferences) {
+          return
+        }
+
+        var integrations = { All: false, "Segment.io": true }
+        var isAnythingEnabled = false
+        destinations.forEach(function (destination) {
+          var isEnabled = Boolean(destinationPreferences[destination.id])
+          integrations[destination.id] = isEnabled
+          isAnythingEnabled = isAnythingEnabled || isEnabled
+        })
+
+        // Like the consent manager, don't load Segment (or send a page call) if nothing is enabled
+        if (!isAnythingEnabled) {
+          return
+        }
+
+        window.analytics.addSourceMiddleware(function (args) {
+          args.payload.obj.context.consent = {
+            defaultDestinationBehavior: "imply",
+            categoryPreferences: preferences,
+            destinationPreferences: destinationPreferences,
+          }
+          args.next(args.payload)
+        })
+        window.analytics.load(WRITE_KEY, { integrations: integrations })
+
+        // Same page call as trackingMiddleware, with the full URL so ?from= is recorded
+        window.analytics.page(
+          {
+            path: location.pathname,
+            url: location.origin + location.pathname + location.search,
+            referrer: document.referrer,
+          },
+          { integrations: { Marketo: false } }
+        )
+      }
+
+      fetch("https://cdn.segment.com/v1/projects/" + encodeURIComponent(WRITE_KEY) + "/integrations")
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Segment integrations: " + response.status)
+          }
+          return response.json()
+        })
+        .then(function (integrations) {
+          loadSegment(
+            integrations
+              .map(function (integration) {
+                var isFullstory = integration.name === "Fullstory (Actions)"
+                return {
+                  id: isFullstory ? integration.name : integration.creationName,
+                  category: integration.category,
+                }
+              })
+              .filter(function (destination) {
+                return destination.id !== "Repeater"
+              })
+          )
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
+    })()
+  </script>
+</body>
+</html>
