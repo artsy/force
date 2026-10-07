@@ -9,17 +9,6 @@ import { DOWNLOAD_APP_URLS, Device } from "Utils/Hooks/useDeviceDetection"
 import express from "express"
 import glob from "glob"
 
-jest.mock("Server/config", () => ({
-  ...jest.requireActual("Server/config"),
-  SEGMENT_WRITE_KEY: "test-write-key",
-  WEBFONT_URL: "https://webfonts.test",
-}))
-
-// src/tests.ts stubs this module for everyone else
-jest.mock("Components/CookieConsentManager/CookieConsentManager", () =>
-  jest.requireActual("Components/CookieConsentManager/CookieConsentManager"),
-)
-
 const APP_STORE_URL = DOWNLOAD_APP_URLS[Device.iPhone]
 const GOOGLE_PLAY_URL = DOWNLOAD_APP_URLS[Device.Android]
 
@@ -43,7 +32,7 @@ describe("cityGuideMiddleware", () => {
   let server: ReturnType<ReturnType<typeof express>["listen"]>
   let baseUrl: string
 
-  // Same order as src/middleware.ts: City Guide first, then downcase, then the static folders
+  // Same order as src/middleware.ts: City Guide first, then downcase, then the static folders, then the app
   beforeAll(async () => {
     const app = express()
 
@@ -57,6 +46,10 @@ describe("cityGuideMiddleware", () => {
     app.use(downcaseMiddleware as any)
     glob.sync(`${SRC_DIR}/{public,**/public}`).forEach(folder => {
       app.use(express.static(folder))
+    })
+    // Stands in for the app router
+    app.use((req, res) => {
+      res.status(404).send(`APP ROUTER ${req.originalUrl}`)
     })
 
     await new Promise<void>(resolve => {
@@ -124,29 +117,35 @@ describe("cityGuideMiddleware", () => {
       )
     })
 
-    it.each(["/city-guide-on-app/", "/city-guide-on-app"])(
-      "serves the landing page on %s without redirecting",
-      async urlPath => {
-        const res = await get(urlPath)
-        const html = await res.text()
+    it("lets /city-guide-on-app/ through to the app router without redirecting", async () => {
+      const res = await get("/city-guide-on-app/")
 
-        expect(res.status).toBe(200)
-        expect(res.headers.get("location")).toBeNull()
-        expect(res.headers.get("content-type")).toMatch(/text\/html/)
-        expect(html).toContain("Plan your art day with City")
-        expect(html).toContain('<meta name="robots" content="noindex">')
-      },
-    )
+      expect(res.status).toBe(404)
+      expect(res.headers.get("location")).toBeNull()
+      expect(await res.text()).toBe("APP ROUTER /city-guide-on-app/")
+    })
 
-    it("serves the landing page with the ?from= it was given", async () => {
+    // express.static adds the slash because the assets live in a folder with this name
+    it("adds the trailing slash to /city-guide-on-app, keeping the query", async () => {
+      const res = await get("/city-guide-on-app?from=%2Fcity-guide")
+
+      expect(res.status).toBe(301)
+      expect(res.headers.get("location")).toBe(
+        "/city-guide-on-app/?from=%2Fcity-guide",
+      )
+    })
+
+    it("lets the page through with the ?from= it was given", async () => {
       const res = await get("/city-guide-on-app/?from=%2Fcity-guide")
 
-      expect(res.status).toBe(200)
+      expect(res.headers.get("location")).toBeNull()
+      expect(await res.text()).toBe(
+        "APP ROUTER /city-guide-on-app/?from=%2Fcity-guide",
+      )
     })
 
     it("serves the page's images", async () => {
       const paths = [
-        "/city-guide-on-app/assets/artsy-logo.svg",
         "/city-guide-on-app/assets/qr-flowcode.png",
         "/city-guide-on-app/assets/v3/map.webp",
         "/city-guide-on-app/assets/v3/frieze-week-guide.webp",
@@ -164,20 +163,11 @@ describe("cityGuideMiddleware", () => {
       expect(statuses).toEqual(paths.map(() => 200))
     })
 
-    it("does not let express.static serve the raw template", async () => {
-      const publicHtmlFiles = glob.sync(
-        `${SRC_DIR}/{public,**/public}/**/*.html`,
-      )
-      const res = await get("/city-guide-on-app/index.html")
-
-      expect(publicHtmlFiles).toEqual([])
-      expect(res.status).toBe(404)
-    })
-
     it("does not match other paths that start with city-guide", async () => {
       const res = await get("/city-guidebook")
 
-      expect(res.status).toBe(404)
+      expect(res.headers.get("location")).toBeNull()
+      expect(await res.text()).toBe("APP ROUTER /city-guidebook")
     })
   })
 

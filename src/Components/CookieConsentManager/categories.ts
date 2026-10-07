@@ -3,7 +3,7 @@ import type {
   Destination,
 } from "@segment/consent-manager/types/types"
 
-export const SEGMENT_CATEGORIES = {
+const SEGMENT_CATEGORIES = {
   performance: [
     "A/B Testing",
     "Analytics",
