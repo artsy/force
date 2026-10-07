@@ -31,6 +31,7 @@ import {
 import artsyPassport from "./Server/passport"
 
 import { appPreferencesMiddleware } from "Apps/AppPreferences/appPreferencesMiddleware"
+import { cityGuideMiddleware } from "Apps/CityGuide/Server/cityGuideMiddleware"
 import { bootstrapSharify } from "./Server/bootstrapSharify"
 import { assetMiddleware } from "./Server/middleware/assetMiddleware"
 import { asyncLocalsMiddleware } from "./Server/middleware/asyncLocalMiddleware"
@@ -157,6 +158,9 @@ export function initializeMiddleware(app) {
       logAssets: process.env.LOG_ASSETS === "true",
     }),
   )
+
+  // City Guide links keep their original path and case, so they come before downcase
+  app.use(cityGuideMiddleware)
 
   // Redirect requests before they even have to deal with Force routing
   app.use(downcaseMiddleware)

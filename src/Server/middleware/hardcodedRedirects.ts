@@ -208,9 +208,6 @@ for (const from in PERMANENT_REDIRECTS) {
 const TEMP_REDIRECTS = {
   "/art-appraisals": "/sell",
   "/sell": "https://partners.artsy.net",
-  // Temporary redirect until we have a joint landing page for iOS/Android apps 
-  // or actual support for city guide itinerary URLs
-  "/city-guide*": "https://apps.apple.com/us/app/artsy-buy-sell-fine-art/id703796080",
 }
 
 for (const from in TEMP_REDIRECTS) {
