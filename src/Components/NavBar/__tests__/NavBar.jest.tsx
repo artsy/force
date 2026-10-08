@@ -156,6 +156,22 @@ describe("NavBar", () => {
       expect(screen.getByText("Artworks")).toBeInTheDocument()
     })
 
+    it("falls back to plain links when navigation data is unavailable", () => {
+      mockUseNavigationData.mockReturnValue(null)
+
+      getWrapper()
+
+      expect(
+        screen.queryByTestId("navbar-dropdown-button"),
+      ).not.toBeInTheDocument()
+      expect(screen.getByText("What’s New")).toHaveAttribute(
+        "href",
+        "/collection/new-this-week",
+      )
+      expect(screen.getByText("Artists")).toHaveAttribute("href", "/artists")
+      expect(screen.getByText("Artworks")).toHaveAttribute("href", "/collect")
+    })
+
     it("renders menu item price database", () => {
       const { container } = getWrapper()
       expect(container.innerHTML).toContain("Price Database")
