@@ -9,7 +9,7 @@ import type { FC, MouseEvent } from "react"
 export type TrendingArtworkNode = NonNullable<
   NonNullable<
     NonNullable<
-      TrendingSearchesQuery["response"]["searchDropdown"]["oneDay"]
+      TrendingSearchesQuery["response"]["searchDropdown"]["trending"]
     >["artworks"]
   >[number]["artwork"]
 >

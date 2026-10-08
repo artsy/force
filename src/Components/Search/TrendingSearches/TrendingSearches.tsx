@@ -51,58 +51,39 @@ interface TrendingSearchesProps {
   shouldTrackImpressions?: boolean
 }
 
-// The three windows Metaphysics serves; keys match the query's aliases.
-// Fallback labels cover a response with a missing server label.
-const TRENDING_WINDOWS = [
-  { key: "oneDay", fallbackLabel: "Today" },
-  { key: "sevenDays", fallbackLabel: "Past 7 Days" },
-  { key: "thirtyDays", fallbackLabel: "Past 30 Days" },
-] as const
-
-type TrendingWindowData = NonNullable<
-  TrendingSearchesQuery["response"]["searchDropdown"]["oneDay"]
+type TrendingData = NonNullable<
+  TrendingSearchesQuery["response"]["searchDropdown"]["trending"]
 >
 
 type TrendingArtistNode = NonNullable<
-  NonNullable<TrendingWindowData["artists"]>[number]["artist"]
+  NonNullable<TrendingData["artists"]>[number]["artist"]
 >
 
 export const TrendingSearches: FC<TrendingSearchesProps> = ({
   onNavigate,
   shouldTrackImpressions = true,
 }) => {
-  const [activeIndex, setActiveIndex] = useState(0)
-
   const { recentSearches, removeRecentSearch } = useRecentSearches()
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
 
-  // One request hydrates all three windows, so tab switches are instant.
   // store-or-network is best-effort reuse across quick panel reopens.
   const { data, loading } = useClientQuery<TrendingSearchesQuery>({
     query: QUERY,
     cacheConfig: { fetchPolicy: "store-or-network" },
   })
 
-  const windows = data?.searchDropdown
-  const active = windows?.[TRENDING_WINDOWS[activeIndex].key]
+  const trending = data?.searchDropdown?.trending
 
   // Rows whose entity failed to hydrate (e.g. delisted) are dropped;
   // image-less artworks are dropped here (not in the card) so that rail
   // indexes in analytics match the positions users actually see
-  const artists = (active?.artists ?? []).flatMap(row => {
+  const artists = (trending?.artists ?? []).flatMap(row => {
     return row.artist ? [row.artist] : []
   })
-  const artworks = (active?.artworks ?? []).flatMap(row => {
+  const artworks = (trending?.artworks ?? []).flatMap(row => {
     return row.artwork?.image?.resized?.src ? [row.artwork] : []
   })
-
-  const windowLabel = (index: number) => {
-    return (
-      windows?.[TRENDING_WINDOWS[index].key]?.label ??
-      TRENDING_WINDOWS[index].fallbackLabel
-    )
-  }
 
   // Adoption metric: one impression per rail per panel session, and only for
   // rails that actually showed content — the whole panel waits for the query
@@ -152,11 +133,12 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
 
   // The panel never shows a skeleton, error, or empty state: it stays hidden
   // until the query resolves with something to show, so the dropdown only
-  // ever opens over real content.
+  // ever opens over real content. Gated on searchDropdown, not trending: a
+  // Vortex failure nulls only trending, and recents should still show.
   const hasContent =
     artists.length > 0 || artworks.length > 0 || recentSearches.length > 0
 
-  if (loading || !windows || !hasContent) {
+  if (loading || !data?.searchDropdown || !hasContent) {
     return null
   }
 
@@ -187,20 +169,6 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
     }
     trackEvent(analyticsEvent)
     navigateUnlessModified(event)
-  }
-
-  // Mirrors the untyped pill event in SearchBarInput: the tabs filter the
-  // rails in place, so there is no destination to report
-  const handleTrendingWindowClick = (index: number) => {
-    // Re-clicking the active tab is a no-op, not a switch
-    if (index !== activeIndex) {
-      trackEvent({
-        action_type: ActionType.tappedNavigationTab,
-        context_module: ContextModule.trendingSearches,
-        subject: windowLabel(index),
-      })
-    }
-    setActiveIndex(index)
   }
 
   const handleTrendingArtistClick = ({
@@ -300,7 +268,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
 
       {/* Artists before artworks: artist page views carry the highest signal
           weight, and a name/face is faster to recognize than a thumbnail.
-          Sections hide entirely when a window has nothing to show. */}
+          Sections hide entirely when there is nothing to show. */}
       {artists.length > 0 && (
         <>
           <SectionLabel>Trending Artists</SectionLabel>
@@ -308,8 +276,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
           <Spacer y={1} />
 
           <ScrollRail
-            contentKey={`artists-${activeIndex}`}
-            scrollResetKey={activeIndex}
+            contentKey={`artists-${artists.length}`}
             shouldShowScrollBar={false}
           >
             {artists.map((artist, index) => {
@@ -341,8 +308,7 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
           <Spacer y={1} />
 
           <ScrollRail
-            contentKey={`artworks-${activeIndex}`}
-            scrollResetKey={activeIndex}
+            contentKey={`artworks-${artworks.length}`}
             alignItems="flex-start"
           >
             {artworks.map((artwork, index) => {
@@ -366,23 +332,6 @@ export const TrendingSearches: FC<TrendingSearchesProps> = ({
           <Spacer y={2} />
         </>
       )}
-
-      {/* Refinement control, not primary content — bottom, per design feedback */}
-      <Flex justifyContent="flex-end" gap={1}>
-        {TRENDING_WINDOWS.map((w, i) => {
-          return (
-            <Tab
-              key={w.key}
-              $isSelected={i === activeIndex}
-              aria-pressed={i === activeIndex}
-              onClick={() => handleTrendingWindowClick(i)}
-              type="button"
-            >
-              {windowLabel(i)}
-            </Tab>
-          )
-        })}
-      </Flex>
     </Box>
   )
 }
@@ -391,8 +340,6 @@ interface ScrollRailProps {
   children: ReactNode
   /** Changes whenever the rail's content changes, to re-measure overflow */
   contentKey: string
-  /** Changes when the rail should scroll back to the start (tab switch) */
-  scrollResetKey?: string | number
   alignItems?: FlexProps["alignItems"]
   gap?: FlexProps["gap"]
   /** Whether to show the scroll indicator when content overflows */
@@ -404,7 +351,6 @@ interface ScrollRailProps {
 const ScrollRail: FC<ScrollRailProps> = ({
   children,
   contentKey,
-  scrollResetKey,
   alignItems,
   gap = 2,
   shouldShowScrollBar = true,
@@ -418,18 +364,12 @@ const ScrollRail: FC<ScrollRailProps> = ({
     setIsScrollable(element.scrollWidth > element.clientWidth)
   }
 
-  // Re-check when the rail mounts or its content changes (tab switch, load)…
+  // Re-check when the rail mounts or its content changes…
   // biome-ignore lint/correctness/useExhaustiveDependencies: contentKey tracks content changes
   useEffect(updateScrollability, [element, contentKey])
 
   // …and when the rail resizes (viewport changes)
   useResizeObserver({ target: element, onResize: updateScrollability })
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: scrollResetKey drives the reset
-  useEffect(() => {
-    // Optional-chained: jsdom doesn't implement scrollTo
-    element?.scrollTo?.({ left: 0 })
-  }, [element, scrollResetKey])
 
   return (
     <>
@@ -578,47 +518,22 @@ const AvatarFallback = styled(Flex)`
   justify-content: center;
 `
 
-const Tab = styled.button<{ $isSelected: boolean }>`
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 13px;
-  padding: 4px 12px;
-  border-radius: 16px;
-  white-space: nowrap;
-  color: ${({ $isSelected }) =>
-    $isSelected ? themeGet("colors.mono100") : themeGet("colors.mono60")};
-  background-color: ${({ $isSelected }) =>
-    $isSelected ? themeGet("colors.mono10") : "transparent"};
-
-  &:hover {
-    color: ${themeGet("colors.mono100")};
-  }
-`
-
+// Only "Today" ships; the 7d and 30d windows were dropped after the experiment.
 const QUERY = graphql`
   query TrendingSearchesQuery {
     searchDropdown {
-      oneDay: trending(period: ONE_DAY) {
-        ...TrendingSearches_trending @relay(mask: false)
-      }
-      sevenDays: trending(period: SEVEN_DAYS) {
-        ...TrendingSearches_trending @relay(mask: false)
-      }
-      thirtyDays: trending(period: THIRTY_DAYS) {
+      trending(period: ONE_DAY) {
         ...TrendingSearches_trending @relay(mask: false)
       }
     }
   }
 `
 
-// Shared by the three window aliases above, spread with @relay(mask: false)
-// so the data is read straight off the query result (no useFragment); the
-// SaveButton spread stays masked and is resolved by its fragment container.
-export const TRENDING_WINDOW_FRAGMENT = graphql`
+// Spread with @relay(mask: false) so the data is read straight off the query
+// result (no useFragment); the SaveButton spread stays masked and is resolved
+// by its fragment container.
+export const TRENDING_FRAGMENT = graphql`
   fragment TrendingSearches_trending on TrendingSearches {
-    label
     artists(first: 12) {
       internalID
       artist {
