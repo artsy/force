@@ -6,6 +6,7 @@ import { COUNTRY_CODE_TO_COUNTRY_NAME } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 import type { ExtractNodeType } from "Utils/typeSupport"
 import type { Order2DeliveryForm_me$data } from "__generated__/Order2DeliveryForm_me.graphql"
+import type { Environment } from "relay-runtime"
 import * as yup from "yup"
 
 type MeAddresses = ExtractNodeType<
@@ -129,6 +130,11 @@ export const findInitialSelectedAddress = (
   return processedAddresses[0]
 }
 
-export const deliveryAddressValidationSchema = yup
-  .object()
-  .shape(addressFormFieldsValidator({ withPhoneNumber: true }))
+export const getDeliveryAddressValidationSchema = (
+  relayEnvironment: Environment,
+) =>
+  yup
+    .object()
+    .shape(
+      addressFormFieldsValidator({ withPhoneNumber: true, relayEnvironment }),
+    )
