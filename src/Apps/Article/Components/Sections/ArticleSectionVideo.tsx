@@ -1,4 +1,4 @@
-import { Clickable, Image, ResponsiveBox, Text } from "@artsy/palette"
+import { Box, Clickable, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
@@ -7,6 +7,9 @@ import type { ArticleSectionVideo_section$data } from "__generated__/ArticleSect
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+
+// Keeps portrait videos from running taller than the screen
+const MAX_VIDEO_HEIGHT = "80vh"
 
 interface ArticleSectionVideoProps {
   section: ArticleSectionVideo_section$data
@@ -30,63 +33,70 @@ const ArticleSectionVideo: FC<
 
   if (!section.embed || !section.fallbackEmbed) return null
 
-  const image = section.image?.cropped
+  const image = section.image?.resized
 
   return (
-    <ResponsiveBox
-      aspectWidth={16}
-      aspectHeight={9}
-      maxWidth="100%"
-      bg="mono10"
-      data-testid="ArticleSectionVideo"
+    <Box
+      maxWidth={`calc(${MAX_VIDEO_HEIGHT} * ${section.aspectRatio})`}
+      mx="auto"
+      width="100%"
     >
-      {ready && (
-        <>
-          {isDestinationAllowed("YouTube") ? (
-            <>
-              {mode === "Pending" && image ? (
-                <Cover
-                  onClick={handleClick}
-                  width="100%"
-                  height="100%"
-                  position="relative"
-                  bg="mono10"
-                >
-                  <Image
-                    src={image.src}
-                    srcSet={image.srcSet}
+      <ResponsiveBox
+        aspectWidth={section.aspectRatio}
+        aspectHeight={1}
+        maxWidth="100%"
+        bg="mono10"
+        data-testid="ArticleSectionVideo"
+      >
+        {ready && (
+          <>
+            {isDestinationAllowed("YouTube") ? (
+              <>
+                {mode === "Pending" && image ? (
+                  <Cover
+                    onClick={handleClick}
                     width="100%"
                     height="100%"
-                    lazyLoad
-                  />
+                    position="relative"
+                    bg="mono10"
+                  >
+                    <Image
+                      src={image.src}
+                      srcSet={image.srcSet}
+                      width="100%"
+                      height="100%"
+                      style={{ objectFit: "cover" }}
+                      lazyLoad
+                    />
 
-                  <Play />
-                </Cover>
-              ) : (
-                <Video
-                  dangerouslySetInnerHTML={{
-                    __html: image ? section.embed : section.fallbackEmbed,
-                  }}
-                />
-              )}
-            </>
-          ) : (
-            <Clickable
-              width="100%"
-              height="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              p={2}
-              color="mono60"
-              onClick={openConsentManager}
-            >
-              <Text variant="xs">Manage Cookies</Text>
-            </Clickable>
-          )}
-        </>
-      )}
-    </ResponsiveBox>
+                    <Play />
+                  </Cover>
+                ) : (
+                  <Video
+                    dangerouslySetInnerHTML={{
+                      __html: image ? section.embed : section.fallbackEmbed,
+                    }}
+                  />
+                )}
+              </>
+            ) : (
+              <Clickable
+                width="100%"
+                height="100%"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                p={2}
+                color="mono60"
+                onClick={openConsentManager}
+              >
+                <Text variant="xs">Manage Cookies</Text>
+              </Clickable>
+            )}
+          </>
+        )}
+      </ResponsiveBox>
+    </Box>
   )
 }
 
@@ -95,10 +105,11 @@ export const ArticleSectionVideoFragmentContainer = createFragmentContainer(
   {
     section: graphql`
       fragment ArticleSectionVideo_section on ArticleSectionVideo {
+        aspectRatio
         embed(autoPlay: true)
         fallbackEmbed: embed(autoPlay: true)
         image {
-          cropped(width: 910, height: 512) {
+          resized(width: 910) {
             src
             srcSet
           }
