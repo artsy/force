@@ -12,11 +12,7 @@ import {
   clearOneTapEmailOptInPending,
   peekOneTapEmailOptInPending,
 } from "Utils/oneTapEmailOptIn"
-import { useEffect, useState } from "react"
-
-// Fall back to the unchecked default if the geo lookup stalls, so users are
-// never blocked from proceeding.
-const GEO_LOOKUP_TIMEOUT_MS = 5000
+import { useState } from "react"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -30,34 +26,15 @@ export const OnboardingWelcome = () => {
   // One Tap has no consent UI at sign-up, so we surface the opt-in here.
   const [isOneTapSignup] = useState(() => peekOneTapEmailOptInPending())
 
-  const { isAutomaticallySubscribed, loading: isCountryLoading } =
-    useCountryCode({ skip: !isOneTapSignup })
+  const { isAutomaticallySubscribed } = useCountryCode()
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
-  // Derived, not state+effect, so a manual toggle survives the geo lookup
-  // resolving. Falls back to unchecked until the region default is known.
+  // Derived, not state, so a manual toggle wins over the region default.
   const [userChoice, setUserChoice] = useState<boolean | null>(null)
   const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
 
-  const [hasGeoTimedOut, setHasGeoTimedOut] = useState(false)
-  useEffect(() => {
-    if (!isOneTapSignup) {
-      return
-    }
-
-    const timeout = setTimeout(() => {
-      setHasGeoTimedOut(true)
-    }, GEO_LOOKUP_TIMEOUT_MS)
-
-    return () => clearTimeout(timeout)
-  }, [isOneTapSignup])
-
-  // Block the CTA until the region default is known, else a fast click persists
-  // the wrong default.
-  const isConsentPending = isOneTapSignup && isCountryLoading && !hasGeoTimedOut
-
-  const showEmailOptIn = isOneTapSignup && (!isCountryLoading || hasGeoTimedOut)
+  const showEmailOptIn = isOneTapSignup
 
   const persistEmailOptIn = () => {
     if (!isOneTapSignup) {
@@ -126,7 +103,7 @@ export const OnboardingWelcome = () => {
             )}
 
             <Button
-              disabled={loading || isConsentPending}
+              disabled={loading}
               loading={loading}
               onClick={() => {
                 persistEmailOptIn()
@@ -142,13 +119,9 @@ export const OnboardingWelcome = () => {
               variant="tertiary"
               mt={1}
               width="100%"
-              disabled={isConsentPending}
               // @ts-ignore
               as={RouterLink}
               onClick={() => {
-                if (isConsentPending) {
-                  return
-                }
                 persistEmailOptIn()
                 onClose()
               }}

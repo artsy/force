@@ -47,7 +47,6 @@ describe("OnboardingDialogSimplified", () => {
     })
     mockUseCountryCode.mockReturnValue({
       isAutomaticallySubscribed: true,
-      loading: false,
     })
     mockUseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
     mockUseSystemContext.mockReturnValue({ user: { id: "user-123" } })

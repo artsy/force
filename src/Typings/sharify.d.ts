@@ -41,6 +41,7 @@ declare module "sharify" {
       CDN_URL: string
       CHANNEL?: { slug?: string } // Articles
       CMS_URL: string
+      COUNTRY_CODE: string
       CSRF_TOKEN: string
       CURRENT_PATH: string
       CURRENT_USER: User
