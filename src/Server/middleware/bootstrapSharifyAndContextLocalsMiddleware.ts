@@ -59,7 +59,6 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
     ),
   )
   updateSharifyAndContext(res, "IS_GOOGLEBOT", Boolean(ua.match(/Googlebot/i)))
-  updateSharifyAndContext(res, "IP_ADDRESS", req.ip || "")
   // Cloudflare geolocates the visitor's IP into CF-IPCountry; we surface it to
   // the client to pick GDPR email-consent defaults without an IP-lookup round trip.
   updateSharifyAndContext(

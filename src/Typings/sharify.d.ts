@@ -63,7 +63,6 @@ declare module "sharify" {
       GRAPHQL_CACHE_SIZE: string
       GRAPHQL_CACHE_TTL: string
       GRAVITY_WEBSOCKET_URL: string
-      IP_ADDRESS: string
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
       JSON_PAGE_DATA: any
