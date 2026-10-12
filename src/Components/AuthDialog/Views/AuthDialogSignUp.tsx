@@ -11,7 +11,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
-import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
@@ -32,11 +31,7 @@ export const AuthDialogSignUp: FC<React.PropsWithChildren<unknown>> = () => {
 
   const track = useAuthDialogTracking()
 
-  const { loading, isAutomaticallySubscribed } = useCountryCode()
-
-  if (loading) {
-    return <AuthDialogSignUpPlaceholder />
-  }
+  const { isAutomaticallySubscribed } = useCountryCode()
 
   return (
     <Formik

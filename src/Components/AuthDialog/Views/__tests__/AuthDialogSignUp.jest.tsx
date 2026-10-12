@@ -45,7 +45,6 @@ jest.mock("Components/AuthDialog/Hooks/useCountryCode")
 describe("AuthDialogSignUp", () => {
   beforeAll(() => {
     ;(useCountryCode as jest.Mock).mockImplementation(() => ({
-      loading: false,
       isAutomaticallySubscribed: true,
     }))
   })
@@ -91,7 +90,6 @@ describe("AuthDialogSignUp", () => {
   describe("when the user is in a GDPR country", () => {
     beforeAll(() => {
       ;(useCountryCode as jest.Mock).mockImplementation(() => ({
-        loading: false,
         isAutomaticallySubscribed: false,
       }))
     })
@@ -108,30 +106,6 @@ describe("AuthDialogSignUp", () => {
 
       expect(screen.getByTestId("disclaimer")).toHaveTextContent(
         "By clicking Sign Up or Continue with Email, Apple, Google, or Facebook, you agree to Artsy’s Terms and Conditions and Privacy Policy.",
-      )
-    })
-  })
-
-  describe("when the country code is loading", () => {
-    beforeAll(() => {
-      ;(useCountryCode as jest.Mock).mockImplementation(() => ({
-        loading: true,
-        isAutomaticallySubscribed: true,
-      }))
-    })
-
-    afterAll(() => {
-      ;(useCountryCode as jest.Mock).mockImplementation(() => ({
-        loading: false,
-        isAutomaticallySubscribed: true,
-      }))
-    })
-
-    it("renders a skeleton disclaimer", () => {
-      render(<AuthDialogSignUp />)
-
-      expect(screen.getByTestId("skeleton-disclaimer")).toHaveTextContent(
-        "██ ████████ ████ ██ ██ ████████ ████ ██████ ██████ ███████ ██ █████████ ███ █████ ██ ███████ █████ ███ ██████████ ███ ███████ ██████ ███ ██ █████████ ██████ ████ ██████",
       )
     })
   })
