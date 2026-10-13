@@ -1,52 +1,29 @@
-import { useSystemContext } from "System/Hooks/useSystemContext"
-import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { getENV } from "Utils/getENV"
-import type { useCountryCodeQuery } from "__generated__/useCountryCodeQuery.graphql"
-import { graphql } from "react-relay"
 
-const USE_COUNTRY_CODE_QUERY = graphql`
-  query useCountryCodeQuery($ip: String!) {
-    requestLocation(ip: $ip) {
-      countryCode
-    }
-  }
-`
-
-interface UseCountryCodeProps {
-  // By default the query is skipped for logged-in users (the auth dialog only
-  // needs it while signed out). Callers that need the country post-login — e.g.
-  // the post-signup email opt-in modal — can override this.
-  skip?: boolean
-}
-
-export const useCountryCode = ({ skip }: UseCountryCodeProps = {}) => {
-  const { isLoggedIn } = useSystemContext()
-
-  const { data, loading, error } = useClientQuery<useCountryCodeQuery>({
-    query: USE_COUNTRY_CODE_QUERY,
-    variables: {
-      ip: getENV("IP_ADDRESS") || "0.0.0.0",
-    },
-    cacheConfig: {
-      networkCacheConfig: {
-        force: false,
-      },
-    },
-    skip: skip ?? isLoggedIn,
-  })
-
-  const countryCode = data?.requestLocation?.countryCode
-
-  const isAutomaticallySubscribed = !!(
-    countryCode && !GDPR_COUNTRY_CODES.includes(countryCode)
-  )
+/**
+ * Resolves the visitor's country from Cloudflare's CF-IPCountry header (injected
+ * into the page as COUNTRY_CODE) to pick GDPR email-consent defaults. Reading a
+ * CDN-provided header avoids an IPBase lookup on every signup/onboarding view.
+ */
+export const useCountryCode = () => {
+  const countryCode: string = getENV("COUNTRY_CODE") || ""
 
   return {
     countryCode,
-    error,
-    isAutomaticallySubscribed,
-    loading,
+    isAutomaticallySubscribed: !requiresExplicitOptIn(countryCode),
   }
+}
+
+// Whether a visitor must explicitly opt in to marketing email. Unknown country —
+// missing, Cloudflare's "XX", or Tor "T1" — fails safe to GDPR (explicit opt-in).
+const requiresExplicitOptIn = (countryCode: string): boolean => {
+  const code = countryCode.trim().toUpperCase()
+
+  if (!code || code === "XX" || code === "T1") {
+    return true
+  }
+
+  return GDPR_COUNTRY_CODES.includes(code)
 }
 
 export const GDPR_COUNTRY_CODES = [

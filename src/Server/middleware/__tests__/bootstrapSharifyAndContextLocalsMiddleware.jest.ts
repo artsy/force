@@ -61,4 +61,15 @@ describe("locals middleware", () => {
     bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.IS_TABLET).toEqual(true)
   })
+
+  it("sets COUNTRY_CODE from the Cloudflare CF-IPCountry header", () => {
+    req.headers["cf-ipcountry"] = "US"
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
+    expect(res.locals.sd.COUNTRY_CODE).toEqual("US")
+  })
+
+  it("falls back to an empty COUNTRY_CODE when the header is absent", () => {
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
+    expect(res.locals.sd.COUNTRY_CODE).toEqual("")
+  })
 })

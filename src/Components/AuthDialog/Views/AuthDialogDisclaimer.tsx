@@ -1,4 +1,4 @@
-import { SkeletonText, Stack, Text } from "@artsy/palette"
+import { Stack, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { RouterLink } from "System/Components/RouterLink"
@@ -11,11 +11,7 @@ type AuthDialogDisclaimerProps = {}
 export const AuthDialogDisclaimer: FC<
   React.PropsWithChildren<AuthDialogDisclaimerProps>
 > = props => {
-  const { loading, isAutomaticallySubscribed } = useCountryCode()
-
-  if (loading) {
-    return <AuthDialogDisclaimerSkeleton />
-  }
+  const { isAutomaticallySubscribed } = useCountryCode()
 
   return (
     <Stack gap={1}>
@@ -58,28 +54,6 @@ export const AuthDialogDisclaimer: FC<
         </AuthDialogDisclaimerLink>{" "}
         apply.
       </Text>
-    </Stack>
-  )
-}
-
-export const AuthDialogDisclaimerSkeleton: FC<
-  React.PropsWithChildren<unknown>
-> = () => {
-  return (
-    <Stack gap={1}>
-      <SkeletonText
-        variant="xs"
-        textAlign="center"
-        data-testid="skeleton-disclaimer"
-      >
-        By clicking Sign Up or Continue with Email, Apple, Google, or Facebook,
-        you agree to Artsy’s Terms and Conditions and Privacy Policy.
-      </SkeletonText>
-
-      <SkeletonText variant="xs" textAlign="center">
-        This site is protected by reCAPTCHA and the Google Privacy Policy and
-        Terms of Service apply.
-      </SkeletonText>
     </Stack>
   )
 }

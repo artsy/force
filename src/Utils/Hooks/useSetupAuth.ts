@@ -1,4 +1,3 @@
-import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 import { useSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { useRunAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
@@ -16,7 +15,4 @@ export const useSetupAuth = () => {
 
   // Checks to see if your current authentication is still valid and logs you out if it's not
   useAuthValidation()
-
-  // Pre-fetches the country code for the sign up form
-  useCountryCode()
 }
