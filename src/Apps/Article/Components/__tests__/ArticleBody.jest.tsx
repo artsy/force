@@ -59,9 +59,10 @@ describe("ArticleBody", () => {
         sections: [
           {
             __typename: "ArticleSectionVideo",
+            aspectRatio: 16 / 9,
             embed: '<iframe src="https://example.com/embed" />',
             image: {
-              cropped: {
+              resized: {
                 src: "https://example.com/image.jpg",
                 srcSet: "https://example.com/image.jpg 1x",
               },
@@ -72,6 +73,24 @@ describe("ArticleBody", () => {
     })
 
     expect(screen.getByTestId("ArticleSectionVideo")).toBeInTheDocument()
+  })
+
+  it("caps the width of a portrait video so it fits the screen", () => {
+    renderWithRelay({
+      Article: () => ({
+        sections: [
+          {
+            __typename: "ArticleSectionVideo",
+            aspectRatio: 9 / 16,
+            embed: '<iframe src="https://example.com/embed" />',
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByTestId("ArticleSectionVideo").parentElement).toHaveStyle(
+      { maxWidth: "calc(80vh * 0.5625)" },
+    )
   })
 
   it("renders an image set", () => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6e287fc31b353afa0c45b12480a2c8c>>
+ * @generated SignedSource<<2f7b1c83ff83d2db07befc1a1a12c3e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,11 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionVideo_section$data = {
+  readonly aspectRatio: number;
   readonly embed: string | null | undefined;
   readonly fallbackEmbed: string | null | undefined;
   readonly image: {
-    readonly cropped: {
+    readonly resized: {
       readonly src: string;
       readonly srcSet: string;
     } | null | undefined;
@@ -42,6 +43,13 @@ return {
   "selections": [
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "aspectRatio",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "embed",
@@ -67,18 +75,13 @@ return {
           "args": [
             {
               "kind": "Literal",
-              "name": "height",
-              "value": 512
-            },
-            {
-              "kind": "Literal",
               "name": "width",
               "value": 910
             }
           ],
-          "concreteType": "CroppedImageUrl",
+          "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
-          "name": "cropped",
+          "name": "resized",
           "plural": false,
           "selections": [
             {
@@ -96,7 +99,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:512,width:910)"
+          "storageKey": "resized(width:910)"
         }
       ],
       "storageKey": null
@@ -107,6 +110,6 @@ return {
 };
 })();
 
-(node as any).hash = "34292f9c333a2340fa8504ce4f0f0c06";
+(node as any).hash = "cf74a0dc2a13dd40494cfd60ecad0301";
 
 export default node;
