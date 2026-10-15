@@ -159,6 +159,8 @@
 - **Prefer a local DesignSystem wrapper over Palette**: When your app has a component in its own DesignSystem, use it instead of the equivalent from Artsy Palette.
 - **Avoid the `style` prop if possible**: Use Palette's style props (e.g. `p`, `m`, `color`, `bg`) over the `style` prop or Styled Components if possible
 - **Use `mono` scale for black/white colors**: Prefer `mono0` over `"white"` and `mono100` over `"black"` — these adapt to dark mode, hardcoded names don't.
+- **Palette spacing values**: Use values from the Palette theme scale (`1`, `2`, `4`, …). If no scale value fits, use a pixel string such as `"30px"` instead of inventing a number.
+- **Use Palette `Link` instead of `<a>`**: Use Palette's `Link` for links so styling matches the design system.
 
 ## GraphQL/Relay
 
