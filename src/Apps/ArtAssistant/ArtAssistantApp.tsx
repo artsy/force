@@ -36,6 +36,7 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
   const shouldFollowResponse = useRef(true)
   const scrollRef = useRef<HTMLDivElement | null>(null)
+  const contentRef = useRef<HTMLDivElement | null>(null)
   const viewportRef = useArtAssistantViewport()
   const { mobile, desktop } = useNavBarHeight()
 
@@ -45,6 +46,18 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
     const element = scrollRef.current
     if (element) element.scrollTop = element.scrollHeight
   }, [conversation.messages])
+
+  useEffect(() => {
+    if (typeof ResizeObserver === "undefined" || !contentRef.current) return
+    // Rails fetch after the terminal event and can change the answer's height again.
+    const observer = new ResizeObserver(() => {
+      const element = scrollRef.current
+      if (element && shouldFollowResponse.current)
+        element.scrollTop = element.scrollHeight
+    })
+    observer.observe(contentRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   const handleSubmit = (text: string): boolean => {
     shouldFollowResponse.current = true
@@ -148,7 +161,13 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
               100
           }}
         >
-          <Flex flexDirection="column" gap={3} maxWidth={900} mx="auto">
+          <Flex
+            ref={contentRef}
+            flexDirection="column"
+            gap={3}
+            maxWidth={900}
+            mx="auto"
+          >
             {!conversation.messages.length && (
               <ArtAssistantEmptyState
                 onSuggestion={(text, position) => {

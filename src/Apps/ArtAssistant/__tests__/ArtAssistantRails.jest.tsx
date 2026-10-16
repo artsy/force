@@ -46,6 +46,7 @@ describe("Art Assistant result rails", () => {
     ])
   })
   it("shows independent loading, error and empty states", () => {
+    const logError = jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useClientQuery as jest.Mock).mockReturnValue({ data: null })
     const { unmount } = render(
       <MockBoot>
@@ -63,7 +64,7 @@ describe("Art Assistant result rails", () => {
       </MockBoot>,
     )
     expect(
-      screen.getByText("Artist suggestions are unavailable."),
+      screen.getAllByText("Artist suggestions are unavailable.")[0],
     ).toBeInTheDocument()
     ;(useClientQuery as jest.Mock).mockReturnValue({
       data: { artistsConnection: { edges: [] } },
@@ -75,5 +76,7 @@ describe("Art Assistant result rails", () => {
       </MockBoot>,
     )
     expect(screen.getByText("No matching artists found.")).toBeInTheDocument()
+    expect(logError).toHaveBeenCalled()
+    logError.mockRestore()
   })
 })

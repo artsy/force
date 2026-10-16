@@ -1,16 +1,17 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { Shelf, Text } from "@artsy/palette"
+import { Shelf, Text, useToasts } from "@artsy/palette"
 import { ArtAssistantRailPlaceholder } from "Apps/ArtAssistant/Components/ArtAssistantRailPlaceholder"
 import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtAssistantArtistRailQuery } from "__generated__/ArtAssistantArtistRailQuery.graphql"
-import type { FC } from "react"
+import { useEffect, type FC } from "react"
 import { graphql } from "react-relay"
 
 export const ArtAssistantArtistRail: FC<{ ids: string[] }> = ({ ids }) => {
   const { trackEvent } = useTracking()
+  const { sendToast } = useToasts()
   const { data, error } = useClientQuery<ArtAssistantArtistRailQuery>({
     query: graphql`
       query ArtAssistantArtistRailQuery($ids: [String], $first: Int!) {
@@ -27,6 +28,14 @@ export const ArtAssistantArtistRail: FC<{ ids: string[] }> = ({ ids }) => {
     `,
     variables: { ids, first: ids.length },
   })
+  useEffect(() => {
+    if (!error) return
+    console.error("Art Assistant artist rail failed", error)
+    sendToast({
+      variant: "error",
+      message: "Artist suggestions are unavailable.",
+    })
+  }, [error, sendToast])
   if (error)
     return (
       <Text variant="xs" color="mono60">

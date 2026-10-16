@@ -168,4 +168,31 @@ describe("Art Assistant conversation", () => {
       else expect(result.current.messages[1]).not.toHaveProperty("debug")
     },
   )
+  it("keeps terminal debug diagnostics when the agent cannot produce an answer", () => {
+    ;(useSystemContext as jest.Mock).mockReturnValue({
+      user: { id: "admin", accessToken: "token", type: "Admin" },
+      relayEnvironment: {},
+    })
+    const { result } = renderHook(() =>
+      useArtAssistantConversation({ isDebugEnabled: true }),
+    )
+    act(() => result.current.submit({ text: "Find art" }))
+    act(() =>
+      callbacks.onNext?.({
+        aiAgentTurn: {
+          __typename: "AIAgentTurnComplete",
+          message: null,
+          sections: [],
+          artworks: [],
+          suggestedReplies: [],
+          stopReason: "max_iterations",
+          toolCallCount: 5,
+        },
+      }),
+    )
+    expect(result.current.messages[1]).toMatchObject({
+      phase: "error",
+      debug: { stopReason: "max_iterations", toolCallCount: 5 },
+    })
+  })
 })

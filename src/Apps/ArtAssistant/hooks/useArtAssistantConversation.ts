@@ -81,12 +81,21 @@ export const reduceArtAssistantEvent = ({
     }
   }
   if (event.__typename !== "AIAgentTurnComplete") return message
+  const debug = message.debug
+    ? {
+        ...message.debug,
+        durationMs: elapsedMs,
+        stopReason: event.stopReason,
+        toolCallCount: event.toolCallCount,
+      }
+    : undefined
   if (!event.message?.trim())
     return {
       ...message,
       phase: "error",
       text: ART_ASSISTANT_ERROR,
       activity: undefined,
+      ...(debug ? { debug } : {}),
     }
 
   const sections = (event.sections ?? [])
@@ -120,16 +129,7 @@ export const reduceArtAssistantEvent = ({
     text: event.message,
     activity: undefined,
     sections,
-    ...(message.debug
-      ? {
-          debug: {
-            ...message.debug,
-            durationMs: elapsedMs,
-            stopReason: event.stopReason,
-            toolCallCount: event.toolCallCount,
-          },
-        }
-      : {}),
+    ...(debug ? { debug } : {}),
     suggestedReplies: (event.suggestedReplies ?? []).map(reply => reply.text),
   }
 }
