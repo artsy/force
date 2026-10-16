@@ -133,4 +133,39 @@ describe("Art Assistant conversation", () => {
     expect(result.current.isResponding).toBe(false)
     error.mockRestore()
   })
+  it.each(["User", "Admin"])(
+    "requests debug only for an opted-in admin (%s)",
+    type => {
+      ;(useSystemContext as jest.Mock).mockReturnValue({
+        user: { id: "user", accessToken: "token", type },
+        relayEnvironment: {},
+      })
+      const { result } = renderHook(() =>
+        useArtAssistantConversation({ isDebugEnabled: true }),
+      )
+      act(() => result.current.submit("Find art"))
+      const variables = (requestSubscription as jest.Mock).mock.calls[0][1]
+        .variables
+      expect(variables.includeDebug).toBe(type === "Admin")
+      expect(variables.input.includeDebugToolCalls).toBe(
+        type === "Admin" ? true : undefined,
+      )
+      act(() =>
+        callbacks.onNext?.({
+          aiAgentTurn: {
+            __typename: "AIAgentToolCall",
+            activity: "SEARCHING_ARTWORKS",
+            toolName: "search",
+            summary: "Searching",
+            debugSummary: "arguments",
+          },
+        }),
+      )
+      if (type === "Admin")
+        expect(result.current.messages[1]).toMatchObject({
+          debug: { events: [{ detail: "arguments" }] },
+        })
+      else expect(result.current.messages[1]).not.toHaveProperty("debug")
+    },
+  )
 })

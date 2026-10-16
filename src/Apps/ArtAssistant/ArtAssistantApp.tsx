@@ -1,5 +1,6 @@
 import { Box, Button, Drawer, Flex, ModalClose, Text } from "@artsy/palette"
 import { ArtAssistantComposer } from "Apps/ArtAssistant/Components/ArtAssistantComposer"
+import { ArtAssistantDebugPanel } from "Apps/ArtAssistant/Components/ArtAssistantDebugPanel"
 import { ArtAssistantEmptyState } from "Apps/ArtAssistant/Components/ArtAssistantEmptyState"
 import { ArtAssistantHistory } from "Apps/ArtAssistant/Components/ArtAssistantHistory"
 import { ArtAssistantMessage } from "Apps/ArtAssistant/Components/ArtAssistantMessage"
@@ -10,6 +11,7 @@ import { useEnableArtAssistant } from "Apps/ArtAssistant/hooks/useEnableArtAssis
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
+import { userIsAdmin } from "Utils/user"
 import { HttpError } from "found"
 import { useEffect, useRef, useState, type FC } from "react"
 import { MetaTags } from "Components/MetaTags"
@@ -22,7 +24,10 @@ export const ArtAssistantApp: FC = () => {
 }
 
 const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
-  const conversation = useArtAssistantConversation()
+  const { user } = useSystemContext()
+  const isAdmin = userIsAdmin(user)
+  const [isDebugEnabled, setIsDebugEnabled] = useState(false)
+  const conversation = useArtAssistantConversation({ isDebugEnabled })
   const history = useArtAssistantHistory({ userID, ...conversation })
   const [draft, setDraft] = useState("")
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
@@ -104,6 +109,16 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
               Art Assistant
             </Text>
           </Flex>
+          {isAdmin && (
+            <Button
+              size="small"
+              variant="tertiary"
+              aria-pressed={isDebugEnabled}
+              onClick={() => setIsDebugEnabled(previous => !previous)}
+            >
+              Debug
+            </Button>
+          )}
           <Button
             size="small"
             variant="secondaryNeutral"
@@ -135,18 +150,28 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
             )}
             {conversation.messages.map((message, index) => {
               return (
-                <ArtAssistantMessage
-                  key={message.id}
-                  message={message}
-                  onSuggestedReply={
-                    !conversation.isResponding &&
-                    index === conversation.messages.length - 1
-                      ? reply => {
-                          handleSubmit(reply)
-                        }
-                      : undefined
-                  }
-                />
+                <Box key={message.id}>
+                  <ArtAssistantMessage
+                    key={message.id}
+                    message={message}
+                    onSuggestedReply={
+                      !conversation.isResponding &&
+                      index === conversation.messages.length - 1
+                        ? reply => {
+                            handleSubmit(reply)
+                          }
+                        : undefined
+                    }
+                  />
+                  {isAdmin &&
+                    isDebugEnabled &&
+                    message.role === "assistant" &&
+                    message.debug && (
+                      <Box mt={1}>
+                        <ArtAssistantDebugPanel debug={message.debug} />
+                      </Box>
+                    )}
+                </Box>
               )
             })}
           </Flex>
