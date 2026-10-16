@@ -9,8 +9,8 @@ import { useOrder2SetOrderFulfillmentOptionMutation } from "Apps/Order2/Routes/C
 import { useOrder2SetOrderPickupDetailsMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2SetOrderPickupDetailsMutation"
 import {
   phoneInitialValuesFromMe,
+  getRichRequiredPhoneValidators,
   handlePhoneNumberChange,
-  richRequiredPhoneValidators,
 } from "Components/Address/utils"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import { countries as phoneCountryOptions } from "Utils/countries"
@@ -25,7 +25,7 @@ import {
   useFormikContext,
 } from "formik"
 import { useCallback, useMemo } from "react"
-import { graphql, useFragment } from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 import * as Yup from "yup"
 
 const logger = createLogger("Order2PickupForm.tsx")
@@ -46,6 +46,15 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
 }) => {
   const orderData = useFragment(ORDER_FRAGMENT, order)
   const meData = useFragment(ME_FRAGMENT, me)
+
+  const relayEnvironment = useRelayEnvironment()
+  const validationSchema = useMemo(
+    () =>
+      Yup.object().shape({
+        ...getRichRequiredPhoneValidators(relayEnvironment),
+      }),
+    [relayEnvironment],
+  )
 
   const { completeStep, checkoutTracking, setCheckoutMode, isOffer } =
     useCheckoutContext()
@@ -170,7 +179,7 @@ export const Order2PickupForm: React.FC<Order2PickupFormProps> = ({
       <Spacer y={[2, 2, 4]} />
       <Formik<PickupFormValues>
         initialValues={initialValues}
-        validationSchema={VALIDATION_SCHEMA}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
         enableReinitialize={true}
       >
@@ -235,10 +244,6 @@ const PickupFormInput: React.FC = () => {
     </div>
   )
 }
-
-const VALIDATION_SCHEMA = Yup.object().shape({
-  ...richRequiredPhoneValidators,
-})
 
 const ME_FRAGMENT = graphql`
   fragment Order2PickupForm_me on Me {
