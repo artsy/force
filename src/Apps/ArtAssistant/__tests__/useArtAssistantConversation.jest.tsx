@@ -57,8 +57,8 @@ describe("Art Assistant conversation", () => {
   it("waits for a final answer and replays the displayed cards", () => {
     const { result } = renderHook(useArtAssistantConversation)
     act(() => {
-      result.current.submit("Find artists")
-      result.current.submit("Duplicate")
+      result.current.submit({ text: "Find artists" })
+      result.current.submit({ text: "Duplicate" })
     })
     expect(requestSubscription).toHaveBeenCalledTimes(1)
     act(() =>
@@ -73,7 +73,7 @@ describe("Art Assistant conversation", () => {
       sections: [{ type: "artists", ids: ["artist-2"] }],
       suggestedReplies: ["Show me more"],
     })
-    act(() => result.current.submit("The second artist"))
+    act(() => result.current.submit({ text: "The second artist" }))
     expect(
       (requestSubscription as jest.Mock).mock.calls[1][1].variables.input,
     ).toMatchObject({
@@ -94,7 +94,7 @@ describe("Art Assistant conversation", () => {
   it("resets the idle deadline on events and settles a silent stream", () => {
     const error = jest.spyOn(console, "error").mockImplementation(() => {})
     const { result } = renderHook(useArtAssistantConversation)
-    act(() => result.current.submit("Find art"))
+    act(() => result.current.submit({ text: "Find art" }))
     act(() => jest.advanceTimersByTime(ART_ASSISTANT_IDLE_TIMEOUT_MS - 1))
     act(() =>
       callbacks.onNext?.({
@@ -114,12 +114,12 @@ describe("Art Assistant conversation", () => {
 
   it("ignores callbacks from a cancelled chat", () => {
     const { result, unmount } = renderHook(useArtAssistantConversation)
-    act(() => result.current.submit("Find art"))
+    act(() => result.current.submit({ text: "Find art" }))
     const oldCallbacks = callbacks
     act(() => result.current.startNewConversation())
     act(() => oldCallbacks.onNext?.(complete))
     expect(result.current.messages).toEqual([])
-    act(() => result.current.submit("New prompt"))
+    act(() => result.current.submit({ text: "New prompt" }))
     unmount()
     expect(dispose).toHaveBeenCalledTimes(2)
   })
@@ -127,7 +127,7 @@ describe("Art Assistant conversation", () => {
   it("treats a stream without a final answer as an error", () => {
     const error = jest.spyOn(console, "error").mockImplementation(() => {})
     const { result } = renderHook(useArtAssistantConversation)
-    act(() => result.current.submit("Find art"))
+    act(() => result.current.submit({ text: "Find art" }))
     act(() => callbacks.onCompleted?.())
     expect(result.current.messages[1]).toMatchObject({ phase: "error" })
     expect(result.current.isResponding).toBe(false)
@@ -143,7 +143,7 @@ describe("Art Assistant conversation", () => {
       const { result } = renderHook(() =>
         useArtAssistantConversation({ isDebugEnabled: true }),
       )
-      act(() => result.current.submit("Find art"))
+      act(() => result.current.submit({ text: "Find art" }))
       const variables = (requestSubscription as jest.Mock).mock.calls[0][1]
         .variables
       expect(variables.includeDebug).toBe(type === "Admin")

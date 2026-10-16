@@ -4,6 +4,7 @@ import { ArtAssistantDebugPanel } from "Apps/ArtAssistant/Components/ArtAssistan
 import { ArtAssistantEmptyState } from "Apps/ArtAssistant/Components/ArtAssistantEmptyState"
 import { ArtAssistantHistory } from "Apps/ArtAssistant/Components/ArtAssistantHistory"
 import { ArtAssistantMessage } from "Apps/ArtAssistant/Components/ArtAssistantMessage"
+import { useArtAssistantTracking } from "Apps/ArtAssistant/hooks/useArtAssistantTracking"
 import { useArtAssistantConversation } from "Apps/ArtAssistant/hooks/useArtAssistantConversation"
 import { useArtAssistantHistory } from "Apps/ArtAssistant/hooks/useArtAssistantHistory"
 import { useArtAssistantViewport } from "Apps/ArtAssistant/hooks/useArtAssistantViewport"
@@ -26,6 +27,8 @@ export const ArtAssistantApp: FC = () => {
 const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
+  const { trackNewChat, trackSuggestedReplyTapped, trackSuggestionTapped } =
+    useArtAssistantTracking()
   const [isDebugEnabled, setIsDebugEnabled] = useState(false)
   const conversation = useArtAssistantConversation({ isDebugEnabled })
   const history = useArtAssistantHistory({ userID, ...conversation })
@@ -45,9 +48,14 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
 
   const handleSubmit = (text: string): boolean => {
     shouldFollowResponse.current = true
-    return conversation.submit(text)
+    return conversation.submit({ text })
   }
   const handleNewChat = (): void => {
+    if (conversation.messages.length)
+      trackNewChat({
+        conversationID: conversation.conversationID,
+        messageCount: conversation.messages.length,
+      })
     conversation.startNewConversation()
     setDraft("")
     setIsHistoryOpen(false)
@@ -143,8 +151,10 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
           <Flex flexDirection="column" gap={3} maxWidth={900} mx="auto">
             {!conversation.messages.length && (
               <ArtAssistantEmptyState
-                onSuggestion={text => {
-                  handleSubmit(text)
+                onSuggestion={(text, position) => {
+                  shouldFollowResponse.current = true
+                  trackSuggestionTapped({ suggestion: text, position })
+                  conversation.submit({ text, type: "suggestion" })
                 }}
               />
             )}
@@ -157,8 +167,18 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
                     onSuggestedReply={
                       !conversation.isResponding &&
                       index === conversation.messages.length - 1
-                        ? reply => {
-                            handleSubmit(reply)
+                        ? (reply, position, responseMessageID) => {
+                            shouldFollowResponse.current = true
+                            trackSuggestedReplyTapped({
+                              conversationID: conversation.conversationID,
+                              reply,
+                              position,
+                              responseMessageID,
+                            })
+                            conversation.submit({
+                              text: reply,
+                              type: "suggestion",
+                            })
                           }
                         : undefined
                     }

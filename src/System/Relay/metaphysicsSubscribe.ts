@@ -24,7 +24,12 @@ export const subscriptionFetch: typeof fetch = async (input, init) => {
     ?.map(error => error.message)
     .filter(Boolean)
     .join("; ")
-  throw new Error(message || `Subscription request failed (${response.status})`)
+  const error = new Error(
+    message || `Subscription request failed (${response.status})`,
+  )
+  throw Object.assign(error, {
+    status: response.status >= 400 ? response.status : undefined,
+  })
 }
 
 export const createMetaphysicsSubscribe = ({

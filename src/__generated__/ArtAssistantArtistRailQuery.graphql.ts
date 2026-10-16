@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebbbf7d6cb5a6ae0139ef5f9cdc26101>>
+ * @generated SignedSource<<2a774dc71513fcd778b70cfc361eff77>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ArtAssistantArtistRailQuery$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
+        readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -59,7 +60,14 @@ v3 = {
   "name": "internalID",
   "storageKey": null
 },
-v4 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -75,7 +83,7 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -117,6 +125,7 @@ return {
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -169,18 +178,12 @@ return {
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "href",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "slug",
                     "storageKey": null
                   },
                   {
@@ -263,13 +266,13 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "storageKey": "cropped(height:45,width:45)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -304,7 +307,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                           }
                         ],
@@ -313,7 +316,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -326,16 +329,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1b20edcfdd9857878540bb9b35c87e73",
+    "cacheID": "2dba39d721afc8797339f0d97597abe1",
     "id": null,
     "metadata": {},
     "name": "ArtAssistantArtistRailQuery",
     "operationKind": "query",
-    "text": "query ArtAssistantArtistRailQuery(\n  $ids: [String]\n  $first: Int!\n) {\n  artistsConnection(ids: $ids, first: $first) {\n    edges {\n      node {\n        internalID\n        ...CellArtist_artist\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtAssistantArtistRailQuery(\n  $ids: [String]\n  $first: Int!\n) {\n  artistsConnection(ids: $ids, first: $first) {\n    edges {\n      node {\n        internalID\n        slug\n        ...CellArtist_artist\n        id\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "84d8cbd1bdaef5d8ddf5d1138d8d2292";
+(node as any).hash = "afe0f02a053c4ea2efd5b6d6a69e21b3";
 
 export default node;

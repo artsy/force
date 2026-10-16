@@ -1,3 +1,9 @@
+import { useArtAssistantTracking } from "Apps/ArtAssistant/hooks/useArtAssistantTracking"
+import type {
+  ArtAssistantTurnFailed,
+  SentArtAssistantMessage,
+} from "@artsy/cohesion"
+import { captureException } from "@sentry/browser"
 import { useToasts } from "@artsy/palette"
 import {
   ART_ASSISTANT_ERROR,
@@ -133,6 +139,8 @@ export const useArtAssistantConversation = ({
 }: { isDebugEnabled?: boolean } = {}) => {
   const { user, relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
+  const { trackMessageSent, trackResponseReceived, trackTurnFailed } =
+    useArtAssistantTracking()
   const shouldIncludeDebug = isDebugEnabled && userIsAdmin(user)
   const [messages, setMessages] = useState<ArtAssistantMessage[]>([])
   const [isResponding, setIsResponding] = useState(false)
@@ -179,7 +187,13 @@ export const useArtAssistantConversation = ({
   }, [user?.id, user?.accessToken, abort, startNewConversation])
 
   const submit = useCallback(
-    (prompt: string): boolean => {
+    ({
+      text: prompt,
+      type = "typed",
+    }: {
+      text: string
+      type?: SentArtAssistantMessage["type"]
+    }): boolean => {
       const text = prompt.trim()
       if (!text || activeTurn.current || !user?.id || !user?.accessToken)
         return false
@@ -199,6 +213,8 @@ export const useArtAssistantConversation = ({
       }
 
       const startedAt = Date.now()
+      const turnConversationID = conversationIDRef.current
+      const previousMessages = messagesRef.current
       let message: AssistantMessage = {
         id: uuid(),
         role: "assistant",
@@ -214,6 +230,14 @@ export const useArtAssistantConversation = ({
       }
       replaceMessages([...messagesRef.current, userMessage, message])
       setIsResponding(true)
+      trackMessageSent({
+        conversationID: turnConversationID,
+        message: text,
+        messageID: userMessage.id,
+        messageIndex: previousMessages.filter(item => item.role === "user")
+          .length,
+        type,
+      })
 
       let isFinished = false
       let subscription: ReturnType<typeof requestSubscription> | undefined
@@ -242,9 +266,37 @@ export const useArtAssistantConversation = ({
         if (activeTurn.current === turn) activeTurn.current = null
         setIsResponding(false)
       }
-      const fail = (error: unknown) => {
+      const fail = ({
+        error,
+        outcome = "stream_error",
+        stopReason,
+      }: {
+        error: unknown
+        outcome?: ArtAssistantTurnFailed["outcome"]
+        stopReason?: string
+      }) => {
         if (isFinished) return
         console.error("Art Assistant turn failed", error)
+        const errorStatus =
+          (error as { status?: number; response?: { status?: number } } | null)
+            ?.status ??
+          (error as { response?: { status?: number } } | null)?.response?.status
+        trackTurnFailed({
+          conversationID: turnConversationID,
+          durationMs: Date.now() - startedAt,
+          messageID: message.id,
+          promptMessageID: userMessage.id,
+          outcome,
+          stopReason,
+          errorStatus,
+        })
+        captureException(new Error(`Art Assistant turn: ${outcome}`), {
+          tags: {
+            artAssistantOutcome: outcome,
+            ...(errorStatus ? { artAssistantStatus: String(errorStatus) } : {}),
+          },
+          extra: { conversationID: turnConversationID },
+        })
         update({
           ...message,
           phase: "error",
@@ -257,7 +309,11 @@ export const useArtAssistantConversation = ({
       const restartTimeout = () => {
         if (timer) clearTimeout(timer)
         timer = setTimeout(
-          () => fail(new Error("Agent stream idle timeout")),
+          () =>
+            fail({
+              error: new Error("Agent stream idle timeout"),
+              outcome: "idle_timeout",
+            }),
           ART_ASSISTANT_IDLE_TIMEOUT_MS,
         )
       }
@@ -316,7 +372,7 @@ export const useArtAssistantConversation = ({
               variables: {
                 includeDebug: shouldIncludeDebug,
                 input: {
-                  conversationID: conversationIDRef.current,
+                  conversationID: turnConversationID,
                   message: text,
                   history,
                   supportedSections: [...ART_ASSISTANT_SUPPORTED_SECTIONS],
@@ -339,23 +395,49 @@ export const useArtAssistantConversation = ({
                 )
                 if (event.__typename === "AIAgentTurnComplete") {
                   if (message.phase === "error") {
-                    fail(new Error("Agent stopped without an answer"))
+                    fail({
+                      error: new Error("Agent stopped without an answer"),
+                      outcome: "stopped_without_answer",
+                      stopReason: event.stopReason,
+                    })
                     return
                   }
+                  const sections = message.sections ?? []
+                  const itemIDs = sections.flatMap(section => section.ids)
+                  const itemType =
+                    sections.length === 1
+                      ? { artworks: "artwork", artists: "artist" }[
+                          sections[0].type
+                        ]
+                      : undefined
+                  trackResponseReceived({
+                    conversationID: turnConversationID,
+                    durationMs: Date.now() - startedAt,
+                    messageID: message.id,
+                    promptMessageID: userMessage.id,
+                    response: message.text,
+                    itemIDs,
+                    itemType,
+                    stopReason: event.stopReason,
+                    toolCallCount: event.toolCallCount,
+                  })
                   finish()
                 }
               },
-              onError: fail,
+              onError: error => fail({ error }),
               onCompleted: () => {
                 if (!isFinished)
-                  fail(new Error("Agent stream ended without an answer"))
+                  fail({
+                    error: new Error("Agent stream ended without an answer"),
+                    outcome: "ended_without_answer",
+                  })
               },
             },
           )
         if (isFinished) subscription.dispose()
         else restartTimeout()
       } catch (error) {
-        fail(error)
+        fail({ error })
       }
       return true
     },
@@ -366,6 +448,9 @@ export const useArtAssistantConversation = ({
       user?.id,
       user?.accessToken,
       shouldIncludeDebug,
+      trackMessageSent,
+      trackResponseReceived,
+      trackTurnFailed,
     ],
   )
 

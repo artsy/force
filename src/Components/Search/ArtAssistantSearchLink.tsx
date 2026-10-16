@@ -1,3 +1,6 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import SparklesMessageIcon from "@artsy/icons/SparklesMessageIcon"
 import { Flex, Text } from "@artsy/palette"
 import { useEnableArtAssistant } from "Apps/ArtAssistant/hooks/useEnableArtAssistant"
@@ -9,6 +12,8 @@ export const ArtAssistantSearchLink: FC<{
   isCompact?: boolean
 }> = ({ onNavigate, isCompact = false }) => {
   const isEnabled = useEnableArtAssistant()
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
   if (!isEnabled) return null
   return (
     <RouterLink
@@ -17,7 +22,16 @@ export const ArtAssistantSearchLink: FC<{
       title="Ask Art Assistant"
       display="block"
       textDecoration="none"
-      onClick={onNavigate}
+      onClick={() => {
+        trackEvent({
+          action: ActionType.tappedArtAssistant,
+          context_module: ContextModule.header,
+          context_screen_owner_type: contextPageOwnerType,
+          destination_screen_owner_type: OwnerType.artAssistant,
+          type: isCompact ? "icon" : "button",
+        })
+        onNavigate?.()
+      }}
       p={1}
     >
       <Flex gap={1} alignItems="center">
