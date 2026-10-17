@@ -1,6 +1,7 @@
 import { Layout } from "Apps/Components/Layouts"
 import { ContentErrorBoundary } from "System/Components/ContentErrorBoundary"
 import { PageLoadingBar } from "System/Components/PageLoadingBar"
+import { TransientRouteErrorBoundary } from "System/Components/TransientRouteErrorBoundary"
 import { AnalyticsContextProvider } from "System/Contexts/AnalyticsContext"
 import { NavigationHistoryProvider } from "System/Contexts/NavigationHistoryContext"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
@@ -69,7 +70,13 @@ export const AppShell: React.FC<
                 nav/footer. Re-throws chunk load errors to the outer boundary in
                 Boot.tsx. See docs/error-handling.md for the two-tier system. */}
             <ContentErrorBoundary pathname={match?.location?.pathname}>
-              {children}
+              {/* Swallows transient null-data crashes during route navigation
+                  and recovers when the next route commits; re-throws genuine
+                  errors to ContentErrorBoundary above. Remove this wrapper to
+                  disable that behavior. */}
+              <TransientRouteErrorBoundary pathname={match?.location?.pathname}>
+                {children}
+              </TransientRouteErrorBoundary>
             </ContentErrorBoundary>
           </Layout>
 
