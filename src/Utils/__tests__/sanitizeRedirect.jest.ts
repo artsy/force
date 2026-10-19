@@ -80,6 +80,46 @@ describe("sanitizeRedirect", () => {
     expect(sanitizeRedirect("http:///google.com")).toEqual("/")
   })
 
+  it("blocks scheme-only URLs without slashes", () => {
+    expect(sanitizeRedirect("http:example.com")).toEqual("/")
+    expect(sanitizeRedirect("https:example.com")).toEqual("/")
+    expect(sanitizeRedirect("HTTP:example.com")).toEqual("/")
+    expect(sanitizeRedirect("http:example.com/path?q=artsy.net")).toEqual("/")
+  })
+
+  it("blocks backslash-prefixed URLs", () => {
+    expect(sanitizeRedirect("\\\\example.com")).toEqual("/")
+    expect(sanitizeRedirect("/\\example.com")).toEqual("/")
+    expect(sanitizeRedirect("http:\\\\example.com")).toEqual("/")
+  })
+
+  it("blocks lookalike hosts", () => {
+    expect(sanitizeRedirect("https://artsy.net.example.com")).toEqual("/")
+    expect(sanitizeRedirect("https://notartsy.net")).toEqual("/")
+    expect(sanitizeRedirect("https://artsy.net@example.com")).toEqual("/")
+  })
+
+  it("blocks whitespace-obfuscated external URLs", () => {
+    expect(sanitizeRedirect("\thttp:example.com")).toEqual("/")
+    expect(sanitizeRedirect("/\t/example.com")).toEqual("/")
+  })
+
+  it("blocks URLs that can't be parsed", () => {
+    expect(sanitizeRedirect("http://")).toEqual("/")
+    expect(sanitizeRedirect("https://exa mple.com")).toEqual("/")
+  })
+
+  it("blocks hosts that aren't allowlisted, even if they look internal", () => {
+    expect(sanitizeRedirect("http://internal")).toEqual("/")
+    expect(sanitizeRedirect("https://sanitize-redirect.invalid/path")).toEqual(
+      "/",
+    )
+  })
+
+  it("blocks the Express `back` keyword", () => {
+    expect(sanitizeRedirect("back")).toEqual("/")
+  })
+
   it("strips out whitespace", () => {
     expect(
       sanitizeRedirect(`http://artsy.net

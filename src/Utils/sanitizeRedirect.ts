@@ -1,37 +1,63 @@
-import { parse } from "url"
-
 const REDIRECT_FALLBACK = "/"
 
-const ALLOWLIST_HOSTS = ["internal", "localhost", "artsy.net"]
+const ALLOWLIST_HOSTS = ["localhost", "artsy.net"]
 
-const ALLOWLIST_PROTOCOLS = ["http:", "https:", null]
+const ALLOWLIST_PROTOCOLS = ["http:", "https:"]
 
-const bareHost = (hostname: string | null) => {
-  if (hostname == null) return "internal"
+// Placeholder origin used only to resolve relative addresses during parsing.
+// It is never returned, so it does not need to be a real host.
+const RELATIVE_BASE = "https://sanitize-redirect.invalid"
 
+const bareHost = (hostname: string) => {
   const hostParts = hostname.split(".")
 
   return hostParts.slice(hostParts.length - 2).join(".")
 }
 
-const normalizeAddress = (address: string) => {
-  return (
-    address
-      // Corrects number of slashes
-      .replace(/^http:\/+/, "http://")
-      .replace(/^https:\/+/, "https://")
-      // Strip whitespace
-      .replace(/\s/g, "")
-  )
+interface ParsedAddress {
+  url: URL
+  isRelative: boolean
+}
+
+/**
+ * Parses an address the same way a browser would (WHATWG URL parser).
+ * Absolute addresses are parsed without a base so that scheme-only forms
+ * like `http:example.com` resolve to their external host rather than being
+ * treated as relative. Returns `null` when the address can't be parsed.
+ */
+const parseAddress = (address: string): ParsedAddress | null => {
+  try {
+    return { url: new URL(address), isRelative: false }
+  } catch {
+    // Not an absolute URL; fall through and resolve it as a relative one
+  }
+
+  try {
+    const url = new URL(address, RELATIVE_BASE)
+
+    // A protocol-relative address (`//host`) supplies its own host
+    return { url, isRelative: url.origin === RELATIVE_BASE }
+  } catch {
+    return null
+  }
 }
 
 const safeAddress = (address: string) => {
-  const parsed = parse(normalizeAddress(address), false, true)
+  // Express's `res.redirect("back")` redirects to the Referer header
+  if (address === "back") return false
 
-  return (
-    ALLOWLIST_PROTOCOLS.includes(parsed.protocol) &&
-    ALLOWLIST_HOSTS.includes(bareHost(parsed.hostname))
-  )
+  const parsed = parseAddress(address)
+
+  // Anything we can't confidently resolve is unsafe
+  if (!parsed) return false
+
+  const { url, isRelative } = parsed
+
+  if (!ALLOWLIST_PROTOCOLS.includes(url.protocol)) return false
+
+  if (isRelative) return true
+
+  return ALLOWLIST_HOSTS.includes(bareHost(url.hostname))
 }
 
 /**
