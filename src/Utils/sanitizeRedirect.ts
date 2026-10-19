@@ -14,37 +14,50 @@ const bareHost = (hostname: string) => {
   return hostParts.slice(hostParts.length - 2).join(".")
 }
 
+interface ParsedAddress {
+  url: URL
+  isRelative: boolean
+}
+
 /**
  * Parses an address the same way a browser would (WHATWG URL parser).
  * Absolute addresses are parsed without a base so that scheme-only forms
  * like `http:example.com` resolve to their external host rather than being
  * treated as relative. Returns `null` when the address can't be parsed.
  */
-const parseAddress = (address: string): URL | null => {
+const parseAddress = (address: string): ParsedAddress | null => {
   try {
-    return new URL(address)
+    return { url: new URL(address), isRelative: false }
   } catch {
     // Not an absolute URL; fall through and resolve it as a relative one
   }
 
   try {
-    return new URL(address, RELATIVE_BASE)
+    const url = new URL(address, RELATIVE_BASE)
+
+    // A protocol-relative address (`//host`) supplies its own host
+    return { url, isRelative: url.origin === RELATIVE_BASE }
   } catch {
     return null
   }
 }
 
 const safeAddress = (address: string) => {
+  // Express's `res.redirect("back")` redirects to the Referer header
+  if (address === "back") return false
+
   const parsed = parseAddress(address)
 
   // Anything we can't confidently resolve is unsafe
   if (!parsed) return false
 
-  if (!ALLOWLIST_PROTOCOLS.includes(parsed.protocol)) return false
+  const { url, isRelative } = parsed
 
-  if (parsed.origin === RELATIVE_BASE) return true
+  if (!ALLOWLIST_PROTOCOLS.includes(url.protocol)) return false
 
-  return ALLOWLIST_HOSTS.includes(bareHost(parsed.hostname))
+  if (isRelative) return true
+
+  return ALLOWLIST_HOSTS.includes(bareHost(url.hostname))
 }
 
 /**

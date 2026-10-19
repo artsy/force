@@ -104,6 +104,22 @@ describe("sanitizeRedirect", () => {
     expect(sanitizeRedirect("/\t/example.com")).toEqual("/")
   })
 
+  it("blocks URLs that can't be parsed", () => {
+    expect(sanitizeRedirect("http://")).toEqual("/")
+    expect(sanitizeRedirect("https://exa mple.com")).toEqual("/")
+  })
+
+  it("blocks hosts that aren't allowlisted, even if they look internal", () => {
+    expect(sanitizeRedirect("http://internal")).toEqual("/")
+    expect(sanitizeRedirect("https://sanitize-redirect.invalid/path")).toEqual(
+      "/",
+    )
+  })
+
+  it("blocks the Express `back` keyword", () => {
+    expect(sanitizeRedirect("back")).toEqual("/")
+  })
+
   it("strips out whitespace", () => {
     expect(
       sanitizeRedirect(`http://artsy.net
