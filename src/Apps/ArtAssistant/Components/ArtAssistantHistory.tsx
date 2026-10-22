@@ -7,20 +7,14 @@ interface ArtAssistantHistoryProps {
   conversations: StoredArtAssistantConversation[]
   activeConversationID: string
   onSelect: (id: string) => void
-  onDelete: (id: string) => void
   onNewChat: () => void
-  isDebugEnabled?: boolean
-  onToggleDebug?: () => void
 }
 
 export const ArtAssistantHistory: FC<ArtAssistantHistoryProps> = ({
   conversations,
   activeConversationID,
   onSelect,
-  onDelete,
   onNewChat,
-  isDebugEnabled = false,
-  onToggleDebug,
 }) => {
   return (
     <Flex
@@ -57,52 +51,25 @@ export const ArtAssistantHistory: FC<ArtAssistantHistoryProps> = ({
         )}
         {conversations.map(conversation => {
           return (
-            <Flex key={conversation.id} gap={1} alignItems="center">
-              <Clickable
-                textAlign="left"
-                flex={1}
-                minWidth={0}
-                p={1}
-                bg={
-                  conversation.id === activeConversationID ? "mono10" : "mono0"
-                }
-                aria-current={
-                  conversation.id === activeConversationID ? "true" : undefined
-                }
-                onClick={() => onSelect(conversation.id)}
-              >
-                <Text
-                  variant="xs"
-                  lineClamp={2}
-                  style={{ overflowWrap: "anywhere" }}
-                >
-                  {conversation.title}
-                </Text>
-              </Clickable>
-              <Button
-                variant="tertiary"
-                size="small"
-                aria-label={`Delete chat: ${conversation.title}`}
-                onClick={() => onDelete(conversation.id)}
-              >
-                Delete
-              </Button>
-            </Flex>
+            <Clickable
+              key={conversation.id}
+              textAlign="left"
+              width="100%"
+              flexShrink={0}
+              minWidth={0}
+              p={1}
+              aria-current={
+                conversation.id === activeConversationID ? "true" : undefined
+              }
+              onClick={() => onSelect(conversation.id)}
+            >
+              <Text variant="xs" overflowEllipsis>
+                {conversation.title}
+              </Text>
+            </Clickable>
           )
         })}
       </Flex>
-      {onToggleDebug && (
-        <Button
-          size="small"
-          variant="tertiary"
-          alignSelf="flex-start"
-          flexShrink={0}
-          aria-pressed={isDebugEnabled}
-          onClick={onToggleDebug}
-        >
-          Debug
-        </Button>
-      )}
     </Flex>
   )
 }

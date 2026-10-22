@@ -13,7 +13,9 @@ export const ArtAssistantCloseButton: FC = () => {
       width={44}
       height={44}
       onClick={event => {
-        if (window.history.length <= 1) return
+        // Farce's index counts in-app navigation; history.length also counts about:blank.
+        const index = window.history.state?.index
+        if (typeof index !== "number" || index <= 0) return
         event.preventDefault()
         window.history.back()
       }}

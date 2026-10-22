@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react"
+import { act, fireEvent, render, screen, within } from "@testing-library/react"
 import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { ArtAssistantApp } from "Apps/ArtAssistant/ArtAssistantApp"
 import { MockBoot } from "DevTools/MockBoot"
@@ -88,6 +88,9 @@ describe("Art Assistant page", () => {
     expect(
       screen.getByRole("navigation", { name: "Recents" }),
     ).toHaveTextContent("Find art")
+    expect(
+      screen.queryByRole("button", { name: /^Delete/ }),
+    ).not.toBeInTheDocument()
   })
   it("opens chat history on mobile", () => {
     render(
@@ -114,6 +117,12 @@ describe("Art Assistant page", () => {
       </MockBoot>,
     )
     const toggle = screen.getByRole("button", { name: "Debug" })
+    expect(
+      within(screen.getByRole("navigation", { name: "Recents" })).queryByRole(
+        "button",
+        { name: "Debug" },
+      ),
+    ).not.toBeInTheDocument()
     expect(toggle).toHaveAttribute("aria-pressed", "false")
     fireEvent.click(toggle)
     fireEvent.change(screen.getByRole("textbox"), {

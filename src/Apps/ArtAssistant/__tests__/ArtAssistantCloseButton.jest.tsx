@@ -3,10 +3,10 @@ import { ArtAssistantCloseButton } from "Apps/ArtAssistant/Components/ArtAssista
 import { MockBoot } from "DevTools/MockBoot"
 
 describe("Closing Art Assistant", () => {
-  it("goes back when a previous browser entry exists", () => {
-    const length = jest
-      .spyOn(window.history, "length", "get")
-      .mockReturnValue(2)
+  it("goes back when a previous in-app entry exists", () => {
+    const state = jest
+      .spyOn(window.history, "state", "get")
+      .mockReturnValue({ index: 1 })
     const back = jest.spyOn(window.history, "back").mockImplementation(() => {})
     try {
       render(
@@ -17,15 +17,18 @@ describe("Closing Art Assistant", () => {
       fireEvent.click(screen.getByRole("link", { name: "Close Art Assistant" }))
       expect(back).toHaveBeenCalledTimes(1)
     } finally {
-      length.mockRestore()
+      state.mockRestore()
       back.mockRestore()
     }
   })
 
-  it("leaves the home link available for a direct visit without history", () => {
+  it("returns home for a direct visit even when the browser counts its blank tab", () => {
     const length = jest
       .spyOn(window.history, "length", "get")
-      .mockReturnValue(1)
+      .mockReturnValue(2)
+    const state = jest
+      .spyOn(window.history, "state", "get")
+      .mockReturnValue({ index: 0 })
     const back = jest.spyOn(window.history, "back").mockImplementation(() => {})
     try {
       render(
@@ -39,6 +42,7 @@ describe("Closing Art Assistant", () => {
       expect(back).not.toHaveBeenCalled()
     } finally {
       length.mockRestore()
+      state.mockRestore()
       back.mockRestore()
     }
   })

@@ -82,12 +82,7 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
       setIsHistoryOpen(false)
       shouldFollowResponse.current = true
     },
-    onDelete: history.removeConversation,
     onNewChat: handleNewChat,
-    isDebugEnabled,
-    onToggleDebug: isAdmin
-      ? () => setIsDebugEnabled(previous => !previous)
-      : undefined,
   }
 
   return (
@@ -128,12 +123,25 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
               </Button>
             </Media>
           </Flex>
-          <ArtAssistantCloseButton />
+          <Flex alignItems="center" gap={1}>
+            {isAdmin && (
+              <Button
+                size="small"
+                variant="tertiary"
+                aria-pressed={isDebugEnabled}
+                onClick={() => setIsDebugEnabled(previous => !previous)}
+              >
+                Debug
+              </Button>
+            )}
+            <ArtAssistantCloseButton />
+          </Flex>
         </Flex>
         <Box
           ref={scrollRef}
           flex={1}
           minHeight={0}
+          overflowX="hidden"
           overflowY="auto"
           p={[2, 4]}
           onScroll={event => {
@@ -146,7 +154,7 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
           <Flex
             ref={contentRef}
             flexDirection="column"
-            gap={3}
+            gap={[2, 4]}
             maxWidth={900}
             mx="auto"
           >

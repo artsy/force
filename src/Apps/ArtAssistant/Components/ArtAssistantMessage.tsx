@@ -29,7 +29,7 @@ export const ArtAssistantMessage: FC<ArtAssistantMessageProps> = ({
     <Flex
       flexDirection="column"
       alignItems={isUser ? "flex-end" : "flex-start"}
-      gap={2}
+      gap={[2, 4]}
     >
       <Text
         variant="sm"
@@ -62,13 +62,18 @@ export const ArtAssistantMessage: FC<ArtAssistantMessageProps> = ({
       {message.role === "assistant" &&
         message.phase === "complete" &&
         onSuggestedReply && (
-          <Flex flexWrap="wrap" gap={1}>
+          <Flex flexWrap="wrap" gap={1} maxWidth="100%" minWidth={0}>
             {message.suggestedReplies?.map((reply, index) => {
               return (
                 <Button
                   key={`${index}-${reply}`}
                   variant="secondaryNeutral"
                   size="small"
+                  maxWidth="100%"
+                  height="auto"
+                  minHeight={32}
+                  py={0.5}
+                  style={{ whiteSpace: "normal", overflowWrap: "anywhere" }}
                   onClick={() => onSuggestedReply(reply, index, message.id)}
                 >
                   {reply}
