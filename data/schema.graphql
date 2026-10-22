@@ -3906,6 +3906,11 @@ type ArtnetImport {
   linkedCount: Int
 
   """
+  Created artworks that still have at least one possible duplicate waiting for the partner's review.
+  """
+  openReviewCount: Int
+
+  """
   Created artworks that might duplicate an existing artwork and need the partner's review.
   """
   reviewCount: Int
@@ -5021,6 +5026,14 @@ type ArtworkDuplicatePairEdge {
   The item at the end of the edge
   """
   node: ArtworkDuplicatePair
+}
+
+enum ArtworkDuplicatePairSort {
+  """
+  Keeps each imported artwork's pairs next to each other, best match first.
+  """
+  IMPORTED_ARTWORK
+  SIMILARITY_SCORE_DESC
 }
 
 enum ArtworkDuplicatePairStatus {
@@ -30100,6 +30113,7 @@ type Partner implements Node {
     Filter by whether the pair can be merged (neither artwork is both published and listed on Artsy)
     """
     mergeable: Boolean
+    sort: ArtworkDuplicatePairSort
 
     """
     Filter by pair status
@@ -33735,6 +33749,7 @@ type Query {
     The ID of the partner
     """
     partnerId: String!
+    sort: ArtworkDuplicatePairSort
 
     """
     Filter by pair status
@@ -43944,6 +43959,7 @@ type Viewer {
     The ID of the partner
     """
     partnerId: String!
+    sort: ArtworkDuplicatePairSort
 
     """
     Filter by pair status
