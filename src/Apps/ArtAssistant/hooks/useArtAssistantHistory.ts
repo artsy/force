@@ -45,19 +45,32 @@ export const useArtAssistantHistory = ({
       return
     }
     if (hydratedUser.current !== userID || !messages.length) return
-    const firstPrompt = messages.find(message => message.role === "user")
-    if (!firstPrompt) return
-    const conversation: StoredArtAssistantConversation = {
-      id: conversationID,
-      title: conversationTitle(firstPrompt.text),
-      updatedAt: new Date().toISOString(),
-      messages: toStoredMessages(messages),
-    }
+    const prompts = messages.filter(message => message.role === "user")
+    const firstPrompt = prompts[0]
+    const lastPrompt = prompts[prompts.length - 1]
+    if (!firstPrompt || !lastPrompt) return
     setConversations(previous => {
-      const next = [
-        conversation,
-        ...previous.filter(item => item.id !== conversationID),
-      ].slice(0, MAX_STORED_CONVERSATIONS)
+      const existing = previous.find(item => item.id === conversationID)
+      const conversation: StoredArtAssistantConversation = {
+        id: conversationID,
+        title: conversationTitle(firstPrompt.text),
+        // Loading a chat or receiving agent events must not change its recency.
+        updatedAt: existing?.messages.some(
+          message => message.role === "user" && message.id === lastPrompt.id,
+        )
+          ? existing.updatedAt
+          : new Date().toISOString(),
+        messages: toStoredMessages(messages),
+      }
+      const next = (
+        existing
+          ? previous.map(item =>
+              item.id === conversationID ? conversation : item,
+            )
+          : [conversation, ...previous]
+      )
+        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+        .slice(0, MAX_STORED_CONVERSATIONS)
       writeArtAssistantConversations({ userID, conversations: next })
       return next
     })
