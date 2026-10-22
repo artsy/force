@@ -24,6 +24,8 @@ describe("Art Assistant composer", () => {
       </MockBoot>,
     )
     const input = screen.getByRole("textbox")
+    expect(input).toHaveAttribute("rows", "1")
+    expect(input).toHaveStyle({ minHeight: "44px", height: "44px" })
     fireEvent.keyDown(input, { key: "Enter", shiftKey: true })
     fireEvent.keyDown(input, { key: "Enter", isComposing: true })
     expect(onSubmit).not.toHaveBeenCalled()

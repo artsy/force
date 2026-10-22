@@ -1,5 +1,6 @@
 import { Box, Button, Drawer, Flex, ModalClose, Text } from "@artsy/palette"
 import { ArtAssistantComposer } from "Apps/ArtAssistant/Components/ArtAssistantComposer"
+import { ArtAssistantCloseButton } from "Apps/ArtAssistant/Components/ArtAssistantCloseButton"
 import { ArtAssistantDebugPanel } from "Apps/ArtAssistant/Components/ArtAssistantDebugPanel"
 import { ArtAssistantEmptyState } from "Apps/ArtAssistant/Components/ArtAssistantEmptyState"
 import { ArtAssistantHistory } from "Apps/ArtAssistant/Components/ArtAssistantHistory"
@@ -9,7 +10,6 @@ import { useArtAssistantConversation } from "Apps/ArtAssistant/hooks/useArtAssis
 import { useArtAssistantHistory } from "Apps/ArtAssistant/hooks/useArtAssistantHistory"
 import { useArtAssistantViewport } from "Apps/ArtAssistant/hooks/useArtAssistantViewport"
 import { useEnableArtAssistant } from "Apps/ArtAssistant/hooks/useEnableArtAssistant"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { userIsAdmin } from "Utils/user"
@@ -38,7 +38,6 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const contentRef = useRef<HTMLDivElement | null>(null)
   const viewportRef = useArtAssistantViewport()
-  const { mobile, desktop } = useNavBarHeight()
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Scroll after a new message or activity changes the layout.
   useEffect(() => {
@@ -85,12 +84,16 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
     },
     onDelete: history.removeConversation,
     onNewChat: handleNewChat,
+    isDebugEnabled,
+    onToggleDebug: isAdmin
+      ? () => setIsDebugEnabled(previous => !previous)
+      : undefined,
   }
 
   return (
     <Flex
       ref={viewportRef}
-      height={[`calc(100dvh - ${mobile}px)`, `calc(100dvh - ${desktop}px)`]}
+      height="100dvh"
       minHeight={200}
       overflow="hidden"
       data-testid="art-assistant"
@@ -110,11 +113,9 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
       <Flex flex={1} minWidth={0} flexDirection="column">
         <Flex
           flexShrink={0}
-          p={2}
+          px={2}
           alignItems="center"
           justifyContent="space-between"
-          borderBottom="1px solid"
-          borderColor="mono15"
         >
           <Flex alignItems="center" gap={1}>
             <Media at="xs">
@@ -123,30 +124,11 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
                 size="small"
                 onClick={() => setIsHistoryOpen(true)}
               >
-                History
+                Recents
               </Button>
             </Media>
-            <Text as="h1" variant="sm-display">
-              Art Assistant
-            </Text>
           </Flex>
-          {isAdmin && (
-            <Button
-              size="small"
-              variant="tertiary"
-              aria-pressed={isDebugEnabled}
-              onClick={() => setIsDebugEnabled(previous => !previous)}
-            >
-              Debug
-            </Button>
-          )}
-          <Button
-            size="small"
-            variant="secondaryNeutral"
-            onClick={handleNewChat}
-          >
-            New chat
-          </Button>
+          <ArtAssistantCloseButton />
         </Flex>
         <Box
           ref={scrollRef}

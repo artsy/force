@@ -11,9 +11,6 @@ jest.mock("uuid", () => ({
     return () => `chat-${id++}`
   })(),
 }))
-jest.mock("Components/NavBar/useNavBarHeight", () => ({
-  useNavBarHeight: () => ({ mobile: 100, desktop: 150 }),
-}))
 jest.mock("Apps/ArtAssistant/Components/ArtAssistantArtistRail", () => ({
   ArtAssistantArtistRail: () => {
     return <div>Artist cards</div>
@@ -43,6 +40,13 @@ describe("Art Assistant page", () => {
       </MockBoot>,
     )
     expect(screen.getByText("What are you looking for?")).toBeInTheDocument()
+    expect(
+      screen.queryByRole("heading", { name: "Art Assistant" }),
+    ).not.toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "New chat" })).toBeInTheDocument()
+    expect(
+      screen.queryByText("Chats are saved in this browser."),
+    ).not.toBeInTheDocument()
     expect(
       screen.queryByRole("button", { name: "Debug" }),
     ).not.toBeInTheDocument()
@@ -79,10 +83,10 @@ describe("Art Assistant page", () => {
     expect(
       environment.mock.getMostRecentOperation().request.variables.input.history,
     ).toHaveLength(2)
-    fireEvent.click(screen.getAllByRole("button", { name: "New chat" })[0])
+    fireEvent.click(screen.getByRole("button", { name: "New chat" }))
     expect(screen.getByText("What are you looking for?")).toBeInTheDocument()
     expect(
-      screen.getByRole("navigation", { name: "Chat history" }),
+      screen.getByRole("navigation", { name: "Recents" }),
     ).toHaveTextContent("Find art")
   })
   it("opens chat history on mobile", () => {
@@ -96,9 +100,9 @@ describe("Art Assistant page", () => {
         <ArtAssistantApp />
       </MockBoot>,
     )
-    fireEvent.click(screen.getByRole("button", { name: "History" }))
+    fireEvent.click(screen.getByRole("button", { name: "Recents" }))
     expect(
-      screen.getByRole("navigation", { name: "Chat history" }),
+      screen.getByRole("navigation", { name: "Recents" }),
     ).toBeInTheDocument()
   })
   it("lets an admin opt in to live debug details", () => {

@@ -1,5 +1,5 @@
 import { Button, Flex, TextArea } from "@artsy/palette"
-import { useRef, type FC } from "react"
+import { useEffect, useRef, type FC } from "react"
 
 interface ArtAssistantComposerProps {
   value: string
@@ -15,6 +15,13 @@ export const ArtAssistantComposer: FC<ArtAssistantComposerProps> = ({
   onSubmit,
 }) => {
   const input = useRef<HTMLTextAreaElement | null>(null)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Re-measure the text after typing or clearing the draft.
+  useEffect(() => {
+    const element = input.current
+    if (!element) return
+    element.style.height = "auto"
+    element.style.height = `${Math.max(44, Math.min(element.scrollHeight, 120))}px`
+  }, [value])
   const handleSubmit = (): void => {
     if (isResponding || !onSubmit(value)) return
     onChange("")
@@ -36,8 +43,8 @@ export const ArtAssistantComposer: FC<ArtAssistantComposerProps> = ({
         placeholder="Tell us what you’d like…"
         value={value}
         onChange={({ value }) => onChange(value)}
-        rows={2}
-        maxHeight={160}
+        rows={1}
+        style={{ minHeight: 44, maxHeight: 120, resize: "none" }}
         flex={1}
         onKeyDown={event => {
           const isDesktop = window.matchMedia("(min-width: 768px)").matches
@@ -52,7 +59,12 @@ export const ArtAssistantComposer: FC<ArtAssistantComposerProps> = ({
           }
         }}
       />
-      <Button type="submit" disabled={isResponding || !value.trim()}>
+      <Button
+        size="small"
+        height={44}
+        type="submit"
+        disabled={isResponding || !value.trim()}
+      >
         Send
       </Button>
     </Flex>

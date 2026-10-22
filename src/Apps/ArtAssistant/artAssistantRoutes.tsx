@@ -16,7 +16,7 @@ const ArtAssistantApp = loadable(
 export const artAssistantRoutes: RouteProps[] = [
   {
     path: "/art-assistant",
-    layout: "FullBleed",
+    layout: "Blank",
     getComponent: () => ArtAssistantApp,
     render: ({ Component, props, match }) => {
       if (

@@ -13,6 +13,9 @@ jest.mock("Apps/ArtAssistant/ArtAssistantApp", () => ({
 }))
 
 describe("Art Assistant access", () => {
+  it("uses the fullscreen layout without site navigation", () => {
+    expect(artAssistantRoutes[0].layout).toBe("Blank")
+  })
   it.each([
     { user: null, enabled: true },
     { user: { id: "user", accessToken: "token" }, enabled: false },
