@@ -1,6 +1,7 @@
+import MenuIcon from "@artsy/icons/MenuIcon"
 import {
   Box,
-  Button,
+  Clickable,
   Drawer,
   Flex,
   ModalClose,
@@ -122,13 +123,17 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
         >
           <Flex alignItems="center" gap={1}>
             <Media at="xs">
-              <Button
-                variant="tertiary"
-                size="small"
+              <Clickable
+                aria-label="Open chat history"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                width={44}
+                height={44}
                 onClick={() => setIsHistoryOpen(true)}
               >
-                Recents
-              </Button>
+                <MenuIcon width={22} height={22} aria-hidden />
+              </Clickable>
             </Media>
           </Flex>
           <Flex alignItems="center" gap={1}>

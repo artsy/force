@@ -103,7 +103,7 @@ describe("Art Assistant page", () => {
         <ArtAssistantApp />
       </MockBoot>,
     )
-    fireEvent.click(screen.getByRole("button", { name: "Recents" }))
+    fireEvent.click(screen.getByRole("button", { name: "Open chat history" }))
     expect(
       screen.getByRole("navigation", { name: "Recents" }),
     ).toBeInTheDocument()
