@@ -1,6 +1,5 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationsTracking } from "Apps/Conversations/hooks/useConversationsTracking"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
@@ -18,8 +17,6 @@ interface ConversationPartnerOfferCTAProps {
 export const ConversationPartnerOfferCTA: FC<
   React.PropsWithChildren<ConversationPartnerOfferCTAProps>
 > = ({ conversation }) => {
-  const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
-
   const data = useFragment(CONVERSATION_FRAGMENT, conversation)
   const { trackPartnerOfferCTAViewed } = useConversationsTracking()
 
@@ -40,7 +37,6 @@ export const ConversationPartnerOfferCTA: FC<
   }, [hasActivePartnerOffer, data?.internalID, trackPartnerOfferCTAViewed])
 
   if (
-    !isPartnerOfferConvoEnabled ||
     !partnerOffer ||
     !artwork?.href ||
     activeOrder ||
