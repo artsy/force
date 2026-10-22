@@ -141,7 +141,8 @@ export const useArtAssistantConversation = ({
   const { sendToast } = useToasts()
   const { trackMessageSent, trackResponseReceived, trackTurnFailed } =
     useArtAssistantTracking()
-  const shouldIncludeDebug = isDebugEnabled && userIsAdmin(user)
+  const shouldCaptureToolEvents = userIsAdmin(user)
+  const shouldIncludeDebug = isDebugEnabled && shouldCaptureToolEvents
   const [messages, setMessages] = useState<ArtAssistantMessage[]>([])
   const [isResponding, setIsResponding] = useState(false)
   const [conversationID, setConversationID] = useState<string>(() => uuid())
@@ -221,7 +222,9 @@ export const useArtAssistantConversation = ({
         text: "",
         phase: "responding",
         activity: ACTIVITY_COPY.THINKING,
-        ...(shouldIncludeDebug ? { debug: { events: [] } } : {}),
+        ...(shouldCaptureToolEvents
+          ? { debug: { events: [], hasRequestedDetails: shouldIncludeDebug } }
+          : {}),
       }
       const userMessage: ArtAssistantMessage = {
         id: uuid(),
@@ -327,19 +330,20 @@ export const useArtAssistantConversation = ({
                 subscription useArtAssistantConversationSubscription(
                   $input: AIAgentTurnInput!
                   $includeDebug: Boolean!
+                  $includeToolMetadata: Boolean!
                 ) {
                   aiAgentTurn(input: $input) {
                     __typename
                     ... on AIAgentToolCall {
                       activity
-                      toolName @include(if: $includeDebug)
-                      summary @include(if: $includeDebug)
+                      toolName @include(if: $includeToolMetadata)
+                      summary @include(if: $includeToolMetadata)
                       debugSummary @include(if: $includeDebug)
                     }
                     ... on AIAgentToolResult {
                       ok
-                      toolName @include(if: $includeDebug)
-                      summary @include(if: $includeDebug)
+                      toolName @include(if: $includeToolMetadata)
+                      summary @include(if: $includeToolMetadata)
                       debugSummary @include(if: $includeDebug)
                     }
                     ... on AIAgentTurnComplete {
@@ -371,6 +375,7 @@ export const useArtAssistantConversation = ({
               `,
               variables: {
                 includeDebug: shouldIncludeDebug,
+                includeToolMetadata: shouldCaptureToolEvents,
                 input: {
                   conversationID: turnConversationID,
                   message: text,
@@ -448,6 +453,7 @@ export const useArtAssistantConversation = ({
       user?.id,
       user?.accessToken,
       shouldIncludeDebug,
+      shouldCaptureToolEvents,
       trackMessageSent,
       trackResponseReceived,
       trackTurnFailed,

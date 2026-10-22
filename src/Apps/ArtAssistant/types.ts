@@ -19,6 +19,7 @@ export const ART_ASSISTANT_SUPPORTED_SECTIONS = ["ARTWORKS", "ARTISTS"] as const
 export const ART_ASSISTANT_ERROR = "Something went wrong. Please try again."
 
 export interface ArtAssistantDebug {
+  hasRequestedDetails?: boolean
   events: {
     type: "call" | "result"
     toolName: string

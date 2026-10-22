@@ -147,6 +147,7 @@ describe("Art Assistant conversation", () => {
       const variables = (requestSubscription as jest.Mock).mock.calls[0][1]
         .variables
       expect(variables.includeDebug).toBe(type === "Admin")
+      expect(variables.includeToolMetadata).toBe(type === "Admin")
       expect(variables.input.includeDebugToolCalls).toBe(
         type === "Admin" ? true : undefined,
       )

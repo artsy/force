@@ -1,4 +1,12 @@
-import { Box, Button, Drawer, Flex, ModalClose, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Drawer,
+  Flex,
+  ModalClose,
+  Text,
+  Toggle,
+} from "@artsy/palette"
 import { ArtAssistantComposer } from "Apps/ArtAssistant/Components/ArtAssistantComposer"
 import { ArtAssistantCloseButton } from "Apps/ArtAssistant/Components/ArtAssistantCloseButton"
 import { ArtAssistantDebugPanel } from "Apps/ArtAssistant/Components/ArtAssistantDebugPanel"
@@ -125,14 +133,14 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
           </Flex>
           <Flex alignItems="center" gap={1}>
             {isAdmin && (
-              <Button
-                size="small"
-                variant="tertiary"
-                aria-pressed={isDebugEnabled}
-                onClick={() => setIsDebugEnabled(previous => !previous)}
-              >
-                Debug
-              </Button>
+              <Flex alignItems="center" gap={1}>
+                <Text variant="xs">Debug {isDebugEnabled ? "on" : "off"}</Text>
+                <Toggle
+                  aria-label="Debug"
+                  selected={isDebugEnabled}
+                  onSelect={setIsDebugEnabled}
+                />
+              </Flex>
             )}
             <ArtAssistantCloseButton />
           </Flex>
@@ -158,6 +166,16 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
             maxWidth={900}
             mx="auto"
           >
+            {isAdmin &&
+              isDebugEnabled &&
+              !conversation.messages.some(
+                message => message.role === "assistant" && message.debug,
+              ) && (
+                <Text variant="xs" color="mono60" role="note">
+                  Send a new message to view agent debug. Debug data isn’t saved
+                  in chat history.
+                </Text>
+              )}
             {!conversation.messages.length && (
               <ArtAssistantEmptyState
                 onSuggestion={(text, position) => {

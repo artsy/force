@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1acb0606ede36f6bd2d1d52a6b582dd2>>
+ * @generated SignedSource<<cbf5f7f7db4c9fd6f1ecb7b338ed2be5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,7 @@ export type AIAgentDisplayedSectionInput = {
 };
 export type useArtAssistantConversationSubscription$variables = {
   includeDebug: boolean;
+  includeToolMetadata: boolean;
   input: AIAgentTurnInput;
 };
 export type useArtAssistantConversationSubscription$data = {
@@ -93,24 +94,29 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "includeToolMetadata"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "input"
 },
-v2 = [
+v3 = [
   {
     "kind": "Variable",
     "name": "input",
     "variableName": "input"
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v4 = {
-  "condition": "includeDebug",
+v5 = {
+  "condition": "includeToolMetadata",
   "kind": "Condition",
   "passingValue": true,
   "selections": [
@@ -127,7 +133,14 @@ v4 = {
       "kind": "ScalarField",
       "name": "summary",
       "storageKey": null
-    },
+    }
+  ]
+},
+v6 = {
+  "condition": "includeDebug",
+  "kind": "Condition",
+  "passingValue": true,
+  "selections": [
     {
       "alias": null,
       "args": null,
@@ -137,7 +150,7 @@ v4 = {
     }
   ]
 },
-v5 = {
+v7 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -147,12 +160,13 @@ v5 = {
       "name": "activity",
       "storageKey": null
     },
-    (v4/*: any*/)
+    (v5/*: any*/),
+    (v6/*: any*/)
   ],
   "type": "AIAgentToolCall",
   "abstractKey": null
 },
-v6 = {
+v8 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -162,53 +176,54 @@ v6 = {
       "name": "ok",
       "storageKey": null
     },
-    (v4/*: any*/)
+    (v5/*: any*/),
+    (v6/*: any*/)
   ],
   "type": "AIAgentToolResult",
   "abstractKey": null
 },
-v7 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "message",
   "storageKey": null
 },
-v8 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "stopReason",
   "storageKey": null
 },
-v9 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "toolCallCount",
   "storageKey": null
 },
-v10 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v11 = [
-  (v10/*: any*/)
+v13 = [
+  (v12/*: any*/)
 ],
-v12 = {
+v14 = {
   "alias": null,
   "args": null,
   "concreteType": "Artwork",
   "kind": "LinkedField",
   "name": "artworks",
   "plural": true,
-  "selections": (v11/*: any*/),
+  "selections": (v13/*: any*/),
   "storageKey": null
 },
-v13 = {
+v15 = {
   "alias": null,
   "args": null,
   "concreteType": "AIAgentSuggestedReply",
@@ -226,8 +241,8 @@ v13 = {
   ],
   "storageKey": null
 },
-v14 = [
-  (v10/*: any*/),
+v16 = [
+  (v12/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -236,21 +251,22 @@ v14 = [
     "storageKey": null
   }
 ],
-v15 = {
+v17 = {
   "alias": null,
   "args": null,
   "concreteType": "Artwork",
   "kind": "LinkedField",
   "name": "artworks",
   "plural": true,
-  "selections": (v14/*: any*/),
+  "selections": (v16/*: any*/),
   "storageKey": null
 };
 return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -258,21 +274,21 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "aiAgentTurn",
         "plural": false,
         "selections": [
-          (v3/*: any*/),
-          (v5/*: any*/),
-          (v6/*: any*/),
+          (v4/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
-              (v7/*: any*/),
-              (v8/*: any*/),
               (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -281,11 +297,11 @@ return {
                 "name": "sections",
                 "plural": true,
                 "selections": [
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v12/*: any*/)
+                      (v14/*: any*/)
                     ],
                     "type": "AIAgentArtworksSection",
                     "abstractKey": null
@@ -300,7 +316,7 @@ return {
                         "kind": "LinkedField",
                         "name": "artists",
                         "plural": true,
-                        "selections": (v11/*: any*/),
+                        "selections": (v13/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -310,8 +326,8 @@ return {
                 ],
                 "storageKey": null
               },
-              (v12/*: any*/),
-              (v13/*: any*/)
+              (v14/*: any*/),
+              (v15/*: any*/)
             ],
             "type": "AIAgentTurnComplete",
             "abstractKey": null
@@ -326,29 +342,30 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
+      (v2/*: any*/),
+      (v0/*: any*/),
+      (v1/*: any*/)
     ],
     "kind": "Operation",
     "name": "useArtAssistantConversationSubscription",
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "aiAgentTurn",
         "plural": false,
         "selections": [
-          (v3/*: any*/),
-          (v5/*: any*/),
-          (v6/*: any*/),
+          (v4/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
-              (v7/*: any*/),
-              (v8/*: any*/),
               (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -357,11 +374,11 @@ return {
                 "name": "sections",
                 "plural": true,
                 "selections": [
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v15/*: any*/)
+                      (v17/*: any*/)
                     ],
                     "type": "AIAgentArtworksSection",
                     "abstractKey": null
@@ -376,7 +393,7 @@ return {
                         "kind": "LinkedField",
                         "name": "artists",
                         "plural": true,
-                        "selections": (v14/*: any*/),
+                        "selections": (v16/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -386,8 +403,8 @@ return {
                 ],
                 "storageKey": null
               },
-              (v15/*: any*/),
-              (v13/*: any*/)
+              (v17/*: any*/),
+              (v15/*: any*/)
             ],
             "type": "AIAgentTurnComplete",
             "abstractKey": null
@@ -398,16 +415,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "32dff615f6fa407fc46cf6ae2c56bae3",
+    "cacheID": "08c90309bceadb98649fb11ffb645fdb",
     "id": null,
     "metadata": {},
     "name": "useArtAssistantConversationSubscription",
     "operationKind": "subscription",
-    "text": "subscription useArtAssistantConversationSubscription(\n  $input: AIAgentTurnInput!\n  $includeDebug: Boolean!\n) {\n  aiAgentTurn(input: $input) {\n    __typename\n    ... on AIAgentToolCall {\n      activity\n      toolName @include(if: $includeDebug)\n      summary @include(if: $includeDebug)\n      debugSummary @include(if: $includeDebug)\n    }\n    ... on AIAgentToolResult {\n      ok\n      toolName @include(if: $includeDebug)\n      summary @include(if: $includeDebug)\n      debugSummary @include(if: $includeDebug)\n    }\n    ... on AIAgentTurnComplete {\n      message\n      stopReason\n      toolCallCount\n      sections {\n        __typename\n        ... on AIAgentArtworksSection {\n          artworks {\n            internalID\n            id\n          }\n        }\n        ... on AIAgentArtistsSection {\n          artists {\n            internalID\n            id\n          }\n        }\n      }\n      artworks {\n        internalID\n        id\n      }\n      suggestedReplies {\n        text\n      }\n    }\n  }\n}\n"
+    "text": "subscription useArtAssistantConversationSubscription(\n  $input: AIAgentTurnInput!\n  $includeDebug: Boolean!\n  $includeToolMetadata: Boolean!\n) {\n  aiAgentTurn(input: $input) {\n    __typename\n    ... on AIAgentToolCall {\n      activity\n      toolName @include(if: $includeToolMetadata)\n      summary @include(if: $includeToolMetadata)\n      debugSummary @include(if: $includeDebug)\n    }\n    ... on AIAgentToolResult {\n      ok\n      toolName @include(if: $includeToolMetadata)\n      summary @include(if: $includeToolMetadata)\n      debugSummary @include(if: $includeDebug)\n    }\n    ... on AIAgentTurnComplete {\n      message\n      stopReason\n      toolCallCount\n      sections {\n        __typename\n        ... on AIAgentArtworksSection {\n          artworks {\n            internalID\n            id\n          }\n        }\n        ... on AIAgentArtistsSection {\n          artists {\n            internalID\n            id\n          }\n        }\n      }\n      artworks {\n        internalID\n        id\n      }\n      suggestedReplies {\n        text\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d98e0841a96245b1ec46592e5e218ad2";
+(node as any).hash = "492114f7071776e0d4674c8579a02fc4";
 
 export default node;
