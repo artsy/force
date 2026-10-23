@@ -5,6 +5,8 @@ import {
   toStoredMessages,
   writeArtAssistantConversations,
   MAX_STORED_CONVERSATIONS,
+  ART_ASSISTANT_HISTORY_CLEARED,
+  artAssistantStorageKey,
   type StoredArtAssistantConversation,
 } from "Apps/ArtAssistant/utils/artAssistantStorage"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -38,6 +40,29 @@ export const useArtAssistantHistory = ({
     if (stored[0]) loadConversation(stored[0])
     else startNewConversation()
   }, [userID, loadConversation, startNewConversation])
+
+  useEffect(() => {
+    const clear = () => {
+      // Disable writes before aborting a turn, so late updates cannot restore a logged-out chat.
+      hydratedUser.current = null
+      setConversations([])
+      startNewConversation()
+    }
+    const handleStorage = (event: StorageEvent) => {
+      if (
+        event.key === null ||
+        (event.key === artAssistantStorageKey(userID) &&
+          event.newValue === null)
+      )
+        clear()
+    }
+    window.addEventListener(ART_ASSISTANT_HISTORY_CLEARED, clear)
+    window.addEventListener("storage", handleStorage)
+    return () => {
+      window.removeEventListener(ART_ASSISTANT_HISTORY_CLEARED, clear)
+      window.removeEventListener("storage", handleStorage)
+    }
+  }, [userID, startNewConversation])
 
   useEffect(() => {
     if (shouldSkipPersist.current) {

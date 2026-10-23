@@ -11,7 +11,25 @@ export interface StoredArtAssistantConversation {
 }
 
 export const MAX_STORED_CONVERSATIONS = 20
-const storageKey = (userID: string): string => `artsy.artAssistant.v1.${userID}`
+export const ART_ASSISTANT_HISTORY_CLEARED =
+  "artsy:art-assistant-history-cleared"
+const STORAGE_PREFIX = "artsy.artAssistant.v1."
+export const artAssistantStorageKey = (userID: string): string =>
+  `${STORAGE_PREFIX}${userID}`
+
+export const clearArtAssistantConversations = (): void => {
+  if (typeof window === "undefined") return
+  try {
+    Array.from({ length: window.localStorage.length }, (_, index) =>
+      window.localStorage.key(index),
+    ).forEach(key => {
+      if (key?.startsWith(STORAGE_PREFIX)) window.localStorage.removeItem(key)
+    })
+  } catch {
+    // Logout must still work when browser storage is unavailable.
+  }
+  window.dispatchEvent(new Event(ART_ASSISTANT_HISTORY_CLEARED))
+}
 
 const isSection = (section: unknown): boolean => {
   if (!section || typeof section !== "object") return false
@@ -71,7 +89,7 @@ export const readArtAssistantConversations = (
   if (typeof window === "undefined") return []
   try {
     const value: unknown = JSON.parse(
-      window.localStorage.getItem(storageKey(userID)) ?? "[]",
+      window.localStorage.getItem(artAssistantStorageKey(userID)) ?? "[]",
     )
     if (!Array.isArray(value)) return []
     return value
@@ -113,7 +131,7 @@ export const writeArtAssistantConversations = ({
   if (typeof window === "undefined") return
   try {
     window.localStorage.setItem(
-      storageKey(userID),
+      artAssistantStorageKey(userID),
       JSON.stringify(
         conversations.slice(0, MAX_STORED_CONVERSATIONS).map(conversation => ({
           ...conversation,

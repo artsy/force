@@ -4,6 +4,7 @@ import {
   readArtAssistantConversations,
   writeArtAssistantConversations,
   type StoredArtAssistantConversation,
+  clearArtAssistantConversations,
 } from "Apps/ArtAssistant/utils/artAssistantStorage"
 
 describe("Art Assistant history controls", () => {
@@ -19,6 +20,50 @@ describe("Art Assistant history controls", () => {
     jest.setSystemTime(new Date("2026-10-22T12:00:00.000Z"))
   })
   afterEach(() => jest.useRealTimers())
+  it("clears an open chat on logout and never writes its later updates back", () => {
+    writeArtAssistantConversations({ userID: "one", conversations: [chat] })
+    const props = {
+      userID: "one",
+      conversationID: "chat",
+      messages: chat.messages,
+      loadConversation: jest.fn(),
+      startNewConversation: jest.fn(),
+    }
+    const { result, rerender } = renderHook(
+      options => useArtAssistantHistory(options),
+      { initialProps: props },
+    )
+    act(() => clearArtAssistantConversations())
+    expect(result.current.conversations).toEqual([])
+    expect(props.startNewConversation).toHaveBeenCalled()
+    rerender({ ...props, messages: [...chat.messages] })
+    expect(readArtAssistantConversations("one")).toEqual([])
+  })
+  it("stops persisting when another tab removes this user’s history", () => {
+    const props = {
+      userID: "one",
+      conversationID: "chat",
+      messages: chat.messages,
+      loadConversation: jest.fn(),
+      startNewConversation: jest.fn(),
+    }
+    const { result, rerender } = renderHook(
+      options => useArtAssistantHistory(options),
+      { initialProps: props },
+    )
+    act(() =>
+      window.dispatchEvent(
+        new StorageEvent("storage", {
+          key: "artsy.artAssistant.v1.one",
+          newValue: null,
+        }),
+      ),
+    )
+    expect(result.current.conversations).toEqual([])
+    expect(props.startNewConversation).toHaveBeenCalled()
+    rerender({ ...props, messages: [...chat.messages] })
+    expect(readArtAssistantConversations("one")).toEqual([])
+  })
   it("restores, selects and deletes a saved chat", () => {
     writeArtAssistantConversations({ userID: "one", conversations: [chat] })
     const loadConversation = jest.fn()

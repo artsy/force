@@ -2,6 +2,7 @@ import {
   readArtAssistantConversations,
   writeArtAssistantConversations,
   type StoredArtAssistantConversation,
+  clearArtAssistantConversations,
 } from "Apps/ArtAssistant/utils/artAssistantStorage"
 
 const conversation: StoredArtAssistantConversation = {
@@ -22,6 +23,19 @@ const conversation: StoredArtAssistantConversation = {
 
 describe("Art Assistant local history", () => {
   beforeEach(() => localStorage.clear())
+  it("allows logout when storage is unavailable", () => {
+    const storage = jest
+      .spyOn(Storage.prototype, "key")
+      .mockImplementation(() => {
+        throw new Error("Blocked")
+      })
+    localStorage.setItem("unrelated", "value")
+    try {
+      expect(() => clearArtAssistantConversations()).not.toThrow()
+    } finally {
+      storage.mockRestore()
+    }
+  })
   it("isolates users and restores interrupted turns as errors", () => {
     writeArtAssistantConversations({
       userID: "one",
