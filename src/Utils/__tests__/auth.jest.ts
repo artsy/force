@@ -179,6 +179,19 @@ describe("signUp", () => {
   })
 
   describe("logout", () => {
+    it("clears saved assistant chats without touching other browser data", async () => {
+      localStorage.clear()
+      localStorage.setItem("artsy.artAssistant.v1.one", "private chat")
+      localStorage.setItem("artsy.artAssistant.v1.two", "another chat")
+      localStorage.setItem("unrelated", "keep")
+      global.fetch = jest
+        .fn()
+        .mockResolvedValue({ ok: true, json: async () => ({ msg: "success" }) })
+      await logout()
+      expect(localStorage.getItem("artsy.artAssistant.v1.one")).toBeNull()
+      expect(localStorage.getItem("artsy.artAssistant.v1.two")).toBeNull()
+      expect(localStorage.getItem("unrelated")).toBe("keep")
+    })
     it("makes the correct request", async () => {
       const mockFetch = jest.fn(() =>
         Promise.resolve({

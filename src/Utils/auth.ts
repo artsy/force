@@ -6,6 +6,7 @@ import { getENV } from "Utils/getENV"
 import { clearOnboardingInterestsPending } from "Utils/onboardingInterestsPending"
 import { recaptcha } from "Utils/recaptcha"
 import Cookies from "cookies-js"
+import { clearArtAssistantConversations } from "Apps/ArtAssistant/utils/artAssistantStorage"
 
 const headers = {
   Accept: "application/json",
@@ -164,6 +165,7 @@ export const signUp = async (args: {
 
 export const logout = async () => {
   clearOnboardingInterestsPending()
+  clearArtAssistantConversations()
 
   const logoutUrl = `${getENV("APP_URL")}${getENV("AP").logoutPath}`
 
