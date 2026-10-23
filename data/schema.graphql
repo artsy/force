@@ -867,6 +867,11 @@ type Alert {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -2643,6 +2648,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -3315,6 +3325,11 @@ type ArtistPartnerEdge {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -3582,6 +3597,11 @@ type ArtistSeries implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -5334,6 +5354,11 @@ type ArtworkFilterNode {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -19187,6 +19212,11 @@ interface EntityWithFilterArtworksConnectionInterface {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -19678,6 +19708,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -20514,6 +20549,11 @@ input FilterArtworksInput {
   When true, will only return signed artworks.
   """
   signed: Boolean
+
+  """
+  Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+  """
+  similarToArtworkID: String
   size: Int
 
   """
@@ -21344,6 +21384,11 @@ type Gene implements Node & Searchable {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -24921,6 +24966,11 @@ type MarketingCollection implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -30548,6 +30598,11 @@ type Partner implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -31188,6 +31243,11 @@ type PartnerArtist {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -31497,6 +31557,11 @@ type PartnerArtistEdge {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -34043,6 +34108,11 @@ type Query {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -34678,6 +34748,11 @@ type Query {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -38592,6 +38667,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -39492,6 +39572,11 @@ type Tag implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -44252,6 +44337,11 @@ type Viewer {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -44676,6 +44766,11 @@ type Viewer {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
