@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<54981e9958a8996c64b5a65d8b204b8e>>
+ * @generated SignedSource<<9e238b3d6d878813a18810c7ddc42330>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -80,6 +80,7 @@ export type FilterArtworksInput = {
   saleID?: string | null | undefined;
   showID?: string | null | undefined;
   signed?: boolean | null | undefined;
+  similarToArtworkID?: string | null | undefined;
   size?: number | null | undefined;
   sizes?: ReadonlyArray<ArtworkSizes | null | undefined> | null | undefined;
   sold?: boolean | null | undefined;
