@@ -1,6 +1,7 @@
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { RouterLink } from "System/Components/RouterLink"
 import type { FC } from "react"
+import { closeArtAssistant } from "Apps/ArtAssistant/utils/closeArtAssistant"
 
 export const ArtAssistantCloseButton: FC = () => {
   return (
@@ -12,13 +13,7 @@ export const ArtAssistantCloseButton: FC = () => {
       justifyContent="center"
       width={44}
       height={44}
-      onClick={event => {
-        // Farce's index counts in-app navigation; history.length also counts about:blank.
-        const index = window.history.state?.index
-        if (typeof index !== "number" || index <= 0) return
-        event.preventDefault()
-        window.history.back()
-      }}
+      onClick={closeArtAssistant}
     >
       <CloseIcon aria-hidden />
     </RouterLink>

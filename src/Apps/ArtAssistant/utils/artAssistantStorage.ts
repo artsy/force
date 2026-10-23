@@ -1,7 +1,5 @@
-import {
-  ART_ASSISTANT_ERROR,
-  type ArtAssistantMessage,
-} from "Apps/ArtAssistant/types"
+import type { ArtAssistantMessage } from "Apps/ArtAssistant/types"
+import { ART_ASSISTANT_ERRORS } from "Apps/ArtAssistant/utils/artAssistantErrors"
 
 export interface StoredArtAssistantConversation {
   id: string
@@ -49,6 +47,12 @@ const isMessage = (message: unknown): message is ArtAssistantMessage => {
   if (value.role === "user") return true
   return (
     value.role === "assistant" &&
+    (value.error === undefined ||
+      (typeof value.error === "string" &&
+        Object.prototype.hasOwnProperty.call(
+          ART_ASSISTANT_ERRORS,
+          value.error,
+        ))) &&
     (value.phase === "complete" || value.phase === "error") &&
     (value.sections === undefined ||
       (Array.isArray(value.sections) && value.sections.every(isSection))) &&
@@ -65,13 +69,16 @@ export const toStoredMessages = (
   return messages.map(message => {
     if (message.role === "user")
       return { id: message.id, role: "user", text: message.text }
-    if (message.phase !== "complete")
+    if (message.phase !== "complete") {
+      const error = message.error ?? "generic"
       return {
         id: message.id,
         role: "assistant",
         phase: "error",
-        text: ART_ASSISTANT_ERROR,
+        text: ART_ASSISTANT_ERRORS[error].message,
+        error,
       }
+    }
     return {
       id: message.id,
       role: "assistant",

@@ -27,7 +27,7 @@ export const ArtAssistantArtworkRail: FC<{ ids: string[] }> = ({ ids }) => {
   })
   useEffect(() => {
     if (!error) return
-    console.error("Art Assistant artwork rail failed", error)
+    console.error("Art Assistant artwork rail failed")
     sendToast({
       variant: "error",
       message: "Artwork suggestions are unavailable.",

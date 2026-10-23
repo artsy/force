@@ -27,7 +27,7 @@ export const ArtAssistantArtistRail: FC<{ ids: string[] }> = ({ ids }) => {
   })
   useEffect(() => {
     if (!error) return
-    console.error("Art Assistant artist rail failed", error)
+    console.error("Art Assistant artist rail failed")
     sendToast({
       variant: "error",
       message: "Artist suggestions are unavailable.",

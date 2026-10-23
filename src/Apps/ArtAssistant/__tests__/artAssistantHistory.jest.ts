@@ -15,13 +15,19 @@ const exchange = (text: string): ArtAssistantMessage[] => [
 ]
 
 describe("Art Assistant history limits", () => {
-  it("keeps the last 20 complete exchanges", () => {
+  it("rejects a full chat instead of silently losing its earlier context", () => {
     const messages = Array.from({ length: 25 }, (_, index) =>
       exchange(String(index)),
     ).flat()
-    const history = toArtAssistantHistory({ messages, prompt: "Next" })
-    expect(history).toHaveLength(40)
-    expect(history[0].content).toBe("5")
+    expect(() => toArtAssistantHistory({ messages, prompt: "Next" })).toThrow(
+      "history is too long",
+    )
+    expect(
+      toArtAssistantHistory({
+        messages: messages.slice(0, 40),
+        prompt: "Next",
+      }),
+    ).toHaveLength(40)
   })
   it("drops failed exchanges", () => {
     const messages: ArtAssistantMessage[] = [
@@ -43,9 +49,11 @@ describe("Art Assistant history limits", () => {
         sections: [{ type: "artists", ids: ["世".repeat(34_000)] }],
       },
     )
-    expect(toArtAssistantHistory({ messages, prompt: "Next" })).toEqual([])
+    expect(() => toArtAssistantHistory({ messages, prompt: "Next" })).toThrow(
+      "input is too large",
+    )
     expect(() =>
       toArtAssistantHistory({ messages: [], prompt: "世".repeat(34_000) }),
-    ).toThrow("too long")
+    ).toThrow("input is too large")
   })
 })

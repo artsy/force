@@ -23,6 +23,32 @@ const conversation: StoredArtAssistantConversation = {
 
 describe("Art Assistant local history", () => {
   beforeEach(() => localStorage.clear())
+  it("restores the error category and copy without storing debug details", () => {
+    writeArtAssistantConversations({
+      userID: "one",
+      conversations: [
+        {
+          ...conversation,
+          messages: [
+            {
+              id: "a",
+              role: "assistant",
+              text: "old copy",
+              phase: "error",
+              error: "timeout",
+              debug: {
+                events: [{ type: "call", toolName: "private", elapsedMs: 1 }],
+              },
+            },
+          ],
+        },
+      ],
+    })
+    const restored = readArtAssistantConversations("one")[0].messages[0]
+    expect(restored).toMatchObject({ error: "timeout", phase: "error" })
+    expect(restored.text).toContain("Would you mind asking us once more?")
+    expect(restored).not.toHaveProperty("debug")
+  })
   it("allows logout when storage is unavailable", () => {
     const storage = jest
       .spyOn(Storage.prototype, "key")

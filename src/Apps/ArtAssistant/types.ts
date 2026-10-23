@@ -1,3 +1,5 @@
+import type { ArtAssistantErrorKind } from "Apps/ArtAssistant/utils/artAssistantErrors"
+
 export type ArtAssistantSection =
   | { type: "artworks"; ids: string[] }
   | { type: "artists"; ids: string[] }
@@ -10,13 +12,13 @@ export type ArtAssistantMessage =
       text: string
       phase: "responding" | "complete" | "error"
       activity?: string
+      error?: ArtAssistantErrorKind
       debug?: ArtAssistantDebug
       sections?: ArtAssistantSection[]
       suggestedReplies?: string[]
     }
 
 export const ART_ASSISTANT_SUPPORTED_SECTIONS = ["ARTWORKS", "ARTISTS"] as const
-export const ART_ASSISTANT_ERROR = "Something went wrong. Please try again."
 
 export interface ArtAssistantDebug {
   hasRequestedDetails?: boolean

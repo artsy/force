@@ -24,6 +24,7 @@ import { userIsAdmin } from "Utils/user"
 import { HttpError } from "found"
 import { useEffect, useRef, useState, type FC } from "react"
 import { MetaTags } from "Components/MetaTags"
+import type { ArtAssistantErrorAction } from "Apps/ArtAssistant/utils/artAssistantErrors"
 
 export const ArtAssistantApp: FC = () => {
   const isEnabled = useEnableArtAssistant()
@@ -39,6 +40,8 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
   const conversation = useArtAssistantConversation({ isDebugEnabled })
   const history = useArtAssistantHistory({ userID, ...conversation })
   const [draft, setDraft] = useState("")
+  const [dismissedErrorID, setDismissedErrorID] = useState<string | null>(null)
+  const composerRef = useRef<HTMLTextAreaElement | null>(null)
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
   const shouldFollowResponse = useRef(true)
   const scrollRef = useRef<HTMLDivElement | null>(null)
@@ -73,6 +76,27 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
     setDraft("")
     setIsHistoryOpen(false)
     shouldFollowResponse.current = true
+  }
+  const handleErrorAction = ({
+    action,
+    messageID,
+  }: {
+    action: ArtAssistantErrorAction
+    messageID: string
+  }): void => {
+    shouldFollowResponse.current = true
+    switch (action) {
+      case "retry":
+        conversation.retry()
+        return
+      case "newChat":
+        handleNewChat()
+        return
+      case "dismiss":
+        setDismissedErrorID(messageID)
+        composerRef.current?.focus()
+        return
+    }
   }
   const historyProps = {
     conversations: history.conversations,
@@ -187,6 +211,14 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
                   <ArtAssistantMessage
                     key={message.id}
                     message={message}
+                    onErrorAction={
+                      !conversation.isResponding &&
+                      index === conversation.messages.length - 1 &&
+                      message.id !== dismissedErrorID
+                        ? action =>
+                            handleErrorAction({ action, messageID: message.id })
+                        : undefined
+                    }
                     onSuggestedReply={
                       !conversation.isResponding &&
                       index === conversation.messages.length - 1
@@ -221,6 +253,7 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
         >
           <Box maxWidth={900} mx="auto">
             <ArtAssistantComposer
+              inputRef={composerRef}
               value={draft}
               onChange={setDraft}
               isResponding={conversation.isResponding}

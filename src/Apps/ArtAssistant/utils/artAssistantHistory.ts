@@ -30,50 +30,37 @@ export const toArtAssistantHistory = ({
   prompt: string
 }): AIAgentMessageInput[] => {
   // Drop failed exchanges together, so a failed prompt cannot become an unanswered turn.
-  const exchanges = messages
-    .flatMap<AIAgentMessageInput[]>((message, index) => {
-      const answer = messages[index + 1]
-      if (
-        message.role !== "user" ||
-        answer?.role !== "assistant" ||
-        answer.phase !== "complete"
-      )
-        return []
-      return [
-        [
-          { role: "USER", content: message.text },
-          {
-            role: "ASSISTANT",
-            content: answer.text,
-            displayedSections: answer.sections?.map(section => ({
-              entityType: section.type === "artworks" ? "ARTWORK" : "ARTIST",
-              internalIDs: section.ids,
-            })),
-          },
-        ],
-      ]
-    })
-    .slice(-MAX_HISTORY_MESSAGES / 2)
+  const history = messages.flatMap<AIAgentMessageInput>((message, index) => {
+    const answer = messages[index + 1]
+    if (
+      message.role !== "user" ||
+      answer?.role !== "assistant" ||
+      answer.phase !== "complete"
+    )
+      return []
+    return [
+      { role: "USER", content: message.text },
+      {
+        role: "ASSISTANT",
+        content: answer.text,
+        displayedSections: answer.sections?.map(section => ({
+          entityType: section.type === "artworks" ? "ARTWORK" : "ARTIST",
+          internalIDs: section.ids,
+        })),
+      },
+    ]
+  })
+
+  if (history.length > MAX_HISTORY_MESSAGES)
+    throw new Error("Conversation history is too long")
 
   const fixedBytes =
     bytes(prompt) +
     ART_ASSISTANT_SUPPORTED_SECTIONS.reduce((sum, type) => sum + bytes(type), 0)
-  if (fixedBytes > MAX_INPUT_BYTES)
-    throw new Error(
-      "Your message is too long. Please shorten it and try again.",
-    )
-
-  const firstFittingExchange = exchanges.findIndex((_, index) => {
-    return (
-      fixedBytes +
-        exchanges
-          .slice(index)
-          .flat()
-          .reduce((sum, entry) => sum + entryBytes(entry), 0) <=
-      MAX_INPUT_BYTES
-    )
-  })
-  return firstFittingExchange < 0
-    ? []
-    : exchanges.slice(firstFittingExchange).flat()
+  if (
+    fixedBytes + history.reduce((sum, entry) => sum + entryBytes(entry), 0) >
+    MAX_INPUT_BYTES
+  )
+    throw new Error("Conversation input is too large")
+  return history
 }

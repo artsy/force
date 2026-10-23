@@ -1,12 +1,17 @@
 import { captureException } from "@sentry/browser"
-import { useToasts } from "@artsy/palette"
 import {
-  ART_ASSISTANT_ERROR,
   ART_ASSISTANT_SUPPORTED_SECTIONS,
   type ArtAssistantMessage,
   type ArtAssistantSection,
 } from "Apps/ArtAssistant/types"
 import { toArtAssistantHistory } from "Apps/ArtAssistant/utils/artAssistantHistory"
+import {
+  ART_ASSISTANT_ERRORS,
+  artAssistantErrorKindForStopReason,
+  artAssistantErrorKindForStreamError,
+  type ArtAssistantErrorKind,
+} from "Apps/ArtAssistant/utils/artAssistantErrors"
+import { MetaphysicsSubscriptionError } from "System/Relay/metaphysicsSubscriptionError"
 import { userIsAdmin } from "Utils/user"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type {
@@ -84,14 +89,17 @@ export const reduceArtAssistantEvent = ({
         toolCallCount: event.toolCallCount,
       }
     : undefined
-  if (!event.message?.trim())
+  if (!event.message?.trim()) {
+    const error = artAssistantErrorKindForStopReason(event.stopReason)
     return {
       ...message,
       phase: "error",
-      text: ART_ASSISTANT_ERROR,
+      text: ART_ASSISTANT_ERRORS[error].message,
+      error,
       activity: undefined,
       ...(debug ? { debug } : {}),
     }
+  }
 
   const sections = (event.sections ?? [])
     .flatMap<ArtAssistantSection>(section => {
@@ -133,7 +141,6 @@ export const useArtAssistantConversation = ({
   isDebugEnabled = false,
 }: { isDebugEnabled?: boolean } = {}) => {
   const { user, relayEnvironment } = useSystemContext()
-  const { sendToast } = useToasts()
   const shouldCaptureToolEvents = userIsAdmin(user)
   const shouldIncludeDebug = isDebugEnabled && shouldCaptureToolEvents
   const [messages, setMessages] = useState<ArtAssistantMessage[]>([])
@@ -186,20 +193,6 @@ export const useArtAssistantConversation = ({
       if (!text || activeTurn.current || !user?.id || !user?.accessToken)
         return false
 
-      let history: ReturnType<typeof toArtAssistantHistory>
-      try {
-        history = toArtAssistantHistory({
-          messages: messagesRef.current,
-          prompt: text,
-        })
-      } catch (error) {
-        sendToast({
-          variant: "error",
-          message: error instanceof Error ? error.message : ART_ASSISTANT_ERROR,
-        })
-        return false
-      }
-
       const startedAt = Date.now()
       const turnConversationID = conversationIDRef.current
       let message: AssistantMessage = {
@@ -216,6 +209,26 @@ export const useArtAssistantConversation = ({
         id: uuid(),
         role: "user",
         text,
+      }
+      let history: ReturnType<typeof toArtAssistantHistory>
+      try {
+        history = toArtAssistantHistory({
+          messages: messagesRef.current,
+          prompt: text,
+        })
+      } catch {
+        replaceMessages([
+          ...messagesRef.current,
+          userMessage,
+          {
+            ...message,
+            phase: "error",
+            error: "conversation_limit",
+            text: ART_ASSISTANT_ERRORS.conversation_limit.message,
+            activity: undefined,
+          },
+        ])
+        return true
       }
       replaceMessages([...messagesRef.current, userMessage, message])
       setIsResponding(true)
@@ -250,8 +263,10 @@ export const useArtAssistantConversation = ({
       const fail = ({
         error,
         outcome = "stream_error",
+        kind = artAssistantErrorKindForStreamError(error),
       }: {
-        error: unknown
+        error?: unknown
+        kind?: ArtAssistantErrorKind
         outcome?:
           | "stream_error"
           | "idle_timeout"
@@ -259,11 +274,14 @@ export const useArtAssistantConversation = ({
           | "ended_without_answer"
       }) => {
         if (isFinished) return
-        console.error("Art Assistant turn failed", error)
         const errorStatus =
-          (error as { status?: number; response?: { status?: number } } | null)
-            ?.status ??
-          (error as { response?: { status?: number } } | null)?.response?.status
+          error instanceof MetaphysicsSubscriptionError
+            ? error.status
+            : undefined
+        console.error("Art Assistant turn failed", {
+          outcome,
+          status: errorStatus,
+        })
         captureException(new Error(`Art Assistant turn: ${outcome}`), {
           tags: {
             artAssistantOutcome: outcome,
@@ -274,10 +292,12 @@ export const useArtAssistantConversation = ({
         update({
           ...message,
           phase: "error",
-          text: ART_ASSISTANT_ERROR,
+          text: ART_ASSISTANT_ERRORS[kind].message,
+          error: kind,
           activity: undefined,
+          sections: undefined,
+          suggestedReplies: undefined,
         })
-        sendToast({ variant: "error", message: ART_ASSISTANT_ERROR })
         finish()
       }
       const restartTimeout = () => {
@@ -285,8 +305,8 @@ export const useArtAssistantConversation = ({
         timer = setTimeout(
           () =>
             fail({
-              error: new Error("Agent stream idle timeout"),
               outcome: "idle_timeout",
+              kind: "timeout",
             }),
           ART_ASSISTANT_IDLE_TIMEOUT_MS,
         )
@@ -372,8 +392,8 @@ export const useArtAssistantConversation = ({
                 if (event.__typename === "AIAgentTurnComplete") {
                   if (message.phase === "error") {
                     fail({
-                      error: new Error("Agent stopped without an answer"),
                       outcome: "stopped_without_answer",
+                      kind: message.error,
                     })
                     return
                   }
@@ -384,8 +404,8 @@ export const useArtAssistantConversation = ({
               onCompleted: () => {
                 if (!isFinished)
                   fail({
-                    error: new Error("Agent stream ended without an answer"),
                     outcome: "ended_without_answer",
+                    kind: "generic",
                   })
               },
             },
@@ -400,7 +420,6 @@ export const useArtAssistantConversation = ({
     [
       relayEnvironment,
       replaceMessages,
-      sendToast,
       user?.id,
       user?.accessToken,
       shouldIncludeDebug,
@@ -408,11 +427,27 @@ export const useArtAssistantConversation = ({
     ],
   )
 
+  const retry = useCallback((): boolean => {
+    if (activeTurn.current || !user?.id || !user.accessToken) return false
+    const current = messagesRef.current
+    const failed = current[current.length - 1]
+    const prompt = current[current.length - 2]
+    if (
+      failed?.role !== "assistant" ||
+      failed.phase !== "error" ||
+      prompt?.role !== "user"
+    )
+      return false
+    messagesRef.current = current.slice(0, -2)
+    return submit({ text: prompt.text })
+  }, [submit, user?.id, user?.accessToken])
+
   return {
     messages,
     isResponding,
     conversationID,
     submit,
+    retry,
     startNewConversation,
     loadConversation,
   }

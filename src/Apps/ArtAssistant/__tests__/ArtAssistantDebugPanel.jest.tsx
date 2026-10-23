@@ -45,6 +45,8 @@ describe("Art Assistant debug panel", () => {
       </MockBoot>,
     )
     expect(screen.getByText("Searching artworks")).toBeVisible()
-    expect(screen.getByText(/ENABLE_AI_AGENT_DEBUG/)).toBeVisible()
+    expect(
+      screen.getByText(/server isn’t providing detailed tool data/),
+    ).toBeVisible()
   })
 })

@@ -52,4 +52,28 @@ describe("Art Assistant messages", () => {
     fireEvent.click(screen.getByRole("button", { name: "Show more" }))
     expect(onSuggestedReply).toHaveBeenCalledWith("Show more", 0, "answer")
   })
+  it("offers a new chat or closing when the conversation limit is reached", () => {
+    const onErrorAction = jest.fn()
+    render(
+      <MockBoot>
+        <ArtAssistantMessage
+          message={{
+            id: "a",
+            role: "assistant",
+            phase: "error",
+            error: "conversation_limit",
+            text: "Chat limit",
+          }}
+          onErrorAction={onErrorAction}
+        />
+      </MockBoot>,
+    )
+    fireEvent.click(
+      screen.getByRole("button", { name: "Yes! Open a new chat window" }),
+    )
+    expect(onErrorAction).toHaveBeenCalledWith("newChat")
+    expect(
+      screen.getByRole("link", { name: "No, I’m done for now" }),
+    ).toHaveAttribute("href", "/")
+  })
 })

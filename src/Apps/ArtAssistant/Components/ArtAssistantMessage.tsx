@@ -3,9 +3,12 @@ import { ArtAssistantArtistRail } from "Apps/ArtAssistant/Components/ArtAssistan
 import { ArtAssistantArtworkRail } from "Apps/ArtAssistant/Components/ArtAssistantArtworkRail"
 import type { ArtAssistantMessage as Message } from "Apps/ArtAssistant/types"
 import type { FC } from "react"
+import { ArtAssistantErrorActions } from "Apps/ArtAssistant/Components/ArtAssistantErrorActions"
+import type { ArtAssistantErrorAction } from "Apps/ArtAssistant/utils/artAssistantErrors"
 
 interface ArtAssistantMessageProps {
   message: Message
+  onErrorAction?: (action: ArtAssistantErrorAction) => void
   onSuggestedReply?: (
     reply: string,
     position: number,
@@ -16,6 +19,7 @@ interface ArtAssistantMessageProps {
 export const ArtAssistantMessage: FC<ArtAssistantMessageProps> = ({
   message,
   onSuggestedReply,
+  onErrorAction,
 }) => {
   if (message.role === "assistant" && message.phase === "responding") {
     return (
@@ -47,6 +51,12 @@ export const ArtAssistantMessage: FC<ArtAssistantMessageProps> = ({
       >
         {message.text}
       </Text>
+      {message.role === "assistant" && message.error && onErrorAction && (
+        <ArtAssistantErrorActions
+          error={message.error}
+          onSelect={onErrorAction}
+        />
+      )}
       {message.role === "assistant" &&
         message.sections?.map((section, index) => {
           return (

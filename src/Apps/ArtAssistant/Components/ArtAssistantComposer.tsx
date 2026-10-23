@@ -1,11 +1,12 @@
 import { Button, Flex, TextArea } from "@artsy/palette"
-import { useEffect, useRef, type FC } from "react"
+import { useEffect, useRef, type FC, type RefObject } from "react"
 
 interface ArtAssistantComposerProps {
   value: string
   isResponding: boolean
   onChange: (value: string) => void
   onSubmit: (value: string) => boolean
+  inputRef?: RefObject<HTMLTextAreaElement>
 }
 
 export const ArtAssistantComposer: FC<ArtAssistantComposerProps> = ({
@@ -13,8 +14,10 @@ export const ArtAssistantComposer: FC<ArtAssistantComposerProps> = ({
   isResponding,
   onChange,
   onSubmit,
+  inputRef,
 }) => {
-  const input = useRef<HTMLTextAreaElement | null>(null)
+  const fallbackRef = useRef<HTMLTextAreaElement | null>(null)
+  const input = inputRef ?? fallbackRef
   // biome-ignore lint/correctness/useExhaustiveDependencies: Re-measure the text after typing or clearing the draft.
   useEffect(() => {
     const element = input.current

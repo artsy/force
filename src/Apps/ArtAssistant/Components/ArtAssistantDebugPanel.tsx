@@ -58,8 +58,7 @@ export const ArtAssistantDebugPanel: FC<{ debug: ArtAssistantDebug }> = ({
       )}
       {debug.hasRequestedDetails && hasToolCalls && !hasDetailedCalls && (
         <Text variant="xxs" color="mono60" mt={1}>
-          The server isn’t providing detailed tool data. Metaphysics must run in
-          development or with ENABLE_AI_AGENT_DEBUG enabled.
+          The server isn’t providing detailed tool data for this turn.
         </Text>
       )}
     </Box>

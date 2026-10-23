@@ -29,6 +29,99 @@ describe("Art Assistant page", () => {
     ;(useFlag as jest.Mock).mockReturnValue(true)
     ;(useFlagsStatus as jest.Mock).mockReturnValue({ flagsReady: true })
   })
+  it("offers retry and dismissal after a timeout, then starts a new chat after a failure", () => {
+    const environment = createMockEnvironment()
+    const user = { id: "user", accessToken: "token" }
+    render(
+      <MockBoot user={user} context={{ user }} relayEnvironment={environment}>
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    const send = () => {
+      fireEvent.change(screen.getByRole("textbox"), {
+        target: { value: "Find art" },
+      })
+      fireEvent.click(screen.getByRole("button", { name: "Send" }))
+    }
+    const stop = (stopReason: string) =>
+      act(() =>
+        environment.mock.nextValue(environment.mock.getMostRecentOperation(), {
+          data: {
+            aiAgentTurn: {
+              __typename: "AIAgentTurnComplete",
+              message: null,
+              stopReason,
+              toolCallCount: 0,
+              sections: [],
+              artworks: [],
+              suggestedReplies: [],
+            },
+          },
+        }),
+      )
+    send()
+    stop("max_iterations")
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Would you mind asking us once more?",
+    )
+    fireEvent.click(
+      screen.getByRole("button", { name: "Try the same ask again" }),
+    )
+    expect(
+      environment.mock.getMostRecentOperation().request.variables.input.history,
+    ).toEqual([])
+    expect(screen.getByRole("status")).toHaveTextContent("Thinking…")
+    stop("max_iterations")
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Forget it, I’ll ask something else",
+      }),
+    )
+    expect(
+      screen.queryByRole("button", { name: "Try the same ask again" }),
+    ).not.toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveFocus()
+    send()
+    stop("error")
+    fireEvent.click(
+      screen.getByRole("button", { name: "Start a new chat instead" }),
+    )
+    expect(screen.getByText("What are you looking for?")).toBeInTheDocument()
+  })
+  it("explains a rate limit without offering a retry", () => {
+    const environment = createMockEnvironment()
+    const user = { id: "user", accessToken: "token" }
+    render(
+      <MockBoot user={user} context={{ user }} relayEnvironment={environment}>
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "Find art" },
+    })
+    fireEvent.click(screen.getByRole("button", { name: "Send" }))
+    act(() =>
+      environment.mock.nextValue(environment.mock.getMostRecentOperation(), {
+        data: {
+          aiAgentTurn: {
+            __typename: "AIAgentTurnComplete",
+            message: null,
+            stopReason: "rate_limited",
+            toolCallCount: 0,
+            sections: [],
+            artworks: [],
+            suggestedReplies: [],
+          },
+        },
+      }),
+    )
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Please come back and chat with me a little later",
+    )
+    expect(
+      screen.queryByRole("button", { name: /Try/ }),
+    ).not.toBeInTheDocument()
+  })
   it("sends a prompt, renders the final response and starts another chat", () => {
     const trackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockReturnValue({ trackEvent })
