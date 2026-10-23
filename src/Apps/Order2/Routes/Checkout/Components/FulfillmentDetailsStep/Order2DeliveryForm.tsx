@@ -11,8 +11,8 @@ import { SELECTABLE_TYPES } from "Apps/Order2/Routes/Checkout/Components/Deliver
 import { SavedAddressOptions } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/SavedAddressOptions/Order2SavedAddressOptions"
 import { handleError } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/handleError"
 import {
-  deliveryAddressValidationSchema,
   findInitialSelectedAddress,
+  getDeliveryAddressValidationSchema,
   processSavedAddresses,
 } from "Apps/Order2/Routes/Checkout/Components/FulfillmentDetailsStep/utils"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
@@ -37,7 +37,7 @@ import type { Order2DeliveryForm_me$key } from "__generated__/Order2DeliveryForm
 import type { Order2DeliveryForm_order$key } from "__generated__/Order2DeliveryForm_order.graphql"
 import { Form, Formik, type FormikHelpers } from "formik"
 import { useCallback, useMemo, useRef } from "react"
-import { graphql, useFragment } from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 
 interface Order2DeliveryFormProps {
   order: Order2DeliveryForm_order$key
@@ -54,6 +54,12 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
   const meData = useFragment(ME_FRAGMENT, me)
   const createUserAddress = useOrder2CreateUserAddressMutation()
   const logger = createLogger("Order2DeliveryForm")
+
+  const relayEnvironment = useRelayEnvironment()
+  const validationSchema = useMemo(
+    () => getDeliveryAddressValidationSchema(relayEnvironment),
+    [relayEnvironment],
+  )
 
   const { addressConnection, name: meName, phoneNumber: mePhoneNumber } = meData
 
@@ -378,7 +384,7 @@ export const Order2DeliveryForm: React.FC<Order2DeliveryFormProps> = ({
           : initialSelectedAddress || initialValues
       }
       enableReinitialize={true}
-      validationSchema={deliveryAddressValidationSchema}
+      validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
       {({ isSubmitting, setValues, status, submitForm }) => {

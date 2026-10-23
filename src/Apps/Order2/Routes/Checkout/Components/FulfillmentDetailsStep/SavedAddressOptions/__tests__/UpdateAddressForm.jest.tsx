@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react"
+import type * as React from "react"
 import userEvent from "@testing-library/user-event"
 import { useCheckoutContext } from "Apps/Order2/Routes/Checkout/Hooks/useCheckoutContext"
 import { useOrder2DeleteUserAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2DeleteUserAddressMutation"
@@ -7,6 +8,13 @@ import { useOrder2UpdateUserAddressMutation } from "Apps/Order2/Routes/Checkout/
 import { useOrder2UpdateUserDefaultAddressMutation } from "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserDefaultAddressMutation"
 import type { ProcessedUserAddress } from "../../utils"
 import { UpdateAddressForm } from "../UpdateAddressForm"
+import { autoResolvePhoneValidation } from "DevTools/autoResolvePhoneValidation"
+import { RelayEnvironmentProvider } from "react-relay"
+import { createMockEnvironment } from "relay-test-utils"
+
+// The form reads the Relay environment via useRelayEnvironment() for async
+// phone validation, so exercise the real hooks against a mock environment.
+jest.unmock("react-relay")
 
 jest.mock(
   "Apps/Order2/Routes/Checkout/Mutations/useOrder2UpdateUserAddressMutation",
@@ -97,6 +105,18 @@ const mockDEProps = {
   onDeleteAddress: jest.fn(),
 }
 
+const renderUpdateAddressForm = (
+  props: React.ComponentProps<typeof UpdateAddressForm> = mockUSProps,
+) => {
+  const env = createMockEnvironment()
+  autoResolvePhoneValidation(env)
+  return render(
+    <RelayEnvironmentProvider environment={env}>
+      <UpdateAddressForm {...props} />
+    </RelayEnvironmentProvider>,
+  )
+}
+
 describe("UpdateAddressForm", () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -128,7 +148,7 @@ describe("UpdateAddressForm", () => {
 
   describe("Core form functionality", () => {
     it("renders form with US address data", () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       expect(screen.getByDisplayValue("John Doe")).toBeInTheDocument()
       expect(screen.getByDisplayValue("123 Main St")).toBeInTheDocument()
@@ -136,7 +156,7 @@ describe("UpdateAddressForm", () => {
     })
 
     it("renders form with German address data", () => {
-      render(<UpdateAddressForm {...mockDEProps} />)
+      renderUpdateAddressForm(mockDEProps)
 
       expect(screen.getByDisplayValue("Hans Mueller")).toBeInTheDocument()
       expect(screen.getByDisplayValue("Unter den Linden 1")).toBeInTheDocument()
@@ -154,7 +174,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       await userEvent.clear(nameField)
@@ -169,7 +189,7 @@ describe("UpdateAddressForm", () => {
     })
 
     it("allows editing address fields", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       const addressField = screen.getByDisplayValue("123 Main St")
@@ -199,7 +219,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       await userEvent.clear(nameField)
@@ -221,7 +241,7 @@ describe("UpdateAddressForm", () => {
     })
 
     it("handles form validation errors", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       await userEvent.clear(nameField)
@@ -237,7 +257,7 @@ describe("UpdateAddressForm", () => {
     })
 
     it("closes form when cancel button is clicked", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const cancelButton = screen.getByText("Cancel")
       await userEvent.click(cancelButton)
@@ -248,13 +268,13 @@ describe("UpdateAddressForm", () => {
 
   describe("Save button disabled state", () => {
     it("disables the Save Address button when no changes are made", () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       expect(screen.getByText("Save Address").closest("button")).toBeDisabled()
     })
 
     it("enables the Save Address button after a field is changed", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       await userEvent.clear(nameField)
@@ -266,7 +286,7 @@ describe("UpdateAddressForm", () => {
     })
 
     it("enables the Save Address button when setAsDefault is checked", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       await userEvent.click(screen.getByTestId("setAsDefault"))
 
@@ -278,7 +298,7 @@ describe("UpdateAddressForm", () => {
 
   describe("Delete functionality", () => {
     it("shows delete confirmation dialog when delete is clicked", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -301,7 +321,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -326,7 +346,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -355,7 +375,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -379,7 +399,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -403,7 +423,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -420,7 +440,7 @@ describe("UpdateAddressForm", () => {
     it("handles network errors gracefully", async () => {
       mockDeleteUserAddress.mockRejectedValue(new Error("Network error"))
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -444,7 +464,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const deleteButton = screen.getByText("Delete address")
       await userEvent.click(deleteButton)
@@ -481,9 +501,10 @@ describe("UpdateAddressForm", () => {
     })
 
     it("calls unsetOrderFulfillmentOption when the deleted address is the order address", async () => {
-      render(
-        <UpdateAddressForm {...mockUSProps} orderAddressID="address-id-123" />,
-      )
+      renderUpdateAddressForm({
+        ...mockUSProps,
+        orderAddressID: "address-id-123",
+      })
 
       await userEvent.click(screen.getByText("Delete address"))
       await userEvent.click(screen.getByText("Delete"))
@@ -496,12 +517,10 @@ describe("UpdateAddressForm", () => {
     })
 
     it("does not call unsetOrderFulfillmentOption when the deleted address is not the order address", async () => {
-      render(
-        <UpdateAddressForm
-          {...mockUSProps}
-          orderAddressID="different-address-id"
-        />,
-      )
+      renderUpdateAddressForm({
+        ...mockUSProps,
+        orderAddressID: "different-address-id",
+      })
 
       await userEvent.click(screen.getByText("Delete address"))
       await userEvent.click(screen.getByText("Delete"))
@@ -514,7 +533,7 @@ describe("UpdateAddressForm", () => {
     })
 
     it("does not call unsetOrderFulfillmentOption when orderAddressID is not provided", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       await userEvent.click(screen.getByText("Delete address"))
       await userEvent.click(screen.getByText("Delete"))
@@ -529,7 +548,7 @@ describe("UpdateAddressForm", () => {
 
   describe("Set as default functionality", () => {
     it("shows setAsDefault checkbox for non-default addresses", () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const checkbox = screen.getByTestId("setAsDefault")
       expect(checkbox).toBeInTheDocument()
@@ -537,14 +556,14 @@ describe("UpdateAddressForm", () => {
     })
 
     it("does not show setAsDefault checkbox for default addresses", () => {
-      render(<UpdateAddressForm {...mockDEProps} />)
+      renderUpdateAddressForm(mockDEProps)
 
       const checkbox = screen.queryByTestId("setAsDefault")
       expect(checkbox).not.toBeInTheDocument()
     })
 
     it("allows checking and unchecking the setAsDefault checkbox", async () => {
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const checkbox = screen.getByTestId("setAsDefault")
       expect(checkbox).not.toBeChecked()
@@ -575,7 +594,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       await userEvent.clear(nameField)
@@ -612,7 +631,7 @@ describe("UpdateAddressForm", () => {
         },
       })
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       await userEvent.clear(nameField)
@@ -640,7 +659,7 @@ describe("UpdateAddressForm", () => {
 
       mockUpdateUserDefaultAddress.mockRejectedValue(new Error("Network error"))
 
-      render(<UpdateAddressForm {...mockUSProps} />)
+      renderUpdateAddressForm()
 
       const nameField = screen.getByDisplayValue("John Doe")
       await userEvent.clear(nameField)
