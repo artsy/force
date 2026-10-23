@@ -1,5 +1,6 @@
-import { Box } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { useRouter } from "System/Hooks/useRouter"
+import { ArtAssistantSearchLink } from "Components/Search/ArtAssistantSearchLink"
 import { Media } from "Utils/Responsive"
 import type { FC } from "react"
 import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
@@ -23,7 +24,12 @@ export const SearchBar: FC<React.PropsWithChildren<SearchBarProps>> = ({
       </Media>
 
       <Media greaterThan="xs">
-        <SearchBarInput searchTerm={urlSearchTerm} />
+        <Flex alignItems="center" gap={1}>
+          <Box flex={1} minWidth={0}>
+            <SearchBarInput searchTerm={urlSearchTerm} />
+          </Box>
+          <ArtAssistantSearchLink isCompact />
+        </Flex>
       </Media>
     </Box>
   )
