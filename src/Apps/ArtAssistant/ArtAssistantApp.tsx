@@ -1,12 +1,24 @@
-import { Box, Button, Flex, Text, VisuallyHidden } from "@artsy/palette"
+import MenuIcon from "@artsy/icons/MenuIcon"
+import {
+  Box,
+  Clickable,
+  Drawer,
+  Flex,
+  ModalClose,
+  Text,
+  VisuallyHidden,
+} from "@artsy/palette"
 import { ArtAssistantComposer } from "Apps/ArtAssistant/Components/ArtAssistantComposer"
 import { ArtAssistantCloseButton } from "Apps/ArtAssistant/Components/ArtAssistantCloseButton"
 import { ArtAssistantEmptyState } from "Apps/ArtAssistant/Components/ArtAssistantEmptyState"
+import { ArtAssistantHistory } from "Apps/ArtAssistant/Components/ArtAssistantHistory"
 import { ArtAssistantMessage } from "Apps/ArtAssistant/Components/ArtAssistantMessage"
 import { useArtAssistantConversation } from "Apps/ArtAssistant/hooks/useArtAssistantConversation"
+import { useArtAssistantHistory } from "Apps/ArtAssistant/hooks/useArtAssistantHistory"
 import { useArtAssistantViewport } from "Apps/ArtAssistant/hooks/useArtAssistantViewport"
 import { useEnableArtAssistant } from "Apps/ArtAssistant/hooks/useEnableArtAssistant"
 import { useSystemContext } from "System/Hooks/useSystemContext"
+import { Media } from "Utils/Responsive"
 import { HttpError } from "found"
 import { useEffect, useRef, useState, type FC } from "react"
 import { MetaTags } from "Components/MetaTags"
@@ -21,14 +33,16 @@ export const ArtAssistantApp: FC = () => {
   const [isEnabledOnMount] = useState(isEnabled)
   const { user } = useSystemContext()
   if (!isEnabledOnMount || !user?.id) throw new HttpError(404)
-  return <ArtAssistantChat key={user.id} />
+  return <ArtAssistantChat key={user.id} userID={user.id} />
 }
 
-const ArtAssistantChat: FC = () => {
+const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
   const conversation = useArtAssistantConversation()
+  const history = useArtAssistantHistory({ userID, ...conversation })
   const [draft, setDraft] = useState("")
   const [dismissedErrorID, setDismissedErrorID] = useState<string | null>(null)
   const composerRef = useRef<HTMLTextAreaElement | null>(null)
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
   const shouldFollowResponse = useRef(true)
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const contentRef = useRef<HTMLDivElement | null>(null)
@@ -88,6 +102,7 @@ const ArtAssistantChat: FC = () => {
   const handleNewChat = (): void => {
     conversation.startNewConversation()
     setDraft("")
+    setIsHistoryOpen(false)
     shouldFollowResponse.current = true
   }
   const handleErrorAction = ({
@@ -111,6 +126,17 @@ const ArtAssistantChat: FC = () => {
         return
     }
   }
+  const historyProps = {
+    conversations: history.conversations,
+    activeConversationID: conversation.conversationID,
+    onSelect: (id: string): void => {
+      history.selectConversation(id)
+      setDraft("")
+      setIsHistoryOpen(false)
+      shouldFollowResponse.current = true
+    },
+    onNewChat: handleNewChat,
+  }
 
   return (
     <Flex
@@ -128,6 +154,17 @@ const ArtAssistantChat: FC = () => {
       <VisuallyHidden aria-live="polite" data-testid="art-assistant-announcer">
         {announcement}
       </VisuallyHidden>
+      <Media greaterThan="xs">
+        <Box
+          width={280}
+          height="100%"
+          overflowY="auto"
+          borderRight="1px solid"
+          borderColor="mono15"
+        >
+          <ArtAssistantHistory {...historyProps} />
+        </Box>
+      </Media>
       <Flex flex={1} minWidth={0} flexDirection="column">
         <Flex
           flexShrink={0}
@@ -135,13 +172,21 @@ const ArtAssistantChat: FC = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Button
-            size="small"
-            variant="secondaryNeutral"
-            onClick={handleNewChat}
-          >
-            New chat
-          </Button>
+          <Flex alignItems="center" gap={1}>
+            <Media at="xs">
+              <Clickable
+                aria-label="Open chat history"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                width={44}
+                height={44}
+                onClick={() => setIsHistoryOpen(true)}
+              >
+                <MenuIcon width={22} height={22} aria-hidden />
+              </Clickable>
+            </Media>
+          </Flex>
           <Flex alignItems="center" gap={1}>
             <ArtAssistantCloseButton />
           </Flex>
@@ -222,6 +267,14 @@ const ArtAssistantChat: FC = () => {
           </Box>
         </Box>
       </Flex>
+      {isHistoryOpen && (
+        <Drawer open onClose={() => setIsHistoryOpen(false)} anchor="left">
+          <Box width="min(340px, 100vw)" height="100%" overflowY="auto">
+            <ModalClose onClick={() => setIsHistoryOpen(false)} />
+            <ArtAssistantHistory {...historyProps} />
+          </Box>
+        </Drawer>
+      )}
     </Flex>
   )
 }
