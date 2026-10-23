@@ -1,4 +1,5 @@
 import { aboutRoutes } from "Apps/About/aboutRoutes"
+import { artAssistantRoutes } from "Apps/ArtAssistant/artAssistantRoutes"
 import { adminRoutes } from "Apps/Admin/adminRoutes"
 import { alertRoutes } from "Apps/Alert/alertRoutes"
 import { artAppraisalsRoutes } from "Apps/ArtAppraisals/artAppraisalsRoutes"
@@ -68,6 +69,7 @@ import { inspiredByYourSavesRoutes } from "./Apps/InspiredByYourSaves/inspiredBy
 
 const ROUTES = buildAppRoutes([
   aboutRoutes,
+  artAssistantRoutes,
   adminRoutes,
   artAppraisalsRoutes,
   articleRoutes,
