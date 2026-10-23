@@ -1,6 +1,5 @@
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 import type { FlexProps } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationEventRow } from "Apps/Conversations/components/Message/ConversationEventRow"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
@@ -15,8 +14,6 @@ interface ConversationPartnerOfferUpdateProps extends FlexProps {
 export const ConversationPartnerOfferUpdate: FC<
   React.PropsWithChildren<ConversationPartnerOfferUpdateProps>
 > = ({ conversation, ...flexProps }) => {
-  const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
-
   const data = useFragment(CONVERSATION_FRAGMENT, conversation)
 
   const { findPartnerOffer } = useConversationsContext()
@@ -27,7 +24,7 @@ export const ConversationPartnerOfferUpdate: FC<
     ? findPartnerOffer(artwork.internalID)
     : null
 
-  if (!isPartnerOfferConvoEnabled || !partnerOffer) {
+  if (!partnerOffer) {
     return null
   }
 

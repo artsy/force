@@ -1,5 +1,4 @@
 import { screen } from "@testing-library/react"
-import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationCTA } from "Apps/Conversations/components/ConversationCTA/ConversationCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -10,8 +9,6 @@ import { useTracking } from "react-tracking"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Hooks/useSystemContext")
-
-const mockUseFlag = useFlag as jest.Mock
 
 describe("ConversationCTA", () => {
   const { renderWithRelay } = setupTestWrapperTL({
@@ -185,32 +182,12 @@ describe("ConversationCTA", () => {
       ],
     })
 
-    describe("with the partner-offer-convo flag on", () => {
-      beforeEach(() => {
-        mockUseFlag.mockImplementation(() => true)
+    it("hides the order offer CTA when there is an open partner offer", () => {
+      renderWithRelay({
+        Conversation: withOffer(mockConversationWithOrderAndOffer),
       })
 
-      it("hides the order offer CTA when there is an open partner offer", () => {
-        renderWithRelay({
-          Conversation: withOffer(mockConversationWithOrderAndOffer),
-        })
-
-        expect(screen.queryByText("Offer Received")).not.toBeInTheDocument()
-      })
-    })
-
-    describe("with the partner-offer-convo flag off", () => {
-      beforeEach(() => {
-        mockUseFlag.mockImplementation(() => false)
-      })
-
-      it("shows the order offer CTA when the flag is off", () => {
-        renderWithRelay({
-          Conversation: withOffer(mockConversationWithOrderAndOffer),
-        })
-
-        expect(screen.queryByText("Offer Received")).toBeInTheDocument()
-      })
+      expect(screen.queryByText("Offer Received")).not.toBeInTheDocument()
     })
   })
 
@@ -268,62 +245,38 @@ describe("ConversationCTA", () => {
       ["a personalized partner offer"],
       ["a bulk offer (send offer)"],
     ])("with %s", () => {
-      describe("with the partner-offer-convo flag on", () => {
-        beforeEach(() => {
-          mockUseFlag.mockImplementation(() => true)
+      it("hides the transaction buttons when there is an active offer", () => {
+        renderWithRelay({
+          Conversation: withOffer(
+            mockConversationWithArtwork({
+              internalID: "artwork-id",
+              isAcquireable: true,
+              isOfferable: true,
+            }),
+          ),
         })
 
-        it("hides the transaction buttons when there is an active offer", () => {
-          renderWithRelay({
-            Conversation: withOffer(
-              mockConversationWithArtwork({
-                internalID: "artwork-id",
-                isAcquireable: true,
-                isOfferable: true,
-              }),
-            ),
-          })
-
-          expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
-          expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
-        })
-
-        it("falls back to showing the transaction buttons once the offer expires", () => {
-          const pastTime = new Date()
-          pastTime.setHours(pastTime.getHours() - 1)
-
-          renderWithRelay({
-            Conversation: withOffer(
-              mockConversationWithArtwork({
-                internalID: "artwork-id",
-                isAcquireable: true,
-                isOfferable: true,
-              }),
-              { endAt: pastTime.toISOString() },
-            ),
-          })
-
-          expect(screen.queryByText("Purchase")).toBeInTheDocument()
-          expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
-        })
+        expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
+        expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
       })
 
-      describe("with the partner-offer-convo flag off", () => {
-        beforeEach(() => {
-          mockUseFlag.mockImplementation(() => false)
+      it("falls back to showing the transaction buttons once the offer expires", () => {
+        const pastTime = new Date()
+        pastTime.setHours(pastTime.getHours() - 1)
+
+        renderWithRelay({
+          Conversation: withOffer(
+            mockConversationWithArtwork({
+              internalID: "artwork-id",
+              isAcquireable: true,
+              isOfferable: true,
+            }),
+            { endAt: pastTime.toISOString() },
+          ),
         })
 
-        it("ignores the offer and shows the normal transaction buttons", () => {
-          renderWithRelay({
-            Conversation: withOffer(
-              mockConversationWithArtwork({
-                internalID: "artwork-id",
-                isAcquireable: true,
-              }),
-            ),
-          })
-          expect(screen.queryByText("Purchase")).toBeInTheDocument()
-        })
+        expect(screen.queryByText("Purchase")).toBeInTheDocument()
+        expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
       })
     })
 
