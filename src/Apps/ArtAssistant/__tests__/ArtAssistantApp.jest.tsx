@@ -182,8 +182,27 @@ describe("Art Assistant page", () => {
     fireEvent.click(screen.getByRole("button", { name: "New chat" }))
     expect(screen.getByText("What are you looking for?")).toBeInTheDocument()
     expect(
+      screen.getByRole("navigation", { name: "Recents" }),
+    ).toHaveTextContent("Find art")
+    expect(
       screen.queryByRole("button", { name: /^Delete/ }),
     ).not.toBeInTheDocument()
     expect(trackEvent).not.toHaveBeenCalled()
+  })
+  it("opens chat history on mobile", () => {
+    render(
+      <MockBoot
+        breakpoint="xs"
+        user={{ id: "user", accessToken: "token", type: "User" }}
+        context={{ user: { id: "user", accessToken: "token", type: "User" } }}
+        relayEnvironment={createMockEnvironment()}
+      >
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    fireEvent.click(screen.getByRole("button", { name: "Open chat history" }))
+    expect(
+      screen.getByRole("navigation", { name: "Recents" }),
+    ).toBeInTheDocument()
   })
 })
