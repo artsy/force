@@ -242,4 +242,67 @@ describe("Art Assistant conversation", () => {
     expect(result.current.isResponding).toBe(false)
     error.mockRestore()
   })
+  it.each(["User", "Admin"])(
+    "requests debug only for an opted-in admin (%s)",
+    type => {
+      ;(useSystemContext as jest.Mock).mockReturnValue({
+        user: { id: "user", accessToken: "token", type },
+        relayEnvironment: {},
+      })
+      const { result } = renderHook(() =>
+        useArtAssistantConversation({ isDebugEnabled: true }),
+      )
+      act(() => result.current.submit({ text: "Find art" }))
+      const variables = (requestSubscription as jest.Mock).mock.calls[0][1]
+        .variables
+      expect(variables.includeDebug).toBe(type === "Admin")
+      expect(variables.includeToolMetadata).toBe(type === "Admin")
+      expect(variables.input.includeDebugToolCalls).toBe(
+        type === "Admin" ? true : undefined,
+      )
+      act(() =>
+        callbacks.onNext?.({
+          aiAgentTurn: {
+            __typename: "AIAgentToolCall",
+            activity: "SEARCHING_ARTWORKS",
+            toolName: "search",
+            summary: "Searching",
+            debugSummary: "arguments",
+          },
+        }),
+      )
+      if (type === "Admin")
+        expect(result.current.messages[1]).toMatchObject({
+          debug: { events: [{ detail: "arguments" }] },
+        })
+      else expect(result.current.messages[1]).not.toHaveProperty("debug")
+    },
+  )
+  it("keeps terminal debug diagnostics when the agent cannot produce an answer", () => {
+    ;(useSystemContext as jest.Mock).mockReturnValue({
+      user: { id: "admin", accessToken: "token", type: "Admin" },
+      relayEnvironment: {},
+    })
+    const { result } = renderHook(() =>
+      useArtAssistantConversation({ isDebugEnabled: true }),
+    )
+    act(() => result.current.submit({ text: "Find art" }))
+    act(() =>
+      callbacks.onNext?.({
+        aiAgentTurn: {
+          __typename: "AIAgentTurnComplete",
+          message: null,
+          sections: [],
+          artworks: [],
+          suggestedReplies: [],
+          stopReason: "max_iterations",
+          toolCallCount: 5,
+        },
+      }),
+    )
+    expect(result.current.messages[1]).toMatchObject({
+      phase: "error",
+      debug: { stopReason: "max_iterations", toolCallCount: 5 },
+    })
+  })
 })
