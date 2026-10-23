@@ -1,4 +1,5 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
+import { ArtAssistantSearchLink } from "Components/Search/ArtAssistantSearchLink"
 import { Box, LabeledInput } from "@artsy/palette"
 import { useFlag } from "@unleash/proxy-client-react"
 import { type FC, useCallback, useEffect, useRef, useState } from "react"
@@ -170,6 +171,9 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
               />
             </Box>
 
+            <Box mx={2}>
+              <ArtAssistantSearchLink onNavigate={onClose} />
+            </Box>
             {shouldStartSearching(inputValue) && (
               <SearchInputPillsFragmentContainer
                 onPillClick={handlePillClick}
