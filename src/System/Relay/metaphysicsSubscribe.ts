@@ -4,6 +4,7 @@ import {
   type RequestParameters,
   type Variables,
 } from "relay-runtime"
+import { toMetaphysicsSubscriptionError } from "System/Relay/metaphysicsSubscriptionError"
 
 interface MetaphysicsSubscribeOptions {
   url: string
@@ -19,17 +20,19 @@ export const subscriptionFetch: typeof fetch = async (input, init) => {
   }
 
   const body = await response.json().catch(() => null)
-  const errors = body?.errors as { message?: string }[] | undefined
-  const message = errors
-    ?.map(error => error.message)
-    .filter(Boolean)
-    .join("; ")
-  const error = new Error(
-    message || `Subscription request failed (${response.status})`,
-  )
-  throw Object.assign(error, {
-    status: response.status >= 400 ? response.status : undefined,
-  })
+  const graphQLErrors = Array.isArray(body?.errors)
+    ? body.errors.flatMap((error: { message?: unknown }) =>
+        typeof error?.message === "string" ? [error.message] : [],
+      )
+    : []
+  // graphql-sse wraps thrown fetch errors and discards their metadata. A response-like
+  // rejection preserves GraphQL errors and HTTP status on NetworkError.response.
+  return {
+    ok: false,
+    status: response.status,
+    statusText: "The server did not return an event stream.",
+    graphQLErrors,
+  } as unknown as Response
 }
 
 export const createMetaphysicsSubscribe = ({
@@ -64,10 +67,7 @@ export const createMetaphysicsSubscribe = ({
         { query: request.text, operationName: request.name, variables },
         {
           next: response => sink.next(response as GraphQLResponse),
-          error: error =>
-            sink.error(
-              error instanceof Error ? error : new Error(String(error)),
-            ),
+          error: error => sink.error(toMetaphysicsSubscriptionError(error)),
           complete: () => sink.complete(),
         },
       )

@@ -4,6 +4,10 @@ import {
 } from "System/Relay/metaphysicsSubscribe"
 import { createClient } from "graphql-sse"
 import type { RequestParameters } from "relay-runtime"
+import {
+  MetaphysicsSubscriptionError,
+  toMetaphysicsSubscriptionError,
+} from "System/Relay/metaphysicsSubscriptionError"
 
 jest.mock("graphql-sse", () => ({ createClient: jest.fn() }))
 
@@ -66,7 +70,35 @@ describe("Metaphysics subscriptions", () => {
       json: async () => ({ errors: [{ message: "Not enabled" }] }),
     })
     try {
-      await expect(subscriptionFetch("/v2")).rejects.toThrow("Not enabled")
+      const rejection = await subscriptionFetch("/v2")
+      const { NetworkError } = jest.requireActual("graphql-sse")
+      const error = toMetaphysicsSubscriptionError(new NetworkError(rejection))
+      expect(error).toBeInstanceOf(MetaphysicsSubscriptionError)
+      expect(error.graphQLErrors).toEqual(["Not enabled"])
+      expect(error.status).toBeUndefined()
+    } finally {
+      global.fetch = originalFetch
+    }
+  })
+  it("preserves HTTP status and GraphQL errors through graphql-sse wrapping", async () => {
+    const originalFetch = global.fetch
+    global.fetch = jest.fn().mockResolvedValue({
+      status: 429,
+      headers: { get: () => "application/json" },
+      json: async () => ({
+        errors: [{ message: "Conversation input is too large" }],
+      }),
+    })
+    try {
+      const { NetworkError } = jest.requireActual("graphql-sse")
+      const error = toMetaphysicsSubscriptionError(
+        new NetworkError(await subscriptionFetch("/v2")),
+      )
+      expect(error.status).toBe(429)
+      expect(error.graphQLErrors).toEqual(["Conversation input is too large"])
+      expect(
+        toMetaphysicsSubscriptionError([{ message: "Rejected" }]).graphQLErrors,
+      ).toEqual(["Rejected"])
     } finally {
       global.fetch = originalFetch
     }
