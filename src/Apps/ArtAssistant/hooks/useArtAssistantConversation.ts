@@ -12,6 +12,7 @@ import {
   type ArtAssistantErrorKind,
 } from "Apps/ArtAssistant/utils/artAssistantErrors"
 import { MetaphysicsSubscriptionError } from "System/Relay/metaphysicsSubscriptionError"
+import { userIsAdmin } from "Utils/user"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type {
   useArtAssistantConversationSubscription,
@@ -41,10 +42,38 @@ const ACTIVITY_COPY: Record<string, string> = {
 export const reduceArtAssistantEvent = ({
   message,
   event,
+  elapsedMs = 0,
 }: {
   message: AssistantMessage
   event: AgentEvent
+  elapsedMs?: number
 }): AssistantMessage => {
+  if (
+    message.debug &&
+    (event.__typename === "AIAgentToolCall" ||
+      event.__typename === "AIAgentToolResult")
+  ) {
+    message = {
+      ...message,
+      debug: {
+        ...message.debug,
+        events: [
+          ...message.debug.events,
+          {
+            type:
+              event.__typename === "AIAgentToolCall"
+                ? ("call" as const)
+                : ("result" as const),
+            toolName: event.toolName ?? "Unknown tool",
+            summary: event.summary,
+            detail: event.debugSummary,
+            ok: event.__typename === "AIAgentToolResult" ? event.ok : undefined,
+            elapsedMs,
+          },
+        ].slice(-100),
+      },
+    }
+  }
   if (event.__typename === "AIAgentToolCall") {
     return {
       ...message,
@@ -52,6 +81,14 @@ export const reduceArtAssistantEvent = ({
     }
   }
   if (event.__typename !== "AIAgentTurnComplete") return message
+  const debug = message.debug
+    ? {
+        ...message.debug,
+        durationMs: elapsedMs,
+        stopReason: event.stopReason,
+        toolCallCount: event.toolCallCount,
+      }
+    : undefined
   if (!event.message?.trim()) {
     const error = artAssistantErrorKindForStopReason(event.stopReason)
     return {
@@ -60,6 +97,7 @@ export const reduceArtAssistantEvent = ({
       text: ART_ASSISTANT_ERRORS[error].message,
       error,
       activity: undefined,
+      ...(debug ? { debug } : {}),
     }
   }
 
@@ -94,12 +132,17 @@ export const reduceArtAssistantEvent = ({
     text: event.message,
     activity: undefined,
     sections,
+    ...(debug ? { debug } : {}),
     suggestedReplies: (event.suggestedReplies ?? []).map(reply => reply.text),
   }
 }
 
-export const useArtAssistantConversation = () => {
+export const useArtAssistantConversation = ({
+  isDebugEnabled = false,
+}: { isDebugEnabled?: boolean } = {}) => {
   const { user, relayEnvironment } = useSystemContext()
+  const shouldCaptureToolEvents = userIsAdmin(user)
+  const shouldIncludeDebug = isDebugEnabled && shouldCaptureToolEvents
   const [messages, setMessages] = useState<ArtAssistantMessage[]>([])
   const [isResponding, setIsResponding] = useState(false)
   const [conversationID, setConversationID] = useState<string>(() => uuid())
@@ -150,6 +193,7 @@ export const useArtAssistantConversation = () => {
       if (!text || activeTurn.current || !user?.id || !user?.accessToken)
         return false
 
+      const startedAt = Date.now()
       const turnConversationID = conversationIDRef.current
       let message: AssistantMessage = {
         id: uuid(),
@@ -157,6 +201,9 @@ export const useArtAssistantConversation = () => {
         text: "",
         phase: "responding",
         activity: ACTIVITY_COPY.THINKING,
+        ...(shouldCaptureToolEvents
+          ? { debug: { events: [], hasRequestedDetails: shouldIncludeDebug } }
+          : {}),
       }
       const userMessage: ArtAssistantMessage = {
         id: uuid(),
@@ -273,14 +320,22 @@ export const useArtAssistantConversation = () => {
               subscription: graphql`
                 subscription useArtAssistantConversationSubscription(
                   $input: AIAgentTurnInput!
+                  $includeDebug: Boolean!
+                  $includeToolMetadata: Boolean!
                 ) {
                   aiAgentTurn(input: $input) {
                     __typename
                     ... on AIAgentToolCall {
                       activity
+                      toolName @include(if: $includeToolMetadata)
+                      summary @include(if: $includeToolMetadata)
+                      debugSummary @include(if: $includeDebug)
                     }
                     ... on AIAgentToolResult {
                       ok
+                      toolName @include(if: $includeToolMetadata)
+                      summary @include(if: $includeToolMetadata)
+                      debugSummary @include(if: $includeDebug)
                     }
                     ... on AIAgentTurnComplete {
                       message
@@ -310,11 +365,16 @@ export const useArtAssistantConversation = () => {
                 }
               `,
               variables: {
+                includeDebug: shouldIncludeDebug,
+                includeToolMetadata: shouldCaptureToolEvents,
                 input: {
                   conversationID: turnConversationID,
                   message: text,
                   history,
                   supportedSections: [...ART_ASSISTANT_SUPPORTED_SECTIONS],
+                  ...(shouldIncludeDebug
+                    ? { includeDebugToolCalls: true }
+                    : {}),
                 },
               },
               onNext: data => {
@@ -326,6 +386,7 @@ export const useArtAssistantConversation = () => {
                   reduceArtAssistantEvent({
                     message,
                     event,
+                    elapsedMs: Date.now() - startedAt,
                   }),
                 )
                 if (event.__typename === "AIAgentTurnComplete") {
@@ -356,7 +417,14 @@ export const useArtAssistantConversation = () => {
       }
       return true
     },
-    [relayEnvironment, replaceMessages, user?.id, user?.accessToken],
+    [
+      relayEnvironment,
+      replaceMessages,
+      user?.id,
+      user?.accessToken,
+      shouldIncludeDebug,
+      shouldCaptureToolEvents,
+    ],
   )
 
   const retry = useCallback((): boolean => {

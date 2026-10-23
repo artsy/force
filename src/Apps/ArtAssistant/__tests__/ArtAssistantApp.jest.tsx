@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react"
+import { act, fireEvent, render, screen, within } from "@testing-library/react"
 import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { ArtAssistantApp } from "Apps/ArtAssistant/ArtAssistantApp"
 import { MockBoot } from "DevTools/MockBoot"
@@ -204,5 +204,97 @@ describe("Art Assistant page", () => {
     expect(
       screen.getByRole("navigation", { name: "Recents" }),
     ).toBeInTheDocument()
+  })
+  it("lets an admin opt in to live debug details", () => {
+    const environment = createMockEnvironment()
+    const user = { id: "admin", accessToken: "token", type: "Admin" }
+    render(
+      <MockBoot user={user} context={{ user }} relayEnvironment={environment}>
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    const toggle = screen.getByRole("switch", { name: "Debug" })
+    expect(
+      within(screen.getByRole("navigation", { name: "Recents" })).queryByRole(
+        "switch",
+        { name: "Debug" },
+      ),
+    ).not.toBeInTheDocument()
+    expect(toggle).not.toBeChecked()
+    expect(screen.getByText("Debug off")).toBeInTheDocument()
+    fireEvent.click(toggle)
+    expect(toggle).toBeChecked()
+    expect(screen.getByText("Debug on")).toBeInTheDocument()
+    expect(screen.getByRole("note")).toHaveTextContent("Send a new message")
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "Find art" },
+    })
+    fireEvent.click(screen.getByRole("button", { name: "Send" }))
+    const operation = environment.mock.getMostRecentOperation()
+    expect(operation.request.variables.input.includeDebugToolCalls).toBe(true)
+    act(() =>
+      environment.mock.nextValue(operation, {
+        data: {
+          aiAgentTurn: {
+            __typename: "AIAgentToolCall",
+            activity: "SEARCHING_ARTWORKS",
+            toolName: "search",
+            summary: "Searching",
+            debugSummary: "debug arguments",
+          },
+        },
+      }),
+    )
+    expect(screen.getByText("debug arguments")).toBeVisible()
+    expect(localStorage.getItem("artsy.artAssistant.v1.admin")).not.toContain(
+      "debug arguments",
+    )
+    fireEvent.click(toggle)
+    expect(toggle).not.toBeChecked()
+    expect(screen.getByText("Debug off")).toBeInTheDocument()
+    expect(screen.queryByText("debug arguments")).not.toBeInTheDocument()
+  })
+  it("can reveal tool activity from an admin's turn started with debug off", () => {
+    const environment = createMockEnvironment()
+    const user = { id: "admin", accessToken: "token", type: "Admin" }
+    render(
+      <MockBoot user={user} context={{ user }} relayEnvironment={environment}>
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "Find art" },
+    })
+    fireEvent.click(screen.getByRole("button", { name: "Send" }))
+    const operation = environment.mock.getMostRecentOperation()
+    expect(operation.request.variables.includeDebug).toBe(false)
+    expect(
+      operation.request.variables.input.includeDebugToolCalls,
+    ).toBeUndefined()
+    act(() =>
+      environment.mock.nextValue(operation, {
+        data: {
+          aiAgentTurn: {
+            __typename: "AIAgentToolCall",
+            activity: "SEARCHING_ARTWORKS",
+            toolName: "search",
+            summary: "Searching saved artists",
+          },
+        },
+      }),
+    )
+    expect(
+      screen.queryByText("Searching saved artists"),
+    ).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole("switch", { name: "Debug" }))
+    expect(screen.getByText("Searching saved artists")).toBeVisible()
+    expect(
+      screen.getByText(
+        "Detailed tool data is collected only for messages sent with Debug on.",
+      ),
+    ).toBeVisible()
+    expect(localStorage.getItem("artsy.artAssistant.v1.admin")).not.toContain(
+      "Searching saved artists",
+    )
   })
 })

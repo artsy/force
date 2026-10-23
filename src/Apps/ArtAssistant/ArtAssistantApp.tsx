@@ -1,7 +1,16 @@
 import MenuIcon from "@artsy/icons/MenuIcon"
-import { Box, Clickable, Drawer, Flex, ModalClose, Text } from "@artsy/palette"
+import {
+  Box,
+  Clickable,
+  Drawer,
+  Flex,
+  ModalClose,
+  Text,
+  Toggle,
+} from "@artsy/palette"
 import { ArtAssistantComposer } from "Apps/ArtAssistant/Components/ArtAssistantComposer"
 import { ArtAssistantCloseButton } from "Apps/ArtAssistant/Components/ArtAssistantCloseButton"
+import { ArtAssistantDebugPanel } from "Apps/ArtAssistant/Components/ArtAssistantDebugPanel"
 import { ArtAssistantEmptyState } from "Apps/ArtAssistant/Components/ArtAssistantEmptyState"
 import { ArtAssistantHistory } from "Apps/ArtAssistant/Components/ArtAssistantHistory"
 import { ArtAssistantMessage } from "Apps/ArtAssistant/Components/ArtAssistantMessage"
@@ -11,6 +20,7 @@ import { useArtAssistantViewport } from "Apps/ArtAssistant/hooks/useArtAssistant
 import { useEnableArtAssistant } from "Apps/ArtAssistant/hooks/useEnableArtAssistant"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
+import { userIsAdmin } from "Utils/user"
 import { HttpError } from "found"
 import { useEffect, useRef, useState, type FC } from "react"
 import { MetaTags } from "Components/MetaTags"
@@ -24,7 +34,10 @@ export const ArtAssistantApp: FC = () => {
 }
 
 const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
-  const conversation = useArtAssistantConversation()
+  const { user } = useSystemContext()
+  const isAdmin = userIsAdmin(user)
+  const [isDebugEnabled, setIsDebugEnabled] = useState(false)
+  const conversation = useArtAssistantConversation({ isDebugEnabled })
   const history = useArtAssistantHistory({ userID, ...conversation })
   const [draft, setDraft] = useState("")
   const [dismissedErrorID, setDismissedErrorID] = useState<string | null>(null)
@@ -140,6 +153,16 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
             </Media>
           </Flex>
           <Flex alignItems="center" gap={1}>
+            {isAdmin && (
+              <Flex alignItems="center" gap={1}>
+                <Text variant="xs">Debug {isDebugEnabled ? "on" : "off"}</Text>
+                <Toggle
+                  aria-label="Debug"
+                  selected={isDebugEnabled}
+                  onSelect={setIsDebugEnabled}
+                />
+              </Flex>
+            )}
             <ArtAssistantCloseButton />
           </Flex>
         </Flex>
@@ -164,6 +187,16 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
             maxWidth={900}
             mx="auto"
           >
+            {isAdmin &&
+              isDebugEnabled &&
+              !conversation.messages.some(
+                message => message.role === "assistant" && message.debug,
+              ) && (
+                <Text variant="xs" color="mono60" role="note">
+                  Send a new message to view agent debug. Debug data isn’t saved
+                  in chat history.
+                </Text>
+              )}
             {!conversation.messages.length && (
               <ArtAssistantEmptyState
                 onSuggestion={text => {
@@ -198,6 +231,14 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
                         : undefined
                     }
                   />
+                  {isAdmin &&
+                    isDebugEnabled &&
+                    message.role === "assistant" &&
+                    message.debug && (
+                      <Box mt={1}>
+                        <ArtAssistantDebugPanel debug={message.debug} />
+                      </Box>
+                    )}
                 </Box>
               )
             })}
