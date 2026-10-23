@@ -3,6 +3,7 @@ import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { ArtAssistantApp } from "Apps/ArtAssistant/ArtAssistantApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { createMockEnvironment } from "relay-test-utils"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("uuid", () => ({
@@ -29,6 +30,8 @@ describe("Art Assistant page", () => {
     ;(useFlagsStatus as jest.Mock).mockReturnValue({ flagsReady: true })
   })
   it("sends a prompt, renders the final response and starts another chat", () => {
+    const trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockReturnValue({ trackEvent })
     const environment = createMockEnvironment()
     render(
       <MockBoot
@@ -91,6 +94,7 @@ describe("Art Assistant page", () => {
     expect(
       screen.queryByRole("button", { name: /^Delete/ }),
     ).not.toBeInTheDocument()
+    expect(trackEvent).not.toHaveBeenCalled()
   })
   it("opens chat history on mobile", () => {
     render(

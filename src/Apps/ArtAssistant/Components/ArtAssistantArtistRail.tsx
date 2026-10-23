@@ -1,5 +1,3 @@
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
 import { Shelf, Text, useToasts } from "@artsy/palette"
 import { ArtAssistantRailPlaceholder } from "Apps/ArtAssistant/Components/ArtAssistantRailPlaceholder"
 import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
@@ -10,7 +8,6 @@ import { useEffect, type FC } from "react"
 import { graphql } from "react-relay"
 
 export const ArtAssistantArtistRail: FC<{ ids: string[] }> = ({ ids }) => {
-  const { trackEvent } = useTracking()
   const { sendToast } = useToasts()
   const { data, error } = useClientQuery<ArtAssistantArtistRailQuery>({
     query: graphql`
@@ -56,23 +53,11 @@ export const ArtAssistantArtistRail: FC<{ ids: string[] }> = ({ ids }) => {
 
   return (
     <Shelf alignItems="flex-start">
-      {artists.map((artist, index) => {
+      {artists.map(artist => {
         return (
           <CellArtistFragmentContainer
             key={artist.internalID}
             artist={artist}
-            onClick={() =>
-              trackEvent({
-                action: ActionType.clickedArtistGroup,
-                context_module: ContextModule.artAssistantResults,
-                context_page_owner_type: OwnerType.artAssistant,
-                destination_page_owner_type: OwnerType.artist,
-                destination_page_owner_id: artist.internalID,
-                destination_page_owner_slug: artist.slug,
-                horizontal_slide_position: index,
-                type: "thumbnail",
-              })
-            }
           />
         )
       })}
