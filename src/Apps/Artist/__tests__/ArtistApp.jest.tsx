@@ -1,6 +1,5 @@
 import { screen } from "@testing-library/react"
 import { ArtistApp } from "Apps/Artist/ArtistApp"
-import { useArtistRecentAuctionResults } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { findCurrentRoute } from "System/Router/Utils/routeUtils"
 import type { ArtistAppTestQuery } from "__generated__/ArtistAppTestQuery.graphql"
@@ -28,8 +27,7 @@ describe("ArtistApp", () => {
   const { renderWithRelay } = setupTestWrapperTL<ArtistAppTestQuery>({
     Component: ArtistApp,
     query: graphql`
-      query ArtistAppTestQuery($saleStartYear: Int, $saleEndYear: Int)
-      @relay_test_operation {
+      query ArtistAppTestQuery @relay_test_operation {
         artist(id: "example") {
           ...ArtistApp_artist
         }
@@ -83,56 +81,6 @@ describe("ArtistApp", () => {
       expect(
         screen.queryByRole("link", { name: "About" }),
       ).not.toBeInTheDocument()
-    })
-  })
-
-  describe("recent auction results context", () => {
-    const RecentAuctionResultsProbe = () => {
-      const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
-
-      return <>{`hasRecentAuctionResults: ${hasRecentAuctionResults}`}</>
-    }
-
-    beforeEach(() => {
-      mockfindCurrentRoute.mockImplementation(() => ({}))
-    })
-
-    it("tells child routes when the artist has recent auction results", () => {
-      renderWithRelay(
-        {
-          Artist: () => ({
-            recentAuctionResultsConnection: {
-              edges: [{ node: { internalID: "auction-result-1" } }],
-            },
-          }),
-        },
-        {
-          match: { params: { artworkId: undefined } },
-          children: <RecentAuctionResultsProbe />,
-        },
-      )
-
-      expect(
-        screen.getByText("hasRecentAuctionResults: true"),
-      ).toBeInTheDocument()
-    })
-
-    it("tells child routes when the artist has no recent auction results", () => {
-      renderWithRelay(
-        {
-          Artist: () => ({
-            recentAuctionResultsConnection: { edges: [] },
-          }),
-        },
-        {
-          match: { params: { artworkId: undefined } },
-          children: <RecentAuctionResultsProbe />,
-        },
-      )
-
-      expect(
-        screen.getByText("hasRecentAuctionResults: false"),
-      ).toBeInTheDocument()
     })
   })
 })
