@@ -16,8 +16,6 @@ import {
 } from "Utils/oneTapEmailOptIn"
 import { type FC, useEffect, useMemo, useState } from "react"
 
-const GEO_LOOKUP_TIMEOUT_MS = 5000
-
 interface OnboardingDialogSimplifiedProps {
   onClose(): void
   onHide(): void
@@ -40,8 +38,7 @@ export const OnboardingDialogSimplified: FC<
   const [source, setSource] = useState<string | null>(null)
   const [otherSourceText, setOtherSourceText] = useState<string | null>(null)
 
-  const { isAutomaticallySubscribed, loading: isCountryLoading } =
-    useCountryCode({ skip: !isOneTapSignup })
+  const { isAutomaticallySubscribed } = useCountryCode()
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
@@ -55,21 +52,7 @@ export const OnboardingDialogSimplified: FC<
   const [userChoice, setUserChoice] = useState<boolean | null>(null)
   const agreedToReceiveEmails = userChoice ?? isAutomaticallySubscribed
 
-  const [hasGeoTimedOut, setHasGeoTimedOut] = useState(false)
-  useEffect(() => {
-    if (!isOneTapSignup) {
-      return
-    }
-
-    const timeout = setTimeout(() => {
-      setHasGeoTimedOut(true)
-    }, GEO_LOOKUP_TIMEOUT_MS)
-
-    return () => clearTimeout(timeout)
-  }, [isOneTapSignup])
-
-  const isConsentPending = isOneTapSignup && isCountryLoading && !hasGeoTimedOut
-  const showEmailOptIn = isOneTapSignup && (!isCountryLoading || hasGeoTimedOut)
+  const showEmailOptIn = isOneTapSignup
 
   const persistEmailOptIn = () => {
     if (!isOneTapSignup) {
@@ -153,7 +136,7 @@ export const OnboardingDialogSimplified: FC<
 
   const isCtaDisabled = useMemo(() => {
     if (currentStep === "welcome") {
-      return isConsentPending
+      return false
     }
 
     if (currentStep === "interests") {
@@ -169,7 +152,7 @@ export const OnboardingDialogSimplified: FC<
     }
 
     return false
-  }, [currentStep, isConsentPending, interests, source, otherSourceText])
+  }, [currentStep, interests, source, otherSourceText])
 
   const renderCurrentStep = () => {
     if (currentStep === "welcome") {

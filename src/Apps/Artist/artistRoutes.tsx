@@ -102,7 +102,7 @@ export const artistRoutes: RouteProps[] = [
 
       return {
         artistID,
-        saleStartYear: currentYear - 1,
+        saleStartYear: currentYear - 5,
         saleEndYear: currentYear,
       }
     },

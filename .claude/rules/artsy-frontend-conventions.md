@@ -139,13 +139,14 @@
 - **One component per file**: Each component should live in its own file. The only exception is small, simple helper components that are exclusively used by the main component in that file — in that case, the main (primary) component must be defined first, with the helpers below it.
 - **Custom hooks location**: Co-locate hooks near the feature that uses them in a `hooks/` subfolder within the feature folder. Don't put all hooks in a global `hooks/` directory. Only move the hook to the global `hooks/` directory if it's used in multiple features.
 - **Error Handling**: Surface async errors to the user via a toast and log them with `console.error`. Use error boundaries in React for render errors.
-- **Skeleton Components**: After design updates, look for the corresponding skeleton components and adjust them if needed.
+- **Skeleton Components**: After UI layout, copy, or spacing changes, update the matching skeleton components (e.g. page or feature skeletons) so the loading state mirrors the rendered page.
 
 ### Naming
 
 - **Event handlers**: Props use `on*` naming (`onClose`, `onToggle`). Internal handlers use `handle*` (`handleClose`, `handleToggle`).
 - **Booleans**: Prefix boolean variables and props with `is`, `has`, or `should` (`isLoading`, `hasError`, `shouldApplyBrandKit`).
 - **Constants**: Use `UPPER_SNAKE_CASE` for constants. Use `Record<EnumType, string>` for enum-like label maps.
+- **One concept, one name**: A prop or variable that mirrors a Relay argument, or the same flag in another component, uses the same name everywhere (not `shouldSuppressAttribution` in one file and `isAttributionSuppressed` in another).
 - **Props interfaces**: Name them `[ComponentName]Props`. Define the interface immediately above the component. Export it if callers need the type.
 
 ## Verification Runs
@@ -158,6 +159,8 @@
 - **Prefer a local DesignSystem wrapper over Palette**: When your app has a component in its own DesignSystem, use it instead of the equivalent from Artsy Palette.
 - **Avoid the `style` prop if possible**: Use Palette's style props (e.g. `p`, `m`, `color`, `bg`) over the `style` prop or Styled Components if possible
 - **Use `mono` scale for black/white colors**: Prefer `mono0` over `"white"` and `mono100` over `"black"` — these adapt to dark mode, hardcoded names don't.
+- **Palette spacing values**: Use values from the Palette theme scale (`1`, `2`, `4`, …). If no scale value fits, use a pixel string such as `"30px"` instead of inventing a number.
+- **Use Palette `Link` instead of `<a>`**: Use Palette's `Link` for links so styling matches the design system.
 
 ## GraphQL/Relay
 
@@ -221,3 +224,7 @@
 
 - **Shared or non-trivial helpers**: Put them in a helper file under a `utils` subfolder next to the feature.
 - **Simple, component-only helpers**: Define them below the component declaration in the same file when they are only used by that component and are not worth extracting.
+
+## Comments & Cleanup
+
+- **Comments explain why, not what**: Delete comments that restate what the code already says. Keep only non-obvious invariants, workarounds, or reasons.

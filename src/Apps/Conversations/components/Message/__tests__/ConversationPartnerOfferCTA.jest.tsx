@@ -1,6 +1,5 @@
 import { screen } from "@testing-library/react"
 import { THEME } from "@artsy/palette"
-import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationPartnerOfferCTA } from "Apps/Conversations/components/Message/ConversationPartnerOfferCTA"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
@@ -11,12 +10,10 @@ import { useTracking } from "react-tracking"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const mockUseFlag = useFlag as jest.Mock
 const mockUseTracking = useTracking as jest.Mock
 const trackingSpy = jest.fn()
 
 beforeEach(() => {
-  mockUseFlag.mockImplementation(() => true)
   mockUseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
 })
 
@@ -211,15 +208,5 @@ describe("ConversationPartnerOfferCTA", () => {
         color: THEME.colors.red100,
       })
     })
-  })
-
-  it("renders nothing when the partner-offer-convo flag is off", () => {
-    mockUseFlag.mockImplementation(() => false)
-
-    renderWithRelay({ Conversation: conversationWithOffer() })
-
-    expect(
-      screen.queryByTestId("partnerOfferActionLink"),
-    ).not.toBeInTheDocument()
   })
 })

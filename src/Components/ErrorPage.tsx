@@ -61,12 +61,25 @@ export const ErrorPage: React.FC<React.PropsWithChildren<ErrorPageProps>> = ({
           <>
             <Spacer y={4} />
 
+            {/* Server and client can see different errors for the same failure
+                (e.g. a Node vs. browser fetch error), so don't compare these
+                during hydration */}
             {message && (
-              <Message color={detail ? "mono100" : "mono60"}>{message}</Message>
+              <Message
+                color={detail ? "mono100" : "mono60"}
+                suppressHydrationWarning
+              >
+                {message}
+              </Message>
             )}
 
             {detail && (
-              <Detail {...(message ? { mt: "-1px" } : {})}>{detail}</Detail>
+              <Detail
+                {...(message ? { mt: "-1px" } : {})}
+                suppressHydrationWarning
+              >
+                {detail}
+              </Detail>
             )}
           </>
         )}

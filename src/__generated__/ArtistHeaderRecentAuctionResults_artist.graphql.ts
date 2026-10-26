@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d61153d30ffc36b652a8a32240edb00>>
+ * @generated SignedSource<<90754e1fbe27f5e02a21caf51e985e69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -98,7 +98,7 @@ return {
         {
           "kind": "Literal",
           "name": "sort",
-          "value": "DATE_DESC"
+          "value": "PRICE_AND_DATE_DESC"
         }
       ],
       "concreteType": "AuctionResultConnection",
@@ -143,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "ebaabd7914f969866193fb4117fbfac5";
+(node as any).hash = "d57db764d85e4539a033f0094ddc8aa2";
 
 export default node;

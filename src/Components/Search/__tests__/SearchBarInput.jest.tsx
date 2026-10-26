@@ -92,9 +92,8 @@ const mockTrackEvent = jest.fn()
 // Consumed by the nested TrendingSearches, which only renders once trending
 // data is present. Artworks stay empty so the card's SaveButton stays out of
 // this suite.
-const trendingWindow = (label: string) => {
+const trendingWindow = () => {
   return {
-    label,
     artists: [
       {
         internalID: "banksy-id",
@@ -113,9 +112,7 @@ const trendingWindow = (label: string) => {
 }
 
 const TRENDING_DROPDOWN = {
-  oneDay: trendingWindow("Today"),
-  sevenDays: trendingWindow("Past 7 Days"),
-  thirtyDays: trendingWindow("Past 30 Days"),
+  trending: trendingWindow(),
 }
 
 // beforeEach only turns on the trending panel

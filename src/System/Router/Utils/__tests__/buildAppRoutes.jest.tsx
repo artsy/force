@@ -29,7 +29,7 @@ jest.mock("Apps/Components/AppShell", () => ({
 }))
 
 describe("buildAppRoutes", () => {
-  const fetchMock = jest.fn().mockResolvedValue({
+  const navigationResponse = {
     json: async () => ({
       data: {
         whatsNewNavigation: null,
@@ -37,14 +37,16 @@ describe("buildAppRoutes", () => {
         artworksNavigation: null,
       },
     }),
-  })
+  }
+
+  const fetchMock = jest.fn()
 
   beforeAll(() => {
     ;(global as any).fetch = fetchMock
   })
 
   beforeEach(() => {
-    fetchMock.mockClear()
+    fetchMock.mockReset().mockResolvedValue(navigationResponse)
   })
 
   it("creates a master route list", () => {
@@ -104,6 +106,36 @@ describe("buildAppRoutes", () => {
   })
 
   it("uses an `<AppShell>` component to render child routes", async () => {
+    const { ClientRouter } = await setupClientRouter({
+      history: {
+        protocol: "memory",
+      },
+      initialRoute: "/foo",
+      routes: buildAppRoutes([
+        [
+          {
+            path: "/foo",
+            Component: () => <div>foo route</div>,
+          },
+        ],
+      ]),
+    })
+
+    render(
+      <SystemContextProvider>
+        <ClientRouter />
+      </SystemContextProvider>,
+    )
+
+    await waitFor(() => {
+      expect(screen.getByText("AppShell")).toBeInTheDocument()
+      expect(screen.getByText("foo route")).toBeInTheDocument()
+    })
+  })
+
+  it("still renders the `<AppShell>` when the navigation query fails", async () => {
+    fetchMock.mockRejectedValue(new Error("fetch failed"))
+
     const { ClientRouter } = await setupClientRouter({
       history: {
         protocol: "memory",

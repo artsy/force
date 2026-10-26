@@ -45,6 +45,40 @@ enum AIAgentActivity {
   THINKING
 }
 
+"""
+Artists to render as cards, in the order they were selected.
+"""
+type AIAgentArtistsSection {
+  artists: [Artist!]!
+}
+
+"""
+Artworks to render as cards, in the order they were selected.
+"""
+type AIAgentArtworksSection {
+  artworks: [Artwork!]!
+}
+
+"""
+One group of cards an earlier answer actually showed the collector -- not everything its prose mentioned.
+"""
+input AIAgentDisplayedSectionInput {
+  entityType: AIAgentEntityType!
+
+  """
+  The entities' `internalID`s, in the order they were displayed.
+  """
+  internalIDs: [String!]!
+}
+
+"""
+The kind of entity a replayed section's ids refer to.
+"""
+enum AIAgentEntityType {
+  ARTIST
+  ARTWORK
+}
+
 union AIAgentEvent =
   | AIAgentTextDelta
   | AIAgentToolCall
@@ -52,14 +86,42 @@ union AIAgentEvent =
   | AIAgentTurnComplete
 
 input AIAgentMessageInput {
+  """
+  Superseded by `displayedSections`. Equivalent to a single ARTWORK section; both may be sent, and ids common to the two are counted once.
+  """
   artworkIDs: [String!]
   content: String!
+
+  """
+  The cards this message showed, by entity type and in display order, so a follow-up like "the second artist" has something to resolve against. Meaningful only on an ASSISTANT message; ignored on a USER one. At most one section is read per message today.
+  """
+  displayedSections: [AIAgentDisplayedSectionInput!]
   role: AIAgentRole!
 }
+
+"""
+A homogeneous group of entities the answer selected. Clients dispatch on `__typename` and may safely ignore a member they don't know yet.
+"""
+union AIAgentResponseSection = AIAgentArtistsSection | AIAgentArtworksSection
 
 enum AIAgentRole {
   ASSISTANT
   USER
+}
+
+"""
+A kind of card group an answer can attach to its prose.
+"""
+enum AIAgentSectionType {
+  ARTISTS
+  ARTWORKS
+}
+
+type AIAgentSuggestedReply {
+  """
+  Sent verbatim as the next turn's `message` when tapped.
+  """
+  text: String!
 }
 
 type AIAgentTextDelta {
@@ -96,11 +158,21 @@ type AIAgentToolResult {
 
 type AIAgentTurnComplete {
   """
-  Artworks referenced in the answer, for rendering as cards.
+  Artworks referenced in the answer, for rendering as cards. Superseded by `sections`, which also carries other entity types; always the same works as the artworks section, for clients that predate it.
   """
   artworks: [Artwork!]
   message: String
+
+  """
+  The entity cards accompanying `message`, each section holding one entity type in the order it should be displayed. Empty for a text-only answer or a turn that produced no answer at all; null only when the cards themselves failed to resolve. Currently at most one section per answer.
+  """
+  sections: [AIAgentResponseSection!]
   stopReason: String!
+
+  """
+  Follow-ups the collector can tap to continue the conversation. Null when suggested replies are disabled or the turn did not finish with an answer.
+  """
+  suggestedReplies: [AIAgentSuggestedReply!]
   toolCallCount: Int!
 }
 
@@ -124,6 +196,11 @@ input AIAgentTurnInput {
   The new user message.
   """
   message: String!
+
+  """
+  The section types this client can render. Defaults to `[ARTWORKS]` when omitted, so a client that predates `sections` keeps working off the legacy `artworks` field. Declare a type only once you render it: the answer's prose is written on the assumption that the cards it asked for will appear, so a section you drop reads as a broken answer rather than a missing rail. Keep the set constant for a build rather than varying it per turn.
+  """
+  supportedSections: [AIAgentSectionType!]
 }
 
 type AIPromptTemplate {
@@ -790,6 +867,11 @@ type Alert {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -979,120 +1061,6 @@ type AnalyticsArtist {
 }
 
 """
-Artist Affinity
-"""
-type AnalyticsArtistAffinity {
-  """
-  Artist ID
-  """
-  artistId: ID!
-
-  """
-  Calculated affinity Score
-  """
-  score: Float!
-}
-
-"""
-The connection type for ArtistAffinity.
-"""
-type AnalyticsArtistAffinityConnection {
-  """
-  A list of edges.
-  """
-  edges: [AnalyticsArtistAffinityEdge]
-
-  """
-  A list of nodes.
-  """
-  nodes: [AnalyticsArtistAffinity]
-  pageCursors: PageCursors
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: AnalyticsPageInfo!
-  totalCount: Int
-  totalPages: Int
-}
-
-"""
-An edge in a connection.
-"""
-type AnalyticsArtistAffinityEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
-
-  """
-  The item at the end of the edge.
-  """
-  node: AnalyticsArtistAffinity
-}
-
-"""
-Artist ID and Medium Tuple
-"""
-input AnalyticsArtistIdMediumTupleType {
-  artistId: String!
-  medium: String!
-}
-
-"""
-Artist Recommendation
-"""
-type AnalyticsArtistRecommendation {
-  """
-  Artist ID
-  """
-  artistId: ID!
-
-  """
-  Calculated score
-  """
-  score: Float!
-}
-
-"""
-The connection type for ArtistRecommendation.
-"""
-type AnalyticsArtistRecommendationConnection {
-  """
-  A list of edges.
-  """
-  edges: [AnalyticsArtistRecommendationEdge]
-
-  """
-  A list of nodes.
-  """
-  nodes: [AnalyticsArtistRecommendation]
-  pageCursors: PageCursors
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: AnalyticsPageInfo!
-  totalCount: Int
-  totalPages: Int
-}
-
-"""
-An edge in a connection.
-"""
-type AnalyticsArtistRecommendationEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
-
-  """
-  The item at the end of the edge.
-  """
-  node: AnalyticsArtistRecommendation
-}
-
-"""
 Artist Sparkline
 """
 type AnalyticsArtistSparkline {
@@ -1144,59 +1112,6 @@ type AnalyticsArtistSparklineEdge {
 
 type AnalyticsArtwork {
   entityId: String!
-}
-
-"""
-Artwork Recommendation
-"""
-type AnalyticsArtworkRecommendation {
-  """
-  Artwork ID
-  """
-  artworkId: ID!
-
-  """
-  Calculated score
-  """
-  score: Float!
-}
-
-"""
-The connection type for ArtworkRecommendation.
-"""
-type AnalyticsArtworkRecommendationConnection {
-  """
-  A list of edges.
-  """
-  edges: [AnalyticsArtworkRecommendationEdge]
-
-  """
-  A list of nodes.
-  """
-  nodes: [AnalyticsArtworkRecommendation]
-  pageCursors: PageCursors
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: AnalyticsPageInfo!
-  totalCount: Int
-  totalPages: Int
-}
-
-"""
-An edge in a connection.
-"""
-type AnalyticsArtworkRecommendationEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
-
-  """
-  The item at the end of the edge.
-  """
-  node: AnalyticsArtworkRecommendation
 }
 
 """
@@ -1331,69 +1246,6 @@ type AnalyticsHistogramBin {
   ): String
   minPriceCents: Int!
   numArtworks: Int!
-}
-
-"""
-New For You Recommendation
-"""
-type AnalyticsNewForYouRecommendation {
-  """
-  Artwork ID
-  """
-  artworkId: ID!
-
-  """
-  Artwork's published_at
-  """
-  publishedAt: AnalyticsDateTime!
-
-  """
-  Artist affinity score
-  """
-  score: Float!
-
-  """
-  Version of affinity recommendation
-  """
-  version: String!
-}
-
-"""
-The connection type for NewForYouRecommendation.
-"""
-type AnalyticsNewForYouRecommendationConnection {
-  """
-  A list of edges.
-  """
-  edges: [AnalyticsNewForYouRecommendationEdge]
-
-  """
-  A list of nodes.
-  """
-  nodes: [AnalyticsNewForYouRecommendation]
-  pageCursors: PageCursors
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: AnalyticsPageInfo!
-  totalCount: Int
-  totalPages: Int
-}
-
-"""
-An edge in a connection.
-"""
-type AnalyticsNewForYouRecommendationEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
-
-  """
-  The item at the end of the edge.
-  """
-  node: AnalyticsNewForYouRecommendation
 }
 
 """
@@ -2345,6 +2197,10 @@ type ArticleSectionText {
 }
 
 type ArticleSectionVideo {
+  """
+  Width divided by height (e.g. 0.5625 for a 9:16 portrait video). Defaults to 16:9.
+  """
+  aspectRatio: Float!
   backgroundColor: String
   caption: String
 
@@ -2792,6 +2648,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -3464,6 +3325,11 @@ type ArtistPartnerEdge {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -3731,6 +3597,11 @@ type ArtistSeries implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -4005,7 +3876,11 @@ type ArtnetEditionSet {
   ): String
 }
 
-type ArtnetImport {
+type ArtnetImport implements Node {
+  """
+  Artnet works not yet created because their artist hasn't been assigned.
+  """
+  awaitingArtistCount: Int
   completedAt(
     format: String
 
@@ -4026,6 +3901,14 @@ type ArtnetImport {
   deletedCount: Int
   errorCount: Int
   errorMessage: String
+  finalizedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
 
   """
   A globally unique ID.
@@ -4036,15 +3919,127 @@ type ArtnetImport {
   A type-specific ID likely used as a database ID.
   """
   internalID: ID!
+
+  """
+  Artnet works linked to an artwork the partner already had, without creating a new one.
+  """
+  linkedCount: Int
+
+  """
+  Created artworks that still have at least one possible duplicate waiting for the partner's review.
+  """
+  openReviewCount: Int
+
+  """
+  The import's Artnet works that were sent to review
+  """
+  reviewArtworksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    reviewState: ArtnetImportReviewState!
+  ): ArtnetImportReviewArtworkConnection
+
+  """
+  Created artworks that might duplicate an existing artwork and need the partner's review.
+  """
+  reviewCount: Int
   skippedCount: Int
   state: ArtnetImportState
   totalCount: Int
   unmatchedArtistNames: [String!]!
 }
 
+"""
+The work as Artnet sent it, kept on the import even after the imported copy is merged away.
+"""
+type ArtnetImportArtnetRecord {
+  artistName: String
+  date: String
+  depth: String
+  diameter: String
+  height: String
+  imageURL: String
+  medium: String
+  metric: String
+  title: String
+  width: String
+}
+
+"""
+An Artnet work from an import that was sent to review, with its possible duplicates.
+"""
+type ArtnetImportReviewArtwork {
+  artnetArtworkID: String!
+  artnetRecord: ArtnetImportArtnetRecord!
+  duplicatePairs: [ArtworkDuplicatePair!]!
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  The artwork the import created. Null once it has been merged into an existing artwork.
+  """
+  importedArtwork: Artwork
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+}
+
+"""
+A connection to a list of items.
+"""
+type ArtnetImportReviewArtworkConnection {
+  """
+  A list of edges.
+  """
+  edges: [ArtnetImportReviewArtworkEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An edge in a connection.
+"""
+type ArtnetImportReviewArtworkEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: ArtnetImportReviewArtwork
+}
+
+enum ArtnetImportReviewState {
+  """
+  At least one possible duplicate is still waiting for review.
+  """
+  OPEN
+
+  """
+  Every possible duplicate has been merged or dismissed.
+  """
+  REVIEWED
+}
+
 enum ArtnetImportState {
   COMPLETED
   FAILED
+  FINALIZED
+  FINALIZING
   PENDING
   PROCESSING
 }
@@ -5066,6 +5061,11 @@ type ArtworkDuplicatePair {
   existingArtworkAlsoImported: Boolean!
 
   """
+  True when the existing side of an import-scoped pair is live on Artsy, so a merge must keep it unchanged.
+  """
+  existingArtworkLive: Boolean!
+
+  """
   A globally unique ID.
   """
   id: ID!
@@ -5354,6 +5354,11 @@ type ArtworkFilterNode {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -8337,7 +8342,12 @@ input BulkUpdateArtworksMetadataInput {
   priceAdjustment: Int
 
   """
-  The currency for the artworks. Required when setting flat shipping fees.
+  Adjusts the artworks' catalog prices by a signed flat amount in major units (500 = £500). Negative decreases. Requires priceCurrency; only artworks whose catalog price currency matches are changed.
+  """
+  priceAdjustmentAmount: Float
+
+  """
+  The currency for the artworks. Required when setting flat shipping fees or priceAdjustmentAmount.
   """
   priceCurrency: String
 
@@ -8355,6 +8365,11 @@ input BulkUpdateArtworksMetadataInput {
   The price in minor units, targeting the catalog artwork field
   """
   priceMinor: Int
+
+  """
+  Rounds adjusted prices to the nearest 10 major units. Only valid with priceAdjustment or priceAdjustmentAmount.
+  """
+  priceRounding: BulkUpdatePriceRoundingEnum
 
   """
   Private notes about the artwork
@@ -8456,6 +8471,15 @@ type BulkUpdateMetadataPreviewCounts {
   """
   nonEditable: Int!
   total: Int!
+}
+
+"""
+Rounding applied to adjusted prices, to the nearest 10 major units
+"""
+enum BulkUpdatePriceRoundingEnum {
+  DOWN
+  NONE
+  UP
 }
 
 """
@@ -14393,6 +14417,11 @@ type Conversation implements Node {
   ): CommerceOrderConnectionWithTotalCount
 
   """
+  Whether the partner can send a personalized offer from this conversation. Null when it can't be determined; treat that as not eligible.
+  """
+  partnerOfferEligibility: PartnerOfferEligibility
+
+  """
   Partner offers for this conversation's artwork, scoped to the user who initiated the conversation (from_id).
   """
   partnerOffersConnection(
@@ -14768,6 +14797,44 @@ type CreateArtistSuccess {
 
 union CreateArtistSuccessOrErrorType = CreateArtistFailure | CreateArtistSuccess
 
+type CreateArtnetArtworkFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateArtnetArtworkMutationInput {
+  """
+  Artnet's own ID for the artist (Gravity has no mapping to it).
+  """
+  artnetArtistID: Int
+
+  """
+  The ID of the artwork to distribute to Artnet.
+  """
+  artworkID: String!
+  clientMutationId: String
+
+  """
+  Whether Artnet should publish the artwork once created.
+  """
+  published: Boolean
+}
+
+type CreateArtnetArtworkMutationPayload {
+  """
+  On success: the created ArtnetArtwork. On error: the error that occurred.
+  """
+  artnetArtworkOrError: CreateArtnetArtworkResponseOrError
+  clientMutationId: String
+}
+
+union CreateArtnetArtworkResponseOrError =
+  | CreateArtnetArtworkFailure
+  | CreateArtnetArtworkSuccess
+
+type CreateArtnetArtworkSuccess {
+  artnetArtwork: ArtnetArtwork
+}
+
 type CreateArtnetImportArtistAssignmentFailure {
   mutationError: GravityMutationError
 }
@@ -15090,6 +15157,11 @@ input CreateArtworkMutationInput {
   The ID of the partner under which the artwork is created.
   """
   partnerId: String!
+
+  """
+  If present, the newly created artwork will be added to this partner list (collection).
+  """
+  partnerListId: String
 
   """
   If present, the newly created artwork will be added to this show.
@@ -19140,6 +19212,11 @@ interface EntityWithFilterArtworksConnectionInterface {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -19631,6 +19708,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -20467,6 +20549,11 @@ input FilterArtworksInput {
   When true, will only return signed artworks.
   """
   signed: Boolean
+
+  """
+  Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+  """
+  similarToArtworkID: String
   size: Int
 
   """
@@ -20539,6 +20626,28 @@ type FiltersForArtworksConnectionEdge {
   The item at the end of the edge
   """
   node: ArtworkFilterNode
+}
+
+type FinalizeArtnetImportFailure {
+  mutationError: GravityMutationError
+}
+
+input FinalizeArtnetImportInput {
+  artnetImportID: String!
+  clientMutationId: String
+}
+
+type FinalizeArtnetImportPayload {
+  clientMutationId: String
+  finalizeArtnetImportOrError: FinalizeArtnetImportResponseOrError
+}
+
+union FinalizeArtnetImportResponseOrError =
+  | FinalizeArtnetImportFailure
+  | FinalizeArtnetImportSuccess
+
+type FinalizeArtnetImportSuccess {
+  artnetImport: ArtnetImport
 }
 
 type FollowArtist {
@@ -21275,6 +21384,11 @@ type Gene implements Node & Searchable {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -23097,6 +23211,11 @@ type Image {
     version: [String]
     width: Int
   ): ResizedImageUrl
+
+  """
+  Remote URL the image was created from (e.g. an Artnet import). Only present while the image is still processing.
+  """
+  sourceURL: String
   tileBaseURL: String
   tileFormat: String
   tileSize: Int
@@ -24703,44 +24822,6 @@ type MarketPriceInsights {
   updatedAt: ISO8601DateTime
 }
 
-"""
-The connection type for MarketPriceInsights.
-"""
-type MarketPriceInsightsConnection {
-  """
-  A list of edges.
-  """
-  edges: [MarketPriceInsightsEdge]
-
-  """
-  A list of nodes.
-  """
-  nodes: [MarketPriceInsights]
-  pageCursors: PageCursors
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: AnalyticsPageInfo!
-  totalCount: Int
-  totalPages: Int
-}
-
-"""
-An edge in a connection.
-"""
-type MarketPriceInsightsEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
-
-  """
-  The item at the end of the edge.
-  """
-  node: MarketPriceInsights
-}
-
 type MarketingCollection implements Node {
   artistIds: [String]
   artworkIds: [String]
@@ -24885,6 +24966,11 @@ type MarketingCollection implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -26298,6 +26384,7 @@ type MetaphysicsService {
   stitching: Boolean!
   stitchingConvection: Boolean!
   stitchingExchange: Boolean!
+  stitchingVortex: Boolean!
 }
 
 """
@@ -27007,6 +27094,13 @@ type Mutation {
   Create an artist, used for MyCollection. use CreateCanonicalArtistMutation for all other cases
   """
   createArtist(input: CreateArtistMutationInput!): CreateArtistMutationPayload
+
+  """
+  Creates an ArtnetArtwork from an existing artwork and its catalog artwork, and pushes the create to Artnet. Requires the `X-Artnet-Token` and `X-Artnet-User-Id` headers.
+  """
+  createArtnetArtwork(
+    input: CreateArtnetArtworkMutationInput!
+  ): CreateArtnetArtworkMutationPayload
 
   """
   Kicks off a background job to pull a gallery's Artnet inventory and create corresponding Artsy artwork records.
@@ -27794,6 +27888,13 @@ type Mutation {
   ): ExcludeArtistFromDiscoveryPayload
 
   """
+  Finalize a completed Artnet import. Its artworks appear in the partner's inventory once the import reaches the FINALIZED state.
+  """
+  finalizeArtnetImport(
+    input: FinalizeArtnetImportInput!
+  ): FinalizeArtnetImportPayload
+
+  """
   Follow (or unfollow) an artist
   """
   followArtist(input: FollowArtistInput!): FollowArtistPayload
@@ -28189,6 +28290,13 @@ type Mutation {
   updateArtistSocials(
     input: UpdateArtistSocialsMutationInput!
   ): UpdateArtistSocialsMutationPayload
+
+  """
+  Updates an ArtnetArtwork and pushes the supported changes to Artnet. At least one of `published`, `availability` or `syncOn` is required. Requires the `X-Artnet-Token` and `X-Artnet-User-Id` headers.
+  """
+  updateArtnetArtwork(
+    input: UpdateArtnetArtworkMutationInput!
+  ): UpdateArtnetArtworkMutationPayload
 
   """
   Updates an artwork.
@@ -30110,6 +30218,16 @@ type Partner implements Node {
   ): ArtistsWithAlertCountsConnection
 
   """
+  An Artwork belonging to this partner, scoped so it can only resolve artworks this partner owns and the current user can manage. Requires authentication.
+  """
+  artwork(
+    """
+    The slug or ID of the Artwork
+    """
+    id: String!
+  ): Artwork
+
+  """
   Artwork duplicate pairs for this partner
   """
   artworkDuplicatePairsConnection(
@@ -30154,9 +30272,9 @@ type Partner implements Node {
     last: Int
 
     """
-    Filter by import source: 'bulk_import' or 'multi_add'. Returns all sources if omitted.
+    Filter by one or more import sources: 'bulk_import', 'multi_add', 'partner_conversion'. Defaults to 'bulk_import' and 'partner_conversion' if omitted.
     """
-    source: String
+    sources: [String]
   ): ArtworkImportConnection
 
   """
@@ -30480,6 +30598,11 @@ type Partner implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -30708,6 +30831,16 @@ type Partner implements Node {
     """
     priceCurrency: String
   ): ShippingPresetConnection
+
+  """
+  A Show belonging to this partner, scoped so it can only resolve shows owned by this partner. Requires authentication.
+  """
+  show(
+    """
+    The ID of the Show
+    """
+    id: String!
+  ): Show
   showPromoted: Boolean
 
   """
@@ -30784,6 +30917,16 @@ type Partner implements Node {
   vatInformation: String
   vatNumber: String
   vatStatus: String
+
+  """
+  A Viewing Room belonging to this partner, scoped so it can only resolve viewing rooms this partner owns and the current user can manage. Requires authentication.
+  """
+  viewingRoom(
+    """
+    The ID of the Viewing Room
+    """
+    id: ID!
+  ): ViewingRoom
   viewingRoomsConnection(
     after: String
     before: String
@@ -31100,6 +31243,11 @@ type PartnerArtist {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -31409,6 +31557,11 @@ type PartnerArtistEdge {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -32257,6 +32410,80 @@ type PartnerOfferEdge {
   The item at the end of the edge
   """
   node: PartnerOffer
+}
+
+"""
+Whether a partner can send a personalized offer from a conversation.
+"""
+type PartnerOfferEligibility {
+  details: PartnerOfferEligibilityDetails
+  status: PartnerOfferEligibilityStatus
+}
+
+type PartnerOfferEligibilityDetails {
+  """
+  The active personalized offer. Set when already offered.
+  """
+  partnerOfferID: String
+
+  """
+  Why the partner can't send an offer. Set when ineligible.
+  """
+  reason: PartnerOfferIneligibleReason
+}
+
+enum PartnerOfferEligibilityStatus {
+  """
+  The collector already has an active personalized offer for this artwork.
+  """
+  ALREADY_OFFERED
+
+  """
+  The partner can send a personalized offer.
+  """
+  ELIGIBLE
+
+  """
+  The partner can't send an offer; see `details.reason`.
+  """
+  INELIGIBLE
+}
+
+enum PartnerOfferIneligibleReason {
+  """
+  The artwork has an active bulk offer.
+  """
+  ACTIVE_BULK_OFFER
+
+  """
+  The conversation's artwork can't receive partner offers.
+  """
+  ARTWORK_NOT_OFFERABLE
+
+  """
+  The conversation has no collector user.
+  """
+  COLLECTOR_NOT_FOUND
+
+  """
+  A personalized offer for this collector and artwork already expired.
+  """
+  EXPIRED_PERSONALIZED_OFFER
+
+  """
+  The conversation is older than the offer window.
+  """
+  OFFER_WINDOW_CLOSED
+
+  """
+  The collector already has an order with the partner on this artwork.
+  """
+  PARTNER_VISIBLE_ORDER
+
+  """
+  Eligibility couldn't be determined (a dependent service was unreachable).
+  """
+  UNAVAILABLE
 }
 
 enum PartnerOfferSorts {
@@ -33486,32 +33713,6 @@ type Query {
   ): AnalyticsArtistSparklineConnection
 
   """
-  Get all recommended artworks for the current user.
-  """
-  analyticsArtworkRecommendations(
-    """
-    Returns the elements in the list that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns the elements in the list that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Returns the first _n_ elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the last _n_ elements from the list.
-    """
-    last: Int
-    userId: String
-  ): AnalyticsArtworkRecommendationConnection
-
-  """
   Get price insights for a market for each calendar year sorted by year asc.
   """
   analyticsCalendarYearMarketPriceInsights(
@@ -33534,16 +33735,6 @@ type Query {
   Last updated timestamp
   """
   analyticsLastUpdatedAt: AnalyticsDateTime
-
-  """
-  Find PartnerStats
-  """
-  analyticsPartnerStats(partnerId: String!): AnalyticsPartnerStats
-
-  """
-  Query UserStats
-  """
-  analyticsUserStats(userId: String!): AnalyticsUserStats
 
   """
   An Article
@@ -33917,6 +34108,11 @@ type Query {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -34552,6 +34748,11 @@ type Query {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -34653,6 +34854,11 @@ type Query {
     ids: [String]
     last: Int
     near: Near
+
+    """
+    Only return published fairs, even for admins and partners. Only applies when a term is provided.
+    """
+    published: Boolean
     sort: FairSorts
     status: EventStatus
 
@@ -34899,6 +35105,11 @@ type Query {
     Include guides outside their display window. Only editors can use this.
     """
     ignoreDisplayWindow: Boolean
+
+    """
+    Include every unpublished curated guide, not only your own. Only editors can use this.
+    """
+    includeDrafts: Boolean
 
     """
     Only curated (editorial) or only personal itineraries
@@ -35485,7 +35696,7 @@ type Query {
   ): PriceInsightConnection
 
   """
-  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
+  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; for a gated room only the gallery name and brand kit are returned, and heading, description and artworks are omitted until authenticated via the authenticatePrivateViewingRoom mutation.
   """
   privateViewingRoom(slug: String!): PrivateViewingRoom
 
@@ -38456,6 +38667,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -39356,6 +39572,11 @@ type Tag implements Node {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -39615,7 +39836,13 @@ The rolling window a trending ranking was computed over.
 enum TrendingSearchPeriod {
   ONE_DAY
   SEVEN_DAYS
+    @deprecated(
+      reason: "Only ONE_DAY is served; other periods return today's ranking."
+    )
   THIRTY_DAYS
+    @deprecated(
+      reason: "Only ONE_DAY is served; other periods return today's ranking."
+    )
 }
 
 """
@@ -39834,6 +40061,16 @@ input UpdateArtistSocialsMutationInput {
   Artist's Instagram handle.
   """
   instagramHandle: String
+
+  """
+  Confirms the user has rights to display content from the Instagram account. Required when setting a handle.
+  """
+  instagramHandleAcknowledged: Boolean
+
+  """
+  Partner the user is acting on behalf of. Required, as a verified representative of the artist, when setting a handle.
+  """
+  partnerId: String
 }
 
 type UpdateArtistSocialsMutationPayload {
@@ -39854,6 +40091,49 @@ type UpdateArtistSocialsSuccess {
 
 type UpdateArtistSuccess {
   artist: Artist
+}
+
+type UpdateArtnetArtworkFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtnetArtworkMutationInput {
+  """
+  Gravity availability (e.g. `for sale`, `sold`), normalized to an Artnet sale status.
+  """
+  availability: String
+  clientMutationId: String
+
+  """
+  The ID of the ArtnetArtwork.
+  """
+  id: String!
+
+  """
+  Publish or unpublish the artwork on Artnet.
+  """
+  published: Boolean
+
+  """
+  Also push the artwork-sourced fields (title, dimensions), making Gravity the source of truth for them. Set when the edit came from an inventory row rather than the Artnet row.
+  """
+  syncOn: Boolean
+}
+
+type UpdateArtnetArtworkMutationPayload {
+  """
+  On success: the updated ArtnetArtwork. On error: the error that occurred.
+  """
+  artnetArtworkOrError: UpdateArtnetArtworkResponseOrError
+  clientMutationId: String
+}
+
+union UpdateArtnetArtworkResponseOrError =
+  | UpdateArtnetArtworkFailure
+  | UpdateArtnetArtworkSuccess
+
+type UpdateArtnetArtworkSuccess {
+  artnetArtwork: ArtnetArtwork
 }
 
 input UpdateArtworkEditionSetInput {
@@ -44057,6 +44337,11 @@ type Viewer {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -44481,6 +44766,11 @@ type Viewer {
     When true, will only return signed artworks.
     """
     signed: Boolean
+
+    """
+    Artwork slug or ID. Image search using this artwork's stored image embedding: returns visually similar works (excluding this one), combined with the other filters and default ranking. Cannot be combined with `keyword`. An unknown or non-public artwork errors; an artwork without an embedding returns no results.
+    """
+    similarToArtworkID: String
     size: Int
 
     """
@@ -44582,6 +44872,11 @@ type Viewer {
     ids: [String]
     last: Int
     near: Near
+
+    """
+    Only return published fairs, even for admins and partners. Only applies when a term is provided.
+    """
+    published: Boolean
     sort: FairSorts
     status: EventStatus
 
@@ -44828,6 +45123,11 @@ type Viewer {
     Include guides outside their display window. Only editors can use this.
     """
     ignoreDisplayWindow: Boolean
+
+    """
+    Include every unpublished curated guide, not only your own. Only editors can use this.
+    """
+    includeDrafts: Boolean
 
     """
     Only curated (editorial) or only personal itineraries
@@ -45327,7 +45627,7 @@ type Viewer {
   ): PreviewSavedSearch
 
   """
-  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; artwork/gallery data is omitted until authenticated via the authenticatePrivateViewingRoom mutation.
+  Find a private viewing room by slug. Returns null for an unknown/unpublished slug. Returns whether a passcode is required; for a gated room only the gallery name and brand kit are returned, and heading, description and artworks are omitted until authenticated via the authenticatePrivateViewingRoom mutation.
   """
   privateViewingRoom(slug: String!): PrivateViewingRoom
 

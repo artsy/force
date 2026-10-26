@@ -43,20 +43,19 @@ export const NavBarDesktopItem: React.FC<NavBarDesktopItemProps> = ({
   if (item.type === "dropdown") {
     const navigationVersion = navigationData?.[item.navigationKey]
 
-    if (!navigationVersion) {
-      return null
+    // Without navigation data, fall through to a plain link
+    if (navigationVersion) {
+      return (
+        <NavBarDropdownPanel
+          navigationData={navigationVersion}
+          label={item.label}
+          href={item.href}
+          contextModule={item.contextModule}
+          menuType={item.menuType}
+          handleClick={handleClick}
+        />
+      )
     }
-
-    return (
-      <NavBarDropdownPanel
-        navigationData={navigationVersion}
-        label={item.label}
-        href={item.href}
-        contextModule={item.contextModule}
-        menuType={item.menuType}
-        handleClick={handleClick}
-      />
-    )
   }
 
   const LinkComponent =

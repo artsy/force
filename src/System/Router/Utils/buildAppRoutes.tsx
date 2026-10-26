@@ -3,7 +3,10 @@ import type { buildAppRoutesQuery$data } from "__generated__/buildAppRoutesQuery
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { RouteProps } from "System/Router/Route"
 import { interceptLinks } from "System/Router/Utils/interceptLinks"
-import { defaultErrorRender } from "System/Router/Utils/renderRouteError"
+import {
+  type RenderArgs,
+  defaultErrorRender,
+} from "System/Router/Utils/renderRouteError"
 import { type Match, Redirect, type Router, withRouter } from "found"
 import { useEffect } from "react"
 import { graphql } from "react-relay"
@@ -113,6 +116,17 @@ export function buildAppRoutes(routes: RouteProps[][]): RouteProps[] {
       }
     }
   `
+  // The navigation query is non-critical. Without a custom `render`, found-relay
+  // returns `null` for this route when the query fails (e.g. Metaphysics is
+  // unreachable), and found then renders child routes bare -- without the
+  // AppShell, so no nav, footer or page gutters. Render the shell regardless;
+  // navigation data falls back to `null`.
+  route.render = ({ Component, props, error }: RenderArgs) => {
+    if (!Component || !(props || error)) return undefined
+
+    return <Component {...props} />
+  }
+
   route.prepareVariables = (_params, props) => {
     const isDraftMode = props.location?.query?.navigationVersion === "draft"
     return {

@@ -1,17 +1,10 @@
 import { screen } from "@testing-library/react"
-import { useFlag } from "@unleash/proxy-client-react"
 import { ConversationsProvider } from "Apps/Conversations/ConversationsContext"
 import { ConversationPartnerOfferUpdate } from "Apps/Conversations/components/Message/ConversationPartnerOfferUpdate"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
-
-const mockUseFlag = useFlag as jest.Mock
-
-beforeEach(() => {
-  mockUseFlag.mockImplementation(() => true)
-})
 
 const futureDate = () => {
   const date = new Date()
@@ -141,14 +134,6 @@ describe("ConversationPartnerOfferUpdate", () => {
     })
 
     expect(screen.getByText("You purchased this artwork")).toBeInTheDocument()
-    expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
-  })
-
-  it("renders nothing when the partner-offer-convo flag is off", () => {
-    mockUseFlag.mockImplementation(() => false)
-
-    renderWithRelay({ Conversation: conversationWithOffer({}) })
-
     expect(screen.queryByText(/You received an offer/)).not.toBeInTheDocument()
   })
 })

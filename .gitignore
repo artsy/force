@@ -74,9 +74,4 @@ manifest-legacy-artwork-dll.json
 # Hokusai
 .hokusai-tmp/
 
-# Depdency Cruiser
-.dependency-cruiser.js
-depcruiser*
-*.html
-
 size-plugin.json

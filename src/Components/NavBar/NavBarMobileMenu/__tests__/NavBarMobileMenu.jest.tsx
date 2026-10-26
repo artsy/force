@@ -228,6 +228,30 @@ describe("NavBarMobileMenu", () => {
 
       expect(screen.getAllByTestId("mobile-sub-menu").length).toEqual(3)
     })
+
+    it("falls back to plain links when navigation data is unavailable", () => {
+      getWrapper({
+        navigationData: {
+          whatsNewNavigation: null,
+          artistsNavigation: null,
+          artworksNavigation: null,
+        },
+      })
+
+      expect(screen.queryByTestId("mobile-sub-menu")).not.toBeInTheDocument()
+      expect(screen.getByText("What’s New").closest("a")).toHaveAttribute(
+        "href",
+        "/collection/new-this-week",
+      )
+      expect(screen.getByText("Artists").closest("a")).toHaveAttribute(
+        "href",
+        "/artists",
+      )
+      expect(screen.getByText("Artworks").closest("a")).toHaveAttribute(
+        "href",
+        "/collect",
+      )
+    })
   })
 
   describe("Analytics tracking", () => {

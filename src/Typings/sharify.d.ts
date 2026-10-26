@@ -41,6 +41,7 @@ declare module "sharify" {
       CDN_URL: string
       CHANNEL?: { slug?: string } // Articles
       CMS_URL: string
+      COUNTRY_CODE: string
       CSRF_TOKEN: string
       CURRENT_PATH: string
       CURRENT_USER: User
@@ -62,7 +63,6 @@ declare module "sharify" {
       GRAPHQL_CACHE_SIZE: string
       GRAPHQL_CACHE_TTL: string
       GRAVITY_WEBSOCKET_URL: string
-      IP_ADDRESS: string
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
       JSON_PAGE_DATA: any
