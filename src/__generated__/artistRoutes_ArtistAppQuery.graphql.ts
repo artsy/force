@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f63ffcbbef9286c98be620b7db2588d6>>
+ * @generated SignedSource<<504cd280474e61ebbcdb17daaf272878>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,6 @@ import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type artistRoutes_ArtistAppQuery$variables = {
   artistID: string;
-  saleEndYear: number;
-  saleStartYear: number;
 };
 export type artistRoutes_ArtistAppQuery$data = {
   readonly artist: {
@@ -27,165 +25,143 @@ export type artistRoutes_ArtistAppQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "artistID"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "saleEndYear"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "saleStartYear"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "artistID"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artistID"
   }
 ],
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "text",
   "storageKey": null
 },
-v8 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v9 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v10 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v11 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v12 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v13 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v14 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "date",
   "storageKey": null
 },
-v15 = [
-  (v5/*: any*/),
-  (v11/*: any*/)
+v13 = [
+  (v3/*: any*/),
+  (v9/*: any*/)
 ],
-v16 = [
-  (v8/*: any*/)
+v14 = [
+  (v6/*: any*/)
 ],
-v17 = {
+v15 = {
   "kind": "Literal",
   "name": "size",
   "value": 3
 },
-v18 = [
+v16 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "HTML"
   }
 ],
-v19 = [
-  (v8/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-],
-v20 = {
+v17 = {
   "kind": "Literal",
   "name": "minValue",
   "value": 50
 },
-v21 = [
-  (v12/*: any*/),
-  (v5/*: any*/),
-  (v4/*: any*/),
-  (v11/*: any*/)
+v18 = [
+  (v10/*: any*/),
+  (v3/*: any*/),
+  (v2/*: any*/),
+  (v9/*: any*/)
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "artistRoutes_ArtistAppQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -205,24 +181,20 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v2/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "artistRoutes_ArtistAppQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
-          (v5/*: any*/),
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -279,7 +251,7 @@ return {
             "name": "instagramHandle",
             "storageKey": null
           },
-          (v6/*: any*/),
+          (v4/*: any*/),
           {
             "alias": "biographyBlurbPlain",
             "args": [
@@ -294,7 +266,7 @@ return {
             "name": "biographyBlurb",
             "plural": false,
             "selections": [
-              (v7/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": "biographyBlurb(format:\"PLAIN\")"
           },
@@ -341,9 +313,9 @@ return {
                     "name": "cropped",
                     "plural": false,
                     "selections": [
-                      (v8/*: any*/),
-                      (v9/*: any*/),
-                      (v10/*: any*/)
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": "cropped(height:900,version:[\"larger\",\"large\"],width:1200)"
                   },
@@ -376,17 +348,17 @@ return {
                     "name": "url",
                     "storageKey": "url(version:[\"larger\",\"larger\"])"
                   },
-                  (v9/*: any*/),
-                  (v10/*: any*/)
+                  (v7/*: any*/),
+                  (v8/*: any*/)
                 ],
                 "storageKey": null
               },
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v2/*: any*/),
+              (v4/*: any*/),
               (v11/*: any*/),
               (v12/*: any*/),
-              (v4/*: any*/),
-              (v6/*: any*/),
-              (v13/*: any*/),
-              (v14/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -401,7 +373,7 @@ return {
                 "kind": "LinkedField",
                 "name": "artist",
                 "plural": false,
-                "selections": (v15/*: any*/),
+                "selections": (v13/*: any*/),
                 "storageKey": null
               }
             ],
@@ -423,10 +395,10 @@ return {
                 "name": "partner",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v11/*: any*/),
-                  (v12/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v9/*: any*/),
+                  (v10/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -461,7 +433,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v16/*: any*/),
+                            "selections": (v14/*: any*/),
                             "storageKey": "cropped(height:30,width:30)"
                           },
                           {
@@ -482,37 +454,37 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v16/*: any*/),
+                            "selections": (v14/*: any*/),
                             "storageKey": "cropped(height:60,width:60)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/)
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v11/*: any*/)
+              (v9/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
             "args": [
-              (v17/*: any*/)
+              (v15/*: any*/)
             ],
             "concreteType": "Artwork",
             "kind": "LinkedField",
             "name": "notableArtworks",
             "plural": true,
             "selections": [
-              (v13/*: any*/),
-              (v6/*: any*/),
-              (v14/*: any*/),
-              (v11/*: any*/)
+              (v11/*: any*/),
+              (v4/*: any*/),
+              (v12/*: any*/),
+              (v9/*: any*/)
             ],
             "storageKey": "notableArtworks(size:3)"
           },
@@ -529,10 +501,10 @@ return {
             "kind": "LinkedField",
             "name": "genes",
             "plural": true,
-            "selections": (v15/*: any*/),
+            "selections": (v13/*: any*/),
             "storageKey": "genes(size:10)"
           },
-          (v12/*: any*/),
+          (v10/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -560,13 +532,13 @@ return {
           },
           {
             "alias": null,
-            "args": (v18/*: any*/),
+            "args": (v16/*: any*/),
             "concreteType": "ArtistBlurb",
             "kind": "LinkedField",
             "name": "biographyBlurb",
             "plural": false,
             "selections": [
-              (v7/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -607,7 +579,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v18/*: any*/),
+                "args": (v16/*: any*/),
                 "kind": "ScalarField",
                 "name": "description",
                 "storageKey": "description(format:\"HTML\")"
@@ -664,9 +636,9 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/),
+                      (v10/*: any*/),
+                      (v2/*: any*/),
                       (v4/*: any*/),
-                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -674,7 +646,7 @@ return {
                         "name": "byline",
                         "storageKey": null
                       },
-                      (v13/*: any*/),
+                      (v11/*: any*/),
                       {
                         "alias": null,
                         "args": [
@@ -714,13 +686,22 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v19/*: any*/),
+                            "selections": [
+                              (v6/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              }
+                            ],
                             "storageKey": "cropped(height:100,width:100)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/)
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -731,174 +712,6 @@ return {
             "storageKey": "articlesConnection(first:3,sort:\"PUBLISHED_AT_DESC\")"
           },
           {
-            "alias": "recentAuctionResultsConnection",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "allowUnspecifiedSaleDates",
-                "value": false
-              },
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 10
-              },
-              {
-                "kind": "Literal",
-                "name": "includeUnknownPrices",
-                "value": false
-              },
-              {
-                "kind": "Variable",
-                "name": "saleEndYear",
-                "variableName": "saleEndYear"
-              },
-              {
-                "kind": "Variable",
-                "name": "saleStartYear",
-                "variableName": "saleStartYear"
-              },
-              {
-                "kind": "Literal",
-                "name": "sort",
-                "value": "PRICE_AND_DATE_DESC"
-              }
-            ],
-            "concreteType": "AuctionResultConnection",
-            "kind": "LinkedField",
-            "name": "auctionResultsConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "AuctionResultEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "AuctionResult",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v12/*: any*/),
-                      (v4/*: any*/),
-                      (v13/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "dateText",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "saleDate",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "AuctionLotImages",
-                        "kind": "LinkedField",
-                        "name": "images",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "thumbnail",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": [
-                                  {
-                                    "kind": "Literal",
-                                    "name": "height",
-                                    "value": 75
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "width",
-                                    "value": 75
-                                  }
-                                ],
-                                "concreteType": "ResizedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "resized",
-                                "plural": false,
-                                "selections": (v19/*: any*/),
-                                "storageKey": "resized(height:75,width:75)"
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "AuctionResultPriceRealized",
-                        "kind": "LinkedField",
-                        "name": "priceRealized",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "display",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "centsUSD",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "AuctionLotPerformance",
-                        "kind": "LinkedField",
-                        "name": "performance",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "mid",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      (v11/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
             "alias": "movementGenes",
             "args": [
               {
@@ -906,14 +719,14 @@ return {
                 "name": "geneFamilyID",
                 "value": "styles-and-movements"
               },
-              (v20/*: any*/),
-              (v17/*: any*/)
+              (v17/*: any*/),
+              (v15/*: any*/)
             ],
             "concreteType": "Gene",
             "kind": "LinkedField",
             "name": "genes",
             "plural": true,
-            "selections": (v21/*: any*/),
+            "selections": (v18/*: any*/),
             "storageKey": "genes(geneFamilyID:\"styles-and-movements\",minValue:50,size:3)"
           },
           {
@@ -924,33 +737,33 @@ return {
                 "name": "geneFamilyID",
                 "value": "medium-and-techniques"
               },
-              (v20/*: any*/),
-              (v17/*: any*/)
+              (v17/*: any*/),
+              (v15/*: any*/)
             ],
             "concreteType": "Gene",
             "kind": "LinkedField",
             "name": "genes",
             "plural": true,
-            "selections": (v21/*: any*/),
+            "selections": (v18/*: any*/),
             "storageKey": "genes(geneFamilyID:\"medium-and-techniques\",minValue:50,size:3)"
           },
-          (v11/*: any*/)
+          (v9/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "cbf736fafb42af696f8b59d714803177",
+    "cacheID": "e43fba3679d377db88e04278eb5c4a98",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n  $saleStartYear: Int!\n  $saleEndYear: Int!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    slug\n    ...ArtistApp_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  name\n  recentAuctionResultsConnection: auctionResultsConnection(first: 10, sort: PRICE_AND_DATE_DESC, saleStartYear: $saleStartYear, saleEndYear: $saleEndYear, includeUnknownPrices: false, allowUnspecifiedSaleDates: false) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n  instagramHandle\n}\n\nfragment ArtistGenesRow_genes on Gene {\n  internalID\n  name\n  slug\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  slug\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  internalID\n  slug\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeaderImage_artwork on Artwork {\n  imageTitle\n  image {\n    src: url(version: [\"larger\", \"larger\"])\n    width\n    height\n  }\n  fallbackArtist: artist {\n    name\n    id\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  slug\n  title\n  dateText\n  saleDate\n  images {\n    thumbnail {\n      resized(width: 75, height: 75) {\n        src\n        srcSet\n      }\n    }\n  }\n  priceRealized {\n    display\n    centsUSD\n  }\n  performance {\n    mid\n  }\n}\n\nfragment ArtistHeaderRecentAuctionResults_artist on Artist {\n  internalID\n  slug\n  href\n  recentAuctionResultsConnection: auctionResultsConnection(first: 10, sort: PRICE_AND_DATE_DESC, saleStartYear: $saleStartYear, saleEndYear: $saleEndYear, includeUnknownPrices: false, allowUnspecifiedSaleDates: false) {\n    edges {\n      node {\n        internalID\n        ...ArtistHeaderRecentAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  instagramHandle\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights(excludeBlanks: true) {\n    kind\n    entities\n    description(format: HTML)\n    ...ArtistCareerHighlight_insight\n  }\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n  }\n  ...ArtistHeaderRecentAuctionResults_artist\n  ...ArtistHeaderEditorial_artist\n  ...ArtistStylesAndTechniques_artist\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    href\n    title\n    date\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    ...ArtistHeaderImage_artwork\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  instagramHandle\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  notableArtworks(size: 3) {\n    title\n    href\n    date\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n\nfragment ArtistStylesAndTechniques_artist on Artist {\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n}\n"
+    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    slug\n    ...ArtistApp_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  internalID\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n  instagramHandle\n}\n\nfragment ArtistGenesRow_genes on Gene {\n  internalID\n  name\n  slug\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  slug\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  internalID\n  slug\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeaderImage_artwork on Artwork {\n  imageTitle\n  image {\n    src: url(version: [\"larger\", \"larger\"])\n    width\n    height\n  }\n  fallbackArtist: artist {\n    name\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  instagramHandle\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights(excludeBlanks: true) {\n    kind\n    entities\n    description(format: HTML)\n    ...ArtistCareerHighlight_insight\n  }\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n  }\n  ...ArtistHeaderEditorial_artist\n  ...ArtistStylesAndTechniques_artist\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    href\n    title\n    date\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    ...ArtistHeaderImage_artwork\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  instagramHandle\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  notableArtworks(size: 3) {\n    title\n    href\n    date\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n\nfragment ArtistStylesAndTechniques_artist on Artist {\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ff9126b65d0fbf8823c62d230314efd1";
+(node as any).hash = "bfee92ede28c9b96821879852dac8387";
 
 export default node;
