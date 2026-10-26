@@ -1,7 +1,6 @@
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { Box, Flex, type FlexProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { ConversationConfirmModal } from "Apps/Conversations/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
@@ -23,21 +22,16 @@ export const ConversationCTA: React.FC<
 > = ({ conversation, ...flexProps }) => {
   const data = useFragment(FRAGMENT, conversation)
   const { findPartnerOffer } = useConversationsContext()
-  const { flagsReady } = useFlagsStatus()
 
   const liveArtwork = data?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
   const partnerOffer = artwork ? findPartnerOffer(artwork.internalID) : null
-  const isPartnerOfferConvoEnabled = useFlag("topaz_partner-offer-convo")
-  const hasOpenPartnerOffer =
-    flagsReady &&
-    isPartnerOfferConvoEnabled &&
-    isPartnerOfferActive(partnerOffer)
+  const hasOpenPartnerOffer = isPartnerOfferActive(partnerOffer)
 
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
   const activePartnerOffer =
-    !activeOrder && isPartnerOfferActive(partnerOffer) ? partnerOffer : null
+    !activeOrder && hasOpenPartnerOffer ? partnerOffer : null
 
   if (!artwork) {
     return null
@@ -53,7 +47,6 @@ export const ConversationCTA: React.FC<
   const canPurchase = artwork.isAcquireable || !!activePartnerOffer
   const canMakeOffer = artwork.isOfferable || artwork.isOfferableFromInquiry
   const showTransactionButtons =
-    flagsReady &&
     !activeOrder &&
     !hasOpenPartnerOffer &&
     artwork.published &&
