@@ -7,7 +7,6 @@ import {
   SkeletonText,
 } from "@artsy/palette"
 import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
-import { useArtistRecentAuctionResults } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -28,7 +27,6 @@ const ArtistCareerHighlights: FC<
   React.PropsWithChildren<ArtistCareerHighlightsProps>
 > = ({ artist }) => {
   const { trackEvent } = useTracking()
-  const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
 
@@ -40,7 +38,7 @@ const ArtistCareerHighlights: FC<
 
   const allInsights = artist.insights
   const insights = allInsights.slice(
-    getArtistHeaderNumberOfInsights({ hasEditorial, hasRecentAuctionResults }),
+    getArtistHeaderNumberOfInsights({ hasEditorial }),
   )
   const numOfColumns = insights.length > 4 ? 2 : 1
   const mid = Math.ceil(insights.length / 2)

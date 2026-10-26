@@ -98,20 +98,13 @@ export const artistRoutes: RouteProps[] = [
     render: artistWithCanonicalSlugRedirect,
     prepareVariables: params => {
       const { artistID } = params
-      const currentYear = new Date().getUTCFullYear()
 
       return {
         artistID,
-        saleStartYear: currentYear - 5,
-        saleEndYear: currentYear,
       }
     },
     query: graphql`
-      query artistRoutes_ArtistAppQuery(
-        $artistID: String!
-        $saleStartYear: Int!
-        $saleEndYear: Int!
-      ) @cacheable {
+      query artistRoutes_ArtistAppQuery($artistID: String!) @cacheable {
         artist(id: $artistID) @principalField {
           slug
           ...ArtistApp_artist
