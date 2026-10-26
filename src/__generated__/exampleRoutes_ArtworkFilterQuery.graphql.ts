@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<68ad9a6be72e31a15358eeeaea4071ec>>
+ * @generated SignedSource<<a5a178f132801cbba352f5aec1f9ff7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,6 +48,7 @@ export type FilterArtworksInput = {
   hybridNeuralK?: number | null | undefined;
   hybridPaginationDepth?: number | null | undefined;
   hybridWeights?: ReadonlyArray<number> | null | undefined;
+  image?: ArtworkImageSearchInput | null | undefined;
   importSources?: ReadonlyArray<string | null | undefined> | null | undefined;
   includeAllJSON?: boolean | null | undefined;
   includeArtworksByFollowedArtists?: boolean | null | undefined;
@@ -90,6 +91,10 @@ export type FilterArtworksInput = {
   viewingRoomID?: string | null | undefined;
   visibilityLevel?: string | null | undefined;
   width?: string | null | undefined;
+};
+export type ArtworkImageSearchInput = {
+  s3Bucket: string;
+  s3Key: string;
 };
 export type exampleRoutes_ArtworkFilterQuery$variables = {
   input?: FilterArtworksInput | null | undefined;
