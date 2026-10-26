@@ -306,10 +306,13 @@ describe("ArtistHeaderFragmentContainer", () => {
 
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
-          action: "clickedHeader",
+          action: "clickedSocialPost",
           context_module: "artistHeader",
           context_page_owner_type: "artist",
-          subject: "social",
+          context_page_owner_id: "4d8b92b34eb68a1b2c0003f4",
+          context_page_owner_slug: "pablo-picasso",
+          destination_path: "https://www.instagram.com/pablopicasso",
+          service: "instagram",
         }),
       )
     })
