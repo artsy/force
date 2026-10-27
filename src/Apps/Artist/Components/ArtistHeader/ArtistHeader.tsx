@@ -26,9 +26,7 @@ import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
-import { ArtistHeaderRecentAuctionResults } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderRecentAuctionResults"
 import { ArtistHeaderSocialLink } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSocialLink"
-import { useArtistRecentAuctionResults } from "Apps/Artist/Components/ArtistRecentAuctionResultsContext"
 import {
   ArtistStylesAndTechniques,
   useHasArtistStylesAndTechniques,
@@ -58,8 +56,6 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
   const instagramHandle = artist.instagramHandle?.trim() || null
 
-  const { hasRecentAuctionResults } = useArtistRecentAuctionResults()
-
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
   const biographyText = artist.biographyBlurb?.text
@@ -74,10 +70,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const hasInsights = insights.length > 0
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
   const hasRightDetails =
-    hasVerifiedRepresentatives ||
-    hasInsights ||
-    hasEditorial ||
-    hasRecentAuctionResults
+    hasVerifiedRepresentatives || hasInsights || hasEditorial
   const hasSomething =
     hasImage || hasBio || hasRightDetails || hasStylesAndTechniques
 
@@ -343,20 +336,10 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             </>
           )}
 
-          {hasRecentAuctionResults && (
-            <ArtistHeaderRecentAuctionResults artist={artist} />
-          )}
-
-          {!hasRecentAuctionResults && hasInsights && (
+          {hasInsights && (
             <Box display={["none", "block"]}>
               {insights
-                .slice(
-                  0,
-                  getArtistHeaderNumberOfInsights({
-                    hasEditorial,
-                    hasRecentAuctionResults,
-                  }),
-                )
+                .slice(0, getArtistHeaderNumberOfInsights({ hasEditorial }))
                 .map((insight, index) => {
                   return (
                     <ArtistCareerHighlightFragmentContainer
@@ -369,9 +352,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             </Box>
           )}
 
-          {hasEditorial && !hasRecentAuctionResults && (
-            <Separator borderColor={["mono10", "mono60"]} />
-          )}
+          {hasEditorial && <Separator borderColor={["mono10", "mono60"]} />}
 
           {hasEditorial && <ArtistHeaderEditorial artist={artist} />}
         </Column>
@@ -406,7 +387,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
         }
-        ...ArtistHeaderRecentAuctionResults_artist
         ...ArtistHeaderEditorial_artist
         ...ArtistStylesAndTechniques_artist
         verifiedRepresentatives {
@@ -462,13 +442,9 @@ export const ARTIST_HEADER_NUMBER_OF_INSIGHTS_WITH_EDITORIAL = 2
 
 export const getArtistHeaderNumberOfInsights = ({
   hasEditorial,
-  hasRecentAuctionResults,
 }: {
   hasEditorial: boolean
-  hasRecentAuctionResults: boolean
 }): number => {
-  if (hasRecentAuctionResults) return 0
-
   return hasEditorial
     ? ARTIST_HEADER_NUMBER_OF_INSIGHTS_WITH_EDITORIAL
     : ARTIST_HEADER_NUMBER_OF_INSIGHTS
