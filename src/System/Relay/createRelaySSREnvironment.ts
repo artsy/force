@@ -12,7 +12,7 @@ import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddle
 import { getENV } from "Utils/getENV"
 import { getTimeZone } from "Utils/getTimeZone"
 import createLogger from "Utils/logger"
-import { isEmpty } from "lodash"
+import { isEmpty, omit } from "lodash"
 import type { Environment as IEnvironment } from "react-relay"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
@@ -178,8 +178,9 @@ export function createRelaySSREnvironment(config: Config = {}) {
       // network-modern's subscription types predate Relay 18's GraphQLResponse union.
       subscribeFn: createMetaphysicsSubscribe({
         url: metaphysicsEndpoint,
+        // graphql-sse sets its own content-type; a second one would be merged into an invalid value.
         headers: {
-          ...headers,
+          ...omit(headers, "Content-Type"),
           ...(user
             ? { "X-USER-ID": user.id, "X-ACCESS-TOKEN": user.accessToken }
             : {}),

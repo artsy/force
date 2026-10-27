@@ -54,7 +54,8 @@ export const createMetaphysicsSubscribe = ({
         return
       }
 
-      // Load only when a subscription is actually opened, including its fetch implementation.
+      // Still bundled; this only defers evaluation until a subscription opens.
+      // The client build aliases graphql-sse to its UMD client build (see rsbuild.config.ts).
       const { createClient } =
         require("graphql-sse") as typeof import("graphql-sse")
       const client = createClient({

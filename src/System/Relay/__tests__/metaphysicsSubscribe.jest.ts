@@ -103,4 +103,40 @@ describe("Metaphysics subscriptions", () => {
       global.fetch = originalFetch
     }
   })
+
+  it("surfaces a JSON rejection through the real graphql-sse client", async () => {
+    const mockCreateClient = createClient as jest.Mock
+    mockCreateClient.mockImplementation(
+      jest.requireActual("graphql-sse").createClient,
+    )
+    const originalFetch = global.fetch
+    global.fetch = jest.fn().mockResolvedValue({
+      status: 403,
+      headers: { get: () => "application/json" },
+      json: async () => ({ errors: [{ message: "Not enabled" }] }),
+    })
+    try {
+      const error = await new Promise<MetaphysicsSubscriptionError>(resolve => {
+        createMetaphysicsSubscribe({
+          url: "https://metaphysics.test/v2",
+          headers: {},
+        })(request, {}).subscribe({ error: resolve })
+      })
+      expect(error).toBeInstanceOf(MetaphysicsSubscriptionError)
+      expect(error.status).toBe(403)
+      expect(error.graphQLErrors).toEqual(["Not enabled"])
+      expect(error.message).toContain("Server responded with 403")
+      expect(error.cause).toBeInstanceOf(
+        jest.requireActual("graphql-sse").NetworkError,
+      )
+    } finally {
+      global.fetch = originalFetch
+    }
+  })
+
+  it("falls back to a generic message for non-Error failures", () => {
+    const error = toMetaphysicsSubscriptionError([{ message: "Rejected" }])
+    expect(error.message).toBe("The subscription failed.")
+    expect(error.cause).toEqual([{ message: "Rejected" }])
+  })
 })

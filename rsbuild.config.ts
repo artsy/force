@@ -25,6 +25,11 @@ export default defineConfig({
           // Replace server-only SSR module with stub on client
           "react-relay-network-modern-ssr/node8/server":
             "./src/System/Relay/RelayServerSSRStub.ts",
+          // The package root also exports the server handler, which pulls in `graphql`
+          "graphql-sse$": path.resolve(
+            process.cwd(),
+            "node_modules/graphql-sse/umd/graphql-sse.js",
+          ),
         },
       },
       output: {
