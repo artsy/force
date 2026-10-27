@@ -9536,6 +9536,7 @@ __metadata:
     fsevents: "npm:*"
     glob: "npm:7.1.3"
     graphql: "npm:15.8.0"
+    graphql-sse: "npm:2.6.1"
     helmet: "npm:2.3.0"
     http-proxy: "npm:1.18.1"
     http-shutdown: "npm:1.2.1"
@@ -10230,6 +10231,15 @@ __metadata:
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
+  languageName: node
+  linkType: hard
+
+"graphql-sse@npm:2.6.1":
+  version: 2.6.1
+  resolution: "graphql-sse@npm:2.6.1"
+  peerDependencies:
+    graphql: ">=0.11 <=17"
+  checksum: 10c0/8a767b83c970dea75db634b27cd28d5040d6e7b07234c38919bc88d15eacf978171e380ba8ab3fa21a1779421e24b8e19dc51a798a90c5766382c406b3d6c221
   languageName: node
   linkType: hard
 
