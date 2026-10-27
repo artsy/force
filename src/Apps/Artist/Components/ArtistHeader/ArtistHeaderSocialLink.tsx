@@ -1,4 +1,9 @@
-import { ActionType, type ClickedHeader, ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  type ClickedSocialPost,
+  ContextModule,
+  type PageOwnerType,
+} from "@artsy/cohesion"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
 import { Stack, Text } from "@artsy/palette"
 import { RouterLink } from "System/Components/RouterLink"
@@ -14,17 +19,21 @@ export const ArtistHeaderSocialLink: React.FC<ArtistHeaderSocialLinkProps> = ({
   instagramHandle,
 }) => {
   const { trackEvent } = useTracking()
-  const { contextPageOwnerType } = useAnalyticsContext()
+  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
+    useAnalyticsContext()
 
   const handle = instagramHandle.trim()
   const href = getInstagramURL(handle)
 
   const handleClick = () => {
-    const payload: ClickedHeader = {
-      action: ActionType.clickedHeader,
+    const payload: ClickedSocialPost = {
+      action: ActionType.clickedSocialPost,
       context_module: ContextModule.artistHeader,
-      context_page_owner_type: contextPageOwnerType,
-      subject: "social",
+      context_page_owner_type: contextPageOwnerType as PageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_path: href ?? undefined,
+      service: "instagram",
     }
 
     trackEvent(payload)
