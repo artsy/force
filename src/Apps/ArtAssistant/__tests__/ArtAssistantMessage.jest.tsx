@@ -76,4 +76,27 @@ describe("Art Assistant messages", () => {
       screen.getByRole("link", { name: "No, I’m done for now" }),
     ).toHaveAttribute("href", "/")
   })
+
+  it("shows an attached image without an empty bubble", () => {
+    render(
+      <MockBoot>
+        <ArtAssistantMessage
+          message={{
+            id: "u",
+            role: "user",
+            text: "",
+            image: {
+              s3Key: "key",
+              s3Bucket: "bucket",
+              thumbnailURL: "data:image/jpeg;base64,abc",
+            },
+          }}
+        />
+      </MockBoot>,
+    )
+    expect(screen.getByRole("img", { name: "Attached image" })).toHaveAttribute(
+      "src",
+      "data:image/jpeg;base64,abc",
+    )
+  })
 })

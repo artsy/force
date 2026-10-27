@@ -12,6 +12,7 @@ const bytes = (text: string): number => new TextEncoder().encode(text).length
 const entryBytes = (entry: AIAgentMessageInput): number => {
   return (
     bytes(entry.content) +
+    (entry.image ? bytes(entry.image.s3Key) + bytes(entry.image.s3Bucket) : 0) +
     (entry.displayedSections ?? []).reduce((total, section) => {
       return (
         total +
@@ -39,7 +40,18 @@ export const toArtAssistantHistory = ({
     )
       return []
     return [
-      { role: "USER", content: message.text },
+      {
+        role: "USER",
+        content: message.text,
+        ...(message.image
+          ? {
+              image: {
+                s3Key: message.image.s3Key,
+                s3Bucket: message.image.s3Bucket,
+              },
+            }
+          : {}),
+      },
       {
         role: "ASSISTANT",
         content: answer.text,

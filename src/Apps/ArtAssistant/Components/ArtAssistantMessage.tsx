@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Text } from "@artsy/palette"
+import { ArtAssistantAttachedImage } from "Apps/ArtAssistant/Components/ArtAssistantAttachedImage"
 import { ArtAssistantArtistRail } from "Apps/ArtAssistant/Components/ArtAssistantArtistRail"
 import { ArtAssistantArtworkRail } from "Apps/ArtAssistant/Components/ArtAssistantArtworkRail"
 import type { ArtAssistantMessage as Message } from "Apps/ArtAssistant/types"
@@ -35,22 +36,27 @@ export const ArtAssistantMessage: FC<ArtAssistantMessageProps> = ({
       alignItems={isUser ? "flex-end" : "flex-start"}
       gap={[2, 4]}
     >
-      <Text
-        variant="sm"
-        bg={isUser ? "mono100" : "mono10"}
-        color={isUser ? "mono0" : "mono100"}
-        p={2}
-        borderRadius="15px"
-        maxWidth={["100%", "85%"]}
-        style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}
-        role={
-          message.role === "assistant" && message.phase === "error"
-            ? "alert"
-            : undefined
-        }
-      >
-        {message.text}
-      </Text>
+      {message.role === "user" && message.image && (
+        <ArtAssistantAttachedImage image={message.image} />
+      )}
+      {(!isUser || message.text) && (
+        <Text
+          variant="sm"
+          bg={isUser ? "mono100" : "mono10"}
+          color={isUser ? "mono0" : "mono100"}
+          p={2}
+          borderRadius="15px"
+          maxWidth={["100%", "85%"]}
+          style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}
+          role={
+            message.role === "assistant" && message.phase === "error"
+              ? "alert"
+              : undefined
+          }
+        >
+          {message.text}
+        </Text>
+      )}
       {message.role === "assistant" && message.error && onErrorAction && (
         <ArtAssistantErrorActions
           error={message.error}

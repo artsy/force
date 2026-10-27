@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbf5f7f7db4c9fd6f1ecb7b338ed2be5>>
+ * @generated SignedSource<<289c512e8f9926ad4717ccc39fe033a9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type AIAgentSectionType = "ARTISTS" | "ARTWORKS" | "%future added value";
 export type AIAgentTurnInput = {
   conversationID: string;
   history?: ReadonlyArray<AIAgentMessageInput> | null | undefined;
+  image?: AIAgentImageInput | null | undefined;
   includeDebugToolCalls?: boolean | null | undefined;
   message: string;
   supportedSections?: ReadonlyArray<AIAgentSectionType> | null | undefined;
@@ -24,11 +25,16 @@ export type AIAgentMessageInput = {
   artworkIDs?: ReadonlyArray<string> | null | undefined;
   content: string;
   displayedSections?: ReadonlyArray<AIAgentDisplayedSectionInput> | null | undefined;
+  image?: AIAgentImageInput | null | undefined;
   role: AIAgentRole;
 };
 export type AIAgentDisplayedSectionInput = {
   entityType: AIAgentEntityType;
   internalIDs: ReadonlyArray<string>;
+};
+export type AIAgentImageInput = {
+  s3Bucket: string;
+  s3Key: string;
 };
 export type useArtAssistantConversationSubscription$variables = {
   includeDebug: boolean;

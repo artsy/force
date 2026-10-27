@@ -13,11 +13,15 @@ import { ArtAssistantCloseButton } from "Apps/ArtAssistant/Components/ArtAssista
 import { ArtAssistantDebugPanel } from "Apps/ArtAssistant/Components/ArtAssistantDebugPanel"
 import { ArtAssistantEmptyState } from "Apps/ArtAssistant/Components/ArtAssistantEmptyState"
 import { ArtAssistantHistory } from "Apps/ArtAssistant/Components/ArtAssistantHistory"
+import { ArtAssistantImageUploadModal } from "Apps/ArtAssistant/Components/ArtAssistantImageUploadModal"
 import { ArtAssistantMessage } from "Apps/ArtAssistant/Components/ArtAssistantMessage"
 import { useArtAssistantConversation } from "Apps/ArtAssistant/hooks/useArtAssistantConversation"
 import { useArtAssistantHistory } from "Apps/ArtAssistant/hooks/useArtAssistantHistory"
+import { useArtAssistantImageAttachment } from "Apps/ArtAssistant/hooks/useArtAssistantImageAttachment"
 import { useArtAssistantViewport } from "Apps/ArtAssistant/hooks/useArtAssistantViewport"
 import { useEnableArtAssistant } from "Apps/ArtAssistant/hooks/useEnableArtAssistant"
+import { useEnableArtAssistantImageInput } from "Apps/ArtAssistant/hooks/useEnableArtAssistantImageInput"
+import type { ArtAssistantImage } from "Apps/ArtAssistant/types"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { userIsAdmin } from "Utils/user"
@@ -40,6 +44,9 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
   const conversation = useArtAssistantConversation({ isDebugEnabled })
   const history = useArtAssistantHistory({ userID, ...conversation })
   const [draft, setDraft] = useState("")
+  const isImageInputEnabled = useEnableArtAssistantImageInput()
+  const imageAttachment = useArtAssistantImageAttachment()
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [dismissedErrorID, setDismissedErrorID] = useState<string | null>(null)
   const composerRef = useRef<HTMLTextAreaElement | null>(null)
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
@@ -67,13 +74,17 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
     return () => observer.disconnect()
   }, [])
 
-  const handleSubmit = (text: string): boolean => {
+  const handleSubmit = (submission: {
+    text: string
+    image?: ArtAssistantImage
+  }): boolean => {
     shouldFollowResponse.current = true
-    return conversation.submit({ text })
+    return conversation.submit(submission)
   }
   const handleNewChat = (): void => {
     conversation.startNewConversation()
     setDraft("")
+    imageAttachment.remove()
     setIsHistoryOpen(false)
     shouldFollowResponse.current = true
   }
@@ -104,6 +115,7 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
     onSelect: (id: string): void => {
       history.selectConversation(id)
       setDraft("")
+      imageAttachment.remove()
       setIsHistoryOpen(false)
       shouldFollowResponse.current = true
     },
@@ -258,6 +270,13 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
               onChange={setDraft}
               isResponding={conversation.isResponding}
               onSubmit={handleSubmit}
+              attachment={imageAttachment.attachment}
+              onAddImage={
+                isImageInputEnabled
+                  ? () => setIsImageModalOpen(true)
+                  : undefined
+              }
+              onRemoveImage={imageAttachment.remove}
             />
             <Text variant="xxs" color="mono60" textAlign="center" mt={1}>
               Art Assistant can make mistakes. Double-check prices and
@@ -266,6 +285,15 @@ const ArtAssistantChat: FC<{ userID: string }> = ({ userID }) => {
           </Box>
         </Box>
       </Flex>
+      {isImageModalOpen && (
+        <ArtAssistantImageUploadModal
+          onClose={() => setIsImageModalOpen(false)}
+          onSelect={file => {
+            imageAttachment.attach(file)
+            composerRef.current?.focus({ preventScroll: true })
+          }}
+        />
+      )}
       {isHistoryOpen && (
         <Drawer open onClose={() => setIsHistoryOpen(false)} anchor="left">
           <Box width="min(340px, 100vw)" height="100%" overflowY="auto">

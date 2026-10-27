@@ -1,4 +1,7 @@
-import type { ArtAssistantMessage } from "Apps/ArtAssistant/types"
+import type {
+  ArtAssistantImage,
+  ArtAssistantMessage,
+} from "Apps/ArtAssistant/types"
 import { ART_ASSISTANT_ERRORS } from "Apps/ArtAssistant/utils/artAssistantErrors"
 
 export interface StoredArtAssistantConversation {
@@ -9,6 +12,8 @@ export interface StoredArtAssistantConversation {
 }
 
 export const MAX_STORED_CONVERSATIONS = 20
+// Keeps the 20-conversation localStorage budget predictable.
+export const MAX_STORED_THUMBNAIL_LENGTH = 40_000
 export const ART_ASSISTANT_HISTORY_CLEARED =
   "artsy:art-assistant-history-cleared"
 const STORAGE_PREFIX = "artsy.artAssistant.v1."
@@ -39,12 +44,31 @@ const isSection = (section: unknown): boolean => {
   )
 }
 
+const isImage = (image: unknown): image is ArtAssistantImage => {
+  if (!image || typeof image !== "object") return false
+  const value = image as Record<string, unknown>
+  return (
+    typeof value.s3Key === "string" &&
+    typeof value.s3Bucket === "string" &&
+    (value.thumbnailURL === undefined || typeof value.thumbnailURL === "string")
+  )
+}
+
+const toStoredImage = (image: ArtAssistantImage): ArtAssistantImage => {
+  const { s3Key, s3Bucket, thumbnailURL } = image
+  return thumbnailURL?.startsWith("data:image/") &&
+    thumbnailURL.length <= MAX_STORED_THUMBNAIL_LENGTH
+    ? { s3Key, s3Bucket, thumbnailURL }
+    : { s3Key, s3Bucket }
+}
+
 const isMessage = (message: unknown): message is ArtAssistantMessage => {
   if (!message || typeof message !== "object") return false
   const value = message as Record<string, unknown>
   if (typeof value.id !== "string" || typeof value.text !== "string")
     return false
-  if (value.role === "user") return true
+  if (value.role === "user")
+    return value.image === undefined || isImage(value.image)
   return (
     value.role === "assistant" &&
     (value.error === undefined ||
@@ -68,7 +92,12 @@ export const toStoredMessages = (
 ): ArtAssistantMessage[] => {
   return messages.map(message => {
     if (message.role === "user")
-      return { id: message.id, role: "user", text: message.text }
+      return {
+        id: message.id,
+        role: "user",
+        text: message.text,
+        ...(message.image ? { image: toStoredImage(message.image) } : {}),
+      }
     if (message.phase !== "complete") {
       const error = message.error ?? "generic"
       return {
@@ -153,5 +182,6 @@ export const writeArtAssistantConversations = ({
 
 export const conversationTitle = (prompt: string): string => {
   const text = prompt.replace(/\s+/g, " ").trim()
+  if (!text) return "Image search"
   return text.length > 80 ? `${text.slice(0, 80)}…` : text
 }

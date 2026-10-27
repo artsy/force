@@ -1,6 +1,7 @@
 import { captureException } from "@sentry/browser"
 import {
   ART_ASSISTANT_SUPPORTED_SECTIONS,
+  type ArtAssistantImage,
   type ArtAssistantMessage,
   type ArtAssistantSection,
 } from "Apps/ArtAssistant/types"
@@ -37,6 +38,7 @@ const ACTIVITY_COPY: Record<string, string> = {
   FINDING_RECOMMENDATIONS: "Finding recommendations…",
   LOADING_ARTWORK_DETAILS: "Loading artwork details…",
   SEARCHING_ARTSY: "Searching Artsy…",
+  LOOKING_AT_IMAGE: "Looking at your image…",
 }
 
 export const reduceArtAssistantEvent = ({
@@ -188,9 +190,20 @@ export const useArtAssistantConversation = ({
   }, [user?.id, user?.accessToken, abort, startNewConversation])
 
   const submit = useCallback(
-    ({ text: prompt }: { text: string }): boolean => {
+    ({
+      text: prompt,
+      image,
+    }: {
+      text: string
+      image?: ArtAssistantImage
+    }): boolean => {
       const text = prompt.trim()
-      if (!text || activeTurn.current || !user?.id || !user?.accessToken)
+      if (
+        (!text && !image) ||
+        activeTurn.current ||
+        !user?.id ||
+        !user?.accessToken
+      )
         return false
 
       const startedAt = Date.now()
@@ -209,6 +222,7 @@ export const useArtAssistantConversation = ({
         id: uuid(),
         role: "user",
         text,
+        ...(image ? { image } : {}),
       }
       let history: ReturnType<typeof toArtAssistantHistory>
       try {
@@ -370,6 +384,14 @@ export const useArtAssistantConversation = ({
                 input: {
                   conversationID: turnConversationID,
                   message: text,
+                  ...(image
+                    ? {
+                        image: {
+                          s3Key: image.s3Key,
+                          s3Bucket: image.s3Bucket,
+                        },
+                      }
+                    : {}),
                   history,
                   supportedSections: [...ART_ASSISTANT_SUPPORTED_SECTIONS],
                   ...(shouldIncludeDebug
@@ -439,7 +461,7 @@ export const useArtAssistantConversation = ({
     )
       return false
     messagesRef.current = current.slice(0, -2)
-    return submit({ text: prompt.text })
+    return submit({ text: prompt.text, image: prompt.image })
   }, [submit, user?.id, user?.accessToken])
 
   return {

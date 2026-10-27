@@ -4,8 +4,15 @@ export type ArtAssistantSection =
   | { type: "artworks"; ids: string[] }
   | { type: "artists"; ids: string[] }
 
+export interface ArtAssistantImage {
+  s3Key: string
+  s3Bucket: string
+  // Local data URL so the attachment survives reloads; never sent to Metaphysics.
+  thumbnailURL?: string
+}
+
 export type ArtAssistantMessage =
-  | { id: string; role: "user"; text: string }
+  | { id: string; role: "user"; text: string; image?: ArtAssistantImage }
   | {
       id: string
       role: "assistant"

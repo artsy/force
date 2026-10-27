@@ -305,4 +305,44 @@ describe("Art Assistant conversation", () => {
       debug: { stopReason: "max_iterations", toolCallCount: 5 },
     })
   })
+
+  it("sends an attached image without text and replays it in history", () => {
+    const image = {
+      s3Key: "gemini/cat.jpg",
+      s3Bucket: "uploads",
+      thumbnailURL: "data:image/jpeg;base64,abc",
+    }
+    const { result } = renderHook(useArtAssistantConversation)
+    expect(result.current.submit({ text: "  " })).toBe(false)
+    act(() => result.current.submit({ text: "", image }))
+    const input = (requestSubscription as jest.Mock).mock.calls[0][1].variables
+      .input
+    expect(input).toMatchObject({
+      message: "",
+      image: { s3Key: "gemini/cat.jpg", s3Bucket: "uploads" },
+    })
+    expect(input.image).not.toHaveProperty("thumbnailURL")
+    expect(result.current.messages[0]).toMatchObject({ role: "user", image })
+    act(() => callbacks.onNext?.(complete))
+    act(() => result.current.submit({ text: "Cheaper" }))
+    const next = (requestSubscription as jest.Mock).mock.calls[1][1].variables
+      .input
+    expect(next.image).toBeUndefined()
+    expect(next.history[0]).toEqual({
+      role: "USER",
+      content: "",
+      image: { s3Key: "gemini/cat.jpg", s3Bucket: "uploads" },
+    })
+  })
+
+  it("retries with the same image", () => {
+    const image = { s3Key: "gemini/cat.jpg", s3Bucket: "uploads" }
+    const { result } = renderHook(useArtAssistantConversation)
+    act(() => result.current.submit({ text: "Like this", image }))
+    act(() => callbacks.onError?.(new Error("Network")))
+    act(() => result.current.retry())
+    expect(
+      (requestSubscription as jest.Mock).mock.calls[1][1].variables.input,
+    ).toMatchObject({ message: "Like this", image })
+  })
 })

@@ -56,4 +56,23 @@ describe("Art Assistant history limits", () => {
       toArtAssistantHistory({ messages: [], prompt: "世".repeat(34_000) }),
     ).toThrow("input is too large")
   })
+
+  it("counts attached image references toward the input limit", () => {
+    const messages: ArtAssistantMessage[] = [
+      {
+        id: "u",
+        role: "user",
+        text: "",
+        image: {
+          s3Key: "k".repeat(100_000),
+          s3Bucket: "bucket",
+          thumbnailURL: "data:image/jpeg;base64,abc",
+        },
+      },
+      { id: "a", role: "assistant", text: "Answer", phase: "complete" },
+    ]
+    expect(() => toArtAssistantHistory({ messages, prompt: "Next" })).toThrow(
+      "input is too large",
+    )
+  })
 })

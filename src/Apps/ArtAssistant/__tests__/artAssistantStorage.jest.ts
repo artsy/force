@@ -3,6 +3,8 @@ import {
   writeArtAssistantConversations,
   type StoredArtAssistantConversation,
   clearArtAssistantConversations,
+  conversationTitle,
+  MAX_STORED_THUMBNAIL_LENGTH,
 } from "Apps/ArtAssistant/utils/artAssistantStorage"
 
 const conversation: StoredArtAssistantConversation = {
@@ -107,5 +109,53 @@ describe("Art Assistant local history", () => {
       }),
     ).not.toThrow()
     write.mockRestore()
+  })
+
+  it("keeps attached images and drops oversized thumbnails", () => {
+    const thumbnailURL = "data:image/jpeg;base64,abc"
+    writeArtAssistantConversations({
+      userID: "one",
+      conversations: [
+        {
+          ...conversation,
+          messages: [
+            {
+              id: "u1",
+              role: "user",
+              text: "",
+              image: { s3Key: "key-1", s3Bucket: "bucket", thumbnailURL },
+            },
+            {
+              id: "u2",
+              role: "user",
+              text: "Again",
+              image: {
+                s3Key: "key-2",
+                s3Bucket: "bucket",
+                thumbnailURL: `data:image/jpeg;base64,${"a".repeat(MAX_STORED_THUMBNAIL_LENGTH)}`,
+              },
+            },
+          ],
+        },
+      ],
+    })
+    expect(readArtAssistantConversations("one")[0].messages).toEqual([
+      {
+        id: "u1",
+        role: "user",
+        text: "",
+        image: { s3Key: "key-1", s3Bucket: "bucket", thumbnailURL },
+      },
+      {
+        id: "u2",
+        role: "user",
+        text: "Again",
+        image: { s3Key: "key-2", s3Bucket: "bucket" },
+      },
+    ])
+  })
+
+  it("titles image-only chats", () => {
+    expect(conversationTitle("  ")).toBe("Image search")
   })
 })
