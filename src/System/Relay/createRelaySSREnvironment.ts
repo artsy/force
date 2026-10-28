@@ -1,6 +1,7 @@
 // Force runs Node with --no-experimental-fetch in production, so keep the fetch polyfill explicit
 import "isomorphic-fetch"
 import { getMetaphysicsEndpoint } from "System/Relay/getMetaphysicsEndpoint"
+import { createMetaphysicsSubscribe } from "System/Relay/metaphysicsSubscribe"
 import {
   hasNoCacheParamPresent,
   hasPersonalizedArguments,
@@ -11,7 +12,7 @@ import { cacheLoggerMiddleware } from "System/Relay/middleware/cacheLoggerMiddle
 import { getENV } from "Utils/getENV"
 import { getTimeZone } from "Utils/getTimeZone"
 import createLogger from "Utils/logger"
-import { isEmpty } from "lodash"
+import { isEmpty, omit } from "lodash"
 import type { Environment as IEnvironment } from "react-relay"
 import type RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import type RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
@@ -23,6 +24,7 @@ import {
   loggerMiddleware,
   retryMiddleware,
   urlMiddleware,
+  type RelayNetworkLayerOpts,
 } from "react-relay-network-modern/node8"
 import { Environment, type INetwork, RecordSource, Store } from "relay-runtime"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
@@ -170,7 +172,21 @@ export function createRelaySSREnvironment(config: Config = {}) {
   // https://github.com/relay-tools/react-relay-network-modern#advanced-options-2nd-argument-after-middlewares
   // This is still 'experimental' and might be removed.
   const network =
-    relayNetwork || new RelayNetworkLayer(middlewares, { noThrow: true })
+    relayNetwork ||
+    new RelayNetworkLayer(middlewares, {
+      noThrow: true,
+      // network-modern's subscription types predate Relay 18's GraphQLResponse union.
+      subscribeFn: createMetaphysicsSubscribe({
+        url: metaphysicsEndpoint,
+        // graphql-sse sets its own content-type; a second one would be merged into an invalid value.
+        headers: {
+          ...omit(headers, "Content-Type"),
+          ...(user
+            ? { "X-USER-ID": user.id, "X-ACCESS-TOKEN": user.accessToken }
+            : {}),
+        },
+      }) as unknown as RelayNetworkLayerOpts["subscribeFn"],
+    })
 
   const source = new RecordSource()
   const store = new Store(source)
