@@ -8,10 +8,13 @@ import { requestSubscription } from "react-relay"
 import type { useArtAssistantConversationSubscription$data } from "__generated__/useArtAssistantConversationSubscription.graphql"
 import { ART_ASSISTANT_ERRORS } from "Apps/ArtAssistant/utils/artAssistantErrors"
 import { MetaphysicsSubscriptionError } from "System/Relay/metaphysicsSubscriptionError"
-import { captureException } from "@sentry/browser"
+import { captureException, captureMessage } from "@sentry/browser"
 
 jest.mock("System/Hooks/useSystemContext")
-jest.mock("@sentry/browser", () => ({ captureException: jest.fn() }))
+jest.mock("@sentry/browser", () => ({
+  captureException: jest.fn(),
+  captureMessage: jest.fn(),
+}))
 jest.mock("uuid", () => ({
   v4: (() => {
     let id = 0
@@ -19,9 +22,6 @@ jest.mock("uuid", () => ({
   })(),
 }))
 jest.mock("react-relay", () => ({ requestSubscription: jest.fn() }))
-jest.mock("@artsy/palette", () => ({
-  useToasts: () => ({ sendToast: jest.fn() }),
-}))
 
 describe("Art Assistant conversation", () => {
   const dispose = jest.fn()
@@ -88,6 +88,57 @@ describe("Art Assistant conversation", () => {
     expect(result.current.isResponding).toBe(false)
   })
 
+  it("reports a turn without an answer as a warning, not an exception", () => {
+    const { result } = renderHook(useArtAssistantConversation)
+    act(() => result.current.submit({ text: "Find art" }))
+    act(() =>
+      callbacks.onNext?.({
+        aiAgentTurn: {
+          __typename: "AIAgentTurnComplete",
+          message: null,
+          sections: [],
+          artworks: [],
+          suggestedReplies: [],
+          toolCallCount: 0,
+          stopReason: "rate_limited",
+        },
+      }),
+    )
+    expect(captureException).not.toHaveBeenCalled()
+    expect(captureMessage).toHaveBeenCalledWith(
+      "Art Assistant turn: stopped_without_answer",
+      expect.objectContaining({
+        level: "warning",
+        tags: {
+          artAssistantOutcome: "stopped_without_answer",
+          artAssistantStopReason: "rate_limited",
+        },
+      }),
+    )
+  })
+
+  it("falls back to artworks when no section is usable", () => {
+    const { result } = renderHook(useArtAssistantConversation)
+    act(() => result.current.submit({ text: "Find art" }))
+    act(() =>
+      callbacks.onNext?.({
+        aiAgentTurn: {
+          __typename: "AIAgentTurnComplete",
+          message: "Here you go",
+          stopReason: "end_turn",
+          toolCallCount: 1,
+          suggestedReplies: [],
+          sections: [{ __typename: "AIAgentArtistsSection", artists: [] }],
+          artworks: [{ internalID: "artwork-1" }],
+        },
+      }),
+    )
+    expect(result.current.messages[1]).toMatchObject({
+      phase: "complete",
+      sections: [{ type: "artworks", ids: ["artwork-1"] }],
+    })
+  })
+
   it("retries a failed prompt in place without replaying the failed exchange", () => {
     const { result } = renderHook(useArtAssistantConversation)
     act(() => result.current.submit({ text: "Find art" }))
@@ -122,10 +173,11 @@ describe("Art Assistant conversation", () => {
     ).not.toContain("PRIVATE_CANARY")
     const [error, context] = (captureException as jest.Mock).mock.calls[0]
     expect(error.message).toBe("Art Assistant turn: stream_error")
+    expect(context.level).toBe("error")
     expect(JSON.stringify(context)).not.toContain("PRIVATE_CANARY")
   })
 
-  it("handles backend and local conversation limits without a raw-error toast", () => {
+  it("handles backend and local conversation limits", () => {
     const { result } = renderHook(useArtAssistantConversation)
     act(() => result.current.submit({ text: "Find art" }))
     act(() =>

@@ -1,4 +1,4 @@
-import { captureException } from "@sentry/browser"
+import { captureException, captureMessage } from "@sentry/browser"
 import {
   ART_ASSISTANT_SUPPORTED_SECTIONS,
   type ArtAssistantMessage,
@@ -82,7 +82,8 @@ export const reduceArtAssistantEvent = ({
       return []
     })
     .filter(section => section.ids.length > 0)
-  if (!event.sections?.length && event.artworks?.length) {
+  // `artworks` predates typed sections; fall back to it when no usable section came back, as Eigen does.
+  if (!sections.length && event.artworks?.length) {
     sections.push({
       type: "artworks",
       ids: event.artworks.map(artwork => artwork.internalID),
@@ -217,6 +218,7 @@ export const useArtAssistantConversation = () => {
         error,
         outcome = "stream_error",
         kind = artAssistantErrorKindForStreamError(error),
+        stopReason,
       }: {
         error?: unknown
         kind?: ArtAssistantErrorKind
@@ -225,6 +227,7 @@ export const useArtAssistantConversation = () => {
           | "idle_timeout"
           | "stopped_without_answer"
           | "ended_without_answer"
+        stopReason?: string
       }) => {
         if (isFinished) return
         const errorStatus =
@@ -235,13 +238,27 @@ export const useArtAssistantConversation = () => {
           outcome,
           status: errorStatus,
         })
-        captureException(new Error(`Art Assistant turn: ${outcome}`), {
+        const context = {
           tags: {
             artAssistantOutcome: outcome,
+            ...(stopReason ? { artAssistantStopReason: stopReason } : {}),
             ...(errorStatus ? { artAssistantStatus: String(errorStatus) } : {}),
           },
           extra: { conversationID: turnConversationID },
-        })
+        }
+        // The original error is not attached: its message can carry backend text.
+        if (error) {
+          captureException(new Error(`Art Assistant turn: ${outcome}`), {
+            ...context,
+            level: "error",
+          })
+        } else {
+          // Turns that end without an answer (e.g. rate limiting) are expected, not exceptions.
+          captureMessage(`Art Assistant turn: ${outcome}`, {
+            ...context,
+            level: "warning",
+          })
+        }
         update({
           ...message,
           phase: "error",
@@ -333,6 +350,7 @@ export const useArtAssistantConversation = () => {
                     fail({
                       outcome: "stopped_without_answer",
                       kind: message.error,
+                      stopReason: event.stopReason,
                     })
                     return
                   }

@@ -67,6 +67,7 @@ export const artAssistantErrorKindForStopReason = (
   }
 }
 
+// Matched on the message because Metaphysics rejects these with a plain `Error`, before streaming.
 export const artAssistantErrorKindForStreamError = (
   error: unknown,
 ): ArtAssistantErrorKind => {
