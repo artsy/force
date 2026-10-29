@@ -137,8 +137,8 @@ describe("Art Assistant page", () => {
     )
     expect(screen.getByText("What are you looking for?")).toBeInTheDocument()
     expect(
-      screen.queryByRole("heading", { name: "Art Assistant" }),
-    ).not.toBeInTheDocument()
+      screen.getByRole("heading", { level: 1, name: "Art Assistant" }),
+    ).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "New chat" })).toBeInTheDocument()
     expect(
       screen.queryByText("Chats are saved in this browser."),
@@ -173,7 +173,10 @@ describe("Art Assistant page", () => {
         },
       }),
     )
-    expect(screen.getByText("Here are some works")).toBeInTheDocument()
+    expect(screen.getByTestId("art-assistant-announcer")).toHaveTextContent(
+      "Here are some works",
+    )
+    expect(screen.getAllByText("Here are some works")).toHaveLength(2)
     expect(screen.getByText("Artwork cards")).toBeInTheDocument()
     fireEvent.click(screen.getByRole("button", { name: "More like this" }))
     expect(

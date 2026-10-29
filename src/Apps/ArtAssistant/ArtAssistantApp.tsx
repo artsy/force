@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text } from "@artsy/palette"
+import { Box, Button, Flex, Text, VisuallyHidden } from "@artsy/palette"
 import { ArtAssistantComposer } from "Apps/ArtAssistant/Components/ArtAssistantComposer"
 import { ArtAssistantCloseButton } from "Apps/ArtAssistant/Components/ArtAssistantCloseButton"
 import { ArtAssistantEmptyState } from "Apps/ArtAssistant/Components/ArtAssistantEmptyState"
@@ -28,6 +28,11 @@ const ArtAssistantChat: FC = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const contentRef = useRef<HTMLDivElement | null>(null)
   const viewportRef = useArtAssistantViewport()
+  const latestMessage = conversation.messages[conversation.messages.length - 1]
+  const announcement =
+    latestMessage?.role === "assistant" && latestMessage.phase === "complete"
+      ? latestMessage.text
+      : ""
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Scroll after a new message or activity changes the layout.
   useEffect(() => {
@@ -88,6 +93,13 @@ const ArtAssistantChat: FC = () => {
       data-testid="art-assistant"
     >
       <MetaTags title="Art Assistant | Artsy" blockRobots />
+      <VisuallyHidden>
+        <h1>Art Assistant</h1>
+      </VisuallyHidden>
+      {/* The “Thinking…” status unmounts when a turn completes, so the answer is announced here. */}
+      <VisuallyHidden aria-live="polite" data-testid="art-assistant-announcer">
+        {announcement}
+      </VisuallyHidden>
       <Flex flex={1} minWidth={0} flexDirection="column">
         <Flex
           flexShrink={0}
@@ -136,32 +148,30 @@ const ArtAssistantChat: FC = () => {
               />
             )}
             {conversation.messages.map((message, index) => {
+              const isLatestIdleMessage =
+                !conversation.isResponding &&
+                index === conversation.messages.length - 1
               return (
-                <Box key={message.id}>
-                  <ArtAssistantMessage
-                    key={message.id}
-                    message={message}
-                    onErrorAction={
-                      !conversation.isResponding &&
-                      index === conversation.messages.length - 1 &&
-                      message.id !== dismissedErrorID
-                        ? action =>
-                            handleErrorAction({ action, messageID: message.id })
-                        : undefined
-                    }
-                    onSuggestedReply={
-                      !conversation.isResponding &&
-                      index === conversation.messages.length - 1
-                        ? reply => {
-                            shouldFollowResponse.current = true
-                            conversation.submit({
-                              text: reply,
-                            })
-                          }
-                        : undefined
-                    }
-                  />
-                </Box>
+                <ArtAssistantMessage
+                  key={message.id}
+                  message={message}
+                  onErrorAction={
+                    isLatestIdleMessage && message.id !== dismissedErrorID
+                      ? action =>
+                          handleErrorAction({ action, messageID: message.id })
+                      : undefined
+                  }
+                  onSuggestedReply={
+                    isLatestIdleMessage
+                      ? reply => {
+                          shouldFollowResponse.current = true
+                          conversation.submit({
+                            text: reply,
+                          })
+                        }
+                      : undefined
+                  }
+                />
               )
             })}
           </Flex>

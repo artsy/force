@@ -1,14 +1,19 @@
 import SparklesMessageIcon from "@artsy/icons/SparklesMessageIcon"
 import { Flex, Text } from "@artsy/palette"
-import { useEnableArtAssistant } from "Apps/ArtAssistant/hooks/useEnableArtAssistant"
+import { useIsArtAssistantLinkEnabled } from "Apps/ArtAssistant/hooks/useEnableArtAssistant"
 import { RouterLink } from "System/Components/RouterLink"
 import type { FC } from "react"
 
-export const ArtAssistantSearchLink: FC<{
+export interface ArtAssistantSearchLinkProps {
   onNavigate?: () => void
   isCompact?: boolean
-}> = ({ onNavigate, isCompact = false }) => {
-  const isEnabled = useEnableArtAssistant()
+}
+
+export const ArtAssistantSearchLink: FC<ArtAssistantSearchLinkProps> = ({
+  onNavigate,
+  isCompact = false,
+}) => {
+  const isEnabled = useIsArtAssistantLinkEnabled()
   if (!isEnabled) return null
   return (
     <RouterLink
