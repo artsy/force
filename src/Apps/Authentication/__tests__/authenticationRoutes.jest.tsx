@@ -103,6 +103,14 @@ describe("authenticationRoutes", () => {
 
   afterEach(() => {
     jest.resetAllMocks()
+
+    // resetAllMocks also wipes the global IntersectionObserver mock from
+    // src/tests.ts, which components rendered here still construct.
+    ;(window.IntersectionObserver as jest.Mock).mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }))
   })
 
   describe("/forgot", () => {
