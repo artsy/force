@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useRef, useState } from "react"
+import { type RefObject, useCallback, useEffect, useRef, useState } from "react"
 
 interface UseIntersectionObserverProperties {
   ref?: RefObject<Element> | null
@@ -18,7 +18,8 @@ export const useIntersectionObserver = <T extends HTMLElement = HTMLElement>({
   onIntersection,
   onOffIntersection,
 }: UseIntersectionObserverProperties) => {
-  const ref = useRef<T | null>(null)
+  const nodeRef = useRef<T | null>(null)
+  const hasIntersectedRef = useRef(false)
 
   const handleIntersect = (entries: IntersectionObserverEntry[]) => {
     if (!observer) return
@@ -29,6 +30,7 @@ export const useIntersectionObserver = <T extends HTMLElement = HTMLElement>({
       )
 
       if (hasIntersected) {
+        hasIntersectedRef.current = true
         onIntersection?.(entries)
         observer.disconnect()
       } else {
@@ -54,13 +56,29 @@ export const useIntersectionObserver = <T extends HTMLElement = HTMLElement>({
       : undefined,
   )
 
+  // A callback ref, rather than observing `ref.current` once on mount, so the
+  // node that's actually in the DOM is observed even when it attaches after
+  // mount or gets replaced (e.g. a wrapper above it changes type).
+  const ref = useCallback(
+    (node: T | null) => {
+      if (!observer) return
+
+      if (nodeRef.current) {
+        observer.unobserve(nodeRef.current)
+      }
+
+      nodeRef.current = node
+
+      if (!node || (once && hasIntersectedRef.current)) return
+
+      observer.observe(node)
+    },
+    [observer, once],
+  )
+
   useEffect(() => {
-    if (!ref.current || !observer) return
-
-    observer.observe(ref.current)
-
     return () => {
-      observer.disconnect()
+      observer?.disconnect()
     }
   }, [observer])
 
