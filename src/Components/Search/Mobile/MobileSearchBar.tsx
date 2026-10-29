@@ -1,8 +1,10 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput, useDidMount } from "@artsy/palette"
-import { type FC, useState } from "react"
+import { useFlag } from "@unleash/proxy-client-react"
+import { type FC, useEffect, useState } from "react"
 import { OverlayRefetchContainer } from "./Overlay"
 import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
+import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import type {
@@ -16,26 +18,62 @@ interface MobileSearchBarProps {
   onClose: () => void
 }
 
+// The history entry the overlay was opened on, so back navigation re-shows it
+interface OverlaySession {
+  locationKey: string
+  hasNavigatedAway: boolean
+}
+
 export const MobileSearchBar: FC<
   React.PropsWithChildren<MobileSearchBarProps>
 > = ({ viewer, onClose }) => {
-  const [overlayDisplayed, setOverlayDisplayed] = useState(false)
+  const { match } = useRouter()
+  // The initial page-load entry carries no farce key (history.state is null
+  // until farce stamps it); the URL identifies that entry instead
+  const locationKey =
+    match.location.key ?? `${match.location.pathname}${match.location.search}`
+
+  const isTrendingEnabled = useFlag("onyx_trending-searches")
+
+  const [session, setSession] = useState<OverlaySession | null>(null)
+
+  // Re-shows after back skip the autofocus (see shouldAutoFocus below)
+  useEffect(() => {
+    if (!session || session.hasNavigatedAway) return
+
+    if (locationKey !== session.locationKey) {
+      setSession({ ...session, hasNavigatedAway: true })
+    }
+  }, [locationKey, session])
 
   const displayOverlay = () => {
-    setOverlayDisplayed(true)
+    setSession({ locationKey, hasNavigatedAway: false })
   }
 
   const handleOverlayClose = () => {
-    setOverlayDisplayed(false)
+    setSession(null)
     onClose()
   }
 
+  // Result clicks keep the session: the location change hides the overlay and
+  // browser back re-shows it. Flag off closes as before.
+  const handleOverlayNavigate = () => {
+    if (!isTrendingEnabled) {
+      handleOverlayClose()
+    }
+  }
+
+  const visibleSession =
+    session && session.locationKey === locationKey ? session : null
+
   return (
     <>
-      {overlayDisplayed && (
+      {visibleSession && (
         <OverlayRefetchContainer
           viewer={viewer}
           onClose={handleOverlayClose}
+          onNavigate={handleOverlayNavigate}
+          shouldAutoFocus={!visibleSession.hasNavigatedAway}
           variant="experiment"
         />
       )}
