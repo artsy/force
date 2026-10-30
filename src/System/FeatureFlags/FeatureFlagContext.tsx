@@ -23,5 +23,18 @@ export const FeatureFlagProvider: React.FC<
     },
   }
 
-  return <FlagProvider config={unleashConfig}>{children}</FlagProvider>
+  // FlagProvider wraps its updates in startTransition by default. A
+  // QueryRenderer whose response lands during that transition render can lose
+  // its state update and stay on its loading state for good, so render flag
+  // updates normally.
+  return (
+    <FlagProvider
+      config={unleashConfig}
+      startTransition={callback => {
+        callback()
+      }}
+    >
+      {children}
+    </FlagProvider>
+  )
 }
