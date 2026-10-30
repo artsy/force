@@ -296,6 +296,7 @@ workflows:
           context: hokusai
           pkg-manager: yarn
           yarn-run: bundle-stats
+          version: 22.14.0
 
       # Playwright e2e tests
       - smoke-tests:
