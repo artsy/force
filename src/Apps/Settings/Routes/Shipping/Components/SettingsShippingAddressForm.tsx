@@ -11,16 +11,16 @@ import {
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
-import { AddressFormFields } from "Components/Address/AddressFormFields"
 import {
-  richRequiredPhoneValidators,
-  yupAddressValidator,
-} from "Components/Address/utils"
+  AddressFormFields,
+  addressFormFieldsValidator,
+} from "Components/Address/AddressFormFields"
 import { sortCountriesForCountryInput } from "Components/Address/utils/sortCountriesForCountryInput"
 import { useInitialLocationValues } from "Components/Address/utils/useInitialLocationValues"
 import { countries as countryPhoneOptions } from "Utils/countries"
 import { Form, Formik } from "formik"
-import type { FC } from "react"
+import { type FC, useMemo } from "react"
+import { useRelayEnvironment } from "react-relay"
 import * as Yup from "yup"
 
 const DEFAULT_PHONE_COUNTRY_CODE = "us"
@@ -54,12 +54,6 @@ const INITIAL_VALUES = {
 
 type AddressAttributes = typeof INITIAL_ADDRESS
 
-const VALIDATION_SCHEMA = Yup.object().shape({
-  address: yupAddressValidator,
-  ...richRequiredPhoneValidators,
-  setAsDefault: Yup.boolean().optional(),
-})
-
 interface SettingsShippingAddressFormProps {
   onClose(): void
   address?: {
@@ -76,6 +70,19 @@ export const SettingsShippingAddressForm: FC<
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
   const { sendToast } = useToasts()
+
+  const relayEnvironment = useRelayEnvironment()
+  const validationSchema = useMemo(
+    () =>
+      Yup.object().shape({
+        ...addressFormFieldsValidator({
+          withPhoneNumber: true,
+          relayEnvironment,
+        }),
+        setAsDefault: Yup.boolean().optional(),
+      }),
+    [relayEnvironment],
+  )
 
   const isEditing = !!address
   const countryInputOptions = sortCountriesForCountryInput(countryPhoneOptions)
@@ -112,7 +119,7 @@ export const SettingsShippingAddressForm: FC<
     <Formik
       validateOnMount
       enableReinitialize={true}
-      validationSchema={VALIDATION_SCHEMA}
+      validationSchema={validationSchema}
       initialValues={getInitialValues()}
       onSubmit={async (
         {
