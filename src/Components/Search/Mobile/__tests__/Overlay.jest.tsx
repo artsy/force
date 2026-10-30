@@ -7,6 +7,7 @@ import { useTracking } from "react-tracking"
 
 jest.mock("@unleash/proxy-client-react", () => ({
   useFlag: jest.fn(() => false),
+  useFlagsStatus: jest.fn(() => ({ flagsReady: true })),
 }))
 
 jest.mock("react-tracking")
