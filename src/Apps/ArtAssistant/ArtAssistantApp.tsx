@@ -12,10 +12,15 @@ import { useEffect, useRef, useState, type FC } from "react"
 import { MetaTags } from "Components/MetaTags"
 import type { ArtAssistantErrorAction } from "Apps/ArtAssistant/utils/artAssistantErrors"
 
+export const ART_ASSISTANT_ANNOUNCEMENT_MS = 7_000
+
 export const ArtAssistantApp: FC = () => {
   const isEnabled = useEnableArtAssistant()
+  // Decided once per visit: the route re-checks the flag on every navigation, and a provider
+  // poll flipping it mid-chat shouldn't swap an open conversation for a 404.
+  const [isEnabledOnMount] = useState(isEnabled)
   const { user } = useSystemContext()
-  if (!isEnabled || !user?.id) throw new HttpError(404)
+  if (!isEnabledOnMount || !user?.id) throw new HttpError(404)
   return <ArtAssistantChat key={user.id} />
 }
 
@@ -29,10 +34,26 @@ const ArtAssistantChat: FC = () => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const viewportRef = useArtAssistantViewport()
   const latestMessage = conversation.messages[conversation.messages.length - 1]
-  const announcement =
+  const completedAnswer =
     latestMessage?.role === "assistant" && latestMessage.phase === "complete"
-      ? latestMessage.text
-      : ""
+      ? latestMessage
+      : undefined
+  const [announcement, setAnnouncement] = useState("")
+
+  // Cleared after it's been read out, so reading the page in order doesn't repeat the answer.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Announce each completed answer once.
+  useEffect(() => {
+    if (!completedAnswer) {
+      setAnnouncement("")
+      return
+    }
+    setAnnouncement(completedAnswer.text)
+    const timeout = setTimeout(
+      () => setAnnouncement(""),
+      ART_ASSISTANT_ANNOUNCEMENT_MS,
+    )
+    return () => clearTimeout(timeout)
+  }, [completedAnswer?.id])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Scroll after a new message or activity changes the layout.
   useEffect(() => {
@@ -42,14 +63,21 @@ const ArtAssistantChat: FC = () => {
   }, [conversation.messages])
 
   useEffect(() => {
-    if (typeof ResizeObserver === "undefined" || !contentRef.current) return
-    // Rails fetch after the terminal event and can change the answer's height again.
+    if (
+      typeof ResizeObserver === "undefined" ||
+      !contentRef.current ||
+      !scrollRef.current
+    )
+      return
+    // Rails fetch after the terminal event and can change the answer's height again, and the
+    // mobile keyboard or a growing composer shrinks the container without a scroll event.
     const observer = new ResizeObserver(() => {
       const element = scrollRef.current
       if (element && shouldFollowResponse.current)
         element.scrollTop = element.scrollHeight
     })
     observer.observe(contentRef.current)
+    observer.observe(scrollRef.current)
     return () => observer.disconnect()
   }, [])
 
@@ -142,8 +170,7 @@ const ArtAssistantChat: FC = () => {
             {!conversation.messages.length && (
               <ArtAssistantEmptyState
                 onSuggestion={text => {
-                  shouldFollowResponse.current = true
-                  conversation.submit({ text })
+                  handleSubmit(text)
                 }}
               />
             )}
@@ -164,10 +191,7 @@ const ArtAssistantChat: FC = () => {
                   onSuggestedReply={
                     isLatestIdleMessage
                       ? reply => {
-                          shouldFollowResponse.current = true
-                          conversation.submit({
-                            text: reply,
-                          })
+                          handleSubmit(reply)
                         }
                       : undefined
                   }

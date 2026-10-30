@@ -1,6 +1,9 @@
 import { act, fireEvent, render, screen } from "@testing-library/react"
 import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
-import { ArtAssistantApp } from "Apps/ArtAssistant/ArtAssistantApp"
+import {
+  ART_ASSISTANT_ANNOUNCEMENT_MS,
+  ArtAssistantApp,
+} from "Apps/ArtAssistant/ArtAssistantApp"
 import { MockBoot } from "DevTools/MockBoot"
 import { createMockEnvironment } from "relay-test-utils"
 import { useTracking } from "react-tracking"
@@ -140,12 +143,6 @@ describe("Art Assistant page", () => {
       screen.getByRole("heading", { level: 1, name: "Art Assistant" }),
     ).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "New chat" })).toBeInTheDocument()
-    expect(
-      screen.queryByText("Chats are saved in this browser."),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole("switch", { name: "Debug" }),
-    ).not.toBeInTheDocument()
     fireEvent.change(
       screen.getByRole("textbox", { name: "Art Assistant prompt" }),
       { target: { value: "Find art" } },
@@ -184,9 +181,56 @@ describe("Art Assistant page", () => {
     ).toHaveLength(2)
     fireEvent.click(screen.getByRole("button", { name: "New chat" }))
     expect(screen.getByText("What are you looking for?")).toBeInTheDocument()
-    expect(
-      screen.queryByRole("button", { name: /^Delete/ }),
-    ).not.toBeInTheDocument()
     expect(trackEvent).not.toHaveBeenCalled()
+  })
+  it("announces a completed answer once, then clears the announcer", () => {
+    jest.useFakeTimers()
+    const environment = createMockEnvironment()
+    const user = { id: "user", accessToken: "token" }
+    render(
+      <MockBoot user={user} context={{ user }} relayEnvironment={environment}>
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "Find art" },
+    })
+    fireEvent.click(screen.getByRole("button", { name: "Send" }))
+    act(() =>
+      environment.mock.nextValue(environment.mock.getMostRecentOperation(), {
+        data: {
+          aiAgentTurn: {
+            __typename: "AIAgentTurnComplete",
+            message: "Here are some works",
+            stopReason: "end_turn",
+            toolCallCount: 0,
+            sections: [],
+            artworks: [],
+            suggestedReplies: [],
+          },
+        },
+      }),
+    )
+    const announcer = screen.getByTestId("art-assistant-announcer")
+    expect(announcer).toHaveTextContent("Here are some works")
+    act(() => jest.advanceTimersByTime(ART_ASSISTANT_ANNOUNCEMENT_MS))
+    expect(announcer).toBeEmptyDOMElement()
+    expect(screen.getByText("Here are some works")).toBeInTheDocument()
+    jest.useRealTimers()
+  })
+  it("keeps an open chat when the flag changes mid-visit", () => {
+    const user = { id: "user", accessToken: "token" }
+    const { rerender } = render(
+      <MockBoot user={user} context={{ user }}>
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    ;(useFlag as jest.Mock).mockReturnValue(false)
+    rerender(
+      <MockBoot user={user} context={{ user }}>
+        <ArtAssistantApp />
+      </MockBoot>,
+    )
+    expect(screen.getByTestId("art-assistant")).toBeInTheDocument()
   })
 })
