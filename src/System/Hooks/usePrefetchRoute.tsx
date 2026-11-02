@@ -86,6 +86,7 @@ export const usePrefetchRoute = ({
               force: false,
               metadata: {
                 maxAge: serverCacheTTL,
+                pagePath: path,
               },
             },
           },

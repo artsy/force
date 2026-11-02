@@ -249,7 +249,7 @@ describe("usePrefetchRoute", () => {
     })
   })
 
-  it("should pass along route TTLs to fetchQuery metadata", () => {
+  it("should pass along route TTLs and the page path to fetchQuery metadata", () => {
     const mockRoute = {
       match: { params: { id: "bar" } },
       route: {
@@ -275,7 +275,10 @@ describe("usePrefetchRoute", () => {
       { id: "bar", isPrefetched: true },
       {
         fetchPolicy: "store-or-network",
-        networkCacheConfig: { force: false, metadata: { maxAge: 1000 } },
+        networkCacheConfig: {
+          force: false,
+          metadata: { maxAge: 1000, pagePath: "/foo/bar" },
+        },
       },
     )
   })

@@ -205,6 +205,66 @@ describe("cacheHeaderMiddleware", () => {
     })
   })
 
+  describe("X-Artsy-Page-Path header", () => {
+    beforeEach(() => {
+      next.mockResolvedValue({ status: 200 })
+    })
+
+    it("sends the current page path without the query string", async () => {
+      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+        pathname: "/feature/the-artsy-vanguard-2027",
+        search: "?nocache=1",
+      }))
+
+      await cacheHeaderMiddleware()(next)(req)
+
+      expect(req.fetchOpts.headers["X-Artsy-Page-Path"]).toBe(
+        "/feature/the-artsy-vanguard-2027",
+      )
+    })
+
+    it("sends the prefetched page path during a prefetch", async () => {
+      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+        pathname: "/",
+        search: "",
+      }))
+      req.cacheConfig.metadata = {
+        maxAge: 1000,
+        pagePath: "/artist/andy-warhol?sort=-decayed_merch",
+      }
+
+      await cacheHeaderMiddleware()(next)(req)
+
+      expect(req.fetchOpts.headers["X-Artsy-Page-Path"]).toBe(
+        "/artist/andy-warhol",
+      )
+    })
+
+    it("sends the current page path when prefetch metadata has no path", async () => {
+      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+        pathname: "/collect",
+        search: "",
+      }))
+      req.cacheConfig.metadata = { maxAge: 1000 }
+
+      await cacheHeaderMiddleware()(next)(req)
+
+      expect(req.fetchOpts.headers["X-Artsy-Page-Path"]).toBe("/collect")
+    })
+
+    it("sends the header even when the request skips the CDN cache", async () => {
+      jest.spyOn(window as any, "location", "get").mockImplementation(() => ({
+        pathname: "/settings",
+        search: "",
+      }))
+
+      await cacheHeaderMiddleware({ user: { email: "foo" } })(next)(req)
+
+      expect(req.fetchOpts.headers["Cache-Control"]).toBe("no-cache")
+      expect(req.fetchOpts.headers["X-Artsy-Page-Path"]).toBe("/settings")
+    })
+  })
+
   it("should return the response from next function", async () => {
     const mockResponse = { status: 200, data: "mockData" }
     next.mockResolvedValue(mockResponse)
