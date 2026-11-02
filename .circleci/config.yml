@@ -10,7 +10,7 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:22.23.4
+      - image: cimg/node:26.13.0
 
 not_main_or_staging_or_release: &not_main_or_staging_or_release
   filters:
