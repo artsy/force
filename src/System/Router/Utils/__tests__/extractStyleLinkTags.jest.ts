@@ -49,4 +49,8 @@ describe("extractStyleLinkTags", () => {
   it("returns an empty string when the manifest has no index entry", () => {
     expect(extractStyleLinkTags({ manifest: { entries: {} } })).toEqual("")
   })
+
+  it("returns an empty string when the manifest is empty", () => {
+    expect(extractStyleLinkTags({ manifest: {} })).toEqual("")
+  })
 })
