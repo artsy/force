@@ -41,6 +41,10 @@ interface OverlayProps {
   viewer: Overlay_viewer$data
   relay: RelayRefetchProp
   onClose: () => void
+  /** Called after a result click; falls back to onClose */
+  onNavigate?: () => void
+  /** Pass false to skip the input autofocus (and its tracking) on mount */
+  shouldAutoFocus?: boolean
   variant?: string
 }
 
@@ -48,6 +52,8 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   viewer,
   relay,
   onClose,
+  onNavigate,
+  shouldAutoFocus = true,
   variant,
 }) => {
   const tracking = useTracking()
@@ -61,7 +67,7 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: Should only focus and track once on mount, not re-run when pill changes
   const inputCallbackRef = useCallback((node: HTMLInputElement | null) => {
     inputRef.current = node
-    if (node) {
+    if (node && shouldAutoFocus) {
       node.focus()
       tracking.trackEvent({
         action_type: ActionType.focusedOnSearchInput,
@@ -132,6 +138,8 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
     [relay, variant],
   )
 
+  const handleNavigate = onNavigate ?? onClose
+
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
   }
@@ -192,12 +200,12 @@ export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = ({
             query={inputValue}
             debouncedQuery={debouncedValue}
             selectedPill={selectedPill}
-            onClose={onClose}
+            onClose={handleNavigate}
           />
         ) : (
           isTrendingEnabled && (
             <TrendingSearches
-              onNavigate={onClose}
+              onNavigate={handleNavigate}
               shouldTrackImpressions={shouldTrackTrendingImpressions}
             />
           )

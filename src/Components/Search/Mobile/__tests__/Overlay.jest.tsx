@@ -25,12 +25,13 @@ describe("Overlay", () => {
     jest.clearAllMocks()
   })
 
-  const renderOverlay = () => {
+  const renderOverlay = (props?: { shouldAutoFocus?: boolean }) => {
     return render(
       <Overlay
         viewer={{} as Overlay_viewer$data}
         relay={{ refetch: jest.fn() } as unknown as RelayRefetchProp}
         onClose={jest.fn()}
+        {...props}
       />,
     )
   }
@@ -60,6 +61,18 @@ describe("Overlay", () => {
     renderOverlay()
 
     expect(screen.getByPlaceholderText("Search Artsy")).toHaveFocus()
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ action_type: "focusedOnSearchInput" }),
+    )
+  })
+
+  it("skips the autofocus and its tracking when shouldAutoFocus is false", () => {
+    renderOverlay({ shouldAutoFocus: false })
+
+    expect(screen.getByPlaceholderText("Search Artsy")).not.toHaveFocus()
+    expect(mockTrackEvent).not.toHaveBeenCalledWith(
+      expect.objectContaining({ action_type: "focusedOnSearchInput" }),
+    )
   })
 
   it("blurs the search input when the user drags the overlay content", () => {
