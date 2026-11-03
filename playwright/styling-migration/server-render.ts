@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import { percentile } from "../../src/Utils/percentile"
 import { OUTPUT_ROOT, ROUTES } from "./routes"
 
 // Usage:
@@ -17,6 +18,15 @@ type Samples = Record<Metric, number[]>
 interface Stats {
   median: number
   p90: number
+  /** Samples behind the median and p90. */
+  count: number
+}
+
+interface SideResult {
+  render: Stats | null
+  total: Stats | null
+  /** Responses with an unexpected status (not 2xx; 404 for the 404 route), left out of the stats. */
+  failedCount: number
 }
 
 interface Side {
@@ -26,8 +36,15 @@ interface Side {
 
 interface RouteResult {
   route: string
-  sides: Record<string, Record<Metric, Stats | null>>
+  sides: Record<string, SideResult>
 }
+
+interface SideSamples extends Samples {
+  failedCount: number
+}
+
+// The 404 page is not rendered by React, so it never reports `render`.
+const ROUTES_WITHOUT_RENDER = ["404"]
 
 const argValue = ({ args, flag }: { args: string[]; flag: string }) => {
   const value = args[args.indexOf(flag) + 1]
@@ -54,9 +71,12 @@ const parseArgs = () => {
   if (
     !Number.isInteger(requests) ||
     requests < 1 ||
-    !Number.isInteger(warmup)
+    !Number.isInteger(warmup) ||
+    warmup < 0
   ) {
-    console.error("--requests must be a positive integer, --warmup an integer")
+    console.error(
+      "--requests must be a positive integer, --warmup a non-negative integer",
+    )
     process.exit(2)
   }
   const routeNames = argValue({ args, flag: "--routes" })?.split(",")
@@ -88,19 +108,28 @@ export const parseServerTiming = (header: string | null) => {
   return timings
 }
 
-const percentile = ({ sorted, p }: { sorted: number[]; p: number }) => {
-  return sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * p))]
-}
-
 const summarize = (values: number[]): Stats | null => {
   if (values.length === 0) {
     return null
   }
-  const sorted = [...values].sort((x, y) => x - y)
   return {
-    median: percentile({ sorted, p: 0.5 }),
-    p90: percentile({ sorted, p: 0.9 }),
+    median: percentile({ values, p: 0.5 }),
+    p90: percentile({ values, p: 0.9 }),
+    count: values.length,
   }
+}
+
+const isExpectedStatus = ({
+  status,
+  routeName,
+}: {
+  status: number
+  routeName: string
+}) => {
+  if (routeName === "404") {
+    return status === 404
+  }
+  return status >= 200 && status < 300
 }
 
 const withServerTiming = ({
@@ -118,7 +147,10 @@ const withServerTiming = ({
 const timeRequest = async (url: string) => {
   const response = await fetch(url, { redirect: "follow" })
   await response.arrayBuffer()
-  return parseServerTiming(response.headers.get("server-timing"))
+  return {
+    status: response.status,
+    timings: parseServerTiming(response.headers.get("server-timing")),
+  }
 }
 
 const inSequence = async <T>(
@@ -133,17 +165,19 @@ const inSequence = async <T>(
 
 const measureRoute = async ({
   sides,
+  routeName,
   routePath,
   requests,
   warmup,
 }: {
   sides: Side[]
+  routeName: string
   routePath: string
   requests: number
   warmup: number
 }) => {
-  const samples: Record<string, Samples> = Object.fromEntries(
-    sides.map(side => [side.name, { render: [], total: [] }]),
+  const samples: Record<string, SideSamples> = Object.fromEntries(
+    sides.map(side => [side.name, { render: [], total: [], failedCount: 0 }]),
   )
   const rounds = Array.from({ length: warmup + requests }, (_, index) => index)
 
@@ -152,10 +186,14 @@ const measureRoute = async ({
     const offset = round % sides.length
     const ordered = [...sides.slice(offset), ...sides.slice(0, offset)]
     await inSequence(ordered, async side => {
-      const timings = await timeRequest(
+      const { status, timings } = await timeRequest(
         withServerTiming({ baseUrl: side.baseUrl, routePath }),
       )
       if (round < warmup) {
+        return
+      }
+      if (!isExpectedStatus({ status, routeName })) {
+        samples[side.name].failedCount += 1
         return
       }
       METRICS.forEach(metric => {
@@ -177,12 +215,54 @@ const formatStats = (stats: Stats | null) => {
   return `${stats.median.toFixed(1)} / ${stats.p90.toFixed(1)}`.padStart(18)
 }
 
-const printResults = ({
+const countsLabel = (result: SideResult) => {
+  const renderCount = result.render?.count ?? 0
+  const totalCount = result.total?.count ?? 0
+  return `n render ${renderCount}, total ${totalCount}, bad status ${result.failedCount}`
+}
+
+const findWarnings = ({
   results,
   sides,
+  requests,
 }: {
   results: RouteResult[]
   sides: Side[]
+  requests: number
+}) => {
+  return results.flatMap(({ route, sides: perSide }) => {
+    return sides.flatMap(side => {
+      const result = perSide[side.name]
+      const warnings: string[] = []
+      if (result.failedCount > 0) {
+        warnings.push(
+          `${route} (${side.name}): ${result.failedCount} responses with an unexpected status left out of the stats`,
+        )
+      }
+      if (!ROUTES_WITHOUT_RENDER.includes(route) && !result.render) {
+        warnings.push(
+          `${route} (${side.name}): no "render" in Server-Timing (is ENABLE_SSR_STREAMING on, or is the server an old build?)`,
+        )
+      }
+      const total = result.total?.count ?? 0
+      if (total < requests && result.failedCount === 0) {
+        warnings.push(
+          `${route} (${side.name}): only ${total} of ${requests} responses had a "total" value`,
+        )
+      }
+      return warnings
+    })
+  })
+}
+
+const printResults = ({
+  results,
+  sides,
+  requests,
+}: {
+  results: RouteResult[]
+  sides: Side[]
+  requests: number
 }) => {
   const header = ["route".padEnd(18)]
   sides.forEach(side => {
@@ -200,7 +280,23 @@ const printResults = ({
     })
     console.log(row.join(""))
   })
-  console.log("\nTimes are ms, from the Server-Timing header.")
+
+  console.log("\nSamples per route and side:")
+  results.forEach(({ route, sides: perSide }) => {
+    sides.forEach(side => {
+      console.log(
+        `  ${route.padEnd(18)}${side.name}  ${countsLabel(perSide[side.name])}`,
+      )
+    })
+  })
+
+  console.log(
+    "\nTimes are ms, from the Server-Timing header. p90 interpolates between ranks.",
+  )
+  const warnings = findWarnings({ results, sides, requests })
+  warnings.forEach(warning => {
+    console.warn(`WARN ${warning}`)
+  })
 }
 
 const main = async () => {
@@ -215,6 +311,7 @@ const main = async () => {
   await inSequence(routes, async route => {
     const samples = await measureRoute({
       sides,
+      routeName: route.name,
       routePath: route.path,
       requests,
       warmup,
@@ -227,13 +324,14 @@ const main = async () => {
           {
             render: summarize(samples[side.name].render),
             total: summarize(samples[side.name].total),
+            failedCount: samples[side.name].failedCount,
           },
         ]),
       ),
     })
   })
 
-  printResults({ results, sides })
+  printResults({ results, sides, requests })
 
   if (jsonFile) {
     const file = path.resolve(OUTPUT_ROOT, jsonFile)

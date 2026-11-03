@@ -305,8 +305,32 @@ const measureRoute = async ({
   }
 }
 
+// Shows unbalanced or short records (a failed load on one target) at the end of a run.
+const reportRecordCounts = () => {
+  const expected = RUNS * ROUTES_TO_MEASURE.length
+  console.log(`\nRecords per label (expected per route: ${RUNS}):`)
+  TARGETS.forEach(({ label }) => {
+    const records = readRecords(label)
+    const perRoute = ROUTES_TO_MEASURE.map(route => {
+      return `${route.name}=${records.filter(r => r.route === route.name).length}`
+    })
+    console.log(
+      `  ${label}: ${records.length}/${expected}  ${perRoute.join(" ")}`,
+    )
+    if (records.length !== expected) {
+      console.warn(
+        `WARN ${label} has ${records.length} of ${expected} records; compare only runs that exist for every label.`,
+      )
+    }
+  })
+}
+
 test.describe("styling migration perf", () => {
   test.setTimeout(APP_READY_TIMEOUT_MS * TARGETS.length + 60000)
+
+  test.afterAll(() => {
+    reportRecordCounts()
+  })
 
   Array.from({ length: RUNS }, (_, index) => index + 1).forEach(run => {
     ROUTES_TO_MEASURE.forEach(route => {

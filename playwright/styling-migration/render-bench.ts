@@ -2,7 +2,10 @@
 // Renders ~2,000-element trees with whichever @artsy/palette is installed, as a string (SSR) and
 // into a jsdom root (CSR). The "Sprinkles-style" rows are a stand-in for a class-per-prop Box, not Palette.
 
+import fs from "fs"
+import path from "path"
 import { JSDOM } from "jsdom"
+import { percentile } from "../../src/Utils/percentile"
 
 const dom = new JSDOM(
   "<!doctype html><html><head></head><body><div id=root></div></body></html>",
@@ -161,8 +164,28 @@ const fillerTree = ({ kit, filler }: { kit: Kit; filler: Component }) => {
   )
 }
 
-const median = (sorted: number[]) => sorted[sorted.length >> 1]
-const p90 = (sorted: number[]) => sorted[Math.floor(sorted.length * 0.9)]
+// The package's exports map may hide ./package.json, so walk up from the resolved entry file.
+const installedPaletteInfo = () => {
+  const findPackageJson = (directory: string): string => {
+    const candidate = path.join(directory, "package.json")
+    if (
+      fs.existsSync(candidate) &&
+      JSON.parse(fs.readFileSync(candidate, "utf8")).name === "@artsy/palette"
+    ) {
+      return candidate
+    }
+    const parent = path.dirname(directory)
+    if (parent === directory) {
+      throw new Error("Could not find the @artsy/palette package.json")
+    }
+    return findPackageJson(parent)
+  }
+  const packageJson = findPackageJson(
+    path.dirname(require.resolve("@artsy/palette")),
+  )
+  const { version } = JSON.parse(fs.readFileSync(packageJson, "utf8"))
+  return { version, directory: path.dirname(fs.realpathSync(packageJson)) }
+}
 
 const time = ({
   label,
@@ -179,9 +202,10 @@ const time = ({
     fn()
     return Number(process.hrtime.bigint() - start) / 1e6
   })
-  const sorted = [...samples].sort((a, b) => a - b)
+  const median = percentile({ values: samples, p: 0.5 })
+  const p90 = percentile({ values: samples, p: 0.9 })
   console.log(
-    `${label.padEnd(44)} median ${median(sorted).toFixed(1)} ms   p90 ${p90(sorted).toFixed(1)} ms`,
+    `${label.padEnd(44)} median ${median.toFixed(1)} ms   p90 ${p90.toFixed(1)} ms   (n=${runs})`,
   )
 }
 
@@ -238,6 +262,8 @@ const main = () => {
     },
   ]
 
+  const installed = installedPaletteInfo()
+  console.log(`@artsy/palette ${installed.version} from ${installed.directory}`)
   console.log(
     `${ELEMENT_COUNT} elements per render, NODE_ENV=${process.env.NODE_ENV}, runs=${runs} (CSR ${csrRuns})`,
   )
