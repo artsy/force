@@ -7,13 +7,22 @@ import {
   IGNORED_PATHS,
   type IgnoredPath,
   OUTPUT_ROOT,
+  ROUTES,
   THEMES,
   VIEWPORTS,
 } from "./routes"
 
-// Usage: node -r @swc-node/register playwright/styling-migration/compare.ts --a main-a --b main-b
+// Usage: node -r @swc-node/register playwright/styling-migration/compare.ts --a main-a --b main-b [--strict]
+// Needs Node 22.12 or later: pixelmatch 7 is ESM-only and loads through require(esm).
 
 const MAX_ROWS_PER_CAPTURE = 1000
+
+// Pixel differences above this share of the page only warn. In A/A runs the stable routes stay at or
+// below 0.03%; routes with live data (home, artist, auctions, collect) reach 3% to 35% from content shifts.
+const PIXEL_WARN_RATIO = 0.005
+
+type Status = "fail" | "warn" | "pass"
+type Side = "a" | "b"
 
 interface StyleDifference {
   path: string
@@ -25,26 +34,42 @@ interface StyleDifference {
 interface CaptureComparison {
   route: string
   variant: string
-  isMissing: "a" | "b" | null
+  missingSides: Side[]
   differences: StyleDifference[]
   onlyInA: string[]
   onlyInB: string[]
   hydrationErrorsA: string[]
   hydrationErrorsB: string[]
+  isSettledA: boolean | null
+  isSettledB: boolean | null
   pixelDiffRatio: number | null
-  diffImage: string | null
+  diffImage: string
+  warnings: string[]
+  status: Status
 }
 
-const parseArgs = (): { a: string; b: string } => {
+interface Args {
+  a: string
+  b: string
+  isStrict: boolean
+}
+
+const parseArgs = (): Args => {
   const args = process.argv.slice(2)
-  const argValue = (flag: string) => args[args.indexOf(flag) + 1]
+  const argValue = (flag: string) => {
+    const value = args[args.indexOf(flag) + 1]
+    if (args.indexOf(flag) === -1 || !value || value.startsWith("--")) {
+      return undefined
+    }
+    return value
+  }
   const a = argValue("--a")
   const b = argValue("--b")
   if (!a || !b) {
-    console.error("Usage: compare.ts --a <label> --b <label>")
+    console.error("Usage: compare.ts --a <label> --b <label> [--strict]")
     process.exit(2)
   }
-  return { a, b }
+  return { a, b, isStrict: args.includes("--strict") }
 }
 
 const escapeHtml = (value: string): string => {
@@ -62,47 +87,35 @@ const readCapture = (file: string): CaptureData | null => {
   return JSON.parse(fs.readFileSync(file, "utf8"))
 }
 
-const matchingIgnores = ({
-  route,
-  elementPath,
-}: {
+interface ElementKey {
   route: string
   elementPath: string
-}): IgnoredPath[] => {
+}
+
+const matchingIgnores = ({ route, elementPath }: ElementKey): IgnoredPath[] => {
   return IGNORED_PATHS.filter(entry => {
-    if (entry.route && entry.route !== route) {
+    if (entry.routes && !entry.routes.includes(route)) {
       return false
     }
     return entry.pattern.test(elementPath)
   })
 }
 
-const isElementIgnored = ({
-  route,
-  elementPath,
-}: {
-  route: string
-  elementPath: string
-}): boolean => {
-  return matchingIgnores({ route, elementPath }).some(
-    entry => !entry.properties,
-  )
+const isElementIgnored = (key: ElementKey): boolean => {
+  return matchingIgnores(key).some(entry => !entry.properties)
 }
 
-const ignoredProperties = ({
-  route,
-  elementPath,
-}: {
-  route: string
-  elementPath: string
-}): string[] => {
-  return matchingIgnores({ route, elementPath }).flatMap(entry => {
-    return entry.properties ?? []
-  })
+const isUnmatchedIgnored = (key: ElementKey): boolean => {
+  return matchingIgnores(key).some(entry => entry.ignoreUnmatched)
+}
+
+const ignoredProperties = (key: ElementKey): string[] => {
+  return matchingIgnores(key).flatMap(entry => entry.properties ?? [])
 }
 
 // The production build reports hydration failures as minified React error codes.
-const MINIFIED_HYDRATION_ERROR = /Minified React error #(418|419|422|423|425)\b/
+const MINIFIED_HYDRATION_ERROR =
+  /Minified React error #(418|419|421|422|423|424|425)\b/
 
 const isHydrationError = (message: string): boolean => {
   return (
@@ -137,10 +150,7 @@ const diffScreenshots = ({
   fileA: string
   fileB: string
   diffFile: string
-}): number | null => {
-  if (!fs.existsSync(fileA) || !fs.existsSync(fileB)) {
-    return null
-  }
+}): number => {
   const imageA = PNG.sync.read(fs.readFileSync(fileA))
   const imageB = PNG.sync.read(fs.readFileSync(fileB))
   const width = Math.max(imageA.width, imageB.width)
@@ -154,9 +164,7 @@ const diffScreenshots = ({
     diff.data,
     width,
     height,
-    {
-      threshold: 0.1,
-    },
+    { threshold: 0.1 },
   )
   fs.mkdirSync(path.dirname(diffFile), { recursive: true })
   fs.writeFileSync(diffFile, PNG.sync.write(diff))
@@ -174,6 +182,9 @@ const compareElements = ({
 }): Pick<CaptureComparison, "differences" | "onlyInA" | "onlyInB"> => {
   const keep = (elementPath: string) => {
     return !isElementIgnored({ route, elementPath })
+  }
+  const isReportable = (elementPath: string) => {
+    return !isUnmatchedIgnored({ route, elementPath })
   }
   const elementsA = new Map(
     dataA.elements.filter(e => keep(e.path)).map(e => [e.path, e.styles]),
@@ -203,9 +214,54 @@ const compareElements = ({
 
   return {
     differences,
-    onlyInA: Array.from(elementsA.keys()).filter(p => !elementsB.has(p)),
-    onlyInB: Array.from(elementsB.keys()).filter(p => !elementsA.has(p)),
+    onlyInA: Array.from(elementsA.keys()).filter(
+      p => !elementsB.has(p) && isReportable(p),
+    ),
+    onlyInB: Array.from(elementsB.keys()).filter(
+      p => !elementsA.has(p) && isReportable(p),
+    ),
   }
+}
+
+const getWarnings = ({
+  hydrationErrorsA,
+  hydrationErrorsB,
+  pixelDiffRatio,
+}: Pick<
+  CaptureComparison,
+  "hydrationErrorsA" | "hydrationErrorsB" | "pixelDiffRatio"
+>): string[] => {
+  const warnings: string[] = []
+  if (hydrationErrorsB.length > hydrationErrorsA.length) {
+    warnings.push(
+      `hydration errors ${hydrationErrorsA.length} -> ${hydrationErrorsB.length}`,
+    )
+  }
+  if (pixelDiffRatio !== null && pixelDiffRatio > PIXEL_WARN_RATIO) {
+    warnings.push(`${(pixelDiffRatio * 100).toFixed(1)}% of pixels differ`)
+  }
+  return warnings
+}
+
+const getStatus = ({
+  missingSides,
+  differences,
+  onlyInA,
+  onlyInB,
+  warnings,
+}: Pick<
+  CaptureComparison,
+  "missingSides" | "differences" | "onlyInA" | "onlyInB" | "warnings"
+>): Status => {
+  const hasFailure =
+    missingSides.length > 0 ||
+    differences.length > 0 ||
+    onlyInA.length > 0 ||
+    onlyInB.length > 0
+  if (hasFailure) {
+    return "fail"
+  }
+  return warnings.length > 0 ? "warn" : "pass"
 }
 
 const compareCapture = ({
@@ -219,53 +275,110 @@ const compareCapture = ({
   route: string
   variant: string
 }): CaptureComparison => {
-  const file = (label: string, extension: string) => {
+  const file = ({ label, extension }: { label: string; extension: string }) => {
     return path.join(OUTPUT_ROOT, label, route, `${variant}.${extension}`)
   }
-  const dataA = readCapture(file(a, "json"))
-  const dataB = readCapture(file(b, "json"))
+  const dataA = readCapture(file({ label: a, extension: "json" }))
+  const dataB = readCapture(file({ label: b, extension: "json" }))
+  const hasPngA = fs.existsSync(file({ label: a, extension: "png" }))
+  const hasPngB = fs.existsSync(file({ label: b, extension: "png" }))
 
-  const empty = {
-    route,
-    variant,
-    differences: [],
-    onlyInA: [],
-    onlyInB: [],
-    hydrationErrorsA: [],
-    hydrationErrorsB: [],
-    pixelDiffRatio: null,
-    diffImage: null,
+  const missingSides: Side[] = []
+  if (!dataA || !hasPngA) {
+    missingSides.push("a")
   }
-  if (!dataA || !dataB) {
-    return { ...empty, isMissing: dataA ? "b" : "a" }
+  if (!dataB || !hasPngB) {
+    missingSides.push("b")
   }
 
   const diffImage = path.join(`diff-${a}-vs-${b}`, route, `${variant}.png`)
-  return {
-    ...empty,
-    isMissing: null,
-    ...compareElements({ route, dataA, dataB }),
-    hydrationErrorsA: dataA.consoleErrors.filter(isHydrationError),
-    hydrationErrorsB: dataB.consoleErrors.filter(isHydrationError),
-    pixelDiffRatio: diffScreenshots({
-      fileA: file(a, "png"),
-      fileB: file(b, "png"),
-      diffFile: path.join(OUTPUT_ROOT, diffImage),
-    }),
+  const base = {
+    route,
+    variant,
+    missingSides,
     diffImage,
+    isSettledA: dataA?.settled ?? null,
+    isSettledB: dataB?.settled ?? null,
+  }
+  if (!dataA || !dataB || missingSides.length > 0) {
+    return {
+      ...base,
+      differences: [],
+      onlyInA: [],
+      onlyInB: [],
+      hydrationErrorsA: [],
+      hydrationErrorsB: [],
+      pixelDiffRatio: null,
+      warnings: [],
+      status: "fail",
+    }
+  }
+
+  const elements = compareElements({ route, dataA, dataB })
+  const hydrationErrorsA = dataA.consoleErrors.filter(isHydrationError)
+  const hydrationErrorsB = dataB.consoleErrors.filter(isHydrationError)
+  const pixelDiffRatio = diffScreenshots({
+    fileA: file({ label: a, extension: "png" }),
+    fileB: file({ label: b, extension: "png" }),
+    diffFile: path.join(OUTPUT_ROOT, diffImage),
+  })
+  const warnings = getWarnings({
+    hydrationErrorsA,
+    hydrationErrorsB,
+    pixelDiffRatio,
+  })
+  return {
+    ...base,
+    ...elements,
+    hydrationErrorsA,
+    hydrationErrorsB,
+    pixelDiffRatio,
+    warnings,
+    status: getStatus({ missingSides, ...elements, warnings }),
   }
 }
 
-const hasStyleChanges = (comparison: CaptureComparison): boolean => {
-  return (
-    comparison.isMissing !== null ||
-    comparison.differences.length > 0 ||
-    comparison.onlyInA.length > 0 ||
-    comparison.onlyInB.length > 0
-  )
+const describeMissing = ({
+  comparison,
+  a,
+  b,
+}: {
+  comparison: CaptureComparison
+  a: string
+  b: string
+}): string => {
+  const labels = comparison.missingSides.map(side => (side === "a" ? a : b))
+  return `missing capture in ${labels.join(" and ")}`
 }
 
-const renderImage = (src: string | null, alt: string): string => {
+const describeComparison = ({
+  comparison,
+  a,
+  b,
+}: {
+  comparison: CaptureComparison
+  a: string
+  b: string
+}): string => {
+  if (comparison.missingSides.length > 0) {
+    return describeMissing({ comparison, a, b })
+  }
+  const unmatched = comparison.onlyInA.length + comparison.onlyInB.length
+  const parts = [
+    `${comparison.differences.length} style differences`,
+    `${unmatched} unmatched paths`,
+    ...comparison.warnings,
+  ]
+  return parts.join(", ")
+}
+
+const renderImage = ({
+  src,
+  alt,
+}: {
+  src: string | null
+  alt: string
+}): string => {
   if (!src) {
     return `<div class="missing">${escapeHtml(alt)}: none</div>`
   }
@@ -278,6 +391,32 @@ const renderRows = (rows: string[][]): string => {
       return `<tr>${cells.map(cell => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`
     })
     .join("")
+}
+
+const countMessages = (messages: string[]): string[][] => {
+  const counts = messages.reduce((result, message) => {
+    return result.set(message, (result.get(message) ?? 0) + 1)
+  }, new Map<string, number>())
+  return Array.from(counts).map(([message, count]) => [`${count}x`, message])
+}
+
+const renderSettledNote = ({
+  comparison,
+  a,
+  b,
+}: {
+  comparison: CaptureComparison
+  a: string
+  b: string
+}): string => {
+  const unsettled = [
+    comparison.isSettledA === false ? a : null,
+    comparison.isSettledB === false ? b : null,
+  ].filter(Boolean)
+  if (unsettled.length === 0) {
+    return ""
+  }
+  return `<p class="unsettled">Not settled in ${escapeHtml(unsettled.join(" and "))}: a wait step timed out, so differences here may come from timing.</p>`
 }
 
 const renderComparison = ({
@@ -295,11 +434,13 @@ const renderComparison = ({
     comparison.pixelDiffRatio === null
       ? "n/a"
       : `${(comparison.pixelDiffRatio * 100).toFixed(2)}%`
-  const status = hasStyleChanges(comparison) ? "fail" : "pass"
   const hydration = [
-    ...comparison.hydrationErrorsA.map(e => [a, e]),
-    ...comparison.hydrationErrorsB.map(e => [b, e]),
+    ...countMessages(comparison.hydrationErrorsA).map(row => [a, ...row]),
+    ...countMessages(comparison.hydrationErrorsB).map(row => [b, ...row]),
   ]
+  const hasA = !comparison.missingSides.includes("a")
+  const hasB = !comparison.missingSides.includes("b")
+  const hasDiff = comparison.pixelDiffRatio !== null
 
   const styleTable = differences.length
     ? `<table><thead><tr><th>Path</th><th>Property</th><th>${escapeHtml(a)}</th><th>${escapeHtml(b)}</th></tr></thead><tbody>${renderRows(
@@ -327,20 +468,19 @@ const renderComparison = ({
     ? `<h4>Hydration errors</h4><table><tbody>${renderRows(hydration)}</tbody></table>`
     : ""
 
-  return `<details class="${status}">
-<summary><strong>${escapeHtml(base)}</strong> ${
-    comparison.isMissing
-      ? `missing capture in ${escapeHtml(comparison.isMissing === "a" ? a : b)}`
-      : `${differences.length} style differences, ${onlyInA.length + onlyInB.length} unmatched paths`
-  }, ${pixels} pixels differ, ${hydration.length} hydration errors</summary>
+  return `<details class="${comparison.status}">
+<summary><strong>${escapeHtml(base)}</strong> ${escapeHtml(describeComparison({ comparison, a, b }))}, ${pixels} pixels differ, hydration errors ${comparison.hydrationErrorsA.length} in ${escapeHtml(a)}, ${comparison.hydrationErrorsB.length} in ${escapeHtml(b)}</summary>
+${renderSettledNote({ comparison, a, b })}
 <div class="shots">
-<figure><figcaption>${escapeHtml(a)}</figcaption>${renderImage(`${a}/${base}.png`, a)}</figure>
-<figure><figcaption>${escapeHtml(b)}</figcaption>${renderImage(`${b}/${base}.png`, b)}</figure>
-<figure><figcaption>diff</figcaption>${renderImage(comparison.pixelDiffRatio === null ? null : comparison.diffImage, "diff")}</figure>
+<figure><figcaption>${escapeHtml(a)}</figcaption>${renderImage({ src: hasA ? `${a}/${base}.png` : null, alt: a })}</figure>
+<figure><figcaption>${escapeHtml(b)}</figcaption>${renderImage({ src: hasB ? `${b}/${base}.png` : null, alt: b })}</figure>
+<figure><figcaption>diff</figcaption>${renderImage({ src: hasDiff ? comparison.diffImage : null, alt: "diff" })}</figure>
 </div>
 ${styleTable}${missingTable}${hydrationTable}
 </details>`
 }
+
+const STATUS_ORDER: Status[] = ["fail", "warn", "pass"]
 
 const renderReport = ({
   comparisons,
@@ -351,14 +491,19 @@ const renderReport = ({
   a: string
   b: string
 }): string => {
-  const failing = comparisons.filter(hasStyleChanges)
-  const ordered = [...failing, ...comparisons.filter(c => !hasStyleChanges(c))]
+  const ordered = STATUS_ORDER.flatMap(status => {
+    return comparisons.filter(comparison => comparison.status === status)
+  })
+  const count = (status: Status) => {
+    return comparisons.filter(comparison => comparison.status === status).length
+  }
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>${escapeHtml(a)} vs ${escapeHtml(b)}</title>
 <style>
 body { font: 14px/1.4 system-ui, sans-serif; margin: 24px; }
 details { border: 1px solid #ccc; border-left-width: 6px; margin: 6px 0; padding: 6px 10px; }
 details.fail { border-left-color: #c62828; }
+details.warn { border-left-color: #ef6c00; }
 details.pass { border-left-color: #2e7d32; }
 .shots { display: flex; gap: 12px; align-items: flex-start; margin: 10px 0; }
 .shots figure { flex: 1; margin: 0; min-width: 0; }
@@ -366,55 +511,57 @@ details.pass { border-left-color: #2e7d32; }
 table { border-collapse: collapse; width: 100%; margin: 8px 0; font: 12px ui-monospace, monospace; }
 td, th { border: 1px solid #ddd; padding: 2px 6px; text-align: left; word-break: break-all; }
 .missing { color: #888; }
+.unsettled { color: #ef6c00; }
 </style></head><body>
 <h1>${escapeHtml(a)} vs ${escapeHtml(b)}</h1>
-<p>${comparisons.length} captures compared, ${failing.length} with computed-style or path differences.</p>
+<p>${comparisons.length} captures: ${count("fail")} fail (style, path or missing), ${count("warn")} warn (hydration errors or pixel diff above ${PIXEL_WARN_RATIO * 100}%), ${count("pass")} pass.</p>
 ${ordered.map(comparison => renderComparison({ comparison, a, b })).join("\n")}
 </body></html>`
 }
 
-const listRoutes = (label: string): string[] => {
-  const dir = path.join(OUTPUT_ROOT, label)
-  if (!fs.existsSync(dir)) {
-    return []
-  }
-  return fs
-    .readdirSync(dir, { withFileTypes: true })
-    .filter(entry => entry.isDirectory() && !entry.name.startsWith("."))
-    .map(entry => entry.name)
-}
-
 const main = (): void => {
-  const { a, b } = parseArgs()
-  const routes = Array.from(
-    new Set([...listRoutes(a), ...listRoutes(b)]),
-  ).sort()
+  const { a, b, isStrict } = parseArgs()
   const variants = VIEWPORTS.flatMap(viewport => {
     return THEMES.map(theme => `${viewport.name}-${theme}`)
   })
 
-  const comparisons = routes.flatMap(route => {
-    return variants.map(variant => compareCapture({ a, b, route, variant }))
+  const comparisons = ROUTES.flatMap(route => {
+    return variants.map(variant => {
+      return compareCapture({ a, b, route: route.name, variant })
+    })
   })
 
   const reportFile = path.join(OUTPUT_ROOT, `report-${a}-vs-${b}.html`)
   fs.writeFileSync(reportFile, renderReport({ comparisons, a, b }))
 
-  const failing = comparisons.filter(hasStyleChanges)
-  failing.forEach(comparison => {
-    const unmatched = comparison.onlyInA.length + comparison.onlyInB.length
-    console.log(
-      `${comparison.route}/${comparison.variant}: ${
-        comparison.isMissing
-          ? `missing in ${comparison.isMissing === "a" ? a : b}`
-          : `${comparison.differences.length} style differences, ${unmatched} unmatched paths`
-      }`,
-    )
-  })
+  const withStatus = (status: Status) => {
+    return comparisons.filter(comparison => comparison.status === status)
+  }
+  const print = ({ prefix, status }: { prefix: string; status: Status }) => {
+    withStatus(status).forEach(comparison => {
+      const description = describeComparison({ comparison, a, b })
+      console.log(
+        `${prefix} ${comparison.route}/${comparison.variant}: ${description}`,
+      )
+    })
+  }
+  print({ prefix: "FAIL", status: "fail" })
+  print({ prefix: "WARN", status: "warn" })
+
+  const compared = comparisons.filter(c => c.missingSides.length === 0)
+  const maxPixelRatio = Math.max(0, ...compared.map(c => c.pixelDiffRatio ?? 0))
+  const failCount = withStatus("fail").length
+  const warnCount = withStatus("warn").length
   console.log(
-    `${comparisons.length} captures compared, ${failing.length} differ. Report: ${reportFile}`,
+    `${comparisons.length} captures, ${compared.length} compared, ${failCount} fail, ${warnCount} warn. Max pixel diff ${(maxPixelRatio * 100).toFixed(2)}%. Report: ${reportFile}`,
   )
-  process.exit(failing.length > 0 ? 1 : 0)
+
+  if (compared.length === 0) {
+    console.error("No captures were compared.")
+    process.exit(1)
+  }
+  const shouldFail = failCount > 0 || (isStrict && warnCount > 0)
+  process.exit(shouldFail ? 1 : 0)
 }
 
 main()

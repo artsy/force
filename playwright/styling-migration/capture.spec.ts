@@ -2,6 +2,7 @@ import fs from "fs"
 import path from "path"
 import { type Page, test } from "@playwright/test"
 import {
+  BASE_URL,
   type CaptureData,
   type CaptureRoute,
   type ElementSnapshot,
@@ -14,7 +15,9 @@ import {
 // Usage: STYLING_LABEL=main-a yarn playwright test -c playwright.styling-migration.config.ts
 
 const STYLING_LABEL = process.env.STYLING_LABEL
-const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:4000"
+// The main process loads this file before it starts workers, so they all inherit one run id.
+process.env.STYLING_RUN_ID = process.env.STYLING_RUN_ID || String(Date.now())
+const RUN_ID = process.env.STYLING_RUN_ID
 
 const SIDES = ["top", "right", "bottom", "left"]
 const CORNERS = ["top-left", "top-right", "bottom-right", "bottom-left"]
@@ -64,17 +67,28 @@ const STYLE_PROPERTIES = [
   "visibility",
   "overflow",
   "box-shadow",
+  "text-decoration-line",
+  "text-transform",
+  "cursor",
+  "white-space",
+  "transform",
+  "pointer-events",
+  "object-fit",
+  "outline-style",
+  "outline-width",
+  "outline-color",
 ]
 
 const SKIPPED_TAGS = ["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE"]
 
-const scrollThroughPage = async ({
+// Returns false when any settle step hit its timeout.
+const settlePage = async ({
   page,
   maxScrollSteps,
 }: {
   page: Page
   maxScrollSteps: number
-}): Promise<void> => {
+}): Promise<boolean> => {
   await page.evaluate(async steps => {
     const sleep = (ms: number) =>
       new Promise(resolve => setTimeout(resolve, ms))
@@ -92,13 +106,18 @@ const scrollThroughPage = async ({
     await sleep(500)
     window.scrollTo(0, 0)
   }, maxScrollSteps)
-  await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {})
-  await page.evaluate(async () => {
+
+  const isNetworkIdle = await page
+    .waitForLoadState("networkidle", { timeout: 10000 })
+    .then(() => true)
+    .catch(() => false)
+
+  const settleSteps = await page.evaluate(async () => {
     const sleep = (ms: number) =>
       new Promise(resolve => setTimeout(resolve, ms))
 
     // Off-screen rail images never load on scroll; without this, fade-in opacity varies per run.
-    const loadAllImages = async () => {
+    const loadAllImages = async (): Promise<boolean> => {
       document.querySelectorAll('img[loading="lazy"]').forEach(image => {
         image.setAttribute("loading", "eager")
       })
@@ -110,7 +129,9 @@ const scrollThroughPage = async ({
             image.addEventListener("error", () => resolve())
           })
         })
-      await Promise.race([Promise.all(pending), sleep(20000)])
+      const loaded = Promise.all(pending).then(() => true)
+      const timedOut = sleep(20000).then(() => false)
+      return Promise.race([loaded, timedOut])
     }
 
     // Skeletons render as "█" glyphs and artwork save buttons start as placeholders;
@@ -121,9 +142,14 @@ const scrollThroughPage = async ({
         document.querySelector('[data-test="saveButtonPlaceholder"]') !== null
       )
     }
-    const waitForPlaceholders = async (remainingMs: number): Promise<void> => {
-      if (!hasPlaceholders() || remainingMs <= 0) {
-        return
+    const waitForPlaceholders = async (
+      remainingMs: number,
+    ): Promise<boolean> => {
+      if (!hasPlaceholders()) {
+        return true
+      }
+      if (remainingMs <= 0) {
+        return false
       }
       await sleep(250)
       return waitForPlaceholders(remainingMs - 250)
@@ -131,63 +157,155 @@ const scrollThroughPage = async ({
 
     // Lazy sections finish loading at different times; wait for the DOM to stop changing.
     const waitForQuietDom = () => {
-      return new Promise<void>(resolve => {
-        const finish = () => {
+      return new Promise<boolean>(resolve => {
+        const finish = (isQuiet: boolean) => {
           observer.disconnect()
-          resolve()
+          resolve(isQuiet)
         }
-        let quietTimer = setTimeout(finish, 1500)
+        let quietTimer = setTimeout(() => finish(true), 1500)
         const observer = new MutationObserver(() => {
           clearTimeout(quietTimer)
-          quietTimer = setTimeout(finish, 1500)
+          quietTimer = setTimeout(() => finish(true), 1500)
         })
         observer.observe(document.body, {
           attributes: true,
           childList: true,
           subtree: true,
         })
-        setTimeout(finish, 10000)
+        setTimeout(() => finish(false), 10000)
       })
     }
 
-    await waitForPlaceholders(20000)
-    await loadAllImages()
+    const hasNoPlaceholders = await waitForPlaceholders(20000)
+    const areImagesLoaded = await loadAllImages()
     await document.fonts.ready
-    await waitForQuietDom()
-    await loadAllImages()
-    await waitForQuietDom()
+    const isQuiet = await waitForQuietDom()
+    const areLateImagesLoaded = await loadAllImages()
+    const isQuietAgain = await waitForQuietDom()
+    return [
+      hasNoPlaceholders,
+      areImagesLoaded,
+      isQuiet,
+      areLateImagesLoaded,
+      isQuietAgain,
+    ]
   })
+
+  return [isNetworkIdle, ...settleSteps].every(Boolean)
 }
 
-const collectElementStyles = (page: Page): Promise<ElementSnapshot[]> => {
+interface PageSnapshot {
+  elements: ElementSnapshot[]
+  bodyBackgroundColor: string
+  bodyColor: string
+}
+
+const snapshotPage = (page: Page): Promise<PageSnapshot> => {
   return page.evaluate(
     ({ properties, skippedTags }) => {
+      const hasNoLayoutBox = (element: Element) => {
+        const rect = element.getBoundingClientRect()
+        return (
+          rect.width === 0 ||
+          rect.height === 0 ||
+          window.getComputedStyle(element).display === "none"
+        )
+      }
+
+      // Client effects insert and remove empty spans without a layout box between runs.
+      const isInvisibleEmptySpan = (element: Element) => {
+        return (
+          element.tagName === "SPAN" &&
+          element.childNodes.length === 0 &&
+          hasNoLayoutBox(element)
+        )
+      }
+
+      const isSkipped = (element: Element) => {
+        return skippedTags.includes(element.tagName)
+      }
+
+      const rootChildren = Array.from(document.body.children)
+      const appRoot = rootChildren.find(element => {
+        return element.tagName === "DIV" && element.querySelector("main")
+      })
+
+      // Portal roots are appended in a different order on each load, so key them by content.
+      const rootSignature = (root: Element) => {
+        const chain: string[] = []
+        let current: Element | null = root
+        while (current && chain.length < 4) {
+          chain.push(current.tagName.toLowerCase())
+          current = current.firstElementChild
+        }
+        const marker = root.matches("[data-testid],[data-test],[role]")
+          ? root
+          : root.querySelector("[data-testid],[data-test],[role]")
+        const markerValue =
+          marker?.getAttribute("data-testid") ??
+          marker?.getAttribute("data-test") ??
+          marker?.getAttribute("role")
+        return `${chain.join("/")}${markerValue ? `{${markerValue}}` : ""}`
+      }
+
+      const signatureCounts = new Map<string, number>()
+      const rootSegments = new Map<Element, string>()
+      rootChildren
+        .filter(element => element.tagName === "DIV")
+        .forEach(element => {
+          if (element === appRoot) {
+            rootSegments.set(element, "div#app")
+            return
+          }
+          const signature = rootSignature(element)
+          const index = signatureCounts.get(signature) ?? 0
+          signatureCounts.set(signature, index + 1)
+          rootSegments.set(element, `div[${signature}]#${index}`)
+        })
+
       const paths = new Map<Element, string>()
       paths.set(document.body, "body")
 
-      // Client effects insert and remove empty spans between runs; dropping them keeps paths stable.
-      const isEmptySpan = (element: Element) => {
-        return element.tagName === "SPAN" && element.childNodes.length === 0
-      }
-
-      const pathOf = (element: Element): string => {
-        const parentPath = paths.get(element.parentElement as Element)
+      const segmentOf = (element: Element) => {
+        const rootSegment = rootSegments.get(element)
+        if (rootSegment) {
+          return rootSegment
+        }
         const sameTypeIndex =
           Array.from(element.parentElement?.children ?? [])
             .filter(sibling => {
               return (
-                sibling.tagName === element.tagName && !isEmptySpan(sibling)
+                sibling.tagName === element.tagName &&
+                !isInvisibleEmptySpan(sibling)
               )
             })
             .indexOf(element) + 1
-        const elementPath = `${parentPath}>${element.tagName.toLowerCase()}:nth-of-type(${sameTypeIndex})`
+        return `${element.tagName.toLowerCase()}:nth-of-type(${sameTypeIndex})`
+      }
+
+      const pathOf = (element: Element): string => {
+        const parentPath = paths.get(element.parentElement as Element)
+        const elementPath = `${parentPath}>${segmentOf(element)}`
         paths.set(element, elementPath)
         return elementPath
       }
 
-      return Array.from(document.querySelectorAll("body *"))
+      // Body-level divs without children have nothing to compare, and their count varies per run.
+      const isChildlessRoot = (element: Element) => {
+        return (
+          element.parentElement === document.body &&
+          element.tagName === "DIV" &&
+          element.children.length === 0
+        )
+      }
+
+      const elements = Array.from(document.querySelectorAll("body *"))
         .filter(element => {
-          return !skippedTags.includes(element.tagName) && !isEmptySpan(element)
+          return (
+            !isSkipped(element) &&
+            !isInvisibleEmptySpan(element) &&
+            !isChildlessRoot(element)
+          )
         })
         .map(element => {
           const computed = window.getComputedStyle(element)
@@ -199,9 +317,50 @@ const collectElementStyles = (page: Page): Promise<ElementSnapshot[]> => {
           )
           return { path: pathOf(element), styles }
         })
+
+      const bodyStyle = window.getComputedStyle(document.body)
+      return {
+        elements,
+        bodyBackgroundColor: bodyStyle.backgroundColor,
+        bodyColor: bodyStyle.color,
+      }
     },
     { properties: STYLE_PROPERTIES, skippedTags: SKIPPED_TAGS },
   )
+}
+
+const removeIfExists = (file: string): void => {
+  if (fs.existsSync(file)) {
+    fs.unlinkSync(file)
+  }
+}
+
+const readCapture = (file: string): CaptureData | null => {
+  if (!fs.existsSync(file)) {
+    return null
+  }
+  return JSON.parse(fs.readFileSync(file, "utf8"))
+}
+
+// Whichever theme finishes second sees both files and runs this check.
+const assertThemesDiffer = ({
+  outputDir,
+  viewportName,
+}: {
+  outputDir: string
+  viewportName: string
+}): void => {
+  const [light, dark] = THEMES.map(theme => {
+    return readCapture(path.join(outputDir, `${viewportName}-${theme}.json`))
+  })
+  if (!light || !dark || light.runId !== dark.runId) {
+    return
+  }
+  if (light.bodyBackgroundColor === dark.bodyBackgroundColor) {
+    throw new Error(
+      `Dark theme not applied: ${viewportName} body background is ${dark.bodyBackgroundColor} in both themes. Check the x-theme header.`,
+    )
+  }
 }
 
 const captureRoute = async ({
@@ -215,6 +374,14 @@ const captureRoute = async ({
   viewport: (typeof VIEWPORTS)[number]
   theme: string
 }): Promise<void> => {
+  const outputDir = path.join(OUTPUT_ROOT, STYLING_LABEL as string, route.name)
+  const basename = `${viewport.name}-${theme}`
+  const pngFile = path.join(outputDir, `${basename}.png`)
+  const jsonFile = path.join(outputDir, `${basename}.json`)
+  fs.mkdirSync(outputDir, { recursive: true })
+  removeIfExists(pngFile)
+  removeIfExists(jsonFile)
+
   const consoleErrors: string[] = []
   page.on("console", message => {
     if (message.type() === "error") {
@@ -243,29 +410,29 @@ const captureRoute = async ({
     { timeout: 60000 },
   )
   await page.evaluate(() => document.fonts.ready)
-  await scrollThroughPage({
+  const settled = await settlePage({
     page,
     maxScrollSteps: route.maxScrollSteps ?? 80,
   })
 
-  const outputDir = path.join(OUTPUT_ROOT, STYLING_LABEL as string, route.name)
-  fs.mkdirSync(outputDir, { recursive: true })
-  const basename = `${viewport.name}-${theme}`
-
   await page.screenshot({
-    path: path.join(outputDir, `${basename}.png`),
+    path: pngFile,
     fullPage: true,
     animations: "disabled",
   })
 
+  const snapshot = await snapshotPage(page)
   const data: CaptureData = {
+    runId: RUN_ID,
+    theme,
+    settled,
     consoleErrors,
-    elements: await collectElementStyles(page),
+    ...snapshot,
   }
-  fs.writeFileSync(
-    path.join(outputDir, `${basename}.json`),
-    JSON.stringify(data),
-  )
+  fs.writeFileSync(jsonFile, JSON.stringify(data))
+  if (!route.isThemeIgnored) {
+    assertThemesDiffer({ outputDir, viewportName: viewport.name })
+  }
 }
 
 test.describe("styling migration capture", () => {
