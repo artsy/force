@@ -75,3 +75,6 @@ manifest-legacy-artwork-dll.json
 .hokusai-tmp/
 
 size-plugin.json
+
+# Styling migration captures
+tmp/styling-migration/

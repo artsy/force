@@ -4889,6 +4889,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/pngjs@npm:^6.0.5":
+  version: 6.0.5
+  resolution: "@types/pngjs@npm:6.0.5"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/11979d0690e774046d3a1e8cfc613a6b53a613909d81c93831cf253800e93ba1a2d47950979b523aebd4fc023351b644d7f4aa2dfcc027c70816a2968420e7da
+  languageName: node
+  linkType: hard
+
 "@types/prettier@npm:^2.1.5":
   version: 2.4.2
   resolution: "@types/prettier@npm:2.4.2"
@@ -9488,6 +9497,7 @@ __metadata:
     "@types/luxon": "npm:^3.2.0"
     "@types/morgan": "npm:1.9.2"
     "@types/node": "npm:12.20.13"
+    "@types/pngjs": "npm:^6.0.5"
     "@types/qrcode.react": "npm:1.0.0"
     "@types/qs": "npm:6.5.3"
     "@types/react": "npm:^18.3.12"
@@ -9567,6 +9577,8 @@ __metadata:
     passport-strategy: "npm:1.x.x"
     patch-package: "npm:6.2.0"
     path-to-regexp: "npm:6.3.0"
+    pixelmatch: "npm:^7"
+    pngjs: "npm:^7"
     prettier: "npm:^3.4.2"
     proportional-scale: "npm:^4.0.0"
     pull-lock: "npm:1.0.0"
@@ -14540,6 +14552,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pixelmatch@npm:^7":
+  version: 7.2.0
+  resolution: "pixelmatch@npm:7.2.0"
+  dependencies:
+    pngjs: "npm:^7.0.0"
+  bin:
+    pixelmatch: bin/pixelmatch
+  checksum: 10c0/d8a2454ecf3a977738d6050ed087effa0a9f1b53a0da92d37381a74bb04db5c21e14cfcd41965fbdac4a5967aa5ff2525e2afe9826a77eae043b8339dafc53b6
+  languageName: node
+  linkType: hard
+
 "pkg-dir@npm:^4.1.0, pkg-dir@npm:^4.2.0":
   version: 4.2.0
   resolution: "pkg-dir@npm:4.2.0"
@@ -14595,6 +14618,13 @@ __metadata:
   dependencies:
     semver-compare: "npm:^1.0.0"
   checksum: 10c0/222514d2841022be4b843f38d415beadcc6409c0545d6d153778d71c601bba7bbf1cd5827d650c7fae6a9a2ba7cf00f4b6729b40d015a3a5ba2937e57bc1c435
+  languageName: node
+  linkType: hard
+
+"pngjs@npm:^7, pngjs@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "pngjs@npm:7.0.0"
+  checksum: 10c0/0d4c7a0fd476a9c33df7d0a2a73e1d56537628a668841f6995c2bca070cf30819f9254a64363266bc14ef2fee47659dd3b4f2b18eec7ab65143015139f497b38
   languageName: node
   linkType: hard
 
