@@ -1,11 +1,14 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
-export function setTimingHeader(
-  res: ArtsyResponse,
-  name: string,
-  durationMilli: number | null = null,
-) {
+interface SetTimingHeaderProps {
+  res: ArtsyResponse
+  name: string
+  /** A `performance.now()` reading; the metric is the time elapsed since. Omit for a metric without a duration. */
+  start?: number
+}
+
+export function setTimingHeader({ res, name, start }: SetTimingHeaderProps) {
   if (!res.serverTimingHeaders) {
     return
   }
@@ -15,6 +18,10 @@ export function setTimingHeader(
       `Header: ${name} will not be sent, response headers have already been sent.`,
     )
   }
+  const durationMilli =
+    start === undefined
+      ? null
+      : Math.round((performance.now() - start) * 10) / 10
   res.serverTimingHeaders.set(name, durationMilli)
 }
 
@@ -27,14 +34,13 @@ export function serverTimingHeaders(
     return next()
   }
 
-  res.perfStart = Date.now()
+  res.perfStart = performance.now()
   res.serverTimingHeaders = new Map<string, number | null>()
 
   const defaultWritehead = res.writeHead
 
   res.writeHead = function () {
-    const perfEnd = Date.now()
-    setTimingHeader(res, "total", perfEnd - res.perfStart)
+    setTimingHeader({ res, name: "total", start: res.perfStart })
 
     const timingHeaders: string[] = []
     for (const key of res.serverTimingHeaders!.keys()) {
