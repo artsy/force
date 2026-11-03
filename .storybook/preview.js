@@ -1,3 +1,4 @@
+import "@artsy/palette/palette.css"
 import { injectGlobalStyles, Theme } from "@artsy/palette"
 import { MediaContextProvider } from "Utils/Responsive"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"

@@ -1,3 +1,4 @@
+import type { PaletteThemeName } from "@artsy/palette"
 import { ENABLE_SSR_STREAMING } from "Server/config"
 import { getEarlyHints } from "Server/getEarlyHints"
 import { loadAssetManifest } from "Server/manifest"
@@ -5,8 +6,10 @@ import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
+import { extractStyleLinkTags } from "System/Router/Utils/extractStyleLinkTags"
 import type { RenderToStreamResult } from "System/Router/Utils/renderToStream"
 import type { ServerAppResults } from "System/Router/serverRouter"
+import { resolveTheme } from "System/Utils/resolveTheme"
 import { getENV } from "Utils/getENV"
 import { getServerParam } from "Utils/getServerParam"
 import { getFontLinkHeaders } from "fonts"
@@ -31,6 +34,8 @@ interface RenderServerAppProps extends ServerAppResults {
   req: ArtsyRequest
   res: ArtsyResponse
   stream?: RenderToStreamResult
+  /** Overrides the theme resolved from the request. */
+  theme?: PaletteThemeName
 }
 
 export const renderServerApp = ({
@@ -43,19 +48,22 @@ export const renderServerApp = ({
   extractScriptTags,
   stream,
   styleTags,
+  theme,
 }: RenderServerAppProps) => {
   const headTagsString = renderToString(headTags as any)
 
   const sharify = res.locals.sharify
 
-  const { WEBFONT_URL } = sharify.data
+  const { WEBFONT_URL, X_THEME_HEADER, APP_PREFERENCES } = sharify.data
 
   const scripts = extractScriptTags?.()
 
   const { linkHeaders, linkPreloadTags } = getEarlyHints(headTags ?? [])
 
+  const cdnUrl = NODE_ENV === "production" ? (CDN_URL as string) : ""
+
   const options: HTMLProps = {
-    cdnUrl: NODE_ENV === "production" ? (CDN_URL as string) : "",
+    cdnUrl,
     content: {
       body: html,
       sharifyData: sharify.script(),
@@ -63,6 +71,10 @@ export const renderServerApp = ({
       linkPreloadTags,
       scripts,
       style: styleTags,
+      styleLinks: extractStyleLinkTags({
+        manifest: MANIFEST.manifest,
+        cdnUrl,
+      }),
     },
     disable: {
       analytics: getServerParam(req, "disableAnalytics") === "true",
@@ -86,6 +98,12 @@ export const renderServerApp = ({
       openSearch: MANIFEST.lookup("/images/opensearch.xml"),
       webmanifest: MANIFEST.lookup("/images/manifest.webmanifest"),
     },
+    theme:
+      theme ??
+      resolveTheme({
+        themeOverride: X_THEME_HEADER,
+        preferredTheme: APP_PREFERENCES?.theme,
+      }),
   }
 
   setLinkHeaders(linkHeaders, res)

@@ -19,27 +19,27 @@ class EarlyHintsPlugin {
         assets => {
           const publicPath = compilation.outputOptions.publicPath || ""
           /**
-           * Collect entry chunk files (JavaScript files only)
+           * Collect entry chunk files (JavaScript and CSS files)
            * @type {string[]}
            */
           const entryChunkFiles = Array.from(compilation.chunks)
             .filter(chunk => chunk.canBeInitial()) // Select only entry chunks
             .reduce(
               (acc, chunk) => {
-                const jsFiles = Array.from(chunk.files)
-                  .filter(file => file.endsWith(".js"))
+                const files = Array.from(chunk.files)
+                  .filter(file => file.endsWith(".js") || file.endsWith(".css"))
                   .map(file => `${publicPath}${file}`)
-                return acc.concat(jsFiles)
+                return acc.concat(files)
               },
-              /** @type {string[]} */ []
+              /** @type {string[]} */ [],
             )
 
           // Output `early-hints.json` to webpack output/publicPath directory
           assets["early-hints.json"] = new rspack.sources.RawSource(
             JSON.stringify(entryChunkFiles),
-            false
+            false,
           )
-        }
+        },
       )
     })
   }

@@ -1,3 +1,4 @@
+import { PALETTE_THEME_ATTRIBUTE, type PaletteThemeName } from "@artsy/palette"
 import { getFontTags } from "fonts"
 
 export interface HTMLProps {
@@ -9,6 +10,7 @@ export interface HTMLProps {
     linkPreloadTags?: string[]
     scripts?: string
     style?: string
+    styleLinks: string
   }
   disable: {
     analytics: boolean
@@ -30,6 +32,7 @@ export interface HTMLProps {
     openSearch: string
     webmanifest: string
   }
+  theme: PaletteThemeName
 }
 
 export function buildHtmlTemplate({
@@ -40,10 +43,11 @@ export function buildHtmlTemplate({
   icons,
   imageCdnUrl,
   manifest,
+  theme,
 }: HTMLProps) {
   return `
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="en" ${PALETTE_THEME_ATTRIBUTE}="${theme}">
 
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -76,6 +80,7 @@ export function buildHtmlTemplate({
 
       ${content.linkPreloadTags ? content.linkPreloadTags.join("") : ""}
       ${content.head || ""}
+      ${content.styleLinks}
       ${content.style || ""}
       ${content.sharifyData || ""}
     </head>

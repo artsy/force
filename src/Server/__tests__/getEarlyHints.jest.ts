@@ -33,13 +33,32 @@ describe("getEarlyHints", () => {
 
     expect(fs.readFileSync).toHaveBeenCalledWith(HINTS_PATH, "utf-8")
     expect(result.linkHeaders).toEqual([
-      `<https://example.com/image.jpg>; rel=preload; as=image`,
-      `<https://cdn.example.com/chunk1.js>; rel=preload; as=script`,
-      `<https://cdn.example.com/chunk2.js>; rel=preload; as=script`,
+      "<https://example.com/image.jpg>; rel=preload; as=image",
+      "<https://cdn.example.com/chunk1.js>; rel=preload; as=script",
+      "<https://cdn.example.com/chunk2.js>; rel=preload; as=script",
     ])
     expect(result.linkPreloadTags).toEqual([
       `<link rel="preload" as="script" href="https://cdn.example.com/chunk1.js">`,
       `<link rel="preload" as="script" href="https://cdn.example.com/chunk2.js">`,
+    ])
+  })
+
+  it("hints CSS files as styles", () => {
+    process.env.NODE_ENV = "production"
+
+    mockReadFileSync.mockReturnValueOnce(
+      JSON.stringify(["/chunk1.js", "/index.css"]),
+    )
+
+    const result = getEarlyHints([])
+
+    expect(result.linkHeaders).toEqual([
+      "<https://cdn.example.com/chunk1.js>; rel=preload; as=script",
+      "<https://cdn.example.com/index.css>; rel=preload; as=style",
+    ])
+    expect(result.linkPreloadTags).toEqual([
+      `<link rel="preload" as="script" href="https://cdn.example.com/chunk1.js">`,
+      `<link rel="preload" as="style" href="https://cdn.example.com/index.css">`,
     ])
   })
 })

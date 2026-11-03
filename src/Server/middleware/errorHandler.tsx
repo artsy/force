@@ -33,6 +33,9 @@ import { ServerStyleSheet } from "styled-components"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 const { GlobalStyles } = injectGlobalStyles()
+// The error page is never hydrated, so its <Theme> cannot update the
+// <html> theme attribute on the client. Both must use the same value.
+const ERROR_PAGE_THEME = "light"
 const logger = createLogger("Server/middleware/errorHandlerMiddleware")
 
 export const errorHandlerMiddleware = async (
@@ -76,7 +79,7 @@ Time: ${new Date().toUTCString()}`
 
     const html = renderToString(
       sheet.collectStyles(
-        <Theme>
+        <Theme theme={ERROR_PAGE_THEME}>
           <GlobalStyles />
 
           <LayoutLogoOnly>
@@ -98,6 +101,7 @@ Time: ${new Date().toUTCString()}`
       code,
       html,
       styleTags,
+      theme: ERROR_PAGE_THEME,
       mount: false, // Does not mount the client-side
     })
   } catch (err) {

@@ -17,6 +17,7 @@ import { SystemContextProvider } from "System/Contexts/SystemContext"
 import { FeatureFlagProvider } from "System/FeatureFlags/FeatureFlagContext"
 import type { RouteProps } from "System/Router/Route"
 import type { ClientContext } from "System/Router/Utils/clientAppContext"
+import { resolveTheme } from "System/Utils/resolveTheme"
 import Events from "Utils/Events"
 import { GoogleOneTapContainer } from "Utils/GoogleOneTapContainer"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
@@ -131,19 +132,13 @@ const EnvironmentProvider: FC<
   )
 }
 
-const validateTheme = (theme: string): "light" | "dark" => {
-  if (theme !== "dark" && theme !== "light") {
-    return "light"
-  }
-
-  return theme
-}
-
 const ThemeProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const { preferences } = useAppPreferences()
 
-  const themeOverride = getENV("X_THEME_HEADER")
-  const theme = validateTheme(themeOverride ?? preferences.theme)
+  const theme = resolveTheme({
+    themeOverride: getENV("X_THEME_HEADER"),
+    preferredTheme: preferences.theme,
+  })
 
   return (
     <Theme theme={theme}>

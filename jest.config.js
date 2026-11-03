@@ -7,6 +7,7 @@ module.exports = {
   moduleNameMapper: {
     "^luxon$": "<rootDir>/node_modules/luxon",
     "^react$": "<rootDir>/node_modules/react",
+    "\\.css$": "<rootDir>/src/DevTools/styleStub.js",
   },
   reporters: ["default", "jest-junit"],
   setupFilesAfterEnv: [

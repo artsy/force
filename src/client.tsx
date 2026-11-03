@@ -1,4 +1,5 @@
 import "Server/webpackPublicPath"
+import "@artsy/palette/palette.css"
 import { loadableReady } from "@loadable/component"
 import { dispatchHydrationError } from "Components/HydrationErrorOverlay"
 import { setupAnalytics } from "Server/analytics/helpers"

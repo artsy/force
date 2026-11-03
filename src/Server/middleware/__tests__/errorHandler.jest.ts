@@ -78,6 +78,21 @@ describe("errorHandler", () => {
     expect(renderArgs[0]).not.toContain("Example stack")
   })
 
+  it("renders the error page with the light theme", () => {
+    testContext.res.locals.sharify.data = { X_THEME_HEADER: "dark" }
+
+    errorHandlerMiddleware(
+      testContext.err,
+      testContext.req,
+      testContext.res,
+      testContext.next,
+    )
+
+    expect(renderServerAppMock).toHaveBeenCalledWith(
+      expect.objectContaining({ theme: "light" }),
+    )
+  })
+
   it("returns a 401 when an IP is denied", () => {
     const err = new IpDeniedError("You've been blocked")
 

@@ -37,13 +37,14 @@ export const getEarlyHints = (
     )
   }
 
-  // Also add initial js chunks to link headers and inject preload tags
+  // Also add initial js and css chunks to link headers and inject preload tags
   try {
     const chunkFiles = JSON.parse(fs.readFileSync(HINTS_PATH, "utf-8"))
     for (const file of chunkFiles) {
-      results.linkHeaders.push(`<${cdnUrl}${file}>; rel=preload; as=script`)
+      const as = file.endsWith(".css") ? "style" : "script"
+      results.linkHeaders.push(`<${cdnUrl}${file}>; rel=preload; as=${as}`)
       results.linkPreloadTags.push(
-        `<link rel="preload" as="script" href="${cdnUrl}${file}">`,
+        `<link rel="preload" as="${as}" href="${cdnUrl}${file}">`,
       )
     }
   } catch (error) {
