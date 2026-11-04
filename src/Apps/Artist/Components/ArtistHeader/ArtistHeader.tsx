@@ -388,8 +388,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
         }
-        # Sized for the header series shelf. 12 also matches ArtistSeriesRail,
-        # so both surfaces issue an identical query and can't disagree on order.
+        # Sized for the header series shelf. first: 12 matches ArtistSeriesRail so
+        # both share one Relay store field; the rail's response replaces these edges.
         artistSeriesConnection(first: 12) {
           edges {
             node {
