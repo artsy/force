@@ -62,4 +62,23 @@ describe("ArtistBio", () => {
 
     expect(screen.getByText("Submitted by Great Gallery")).toBeInTheDocument()
   })
+
+  it("renders credit after the bio text", async () => {
+    renderWithRelay({
+      Artist: () => ({
+        id: "unused",
+        biographyBlurb: {
+          ...biographyBlurb,
+          credit: "Submitted by Great Gallery",
+        },
+      }),
+    })
+
+    const text = screen.getByText("hello how are you")
+    const credit = screen.getByText("Submitted by Great Gallery")
+
+    expect(
+      text.compareDocumentPosition(credit) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+  })
 })

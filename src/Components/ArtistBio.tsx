@@ -16,13 +16,13 @@ export const ArtistBio: React.FC<React.PropsWithChildren<ArtistBioProps>> = ({
 
   return (
     <>
+      {text && <HTML variant="sm" html={text} />}
       {!!credit && (
         <>
+          {!!text && <br />}
           <HTML variant="sm" html={credit} />
-          <br />
         </>
       )}
-      {text && <HTML variant="sm" html={text} />}
     </>
   )
 }
