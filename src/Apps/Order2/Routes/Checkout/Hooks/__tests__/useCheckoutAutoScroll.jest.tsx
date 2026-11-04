@@ -109,6 +109,52 @@ describe("useCheckoutAutoScroll", () => {
     expect(mockJumpTo).not.toHaveBeenCalled()
   })
 
+  it("does not scroll on load if express checkout is available and we are on a non-first, non-review step", () => {
+    const steps = createSteps(CheckoutStepName.PAYMENT)
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: true,
+      steps,
+      expressCheckoutPaymentMethods: null,
+    })
+
+    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps,
+      expressCheckoutPaymentMethods: ["CREDIT_CARD"],
+    })
+
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).not.toHaveBeenCalled()
+  })
+
+  it("does scroll on load if express checkout is available and we are on the review step", () => {
+    const steps = createSteps(CheckoutStepName.CONFIRMATION)
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: true,
+      steps,
+      expressCheckoutPaymentMethods: null,
+    })
+
+    const { rerender } = renderHook(() => useCheckoutAutoScroll())
+
+    mockUseCheckoutContext.mockReturnValue({
+      isLoading: false,
+      steps,
+      expressCheckoutPaymentMethods: ["CREDIT_CARD"],
+    })
+
+    rerender()
+    jest.runAllTimers()
+
+    expect(mockJumpTo).toHaveBeenCalled()
+  })
+
   it("scrolls to confirmation when it becomes active", () => {
     mockUseCheckoutContext.mockReturnValue({
       isLoading: false,
