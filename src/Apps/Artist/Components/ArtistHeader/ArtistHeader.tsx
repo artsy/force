@@ -368,6 +368,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
       fragment ArtistHeader_artist on Artist {
         internalID
         slug
+        href
         name
         instagramHandle
         formattedNationalityAndBirthday
@@ -386,6 +387,25 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
+        }
+        # Sized for the header series shelf. 12 also matches ArtistSeriesRail,
+        # so both surfaces issue an identical query and can't disagree on order.
+        artistSeriesConnection(first: 12) {
+          edges {
+            node {
+              internalID
+              slug
+              title
+              featured
+              forSaleArtworksCount
+              image {
+                cropped(width: 280, height: 210, version: ["larger", "large"]) {
+                  src
+                  srcSet
+                }
+              }
+            }
+          }
         }
         ...ArtistHeaderEditorial_artist
         ...ArtistStylesAndTechniques_artist
