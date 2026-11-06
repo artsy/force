@@ -76,9 +76,6 @@ const MOBILE_SERIES_WIDTH = 100
 
 const DEFAULT_DESKTOP_SERIES_WIDTH = 100
 
-// Working assumption from the Decision Log: items stop growing at three series,
-// so 1, 2 and 3 share one size. Counts above the largest key fall through to
-// the default.
 const DESKTOP_SERIES_WIDTHS: Record<number, number> = {
   1: 140,
   2: 140,
@@ -100,7 +97,6 @@ const FRAGMENT = graphql`
         node {
           ...ArtistHeaderSeriesItem_artistSeries
           internalID
-          featured
           forSaleArtworksCount
         }
       }

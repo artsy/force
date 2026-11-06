@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<106d4d296cc5dc2c3b614cd841fda5dc>>
+ * @generated SignedSource<<911d2a7f5974c5852b9bf213f08e3d91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type ArtistHeaderSeries_artist$data = {
   readonly artistSeriesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly featured: boolean;
         readonly forSaleArtworksCount: number;
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderSeriesItem_artistSeries">;
@@ -96,13 +95,6 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "featured",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "forSaleArtworksCount",
                   "storageKey": null
                 }
@@ -120,6 +112,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bc1df01e7fa75231068fe8f0cea7b6cc";
+(node as any).hash = "8d21effefe6a715ab3f490d7c0cefcfd";
 
 export default node;
