@@ -3,16 +3,15 @@ import { RouterLink } from "System/Components/RouterLink"
 import type { ArtistHeaderSeriesItem_artistSeries$key } from "__generated__/ArtistHeaderSeriesItem_artistSeries.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
+import type { ResponsiveValue } from "styled-system"
 
 interface ArtistHeaderSeriesItemProps {
   artistSeries: ArtistHeaderSeriesItem_artistSeries$key
-  artistName: string
-  width: number
+  width: ResponsiveValue<number>
 }
 
 export const ArtistHeaderSeriesItem: FC<ArtistHeaderSeriesItemProps> = ({
   artistSeries,
-  artistName,
   width,
 }) => {
   const series = useFragment(FRAGMENT, artistSeries)
@@ -41,7 +40,9 @@ export const ArtistHeaderSeriesItem: FC<ArtistHeaderSeriesItemProps> = ({
             srcSet={image.srcSet}
             width="100%"
             height="100%"
-            alt={`${series.title} series by ${artistName}`}
+            // Decorative: the title below is this link's visible text, so alt
+            // text here would be announced twice in its accessible name.
+            alt=""
           />
         )}
       </ResponsiveBox>

@@ -26,11 +26,13 @@ import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
+import { ArtistHeaderSeries } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSeries"
 import { ArtistHeaderSocialLink } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSocialLink"
 import {
   ArtistStylesAndTechniques,
   useHasArtistStylesAndTechniques,
 } from "Apps/Artist/Components/ArtistHeader/ArtistStylesAndTechniques"
+import { useEnableArtistHeaderSeries } from "Apps/Artist/Components/ArtistHeader/hooks/useEnableArtistHeaderSeries"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
@@ -54,6 +56,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
+  const isSeriesEnabled = useEnableArtistHeaderSeries()
   const instagramHandle = artist.instagramHandle?.trim() || null
 
   const image = artist.coverArtwork?.image
@@ -281,6 +284,8 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             contextModule={ContextModule.artistHeader}
           />
         )}
+
+        {isSeriesEnabled && <ArtistHeaderSeries artist={artist} />}
       </Column>
 
       {hasRightDetails && (
@@ -368,7 +373,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
       fragment ArtistHeader_artist on Artist {
         internalID
         slug
-        href
         name
         instagramHandle
         formattedNationalityAndBirthday
@@ -388,26 +392,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {
           totalCount
         }
-        # Sized for the header series shelf. first: 12 matches ArtistSeriesRail so
-        # both share one Relay store field; the rail's response replaces these edges.
-        artistSeriesConnection(first: 12) {
-          edges {
-            node {
-              internalID
-              slug
-              title
-              featured
-              forSaleArtworksCount
-              image {
-                cropped(width: 280, height: 210, version: ["larger", "large"]) {
-                  src
-                  srcSet
-                }
-              }
-            }
-          }
-        }
         ...ArtistHeaderEditorial_artist
+        ...ArtistHeaderSeries_artist
         ...ArtistStylesAndTechniques_artist
         verifiedRepresentatives {
           partner {

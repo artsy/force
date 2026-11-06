@@ -24,7 +24,6 @@ const { renderWithRelay } =
       return (
         <ArtistHeaderSeriesItem
           artistSeries={props.artistSeries}
-          artistName={props.artistName}
           width={props.width}
         />
       )
@@ -50,7 +49,7 @@ const ARTIST_SERIES = {
   },
 }
 
-const COMPONENT_PROPS = { artistName: "Roy Lichtenstein", width: 140 }
+const COMPONENT_PROPS = { width: 140 }
 
 describe("ArtistHeaderSeriesItem", () => {
   it("renders the series title", () => {
@@ -74,21 +73,22 @@ describe("ArtistHeaderSeriesItem", () => {
     )
   })
 
-  it("gives the cover image descriptive alt text", () => {
-    renderWithRelay({ ArtistSeries: () => ARTIST_SERIES }, COMPONENT_PROPS)
+  it("hides the cover image from assistive technology", () => {
+    const { container } = renderWithRelay(
+      { ArtistSeries: () => ARTIST_SERIES },
+      COMPONENT_PROPS,
+    )
 
-    expect(
-      screen.getByAltText("Crying Girl series by Roy Lichtenstein"),
-    ).toBeInTheDocument()
+    expect(container.querySelector("img")).toHaveAttribute("alt", "")
   })
 
   it("renders a placeholder when the series has no image", () => {
-    renderWithRelay(
+    const { container } = renderWithRelay(
       { ArtistSeries: () => ({ ...ARTIST_SERIES, image: null }) },
       COMPONENT_PROPS,
     )
 
-    expect(screen.queryByRole("img")).not.toBeInTheDocument()
+    expect(container.querySelector("img")).not.toBeInTheDocument()
     expect(screen.getByText("Crying Girl")).toBeInTheDocument()
   })
 })
