@@ -6,6 +6,8 @@ import {
 } from "System/Relay/isRequestCacheable"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
 
+const PAGE_PATH_HEADER = "X-Artsy-Page-Path"
+
 interface CacheHeaderMiddlewareProps {
   url?: string | null
   user: User
@@ -84,13 +86,29 @@ export const cacheHeaderMiddleware = (props?: CacheHeaderMiddlewareProps) => {
       }
     })()
 
+    // The metaphysics-cdn Worker tags cached responses with this path so Forque can purge one page.
+    // During a prefetch, the path comes from the prefetched route, like the TTL above.
+    const pagePath = getPathname(req.cacheConfig.metadata?.pagePath ?? url)
+    const pagePathHeader = pagePath ? { [PAGE_PATH_HEADER]: pagePath } : {}
+
     req.fetchOpts.headers = {
       ...req.fetchOpts.headers,
       ...cacheControlHeader,
+      ...pagePathHeader,
     }
 
     const res = await next(req)
 
     return res
   }
+}
+
+const getPathname = (url?: string | null): string | null => {
+  const pathname = url?.split(/[?#]/)[0]
+
+  if (!pathname?.startsWith("/")) {
+    return null
+  }
+
+  return pathname
 }
