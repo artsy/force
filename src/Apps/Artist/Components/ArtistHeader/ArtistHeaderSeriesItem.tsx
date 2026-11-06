@@ -40,8 +40,6 @@ export const ArtistHeaderSeriesItem: FC<ArtistHeaderSeriesItemProps> = ({
             srcSet={image.srcSet}
             width="100%"
             height="100%"
-            // Decorative: the title below is this link's visible text, so alt
-            // text here would be announced twice in its accessible name.
             alt=""
           />
         )}
