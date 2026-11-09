@@ -1,7 +1,6 @@
-import { Flex, Shelf, THEME, Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import { ArtistHeaderSeriesItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSeriesItem"
 import { RouterLink } from "System/Components/RouterLink"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistHeaderSeries_artist$key } from "__generated__/ArtistHeaderSeries_artist.graphql"
 import type { FC } from "react"
@@ -15,8 +14,6 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
   artist: artistRef,
 }) => {
   const artist = useFragment(FRAGMENT, artistRef)
-
-  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   const allSeries = extractNodes(artist.artistSeriesConnection)
 
@@ -53,7 +50,7 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
         )}
       </Flex>
 
-      <Shelf gap={1} fullBleed={!!isMobile} showProgress={false}>
+      <Flex gap={1} overflowX={["auto", "visible"]}>
         {visibleSeries.map(artistSeries => {
           return (
             <ArtistHeaderSeriesItem
@@ -63,7 +60,7 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
             />
           )
         })}
-      </Shelf>
+      </Flex>
     </Flex>
   )
 }
