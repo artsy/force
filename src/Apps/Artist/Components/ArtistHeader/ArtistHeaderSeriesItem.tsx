@@ -7,11 +7,13 @@ import type { ResponsiveValue } from "styled-system"
 
 interface ArtistHeaderSeriesItemProps {
   artistSeries: ArtistHeaderSeriesItem_artistSeries$key
+  onClick?: () => void
   width: ResponsiveValue<number>
 }
 
 export const ArtistHeaderSeriesItem: FC<ArtistHeaderSeriesItemProps> = ({
   artistSeries,
+  onClick,
   width,
 }) => {
   const series = useFragment(FRAGMENT, artistSeries)
@@ -27,6 +29,7 @@ export const ArtistHeaderSeriesItem: FC<ArtistHeaderSeriesItemProps> = ({
       textDecoration="none"
       width={width}
       flexShrink={0}
+      onClick={onClick}
     >
       <ResponsiveBox
         aspectWidth={4}

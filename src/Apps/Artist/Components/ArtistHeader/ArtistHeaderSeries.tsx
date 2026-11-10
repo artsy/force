@@ -1,10 +1,18 @@
+import {
+  ActionType,
+  type ClickedArtistSeriesGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { Flex, Text } from "@artsy/palette"
 import { ArtistHeaderSeriesItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSeriesItem"
 import { RouterLink } from "System/Components/RouterLink"
+import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistHeaderSeries_artist$key } from "__generated__/ArtistHeaderSeries_artist.graphql"
 import type { FC } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useTracking } from "react-tracking"
 
 interface ArtistHeaderSeriesProps {
   artist: ArtistHeaderSeries_artist$key
@@ -14,6 +22,10 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
   artist: artistRef,
 }) => {
   const artist = useFragment(FRAGMENT, artistRef)
+
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId, contextPageOwnerSlug, contextPageOwnerType } =
+    useAnalyticsContext()
 
   const allSeries = extractNodes(artist.artistSeriesConnection)
 
@@ -33,12 +45,43 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
   const viewMoreHref = artist.href ? `${artist.href}/series` : null
   const heading = artist.name ? `Shop ${artist.name} Series` : "Shop Series"
 
-  const items = visibleSeries.map(artistSeries => {
+  const handleViewMoreClick = () => {
+    const payload: ClickedArtistSeriesGroup = {
+      action: ActionType.clickedArtistSeriesGroup,
+      context_module: ContextModule.artistHeader,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      context_page_owner_type: contextPageOwnerType,
+      destination_page_owner_type: OwnerType.allArtistSeries,
+      type: "viewAll",
+    }
+
+    trackEvent(payload)
+  }
+
+  const items = visibleSeries.map((artistSeries, index) => {
     return (
       <ArtistHeaderSeriesItem
         key={artistSeries.internalID}
         artistSeries={artistSeries}
         width={[MOBILE_SERIES_WIDTH, desktopWidth]}
+        onClick={() => {
+          const payload: ClickedArtistSeriesGroup = {
+            action: ActionType.clickedArtistSeriesGroup,
+            context_module: ContextModule.artistHeader,
+            context_page_owner_id: contextPageOwnerId,
+            context_page_owner_slug: contextPageOwnerSlug,
+            context_page_owner_type: contextPageOwnerType,
+            curation_boost: artistSeries.featured,
+            destination_page_owner_id: artistSeries.internalID,
+            destination_page_owner_slug: artistSeries.slug,
+            destination_page_owner_type: OwnerType.artistSeries,
+            horizontal_slide_position: index,
+            type: "thumbnail",
+          }
+
+          trackEvent(payload)
+        }}
       />
     )
   })
@@ -46,7 +89,9 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
   return (
     <Flex flexDirection="column" gap={1}>
       <Flex justifyContent="space-between" alignItems="center" gap={1}>
-        <Text variant={["sm-display", "sm"]}>{heading}</Text>
+        <Text as="h3" variant={["sm-display", "sm"]}>
+          {heading}
+        </Text>
 
         {hasMoreSeries && viewMoreHref && (
           <RouterLink
@@ -54,13 +99,14 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
             color="mono60"
             textDecoration="underline"
             flexShrink={0}
+            onClick={handleViewMoreClick}
           >
             <Text variant="xs">View More</Text>
           </RouterLink>
         )}
       </Flex>
 
-      <Flex gap={1} overflowX="auto">
+      <Flex gap={1} overflowX="auto" pb={1}>
         {items}
       </Flex>
     </Flex>
@@ -96,6 +142,8 @@ const FRAGMENT = graphql`
         node {
           ...ArtistHeaderSeriesItem_artistSeries
           internalID
+          slug
+          featured
           forSaleArtworksCount
         }
       }

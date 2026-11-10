@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import {
   ArtistHeaderSeries,
   getDesktopSeriesWidth,
@@ -7,11 +7,24 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import type { ArtistHeaderSeries_Test_Query } from "__generated__/ArtistHeaderSeries_Test_Query.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 jest.mock("System/Hooks/useRouter")
+jest.mock("System/Hooks/useAnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "artist-id",
+    contextPageOwnerSlug: "andy-warhol",
+    contextPageOwnerType: "artist",
+  })),
+}))
+
+const mockUseTracking = useTracking as jest.Mock
+const trackEvent = jest.fn()
 
 beforeAll(() => {
+  mockUseTracking.mockImplementation(() => ({ trackEvent }))
   ;(useRouter as jest.Mock).mockImplementation(() => ({
     match: {
       location: {
@@ -19,6 +32,10 @@ beforeAll(() => {
       },
     },
   }))
+})
+
+beforeEach(() => {
+  trackEvent.mockClear()
 })
 
 const { renderWithRelay } = setupTestWrapperTL<ArtistHeaderSeries_Test_Query>({
@@ -46,6 +63,7 @@ const seriesEdge = ({
       internalID: title,
       slug: title.toLowerCase().replace(/\s+/g, "-"),
       title,
+      featured: true,
       forSaleArtworksCount,
       image: {
         cropped: {
@@ -165,5 +183,63 @@ describe("ArtistHeaderSeries", () => {
       "href",
       "/artist/andy-warhol/series",
     )
+  })
+
+  describe("tracking", () => {
+    it("tracks a click on a series", () => {
+      renderWithRelay(artistWithSeries({ forSaleCounts: [10, 20, 30] }))
+
+      fireEvent.click(screen.getByText("Series 1").closest("a")!)
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedArtistSeriesGroup",
+          context_module: "artistHeader",
+          context_page_owner_id: "artist-id",
+          context_page_owner_slug: "andy-warhol",
+          context_page_owner_type: "artist",
+          curation_boost: true,
+          destination_page_owner_id: "Series 1",
+          destination_page_owner_slug: "series-1",
+          destination_page_owner_type: "artistSeries",
+          horizontal_slide_position: 0,
+          type: "thumbnail",
+        }),
+      )
+    })
+
+    it("tracks the position of the clicked series", () => {
+      renderWithRelay(artistWithSeries({ forSaleCounts: [10, 20, 30] }))
+
+      fireEvent.click(screen.getByText("Series 3").closest("a")!)
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          destination_page_owner_id: "Series 3",
+          horizontal_slide_position: 2,
+          type: "thumbnail",
+        }),
+      )
+    })
+
+    it("tracks a click on View More", () => {
+      renderWithRelay(
+        artistWithSeries({ forSaleCounts: [10, 10, 10, 10, 10, 10] }),
+      )
+
+      fireEvent.click(screen.getByText("View More").closest("a")!)
+
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "clickedArtistSeriesGroup",
+          context_module: "artistHeader",
+          context_page_owner_id: "artist-id",
+          context_page_owner_slug: "andy-warhol",
+          context_page_owner_type: "artist",
+          destination_page_owner_type: "allArtistSeries",
+          type: "viewAll",
+        }),
+      )
+    })
   })
 })
