@@ -66,7 +66,6 @@ const ConversationSkeleton: React.FC<
           </Flex>
 
           <Flex flexDirection="column" alignSelf="flex-start">
-            <SkeletonText variant="xs">Inquiry</SkeletonText>
             <SkeletonText variant="xs">22 Feb, 2023</SkeletonText>
           </Flex>
         </Flex>

@@ -2,7 +2,6 @@ import { Box, Flex, Image, StackableBorderBox, Text } from "@artsy/palette"
 import { getSidebarTotal } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import { RouterLink } from "System/Components/RouterLink"
 import { useRouter } from "System/Hooks/useRouter"
-import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
 import type { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
 import { useEffect, useRef } from "react"
@@ -39,7 +38,6 @@ export const ConversationsSidebarItem: React.FC<
   }, [])
 
   const item = data?.items?.[0]?.item
-  const orders = extractNodes(data?.orderConnection)
   const lastMessagePreview = data.lastMessage?.replace(/\n/g, " ").trim()
 
   if (!item || item.__typename !== "Artwork") {
@@ -47,13 +45,6 @@ export const ConversationsSidebarItem: React.FC<
   }
 
   const borderTop = index !== 0 ? {} : { borderTop: 0 }
-
-  const conversationType =
-    orders.length === 0
-      ? "Inquiry"
-      : orders[0].__typename === "CommerceBuyOrder"
-        ? "Order"
-        : "Offer"
 
   return (
     <StackableBorderBox
@@ -117,10 +108,6 @@ export const ConversationsSidebarItem: React.FC<
               </Text>
             </Text>
 
-            <Text variant="xs" color="mono60" overflowEllipsis>
-              {conversationType}
-            </Text>
-
             {!!lastMessagePreview && (
               <Text
                 variant="xs"
@@ -181,17 +168,6 @@ const FRAGMENT = graphql`
     lastMessageAt(format: "MMM D")
     lastMessage
     isLastMessageToUser
-
-    orderConnection(
-      last: 1
-      states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]
-    ) {
-      edges {
-        node {
-          __typename
-        }
-      }
-    }
 
     items {
       item @required(action: NONE) {
