@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05e84a4fa88fd2a58e4ef3473dd27a98>>
+ * @generated SignedSource<<22a04861ed46e28800ed260db5760bd6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -220,58 +220,6 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "last",
-                            "value": 1
-                          },
-                          {
-                            "kind": "Literal",
-                            "name": "states",
-                            "value": [
-                              "APPROVED",
-                              "FULFILLED",
-                              "SUBMITTED",
-                              "PROCESSING_APPROVAL",
-                              "REFUNDED"
-                            ]
-                          }
-                        ],
-                        "concreteType": "CommerceOrderConnectionWithTotalCount",
-                        "kind": "LinkedField",
-                        "name": "orderConnection",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "CommerceOrderEdge",
-                            "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": null,
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  (v3/*: any*/),
-                                  (v1/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\"])"
-                      },
-                      {
-                        "alias": null,
                         "args": null,
                         "concreteType": "ConversationItem",
                         "kind": "LinkedField",
@@ -420,7 +368,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9067f478be361e2110dee5b12b3503e0",
+    "cacheID": "5d11d118093b05172e1f440c06e8e763",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -493,26 +441,6 @@ return {
         "viewer.conversationsConnection.edges.node.items.item.title": (v7/*: any*/),
         "viewer.conversationsConnection.edges.node.lastMessage": (v7/*: any*/),
         "viewer.conversationsConnection.edges.node.lastMessageAt": (v7/*: any*/),
-        "viewer.conversationsConnection.edges.node.orderConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceOrderConnectionWithTotalCount"
-        },
-        "viewer.conversationsConnection.edges.node.orderConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "CommerceOrderEdge"
-        },
-        "viewer.conversationsConnection.edges.node.orderConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceOrder"
-        },
-        "viewer.conversationsConnection.edges.node.orderConnection.edges.node.__typename": (v4/*: any*/),
-        "viewer.conversationsConnection.edges.node.orderConnection.edges.node.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.to": {
           "enumValues": null,
           "nullable": false,
@@ -540,7 +468,7 @@ return {
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  lastMessage\n  isLastMessageToUser\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    totalUnreadCount\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  unreadByCollector\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  lastMessage\n  isLastMessageToUser\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        isUnlisted\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    totalUnreadCount\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

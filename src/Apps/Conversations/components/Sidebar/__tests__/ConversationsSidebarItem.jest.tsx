@@ -56,9 +56,6 @@ describe("ConversationSidebarItem", () => {
           },
         },
       }),
-      CommerceOrderConnectionWithTotalCount: () => ({
-        edges: null,
-      }),
       ConversationItemType: () => ({
         __typename: "Artwork",
         title: "Demo title",
@@ -78,31 +75,10 @@ describe("ConversationSidebarItem", () => {
     expect(screen.getByText("Edgar the doggo,")).toBeInTheDocument()
     expect(screen.getByText("Demo title")).toBeInTheDocument()
     expect(screen.getByText("Dec 07")).toBeInTheDocument()
-    expect(screen.getByText("Inquiry")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
       "/user/conversations/conversation-id?",
     )
-  })
-
-  it("shows Order text", () => {
-    renderWithRelay({
-      CommerceOrder: () => ({
-        __typename: "CommerceBuyOrder",
-      }),
-    })
-
-    expect(screen.getByText("Order")).toBeInTheDocument()
-  })
-
-  it("shows Offer text", () => {
-    renderWithRelay({
-      CommerceOrder: () => ({
-        __typename: "CommerceOfferOrder",
-      }),
-    })
-
-    expect(screen.getByText("Offer")).toBeInTheDocument()
   })
 
   it("renders component when info is missing", () => {
@@ -117,9 +93,6 @@ describe("ConversationSidebarItem", () => {
             confirmedBuyerAt: null,
           },
         },
-      }),
-      CommerceOrderConnectionWithTotalCount: () => ({
-        edges: null,
       }),
       ConversationItemType: () => ({
         __typename: "Artwork",
