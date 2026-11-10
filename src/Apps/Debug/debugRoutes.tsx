@@ -30,6 +30,12 @@ const DebugHydrationErrorRoute = loadable(
   { resolveComponent: component => component.DebugHydrationErrorRoute },
 )
 
+const DebugFeatureFlagsRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "debugBundle" */ "./DebugFeatureFlagsRoute"),
+  { resolveComponent: component => component.DebugFeatureFlagsRoute },
+)
+
 /**
  * These routes are just for testing baseline page shell stuff -- Lighthouse,
  * Calibre, assets loaded on page, and other debugging things that might
@@ -70,6 +76,10 @@ export const debugRoutes: RouteProps[] = [
       {
         path: "hydration-error",
         getComponent: () => DebugHydrationErrorRoute,
+      },
+      {
+        path: "feature-flags",
+        getComponent: () => DebugFeatureFlagsRoute,
       },
     ],
   },
