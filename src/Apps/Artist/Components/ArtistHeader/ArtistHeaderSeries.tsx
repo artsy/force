@@ -1,7 +1,6 @@
-import { Flex, HorizontalOverflow, Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import { ArtistHeaderSeriesItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSeriesItem"
 import { RouterLink } from "System/Components/RouterLink"
-import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistHeaderSeries_artist$key } from "__generated__/ArtistHeaderSeries_artist.graphql"
 import type { FC } from "react"
@@ -61,15 +60,9 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
         )}
       </Flex>
 
-      <Media at="xs">
-        <HorizontalOverflow>
-          <Flex gap={1}>{items}</Flex>
-        </HorizontalOverflow>
-      </Media>
-
-      <Media greaterThan="xs">
-        <Flex gap={1}>{items}</Flex>
-      </Media>
+      <Flex gap={1} overflowX="auto">
+        {items}
+      </Flex>
     </Flex>
   )
 }
