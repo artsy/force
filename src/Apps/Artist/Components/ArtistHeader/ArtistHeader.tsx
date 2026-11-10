@@ -32,7 +32,6 @@ import {
   ArtistStylesAndTechniques,
   useHasArtistStylesAndTechniques,
 } from "Apps/Artist/Components/ArtistHeader/ArtistStylesAndTechniques"
-import { useEnableArtistHeaderSeries } from "Apps/Artist/Components/ArtistHeader/hooks/useEnableArtistHeaderSeries"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
@@ -56,7 +55,6 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
-  const isSeriesEnabled = useEnableArtistHeaderSeries()
   const instagramHandle = artist.instagramHandle?.trim() || null
 
   const image = artist.coverArtwork?.image
@@ -285,7 +283,7 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
           />
         )}
 
-        {isSeriesEnabled && <ArtistHeaderSeries artist={artist} />}
+        <ArtistHeaderSeries artist={artist} />
       </Column>
 
       {hasRightDetails && (
