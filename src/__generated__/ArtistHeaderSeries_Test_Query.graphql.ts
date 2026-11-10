@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<edc5bdac653b11df38ca9dfd50bff378>>
+ * @generated SignedSource<<05810164cb12e9d5312826fcf4f498e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -222,6 +222,13 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "featured",
+                        "storageKey": null
+                      },
                       (v1/*: any*/)
                     ],
                     "storageKey": null
@@ -239,7 +246,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "751b77dc48c30c587a58d789d6f484d1",
+    "cacheID": "f27242de8903dc9c74ded9d1f2099343",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -266,6 +273,12 @@ return {
           "nullable": true,
           "plural": false,
           "type": "ArtistSeries"
+        },
+        "artist.artistSeriesConnection.edges.node.featured": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
         },
         "artist.artistSeriesConnection.edges.node.forSaleArtworksCount": {
           "enumValues": null,
@@ -298,7 +311,7 @@ return {
     },
     "name": "ArtistHeaderSeries_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeaderSeries_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeaderSeries_artist\n    id\n  }\n}\n\nfragment ArtistHeaderSeriesItem_artistSeries on ArtistSeries {\n  slug\n  title\n  forSaleArtworksCount\n  image {\n    cropped(width: 280, height: 210, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderSeries_artist on Artist {\n  name\n  href\n  artistSeriesConnection(first: 10) {\n    edges {\n      node {\n        ...ArtistHeaderSeriesItem_artistSeries\n        internalID\n        forSaleArtworksCount\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistHeaderSeries_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeaderSeries_artist\n    id\n  }\n}\n\nfragment ArtistHeaderSeriesItem_artistSeries on ArtistSeries {\n  slug\n  title\n  forSaleArtworksCount\n  image {\n    cropped(width: 280, height: 210, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderSeries_artist on Artist {\n  name\n  href\n  artistSeriesConnection(first: 10) {\n    edges {\n      node {\n        ...ArtistHeaderSeriesItem_artistSeries\n        internalID\n        slug\n        featured\n        forSaleArtworksCount\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
