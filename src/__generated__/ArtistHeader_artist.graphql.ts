@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93c55eb4a08dd3a30e310059a0d53604>>
+ * @generated SignedSource<<0ac226b7e356a141f031647c82ef76c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,7 +63,7 @@ export type ArtistHeader_artist$data = {
       } | null | undefined;
     };
   }>;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist" | "ArtistStylesAndTechniques_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist" | "ArtistHeaderSeries_artist" | "ArtistStylesAndTechniques_artist">;
   readonly " $fragmentType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$key = {
@@ -262,6 +262,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "ArtistHeaderSeries_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtistStylesAndTechniques_artist"
     },
     {
@@ -433,6 +438,6 @@ return {
 };
 })();
 
-(node as any).hash = "926ae7d62b746bfcb0446853b4a6bda8";
+(node as any).hash = "2e2c7e43827b9e6897e6a24258643051";
 
 export default node;

@@ -1,5 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { useEnableArtistHeaderSeries } from "Apps/Artist/Components/ArtistHeader/hooks/useEnableArtistHeaderSeries"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapperTL"
 import { useRouter } from "System/Hooks/useRouter"
 import { graphql } from "react-relay"
@@ -26,8 +27,15 @@ jest.mock(
     ProgressiveOnboardingFollowArtist: ({ children }) => children,
   }),
 )
+jest.mock(
+  "Apps/Artist/Components/ArtistHeader/hooks/useEnableArtistHeaderSeries",
+  () => ({
+    useEnableArtistHeaderSeries: jest.fn(() => false),
+  }),
+)
 
 const mockUseTracking = useTracking as jest.Mock
+const mockUseEnableArtistHeaderSeries = useEnableArtistHeaderSeries as jest.Mock
 const trackEvent = jest.fn()
 
 beforeAll(() => {
@@ -675,6 +683,50 @@ describe("ArtistHeaderFragmentContainer", () => {
       })
 
       expect(screen.getByTestId("follow-button")).toBeInTheDocument()
+    })
+  })
+
+  describe("Series section", () => {
+    const artistWithSeries = {
+      Artist: () => ({
+        name: "Andy Warhol",
+        href: "/artist/andy-warhol",
+        artistSeriesConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "series-1",
+                slug: "andy-warhol-flowers",
+                title: "Flowers",
+                forSaleArtworksCount: 173,
+              },
+            },
+          ],
+        },
+      }),
+    }
+
+    afterEach(() => {
+      mockUseEnableArtistHeaderSeries.mockReturnValue(false)
+    })
+
+    it("does not render when the feature flag is off", () => {
+      mockUseEnableArtistHeaderSeries.mockReturnValue(false)
+
+      renderWithRelay(artistWithSeries)
+
+      expect(
+        screen.queryByText("Shop Andy Warhol Series"),
+      ).not.toBeInTheDocument()
+    })
+
+    it("renders in the left column when the feature flag is on", () => {
+      mockUseEnableArtistHeaderSeries.mockReturnValue(true)
+
+      renderWithRelay(artistWithSeries)
+
+      expect(screen.getByText("Shop Andy Warhol Series")).toBeInTheDocument()
+      expect(screen.getByText("Flowers")).toBeInTheDocument()
     })
   })
 })
