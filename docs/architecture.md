@@ -46,7 +46,7 @@ The application starts by:
 
 - Importing instrumentation for monitoring
 - Creating an Express app instance
-- Initializing the Unleash feature flag client
+- Initializing the Unleash feature flag client (flags are evaluated per request during rendering; see [using_unleash.md](using_unleash.md))
 - Setting up middleware via `initializeMiddleware()`
 - Configuring routes and error handling
 

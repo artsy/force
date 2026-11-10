@@ -11,7 +11,7 @@ Unleash is an open source feature flag service that lets us:
 - Control feature rollout using gradual activation
 - Target specific user segments with features
 
-We self host the instance at https://unleash.artsy.net and it's image configuration is at https://gihubs.com/artsy/artsy-unleash
+We self host the instance at https://unleash.artsy.net and its image configuration is at https://github.com/artsy/artsy-unleash
 
 ## Creating a new flag
 
@@ -49,9 +49,26 @@ By following these steps, you can safely manage feature rollouts and experiments
 
 3. **Use the flag in your code**: Refer to the examples in this guide to implement the feature flag in your application.
 
-## Using Feature Flags in React (Client-side)
+## How flags reach the page
 
-IMPORTANT: `useFlag` is not isomorphic. Meaning you will not have access to the flag on the server side render. Design your UI accordingly.
+Flags are evaluated on the server and rendered into the initial HTML, so `useFlag`, `useVariant`, and `match.context.featureFlags` all return the same value on the server and during hydration.
+
+1. For each request, `createSSRFeatureFlags` (`src/System/FeatureFlags/unleashServer.ts`) creates a client that evaluates a flag with the Node SDK the first time the render reads it, then reuses the answer for the rest of the request. Flags the page doesn't read are never evaluated, so usage metrics in Unleash reflect real usage.
+2. After rendering, the enabled flags the render read are serialized into sharify as `UNLEASH_TOGGLES`.
+3. In the browser, `getOrInitBrowserFeatureFlagsContext` (`src/System/FeatureFlags/unleashClient.ts`) creates a single client seeded with those toggles. It backs both the router context and the React hooks.
+4. After hydration, `FeatureFlagProvider` starts that client, which then polls the Frontend API every 30 seconds. Changes arrive as ordinary re-renders.
+
+Both sides evaluate against the same context, built by `getUnleashContext` (`src/System/FeatureFlags/unleashContext.ts`): `userId`, `sessionId`, and the user's `roles` as a comma-separated property.
+
+Things to know:
+
+- A flag first read only in the browser (for example in a component that renders only on the client, or on a route reached by client-side navigation) isn't in the bootstrap. It reads as disabled until the first Frontend API response arrives, shortly after hydration.
+- Because flags are collected during rendering, this relies on sharify being serialized after the body renders. It doesn't support `ENABLE_SSR_STREAMING`, which sends sharify before the body.
+- To inspect a flag, visit `/debug/feature-flags?flag=<name>`. It shows each source's value on the first render (which must match the server) next to its current value.
+
+## Using Feature Flags in React
+
+`useFlag` and `useVariant` are safe to use during server rendering.
 
 ### Basic Feature Flag Usage
 
@@ -70,8 +87,6 @@ const MyComponent = () => {
 ```
 
 ### A/B Testing with Variants
-
-IMPORTANT: `useVariant` is not isomorphic. Meaning you will not have access to the variant on the server side render. `variant` will be `"disabled"` until Unleash mounts and fetches.
 
 ```tsx
 import { useVariant } from "@unleash/proxy-client-react"
@@ -98,67 +113,22 @@ const MyExperiment = () => {
 }
 ```
 
-## Using Feature Flags in Node.js (Server-side)
-
-### Checking Feature Flags in Server Code
-
-```typescript
-import { isFeatureFlagEnabled } from "System/FeatureFlags/unleashServer"
-
-async function someServerFunction() {
-  if (isFeatureFlagEnabled("demo-feature")) {
-    return newFeatureBehavior()
-  }
-
-  return existingBehavior()
-}
-```
-
-### Using Context for Targeted Rollouts
-
-```typescript
-import {
-  isFeatureFlagEnabled,
-  getVariant,
-} from "System/FeatureFlags/unleashServer"
-
-// Check toggle
-if (isFeatureFlagEnabled("demo")) {
-  console.log("Toggle enabled")
-} else {
-  console.log("Toggle disabled")
-}
-
-// Check variant
-const variant = getVariant("demo-variant")
-
-if (variant.name === "experiment") {
-  // do something with the experiment variant...
-}
-```
-
 ## Accessing Unleash from the Router
 
-When the router first mounts we inject it into the router context, which can be used in the render function in our router to perform redirects and other operations. Example:
+The router context exposes `featureFlags`, backed by the same client as the hooks. Use it in route `render` functions, `prepareVariables`, and so on. It agrees with the hooks on both the server and the client.
 
-### Performing server-side redirects
+### Performing redirects
 
 ```tsx
 const routes = [
   {
     path: "/some-route",
     render: ({ match }) => {
-      if (isServer) {
-        if (
-          match.context.featureFlags.isEnabled("emerald_order-details-page")
-        ) {
-          console.log("Successfully found feature flag flag")
-
-          throw new RedirectException("/")
-        }
+      if (match.context.featureFlags.isEnabled("emerald_order-details-page")) {
+        throw new RedirectException("/")
       }
 
-      return <>This shouldn't render on the server, but rather redirect</>
+      return <>Rendered when the flag is disabled</>
     },
   },
 ]
@@ -186,6 +156,26 @@ const routes = [
     `,
   },
 ]
+```
+
+## Using Feature Flags in Express code
+
+Outside of React routes (plain Express handlers), use the Node SDK directly with the same context the rest of the app uses:
+
+```typescript
+import { getUnleashContext } from "System/FeatureFlags/unleashContext"
+import { getOrInitUnleashServer } from "System/FeatureFlags/unleashServer"
+
+const handler = (req: ArtsyRequest, res: ArtsyResponse) => {
+  const context = getUnleashContext({
+    user: res.locals.sd.CURRENT_USER,
+    sessionId: res.locals.sd.SESSION_ID,
+  })
+
+  if (getOrInitUnleashServer().isEnabled("demo-feature", context)) {
+    // ...
+  }
+}
 ```
 
 ## Common Pattern Examples
