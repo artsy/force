@@ -89,7 +89,9 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
   return (
     <Flex flexDirection="column" gap={1}>
       <Flex justifyContent="space-between" alignItems="center" gap={1}>
-        <Text variant={["sm-display", "sm"]}>{heading}</Text>
+        <Text as="h3" variant={["sm-display", "sm"]}>
+          {heading}
+        </Text>
 
         {hasMoreSeries && viewMoreHref && (
           <RouterLink
