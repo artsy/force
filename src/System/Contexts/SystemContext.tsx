@@ -1,3 +1,7 @@
+import type {
+  FeatureFlags,
+  UnleashBootstrap,
+} from "System/FeatureFlags/unleashClient"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getENV } from "Utils/getENV"
 import { type Metric, getSupportedMetric } from "Utils/metrics"
@@ -17,11 +21,6 @@ export interface SystemContextState {
   user: User
 }
 
-interface FeatureFlags {
-  isEnabled: (flag: string) => boolean
-  getVariant: (flag: string) => any
-}
-
 export interface SystemContextProps extends SystemContextState {
   featureFlags?: FeatureFlags
   injectedData?: any
@@ -29,6 +28,8 @@ export interface SystemContextProps extends SystemContextState {
   isLoggedIn?: boolean
   relayEnvironment: Environment
   searchQuery?: string
+  /** The bootstrapped Unleash client backing `featureFlags` and the flag hooks */
+  unleash?: UnleashBootstrap
   userPreferences?: UserPreferences
 }
 
