@@ -106,7 +106,7 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
         )}
       </Flex>
 
-      <Flex gap={1} overflowX="auto">
+      <Flex gap={1} overflowX="auto" pb={1}>
         {items}
       </Flex>
     </Flex>
