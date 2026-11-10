@@ -1,6 +1,7 @@
-import { Flex, Text } from "@artsy/palette"
+import { Flex, HorizontalOverflow, Text } from "@artsy/palette"
 import { ArtistHeaderSeriesItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSeriesItem"
 import { RouterLink } from "System/Components/RouterLink"
+import { Media } from "Utils/Responsive"
 import { extractNodes } from "Utils/extractNodes"
 import type { ArtistHeaderSeries_artist$key } from "__generated__/ArtistHeaderSeries_artist.graphql"
 import type { FC } from "react"
@@ -33,6 +34,16 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
   const viewMoreHref = artist.href ? `${artist.href}/series` : null
   const heading = artist.name ? `Shop ${artist.name} Series` : "Shop Series"
 
+  const items = visibleSeries.map(artistSeries => {
+    return (
+      <ArtistHeaderSeriesItem
+        key={artistSeries.internalID}
+        artistSeries={artistSeries}
+        width={[MOBILE_SERIES_WIDTH, desktopWidth]}
+      />
+    )
+  })
+
   return (
     <Flex flexDirection="column" gap={1}>
       <Flex justifyContent="space-between" alignItems="center" gap={1}>
@@ -50,17 +61,15 @@ export const ArtistHeaderSeries: FC<ArtistHeaderSeriesProps> = ({
         )}
       </Flex>
 
-      <Flex gap={1} overflowX={["auto", "visible"]}>
-        {visibleSeries.map(artistSeries => {
-          return (
-            <ArtistHeaderSeriesItem
-              key={artistSeries.internalID}
-              artistSeries={artistSeries}
-              width={[MOBILE_SERIES_WIDTH, desktopWidth]}
-            />
-          )
-        })}
-      </Flex>
+      <Media at="xs">
+        <HorizontalOverflow>
+          <Flex gap={1}>{items}</Flex>
+        </HorizontalOverflow>
+      </Media>
+
+      <Media greaterThan="xs">
+        <Flex gap={1}>{items}</Flex>
+      </Media>
     </Flex>
   )
 }
