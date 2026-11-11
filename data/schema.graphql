@@ -33369,6 +33369,11 @@ type Query {
   """
   crmContactsConnection(
     after: String
+
+    """
+    Only contacts assigned to this partner user. Cannot be combined with isUnassigned.
+    """
+    assignedToUserID: String
     before: String
 
     """
@@ -33376,6 +33381,11 @@ type Query {
     """
     category: String
     first: Int
+
+    """
+    Only contacts with no assignee. Cannot be combined with assignedToUserID.
+    """
+    isUnassigned: Boolean
     last: Int
 
     """
@@ -43812,6 +43822,11 @@ type Viewer {
   """
   crmContactsConnection(
     after: String
+
+    """
+    Only contacts assigned to this partner user. Cannot be combined with isUnassigned.
+    """
+    assignedToUserID: String
     before: String
 
     """
@@ -43819,6 +43834,11 @@ type Viewer {
     """
     category: String
     first: Int
+
+    """
+    Only contacts with no assignee. Cannot be combined with assignedToUserID.
+    """
+    isUnassigned: Boolean
     last: Int
 
     """
