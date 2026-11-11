@@ -10,6 +10,7 @@ A stable, client-safe description of what the agent is currently doing.
 enum AIAgentActivity {
   FINDING_RECOMMENDATIONS
   LOADING_ARTWORK_DETAILS
+  LOOKING_AT_IMAGE
   SEARCHING_ARTISTS
   SEARCHING_ARTSY
   SEARCHING_ARTWORKS
@@ -187,7 +188,7 @@ input AIAgentTurnInput {
   history: [AIAgentMessageInput!]
 
   """
-  An image attached to the new message, to find artworks that look like it.
+  An image attached to the new message, to find artworks that look like it or ask about it.
   """
   image: AIAgentImageInput
 

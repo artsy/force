@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<289c512e8f9926ad4717ccc39fe033a9>>
+ * @generated SignedSource<<dc577966fb92848db43170b156a3d47a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-export type AIAgentActivity = "FINDING_RECOMMENDATIONS" | "LOADING_ARTWORK_DETAILS" | "SEARCHING_ARTISTS" | "SEARCHING_ARTSY" | "SEARCHING_ARTWORKS" | "SEARCHING_FAIRS" | "SEARCHING_SHOWS" | "THINKING" | "%future added value";
+export type AIAgentActivity = "FINDING_RECOMMENDATIONS" | "LOADING_ARTWORK_DETAILS" | "LOOKING_AT_IMAGE" | "SEARCHING_ARTISTS" | "SEARCHING_ARTSY" | "SEARCHING_ARTWORKS" | "SEARCHING_FAIRS" | "SEARCHING_SHOWS" | "THINKING" | "%future added value";
 export type AIAgentEntityType = "ARTIST" | "ARTWORK" | "%future added value";
 export type AIAgentRole = "ASSISTANT" | "USER" | "%future added value";
 export type AIAgentSectionType = "ARTISTS" | "ARTWORKS" | "%future added value";
