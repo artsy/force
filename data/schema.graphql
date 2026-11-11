@@ -1767,6 +1767,41 @@ input AppSecondFactorAttributes {
 
 union AppSecondFactorOrErrorsUnion = AppSecondFactor | Errors
 
+type ApproveEmailSenderReviewFailure {
+  mutationError: GravityMutationError
+}
+
+input ApproveEmailSenderReviewInput {
+  clientMutationId: String
+
+  """
+  An existing CRM contact to link the sender to. A new contact is created when omitted.
+  """
+  crmContactID: String
+
+  """
+  The internal ID of the review
+  """
+  id: String!
+}
+
+type ApproveEmailSenderReviewPayload {
+  clientMutationId: String
+
+  """
+  On success: the approved review
+  """
+  emailSenderReviewOrError: ApproveEmailSenderReviewResponseOrError
+}
+
+union ApproveEmailSenderReviewResponseOrError =
+  | ApproveEmailSenderReviewFailure
+  | ApproveEmailSenderReviewSuccess
+
+type ApproveEmailSenderReviewSuccess {
+  emailSenderReview: EmailSenderReview
+}
+
 type ArchiveCRMContactFailure {
   mutationError: GravityMutationError
 }
@@ -17676,6 +17711,117 @@ enum EmailParticipantRole {
   TO
 }
 
+type EmailSenderReview {
+  """
+  The sender's email address
+  """
+  address: String!
+
+  """
+  Set once the review is approved
+  """
+  crmContactID: String
+  decidedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  The user who approved or skipped the review
+  """
+  decidedByID: String
+
+  """
+  The mailbox the sender was first seen through
+  """
+  emailAccountID: String
+  firstSeenAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+  lastSeenAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  How many messages from this sender have been withheld
+  """
+  messageCount: Int!
+
+  """
+  The sender's display name, if known
+  """
+  name: String
+  partnerID: String!
+  status: EmailSenderReviewStatus
+
+  """
+  The first recipient address, to tell mailboxes apart
+  """
+  toAddress: String
+}
+
+"""
+A connection to a list of items.
+"""
+type EmailSenderReviewConnection {
+  """
+  A list of edges.
+  """
+  edges: [EmailSenderReviewEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An edge in a connection.
+"""
+type EmailSenderReviewEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: EmailSenderReview
+}
+
+enum EmailSenderReviewStatus {
+  APPROVED
+  PENDING
+  SKIPPED
+}
+
 input EnableSecondFactorInput {
   clientMutationId: String
   code: String!
@@ -25300,6 +25446,13 @@ type Mutation {
   ): AdminUpdateFeatureFlagPayload
 
   """
+  Approve a pending email sender review. Finds or creates a CRM contact for the sender and releases the sender's withheld mail in the background.
+  """
+  approveEmailSenderReview(
+    input: ApproveEmailSenderReviewInput!
+  ): ApproveEmailSenderReviewPayload
+
+  """
   Archive a CRM contact. Contacts can't be deleted, and an archived contact keeps its email addresses, so they can't be reused.
   """
   archiveCRMContact(input: ArchiveCRMContactInput!): ArchiveCRMContactPayload
@@ -26814,6 +26967,13 @@ type Mutation {
   setOrderPayment(input: setOrderPaymentInput!): setOrderPaymentPayload
 
   """
+  Skip a pending email sender review. Further mail from the sender is dropped until the review is unskipped or approved.
+  """
+  skipEmailSenderReview(
+    input: SkipEmailSenderReviewInput!
+  ): SkipEmailSenderReviewPayload
+
+  """
   Start an identity verification flow for a pending identity verification
   """
   startIdentityVerification(
@@ -26913,6 +27073,13 @@ type Mutation {
   unsetOrderPaymentMethod(
     input: unsetOrderPaymentMethodInput!
   ): unsetOrderPaymentMethodPayload
+
+  """
+  Return a skipped email sender review to pending
+  """
+  unskipEmailSenderReview(
+    input: UnskipEmailSenderReviewInput!
+  ): UnskipEmailSenderReviewPayload
 
   """
   Create an alert
@@ -33498,6 +33665,36 @@ type Query {
   ): [MarketingCollection!]
 
   """
+  A pending, approved or skipped email sender review
+  """
+  emailSenderReview(
+    """
+    The internal ID of the review
+    """
+    id: String!
+  ): EmailSenderReview
+
+  """
+  A connection of a partner's email sender reviews
+  """
+  emailSenderReviewsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    The partner ID to list sender reviews for
+    """
+    partnerID: String!
+
+    """
+    Only reviews with this status. Defaults to all statuses.
+    """
+    status: EmailSenderReviewStatus
+  ): EmailSenderReviewConnection
+
+  """
   A namespace external partners (provided by Galaxy)
   """
   external: External!
@@ -37735,6 +37932,36 @@ enum ShowSorts {
   UPDATED_AT_DESC
 }
 
+type SkipEmailSenderReviewFailure {
+  mutationError: GravityMutationError
+}
+
+input SkipEmailSenderReviewInput {
+  clientMutationId: String
+
+  """
+  The internal ID of the review
+  """
+  id: String!
+}
+
+type SkipEmailSenderReviewPayload {
+  clientMutationId: String
+
+  """
+  On success: the skipped review
+  """
+  emailSenderReviewOrError: SkipEmailSenderReviewResponseOrError
+}
+
+union SkipEmailSenderReviewResponseOrError =
+  | SkipEmailSenderReviewFailure
+  | SkipEmailSenderReviewSuccess
+
+type SkipEmailSenderReviewSuccess {
+  emailSenderReview: EmailSenderReview
+}
+
 type SmsSecondFactor implements SecondFactor {
   countryCode: String
   disabledAt(
@@ -38667,6 +38894,36 @@ union UnpublishViewingRoomResponseOrError =
 
 type UnpublishViewingRoomSuccess {
   viewingRoom: ViewingRoom!
+}
+
+type UnskipEmailSenderReviewFailure {
+  mutationError: GravityMutationError
+}
+
+input UnskipEmailSenderReviewInput {
+  clientMutationId: String
+
+  """
+  The internal ID of the review
+  """
+  id: String!
+}
+
+type UnskipEmailSenderReviewPayload {
+  clientMutationId: String
+
+  """
+  On success: the pending review
+  """
+  emailSenderReviewOrError: UnskipEmailSenderReviewResponseOrError
+}
+
+union UnskipEmailSenderReviewResponseOrError =
+  | UnskipEmailSenderReviewFailure
+  | UnskipEmailSenderReviewSuccess
+
+type UnskipEmailSenderReviewSuccess {
+  emailSenderReview: EmailSenderReview
 }
 
 type UpdateAlertFailure {
@@ -43798,6 +44055,36 @@ type Viewer {
     last: Int
     size: Int = 12
   ): [MarketingCollection!]
+
+  """
+  A pending, approved or skipped email sender review
+  """
+  emailSenderReview(
+    """
+    The internal ID of the review
+    """
+    id: String!
+  ): EmailSenderReview
+
+  """
+  A connection of a partner's email sender reviews
+  """
+  emailSenderReviewsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    The partner ID to list sender reviews for
+    """
+    partnerID: String!
+
+    """
+    Only reviews with this status. Defaults to all statuses.
+    """
+    status: EmailSenderReviewStatus
+  ): EmailSenderReviewConnection
 
   """
   A namespace external partners (provided by Galaxy)
