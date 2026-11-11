@@ -677,4 +677,32 @@ describe("ArtistHeaderFragmentContainer", () => {
       expect(screen.getByTestId("follow-button")).toBeInTheDocument()
     })
   })
+
+  describe("Series section", () => {
+    const artistWithSeries = {
+      Artist: () => ({
+        name: "Andy Warhol",
+        href: "/artist/andy-warhol",
+        artistSeriesConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "series-1",
+                slug: "andy-warhol-flowers",
+                title: "Flowers",
+                forSaleArtworksCount: 173,
+              },
+            },
+          ],
+        },
+      }),
+    }
+
+    it("renders in the left column", () => {
+      renderWithRelay(artistWithSeries)
+
+      expect(screen.getByText("Shop Andy Warhol Series")).toBeInTheDocument()
+      expect(screen.getByText("Flowers")).toBeInTheDocument()
+    })
+  })
 })

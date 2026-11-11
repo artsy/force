@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0b43f3c1922b5a70dfb403ea0ef5df7>>
+ * @generated SignedSource<<3768a5910e439d649a2ce3317798f894>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,13 +34,6 @@ export type ConversationsSidebarItem_conversation$data = {
   } | null | undefined> | null | undefined;
   readonly lastMessage: string | null | undefined;
   readonly lastMessageAt: string | null | undefined;
-  readonly orderConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly __typename: string;
-      } | null | undefined;
-    } | null | undefined> | null | undefined;
-  } | null | undefined;
   readonly to: {
     readonly name: string;
   };
@@ -58,13 +51,6 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
   "storageKey": null
 };
 return {
@@ -128,57 +114,6 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "last",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "FULFILLED",
-            "SUBMITTED",
-            "PROCESSING_APPROVAL",
-            "REFUNDED"
-          ]
-        }
-      ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
-      "kind": "LinkedField",
-      "name": "orderConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOrderEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": null,
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                (v1/*: any*/)
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\"])"
-    },
-    {
-      "alias": null,
       "args": null,
       "concreteType": "ConversationItem",
       "kind": "LinkedField",
@@ -195,7 +130,13 @@ return {
             "name": "item",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
+                "storageKey": null
+              },
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -304,6 +245,6 @@ return {
 };
 })();
 
-(node as any).hash = "7056b04f4cf61f88ca603c3dd874475b";
+(node as any).hash = "3fec48cf10df3bbe40016144849bedf2";
 
 export default node;

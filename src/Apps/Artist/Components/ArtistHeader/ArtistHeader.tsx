@@ -26,6 +26,7 @@ import {
   ArtistHeaderImageFragmentContainer,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
+import { ArtistHeaderSeries } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSeries"
 import { ArtistHeaderSocialLink } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderSocialLink"
 import {
   ArtistStylesAndTechniques,
@@ -281,6 +282,8 @@ const ArtistHeader: React.FC<React.PropsWithChildren<ArtistHeaderProps>> = ({
             contextModule={ContextModule.artistHeader}
           />
         )}
+
+        <ArtistHeaderSeries artist={artist} />
       </Column>
 
       {hasRightDetails && (
@@ -388,6 +391,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           totalCount
         }
         ...ArtistHeaderEditorial_artist
+        ...ArtistHeaderSeries_artist
         ...ArtistStylesAndTechniques_artist
         verifiedRepresentatives {
           partner {
