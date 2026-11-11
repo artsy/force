@@ -8,8 +8,9 @@ export const FeatureFlagProvider: React.FC<React.PropsWithChildren> = ({
 
   if (!unleash) {
     // Without a bootstrapped client there is nothing to agree with the server
-    // on, so render the provider's offline default: every flag is off.
-    return <FlagProvider>{children}</FlagProvider>
+    // on, so render the provider's offline default: every flag is off. It's
+    // never started, because the offline client would poll `http://localhost`.
+    return <FlagProvider startClient={false}>{children}</FlagProvider>
   }
 
   return (

@@ -66,7 +66,9 @@ class SSRUnleashClient extends UnleashClient {
   }
 
   getVariant(name: string): IVariant {
-    return this.evaluate(name)?.variant ?? DISABLED_VARIANT
+    // A copy, like the browser client returns, so callers can't mutate the
+    // toggle that gets serialized.
+    return { ...(this.evaluate(name)?.variant ?? DISABLED_VARIANT) }
   }
 
   getAllToggles(): IToggle[] {
