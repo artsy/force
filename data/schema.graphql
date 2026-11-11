@@ -739,6 +739,11 @@ type Alert {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -2230,6 +2235,7 @@ type ArticleUnpublishedArtworkPartner {
 }
 
 type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Searchable {
+  accentColorOptions: [ArtistStoryAccentColor!]
   alternateNames: [String]
   articlesConnection(
     after: String
@@ -2591,6 +2597,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -3273,6 +3284,11 @@ type ArtistPartnerEdge {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -3555,6 +3571,11 @@ type ArtistSeries implements Node {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -3660,8 +3681,9 @@ type ArtistStatuses {
 
 type ArtistStory {
   about: ArtistStoryAbout
+  accentColor: ArtistStoryAccentColor
   headerImage: ArtistStoryImage
-  headerVideo: Video
+  headerVideo: ArtistStoryVideo
 
   """
   A globally unique ID.
@@ -3673,7 +3695,7 @@ type ArtistStory {
   """
   internalID: ID!
   motionVideos: [ArtistStoryVideo!]!
-  processVideo: Video
+  processVideo: ArtistStoryVideo
   pullQuote: ArtistStoryQuote
 }
 
@@ -3683,15 +3705,37 @@ type ArtistStoryAbout {
   tagline: String
 }
 
+type ArtistStoryAccentColor {
+  hex: String!
+  textColor: ArtistStoryTextColor!
+}
+
 type ArtistStoryImage {
   altText: String!
   credit: String
   image: Image!
 }
 
+type ArtistStoryMutationFailure {
+  mutationError: GravityMutationError
+}
+
+union ArtistStoryMutationResponseOrError =
+  | ArtistStoryMutationFailure
+  | ArtistStoryMutationSuccess
+
+type ArtistStoryMutationSuccess {
+  artistStory: ArtistStory
+}
+
 type ArtistStoryQuote {
   attribution: String
   text: String!
+}
+
+enum ArtistStoryTextColor {
+  BLACK
+  WHITE
 }
 
 type ArtistStoryVideo {
@@ -3708,7 +3752,42 @@ type ArtistStoryVideo {
   internalID: ID!
   position: Int!
   quote: ArtistStoryQuote
+  role: ArtistStoryVideoRole!
   video: Video!
+}
+
+type ArtistStoryVideoMutationFailure {
+  mutationError: GravityMutationError
+}
+
+union ArtistStoryVideoMutationResponseOrError =
+  | ArtistStoryVideoMutationFailure
+  | ArtistStoryVideoMutationSuccess
+
+type ArtistStoryVideoMutationSuccess {
+  artistStoryID: String!
+
+  """
+  The Story's videos of every role, header first, then motion, then process, each in order.
+  """
+  videos: [ArtistStoryVideo!]!
+}
+
+enum ArtistStoryVideoRole {
+  """
+  Silent background loop behind the page header. Vimeo only.
+  """
+  HEADER
+
+  """
+  Silent loop with a caption and quote. Vimeo only.
+  """
+  MOTION
+
+  """
+  The artist's process film. Vimeo or YouTube.
+  """
+  PROCESS
 }
 
 type ArtistTargetSupply {
@@ -5418,6 +5497,11 @@ type ArtworkFilterNode {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -6123,6 +6207,15 @@ type ArtworkSavedSearch {
     first: Int
     last: Int
   ): ArtworkConnection
+}
+
+enum ArtworkSearchProfile {
+  DEFAULT
+
+  """
+  Inventory search for a partner. Requires partnerID and partner access; ignored otherwise.
+  """
+  PARTNER_INVENTORY
 }
 
 type ArtworkSignatureMeta {
@@ -15663,6 +15756,14 @@ type DeleteArtistPayload {
   clientMutationId: String
 }
 
+union DeleteArtistStoryResponseOrError =
+  | ArtistStoryMutationFailure
+  | DeleteArtistStorySuccess
+
+type DeleteArtistStorySuccess {
+  artistStoryID: String!
+}
+
 type DeleteArtistSuccess {
   artist: Artist
 }
@@ -17982,6 +18083,11 @@ interface EntityWithFilterArtworksConnectionInterface {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -18483,6 +18589,11 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -19329,6 +19440,11 @@ input FilterArtworksInput {
   """
   published: Boolean
   saleID: ID
+
+  """
+  Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+  """
+  searchProfile: ArtworkSearchProfile
   showID: String
 
   """
@@ -20169,6 +20285,11 @@ type Gene implements Node & Searchable {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -20981,6 +21102,60 @@ type HomeViewCardEdge {
 }
 
 """
+A card linking to a city's City Guide, or to the City Guide for the city nearest the user
+"""
+type HomeViewCityGuideCard {
+  """
+  Count chips in display order, e.g. ["6 Curated Guides", "100+ Shows"]. Counts that are zero or failed to load are left out, so this can be empty
+  """
+  chips: [String!]!
+
+  """
+  The city's slug, or `null` for the "Explore city near me" card, where the app picks the city
+  """
+  citySlug: String
+  href: String!
+
+  """
+  The card's image. The rail has no background image of its own: clients use a blurred version of the current card's image
+  """
+  image: Image
+  title: String!
+}
+
+"""
+A connection to a list of items.
+"""
+type HomeViewCityGuideCardConnection {
+  """
+  A list of edges.
+  """
+  edges: [HomeViewCityGuideCardEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An edge in a connection.
+"""
+type HomeViewCityGuideCardEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: HomeViewCityGuideCard
+}
+
+"""
 A component specification, to allow for customization of presentation and behavior
 """
 type HomeViewComponent {
@@ -21306,6 +21481,43 @@ type HomeViewSectionCards implements HomeViewSectionGeneric & Node {
   """
   ownerType: String
   trackItemImpressions: Boolean!
+}
+
+"""
+A rail of cards linking to City Guides
+"""
+type HomeViewSectionCityGuides implements HomeViewSectionGeneric & Node {
+  cardsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): HomeViewCityGuideCardConnection
+
+  """
+  Component prescription for this section, for overriding or customizing presentation and behavior
+  """
+  component: HomeViewComponent
+
+  """
+  [Analytics] `context module` analytics value for this section, as defined in our schema (artsy/cohesion)
+  """
+  contextModule: String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+
+  """
+  [Analytics] `owner type` analytics value for this scetion when displayed in a standalone UI, as defined in our schema (artsy/cohesion)
+  """
+  ownerType: String
 }
 
 """
@@ -23752,6 +23964,11 @@ type MarketingCollection implements Node {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -25844,6 +26061,14 @@ type Mutation {
   Create an artist, used for MyCollection. use CreateCanonicalArtistMutation for all other cases
   """
   createArtist(input: CreateArtistMutationInput!): CreateArtistMutationPayload
+  createArtistStory(input: createArtistStoryInput!): createArtistStoryPayload
+
+  """
+  Place a video on an Artist Story, at the end of its role's list
+  """
+  createArtistStoryVideo(
+    input: createArtistStoryVideoInput!
+  ): createArtistStoryVideoPayload
 
   """
   Creates an ArtnetArtwork from an existing artwork and its catalog artwork, and pushes the create to Artnet. Gravity resolves the Artnet artist itself and refuses a create it cannot match, so correcting the artist in Gravity is what makes a retry succeed. Requires the `X-Artnet-Token` and `X-Artnet-User-Id` headers.
@@ -26269,6 +26494,14 @@ type Mutation {
   Delete an artist
   """
   deleteArtist(input: DeleteArtistInput!): DeleteArtistPayload
+
+  """
+  Delete an Artist Story, its videos and its images
+  """
+  deleteArtistStory(input: deleteArtistStoryInput!): deleteArtistStoryPayload
+  deleteArtistStoryVideo(
+    input: deleteArtistStoryVideoInput!
+  ): deleteArtistStoryVideoPayload
 
   """
   Deletes an artwork.
@@ -26799,6 +27032,13 @@ type Mutation {
   ): RecordGuidedTourEventPayload
 
   """
+  Rebuild the accent color options of an artist
+  """
+  refreshArtistAccentColorOptions(
+    input: RefreshArtistAccentColorOptionsMutationInput!
+  ): RefreshArtistAccentColorOptionsMutationPayload
+
+  """
   Renew the change notifications of a connected email account
   """
   refreshEmailAccountWatch(
@@ -27108,6 +27348,14 @@ type Mutation {
   updateArtistSocials(
     input: UpdateArtistSocialsMutationInput!
   ): UpdateArtistSocialsMutationPayload
+  updateArtistStory(input: updateArtistStoryInput!): updateArtistStoryPayload
+
+  """
+  Change a video's role, position, caption or quote on an Artist Story
+  """
+  updateArtistStoryVideo(
+    input: updateArtistStoryVideoInput!
+  ): updateArtistStoryVideoPayload
 
   """
   Updates an ArtnetArtwork and pushes the supported changes to Artnet. At least one of `published`, `availability`, `materials`, `priceToMinor` or `syncOn` is required. Requires the `X-Artnet-Token` and `X-Artnet-User-Id` headers.
@@ -29163,6 +29411,11 @@ type Partner implements Node {
     last: Int
     page: Int
     query: String!
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` matches title, artist, medium type and full or partial inventory ID.
+    """
+    searchProfile: ArtworkSearchProfile
     size: Int
   ): ArtworkConnection
 
@@ -29416,6 +29669,11 @@ type Partner implements Node {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -30066,6 +30324,11 @@ type PartnerArtist {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -30385,6 +30648,11 @@ type PartnerArtistEdge {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -32987,6 +33255,11 @@ type Query {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -33631,6 +33904,11 @@ type Query {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -35151,6 +35429,28 @@ union RecordGuidedTourEventResponseOrError =
 type RecordGuidedTourEventSuccess {
   guidedTour: GuidedTourStateView!
   me: Me!
+}
+
+type RefreshArtistAccentColorOptionsFailure {
+  mutationError: GravityMutationError
+}
+
+input RefreshArtistAccentColorOptionsMutationInput {
+  artistID: String!
+  clientMutationId: String
+}
+
+type RefreshArtistAccentColorOptionsMutationPayload {
+  clientMutationId: String
+  responseOrError: RefreshArtistAccentColorOptionsResponseOrError
+}
+
+union RefreshArtistAccentColorOptionsResponseOrError =
+  | RefreshArtistAccentColorOptionsFailure
+  | RefreshArtistAccentColorOptionsSuccess
+
+type RefreshArtistAccentColorOptionsSuccess {
+  accentColorOptions: [ArtistStoryAccentColor!]!
 }
 
 type RefreshEmailAccountWatchFailure {
@@ -37537,6 +37837,11 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -38492,6 +38797,11 @@ type Tag implements Node {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -43510,6 +43820,11 @@ type Viewer {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -44084,6 +44399,11 @@ type Viewer {
     """
     published: Boolean
     saleID: ID
+
+    """
+    Which search behaviour to use. `PARTNER_INVENTORY` needs `partnerID` and partner access, and is ignored otherwise.
+    """
+    searchProfile: ArtworkSearchProfile
     showID: String
 
     """
@@ -45800,6 +46120,79 @@ type createAlertPayload {
   responseOrError: CreateAlertResponseOrError
 }
 
+input createArtistStoryInput {
+  """
+  Markdown.
+  """
+  aboutBody: String
+
+  """
+  Hex string. Must be one of the artist's accent color options when it changes.
+  """
+  accentColor: String
+  clientMutationId: String
+
+  """
+  Required while a Header Image is set.
+  """
+  headerImageAltText: String
+  headerImageCredit: String
+  headerImageS3Bucket: String
+  headerImageS3Key: String
+  partnerArtistID: String!
+
+  """
+  Required while a Portrait is set.
+  """
+  portraitAltText: String
+  portraitCredit: String
+  portraitImageS3Bucket: String
+  portraitImageS3Key: String
+
+  """
+  Plain text, max 250.
+  """
+  pullQuote: String
+  pullQuoteAttribution: String
+
+  """
+  Plain text, max 250.
+  """
+  tagline: String
+}
+
+type createArtistStoryPayload {
+  clientMutationId: String
+  responseOrError: ArtistStoryMutationResponseOrError
+}
+
+input createArtistStoryVideoInput {
+  artistStoryID: String!
+
+  """
+  Motion videos only.
+  """
+  caption: String
+  clientMutationId: String
+
+  """
+  Motion videos only. Plain text, max 250.
+  """
+  quote: String
+
+  """
+  Motion videos only, and only with a quote.
+  """
+  quoteAttribution: String
+  role: ArtistStoryVideoRole!
+  videoID: String!
+}
+
+type createArtistStoryVideoPayload {
+  clientMutationId: String
+  responseOrError: ArtistStoryVideoMutationResponseOrError
+}
+
 input createBuyerOfferInput {
   """
   Offer amount in minor units (cents).
@@ -46106,6 +46499,30 @@ input deleteAlertInput {
 type deleteAlertPayload {
   clientMutationId: String
   responseOrError: DeleteAlertResponseOrError
+}
+
+input deleteArtistStoryInput {
+  clientMutationId: String
+  id: String!
+}
+
+type deleteArtistStoryPayload {
+  clientMutationId: String
+  responseOrError: DeleteArtistStoryResponseOrError
+}
+
+input deleteArtistStoryVideoInput {
+  clientMutationId: String
+
+  """
+  The placement's id (not the video's).
+  """
+  id: String!
+}
+
+type deleteArtistStoryVideoPayload {
+  clientMutationId: String
+  responseOrError: ArtistStoryVideoMutationResponseOrError
 }
 
 input deleteCityArticleInput {
@@ -46578,6 +46995,86 @@ input updateAlertInput {
 type updateAlertPayload {
   clientMutationId: String
   responseOrError: UpdateAlertResponseOrError
+}
+
+input updateArtistStoryInput {
+  """
+  Markdown.
+  """
+  aboutBody: String
+
+  """
+  Hex string. Must be one of the artist's accent color options when it changes.
+  """
+  accentColor: String
+  clientMutationId: String
+
+  """
+  Required while a Header Image is set.
+  """
+  headerImageAltText: String
+  headerImageCredit: String
+  headerImageS3Bucket: String
+  headerImageS3Key: String
+  id: String!
+
+  """
+  Required while a Portrait is set.
+  """
+  portraitAltText: String
+  portraitCredit: String
+  portraitImageS3Bucket: String
+  portraitImageS3Key: String
+
+  """
+  Plain text, max 250.
+  """
+  pullQuote: String
+  pullQuoteAttribution: String
+
+  """
+  Plain text, max 250.
+  """
+  tagline: String
+}
+
+type updateArtistStoryPayload {
+  clientMutationId: String
+  responseOrError: ArtistStoryMutationResponseOrError
+}
+
+input updateArtistStoryVideoInput {
+  """
+  Motion videos only.
+  """
+  caption: String
+  clientMutationId: String
+
+  """
+  The placement's id (not the video's).
+  """
+  id: String!
+
+  """
+  Zero-based position among the Story's videos of the same role.
+  """
+  position: Int
+
+  """
+  Motion videos only. Plain text, max 250.
+  """
+  quote: String
+
+  """
+  Motion videos only, and only with a quote.
+  """
+  quoteAttribution: String
+  role: ArtistStoryVideoRole
+}
+
+type updateArtistStoryVideoPayload {
+  clientMutationId: String
+  responseOrError: ArtistStoryVideoMutationResponseOrError
 }
 
 type updateArtworkFailure {
