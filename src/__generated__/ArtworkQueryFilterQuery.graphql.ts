@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a17363a6e6704c5a73ef488c516e055>>
+ * @generated SignedSource<<117b127886d3b7d8b2a27d512cee5054>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "IMPORT_SOURCE" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
+export type ArtworkSearchProfile = "DEFAULT" | "PARTNER_INVENTORY" | "%future added value";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type LabelSignalEnum = "CURATORS_PICK" | "INCREASED_INTEREST" | "PARTNER_OFFER" | "%future added value";
 export type FilterArtworksInput = {
@@ -80,6 +81,7 @@ export type FilterArtworksInput = {
   priceRange?: string | null | undefined;
   published?: boolean | null | undefined;
   saleID?: string | null | undefined;
+  searchProfile?: ArtworkSearchProfile | null | undefined;
   showID?: string | null | undefined;
   signed?: boolean | null | undefined;
   similarToArtworkID?: string | null | undefined;
