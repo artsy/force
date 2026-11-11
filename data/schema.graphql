@@ -26852,6 +26852,13 @@ type Mutation {
   ): ReopenArtworkDuplicatePairMutationPayload
 
   """
+  Reply to a synced email message from the mailbox that owns it. Only the mailbox owner can reply. The sent copy is stored by a background sync.
+  """
+  replyToEmailMessage(
+    input: ReplyToEmailMessageInput!
+  ): ReplyToEmailMessagePayload
+
+  """
   Reposition artwork images, determining their display order.
   """
   repositionArtworkImages(
@@ -35374,6 +35381,57 @@ union ReopenArtworkDuplicatePairResponseOrError =
 
 type ReopenArtworkDuplicatePairSuccess {
   artworkDuplicatePair: ArtworkDuplicatePair
+}
+
+type ReplyToEmailMessageFailure {
+  mutationError: GravityMutationError
+}
+
+input ReplyToEmailMessageInput {
+  """
+  The HTML body of the reply
+  """
+  bodyHTML: String!
+  clientMutationId: String
+
+  """
+  The internal ID of the email message being replied to
+  """
+  id: String!
+}
+
+type ReplyToEmailMessagePayload {
+  clientMutationId: String
+
+  """
+  On success: the provider IDs of the sent reply
+  """
+  replyOrError: ReplyToEmailMessageResponseOrError
+}
+
+type ReplyToEmailMessageReply {
+  """
+  The provider's ID of the sent message
+  """
+  providerMessageID: String
+
+  """
+  The provider's ID of the thread the reply was added to
+  """
+  providerThreadID: String
+
+  """
+  The RFC 2822 Message-ID of the sent message
+  """
+  rfcMessageID: String
+}
+
+union ReplyToEmailMessageResponseOrError =
+  | ReplyToEmailMessageFailure
+  | ReplyToEmailMessageSuccess
+
+type ReplyToEmailMessageSuccess {
+  reply: ReplyToEmailMessageReply
 }
 
 type RepositionArtworkImagesFailure {
