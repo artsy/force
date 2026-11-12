@@ -268,10 +268,6 @@ const DebugFeatureFlagsEnabledList: React.FC = () => {
     }),
   )
 
-  const serverCount = toggles.filter(({ name }) => {
-    return serverFlagNames.has(name)
-  }).length
-
   // Flags the server sent first, then the rest, each alphabetically
   const sortedToggles = [...toggles]
     .filter(({ name }) => {
@@ -290,9 +286,9 @@ const DebugFeatureFlagsEnabledList: React.FC = () => {
       <Text variant="lg-display">Enabled for you</Text>
 
       <Text variant="sm" color="mono60">
-        {toggles.length} enabled. The server sent {serverCount}: the flags it
-        read while rendering this page. The rest arrived from the browser’s
-        fetch after load.
+        {toggles.length} enabled. The server sent {serverFlagNames.size}: the
+        flags it read while rendering this page. The rest arrived from the
+        browser’s fetch after load.
       </Text>
 
       <Spacer y={2} />
