@@ -43,6 +43,16 @@ if (ENABLE_SSR_STREAMING) {
 // Mount middleware
 initializeMiddleware(app)
 
+// Debug pages are tools, not content. Keep them out of search results, and
+// stop crawlers following their links (the feature flag page links to every
+// enabled flag, and each visit evaluates one). A header, not a robots.txt
+// Disallow: crawlers have to fetch the page to see it, and a disallowed URL
+// can still be indexed from an outside link.
+app.use("/debug", (_req, res, next) => {
+  res.set("X-Robots-Tag", "noindex, nofollow")
+  next()
+})
+
 const { routes, routePaths } = getRoutes()
 
 // Pre-emptive redirects
