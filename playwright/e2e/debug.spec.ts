@@ -5,6 +5,11 @@ test.describe("/debug/baseline", () => {
     await page.goto("/debug/baseline")
     await expect(page.getByText("Baseline")).toBeVisible()
   })
+
+  test("asks crawlers not to index or follow debug pages", async ({ page }) => {
+    const response = await page.goto("/debug/baseline")
+    expect(response?.headers()["x-robots-tag"]).toBe("noindex, nofollow")
+  })
 })
 
 test.describe("/debug/feature-flags", () => {
