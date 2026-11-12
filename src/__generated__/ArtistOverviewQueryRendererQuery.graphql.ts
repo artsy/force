@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3a006f420f81cd797dc8bc6401fbecc>>
+ * @generated SignedSource<<ae7b8596ece3db1a4f51b4f2dd368757>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,17 +42,31 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v3 = [
+v5 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 1
   }
 ],
-v4 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -61,17 +75,10 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v7 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -114,13 +121,7 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -137,6 +138,19 @@ return {
           },
           {
             "alias": null,
+            "args": null,
+            "concreteType": "ArtistStory",
+            "kind": "LinkedField",
+            "name": "featuredStory",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -149,36 +163,36 @@ return {
             "name": "insights",
             "plural": true,
             "selections": [
-              (v2/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": "insights(excludeBlanks:true)"
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v4/*: any*/),
+            "selections": (v6/*: any*/),
             "storageKey": "articlesConnection(first:1)"
           },
           {
             "alias": null,
             "args": [
-              (v5/*: any*/)
+              (v7/*: any*/)
             ],
             "concreteType": "ArtistSeriesConnection",
             "kind": "LinkedField",
             "name": "artistSeriesConnection",
             "plural": false,
-            "selections": (v4/*: any*/),
+            "selections": (v6/*: any*/),
             "storageKey": "artistSeriesConnection(first:0)"
           },
           {
             "alias": null,
             "args": [
-              (v5/*: any*/),
+              (v7/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -189,7 +203,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v4/*: any*/),
+            "selections": (v6/*: any*/),
             "storageKey": "showsConnection(first:0,status:\"running\")"
           },
           {
@@ -220,7 +234,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v3/*: any*/),
+                "args": (v5/*: any*/),
                 "concreteType": "GeneConnection",
                 "kind": "LinkedField",
                 "name": "genes",
@@ -242,8 +256,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
-                          (v6/*: any*/)
+                          (v4/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -256,19 +270,19 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "799c70b0b04364e5891e90bb78313cf6",
+    "cacheID": "4f20938762803098a02096c0307b8f50",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewQueryRendererQuery",
     "operationKind": "query",
-    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  insights(excludeBlanks: true) {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  featuredStory {\n    internalID\n    id\n  }\n  insights(excludeBlanks: true) {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
