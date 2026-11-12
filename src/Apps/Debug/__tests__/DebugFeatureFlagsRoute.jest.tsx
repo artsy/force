@@ -21,9 +21,11 @@ const REQUESTED_FLAG = "example_requested-flag"
 const renderPage = ({
   environment,
   user,
+  flag = REQUESTED_FLAG,
 }: {
   environment: string
   user: User
+  flag?: unknown
 }) => {
   ;(getENV as jest.Mock).mockImplementation((key: string) => {
     return key === "NODE_ENV" ? environment : undefined
@@ -33,7 +35,7 @@ const renderPage = ({
     featureFlags: { isEnabled: () => true },
   })
   ;(useRouter as jest.Mock).mockReturnValue({
-    match: { location: { query: { flag: REQUESTED_FLAG } } },
+    match: { location: { query: { flag } } },
   })
 
   return render(
@@ -88,5 +90,13 @@ describe("DebugFeatureFlagsRoute", () => {
 
     expect(useFlag).toHaveBeenCalledWith(REQUESTED_FLAG)
     expect(screen.getByText(REQUESTED_FLAG)).toBeInTheDocument()
+  })
+
+  it("falls back to the default flag when the query isn't a string", () => {
+    // `?flag[a]=b` parses to an object, which would crash the server render
+    renderPage({ environment: "staging", user: null, flag: { a: "b" } })
+
+    expect(useFlag).toHaveBeenCalledWith("onyx_art-assistant-web")
+    expect(screen.getByText("onyx_art-assistant-web")).toBeInTheDocument()
   })
 })

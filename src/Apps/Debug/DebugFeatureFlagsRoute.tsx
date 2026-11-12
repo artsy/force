@@ -42,7 +42,7 @@ export const DebugFeatureFlagsRoute = () => {
   const { match } = useRouter()
   const { user } = useSystemContext()
 
-  const flag = (match?.location?.query?.flag as string) || DEFAULT_FLAG
+  const flag = getFlagFromQuery(match?.location?.query?.flag)
   const isProduction = getENV("NODE_ENV") === "production"
   const canInspect = !isProduction || userIsTeam(user)
 
@@ -403,4 +403,13 @@ const getVariantLabel = (name?: string) => {
   if (!name || name === "disabled") return "None"
 
   return name
+}
+
+// The router parses the query with `qs`, so `?flag[a]=b` arrives as an object
+// and `?flag=123` as a number. Rendering an object would crash the server
+// render, so only a non-empty string counts.
+const getFlagFromQuery = (value: unknown) => {
+  if (typeof value === "string" && value.trim()) return value.trim()
+
+  return DEFAULT_FLAG
 }
