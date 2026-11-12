@@ -8,13 +8,6 @@ test.describe("/debug/baseline", () => {
 })
 
 test.describe("/debug/feature-flags", () => {
-  // Deployed environments limit this page to team members, and the smoke
-  // tests run logged out, so only run it against a local server.
-  test.skip(
-    !!process.env.PLAYWRIGHT_BASE_URL,
-    "Team-only outside of local development",
-  )
-
   test("hydrates with the flag values the server rendered", async ({
     page,
   }) => {
