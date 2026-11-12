@@ -1,5 +1,10 @@
 import { Spacer } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import {
+  ArtistStoryHeader,
+  hasArtistStoryHeaderMedia,
+} from "Apps/Artist/Components/ArtistStoryHeader/ArtistStoryHeader"
 import { Analytics } from "System/Contexts/AnalyticsContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
@@ -16,6 +21,7 @@ export const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
   children,
 }) => {
   const artist = useFragment(artistAppLayoutFragment, artistRef)
+  const isArtistStoryEnabled = useFlag("fireworksq4_artist-story")
 
   useScrollToOpenArtistAuthModal({ name: artist.name })
 
@@ -24,10 +30,17 @@ export const ArtistApp: React.FC<React.PropsWithChildren<ArtistAppProps>> = ({
       <ArtistMetaFragmentContainer artist={artist} />
 
       <Analytics contextPageOwnerId={artist.internalID}>
-        <Spacer y={[0, 4]} />
-        <ArtistHeaderFragmentContainer artist={artist} />
+        {isArtistStoryEnabled &&
+        hasArtistStoryHeaderMedia(artist.featuredStory) ? (
+          <ArtistStoryHeader artist={artist} />
+        ) : (
+          <>
+            <Spacer y={[0, 4]} />
+            <ArtistHeaderFragmentContainer artist={artist} />
 
-        <Spacer y={4} />
+            <Spacer y={4} />
+          </>
+        )}
 
         <Jump id="artistContentArea" />
 
@@ -41,6 +54,15 @@ const artistAppLayoutFragment = graphql`
   fragment ArtistApp_artist on Artist {
     ...ArtistMeta_artist
     ...ArtistHeader_artist
+    ...ArtistStoryHeader_artist
+    featuredStory {
+      headerVideo {
+        internalID
+      }
+      headerImage {
+        altText
+      }
+    }
     internalID
     name
   }

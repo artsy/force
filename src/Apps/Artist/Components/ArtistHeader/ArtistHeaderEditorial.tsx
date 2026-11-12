@@ -4,7 +4,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Shelf, Stack, Text, THEME } from "@artsy/palette"
+import { Shelf, Stack, THEME, Text } from "@artsy/palette"
 import { ArtistHeaderEditorialItem } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderEditorialItem"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
@@ -16,10 +16,24 @@ import { useTracking } from "react-tracking"
 
 interface ArtistHeaderEditorialProps {
   artist: ArtistHeaderEditorial_artist$key
+  itemBackgroundColor?: string
+  showProgress?: boolean
+  pt?: number
+}
+
+export const useHasArtistHeaderEditorial = (
+  artist: ArtistHeaderEditorial_artist$key,
+) => {
+  const data = useFragment(fragment, artist)
+
+  return extractNodes(data.articlesConnection).length > 0
 }
 
 export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
   artist: artistRef,
+  itemBackgroundColor,
+  showProgress = true,
+  pt = 2,
 }) => {
   const artist = useFragment(fragment, artistRef)
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
@@ -55,7 +69,7 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         flexDirection="row"
         justifyContent="space-between"
         alignItems="top"
-        pt={2}
+        pt={pt}
       >
         <Text variant="sm-display">
           Artsy Editorial Featuring {artist.name}
@@ -75,12 +89,18 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         )}
       </Stack>
 
-      <Shelf alignItems="stretch" gap={1} fullBleed={!!isMobile}>
+      <Shelf
+        alignItems="stretch"
+        gap={1}
+        fullBleed={!!isMobile}
+        showProgress={showProgress}
+      >
         {articles.map(article => {
           return (
             <ArtistHeaderEditorialItem
               key={article.internalID}
               article={article}
+              backgroundColor={itemBackgroundColor}
             />
           )
         })}
