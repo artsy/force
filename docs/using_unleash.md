@@ -67,7 +67,7 @@ Things to know:
 - A flag first read only in the browser (for example in a component that renders only on the client, or on a route reached by client-side navigation) isn't in the bootstrap. It reads as disabled until the first Frontend API response arrives, shortly after hydration.
 - Because flags are collected during rendering, this relies on sharify being serialized after the body renders. It doesn't support `ENABLE_SSR_STREAMING`, which sends sharify before the body.
 - `useFlagsStatus().flagsReady` is `true` from the first render, on the server and in the browser. It means the server's values are present, not that the browser has fetched from the Frontend API. It doesn't guard a flag that is first read in the browser.
-- To inspect a flag, visit `/debug/feature-flags?flag=<name>`. It shows each source's value on the first render (which must match the server) next to its current value. It also lists every flag enabled for you and whether the server sent it.
+- To inspect a flag, visit `/debug/feature-flags?flag=<name>`. It shows each source's value on the first render (which must match the server) next to its current value. It also lists every flag enabled for you and whether the server sent it. In production, inspecting a flag is limited to users with the `team` role, because it evaluates any flag name with the server key and the result, including any variant payload, ships in the page. The list stays open to everyone.
 
 ## Using Feature Flags in React
 

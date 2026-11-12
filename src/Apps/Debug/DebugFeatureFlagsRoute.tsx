@@ -22,6 +22,7 @@ import { useRouter } from "System/Hooks/useRouter"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { getENV } from "Utils/getENV"
+import { userIsTeam } from "Utils/user"
 import { useState } from "react"
 import { Title } from "react-head"
 
@@ -31,22 +32,19 @@ const DEFAULT_FLAG = "onyx_art-assistant-web"
  * Checks that a feature flag renders the same on the server and in the
  * browser. Pass `?flag=<name>` to inspect a specific flag.
  *
- * Each row shows the value from the first render (in the browser, the
- * hydration render, which must match the server HTML) next to its current
- * value. A value that changes after load came from the browser's first fetch
- * to the Unleash Frontend API.
+ * The inspector evaluates whatever flag name it's given with the server key,
+ * which can see flags the frontend key can't, and the result (including any
+ * variant payload) ships in the page. So in production it's limited to team
+ * members. The list of enabled flags shows only what the browser already has,
+ * so it's open to everyone.
  */
 export const DebugFeatureFlagsRoute = () => {
   const { match } = useRouter()
+  const { user } = useSystemContext()
+
   const flag = (match?.location?.query?.flag as string) || DEFAULT_FLAG
-
-  const { featureFlags } = useSystemContext()
-  const isEnabled = useFlag(flag)
-  const variant = useVariant(flag)
-  const { flagsReady } = useFlagsStatus()
-  const isEnabledInRouterContext = !!featureFlags?.isEnabled(flag)
-
-  const variantName = variant?.name ?? "disabled"
+  const isProduction = getENV("NODE_ENV") === "production"
+  const canInspect = !isProduction || userIsTeam(user)
 
   return (
     <>
@@ -66,6 +64,46 @@ export const DebugFeatureFlagsRoute = () => {
 
       <Spacer y={4} />
 
+      {canInspect ? (
+        <DebugFeatureFlagsInspector flag={flag} />
+      ) : (
+        <Text variant="sm" color="mono60">
+          Inspecting a flag is limited to team members in production.
+        </Text>
+      )}
+
+      <Spacer y={6} />
+
+      <DebugFeatureFlagsEnabledList />
+
+      <Spacer y={6} />
+    </>
+  )
+}
+
+interface DebugFeatureFlagsInspectorProps {
+  flag: string
+}
+
+/**
+ * Each row shows the value from the first render (in the browser, the
+ * hydration render, which must match the server HTML) next to its current
+ * value. A value that changes after load came from the browser's first fetch
+ * to the Unleash Frontend API.
+ */
+const DebugFeatureFlagsInspector: React.FC<DebugFeatureFlagsInspectorProps> = ({
+  flag,
+}) => {
+  const { featureFlags } = useSystemContext()
+  const isEnabled = useFlag(flag)
+  const variant = useVariant(flag)
+  const { flagsReady } = useFlagsStatus()
+  const isEnabledInRouterContext = !!featureFlags?.isEnabled(flag)
+
+  const variantName = variant?.name ?? "disabled"
+
+  return (
+    <>
       <DebugFeatureFlagsForm flag={flag} />
 
       <Spacer y={6} />
@@ -121,12 +159,6 @@ export const DebugFeatureFlagsRoute = () => {
           testId="routerContext"
         />
       </Join>
-
-      <Spacer y={6} />
-
-      <DebugFeatureFlagsEnabledList />
-
-      <Spacer y={6} />
     </>
   )
 }
