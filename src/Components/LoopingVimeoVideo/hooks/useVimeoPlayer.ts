@@ -25,6 +25,7 @@ export const useVimeoPlayer = ({
   const [isPlaying, setIsPlaying] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
   const [hasFailed, setHasFailed] = useState(false)
+  const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false)
 
   const post = useCallback(
     (message: { method: string; value?: string }) => {
@@ -69,7 +70,9 @@ export const useVimeoPlayer = ({
         case "error":
           // Browsers refuse a play() without a user gesture; the button can
           // still start the video, so that is not a broken player.
-          if (message.errorName !== "NotAllowedError") {
+          if (message.errorName === "NotAllowedError") {
+            setIsAutoplayBlocked(true)
+          } else {
             setHasFailed(true)
           }
           break
@@ -84,7 +87,9 @@ export const useVimeoPlayer = ({
   }, [src, iframeRef, post])
 
   useEffect(() => {
-    if (!src || !shouldAutoplay || hasStarted) return
+    // A blocked autoplay will never start on its own, but the button can
+    // still start it, so the timeout must not take the button away.
+    if (!src || !shouldAutoplay || hasStarted || isAutoplayBlocked) return
 
     const timeout = setTimeout(() => {
       setHasFailed(true)
@@ -93,7 +98,7 @@ export const useVimeoPlayer = ({
     return () => {
       clearTimeout(timeout)
     }
-  }, [src, shouldAutoplay, hasStarted])
+  }, [src, shouldAutoplay, hasStarted, isAutoplayBlocked])
 
   const play = useCallback(() => post({ method: "play" }), [post])
   const pause = useCallback(() => post({ method: "pause" }), [post])

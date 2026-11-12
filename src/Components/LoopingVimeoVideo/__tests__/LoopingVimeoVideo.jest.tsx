@@ -204,7 +204,8 @@ describe("LoopingVimeoVideo", () => {
         ).not.toBeInTheDocument()
       })
 
-      it("ignores a play() refused without a user gesture", async () => {
+      it("keeps the play button when the browser refuses autoplay", async () => {
+        jest.useFakeTimers()
         const onError = jest.fn()
         renderVideo({ onError })
 
@@ -214,8 +215,14 @@ describe("LoopingVimeoVideo", () => {
           event: "error",
           data: { name: "NotAllowedError" },
         })
+        act(() => {
+          jest.advanceTimersByTime(8000)
+        })
 
         expect(onError).not.toHaveBeenCalled()
+        expect(
+          screen.getByRole("button", { name: "Play video" }),
+        ).toBeInTheDocument()
       })
 
       it("reports an error when autoplay never starts", async () => {
