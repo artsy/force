@@ -6,3 +6,33 @@ test.describe("/debug/baseline", () => {
     await expect(page.getByText("Baseline")).toBeVisible()
   })
 })
+
+test.describe("/debug/feature-flags", () => {
+  // Deployed environments limit this page to team members, and the smoke
+  // tests run logged out, so only run it against a local server.
+  test.skip(
+    !!process.env.PLAYWRIGHT_BASE_URL,
+    "Team-only outside of local development",
+  )
+
+  test("hydrates with the flag values the server rendered", async ({
+    page,
+  }) => {
+    const firstRenderValues = async () => {
+      return page.locator("[data-testid$='-first']").allTextContents()
+    }
+
+    // Block scripts so the first load shows the server's HTML as-is
+    await page.route("**/*.js", route => route.abort())
+    await page.goto("/debug/feature-flags")
+    await expect(page.getByText("Feature flags")).toBeVisible()
+    const serverValues = await firstRenderValues()
+    expect(serverValues).toHaveLength(4)
+
+    await page.unroute("**/*.js")
+    await page.goto("/debug/feature-flags")
+    await expect(page.locator("body[data-test='AppReady']")).toBeVisible()
+
+    expect(await firstRenderValues()).toEqual(serverValues)
+  })
+})

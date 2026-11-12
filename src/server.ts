@@ -12,8 +12,13 @@ import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
+import { ENABLE_SSR_STREAMING } from "Server/config"
 import { errorHandlerMiddleware } from "Server/middleware/errorHandler"
-import { getOrInitUnleashServer } from "System/FeatureFlags/unleashServer"
+import { getUnleashContext } from "System/FeatureFlags/unleashContext"
+import {
+  createSSRFeatureFlags,
+  getOrInitUnleashServer,
+} from "System/FeatureFlags/unleashServer"
 import { getRoutes } from "System/Router/Utils/routeUtils"
 import { renderServerApp } from "System/Router/renderServerApp"
 import { setupServerRouter } from "System/Router/serverRouter"
@@ -24,7 +29,16 @@ import { initializeMiddleware } from "middleware"
 const app = express()
 
 // Initialize unleash server client
-const unleashClient = getOrInitUnleashServer()
+getOrInitUnleashServer()
+
+if (ENABLE_SSR_STREAMING) {
+  // Flags are collected while the page renders, but streaming sends sharify
+  // before the body renders. The browser would start without them, so any
+  // flag that's on would cause a hydration mismatch.
+  console.error(
+    "[unleash] ENABLE_SSR_STREAMING is on, but server-rendered feature flags don't support streaming. Expect hydration mismatches wherever a flag is enabled.",
+  )
+}
 
 // Mount middleware
 initializeMiddleware(app)
@@ -45,31 +59,32 @@ app.get(
 app.get(
   routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
-    const unleashContext = {
-      userId: req.user?.id, // res.locals.sd.CURRENT_USER.id
-      sessionId: req.session.id, // res.locals.sd.SESSION_ID
-    }
-
     try {
+      // Inside the `try` so a failure building the client reaches the error
+      // handler; Express doesn't catch rejections from async handlers.
+      const unleashContext = getUnleashContext({
+        user: res.locals.sd.CURRENT_USER,
+        sessionId: res.locals.sd.SESSION_ID,
+      })
+
+      const featureFlags = createSSRFeatureFlags(unleashContext)
+
       const { status, redirect, ...rest } = await setupServerRouter({
         next,
         req,
         res,
         routes,
-        context: {
-          featureFlags: {
-            isEnabled: (flag: string) =>
-              unleashClient.isEnabled(flag, unleashContext),
-            getVariant: (flag: string) =>
-              unleashClient.getVariant(flag, unleashContext),
-          },
-        },
+        context: featureFlags.context,
       })
 
       if (redirect) {
         res.redirect(status ?? 302, redirect.url)
         return
       }
+
+      // Rendering is done, so these are exactly the flags it read. The browser
+      // client is seeded with them so hydration sees the same values.
+      res.locals.sd.UNLEASH_TOGGLES = featureFlags.getEvaluatedToggles()
 
       renderServerApp({ req, res, code: status, ...rest })
     } catch (error) {

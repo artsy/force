@@ -1,5 +1,7 @@
 import loadable from "@loadable/component"
 import type { RouteProps } from "System/Router/Route"
+import { getENV } from "Utils/getENV"
+import { userIsTeam } from "Utils/user"
 import { HttpError } from "found"
 
 const DebugBaselineRoute = loadable(
@@ -28,6 +30,12 @@ const DebugHydrationErrorRoute = loadable(
   () =>
     import(/* webpackChunkName: "debugBundle" */ "./DebugHydrationErrorRoute"),
   { resolveComponent: component => component.DebugHydrationErrorRoute },
+)
+
+const DebugFeatureFlagsRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "debugBundle" */ "./DebugFeatureFlagsRoute"),
+  { resolveComponent: component => component.DebugFeatureFlagsRoute },
 )
 
 /**
@@ -70,6 +78,25 @@ export const debugRoutes: RouteProps[] = [
       {
         path: "hydration-error",
         getComponent: () => DebugHydrationErrorRoute,
+      },
+      {
+        path: "feature-flags",
+        getComponent: () => DebugFeatureFlagsRoute,
+        render: ({ Component, props, match }) => {
+          // This page evaluates whichever flag name is in the query string
+          // with the server SDK. Left open in production, anyone could report
+          // usage for arbitrary flag names to Unleash, or probe flags that
+          // aren't exposed to the browser.
+          const isProduction = getENV("NODE_ENV") === "production"
+
+          if (isProduction && !userIsTeam(match.context.user)) {
+            throw new HttpError(404)
+          }
+
+          if (!Component || !props) return null
+
+          return <Component {...props} />
+        },
       },
     ],
   },

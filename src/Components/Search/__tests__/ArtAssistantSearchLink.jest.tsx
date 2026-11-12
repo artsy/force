@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { useFlag, useFlagsStatus } from "@unleash/proxy-client-react"
+import { useFlag } from "@unleash/proxy-client-react"
 import { ArtAssistantSearchLink } from "Components/Search/ArtAssistantSearchLink"
 import { MockBoot } from "DevTools/MockBoot"
 
@@ -7,10 +7,7 @@ describe("Art Assistant search entry", () => {
   const user = { id: "user", accessToken: "token" }
   const renderLink = (props = {}) => {
     return render(
-      <MockBoot
-        user={user}
-        context={{ user, featureFlags: { isEnabled: () => true } }}
-      >
+      <MockBoot user={user} context={{ user }}>
         <ArtAssistantSearchLink {...props} />
       </MockBoot>,
     )
@@ -18,19 +15,10 @@ describe("Art Assistant search entry", () => {
 
   beforeEach(() => {
     ;(useFlag as jest.Mock).mockReturnValue(true)
-    ;(useFlagsStatus as jest.Mock).mockReturnValue({ flagsReady: true })
   })
 
   it("is hidden without access", () => {
     ;(useFlag as jest.Mock).mockReturnValue(false)
-    renderLink()
-    expect(
-      screen.queryByRole("link", { name: "Ask Art Assistant" }),
-    ).not.toBeInTheDocument()
-  })
-
-  it("stays hidden until the flag provider is ready, so SSR and hydration agree", () => {
-    ;(useFlagsStatus as jest.Mock).mockReturnValue({ flagsReady: false })
     renderLink()
     expect(
       screen.queryByRole("link", { name: "Ask Art Assistant" }),
