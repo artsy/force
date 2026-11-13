@@ -136,6 +136,41 @@
   This is a zero-tolerance rule. All new code must follow this pattern without exception.
 
 - **No components inside components**: Never define a React component inside another component's function body. Extract it to the module's top level or to its own file. Components defined inside other components are re-created on every render, losing state and hurting performance.
+- **One status, not many flags**: When two or more `useState` values describe stages of the same process (`isLoading`, `hasError`, `data`), replace them with one `status` union driven by `useReducer`. Name the states and the events that move between them, and have the reducer ignore events that make no sense in the current state. Derive booleans from `status` instead of storing them. Separate flags stay fine when they really are independent (`isMenuOpen` and `isTooltipVisible`). See [State machines will save you from useState](https://www.sandromaglione.com/articles/state-machines-will-save-you-from-use-state).
+
+  ```tsx
+  // ✗ INCORRECT - nothing stops isLoading and hasError from both being true
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasError, setHasError] = useState(false)
+  const [data, setData] = useState<Artwork | null>(null)
+
+  // ✓ CORRECT - exactly one state at a time, transitions in one place
+  type State =
+    | { status: "idle" }
+    | { status: "loading" }
+    | { status: "error" }
+    | { status: "success"; data: Artwork }
+
+  type Event =
+    | { type: "FETCH" }
+    | { type: "RESOLVE"; data: Artwork }
+    | { type: "REJECT" }
+
+  const reducer = (state: State, event: Event): State => {
+    switch (event.type) {
+      case "FETCH":
+        return { status: "loading" }
+      case "RESOLVE":
+        return state.status === "loading" ? { status: "success", data: event.data } : state
+      case "REJECT":
+        return state.status === "loading" ? { status: "error" } : state
+    }
+  }
+
+  const [state, send] = useReducer(reducer, { status: "idle" })
+  const isLoading = state.status === "loading"
+  ```
+
 - **One component per file**: Each component should live in its own file. The only exception is small, simple helper components that are exclusively used by the main component in that file — in that case, the main (primary) component must be defined first, with the helpers below it.
 - **Custom hooks location**: Co-locate hooks near the feature that uses them in a `hooks/` subfolder within the feature folder. Don't put all hooks in a global `hooks/` directory. Only move the hook to the global `hooks/` directory if it's used in multiple features.
 - **Error Handling**: Surface async errors to the user via a toast and log them with `console.error`. Use error boundaries in React for render errors.
