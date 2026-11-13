@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c7fbae31fb11fc56e538db00b7cd4fa>>
+ * @generated SignedSource<<8fdea809310f798ad10ebd6ebd102a91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,9 @@ export type ArtistOverview_artist$data = {
   } | null | undefined;
   readonly counts: {
     readonly relatedArtists: number | null | undefined;
+  } | null | undefined;
+  readonly featuredStory: {
+    readonly internalID: string;
   } | null | undefined;
   readonly href: string | null | undefined;
   readonly insights: ReadonlyArray<{
@@ -46,7 +49,14 @@ export type ArtistOverview_artist$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -55,14 +65,14 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 1
   }
 ],
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -71,7 +81,7 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v4 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
@@ -82,13 +92,7 @@ return {
   "metadata": null,
   "name": "ArtistOverview_artist",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -105,6 +109,18 @@ return {
     },
     {
       "alias": null,
+      "args": null,
+      "concreteType": "ArtistStory",
+      "kind": "LinkedField",
+      "name": "featuredStory",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -116,35 +132,35 @@ return {
       "kind": "LinkedField",
       "name": "insights",
       "plural": true,
-      "selections": (v0/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": "insights(excludeBlanks:true)"
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "ArticleConnection",
       "kind": "LinkedField",
       "name": "articlesConnection",
       "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "articlesConnection(first:1)"
     },
     {
       "alias": null,
       "args": [
-        (v3/*: any*/)
+        (v4/*: any*/)
       ],
       "concreteType": "ArtistSeriesConnection",
       "kind": "LinkedField",
       "name": "artistSeriesConnection",
       "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "artistSeriesConnection(first:0)"
     },
     {
       "alias": null,
       "args": [
-        (v3/*: any*/),
+        (v4/*: any*/),
         {
           "kind": "Literal",
           "name": "status",
@@ -155,7 +171,7 @@ return {
       "kind": "LinkedField",
       "name": "showsConnection",
       "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "showsConnection(first:0,status:\"running\")"
     },
     {
@@ -186,7 +202,7 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": (v1/*: any*/),
+          "args": (v2/*: any*/),
           "concreteType": "GeneConnection",
           "kind": "LinkedField",
           "name": "genes",
@@ -207,7 +223,7 @@ return {
                   "kind": "LinkedField",
                   "name": "node",
                   "plural": false,
-                  "selections": (v0/*: any*/),
+                  "selections": (v1/*: any*/),
                   "storageKey": null
                 }
               ],
@@ -225,6 +241,6 @@ return {
 };
 })();
 
-(node as any).hash = "34f4d63ce1d9a316bf72939b97d7b016";
+(node as any).hash = "51574a6a6190eb240c91919d664b35e4";
 
 export default node;
