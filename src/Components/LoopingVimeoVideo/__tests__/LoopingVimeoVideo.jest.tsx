@@ -129,6 +129,12 @@ describe("LoopingVimeoVideo", () => {
         { method: "play" },
       ])
       expect(onPlay).toHaveBeenCalledTimes(1)
+
+      sendFromVimeo({ frame, event: "play" })
+
+      expect(
+        screen.getByRole("button", { name: "Pause video" }),
+      ).toBeInTheDocument()
     })
 
     it("does not report autoplay", async () => {
@@ -225,6 +231,78 @@ describe("LoopingVimeoVideo", () => {
         ).toBeInTheDocument()
       })
 
+      it("plays from the button after the browser refused autoplay", async () => {
+        renderVideo()
+
+        const frame = await screen.findByTitle("Header video")
+        sendFromVimeo({
+          frame,
+          event: "error",
+          data: { name: "NotAllowedError" },
+        })
+        sendFromVimeo({ frame, event: "play" })
+
+        expect(
+          screen.getByRole("button", { name: "Pause video" }),
+        ).toBeInTheDocument()
+      })
+
+      it("drops the button when a playing video errors", async () => {
+        const onError = jest.fn()
+        renderVideo({ onError })
+
+        const frame = await screen.findByTitle("Header video")
+        sendFromVimeo({ frame, event: "play" })
+        sendFromVimeo({ frame, event: "error", data: { name: "DRMError" } })
+
+        expect(onError).toHaveBeenCalledTimes(1)
+        expect(
+          screen.queryByRole("button", { name: /video/ }),
+        ).not.toBeInTheDocument()
+      })
+
+      it("keeps the button gone when a failed player plays later", async () => {
+        renderVideo()
+
+        const frame = await screen.findByTitle("Header video")
+        sendFromVimeo({ frame, event: "error", data: { name: "DRMError" } })
+        sendFromVimeo({ frame, event: "play" })
+
+        expect(
+          screen.queryByRole("button", { name: /video/ }),
+        ).not.toBeInTheDocument()
+      })
+
+      it("keeps the pause button when a playing video gets a refusal", async () => {
+        renderVideo()
+
+        const frame = await screen.findByTitle("Header video")
+        sendFromVimeo({ frame, event: "play" })
+        sendFromVimeo({
+          frame,
+          event: "error",
+          data: { name: "NotAllowedError" },
+        })
+
+        expect(
+          screen.getByRole("button", { name: "Pause video" }),
+        ).toBeInTheDocument()
+      })
+
+      it("still reports an error when a pause arrives before the video plays", async () => {
+        jest.useFakeTimers()
+        const onError = jest.fn()
+        renderVideo({ onError })
+
+        const frame = await screen.findByTitle("Header video")
+        sendFromVimeo({ frame, event: "pause" })
+        act(() => {
+          jest.advanceTimersByTime(8000)
+        })
+
+        expect(onError).toHaveBeenCalledTimes(1)
+      })
+
       it("reports an error when autoplay never starts", async () => {
         jest.useFakeTimers()
         const onError = jest.fn()
@@ -305,6 +383,10 @@ describe("LoopingVimeoVideo", () => {
       expect(onPlay).toHaveBeenCalledTimes(1)
 
       sendFromVimeo({ frame, event: "play" })
+
+      expect(container.querySelector("img")).not.toBeInTheDocument()
+
+      sendFromVimeo({ frame, event: "pause" })
 
       expect(container.querySelector("img")).not.toBeInTheDocument()
     })
