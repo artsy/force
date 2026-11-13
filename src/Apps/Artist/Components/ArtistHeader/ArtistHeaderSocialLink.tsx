@@ -13,11 +13,14 @@ import { useTracking } from "react-tracking"
 
 export interface ArtistHeaderSocialLinkProps {
   instagramHandle: string
+  isInFeaturedStory?: boolean
 }
 
 export const ArtistHeaderSocialLink: React.FC<ArtistHeaderSocialLinkProps> = ({
   instagramHandle,
+  isInFeaturedStory = false,
 }) => {
+  const color = isInFeaturedStory ? "mono0" : "mono100"
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
@@ -53,8 +56,8 @@ export const ArtistHeaderSocialLink: React.FC<ArtistHeaderSocialLinkProps> = ({
       width="fit-content"
     >
       <Stack gap={0.5} flexDirection="row" alignItems="center">
-        <InstagramIcon size={24} fill="mono100" display="block" />
-        <Text variant="xs" color="mono100">
+        <InstagramIcon size={24} fill={color} display="block" />
+        <Text variant="xs" color={color}>
           {`@${handle}`}
         </Text>
       </Stack>
