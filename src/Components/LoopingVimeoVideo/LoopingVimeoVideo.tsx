@@ -1,5 +1,7 @@
 import { Box, Clickable, Image, Theme } from "@artsy/palette"
 import { useVimeoPlayer } from "Components/LoopingVimeoVideo/hooks/useVimeoPlayer"
+import { PauseIcon } from "Components/PauseIcon"
+import { PlayIcon } from "Components/PlayIcon"
 import {
   getVimeoBackgroundUrl,
   getVimeoThumbnailUrl,
@@ -161,22 +163,7 @@ export const LoopingVimeoVideo: React.FC<LoopingVimeoVideoProps> = ({
             background="rgba(255, 255, 255, 0.2)"
             color="mono0"
           >
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 12 12"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              {isPlaying ? (
-                <>
-                  <rect x="2" y="1.5" width="2.8" height="9" rx=".6" />
-                  <rect x="7.2" y="1.5" width="2.8" height="9" rx=".6" />
-                </>
-              ) : (
-                <path d="M3 1.6v8.8a.4.4 0 0 0 .6.35l7-4.4a.4.4 0 0 0 0-.7l-7-4.4A.4.4 0 0 0 3 1.6Z" />
-              )}
-            </svg>
+            {isPlaying ? <PauseIcon size={13} /> : <PlayIcon size={13} />}
           </Clickable>
         )}
       </Box>
