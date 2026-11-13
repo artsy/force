@@ -16,9 +16,7 @@ import { useTracking } from "react-tracking"
 
 interface ArtistHeaderEditorialProps {
   artist: ArtistHeaderEditorial_artist$key
-  itemBackgroundColor?: string
-  showProgress?: boolean
-  pt?: number
+  isInFeaturedStory?: boolean
 }
 
 export const useHasArtistHeaderEditorial = (
@@ -31,9 +29,7 @@ export const useHasArtistHeaderEditorial = (
 
 export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
   artist: artistRef,
-  itemBackgroundColor,
-  showProgress = true,
-  pt = 2,
+  isInFeaturedStory = false,
 }) => {
   const artist = useFragment(fragment, artistRef)
   const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
@@ -69,7 +65,7 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         flexDirection="row"
         justifyContent="space-between"
         alignItems="top"
-        pt={pt}
+        pt={isInFeaturedStory ? 0 : 2}
       >
         <Text variant="sm-display">
           Artsy Editorial Featuring {artist.name}
@@ -93,14 +89,14 @@ export const ArtistHeaderEditorial: React.FC<ArtistHeaderEditorialProps> = ({
         alignItems="stretch"
         gap={1}
         fullBleed={!!isMobile}
-        showProgress={showProgress}
+        showProgress={!isInFeaturedStory}
       >
         {articles.map(article => {
           return (
             <ArtistHeaderEditorialItem
               key={article.internalID}
               article={article}
-              backgroundColor={itemBackgroundColor}
+              isInFeaturedStory={isInFeaturedStory}
             />
           )
         })}

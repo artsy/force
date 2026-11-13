@@ -166,7 +166,7 @@ export const ArtistStoryHeader: React.FC<ArtistStoryHeaderProps> = ({
                       <Box mt={1}>
                         <ArtistHeaderSocialLink
                           instagramHandle={instagramHandle}
-                          color="mono0"
+                          isInFeaturedStory
                         />
                       </Box>
                     )}
@@ -238,12 +238,7 @@ export const ArtistStoryHeader: React.FC<ArtistStoryHeaderProps> = ({
 
           <FullBleed bg="mono5" py={2}>
             <AppContainer px={[2, 4]}>
-              <ArtistHeaderEditorial
-                artist={artist}
-                itemBackgroundColor="mono0"
-                showProgress={false}
-                pt={0}
-              />
+              <ArtistHeaderEditorial artist={artist} isInFeaturedStory />
             </AppContainer>
           </FullBleed>
         </>

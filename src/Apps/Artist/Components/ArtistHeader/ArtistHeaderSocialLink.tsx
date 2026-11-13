@@ -13,13 +13,14 @@ import { useTracking } from "react-tracking"
 
 export interface ArtistHeaderSocialLinkProps {
   instagramHandle: string
-  color?: string
+  isInFeaturedStory?: boolean
 }
 
 export const ArtistHeaderSocialLink: React.FC<ArtistHeaderSocialLinkProps> = ({
   instagramHandle,
-  color = "mono100",
+  isInFeaturedStory = false,
 }) => {
+  const color = isInFeaturedStory ? "mono0" : "mono100"
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()

@@ -18,12 +18,12 @@ const THUMBNAIL_SIZE = 100
 
 interface ArtistHeaderEditorialItemProps {
   article: ArtistHeaderEditorialItem_article$key
-  backgroundColor?: string
+  isInFeaturedStory?: boolean
 }
 
 export const ArtistHeaderEditorialItem: React.FC<
   ArtistHeaderEditorialItemProps
-> = ({ article: articleRef, backgroundColor = "mono5" }) => {
+> = ({ article: articleRef, isInFeaturedStory = false }) => {
   const article = useFragment(fragment, articleRef)
 
   const { trackEvent } = useTracking()
@@ -46,7 +46,7 @@ export const ArtistHeaderEditorialItem: React.FC<
       as={RouterLink}
       to={article.href}
       textDecoration="none"
-      bg={backgroundColor}
+      bg={isInFeaturedStory ? "mono0" : "mono5"}
       p={1}
       borderRadius="5px"
       onClick={() => {
