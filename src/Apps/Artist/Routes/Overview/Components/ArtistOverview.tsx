@@ -1,5 +1,6 @@
 import { ActionType, type ClickedCV, ContextModule } from "@artsy/cohesion"
 import { Stack } from "@artsy/palette"
+import { useFlag } from "@unleash/proxy-client-react"
 import { getArtistHeaderNumberOfInsights } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import {
   ArtistSeriesRailPlaceholder,
@@ -15,6 +16,7 @@ import type * as React from "react"
 import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { ArtistAchievementsQueryRenderer } from "./ArtistAchievements"
 import {
   ArtistCareerHighlightsPlaceholder,
   ArtistCareerHighlightsQueryRenderer,
@@ -79,6 +81,8 @@ export const ArtistOverview: React.FC<
     useAnalyticsContext()
 
   const hasEditorial = (artist.articlesConnection?.totalCount ?? 0) > 0
+  const isArtistStoryEnabled = useFlag("fireworksq4_artist-story")
+  const hasStory = isArtistStoryEnabled && !!artist.featuredStory
   const hasCareerHighlights =
     Array.isArray(artist.insights) &&
     artist.insights.length > getArtistHeaderNumberOfInsights({ hasEditorial })
@@ -103,6 +107,7 @@ export const ArtistOverview: React.FC<
   }
 
   if (
+    !hasStory &&
     !hasCareerHighlights &&
     !hasArtistSeries &&
     !hasCurrentShows &&
@@ -125,7 +130,9 @@ export const ArtistOverview: React.FC<
 
   return (
     <Stack gap={6}>
-      {hasCareerHighlights && (
+      {hasStory && <ArtistAchievementsQueryRenderer id={artist.internalID} />}
+
+      {!hasStory && hasCareerHighlights && (
         <ArtistCareerHighlightsQueryRenderer id={artist.internalID} />
       )}
 
@@ -159,6 +166,9 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
         internalID
         href
         name
+        featuredStory {
+          internalID
+        }
         insights(excludeBlanks: true) {
           __typename
         }

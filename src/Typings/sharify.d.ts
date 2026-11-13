@@ -108,6 +108,7 @@ declare module "sharify" {
       UNLEASH_ENVIRONMENT: string
       UNLEASH_FRONTEND_KEY: string
       UNLEASH_SERVER_KEY: string
+      UNLEASH_TOGGLES?: import("unleash-proxy-client").IToggle[]
       USER_AGENT: string
       USER_PREFERENCES: any
       VOLLEY_ENDPOINT: string

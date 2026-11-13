@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef3e3288145c5ceaca8a2f86c2705d78>>
+ * @generated SignedSource<<dda9c694ee996de509360a2c24a77b89>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,17 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistApp_artist$data = {
+  readonly featuredStory: {
+    readonly headerImage: {
+      readonly altText: string;
+    } | null | undefined;
+    readonly headerVideo: {
+      readonly internalID: string;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly name: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist" | "ArtistMeta_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist" | "ArtistMeta_artist" | "ArtistStoryHeader_artist">;
   readonly " $fragmentType": "ArtistApp_artist";
 };
 export type ArtistApp_artist$key = {
@@ -21,7 +29,15 @@ export type ArtistApp_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -38,12 +54,52 @@ const node: ReaderFragment = {
       "name": "ArtistHeader_artist"
     },
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistStoryHeader_artist"
+    },
+    {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
+      "concreteType": "ArtistStory",
+      "kind": "LinkedField",
+      "name": "featuredStory",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistStoryVideo",
+          "kind": "LinkedField",
+          "name": "headerVideo",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistStoryImage",
+          "kind": "LinkedField",
+          "name": "headerImage",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "altText",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -55,7 +111,8 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "fa8eff2f41a68dfe4464e29bac0091ee";
+(node as any).hash = "00d529a531b6df4efe2bae1f4fb5df89";
 
 export default node;
