@@ -47,6 +47,9 @@ export const getVimeoBackgroundUrl = (
     url.searchParams.set("muted", "1")
     url.searchParams.set("loop", "1")
     url.searchParams.set("autoplay", shouldAutoplay ? "1" : "0")
+    // Vimeo plays one video per page by default, so another Vimeo player
+    // starting would pause the loop.
+    url.searchParams.set("autopause", "0")
 
     return url.toString()
   } catch {
