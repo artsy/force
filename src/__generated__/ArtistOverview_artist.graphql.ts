@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fdea809310f798ad10ebd6ebd102a91>>
+ * @generated SignedSource<<2cd2eaac9428864dcff1a2a4766e112f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,6 +41,7 @@ export type ArtistOverview_artist$data = {
   readonly showsConnection: {
     readonly totalCount: number | null | undefined;
   } | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryAbout_artist">;
   readonly " $fragmentType": "ArtistOverview_artist";
 };
 export type ArtistOverview_artist$key = {
@@ -118,6 +119,11 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistStoryAbout_artist"
     },
     {
       "alias": null,
@@ -241,6 +247,6 @@ return {
 };
 })();
 
-(node as any).hash = "51574a6a6190eb240c91919d664b35e4";
+(node as any).hash = "05bc25abc5bac3168ece2cd7d4daeef3";
 
 export default node;

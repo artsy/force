@@ -89,6 +89,7 @@ describe("LoopingVimeoVideo", () => {
       expect(url.searchParams.get("muted")).toBe("1")
       expect(url.searchParams.get("loop")).toBe("1")
       expect(url.searchParams.get("autoplay")).toBe("1")
+      expect(url.searchParams.get("autopause")).toBe("0")
     })
 
     it("subscribes to play, pause and error once the player is ready", async () => {
