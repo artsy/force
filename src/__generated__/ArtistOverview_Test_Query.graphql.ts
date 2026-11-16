@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6d3c11e390c71f6b0a9250a67059a8ff>>
+ * @generated SignedSource<<9efbbc4aa90d60ce49fc0a5ce3c517d8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,17 +47,31 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "playerUrl",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v4 = [
+v6 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 1
   }
 ],
-v5 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -66,34 +80,40 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v8 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
-},
-v7 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Int"
-},
-v8 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
 },
 v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Int"
 },
 v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v11 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Video"
 };
 return {
   "fragment": {
@@ -160,7 +180,232 @@ return {
             "plural": false,
             "selections": [
               (v1/*: any*/),
-              (v2/*: any*/)
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryAccentColor",
+                "kind": "LinkedField",
+                "name": "accentColor",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hex",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "textColor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryAbout",
+                "kind": "LinkedField",
+                "name": "about",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "tagline",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "format",
+                        "value": "HTML"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "body",
+                    "storageKey": "body(format:\"HTML\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArtistStoryImage",
+                    "kind": "LinkedField",
+                    "name": "portrait",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "altText",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "credit",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": [
+                                  "main",
+                                  "normalized",
+                                  "larger",
+                                  "large"
+                                ]
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 800
+                              }
+                            ],
+                            "concreteType": "ResizedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "resized",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryVideo",
+                "kind": "LinkedField",
+                "name": "processVideo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Video",
+                    "kind": "LinkedField",
+                    "name": "video",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryVideo",
+                "kind": "LinkedField",
+                "name": "motionVideos",
+                "plural": true,
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "caption",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArtistStoryQuote",
+                    "kind": "LinkedField",
+                    "name": "quote",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "text",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "attribution",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Video",
+                    "kind": "LinkedField",
+                    "name": "video",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "aspectRatio",
+                        "storageKey": null
+                      },
+                      (v4/*: any*/),
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -178,36 +423,36 @@ return {
             "name": "insights",
             "plural": true,
             "selections": [
-              (v3/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": "insights(excludeBlanks:true)"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v6/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v5/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": "articlesConnection(first:1)"
           },
           {
             "alias": null,
             "args": [
-              (v6/*: any*/)
+              (v8/*: any*/)
             ],
             "concreteType": "ArtistSeriesConnection",
             "kind": "LinkedField",
             "name": "artistSeriesConnection",
             "plural": false,
-            "selections": (v5/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": "artistSeriesConnection(first:0)"
           },
           {
             "alias": null,
             "args": [
-              (v6/*: any*/),
+              (v8/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -218,7 +463,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v5/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": "showsConnection(first:0,status:\"running\")"
           },
           {
@@ -249,7 +494,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v4/*: any*/),
+                "args": (v6/*: any*/),
                 "concreteType": "GeneConnection",
                 "kind": "LinkedField",
                 "name": "genes",
@@ -271,7 +516,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
+                          (v5/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -292,7 +537,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "84342463ddd5c00d6c0b2fbbcf2dd3f6",
+    "cacheID": "100d822d7282eace40c3521d5d99d606",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -308,7 +553,7 @@ return {
           "plural": false,
           "type": "ArticleConnection"
         },
-        "artist.articlesConnection.totalCount": (v7/*: any*/),
+        "artist.articlesConnection.totalCount": (v9/*: any*/),
         "artist.artistSeriesConnection": {
           "enumValues": null,
           "nullable": true,
@@ -327,26 +572,110 @@ return {
           "plural": false,
           "type": "ArtistCounts"
         },
-        "artist.counts.relatedArtists": (v7/*: any*/),
+        "artist.counts.relatedArtists": (v9/*: any*/),
         "artist.featuredStory": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistStory"
         },
-        "artist.featuredStory.id": (v8/*: any*/),
-        "artist.featuredStory.internalID": (v8/*: any*/),
-        "artist.href": (v9/*: any*/),
-        "artist.id": (v8/*: any*/),
+        "artist.featuredStory.about": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistStoryAbout"
+        },
+        "artist.featuredStory.about.body": (v10/*: any*/),
+        "artist.featuredStory.about.portrait": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistStoryImage"
+        },
+        "artist.featuredStory.about.portrait.altText": (v11/*: any*/),
+        "artist.featuredStory.about.portrait.credit": (v10/*: any*/),
+        "artist.featuredStory.about.portrait.image": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.featuredStory.about.portrait.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "artist.featuredStory.about.portrait.image.resized.src": (v11/*: any*/),
+        "artist.featuredStory.about.portrait.image.resized.srcSet": (v11/*: any*/),
+        "artist.featuredStory.about.tagline": (v10/*: any*/),
+        "artist.featuredStory.accentColor": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistStoryAccentColor"
+        },
+        "artist.featuredStory.accentColor.hex": (v11/*: any*/),
+        "artist.featuredStory.accentColor.textColor": {
+          "enumValues": [
+            "BLACK",
+            "WHITE"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "ArtistStoryTextColor"
+        },
+        "artist.featuredStory.id": (v12/*: any*/),
+        "artist.featuredStory.internalID": (v12/*: any*/),
+        "artist.featuredStory.motionVideos": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "ArtistStoryVideo"
+        },
+        "artist.featuredStory.motionVideos.caption": (v10/*: any*/),
+        "artist.featuredStory.motionVideos.id": (v12/*: any*/),
+        "artist.featuredStory.motionVideos.internalID": (v12/*: any*/),
+        "artist.featuredStory.motionVideos.quote": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistStoryQuote"
+        },
+        "artist.featuredStory.motionVideos.quote.attribution": (v10/*: any*/),
+        "artist.featuredStory.motionVideos.quote.text": (v11/*: any*/),
+        "artist.featuredStory.motionVideos.video": (v13/*: any*/),
+        "artist.featuredStory.motionVideos.video.aspectRatio": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Float"
+        },
+        "artist.featuredStory.motionVideos.video.id": (v12/*: any*/),
+        "artist.featuredStory.motionVideos.video.playerUrl": (v11/*: any*/),
+        "artist.featuredStory.motionVideos.video.title": (v11/*: any*/),
+        "artist.featuredStory.processVideo": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistStoryVideo"
+        },
+        "artist.featuredStory.processVideo.id": (v12/*: any*/),
+        "artist.featuredStory.processVideo.video": (v13/*: any*/),
+        "artist.featuredStory.processVideo.video.id": (v12/*: any*/),
+        "artist.featuredStory.processVideo.video.playerUrl": (v11/*: any*/),
+        "artist.featuredStory.processVideo.video.title": (v11/*: any*/),
+        "artist.href": (v10/*: any*/),
+        "artist.id": (v12/*: any*/),
         "artist.insights": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtistInsight"
         },
-        "artist.insights.__typename": (v10/*: any*/),
-        "artist.internalID": (v8/*: any*/),
-        "artist.name": (v9/*: any*/),
+        "artist.insights.__typename": (v11/*: any*/),
+        "artist.internalID": (v12/*: any*/),
+        "artist.name": (v10/*: any*/),
         "artist.related": {
           "enumValues": null,
           "nullable": true,
@@ -371,20 +700,20 @@ return {
           "plural": false,
           "type": "Gene"
         },
-        "artist.related.genes.edges.node.__typename": (v10/*: any*/),
-        "artist.related.genes.edges.node.id": (v8/*: any*/),
+        "artist.related.genes.edges.node.__typename": (v11/*: any*/),
+        "artist.related.genes.edges.node.id": (v12/*: any*/),
         "artist.showsConnection": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ShowConnection"
         },
-        "artist.showsConnection.totalCount": (v7/*: any*/)
+        "artist.showsConnection.totalCount": (v9/*: any*/)
       }
     },
     "name": "ArtistOverview_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverview_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  featuredStory {\n    internalID\n    id\n  }\n  insights(excludeBlanks: true) {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverview_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  featuredStory {\n    internalID\n    id\n  }\n  ...ArtistStoryAbout_artist\n  insights(excludeBlanks: true) {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistStoryAbout_artist on Artist {\n  featuredStory {\n    accentColor {\n      hex\n      textColor\n    }\n    about {\n      tagline\n      body(format: HTML)\n      portrait {\n        altText\n        credit\n        image {\n          resized(width: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n      }\n    }\n    processVideo {\n      video {\n        ...ArtistStoryProcessVideo_video\n        id\n      }\n      id\n    }\n    motionVideos {\n      ...ArtistStoryMotionVideos_motionVideos\n      id\n    }\n    id\n  }\n}\n\nfragment ArtistStoryMotionVideos_motionVideos on ArtistStoryVideo {\n  internalID\n  caption\n  quote {\n    text\n    attribution\n  }\n  video {\n    playerUrl\n    aspectRatio\n    title\n    id\n  }\n}\n\nfragment ArtistStoryProcessVideo_video on Video {\n  playerUrl\n  title\n}\n"
   }
 };
 })();

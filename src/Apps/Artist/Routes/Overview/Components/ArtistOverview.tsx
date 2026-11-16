@@ -17,6 +17,7 @@ import type { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtistAchievementsQueryRenderer } from "./ArtistAchievements"
+import { ArtistStoryAbout } from "./ArtistStoryAbout/ArtistStoryAbout"
 import {
   ArtistCareerHighlightsPlaceholder,
   ArtistCareerHighlightsQueryRenderer,
@@ -130,6 +131,8 @@ export const ArtistOverview: React.FC<
 
   return (
     <Stack gap={6}>
+      {hasStory && <ArtistStoryAbout artist={artist} />}
+
       {hasStory && <ArtistAchievementsQueryRenderer id={artist.internalID} />}
 
       {!hasStory && hasCareerHighlights && (
@@ -169,6 +172,7 @@ export const ArtistOverviewFragmentContainer = createFragmentContainer(
         featuredStory {
           internalID
         }
+        ...ArtistStoryAbout_artist
         insights(excludeBlanks: true) {
           __typename
         }
