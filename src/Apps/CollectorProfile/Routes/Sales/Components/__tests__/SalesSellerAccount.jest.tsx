@@ -3,9 +3,15 @@ import {
   deleteSellerAccount,
   fetchSellerAccount,
 } from "Apps/CollectorProfile/Routes/Sales/Utils/sellerAccount"
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { useEffect } from "react"
 
-let mockOnboardingProps: { onExit: () => void; onError: () => void }
+let mockOnboardingProps: {
+  onExit: () => void
+  onLoaderStart: () => void
+  onLoadError: () => void
+}
+let mockOnboardingMounts = 0
 
 jest.mock(
   "Apps/CollectorProfile/Routes/Sales/Components/SalesStripeOnboarding",
@@ -13,6 +19,9 @@ jest.mock(
     return {
       SalesStripeOnboarding: props => {
         mockOnboardingProps = props
+        useEffect(() => {
+          mockOnboardingMounts += 1
+        }, [])
         return <div>Stripe onboarding</div>
       },
     }
@@ -45,6 +54,7 @@ const SELLER_ACCOUNT = {
 describe("SalesSellerAccount", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockOnboardingMounts = 0
     jest.spyOn(console, "error").mockImplementation(() => {})
   })
 
@@ -108,7 +118,15 @@ describe("SalesSellerAccount", () => {
 
         fireEvent.click(await screen.findByText("Complete payout details"))
 
+        expect(screen.getByText("Complete payout details")).toBeInTheDocument()
         expect(screen.getByText("Stripe onboarding")).toBeInTheDocument()
+
+        act(() => {
+          mockOnboardingProps.onLoaderStart()
+        })
+
+        expect(screen.getByText("Stripe onboarding")).toBeInTheDocument()
+        expect(screen.queryByText("acct_123")).not.toBeInTheDocument()
         ;(fetchSellerAccount as jest.Mock).mockResolvedValue({
           ...SELLER_ACCOUNT,
           action_needed: false,
@@ -198,9 +216,34 @@ describe("SalesSellerAccount", () => {
       expect(screen.getByText("Stripe onboarding")).toBeInTheDocument()
     })
 
+    it("keeps the clicked button while Stripe loads in the background", async () => {
+      render(<SalesSellerAccount />)
+
+      fireEvent.click(await screen.findByText("Set up payouts"))
+
+      expect(screen.getByText("Set up payouts")).toBeInTheDocument()
+      expect(screen.getByText("Stripe onboarding")).toBeInTheDocument()
+    })
+
+    it("shows only Stripe’s UI once it has started, without remounting it", async () => {
+      render(<SalesSellerAccount />)
+      fireEvent.click(await screen.findByText("Set up payouts"))
+
+      act(() => {
+        mockOnboardingProps.onLoaderStart()
+      })
+
+      expect(screen.queryByText("Set up payouts")).not.toBeInTheDocument()
+      expect(screen.getByText("Stripe onboarding")).toBeInTheDocument()
+      expect(mockOnboardingMounts).toBe(1)
+    })
+
     it("reloads the account when onboarding exits", async () => {
       render(<SalesSellerAccount />)
       fireEvent.click(await screen.findByText("Set up payouts"))
+      act(() => {
+        mockOnboardingProps.onLoaderStart()
+      })
       ;(fetchSellerAccount as jest.Mock).mockResolvedValue(SELLER_ACCOUNT)
 
       mockOnboardingProps.onExit()
@@ -209,16 +252,34 @@ describe("SalesSellerAccount", () => {
       expect(screen.queryByText("Stripe onboarding")).not.toBeInTheDocument()
     })
 
+    it("leaves load errors to Stripe once its UI is showing", async () => {
+      render(<SalesSellerAccount />)
+      fireEvent.click(await screen.findByText("Set up payouts"))
+      act(() => {
+        mockOnboardingProps.onLoaderStart()
+      })
+
+      act(() => {
+        mockOnboardingProps.onLoadError()
+      })
+
+      expect(screen.getByText("Stripe onboarding")).toBeInTheDocument()
+      expect(
+        screen.queryByText(/Something went wrong setting up payouts/),
+      ).not.toBeInTheDocument()
+    })
+
     it("shows an error when onboarding fails", async () => {
       render(<SalesSellerAccount />)
       fireEvent.click(await screen.findByText("Set up payouts"))
 
-      mockOnboardingProps.onError()
+      mockOnboardingProps.onLoadError()
 
       expect(
         await screen.findByText(/Something went wrong setting up payouts/),
       ).toBeInTheDocument()
       expect(screen.queryByText("Stripe onboarding")).not.toBeInTheDocument()
+      expect(screen.getByText("Set up payouts")).toBeInTheDocument()
     })
   })
 
