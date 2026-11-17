@@ -30,14 +30,8 @@ const HIDDEN_PROPS = {
 } as const
 
 export const SalesSellerAccount: React.FC = () => {
-  const {
-    sellerAccount,
-    isLoading,
-    hasLoadFailed,
-    isDeleting,
-    reload,
-    deleteAccount,
-  } = useSellerAccount()
+  const { sellerAccount, status, isDeleting, reload, deleteAccount } =
+    useSellerAccount()
 
   const [onboardingStatus, setOnboardingStatus] =
     useState<OnboardingStatus>("idle")
@@ -134,11 +128,11 @@ export const SalesSellerAccount: React.FC = () => {
     )
   }
 
-  if (isLoading) {
+  if (status === "loading") {
     return <Spinner position="relative" />
   }
 
-  if (hasLoadFailed) {
+  if (status === "failed") {
     return (
       <Message variant="error">
         Something went wrong loading your payout account. Please try again

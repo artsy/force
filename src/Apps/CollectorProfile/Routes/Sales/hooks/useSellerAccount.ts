@@ -6,6 +6,8 @@ import {
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import { useCallback, useEffect, useState } from "react"
 
+type LoadStatus = "loading" | "loaded" | "failed"
+
 /**
  * Loads the user's active seller account (null when there is none) and
  * deletes it. `deleteAccount` rethrows so the caller can show its own error.
@@ -14,22 +16,19 @@ export const useSellerAccount = () => {
   const { user } = useSystemContext()
   const accessToken = user?.accessToken
 
+  const [status, setStatus] = useState<LoadStatus>("loading")
   const [sellerAccount, setSellerAccount] = useState<SellerAccount | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [hasLoadFailed, setHasLoadFailed] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
 
   const reload = useCallback(async () => {
-    setIsLoading(true)
+    setStatus("loading")
 
     try {
       setSellerAccount(await fetchSellerAccount({ accessToken }))
-      setHasLoadFailed(false)
+      setStatus("loaded")
     } catch (error) {
       console.error(error)
-      setHasLoadFailed(true)
-    } finally {
-      setIsLoading(false)
+      setStatus("failed")
     }
   }, [accessToken])
 
@@ -53,8 +52,7 @@ export const useSellerAccount = () => {
 
   return {
     sellerAccount,
-    isLoading,
-    hasLoadFailed,
+    status,
     isDeleting,
     reload,
     deleteAccount,

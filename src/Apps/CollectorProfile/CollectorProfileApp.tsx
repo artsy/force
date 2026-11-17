@@ -1,6 +1,6 @@
 import { Spacer } from "@artsy/palette"
-import { C2C_SELLER_PAYMENTS_FLAG } from "Apps/CollectorProfile/Utils/featureFlags"
 import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/CollectorProfileHeader"
+import { C2C_SELLER_PAYMENTS_FLAG } from "Apps/CollectorProfile/Utils/featureFlags"
 import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
