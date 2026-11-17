@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae7b8596ece3db1a4f51b4f2dd368757>>
+ * @generated SignedSource<<c61d6a719ce99d932e6c42c6d6aebef8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,17 +56,31 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "playerUrl",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v5 = [
+v7 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 1
   }
 ],
-v6 = [
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -75,7 +89,7 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
+v9 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
@@ -145,7 +159,232 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryAccentColor",
+                "kind": "LinkedField",
+                "name": "accentColor",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hex",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "textColor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryAbout",
+                "kind": "LinkedField",
+                "name": "about",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "tagline",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "format",
+                        "value": "HTML"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "body",
+                    "storageKey": "body(format:\"HTML\")"
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArtistStoryImage",
+                    "kind": "LinkedField",
+                    "name": "portrait",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "altText",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "credit",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": [
+                                  "main",
+                                  "normalized",
+                                  "larger",
+                                  "large"
+                                ]
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 800
+                              }
+                            ],
+                            "concreteType": "ResizedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "resized",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryVideo",
+                "kind": "LinkedField",
+                "name": "processVideo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Video",
+                    "kind": "LinkedField",
+                    "name": "video",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v3/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistStoryVideo",
+                "kind": "LinkedField",
+                "name": "motionVideos",
+                "plural": true,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "caption",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArtistStoryQuote",
+                    "kind": "LinkedField",
+                    "name": "quote",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "text",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "attribution",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Video",
+                    "kind": "LinkedField",
+                    "name": "video",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "aspectRatio",
+                        "storageKey": null
+                      },
+                      (v5/*: any*/),
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v3/*: any*/)
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -163,36 +402,36 @@ return {
             "name": "insights",
             "plural": true,
             "selections": [
-              (v4/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": "insights(excludeBlanks:true)"
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v7/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v8/*: any*/),
             "storageKey": "articlesConnection(first:1)"
           },
           {
             "alias": null,
             "args": [
-              (v7/*: any*/)
+              (v9/*: any*/)
             ],
             "concreteType": "ArtistSeriesConnection",
             "kind": "LinkedField",
             "name": "artistSeriesConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v8/*: any*/),
             "storageKey": "artistSeriesConnection(first:0)"
           },
           {
             "alias": null,
             "args": [
-              (v7/*: any*/),
+              (v9/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -203,7 +442,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v8/*: any*/),
             "storageKey": "showsConnection(first:0,status:\"running\")"
           },
           {
@@ -234,7 +473,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v5/*: any*/),
+                "args": (v7/*: any*/),
                 "concreteType": "GeneConnection",
                 "kind": "LinkedField",
                 "name": "genes",
@@ -256,7 +495,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v4/*: any*/),
+                          (v6/*: any*/),
                           (v3/*: any*/)
                         ],
                         "storageKey": null
@@ -277,12 +516,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4f20938762803098a02096c0307b8f50",
+    "cacheID": "a2aa8a8efdbfa7c5c1dd7cde537c515f",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewQueryRendererQuery",
     "operationKind": "query",
-    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  featuredStory {\n    internalID\n    id\n  }\n  insights(excludeBlanks: true) {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistOverviewQueryRendererQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) {\n    ...ArtistOverview_artist\n    id\n  }\n}\n\nfragment ArtistOverview_artist on Artist {\n  internalID\n  href\n  name\n  featuredStory {\n    internalID\n    id\n  }\n  ...ArtistStoryAbout_artist\n  insights(excludeBlanks: true) {\n    __typename\n  }\n  articlesConnection(first: 1) {\n    totalCount\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    relatedArtists\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistStoryAbout_artist on Artist {\n  featuredStory {\n    accentColor {\n      hex\n      textColor\n    }\n    about {\n      tagline\n      body(format: HTML)\n      portrait {\n        altText\n        credit\n        image {\n          resized(width: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n      }\n    }\n    processVideo {\n      video {\n        ...ArtistStoryProcessVideo_video\n        id\n      }\n      id\n    }\n    motionVideos {\n      ...ArtistStoryMotionVideos_motionVideos\n      id\n    }\n    id\n  }\n}\n\nfragment ArtistStoryMotionVideos_motionVideos on ArtistStoryVideo {\n  internalID\n  caption\n  quote {\n    text\n    attribution\n  }\n  video {\n    playerUrl\n    aspectRatio\n    title\n    id\n  }\n}\n\nfragment ArtistStoryProcessVideo_video on Video {\n  playerUrl\n  title\n}\n"
   }
 };
 })();

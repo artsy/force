@@ -19,6 +19,9 @@ jest.mock("Components/ArtistSeriesRail/ArtistSeriesRail", () => ({
 jest.mock("../ArtistAchievements", () => ({
   ArtistAchievementsQueryRenderer: () => <div>Achievements section</div>,
 }))
+jest.mock("../ArtistStoryAbout/ArtistStoryAbout", () => ({
+  ArtistStoryAbout: () => <div>About section</div>,
+}))
 jest.mock("../ArtistCareerHighlights", () => ({
   ArtistCareerHighlightsQueryRenderer: () => <div>Highlights section</div>,
   ArtistCareerHighlightsPlaceholder: () => null,
@@ -57,11 +60,12 @@ describe("ArtistOverview", () => {
     ;(useFlag as jest.Mock).mockReturnValue(true)
   })
 
-  it("shows the achievements accordions when the artist has a Story", () => {
+  it("shows the About section and achievements accordions when the artist has a Story", () => {
     renderWithRelay({
       Artist: () => ({ ...artist, featuredStory: { internalID: "story-id" } }),
     })
 
+    expect(screen.getByText("About section")).toBeInTheDocument()
     expect(screen.getByText("Achievements section")).toBeInTheDocument()
     expect(screen.queryByText("Highlights section")).not.toBeInTheDocument()
   })
@@ -71,17 +75,19 @@ describe("ArtistOverview", () => {
       Artist: () => ({ ...artist, featuredStory: null }),
     })
 
+    expect(screen.queryByText("About section")).not.toBeInTheDocument()
     expect(screen.getByText("Highlights section")).toBeInTheDocument()
     expect(screen.queryByText("Achievements section")).not.toBeInTheDocument()
   })
 
-  it("keeps today's highlights when the flag is off, even with a Story", () => {
+  it("keeps today's section when the flag is off, even with a Story", () => {
     ;(useFlag as jest.Mock).mockReturnValue(false)
 
     renderWithRelay({
       Artist: () => ({ ...artist, featuredStory: { internalID: "story-id" } }),
     })
 
+    expect(screen.queryByText("About section")).not.toBeInTheDocument()
     expect(screen.getByText("Highlights section")).toBeInTheDocument()
     expect(screen.queryByText("Achievements section")).not.toBeInTheDocument()
   })

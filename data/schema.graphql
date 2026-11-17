@@ -3960,6 +3960,11 @@ type ArtnetArtwork {
   Whether the artwork is published on Artnet.
   """
   published: Boolean
+
+  """
+  What the last push of this artwork to Artnet had to say, if anything. Null once a later push settles cleanly — a working push is what clears these, nothing acknowledges them.
+  """
+  pushMessages: ArtnetPushMessages
   updatedAt(
     format: String
 
@@ -4239,6 +4244,21 @@ enum ArtnetImportState {
   FINALIZING
   PENDING
   PROCESSING
+}
+
+"""
+What Artnet had to say about the last push of this artwork. Artnet reports no severity and no failure state — work that went wrong comes back complete, carrying messages — so these say only that the push had something to report, not that it failed. Read `gaveUp` for the one hard distinction.
+"""
+type ArtnetPushMessages {
+  """
+  True when Gravity stopped asking how the push turned out, so the outcome is unknown rather than bad. False when Artnet itself reported these messages.
+  """
+  gaveUp: Boolean
+
+  """
+  What Artnet said about the push, verbatim, plus Gravity's own reason when it gave up. A message can be a warning about work that still succeeded, such as an image Artnet could not add to an artwork it did create.
+  """
+  messages: [String]
 }
 
 """
@@ -8730,6 +8750,36 @@ Price Insights Calendar year
 type CalendarYearPriceInsights {
   calendarYearMarketPriceInsights: [CalendarYearMarketPriceInsights!]
   medium: String!
+}
+
+type CancelResaleSubmissionFailure {
+  mutationError: GravityMutationError
+}
+
+input CancelResaleSubmissionInput {
+  clientMutationId: String
+
+  """
+  The internal ID of the resale submission to cancel.
+  """
+  id: String!
+}
+
+type CancelResaleSubmissionPayload {
+  clientMutationId: String
+
+  """
+  On success: the canceled resale submission.
+  """
+  resaleSubmissionOrError: CancelResaleSubmissionResponseOrError
+}
+
+union CancelResaleSubmissionResponseOrError =
+  | CancelResaleSubmissionFailure
+  | CancelResaleSubmissionSuccess
+
+type CancelResaleSubmissionSuccess {
+  resaleSubmission: ResaleSubmission
 }
 
 type Card {
@@ -15233,6 +15283,43 @@ union CreatePurchaseResponseOrError =
 
 type CreatePurchaseSuccess {
   purchase: Purchase
+}
+
+type CreateResaleSubmissionFailure {
+  """
+  The artwork this result is for.
+  """
+  artworkID: String!
+  mutationError: GravityMutationError
+}
+
+union CreateResaleSubmissionResponseOrError =
+  | CreateResaleSubmissionFailure
+  | CreateResaleSubmissionSuccess
+
+type CreateResaleSubmissionSuccess {
+  """
+  The artwork this result is for.
+  """
+  artworkID: String!
+  resaleSubmission: ResaleSubmission
+}
+
+input CreateResaleSubmissionsInput {
+  """
+  The internal IDs of the artworks to assess.
+  """
+  artworkIDs: [String!]!
+  clientMutationId: String
+}
+
+type CreateResaleSubmissionsPayload {
+  clientMutationId: String
+
+  """
+  One result per distinct artwork, in the order first sent. On success: the new resale submission.
+  """
+  resaleSubmissionsOrErrors: [CreateResaleSubmissionResponseOrError!]!
 }
 
 type CreateSaleAgreementFailure {
@@ -25102,6 +25189,22 @@ type Me implements Node {
     @deprecated(
       reason: "These genomic recs are deprecated. Use artworkRecommendations instead."
     )
+  resaleSubmission(id: String!): ResaleSubmission
+
+  """
+  The current user’s resale submissions.
+  """
+  resaleSubmissionsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    Newest first when omitted.
+    """
+    sort: ResaleSubmissionSorts
+  ): ResaleSubmissionConnection
   saleRegistrationsConnection(
     after: String
     auctionState: AuctionState
@@ -25938,6 +26041,13 @@ type Mutation {
   ): BulkUpdateArtworksMetadataMutationPayload
 
   """
+  Cancel an accepted resale submission. The submission is kept, with state CANCELED.
+  """
+  cancelResaleSubmission(
+    input: CancelResaleSubmissionInput!
+  ): CancelResaleSubmissionPayload
+
+  """
   Creates a pending offer on an pending order.
   """
   commerceAddInitialOfferToOrder(
@@ -26586,6 +26696,13 @@ type Mutation {
   Create a purchase
   """
   createPurchase(input: createPurchaseInput!): createPurchasePayload
+
+  """
+  Submit My Collection works for resale assessment.
+  """
+  createResaleSubmissions(
+    input: CreateResaleSubmissionsInput!
+  ): CreateResaleSubmissionsPayload
 
   """
   Creates a static Markdown-backed sale agreement.
@@ -27907,6 +28024,13 @@ type Mutation {
   Update a quiz artwork interacted_with flag
   """
   updateQuiz(input: updateQuizMutationInput!): updateQuizMutationPayload
+
+  """
+  Update the asking price and shipping preferences of a resale submission. Omitted or null fields are left unchanged.
+  """
+  updateResaleSubmission(
+    input: UpdateResaleSubmissionInput!
+  ): UpdateResaleSubmissionPayload
 
   """
   Updates a saleAgreement.
@@ -31585,7 +31709,7 @@ type PartnerListPublication {
   artworksCount: Int!
 
   """
-  Cover image for the room's hero banner (viewing rooms rebuild). Not shown to visitors yet.
+  Cover image for the room's hero banner (viewing rooms rebuild), as currently uploaded. Visitors see the one from the last publish, via PrivateViewingRoom.coverImageURL.
   """
   coverImage: Image
   createdAt(
@@ -32660,6 +32784,11 @@ type PrivateViewingRoom {
   applyBrand: Boolean
   artworks: [PrivateViewingRoomArtwork!]
   brandKit: BrandKit
+
+  """
+  URL of the room's cover image as of the last publish (viewing rooms rebuild), for the hero banner. Omitted without a cover, and for a gated room until authenticated.
+  """
+  coverImageURL: String
   description: String
 
   """
@@ -32722,6 +32851,11 @@ type PrivateViewingRoomContents {
   applyBrand: Boolean
   artworks: [PrivateViewingRoomArtwork!]
   brandKit: BrandKit
+
+  """
+  URL of the room's cover image as of the last publish (viewing rooms rebuild), for the hero banner. Omitted without a cover, and for a gated room until authenticated.
+  """
+  coverImageURL: String
   description: String
 
   """
@@ -36294,6 +36428,178 @@ type RequestPriceEstimatedMutationFailure {
 
 type RequestPriceEstimatedMutationSuccess {
   submittedPriceEstimateParams: SubmittedPriceEstimateParams
+}
+
+"""
+A collector’s request to resell a work from their My Collection.
+"""
+type ResaleSubmission {
+  canceledAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  Auction, marketplace, or null if rejected.
+  """
+  channel: ResaleSubmissionChannel
+
+  """
+  The seller’s answer to how the work will get to its buyer.
+  """
+  courierHandoff: ResaleSubmissionCourierHandoff
+  createdAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+
+  """
+  Answers still needed before the submission can be listed.
+  """
+  missingRequirements: [String!]!
+
+  """
+  The seller’s answer to how the work will be packed.
+  """
+  packaging: ResaleSubmissionPackaging
+
+  """
+  The seller’s answer to who will pack the work.
+  """
+  packer: ResaleSubmissionPacker
+
+  """
+  The seller’s asking price.
+  """
+  priceListed: Money
+
+  """
+  Upper end of recommended price range, per automated valuation.
+  """
+  recommendedPriceMax: Money
+
+  """
+  Lower end of recommended price range, per automated valuation.
+  """
+  recommendedPriceMin: Money
+
+  """
+  Why the submission was rejected.
+  """
+  rejectionReasons: [ResaleSubmissionRejectionReason!]!
+  state: ResaleSubmissionState!
+
+  """
+  The My Collection artwork being resold.
+  """
+  submittedArtwork: Artwork
+
+  """
+  ID of the My Collection artwork being resold.
+  """
+  submittedArtworkID: String!
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+}
+
+enum ResaleSubmissionChannel {
+  AUCTION
+  MARKETPLACE
+}
+
+"""
+A connection to a list of items.
+"""
+type ResaleSubmissionConnection {
+  """
+  A list of edges.
+  """
+  edges: [ResaleSubmissionEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+enum ResaleSubmissionCourierHandoff {
+  COURIER_PICKUP
+  NO_PREFERENCE
+  SELLER_DROPOFF
+}
+
+"""
+An edge in a connection.
+"""
+type ResaleSubmissionEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: ResaleSubmission
+}
+
+enum ResaleSubmissionPackaging {
+  FRAMED
+  NO_PREFERENCE
+  ROLLED
+}
+
+enum ResaleSubmissionPacker {
+  COURIER
+  NO_PREFERENCE
+  SELLER
+}
+
+enum ResaleSubmissionRejectionReason {
+  MEDIUM_NOT_SUPPORTED
+  NOT_PURCHASED_ON_ARTSY
+  OUTSIDE_US
+}
+
+enum ResaleSubmissionSorts {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+}
+
+enum ResaleSubmissionState {
+  ACCEPTED
+  AUCTION_REVIEW
+  CANCELED
+  LISTED
+  REJECTED
 }
 
 type ResizedImageUrl {
@@ -42398,6 +42704,56 @@ union UpdatePurchaseResponseOrError =
 
 type UpdatePurchaseSuccess {
   purchase: Purchase
+}
+
+type UpdateResaleSubmissionFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateResaleSubmissionInput {
+  clientMutationId: String
+
+  """
+  How the work will get to its buyer.
+  """
+  courierHandoff: ResaleSubmissionCourierHandoff
+
+  """
+  The internal ID of the resale submission to update.
+  """
+  id: String!
+
+  """
+  How the work will be packed.
+  """
+  packaging: ResaleSubmissionPackaging
+
+  """
+  Who will pack the work.
+  """
+  packer: ResaleSubmissionPacker
+
+  """
+  The asking price in US dollars, as a plain number like “2500” or “2500.50”, without a currency symbol or separators.
+  """
+  priceListed: String
+}
+
+type UpdateResaleSubmissionPayload {
+  clientMutationId: String
+
+  """
+  On success: the updated resale submission.
+  """
+  resaleSubmissionOrError: UpdateResaleSubmissionResponseOrError
+}
+
+union UpdateResaleSubmissionResponseOrError =
+  | UpdateResaleSubmissionFailure
+  | UpdateResaleSubmissionSuccess
+
+type UpdateResaleSubmissionSuccess {
+  resaleSubmission: ResaleSubmission
 }
 
 type UpdateSaleAgreementFailure {
