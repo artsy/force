@@ -1,5 +1,5 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
-import { SalesStripeOnboarding } from "Apps/CollectorProfile/Routes/Sales/Components/SalesStripeOnboarding"
+import { SalesSellerAccount } from "Apps/CollectorProfile/Routes/Sales/Components/SalesSellerAccount"
 import { MetaTags } from "Components/MetaTags"
 
 export const CollectorProfileSalesRoute: React.FC = () => {
@@ -9,7 +9,7 @@ export const CollectorProfileSalesRoute: React.FC = () => {
 
       <GridColumns>
         <Column span={[12, 8, 6]}>
-          <SalesStripeOnboarding />
+          <SalesSellerAccount />
         </Column>
       </GridColumns>
 
