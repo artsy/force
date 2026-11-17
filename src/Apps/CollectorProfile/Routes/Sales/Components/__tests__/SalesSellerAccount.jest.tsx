@@ -269,6 +269,47 @@ describe("SalesSellerAccount", () => {
       ).not.toBeInTheDocument()
     })
 
+    describe("when Stripe never starts", () => {
+      afterEach(() => {
+        jest.useRealTimers()
+      })
+
+      it("shows an error after a timeout", async () => {
+        render(<SalesSellerAccount />)
+        const button = await screen.findByText("Set up payouts")
+        jest.useFakeTimers()
+        fireEvent.click(button)
+
+        act(() => {
+          jest.advanceTimersByTime(15_000)
+        })
+
+        expect(
+          screen.getByText(/Something went wrong setting up payouts/),
+        ).toBeInTheDocument()
+        expect(screen.queryByText("Stripe onboarding")).not.toBeInTheDocument()
+      })
+
+      it("does not time out once Stripe has started", async () => {
+        render(<SalesSellerAccount />)
+        const button = await screen.findByText("Set up payouts")
+        jest.useFakeTimers()
+        fireEvent.click(button)
+        act(() => {
+          mockOnboardingProps.onLoaderStart()
+        })
+
+        act(() => {
+          jest.advanceTimersByTime(30_000)
+        })
+
+        expect(screen.getByText("Stripe onboarding")).toBeInTheDocument()
+        expect(
+          screen.queryByText(/Something went wrong setting up payouts/),
+        ).not.toBeInTheDocument()
+      })
+    })
+
     it("shows an error when onboarding fails", async () => {
       render(<SalesSellerAccount />)
       fireEvent.click(await screen.findByText("Set up payouts"))

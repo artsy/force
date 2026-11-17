@@ -10,13 +10,18 @@ import {
 import { SalesDeleteAccountDialog } from "Apps/CollectorProfile/Routes/Sales/Components/SalesDeleteAccountDialog"
 import { SalesStripeOnboarding } from "Apps/CollectorProfile/Routes/Sales/Components/SalesStripeOnboarding"
 import { useSellerAccount } from "Apps/CollectorProfile/Routes/Sales/hooks/useSellerAccount"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const ONBOARDING_ERROR_MESSAGE =
   "Something went wrong setting up payouts. Please try again later."
 
 const DELETE_ERROR_MESSAGE =
   "Something went wrong deleting your payout account. Please try again later."
+
+// If connect.js can't load (ad blocker, offline, CSP) it fails silently: neither
+// onLoaderStart nor onLoadError ever fires. Give up after this long so the
+// button doesn't spin forever.
+const ONBOARDING_LOAD_TIMEOUT_MS = 15_000
 
 // "loading" is from the click until Stripe displays its own UI. The component
 // mounts out of sight then, while the button that was clicked shows its loading
@@ -39,6 +44,22 @@ export const SalesSellerAccount: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const isOnboardingLoading = onboardingStatus === "loading"
+
+  useEffect(() => {
+    if (!isOnboardingLoading) {
+      return
+    }
+
+    const timeout = setTimeout(() => {
+      console.error(new Error("Timed out loading Stripe onboarding"))
+      setOnboardingStatus("idle")
+      setErrorMessage(ONBOARDING_ERROR_MESSAGE)
+    }, ONBOARDING_LOAD_TIMEOUT_MS)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [isOnboardingLoading])
 
   const handleStartOnboarding = () => {
     setErrorMessage(null)
