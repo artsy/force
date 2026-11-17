@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("/debug/baseline", () => {
   test("renders a blank page", async ({ page }) => {
@@ -12,10 +12,27 @@ test.describe("/debug/baseline", () => {
   })
 })
 
+// Deployed hosts, staging included, run with NODE_ENV=production, which limits
+// flag inspection to team members
+const isLocalhost = (baseURL?: string) => {
+  return !!baseURL && new URL(baseURL).hostname === "localhost"
+}
+
 test.describe("/debug/feature-flags", () => {
+  test("limits flag inspection to team members", async ({ page, baseURL }) => {
+    test.skip(isLocalhost(baseURL), "Inspection is open in development")
+
+    await page.goto("/debug/feature-flags")
+    await expect(
+      page.getByText("Inspecting a flag is limited to team members"),
+    ).toBeVisible()
+  })
+
   test("hydrates with the flag values the server rendered", async ({
     page,
+    baseURL,
   }) => {
+    test.skip(!isLocalhost(baseURL), "Inspection is limited to team members")
     const firstRenderValues = async () => {
       return page.locator("[data-testid$='-first']").allTextContents()
     }
