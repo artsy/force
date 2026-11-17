@@ -1,4 +1,5 @@
 import { Spacer } from "@artsy/palette"
+import { C2C_SELLER_PAYMENTS_FLAG } from "Apps/CollectorProfile/Utils/featureFlags"
 import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/CollectorProfileHeader"
 import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { MetaTags } from "Components/MetaTags"
@@ -6,6 +7,7 @@ import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { useSystemContext } from "System/Hooks/useSystemContext"
 import type { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useFlag } from "@unleash/proxy-client-react"
 import styled from "styled-components"
 
 interface CollectorProfileAppProps {
@@ -16,6 +18,7 @@ const CollectorProfileApp: React.FC<
   React.PropsWithChildren<CollectorProfileAppProps>
 > = ({ me, children }) => {
   const { isLoggedIn } = useSystemContext()
+  const isSellerPaymentsEnabled = useFlag(C2C_SELLER_PAYMENTS_FLAG)
 
   if (!isLoggedIn) {
     return (
@@ -49,6 +52,12 @@ const CollectorProfileApp: React.FC<
         <Tab to="/collector-profile/insights" variant={["xs", "sm"]}>
           Insights
         </Tab>
+
+        {isSellerPaymentsEnabled && (
+          <Tab to="/collector-profile/sales" variant={["xs", "sm"]}>
+            Sales
+          </Tab>
+        )}
       </RouteTabs>
 
       <Spacer y={[2, 4]} />
