@@ -1,4 +1,5 @@
 import { Button, Flex, Message, Spacer, Spinner, Text } from "@artsy/palette"
+import { SalesDeleteAccountDialog } from "Apps/CollectorProfile/Routes/Sales/Components/SalesDeleteAccountDialog"
 import { SalesStripeOnboarding } from "Apps/CollectorProfile/Routes/Sales/Components/SalesStripeOnboarding"
 import { useSellerAccount } from "Apps/CollectorProfile/Routes/Sales/hooks/useSellerAccount"
 import { useState } from "react"
@@ -20,6 +21,7 @@ export const SalesSellerAccount: React.FC = () => {
   } = useSellerAccount()
 
   const [isOnboarding, setIsOnboarding] = useState(false)
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const handleStartOnboarding = () => {
@@ -44,6 +46,8 @@ export const SalesSellerAccount: React.FC = () => {
       await deleteAccount()
     } catch {
       setErrorMessage(DELETE_ERROR_MESSAGE)
+    } finally {
+      setIsConfirmingDelete(false)
     }
   }
 
@@ -77,8 +81,9 @@ export const SalesSellerAccount: React.FC = () => {
 
             <Button
               variant="secondaryBlack"
-              onClick={handleDelete}
-              loading={isDeleting}
+              onClick={() => {
+                setIsConfirmingDelete(true)
+              }}
             >
               Delete account
             </Button>
@@ -128,6 +133,16 @@ export const SalesSellerAccount: React.FC = () => {
       )}
 
       {getContent()}
+
+      {isConfirmingDelete && (
+        <SalesDeleteAccountDialog
+          isDeleting={isDeleting}
+          onCancel={() => {
+            setIsConfirmingDelete(false)
+          }}
+          onConfirm={handleDelete}
+        />
+      )}
     </>
   )
 }

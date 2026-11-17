@@ -29,6 +29,11 @@ jest.mock("System/Hooks/useSystemContext", () => {
   }
 })
 
+// The dialog's confirm button shares its label with the page's delete button
+const getConfirmButton = () => {
+  return screen.getAllByText("Delete account").slice(-1)[0]
+}
+
 const SELLER_ACCOUNT = {
   id: "1",
   external_id: "acct_123",
@@ -118,15 +123,41 @@ describe("SalesSellerAccount", () => {
       })
     })
 
-    it("deletes the account and offers to set up payouts again", async () => {
-      ;(deleteSellerAccount as jest.Mock).mockResolvedValue(undefined)
+    it("asks for confirmation before deleting", async () => {
       render(<SalesSellerAccount />)
 
       fireEvent.click(await screen.findByText("Delete account"))
 
+      expect(screen.getByText("Delete payout account?")).toBeInTheDocument()
+      expect(deleteSellerAccount).not.toHaveBeenCalled()
+    })
+
+    it("does not delete when the user cancels", async () => {
+      render(<SalesSellerAccount />)
+
+      fireEvent.click(await screen.findByText("Delete account"))
+      fireEvent.click(screen.getByText("Cancel"))
+
+      expect(
+        screen.queryByText("Delete payout account?"),
+      ).not.toBeInTheDocument()
+      expect(deleteSellerAccount).not.toHaveBeenCalled()
+      expect(screen.getByText("acct_123")).toBeInTheDocument()
+    })
+
+    it("deletes the account once confirmed and offers to set up payouts again", async () => {
+      ;(deleteSellerAccount as jest.Mock).mockResolvedValue(undefined)
+      render(<SalesSellerAccount />)
+
+      fireEvent.click(await screen.findByText("Delete account"))
+      fireEvent.click(getConfirmButton())
+
       expect(await screen.findByText("Set up payouts")).toBeInTheDocument()
       expect(deleteSellerAccount).toHaveBeenCalledWith({ accessToken: "token" })
       expect(screen.queryByText("acct_123")).not.toBeInTheDocument()
+      expect(
+        screen.queryByText("Delete payout account?"),
+      ).not.toBeInTheDocument()
     })
 
     it("keeps the account and shows an error when deleting fails", async () => {
@@ -134,11 +165,15 @@ describe("SalesSellerAccount", () => {
       render(<SalesSellerAccount />)
 
       fireEvent.click(await screen.findByText("Delete account"))
+      fireEvent.click(getConfirmButton())
 
       expect(
         await screen.findByText(/Something went wrong deleting your payout/),
       ).toBeInTheDocument()
       expect(screen.getByText("acct_123")).toBeInTheDocument()
+      expect(
+        screen.queryByText("Delete payout account?"),
+      ).not.toBeInTheDocument()
     })
   })
 
