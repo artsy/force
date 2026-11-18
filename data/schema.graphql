@@ -40216,12 +40216,17 @@ input UpdateArtnetArtworkMutationInput {
   removeImageIDs: [String!]
 
   """
+  Push only title, artist, dimensions and description, plus the editions for their dimensions. Price, availability, medium and materials stay as Artnet has them. Set after an inventory edit when the partner's Auto-Update is off. Ignored when `syncOn` is set.
+  """
+  syncCore: Boolean
+
+  """
   Add the Artsy artwork's new images to Artnet and remove its deleted ones. Send after an image save. Does nothing when `hasSeparateImageSets` is true, and is ignored when images are named in the same request.
   """
   syncImages: Boolean
 
   """
-  Also push the artwork-sourced fields (title, artist, dimensions, description, medium, materials, editions), making Gravity the source of truth for them. The artist is resolved to Artnet's own artist record by best match. Set when the edit came from an inventory row rather than the Artnet row.
+  Also push the artwork-sourced fields (title, artist, dimensions, description, medium, materials, editions), making Gravity the source of truth for them. The artist is resolved to Artnet's own artist record by best match. Also sends price and availability from the catalog. Set when the edit came from an inventory row rather than the Artnet row.
   """
   syncOn: Boolean
 
