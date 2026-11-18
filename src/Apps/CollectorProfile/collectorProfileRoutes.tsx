@@ -1,5 +1,8 @@
 import loadable from "@loadable/component"
+import { C2C_SELLER_PAYMENTS_FLAG } from "Apps/CollectorProfile/Utils/featureFlags"
+import type { SystemContextProps } from "System/Contexts/SystemContext"
 import type { RouteProps } from "System/Router/Route"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
 const CollectorProfileApp = loadable(
@@ -78,6 +81,16 @@ const Artists = loadable(
   },
 )
 
+const Sales = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Sales/CollectorProfileSalesRoute"
+    ),
+  {
+    resolveComponent: component => component.CollectorProfileSalesRoute,
+  },
+)
+
 // Redirect home if the user is not logged in
 const handleServerSideRender = () => {
   // TODO: Redirect to the logged out experience once released
@@ -103,6 +116,26 @@ export const collectorProfileRoutes: RouteProps[] = [
         getComponent: () => Artists,
         onPreloadJS: () => {
           Artists.preload()
+        },
+      },
+      {
+        path: "sales",
+        getComponent: () => Sales,
+        render: ({ Component, props, match }) => {
+          const { featureFlags } = match.context as SystemContextProps
+
+          if (!featureFlags?.isEnabled(C2C_SELLER_PAYMENTS_FLAG)) {
+            throw new RedirectException("/collector-profile", 302)
+          }
+
+          if (!Component) {
+            return undefined
+          }
+
+          return <Component {...props} />
+        },
+        onPreloadJS: () => {
+          Sales.preload()
         },
       },
       {

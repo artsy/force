@@ -8322,6 +8322,15 @@ type BuyersPremium {
 }
 
 type CRMActivity {
+  """
+  The artists this activity is about. Deleted ones are left out
+  """
+  artists: [Artist!]!
+
+  """
+  The artworks this activity is about. Deleted ones are left out
+  """
+  artworks: [Artwork!]!
   createdAt(
     format: String
 
@@ -8331,6 +8340,7 @@ type CRMActivity {
     timezone: String
   ): String
   crmContactID: String!
+  description: String
 
   """
   Null for activities that are not emails
@@ -8356,6 +8366,15 @@ type CRMActivity {
     timezone: String
   ): String
   partnerID: String!
+  subject: String
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
 }
 
 """
@@ -8391,7 +8410,10 @@ type CRMActivityEdge {
 }
 
 enum CRMActivityKind {
+  CALL
   EMAIL
+  INTEREST
+  MEETING
   NOTE
 }
 
@@ -13912,6 +13934,57 @@ type CreateBrandKitSuccess {
   brandKit: BrandKit
 }
 
+type CreateCRMActivityFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateCRMActivityInput {
+  """
+  Artists the partner shows or represents that the activity is about. An INTEREST needs an artwork or an artist
+  """
+  artistIDs: [String!]
+
+  """
+  Artworks of the partner that the activity is about
+  """
+  artworkIDs: [String!]
+  clientMutationId: String
+  crmContactID: String!
+
+  """
+  Required for NOTE
+  """
+  description: String
+
+  """
+  Kind of activity. EMAIL is not accepted
+  """
+  kind: CRMActivityKind!
+
+  """
+  ISO 8601 time the activity happened. Defaults to now on create
+  """
+  occurredAt: String
+  subject: String
+}
+
+type CreateCRMActivityPayload {
+  clientMutationId: String
+
+  """
+  On success: the created activity
+  """
+  crmActivityOrError: CreateCRMActivityResponseOrError
+}
+
+union CreateCRMActivityResponseOrError =
+  | CreateCRMActivityFailure
+  | CreateCRMActivitySuccess
+
+type CreateCRMActivitySuccess {
+  crmActivity: CRMActivity
+}
+
 type CreateCRMContactEmailFailure {
   mutationError: GravityMutationError
 }
@@ -16155,6 +16228,36 @@ union DeleteBrandKitResponseOrError =
 
 type DeleteBrandKitSuccess {
   success: Boolean
+}
+
+type DeleteCRMActivityFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteCRMActivityInput {
+  clientMutationId: String
+
+  """
+  The internal ID of the activity
+  """
+  id: String!
+}
+
+type DeleteCRMActivityPayload {
+  clientMutationId: String
+
+  """
+  On success: the removed activity
+  """
+  crmActivityOrError: DeleteCRMActivityResponseOrError
+}
+
+union DeleteCRMActivityResponseOrError =
+  | DeleteCRMActivityFailure
+  | DeleteCRMActivitySuccess
+
+type DeleteCRMActivitySuccess {
+  crmActivity: CRMActivity
 }
 
 type DeleteCRMContactEmailFailure {
@@ -26428,6 +26531,11 @@ type Mutation {
   createBuyerOffer(input: createBuyerOfferInput!): createBuyerOfferPayload
 
   """
+  Add an activity to a CRM contact's timeline. Email activities can't be created.
+  """
+  createCRMActivity(input: CreateCRMActivityInput!): CreateCRMActivityPayload
+
+  """
   Create a CRM contact. It needs at least one of firstName, lastName, company or an email. Creation is all-or-nothing: a failing email or location creates nothing.
   """
   createCRMContact(input: CreateCRMContactInput!): CreateCRMContactPayload
@@ -26842,6 +26950,11 @@ type Mutation {
   Remove the logo from a brand kit
   """
   deleteBrandKitLogo(input: DeleteBrandKitLogoInput!): DeleteBrandKitLogoPayload
+
+  """
+  Remove an activity from a CRM contact's timeline. Email activities can't be removed.
+  """
+  deleteCRMActivity(input: DeleteCRMActivityInput!): DeleteCRMActivityPayload
 
   """
   Remove an email from a CRM contact. Fails when it is the contact's last email and the contact has no name or company.
@@ -27714,6 +27827,11 @@ type Mutation {
   updateCMSLastAccessTimestamp(
     input: UpdateCMSLastAccessTimestampMutationInput!
   ): UpdateCMSLastAccessTimestampMutationPayload
+
+  """
+  Change an activity. Email activities can't be changed.
+  """
+  updateCRMActivity(input: UpdateCRMActivityInput!): UpdateCRMActivityPayload
 
   """
   Update a CRM contact's own fields. Emails and locations have their own mutations, and a contact can't change partner.
@@ -31574,6 +31692,11 @@ type PartnerList {
   publication: PartnerListPublication
 
   """
+  Public-facing path of this list's private viewing room, from the same inline key as published. Null if no publication exists yet.
+  """
+  publicationHref: String
+
+  """
   Whether this list's private viewing room publication is live. Null if no publication exists yet.
   """
   published: Boolean
@@ -31699,9 +31822,19 @@ type PartnerListPublication {
   applyBrand: Boolean
 
   """
+  Number of artwork columns, 2 to 4 (viewing rooms rebuild). Null on a room published before the rebuild.
+  """
+  artworkColumns: Int
+
+  """
   Per-field visibility toggles for artworks in the room. Any key the gallery hasn't set is null.
   """
   artworkFieldVisibility: ArtworkFieldVisibility
+
+  """
+  Artworks as a grid or masonry (viewing rooms rebuild). Null on a room published before the rebuild.
+  """
+  artworkLayout: ViewingRoomArtworkLayout
 
   """
   Number of artworks currently snapshotted into this publication.
@@ -31722,7 +31855,7 @@ type PartnerListPublication {
   ): String
 
   """
-  Long plain-text curatorial text introducing the works (viewing rooms rebuild). Not shown to visitors yet.
+  Long plain-text curatorial text introducing the works (viewing rooms rebuild).
   """
   curatorialText: String
   description: String
@@ -31731,6 +31864,11 @@ type PartnerListPublication {
   Optional heading shown on the published room.
   """
   heading: String
+
+  """
+  Hero banner style (viewing rooms rebuild). Null on a room published before the rebuild.
+  """
+  heroStyle: ViewingRoomHeroStyle
 
   """
   Public-facing path for this private viewing room.
@@ -31776,6 +31914,11 @@ type PartnerListPublication {
   """
   showGalleryName: Boolean
   slug: String
+
+  """
+  Alignment of the heading and text (viewing rooms rebuild). Null on a room published before the rebuild.
+  """
+  textAlignment: ViewingRoomTextAlignment
   updatedAt(
     format: String
 
@@ -32782,6 +32925,16 @@ union PricingBreakdownLineUnion =
 
 type PrivateViewingRoom {
   applyBrand: Boolean
+
+  """
+  Number of artwork columns, 2 to 4 (viewing rooms rebuild). Omitted like heroStyle.
+  """
+  artworkColumns: Int
+
+  """
+  Artworks as a grid or masonry (viewing rooms rebuild). Omitted like heroStyle.
+  """
+  artworkLayout: ViewingRoomArtworkLayout
   artworks: [PrivateViewingRoomArtwork!]
   brandKit: BrandKit
 
@@ -32789,6 +32942,11 @@ type PrivateViewingRoom {
   URL of the room's cover image as of the last publish (viewing rooms rebuild), for the hero banner. Omitted without a cover, and for a gated room until authenticated.
   """
   coverImageURL: String
+
+  """
+  Long plain-text curatorial text introducing the works (viewing rooms rebuild). Omitted when the gallery didn't add any, and for a gated room until authenticated.
+  """
+  curatorialText: String
   description: String
 
   """
@@ -32798,9 +32956,19 @@ type PrivateViewingRoom {
   heading: String
 
   """
+  Hero banner style (viewing rooms rebuild). Omitted on a room published before the rebuild, which keeps its original layout, and for a gated room until authenticated.
+  """
+  heroStyle: ViewingRoomHeroStyle
+
+  """
   Whether this room requires a passcode to view.
   """
   passcodeRequired: Boolean!
+
+  """
+  Alignment of the heading and text (viewing rooms rebuild). Omitted like heroStyle.
+  """
+  textAlignment: ViewingRoomTextAlignment
 }
 
 type PrivateViewingRoomArtwork {
@@ -32849,6 +33017,16 @@ type PrivateViewingRoomArtworkEditionInfo {
 
 type PrivateViewingRoomContents {
   applyBrand: Boolean
+
+  """
+  Number of artwork columns, 2 to 4 (viewing rooms rebuild). Omitted like heroStyle.
+  """
+  artworkColumns: Int
+
+  """
+  Artworks as a grid or masonry (viewing rooms rebuild). Omitted like heroStyle.
+  """
+  artworkLayout: ViewingRoomArtworkLayout
   artworks: [PrivateViewingRoomArtwork!]
   brandKit: BrandKit
 
@@ -32856,6 +33034,11 @@ type PrivateViewingRoomContents {
   URL of the room's cover image as of the last publish (viewing rooms rebuild), for the hero banner. Omitted without a cover, and for a gated room until authenticated.
   """
   coverImageURL: String
+
+  """
+  Long plain-text curatorial text introducing the works (viewing rooms rebuild). Omitted when the gallery didn't add any, and for a gated room until authenticated.
+  """
+  curatorialText: String
   description: String
 
   """
@@ -32863,6 +33046,16 @@ type PrivateViewingRoomContents {
   """
   galleryName: String
   heading: String
+
+  """
+  Hero banner style (viewing rooms rebuild). Omitted on a room published before the rebuild, which keeps its original layout, and for a gated room until authenticated.
+  """
+  heroStyle: ViewingRoomHeroStyle
+
+  """
+  Alignment of the heading and text (viewing rooms rebuild). Omitted like heroStyle.
+  """
+  textAlignment: ViewingRoomTextAlignment
 }
 
 type Profile {
@@ -32987,9 +33180,19 @@ input PublishPartnerListPublicationMutationInput {
   applyBrand: Boolean
 
   """
+  Number of artwork columns, 2 to 4 (viewing rooms rebuild). Gravity rejects other values.
+  """
+  artworkColumns: Int
+
+  """
   Per-field visibility toggles for artworks in the room.
   """
   artworkFieldVisibility: ArtworkFieldVisibilityInput
+
+  """
+  Artworks as a grid or masonry (viewing rooms rebuild).
+  """
+  artworkLayout: ViewingRoomArtworkLayout
   clientMutationId: String
 
   """
@@ -33008,6 +33211,11 @@ input PublishPartnerListPublicationMutationInput {
   heading: String
 
   """
+  Hero banner style (viewing rooms rebuild).
+  """
+  heroStyle: ViewingRoomHeroStyle
+
+  """
   The ID of the partner list to publish as a viewing room.
   """
   partnerListID: String!
@@ -33021,6 +33229,11 @@ input PublishPartnerListPublicationMutationInput {
   Whether to show the gallery name on the public page.
   """
   showGalleryName: Boolean
+
+  """
+  Alignment of the heading and text (viewing rooms rebuild).
+  """
+  textAlignment: ViewingRoomTextAlignment
 }
 
 type PublishPartnerListPublicationMutationPayload {
@@ -40622,6 +40835,57 @@ type UpdateCMSLastAccessTimestampSuccess {
   partner: Partner
 }
 
+type UpdateCRMActivityFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCRMActivityInput {
+  """
+  Replaces the artists the activity is about. An empty list clears them, leaving it out keeps them
+  """
+  artistIDs: [String!]
+
+  """
+  Replaces the artworks the activity is about. An empty list clears them, leaving it out keeps them
+  """
+  artworkIDs: [String!]
+  clientMutationId: String
+  description: String
+
+  """
+  The internal ID of the activity
+  """
+  id: String!
+
+  """
+  Switch between NOTE, CALL, MEETING and INTEREST
+  """
+  kind: CRMActivityKind
+
+  """
+  ISO 8601 time the activity happened. Defaults to now on create
+  """
+  occurredAt: String
+  subject: String
+}
+
+type UpdateCRMActivityPayload {
+  clientMutationId: String
+
+  """
+  On success: the updated activity
+  """
+  crmActivityOrError: UpdateCRMActivityResponseOrError
+}
+
+union UpdateCRMActivityResponseOrError =
+  | UpdateCRMActivityFailure
+  | UpdateCRMActivitySuccess
+
+type UpdateCRMActivitySuccess {
+  crmActivity: CRMActivity
+}
+
 type UpdateCRMContactEmailFailure {
   mutationError: GravityMutationError
 }
@@ -46479,6 +46743,11 @@ input ViewingRoomArtworkInput {
   position: Int
 }
 
+enum ViewingRoomArtworkLayout {
+  GRID
+  MASONRY
+}
+
 input ViewingRoomAttributes {
   body: String
 
@@ -46537,6 +46806,11 @@ type ViewingRoomEdge {
   node: ViewingRoom
 }
 
+enum ViewingRoomHeroStyle {
+  EDITORIAL
+  FULL_IMAGE
+}
+
 union ViewingRoomOrErrorsUnion = Errors | ViewingRoom
 
 type ViewingRoomPublishedNotificationItem {
@@ -46585,6 +46859,11 @@ input ViewingRoomSubsectionInput {
   delete: Boolean = false
   image: ARImageInput
   internalID: ID
+}
+
+enum ViewingRoomTextAlignment {
+  CENTER
+  LEFT
 }
 
 """
