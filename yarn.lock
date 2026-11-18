@@ -160,10 +160,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/xapp@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@artsy/xapp@npm:2.0.0"
-  checksum: 10c0/5858e4348156faa950abbaa13733abeb984e3f94894b78df1b87500323aeeb4e8ea8b4d27963057c071f6b938194b69517afc613bb1f0e089d4641d965285d1c
+"@artsy/xapp@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@artsy/xapp@npm:2.0.1"
+  checksum: 10c0/743a7d54da7d3c33e913a2accc058de05c57b4a06c0fa9f0dbb6bc98ca105cc55020ebbf312df9c598ddfc9bece70a2950f4a11a666d5bdd050817f6bb63517e
   languageName: node
   linkType: hard
 
@@ -9458,7 +9458,7 @@ __metadata:
     "@artsy/palette-charts": "npm:45.11.0"
     "@artsy/palette-tokens": "npm:7.3.0"
     "@artsy/react-html-parser": "npm:^3.0.2"
-    "@artsy/xapp": "npm:2.0.0"
+    "@artsy/xapp": "npm:2.0.1"
     "@biomejs/biome": "npm:1.9.4"
     "@graphql-inspector/core": "npm:1.14.0"
     "@graphql-tools/jest-transform": "npm:^2.0.0"
