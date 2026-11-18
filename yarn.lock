@@ -3962,6 +3962,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/connect-js@npm:^3.4.6":
+  version: 3.5.0
+  resolution: "@stripe/connect-js@npm:3.5.0"
+  checksum: 10c0/86cb43ddc241b2f5c1d14f17caedbecc7c93078f8b5df22c0f971048840600b708b0a4357aae9ecc9053452f2d73abdef881942725f1a74cfca074dd5bb634c1
+  languageName: node
+  linkType: hard
+
+"@stripe/react-connect-js@npm:^3.4.4":
+  version: 3.5.0
+  resolution: "@stripe/react-connect-js@npm:3.5.0"
+  peerDependencies:
+    "@stripe/connect-js": ">=3.5.0"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10c0/63c22b02962eee6863c5ba79c7fe89cc7584e45b45cf92ca3eb4b6eee975f685729ca01066209b0b549a19bffac733beea06b0474c7f38a35773f9690ca177c2
+  languageName: node
+  linkType: hard
+
 "@stripe/react-stripe-js@npm:^3.1.1":
   version: 3.1.1
   resolution: "@stripe/react-stripe-js@npm:3.1.1"
@@ -9463,6 +9481,8 @@ __metadata:
     "@storybook/addon-links": "npm:^8.6.19"
     "@storybook/react": "npm:^8.6.19"
     "@storybook/test": "npm:^8.6.19"
+    "@stripe/connect-js": "npm:^3.4.6"
+    "@stripe/react-connect-js": "npm:^3.4.4"
     "@stripe/react-stripe-js": "npm:^3.1.1"
     "@stripe/stripe-js": "npm:^5.5.0"
     "@styled-system/theme-get": "npm:5.1.2"

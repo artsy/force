@@ -88,6 +88,8 @@
     "@sentry/browser": "^8.33.0",
     "@sentry/node": "^8.32.0",
     "@sentry/profiling-node": "^8.32.0",
+    "@stripe/connect-js": "^3.4.6",
+    "@stripe/react-connect-js": "^3.4.4",
     "@stripe/react-stripe-js": "^3.1.1",
     "@stripe/stripe-js": "^5.5.0",
     "@styled-system/theme-get": "5.1.2",
