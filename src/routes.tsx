@@ -34,7 +34,6 @@ import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionIns
 import { myCollectionInsightsRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsRoutes"
 import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
 import { newWorksFromGalleriesYouFollowRoutes } from "Apps/NewWorksFromGalleriesYouFollow/newWorksFromGalleriesYouFollowRoutes"
-import { onboardingRoutes } from "Apps/Onboarding/onboardingRoutes"
 import { orderRoutes } from "Apps/Order/orderRoutes"
 import { order2Routes } from "Apps/Order2/order2Routes"
 import { pageRoutes } from "Apps/Page/pageRoutes"
@@ -111,7 +110,6 @@ const ROUTES = buildAppRoutes([
   newForYouRoutes,
   newWorksFromGalleriesYouFollowRoutes,
   notificationsRoutes,
-  onboardingRoutes,
   orderRoutes,
   order2Routes,
   pageRoutes,

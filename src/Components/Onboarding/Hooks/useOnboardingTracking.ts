@@ -23,45 +23,6 @@ export const useOnboardingTracking = () => {
     trackEvent(payload)
   }, [trackEvent])
 
-  const trackQuestionOne = useCallback(
-    response => {
-      const payload: OnboardingUserInputData = {
-        action: ActionType.onboardingUserInputData,
-        context_module: ContextModule.onboardingCollectorLevel,
-        data_input: response,
-      }
-
-      trackEvent(payload)
-    },
-    [trackEvent],
-  )
-
-  const trackQuestionTwo = useCallback(
-    response => {
-      const payload: OnboardingUserInputData = {
-        action: ActionType.onboardingUserInputData,
-        context_module: ContextModule.onboardingInterests,
-        data_input: response,
-      }
-
-      trackEvent(payload)
-    },
-    [trackEvent],
-  )
-
-  const trackQuestionThree = useCallback(
-    response => {
-      const payload: OnboardingUserInputData = {
-        action: ActionType.onboardingUserInputData,
-        context_module: ContextModule.onboardingActivity,
-        data_input: response,
-      }
-
-      trackEvent(payload)
-    },
-    [trackEvent],
-  )
-
   const trackInterests = useCallback(
     (interests: string[]) => {
       const payload: OnboardingUserInputData = {
@@ -120,9 +81,6 @@ export const useOnboardingTracking = () => {
 
   return {
     userStartedOnboarding,
-    trackQuestionOne,
-    trackQuestionTwo,
-    trackQuestionThree,
     trackInterests,
     trackSource,
     trackSubscribedToEmail,
