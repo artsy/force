@@ -14,12 +14,12 @@ describe("fetchStripeClientSecret", () => {
   it("posts to Gravity with the access token and returns the client secret", async () => {
     fetchMock.mockResolvedValue({
       ok: true,
-      json: async () => ({ client_secret: "accsess_secret" }),
+      json: async () => ({ client_secret: "account_session_secret" }),
     })
 
     const secret = await fetchStripeClientSecret({ accessToken: "token" })
 
-    expect(secret).toBe("accsess_secret")
+    expect(secret).toBe("account_session_secret")
     expect(fetchMock).toHaveBeenCalledWith(
       expect.stringContaining("/api/v1/me/seller_account_session"),
       { method: "POST", headers: { "X-Access-Token": "token" } },
