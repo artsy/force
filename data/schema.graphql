@@ -31913,6 +31913,11 @@ type PartnerListPublication {
   Whether the gallery name is shown on the public page.
   """
   showGalleryName: Boolean
+
+  """
+  Whether the gallery's brand kit logo is shown on the public page, apart from the gallery name. Null on a room published before the logo had its own setting.
+  """
+  showLogo: Boolean
   slug: String
 
   """
@@ -32966,6 +32971,11 @@ type PrivateViewingRoom {
   passcodeRequired: Boolean!
 
   """
+  Whether to show the brand kit logo, apart from the gallery name. Null on a room published before the logo had its own setting, which shows the logo in place of the name when the brand is applied. The brand kit also comes with it when only the logo is on; apply its colors and font only when applyBrand is true.
+  """
+  showLogo: Boolean
+
+  """
   Alignment of the heading and text (viewing rooms rebuild). Omitted like heroStyle.
   """
   textAlignment: ViewingRoomTextAlignment
@@ -33051,6 +33061,11 @@ type PrivateViewingRoomContents {
   Hero banner style (viewing rooms rebuild). Omitted on a room published before the rebuild, which keeps its original layout, and for a gated room until authenticated.
   """
   heroStyle: ViewingRoomHeroStyle
+
+  """
+  Whether to show the brand kit logo, apart from the gallery name. Null on a room published before the logo had its own setting, which shows the logo in place of the name when the brand is applied. The brand kit also comes with it when only the logo is on; apply its colors and font only when applyBrand is true.
+  """
+  showLogo: Boolean
 
   """
   Alignment of the heading and text (viewing rooms rebuild). Omitted like heroStyle.
@@ -33229,6 +33244,11 @@ input PublishPartnerListPublicationMutationInput {
   Whether to show the gallery name on the public page.
   """
   showGalleryName: Boolean
+
+  """
+  Whether to show the gallery's brand kit logo on the public page, apart from the gallery name.
+  """
+  showLogo: Boolean
 
   """
   Alignment of the heading and text (viewing rooms rebuild).
