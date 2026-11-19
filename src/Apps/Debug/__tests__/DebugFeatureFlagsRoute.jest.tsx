@@ -28,7 +28,7 @@ const renderPage = ({
   flag?: unknown
 }) => {
   ;(getENV as jest.Mock).mockImplementation((key: string) => {
-    return key === "NODE_ENV" ? environment : undefined
+    return key === "UNLEASH_ENVIRONMENT" ? environment : undefined
   })
   ;(useSystemContext as jest.Mock).mockReturnValue({
     user,
@@ -93,7 +93,8 @@ describe("DebugFeatureFlagsRoute", () => {
   })
 
   it("lets anyone inspect any flag outside of production", () => {
-    renderPage({ environment: "staging", user: null })
+    // Staging uses Unleash's development environment
+    renderPage({ environment: "development", user: null })
 
     expect(useFlag).toHaveBeenCalledWith(REQUESTED_FLAG)
     expect(screen.getByText(REQUESTED_FLAG)).toBeInTheDocument()
@@ -101,7 +102,7 @@ describe("DebugFeatureFlagsRoute", () => {
 
   it("falls back to the default flag when the query isn't a string", () => {
     // `?flag[a]=b` parses to an object, which would crash the server render
-    renderPage({ environment: "staging", user: null, flag: { a: "b" } })
+    renderPage({ environment: "development", user: null, flag: { a: "b" } })
 
     expect(useFlag).toHaveBeenCalledWith("onyx_art-assistant-web")
     expect(screen.getByText("onyx_art-assistant-web")).toBeInTheDocument()

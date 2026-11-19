@@ -34,17 +34,19 @@ const DEFAULT_FLAG = "onyx_art-assistant-web"
  *
  * The inspector evaluates whatever flag name it's given with the server key,
  * which can see flags the frontend key can't, and the result (including any
- * variant payload) ships in the page. So in production it's limited to team
- * members. The list of enabled flags shows only what the browser already has,
- * so it's open to everyone.
+ * variant payload) ships in the page. So against Unleash's production
+ * environment it's limited to team members. The list of enabled flags shows
+ * only what the browser already has, so it's open to everyone.
  */
 export const DebugFeatureFlagsRoute = () => {
   const { match } = useRouter()
   const { user } = useSystemContext()
 
   const flag = getFlagFromQuery(match?.location?.query?.flag)
-  const isProduction = getENV("NODE_ENV") === "production"
-  const canInspect = !isProduction || userIsTeam(user)
+  // Not NODE_ENV: staging also runs with NODE_ENV=production, but it uses
+  // Unleash's development environment, which is what this page exposes.
+  const isProductionUnleash = getENV("UNLEASH_ENVIRONMENT") === "production"
+  const canInspect = !isProductionUnleash || userIsTeam(user)
 
   return (
     <>
