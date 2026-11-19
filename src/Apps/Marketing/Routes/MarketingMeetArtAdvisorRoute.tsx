@@ -8,6 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAlternatingStack"
+import { MarketingGoogleSignInSection } from "Apps/Marketing/Components/MarketingGoogleSignInSection"
 import { MarketingHeaderPrimary } from "Apps/Marketing/Components/MarketingHeaderPrimary"
 import { MetaTags } from "Components/MetaTags"
 import { useSystemContext } from "System/Hooks/useSystemContext"
@@ -85,6 +86,8 @@ export const MarketingMeetArtAdvisorRoute: FC<
             </GridColumns>
           </FullBleed>
         )}
+
+        <MarketingGoogleSignInSection />
       </Join>
     </>
   )
