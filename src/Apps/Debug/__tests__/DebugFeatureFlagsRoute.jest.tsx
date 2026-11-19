@@ -28,7 +28,7 @@ const renderPage = ({
   flag?: unknown
 }) => {
   ;(getENV as jest.Mock).mockImplementation((key: string) => {
-    return key === "NODE_ENV" ? environment : undefined
+    return key === "UNLEASH_ENVIRONMENT" ? environment : undefined
   })
   ;(useSystemContext as jest.Mock).mockReturnValue({
     user,
@@ -71,8 +71,12 @@ describe("DebugFeatureFlagsRoute", () => {
         "Inspecting a flag is limited to team members in production.",
       ),
     ).toBeInTheDocument()
-    // The list only shows what the browser already has, so it stays open
+    // The list only shows what the browser already has, so it stays open,
+    // without links to the inspector they can't use
     expect(screen.getByText("example_enabled-flag")).toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: "example_enabled-flag" })).toBe(
+      null,
+    )
   })
 
   it("lets team members inspect any flag in production", () => {
@@ -83,10 +87,14 @@ describe("DebugFeatureFlagsRoute", () => {
 
     expect(useFlag).toHaveBeenCalledWith(REQUESTED_FLAG)
     expect(screen.getByText(REQUESTED_FLAG)).toBeInTheDocument()
+    expect(
+      screen.getByRole("link", { name: "example_enabled-flag" }),
+    ).toHaveAttribute("href", "?flag=example_enabled-flag")
   })
 
   it("lets anyone inspect any flag outside of production", () => {
-    renderPage({ environment: "staging", user: null })
+    // Staging uses Unleash's development environment
+    renderPage({ environment: "development", user: null })
 
     expect(useFlag).toHaveBeenCalledWith(REQUESTED_FLAG)
     expect(screen.getByText(REQUESTED_FLAG)).toBeInTheDocument()
@@ -94,7 +102,7 @@ describe("DebugFeatureFlagsRoute", () => {
 
   it("falls back to the default flag when the query isn't a string", () => {
     // `?flag[a]=b` parses to an object, which would crash the server render
-    renderPage({ environment: "staging", user: null, flag: { a: "b" } })
+    renderPage({ environment: "development", user: null, flag: { a: "b" } })
 
     expect(useFlag).toHaveBeenCalledWith("onyx_art-assistant-web")
     expect(screen.getByText("onyx_art-assistant-web")).toBeInTheDocument()

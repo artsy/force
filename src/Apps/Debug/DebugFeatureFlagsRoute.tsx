@@ -34,17 +34,19 @@ const DEFAULT_FLAG = "onyx_art-assistant-web"
  *
  * The inspector evaluates whatever flag name it's given with the server key,
  * which can see flags the frontend key can't, and the result (including any
- * variant payload) ships in the page. So in production it's limited to team
- * members. The list of enabled flags shows only what the browser already has,
- * so it's open to everyone.
+ * variant payload) ships in the page. So against Unleash's production
+ * environment it's limited to team members. The list of enabled flags shows
+ * only what the browser already has, so it's open to everyone.
  */
 export const DebugFeatureFlagsRoute = () => {
   const { match } = useRouter()
   const { user } = useSystemContext()
 
   const flag = getFlagFromQuery(match?.location?.query?.flag)
-  const isProduction = getENV("NODE_ENV") === "production"
-  const canInspect = !isProduction || userIsTeam(user)
+  // Not NODE_ENV: staging also runs with NODE_ENV=production, but it uses
+  // Unleash's development environment, which is what this page exposes.
+  const isProductionUnleash = getENV("UNLEASH_ENVIRONMENT") === "production"
+  const canInspect = !isProductionUnleash || userIsTeam(user)
 
   return (
     <>
@@ -74,7 +76,7 @@ export const DebugFeatureFlagsRoute = () => {
 
       <Spacer y={6} />
 
-      <DebugFeatureFlagsEnabledList />
+      <DebugFeatureFlagsEnabledList canInspect={canInspect} />
 
       <Spacer y={6} />
     </>
@@ -281,7 +283,14 @@ const DebugFeatureFlagsTableRow: React.FC<DebugFeatureFlagsTableRowProps> = ({
  * browser's list grows when its first fetch arrives, so it can't be part of
  * the server HTML.
  */
-const DebugFeatureFlagsEnabledList: React.FC = () => {
+interface DebugFeatureFlagsEnabledListProps {
+  /** Link each flag to the inspector, when the viewer can use it */
+  canInspect: boolean
+}
+
+const DebugFeatureFlagsEnabledList: React.FC<
+  DebugFeatureFlagsEnabledListProps
+> = ({ canInspect }) => {
   const isMounted = useDidMount()
   const toggles = useFlags()
   const [query, setQuery] = useState("")
@@ -364,12 +373,16 @@ const DebugFeatureFlagsEnabledList: React.FC = () => {
             <GridColumns key={toggle.name} py={1}>
               <Column span={[12, 7]}>
                 <Text variant="sm">
-                  <Link
-                    href={`?flag=${encodeURIComponent(toggle.name)}`}
-                    color="mono100"
-                  >
-                    {toggle.name}
-                  </Link>
+                  {canInspect ? (
+                    <Link
+                      href={`?flag=${encodeURIComponent(toggle.name)}`}
+                      color="mono100"
+                    >
+                      {toggle.name}
+                    </Link>
+                  ) : (
+                    toggle.name
+                  )}
                 </Text>
               </Column>
 
