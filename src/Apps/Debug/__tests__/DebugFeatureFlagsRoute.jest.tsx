@@ -71,8 +71,12 @@ describe("DebugFeatureFlagsRoute", () => {
         "Inspecting a flag is limited to team members in production.",
       ),
     ).toBeInTheDocument()
-    // The list only shows what the browser already has, so it stays open
+    // The list only shows what the browser already has, so it stays open,
+    // without links to the inspector they can't use
     expect(screen.getByText("example_enabled-flag")).toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: "example_enabled-flag" })).toBe(
+      null,
+    )
   })
 
   it("lets team members inspect any flag in production", () => {
@@ -83,6 +87,9 @@ describe("DebugFeatureFlagsRoute", () => {
 
     expect(useFlag).toHaveBeenCalledWith(REQUESTED_FLAG)
     expect(screen.getByText(REQUESTED_FLAG)).toBeInTheDocument()
+    expect(
+      screen.getByRole("link", { name: "example_enabled-flag" }),
+    ).toHaveAttribute("href", "?flag=example_enabled-flag")
   })
 
   it("lets anyone inspect any flag outside of production", () => {

@@ -74,7 +74,7 @@ export const DebugFeatureFlagsRoute = () => {
 
       <Spacer y={6} />
 
-      <DebugFeatureFlagsEnabledList />
+      <DebugFeatureFlagsEnabledList canInspect={canInspect} />
 
       <Spacer y={6} />
     </>
@@ -281,7 +281,14 @@ const DebugFeatureFlagsTableRow: React.FC<DebugFeatureFlagsTableRowProps> = ({
  * browser's list grows when its first fetch arrives, so it can't be part of
  * the server HTML.
  */
-const DebugFeatureFlagsEnabledList: React.FC = () => {
+interface DebugFeatureFlagsEnabledListProps {
+  /** Link each flag to the inspector, when the viewer can use it */
+  canInspect: boolean
+}
+
+const DebugFeatureFlagsEnabledList: React.FC<
+  DebugFeatureFlagsEnabledListProps
+> = ({ canInspect }) => {
   const isMounted = useDidMount()
   const toggles = useFlags()
   const [query, setQuery] = useState("")
@@ -364,12 +371,16 @@ const DebugFeatureFlagsEnabledList: React.FC = () => {
             <GridColumns key={toggle.name} py={1}>
               <Column span={[12, 7]}>
                 <Text variant="sm">
-                  <Link
-                    href={`?flag=${encodeURIComponent(toggle.name)}`}
-                    color="mono100"
-                  >
-                    {toggle.name}
-                  </Link>
+                  {canInspect ? (
+                    <Link
+                      href={`?flag=${encodeURIComponent(toggle.name)}`}
+                      color="mono100"
+                    >
+                      {toggle.name}
+                    </Link>
+                  ) : (
+                    toggle.name
+                  )}
                 </Text>
               </Column>
 
