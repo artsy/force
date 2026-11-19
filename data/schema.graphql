@@ -34243,6 +34243,11 @@ type Query {
     before: String
 
     """
+    Only contacts with any of these categories. Case-insensitive.
+    """
+    categories: [String!]
+
+    """
     Only contacts with this category. Case-insensitive, one value only.
     """
     category: String
@@ -45111,6 +45116,11 @@ type Viewer {
     """
     assignedToUserID: String
     before: String
+
+    """
+    Only contacts with any of these categories. Case-insensitive.
+    """
+    categories: [String!]
 
     """
     Only contacts with this category. Case-insensitive, one value only.
