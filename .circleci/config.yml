@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  artsy-remote-docker: artsy/remote-docker@dev:648e4b5a8eef622b1d27790324c4f531
+  artsy-remote-docker: artsy/remote-docker@volatile
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@6.1.3
