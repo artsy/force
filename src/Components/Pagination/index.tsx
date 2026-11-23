@@ -5,7 +5,6 @@ import {
 } from "@artsy/palette"
 import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
 import { useJump } from "Utils/Hooks/useJump"
-import type { CommercePagination_pageCursors$data } from "__generated__/CommercePagination_pageCursors.graphql"
 import type { Pagination_pageCursors$data } from "__generated__/Pagination_pageCursors.graphql"
 import type * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -15,10 +14,7 @@ export interface PaginationProps
   extends Pick<BasePaginationProps, "getHref">,
     BoxProps {
   hasNextPage: boolean
-  // TODO: Hacks around stitching. See if we can transform the schema to make this unnecessary.
-  pageCursors?:
-    | Pagination_pageCursors$data
-    | CommercePagination_pageCursors$data
+  pageCursors?: Pagination_pageCursors$data
   scrollTo?: string
   offset?: number
   onClick?: (cursor: string, page: number) => void
