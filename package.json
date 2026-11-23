@@ -298,5 +298,5 @@
   "pull-lock": {
     "yarn.lock": "yarn install"
   },
-  "packageManager": "yarn@4.18.1"
+  "packageManager": "yarn@4.19.0"
 }
