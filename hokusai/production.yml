@@ -83,6 +83,7 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 10
           timeoutSeconds: 10
+          failureThreshold: 6
         resources:
           requests:
             cpu: 1000m
@@ -199,6 +200,7 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 10
           timeoutSeconds: 10
+          failureThreshold: 6
         resources:
           requests:
             cpu: 1000m
@@ -256,7 +258,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: force-web-spotty
-  minReplicas: 1
+  minReplicas: 16
   maxReplicas: 28
   behavior:
     scaleDown:
