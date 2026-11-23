@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  artsy-remote-docker: artsy/remote-docker@volatile
+  artsy-remote-docker: artsy/remote-docker@dev:648e4b5a8eef622b1d27790324c4f531
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@6.1.3
@@ -309,7 +309,8 @@ workflows:
             - bundle-github
             - hokusai
           executor: hokusai/beta
-          build_args: SENTRY_AUTH_TOKEN SENTRY_RELEASE=$CIRCLE_SHA1
+          build_args: SENTRY_RELEASE=$CIRCLE_SHA1
+          secrets: SENTRY_AUTH_TOKEN
           resource_class: medium
 
       - hokusai/deploy-staging:

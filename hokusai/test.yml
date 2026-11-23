@@ -8,3 +8,6 @@ services:
       - CI=true
       - CIRCLE_NODE_INDEX
     env_file: ../.env.test
+secrets:
+  SENTRY_AUTH_TOKEN:
+    environment: SENTRY_AUTH_TOKEN

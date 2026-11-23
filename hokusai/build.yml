@@ -3,3 +3,6 @@ version: "3.8"
 services:
   force:
 {% include 'templates/docker-compose-service.yml.j2' %}
+secrets:
+  SENTRY_AUTH_TOKEN:
+    environment: SENTRY_AUTH_TOKEN
