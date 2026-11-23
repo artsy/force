@@ -310,7 +310,7 @@ workflows:
             - hokusai
           executor: hokusai/beta
           build_args: SENTRY_RELEASE=$CIRCLE_SHA1
-          secrets: SENTRY_AUTH_TOKEN
+          secrets: SENTRY_AUTH_TOKEN # pragma: allowlist secret
           resource_class: medium
 
       - hokusai/deploy-staging:
