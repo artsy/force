@@ -22,12 +22,11 @@ RUN yarn install --immutable && \
 # Copy application code
 COPY  . ./
 
-ARG SENTRY_AUTH_TOKEN
 ARG SENTRY_RELEASE
-ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
-RUN yarn build
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN,required=false \
+  yarn build
 
 # ---------------------------------------------------------
 # Release image
