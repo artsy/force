@@ -69,7 +69,7 @@ Your browser has probably cached a redirect to `https://...`. Clear your browser
 
 ### Uploading Sentry source maps from a local Docker build
 
-Local builds don't need a Sentry token. If you intend to upload source maps to Sentry, export `SENTRY_AUTH_TOKEN` and set `SENTRY_RELEASE` to the intended release in your environment, then run this from the repo root:
+Local builds don't need a Sentry token. Use a current Docker release with Dockerfile frontend 1.10 or later. To upload source maps, export both `SENTRY_AUTH_TOKEN` and `SENTRY_RELEASE` for the intended release, then run this from the repo root:
 
 ```sh
 docker build --no-cache \
