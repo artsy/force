@@ -302,13 +302,15 @@ workflows:
       - smoke-tests:
           <<: *not_staging_or_release
 
-      - artsy-remote-docker/build:
+      - artsy-remote-docker/buildx-build-push:
           <<: *not_staging_or_release
           name: build-and-push-docker
           context:
             - bundle-github
             - hokusai
           executor: hokusai/beta
+          build_args: SENTRY_AUTH_TOKEN SENTRY_RELEASE=$CIRCLE_SHA1
+          resource_class: medium
 
       - hokusai/deploy-staging:
           <<: *only_main
