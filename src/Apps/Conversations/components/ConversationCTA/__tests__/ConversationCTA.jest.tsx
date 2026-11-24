@@ -75,16 +75,9 @@ describe("ConversationCTA", () => {
   it("renders the correct CTA when an offer has been received", () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
-          edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
-        },
-        activeOrderCTA: {
+        activeCollectorOrders: {
           edges: [
-            {
-              node: {
-                internalID: "foo",
-              },
-            },
+            { node: { internalID: "foo", buyerAction: "OFFER_RECEIVED" } },
           ],
         },
       }),
@@ -96,7 +89,7 @@ describe("ConversationCTA", () => {
   it("renders the correct CTA when payment has failed", () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [{ node: { buyerAction: "PAYMENT_FAILED" } }],
         },
       }),
@@ -108,7 +101,7 @@ describe("ConversationCTA", () => {
   it("renders the correct CTA when offer is accepted", () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [{ node: { buyerAction: "OFFER_ACCEPTED" } }],
         },
       }),
@@ -122,7 +115,7 @@ describe("ConversationCTA", () => {
   it("renders the correct CTA when offer is accepted but confirmation is needed", () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [{ node: { buyerAction: "OFFER_ACCEPTED_CONFIRM_NEEDED" } }],
         },
       }),
@@ -136,7 +129,7 @@ describe("ConversationCTA", () => {
   it("renders the correct CTA when offer is received but confirmation is needed", () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [{ node: { buyerAction: "OFFER_RECEIVED_CONFIRM_NEEDED" } }],
         },
       }),
@@ -150,7 +143,7 @@ describe("ConversationCTA", () => {
   it("renders the correct CTA when a provisional offer is accepted", () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [{ node: { buyerAction: "PROVISIONAL_OFFER_ACCEPTED" } }],
         },
       }),
@@ -162,10 +155,7 @@ describe("ConversationCTA", () => {
   describe("with an active order and an open partner offer", () => {
     const mockConversationWithOrderAndOffer = () => ({
       internalID: "internal-test-id",
-      activeOrders: {
-        edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
-      },
-      activeOrderCTA: {
+      activeCollectorOrders: {
         edges: [
           { node: { internalID: "order-id", buyerAction: "OFFER_RECEIVED" } },
         ],
@@ -194,7 +184,7 @@ describe("ConversationCTA", () => {
   describe("With no active orders", () => {
     const mockConversationWithArtwork = artwork => () => ({
       internalID: "internal-test-id",
-      activeOrderCTA: null,
+      activeCollectorOrders: null,
       items: [
         { liveArtwork: { __typename: "Artwork", ...artwork, published: true } },
       ],
@@ -202,7 +192,7 @@ describe("ConversationCTA", () => {
 
     it("renders a message about buyer guarantee", () => {
       renderWithRelay({
-        Conversation: () => ({ activeOrderCTA: null }),
+        Conversation: () => ({ activeCollectorOrders: null }),
       })
 
       const link = screen.getByText("The Artsy Guarantee")

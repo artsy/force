@@ -62,7 +62,7 @@ const baseConversation = {
       },
     },
   ],
-  activeOrders: { edges: [] },
+  activeCollectorOrders: { edges: [] },
 }
 
 const conversationWithOffer =
@@ -165,7 +165,39 @@ describe("ConversationPartnerOfferCTA", () => {
     renderWithRelay({
       Conversation: conversationWithOffer(
         {},
-        { activeOrders: { edges: [{ node: { internalID: "order-id" } }] } },
+        {
+          activeCollectorOrders: {
+            edges: [{ node: { internalID: "order-id" } }],
+          },
+        },
+      ),
+    })
+
+    expect(
+      screen.queryByTestId("partnerOfferActionLink"),
+    ).not.toBeInTheDocument()
+  })
+
+  it("ignores null order nodes when checking for an active order", () => {
+    renderWithRelay({
+      Conversation: conversationWithOffer(
+        {},
+        { activeCollectorOrders: { edges: [{ node: null }] } },
+      ),
+    })
+
+    expect(screen.getByTestId("partnerOfferActionLink")).toBeInTheDocument()
+  })
+
+  it("renders nothing when an active order follows a null order node", () => {
+    renderWithRelay({
+      Conversation: conversationWithOffer(
+        {},
+        {
+          activeCollectorOrders: {
+            edges: [{ node: null }, { node: { internalID: "order-id" } }],
+          },
+        },
       ),
     })
 

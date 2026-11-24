@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be78abd1d56781503ec9d9cc600a79f6>>
+ * @generated SignedSource<<34ebfc27675ea98b93c940b14ca89d79>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,29 +9,21 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
-export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type OrderBuyerActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationReviewOfferCTA_conversation$data = {
-  readonly activeOrders: {
+  readonly activeCollectorOrders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
+        readonly buyerAction: OrderBuyerActionEnum | null | undefined;
+        readonly buyerStateExpiresAt: string | null | undefined;
         readonly internalID: string;
-        readonly lastOffer?: {
-          readonly createdAt: string;
+        readonly lastSubmittedOffer: {
+          readonly createdAt: string | null | undefined;
         } | null | undefined;
-        readonly offers?: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly internalID: string;
-            } | null | undefined;
-          } | null | undefined> | null | undefined;
-        } | null | undefined;
-        readonly state: CommerceOrderStateEnum;
-        readonly stateExpiresAt: string | null | undefined;
-        readonly stateReason: string | null | undefined;
-        readonly stateUpdatedAt: string | null | undefined;
+        readonly submittedOffers: ReadonlyArray<{
+          readonly internalID: string;
+        }>;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -59,34 +51,39 @@ return {
   "selections": [
     (v0/*: any*/),
     {
-      "alias": "activeOrders",
+      "alias": "activeCollectorOrders",
       "args": [
         {
           "kind": "Literal",
-          "name": "first",
-          "value": 1
+          "name": "buyerState",
+          "value": [
+            "SUBMITTED",
+            "OFFER_RECEIVED",
+            "COUNTEROFFER_SENT",
+            "PAYMENT_FAILED",
+            "PROCESSING_PAYMENT",
+            "PROCESSING_OFFLINE_PAYMENT",
+            "APPROVED",
+            "SHIPPED",
+            "COMPLETED",
+            "REFUNDED"
+          ]
         },
         {
           "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "PROCESSING_APPROVAL",
-            "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED"
-          ]
+          "name": "first",
+          "value": 10
         }
       ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "concreteType": "MeOrdersConnection",
       "kind": "LinkedField",
-      "name": "orderConnection",
+      "name": "collectorOrdersConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "CommerceOrderEdge",
+          "concreteType": "MeOrdersEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -94,7 +91,7 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": null,
+              "concreteType": "Order",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -104,101 +101,45 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "state",
+                  "name": "buyerAction",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "stateReason",
+                  "name": "buyerStateExpiresAt",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "stateExpiresAt",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "stateUpdatedAt",
-                  "storageKey": null
-                },
-                {
-                  "kind": "InlineFragment",
+                  "concreteType": "Offer",
+                  "kind": "LinkedField",
+                  "name": "lastSubmittedOffer",
+                  "plural": false,
                   "selections": [
                     {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "buyerAction",
+                      "name": "createdAt",
                       "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "CommerceOffer",
-                      "kind": "LinkedField",
-                      "name": "lastOffer",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "createdAt",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "first",
-                          "value": 5
-                        }
-                      ],
-                      "concreteType": "CommerceOfferConnection",
-                      "kind": "LinkedField",
-                      "name": "offers",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "CommerceOfferEdge",
-                          "kind": "LinkedField",
-                          "name": "edges",
-                          "plural": true,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "concreteType": "CommerceOffer",
-                              "kind": "LinkedField",
-                              "name": "node",
-                              "plural": false,
-                              "selections": [
-                                (v0/*: any*/)
-                              ],
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "offers(first:5)"
                     }
                   ],
-                  "type": "CommerceOfferOrder",
-                  "abstractKey": null
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Offer",
+                  "kind": "LinkedField",
+                  "name": "submittedOffers",
+                  "plural": true,
+                  "selections": [
+                    (v0/*: any*/)
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -207,7 +148,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "collectorOrdersConnection(buyerState:[\"SUBMITTED\",\"OFFER_RECEIVED\",\"COUNTEROFFER_SENT\",\"PAYMENT_FAILED\",\"PROCESSING_PAYMENT\",\"PROCESSING_OFFLINE_PAYMENT\",\"APPROVED\",\"SHIPPED\",\"COMPLETED\",\"REFUNDED\"],first:10)"
     }
   ],
   "type": "Conversation",
@@ -215,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "27b3bf1e97cc22113087b7b07f299c87";
+(node as any).hash = "1a14fc618c264d687a638b6778b68545";
 
 export default node;

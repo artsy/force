@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f77c1d5311339b70b382f581eef3d5b>>
+ * @generated SignedSource<<a70b208e9dee01fb6d8088ba72ef93ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,7 +45,7 @@ v2 = {
 },
 v3 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 },
@@ -54,18 +54,6 @@ v4 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "CommerceOffer"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -110,34 +98,39 @@ return {
         "selections": [
           (v1/*: any*/),
           {
-            "alias": "activeOrders",
+            "alias": "activeCollectorOrders",
             "args": [
               {
                 "kind": "Literal",
-                "name": "first",
-                "value": 1
+                "name": "buyerState",
+                "value": [
+                  "SUBMITTED",
+                  "OFFER_RECEIVED",
+                  "COUNTEROFFER_SENT",
+                  "PAYMENT_FAILED",
+                  "PROCESSING_PAYMENT",
+                  "PROCESSING_OFFLINE_PAYMENT",
+                  "APPROVED",
+                  "SHIPPED",
+                  "COMPLETED",
+                  "REFUNDED"
+                ]
               },
               {
                 "kind": "Literal",
-                "name": "states",
-                "value": [
-                  "APPROVED",
-                  "PROCESSING_APPROVAL",
-                  "FULFILLED",
-                  "SUBMITTED",
-                  "REFUNDED"
-                ]
+                "name": "first",
+                "value": 10
               }
             ],
-            "concreteType": "CommerceOrderConnectionWithTotalCount",
+            "concreteType": "MeOrdersConnection",
             "kind": "LinkedField",
-            "name": "orderConnection",
+            "name": "collectorOrdersConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "CommerceOrderEdge",
+                "concreteType": "MeOrdersEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -145,120 +138,57 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": null,
+                    "concreteType": "Order",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      },
                       (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "state",
+                        "name": "buyerAction",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "stateReason",
+                        "name": "buyerStateExpiresAt",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "stateExpiresAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "stateUpdatedAt",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
+                        "concreteType": "Offer",
+                        "kind": "LinkedField",
+                        "name": "lastSubmittedOffer",
+                        "plural": false,
                         "selections": [
                           {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "buyerAction",
+                            "name": "createdAt",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "CommerceOffer",
-                            "kind": "LinkedField",
-                            "name": "lastOffer",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "createdAt",
-                                "storageKey": null
-                              },
-                              (v2/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "first",
-                                "value": 5
-                              }
-                            ],
-                            "concreteType": "CommerceOfferConnection",
-                            "kind": "LinkedField",
-                            "name": "offers",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "CommerceOfferEdge",
-                                "kind": "LinkedField",
-                                "name": "edges",
-                                "plural": true,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "concreteType": "CommerceOffer",
-                                    "kind": "LinkedField",
-                                    "name": "node",
-                                    "plural": false,
-                                    "selections": [
-                                      (v1/*: any*/),
-                                      (v2/*: any*/)
-                                    ],
-                                    "storageKey": null
-                                  }
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "offers(first:5)"
-                          }
+                          (v2/*: any*/)
                         ],
-                        "type": "CommerceOfferOrder",
-                        "abstractKey": null
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Offer",
+                        "kind": "LinkedField",
+                        "name": "submittedOffers",
+                        "plural": true,
+                        "selections": [
+                          (v1/*: any*/),
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
                       },
                       (v2/*: any*/)
                     ],
@@ -268,7 +198,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+            "storageKey": "collectorOrdersConnection(buyerState:[\"SUBMITTED\",\"OFFER_RECEIVED\",\"COUNTEROFFER_SENT\",\"PAYMENT_FAILED\",\"PROCESSING_PAYMENT\",\"PROCESSING_OFFLINE_PAYMENT\",\"APPROVED\",\"SHIPPED\",\"COMPLETED\",\"REFUNDED\"],first:10)"
           },
           (v2/*: any*/)
         ],
@@ -277,7 +207,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "feaa885a42bdf3d0cb387f0651fc060e",
+    "cacheID": "d50fc1046cb309e7188c703811eb5e36",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -287,26 +217,25 @@ return {
           "plural": false,
           "type": "Conversation"
         },
-        "conversation.activeOrders": {
+        "conversation.activeCollectorOrders": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "CommerceOrderConnectionWithTotalCount"
+          "type": "MeOrdersConnection"
         },
-        "conversation.activeOrders.edges": {
+        "conversation.activeCollectorOrders.edges": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
-          "type": "CommerceOrderEdge"
+          "type": "MeOrdersEdge"
         },
-        "conversation.activeOrders.edges.node": {
+        "conversation.activeCollectorOrders.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "CommerceOrder"
+          "type": "Order"
         },
-        "conversation.activeOrders.edges.node.__typename": (v3/*: any*/),
-        "conversation.activeOrders.edges.node.buyerAction": {
+        "conversation.activeCollectorOrders.edges.node.buyerAction": {
           "enumValues": [
             "OFFER_ACCEPTED",
             "OFFER_ACCEPTED_CONFIRM_NEEDED",
@@ -317,47 +246,27 @@ return {
           ],
           "nullable": true,
           "plural": false,
-          "type": "CommerceBuyerOfferActionEnum"
+          "type": "OrderBuyerActionEnum"
         },
-        "conversation.activeOrders.edges.node.id": (v4/*: any*/),
-        "conversation.activeOrders.edges.node.internalID": (v4/*: any*/),
-        "conversation.activeOrders.edges.node.lastOffer": (v5/*: any*/),
-        "conversation.activeOrders.edges.node.lastOffer.createdAt": (v3/*: any*/),
-        "conversation.activeOrders.edges.node.lastOffer.id": (v4/*: any*/),
-        "conversation.activeOrders.edges.node.offers": {
+        "conversation.activeCollectorOrders.edges.node.buyerStateExpiresAt": (v3/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.id": (v4/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.internalID": (v4/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.lastSubmittedOffer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "CommerceOfferConnection"
+          "type": "Offer"
         },
-        "conversation.activeOrders.edges.node.offers.edges": {
+        "conversation.activeCollectorOrders.edges.node.lastSubmittedOffer.createdAt": (v3/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.lastSubmittedOffer.id": (v4/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.submittedOffers": {
           "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "CommerceOfferEdge"
-        },
-        "conversation.activeOrders.edges.node.offers.edges.node": (v5/*: any*/),
-        "conversation.activeOrders.edges.node.offers.edges.node.id": (v4/*: any*/),
-        "conversation.activeOrders.edges.node.offers.edges.node.internalID": (v4/*: any*/),
-        "conversation.activeOrders.edges.node.state": {
-          "enumValues": [
-            "ABANDONED",
-            "APPROVED",
-            "CANCELED",
-            "FULFILLED",
-            "IN_REVIEW",
-            "PENDING",
-            "PROCESSING_APPROVAL",
-            "REFUNDED",
-            "SUBMITTED"
-          ],
           "nullable": false,
-          "plural": false,
-          "type": "CommerceOrderStateEnum"
+          "plural": true,
+          "type": "Offer"
         },
-        "conversation.activeOrders.edges.node.stateExpiresAt": (v6/*: any*/),
-        "conversation.activeOrders.edges.node.stateReason": (v6/*: any*/),
-        "conversation.activeOrders.edges.node.stateUpdatedAt": (v6/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.submittedOffers.id": (v4/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.submittedOffers.internalID": (v4/*: any*/),
         "conversation.id": (v4/*: any*/),
         "conversation.internalID": {
           "enumValues": null,
@@ -369,7 +278,7 @@ return {
     },
     "name": "ConversationReviewOfferCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationReviewOfferCTA_Test_Query {\n  conversation(id: \"123\") {\n    ...ConversationReviewOfferCTA_conversation\n    id\n  }\n}\n\nfragment ConversationReviewOfferCTA_conversation on Conversation {\n  internalID\n  activeOrders: orderConnection(first: 1, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        stateUpdatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          lastOffer {\n            createdAt\n            id\n          }\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationReviewOfferCTA_Test_Query {\n  conversation(id: \"123\") {\n    ...ConversationReviewOfferCTA_conversation\n    id\n  }\n}\n\nfragment ConversationReviewOfferCTA_conversation on Conversation {\n  internalID\n  activeCollectorOrders: collectorOrdersConnection(first: 10, buyerState: [SUBMITTED, OFFER_RECEIVED, COUNTEROFFER_SENT, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, REFUNDED]) {\n    edges {\n      node {\n        internalID\n        buyerAction\n        buyerStateExpiresAt\n        lastSubmittedOffer {\n          createdAt\n          id\n        }\n        submittedOffers {\n          internalID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

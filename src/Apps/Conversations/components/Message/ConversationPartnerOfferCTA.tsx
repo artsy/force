@@ -22,7 +22,11 @@ export const ConversationPartnerOfferCTA: FC<
 
   const { findPartnerOffer } = useConversationsContext()
 
-  const activeOrder = extractNodes(data.activeOrders)[0]
+  // The native orders connection can return null nodes (e.g. an order whose
+  // artwork no longer exists), so drop them before checking for an order.
+  const activeOrder = extractNodes(data.activeCollectorOrders).filter(
+    Boolean,
+  )[0]
   const item = data.items?.[0]?.item
   const artwork = item?.__typename === "Artwork" ? item : null
   const partnerOffer = artwork?.internalID
@@ -100,9 +104,25 @@ const CONVERSATION_FRAGMENT = graphql`
         }
       }
     }
-    activeOrders: orderConnection(
-      first: 1
-      states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
+    # Buyer states equivalent to the legacy Exchange order states
+    # [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
+    # (IN_REVIEW orders are also included, shown to the buyer as submitted).
+    # Keep alias and arguments identical across the inbox CTA fragments so the
+    # selections merge into a single Exchange request.
+    activeCollectorOrders: collectorOrdersConnection(
+      first: 10
+      buyerState: [
+        SUBMITTED
+        OFFER_RECEIVED
+        COUNTEROFFER_SENT
+        PAYMENT_FAILED
+        PROCESSING_PAYMENT
+        PROCESSING_OFFLINE_PAYMENT
+        APPROVED
+        SHIPPED
+        COMPLETED
+        REFUNDED
+      ]
     ) {
       edges {
         node {

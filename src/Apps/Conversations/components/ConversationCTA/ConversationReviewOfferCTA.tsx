@@ -25,12 +25,15 @@ export const ConversationReviewOfferCTA: React.FC<
   React.PropsWithChildren<ConversationReviewOfferCTAProps>
 > = ({ conversation }) => {
   const data = useFragment(FRAGMENT, conversation)
-  const activeOrder = extractNodes(data.activeOrders)[0]
+  const activeOrder = extractNodes(data.activeCollectorOrders).filter(
+    Boolean,
+  )[0]
   const { trackEvent } = useTracking()
 
   const { remainingTime } = useCountdownTimer({
-    startTime: activeOrder?.stateUpdatedAt as string,
-    endTime: activeOrder?.stateExpiresAt as string,
+    // Only the remaining time is shown, which depends on the end time alone.
+    startTime: activeOrder?.lastSubmittedOffer?.createdAt as string,
+    endTime: activeOrder?.buyerStateExpiresAt as string,
   })
 
   if (!activeOrder) {
@@ -107,7 +110,7 @@ const getProps = ({
   remainingTime,
 }: GetCTAAttributesProps): GetCTAReturnProps => {
   const offerType =
-    (activeOrder.offers?.edges?.length ?? 0) > 1 ? "Counteroffer" : "Offer"
+    (activeOrder.submittedOffers?.length ?? 0) > 1 ? "Counteroffer" : "Offer"
 
   switch (activeOrder.buyerAction) {
     case "PAYMENT_FAILED": {
@@ -176,30 +179,36 @@ const FRAGMENT = graphql`
   fragment ConversationReviewOfferCTA_conversation on Conversation {
     internalID
 
-    activeOrders: orderConnection(
-      first: 1
-      states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
+    # Buyer states equivalent to the legacy Exchange order states
+    # [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
+    # (IN_REVIEW orders are also included, shown to the buyer as submitted).
+    # Keep alias and arguments identical across the inbox CTA fragments so the
+    # selections merge into a single Exchange request.
+    activeCollectorOrders: collectorOrdersConnection(
+      first: 10
+      buyerState: [
+        SUBMITTED
+        OFFER_RECEIVED
+        COUNTEROFFER_SENT
+        PAYMENT_FAILED
+        PROCESSING_PAYMENT
+        PROCESSING_OFFLINE_PAYMENT
+        APPROVED
+        SHIPPED
+        COMPLETED
+        REFUNDED
+      ]
     ) {
       edges {
         node {
           internalID
-          state
-          stateReason
-          stateExpiresAt
-          stateUpdatedAt
-
-          ... on CommerceOfferOrder {
-            buyerAction
-            lastOffer {
-              createdAt
-            }
-            offers(first: 5) {
-              edges {
-                node {
-                  internalID
-                }
-              }
-            }
+          buyerAction
+          buyerStateExpiresAt
+          lastSubmittedOffer {
+            createdAt
+          }
+          submittedOffers {
+            internalID
           }
         }
       }

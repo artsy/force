@@ -29,7 +29,7 @@ describe("ConversationReviewOfferCTA", () => {
   it("PAYMENT_FAILED", async () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [
             { node: { buyerAction: "PAYMENT_FAILED", internalID: "orderID" } },
           ],
@@ -53,7 +53,7 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_RECEIVED", async () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [
             { node: { buyerAction: "OFFER_RECEIVED", internalID: "orderID" } },
           ],
@@ -72,7 +72,7 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_ACCEPTED", async () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [
             { node: { buyerAction: "OFFER_ACCEPTED", internalID: "orderID" } },
           ],
@@ -93,7 +93,7 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_ACCEPTED_CONFIRM_NEEDED", async () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [
             {
               node: {
@@ -119,7 +119,7 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_RECEIVED_CONFIRM_NEEDED", async () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [
             {
               node: {
@@ -145,7 +145,7 @@ describe("ConversationReviewOfferCTA", () => {
   it("PROVISIONAL_OFFER_ACCEPTED", async () => {
     renderWithRelay({
       Conversation: () => ({
-        activeOrders: {
+        activeCollectorOrders: {
           edges: [
             {
               node: {
@@ -165,5 +165,75 @@ describe("ConversationReviewOfferCTA", () => {
       "href",
       "/orders/orderID/details",
     )
+  })
+
+  it("labels the offer as a counteroffer when more than one offer was submitted", async () => {
+    renderWithRelay({
+      Conversation: () => ({
+        activeCollectorOrders: {
+          edges: [
+            {
+              node: {
+                buyerAction: "OFFER_RECEIVED",
+                internalID: "orderID",
+                submittedOffers: [
+                  { internalID: "offer-1" },
+                  { internalID: "offer-2" },
+                ],
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.getByText("Counteroffer Received")).toBeInTheDocument()
+  })
+
+  it("shows the remaining time until the buyer state expires", async () => {
+    const inTwoDays = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000 + 60 * 1000)
+
+    renderWithRelay({
+      Conversation: () => ({
+        activeCollectorOrders: {
+          edges: [
+            {
+              node: {
+                buyerAction: "OFFER_RECEIVED",
+                internalID: "orderID",
+                buyerStateExpiresAt: inTwoDays.toISOString(),
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.getByText("The offer expires in 2d 0h")).toBeInTheDocument()
+  })
+
+  it("skips null order nodes", async () => {
+    renderWithRelay({
+      Conversation: () => ({
+        activeCollectorOrders: {
+          edges: [
+            { node: null },
+            { node: { buyerAction: "PAYMENT_FAILED", internalID: "orderID" } },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.getByText("Payment Failed")).toBeInTheDocument()
+  })
+
+  it("renders nothing when the only order node is null", async () => {
+    renderWithRelay({
+      Conversation: () => ({
+        activeCollectorOrders: { edges: [{ node: null }] },
+      }),
+    })
+
+    expect(screen.queryByTestId("orderActionLink")).not.toBeInTheDocument()
   })
 })

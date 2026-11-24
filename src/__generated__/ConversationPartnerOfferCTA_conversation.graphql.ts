@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f7a135715fbbbc6c9bade2f939d0695>>
+ * @generated SignedSource<<108961d0e6adf89f27cd74673ea7f047>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferCTA_conversation$data = {
-  readonly activeOrders: {
+  readonly activeCollectorOrders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
@@ -97,34 +97,39 @@ return {
       "storageKey": null
     },
     {
-      "alias": "activeOrders",
+      "alias": "activeCollectorOrders",
       "args": [
         {
           "kind": "Literal",
-          "name": "first",
-          "value": 1
+          "name": "buyerState",
+          "value": [
+            "SUBMITTED",
+            "OFFER_RECEIVED",
+            "COUNTEROFFER_SENT",
+            "PAYMENT_FAILED",
+            "PROCESSING_PAYMENT",
+            "PROCESSING_OFFLINE_PAYMENT",
+            "APPROVED",
+            "SHIPPED",
+            "COMPLETED",
+            "REFUNDED"
+          ]
         },
         {
           "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "PROCESSING_APPROVAL",
-            "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED"
-          ]
+          "name": "first",
+          "value": 10
         }
       ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "concreteType": "MeOrdersConnection",
       "kind": "LinkedField",
-      "name": "orderConnection",
+      "name": "collectorOrdersConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "CommerceOrderEdge",
+          "concreteType": "MeOrdersEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -132,7 +137,7 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": null,
+              "concreteType": "Order",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -145,7 +150,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "collectorOrdersConnection(buyerState:[\"SUBMITTED\",\"OFFER_RECEIVED\",\"COUNTEROFFER_SENT\",\"PAYMENT_FAILED\",\"PROCESSING_PAYMENT\",\"PROCESSING_OFFLINE_PAYMENT\",\"APPROVED\",\"SHIPPED\",\"COMPLETED\",\"REFUNDED\"],first:10)"
     }
   ],
   "type": "Conversation",
@@ -153,6 +158,6 @@ return {
 };
 })();
 
-(node as any).hash = "32d91448f5f02eaa40e418844bc0fb65";
+(node as any).hash = "6a031cc8441140ce73092c1038d4fff6";
 
 export default node;
