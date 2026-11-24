@@ -1,4 +1,5 @@
 import { addBreadcrumb } from "@sentry/browser"
+import { isPageTranslated } from "System/Utils/isPageTranslated"
 
 let isPatched = false
 
@@ -17,14 +18,19 @@ export const patchDomForTranslation = (): void => {
       return originalRemoveChild.call(this, child) as T
     }
 
-    logPatchedCall("removeChild")
-
-    const wrapper = findChildOf({ node: child, parent: this })
+    const wrapper = findFontWrapper({ node: child, parent: this })
     if (wrapper) {
+      logPatchedCall("removeChild")
       originalRemoveChild.call(this, wrapper)
+      return child
     }
 
-    return child
+    if (isPageTranslated()) {
+      logPatchedCall("removeChild")
+      return child
+    }
+
+    return originalRemoveChild.call(this, child) as T
   }
 
   const originalInsertBefore = Node.prototype.insertBefore
@@ -37,24 +43,38 @@ export const patchDomForTranslation = (): void => {
       return originalInsertBefore.call(this, newNode, referenceNode) as T
     }
 
-    logPatchedCall("insertBefore")
+    const wrapper = findFontWrapper({ node: referenceNode, parent: this })
+    if (wrapper) {
+      logPatchedCall("insertBefore")
+      return originalInsertBefore.call(this, newNode, wrapper) as T
+    }
 
-    const anchor = findChildOf({ node: referenceNode, parent: this })
+    if (isPageTranslated()) {
+      logPatchedCall("insertBefore")
+      return originalInsertBefore.call(this, newNode, null) as T
+    }
 
-    return originalInsertBefore.call(this, newNode, anchor) as T
+    return originalInsertBefore.call(this, newNode, referenceNode) as T
   }
 }
 
-interface FindChildOfParams {
+interface FindFontWrapperParams {
   node: Node
   parent: Node
 }
 
-const findChildOf = ({ node, parent }: FindChildOfParams): Node | null => {
+const findFontWrapper = ({
+  node,
+  parent,
+}: FindFontWrapperParams): Node | null => {
   let current: Node | null = node.parentNode
 
   while (current && current.parentNode !== parent) {
     current = current.parentNode
+  }
+
+  if (current?.nodeName !== "FONT") {
+    return null
   }
 
   return current
