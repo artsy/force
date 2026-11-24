@@ -2,6 +2,7 @@ import "Server/webpackPublicPath"
 import { loadableReady } from "@loadable/component"
 import { dispatchHydrationError } from "Components/HydrationErrorOverlay"
 import { setupAnalytics } from "Server/analytics/helpers"
+import { patchDomForTranslation } from "System/Utils/patchDomForTranslation"
 import { initBrowserFeatureFlagsContext } from "System/FeatureFlags/unleashClient"
 import { setupClientRouter } from "System/Router/clientRouter"
 import { setupSentryClient } from "System/Utils/setupSentryClient"
@@ -9,6 +10,7 @@ import { setupWebVitals } from "System/Utils/setupWebVitals"
 import { hydrateRoot } from "react-dom/client"
 import { getAppRoutes } from "routes"
 
+patchDomForTranslation()
 setupAnalytics()
 setupSentryClient()
 setupWebVitals()
