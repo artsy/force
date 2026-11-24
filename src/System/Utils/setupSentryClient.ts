@@ -2,6 +2,7 @@ import {
   SEMANTIC_ATTRIBUTE_SENTRY_OP,
   SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
   SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
+  type ErrorEvent,
   type Span,
   browserTracingIntegration,
   dedupeIntegration,
@@ -17,6 +18,7 @@ import {
   IGNORED_ERRORS,
 } from "Server/analytics/sentryFilters"
 import { findRoutesByPath } from "System/Router/Utils/routeUtils"
+import { isPageTranslated } from "System/Utils/isPageTranslated"
 import { getENV } from "Utils/getENV"
 import type { Match } from "found"
 
@@ -33,6 +35,13 @@ const tracesSampler = (samplingContext: { name?: string }): number => {
   return 0.08
 }
 
+export const tagPageTranslated = (event: ErrorEvent): ErrorEvent => {
+  return {
+    ...event,
+    tags: { ...event.tags, pageTranslated: isPageTranslated() },
+  }
+}
+
 export function setupSentryClient() {
   if (getENV("NODE_ENV") !== "production") {
     return
@@ -42,6 +51,7 @@ export function setupSentryClient() {
     allowUrls: ALLOWED_URLS,
     denyUrls: DENIED_URLS,
     dsn: getENV("SENTRY_PUBLIC_DSN"),
+    beforeSend: tagPageTranslated,
     ignoreErrors: IGNORED_ERRORS,
     release: getENV("SENTRY_RELEASE"),
     tracesSampler,
