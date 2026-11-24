@@ -29,9 +29,16 @@ describe("ConversationReviewOfferCTA", () => {
   it("PAYMENT_FAILED", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
-            { node: { buyerAction: "PAYMENT_FAILED", internalID: "orderID" } },
+            {
+              node: {
+                impulseConversationId: "conversation-id",
+                buyerAction: "PAYMENT_FAILED",
+                internalID: "orderID",
+              },
+            },
           ],
         },
       }),
@@ -53,9 +60,16 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_RECEIVED", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
-            { node: { buyerAction: "OFFER_RECEIVED", internalID: "orderID" } },
+            {
+              node: {
+                impulseConversationId: "conversation-id",
+                buyerAction: "OFFER_RECEIVED",
+                internalID: "orderID",
+              },
+            },
           ],
         },
       }),
@@ -72,9 +86,16 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_ACCEPTED", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
-            { node: { buyerAction: "OFFER_ACCEPTED", internalID: "orderID" } },
+            {
+              node: {
+                impulseConversationId: "conversation-id",
+                buyerAction: "OFFER_ACCEPTED",
+                internalID: "orderID",
+              },
+            },
           ],
         },
       }),
@@ -93,10 +114,12 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_ACCEPTED_CONFIRM_NEEDED", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
             {
               node: {
+                impulseConversationId: "conversation-id",
                 buyerAction: "OFFER_ACCEPTED_CONFIRM_NEEDED",
                 internalID: "orderID",
               },
@@ -119,10 +142,12 @@ describe("ConversationReviewOfferCTA", () => {
   it("OFFER_RECEIVED_CONFIRM_NEEDED", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
             {
               node: {
+                impulseConversationId: "conversation-id",
                 buyerAction: "OFFER_RECEIVED_CONFIRM_NEEDED",
                 internalID: "orderID",
               },
@@ -145,10 +170,12 @@ describe("ConversationReviewOfferCTA", () => {
   it("PROVISIONAL_OFFER_ACCEPTED", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
             {
               node: {
+                impulseConversationId: "conversation-id",
                 buyerAction: "PROVISIONAL_OFFER_ACCEPTED",
                 internalID: "orderID",
               },
@@ -170,10 +197,12 @@ describe("ConversationReviewOfferCTA", () => {
   it("labels the offer as a counteroffer when more than one offer was submitted", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
             {
               node: {
+                impulseConversationId: "conversation-id",
                 buyerAction: "OFFER_RECEIVED",
                 internalID: "orderID",
                 submittedOffers: [
@@ -195,10 +224,12 @@ describe("ConversationReviewOfferCTA", () => {
 
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
             {
               node: {
+                impulseConversationId: "conversation-id",
                 buyerAction: "OFFER_RECEIVED",
                 internalID: "orderID",
                 buyerStateExpiresAt: inTwoDays.toISOString(),
@@ -215,10 +246,17 @@ describe("ConversationReviewOfferCTA", () => {
   it("skips null order nodes", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: {
           edges: [
             { node: null },
-            { node: { buyerAction: "PAYMENT_FAILED", internalID: "orderID" } },
+            {
+              node: {
+                impulseConversationId: "conversation-id",
+                buyerAction: "PAYMENT_FAILED",
+                internalID: "orderID",
+              },
+            },
           ],
         },
       }),
@@ -230,10 +268,63 @@ describe("ConversationReviewOfferCTA", () => {
   it("renders nothing when the only order node is null", async () => {
     renderWithRelay({
       Conversation: () => ({
+        internalID: "conversation-id",
         activeCollectorOrders: { edges: [{ node: null }] },
       }),
     })
 
     expect(screen.queryByTestId("orderActionLink")).not.toBeInTheDocument()
+  })
+
+  it("ignores orders from other conversations", async () => {
+    renderWithRelay({
+      Conversation: () => ({
+        internalID: "conversation-id",
+        activeCollectorOrders: {
+          edges: [
+            {
+              node: {
+                impulseConversationId: "other-conversation-id",
+                buyerAction: "PAYMENT_FAILED",
+                internalID: "otherOrderID",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.queryByTestId("orderActionLink")).not.toBeInTheDocument()
+  })
+
+  it("shows the order waiting on the buyer even when a newer order is listed first", async () => {
+    renderWithRelay({
+      Conversation: () => ({
+        internalID: "conversation-id",
+        activeCollectorOrders: {
+          edges: [
+            {
+              node: {
+                impulseConversationId: "conversation-id",
+                buyerAction: null,
+                internalID: "newerOrderID",
+              },
+            },
+            {
+              node: {
+                impulseConversationId: "conversation-id",
+                buyerAction: "OFFER_RECEIVED",
+                internalID: "orderID",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(screen.getByTestId("orderActionLink")).toHaveAttribute(
+      "href",
+      "/orders/orderID/respond",
+    )
   })
 })

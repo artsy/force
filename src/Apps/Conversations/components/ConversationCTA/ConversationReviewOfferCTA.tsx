@@ -9,6 +9,7 @@ import {
   type MessageProps,
   Text,
 } from "@artsy/palette"
+import { findActiveConversationOrder } from "Apps/Conversations/utils/findActiveConversationOrder"
 import { RouterLink } from "System/Components/RouterLink"
 import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import { extractNodes } from "Utils/extractNodes"
@@ -25,9 +26,10 @@ export const ConversationReviewOfferCTA: React.FC<
   React.PropsWithChildren<ConversationReviewOfferCTAProps>
 > = ({ conversation }) => {
   const data = useFragment(FRAGMENT, conversation)
-  const activeOrder = extractNodes(data.activeCollectorOrders).filter(
-    Boolean,
-  )[0]
+  const activeOrder = findActiveConversationOrder(
+    extractNodes(data.activeCollectorOrders),
+    data.internalID,
+  )
   const { trackEvent } = useTracking()
 
   const { remainingTime } = useCountdownTimer({
@@ -179,11 +181,7 @@ const FRAGMENT = graphql`
   fragment ConversationReviewOfferCTA_conversation on Conversation {
     internalID
 
-    # Buyer states equivalent to the legacy Exchange order states
-    # [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
-    # (IN_REVIEW orders are also included, shown to the buyer as submitted).
-    # Keep alias and arguments identical across the inbox CTA fragments so the
-    # selections merge into a single Exchange request.
+    # Keep in sync with ConversationCTA so the selections merge into one request
     activeCollectorOrders: collectorOrdersConnection(
       first: 10
       buyerState: [
@@ -202,6 +200,7 @@ const FRAGMENT = graphql`
       edges {
         node {
           internalID
+          impulseConversationId
           buyerAction
           buyerStateExpiresAt
           lastSubmittedOffer {

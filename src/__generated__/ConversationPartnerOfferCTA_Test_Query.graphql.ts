@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cebc17bd16ad54422de55c6a2a1827f5>>
+ * @generated SignedSource<<1ad99e5a25214f11788136f69fe5ccc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -327,6 +327,20 @@ return {
                         "plural": false,
                         "selections": [
                           (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "buyerAction",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "impulseConversationId",
+                            "storageKey": null
+                          },
                           (v3/*: any*/)
                         ],
                         "storageKey": null
@@ -348,7 +362,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "91d20a43613bf44920bf4b924a211867",
+    "cacheID": "af89aa99dfc78905f5c64f650e04dd5d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -382,7 +396,21 @@ return {
           "plural": false,
           "type": "Order"
         },
+        "me.conversation.activeCollectorOrders.edges.node.buyerAction": {
+          "enumValues": [
+            "OFFER_ACCEPTED",
+            "OFFER_ACCEPTED_CONFIRM_NEEDED",
+            "OFFER_RECEIVED",
+            "OFFER_RECEIVED_CONFIRM_NEEDED",
+            "PAYMENT_FAILED",
+            "PROVISIONAL_OFFER_ACCEPTED"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "OrderBuyerActionEnum"
+        },
         "me.conversation.activeCollectorOrders.edges.node.id": (v4/*: any*/),
+        "me.conversation.activeCollectorOrders.edges.node.impulseConversationId": (v5/*: any*/),
         "me.conversation.activeCollectorOrders.edges.node.internalID": (v4/*: any*/),
         "me.conversation.collectorPartnerOffersConnection": {
           "enumValues": null,
@@ -455,7 +483,7 @@ return {
     },
     "name": "ConversationPartnerOfferCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPartnerOfferCTA_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationsContext_conversation\n      ...ConversationPartnerOfferCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationPartnerOfferCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        href\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeCollectorOrders: collectorOrdersConnection(first: 10, buyerState: [SUBMITTED, OFFER_RECEIVED, COUNTEROFFER_SENT, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, REFUNDED]) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_conversation on Conversation {\n  collectorPartnerOffersConnection(first: 10, offerType: [BULK, PERSONALIZED]) {\n    edges {\n      node {\n        artworkId\n        endAt\n        internalID\n        isAvailable\n        isPurchased\n        note\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationPartnerOfferCTA_Test_Query {\n  me {\n    conversation(id: \"conversation-id\") {\n      ...ConversationsContext_conversation\n      ...ConversationPartnerOfferCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationPartnerOfferCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        href\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeCollectorOrders: collectorOrdersConnection(first: 10, buyerState: [SUBMITTED, OFFER_RECEIVED, COUNTEROFFER_SENT, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, REFUNDED]) {\n    edges {\n      node {\n        internalID\n        buyerAction\n        impulseConversationId\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsContext_conversation on Conversation {\n  collectorPartnerOffersConnection(first: 10, offerType: [BULK, PERSONALIZED]) {\n    edges {\n      node {\n        artworkId\n        endAt\n        internalID\n        isAvailable\n        isPurchased\n        note\n        priceWithDiscount {\n          display\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

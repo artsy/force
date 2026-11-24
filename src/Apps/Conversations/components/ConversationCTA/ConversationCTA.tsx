@@ -6,6 +6,7 @@ import { ConversationConfirmModal } from "Apps/Conversations/components/Conversa
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
 import { ConversationReviewOfferCTA } from "Apps/Conversations/components/ConversationCTA/ConversationReviewOfferCTA"
+import { findActiveConversationOrder } from "Apps/Conversations/utils/findActiveConversationOrder"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
 import { RouterLink } from "System/Components/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -29,11 +30,10 @@ export const ConversationCTA: React.FC<
   const partnerOffer = artwork ? findPartnerOffer(artwork.internalID) : null
   const hasOpenPartnerOffer = isPartnerOfferActive(partnerOffer)
 
-  // The native orders connection can return null nodes (e.g. an order whose
-  // artwork no longer exists), so drop them before picking the active order.
-  const activeOrder = extractNodes(data.activeCollectorOrders).filter(
-    Boolean,
-  )[0]
+  const activeOrder = findActiveConversationOrder(
+    extractNodes(data.activeCollectorOrders),
+    data.internalID,
+  )
   const activePartnerOffer =
     !activeOrder && hasOpenPartnerOffer ? partnerOffer : null
 
@@ -144,7 +144,8 @@ const FRAGMENT = graphql`
     # Buyer states equivalent to the legacy Exchange order states
     # [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
     # (IN_REVIEW orders are also included, shown to the buyer as submitted).
-    # Keep alias and arguments identical across the inbox CTA fragments so the
+    # Keep alias and arguments identical across the inbox CTA fragments
+    # (ConversationReviewOfferCTA, ConversationPartnerOfferCTA) so the
     # selections merge into a single Exchange request.
     activeCollectorOrders: collectorOrdersConnection(
       first: 10
@@ -164,6 +165,7 @@ const FRAGMENT = graphql`
       edges {
         node {
           internalID
+          impulseConversationId
           buyerAction
         }
       }

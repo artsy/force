@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<108961d0e6adf89f27cd74673ea7f047>>
+ * @generated SignedSource<<3349e93195c0a4555a438768fb5e8565>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,14 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderBuyerActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferCTA_conversation$data = {
   readonly activeCollectorOrders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly buyerAction: OrderBuyerActionEnum | null | undefined;
+        readonly impulseConversationId: string | null | undefined;
         readonly internalID: string;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -142,7 +145,21 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/)
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "buyerAction",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "impulseConversationId",
+                  "storageKey": null
+                }
               ],
               "storageKey": null
             }
@@ -158,6 +175,6 @@ return {
 };
 })();
 
-(node as any).hash = "6a031cc8441140ce73092c1038d4fff6";
+(node as any).hash = "02e7fd4e16b31ad79c71e5d6f65f19b8";
 
 export default node;

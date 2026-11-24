@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a70b208e9dee01fb6d8088ba72ef93ff>>
+ * @generated SignedSource<<13ba8e403699c238abf98dd6b0a7cfce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -148,6 +148,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "impulseConversationId",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "buyerAction",
                         "storageKey": null
                       },
@@ -207,7 +214,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d50fc1046cb309e7188c703811eb5e36",
+    "cacheID": "1b8a29870c0de78696dad5ecfcbee1bd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -250,6 +257,7 @@ return {
         },
         "conversation.activeCollectorOrders.edges.node.buyerStateExpiresAt": (v3/*: any*/),
         "conversation.activeCollectorOrders.edges.node.id": (v4/*: any*/),
+        "conversation.activeCollectorOrders.edges.node.impulseConversationId": (v3/*: any*/),
         "conversation.activeCollectorOrders.edges.node.internalID": (v4/*: any*/),
         "conversation.activeCollectorOrders.edges.node.lastSubmittedOffer": {
           "enumValues": null,
@@ -278,7 +286,7 @@ return {
     },
     "name": "ConversationReviewOfferCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationReviewOfferCTA_Test_Query {\n  conversation(id: \"123\") {\n    ...ConversationReviewOfferCTA_conversation\n    id\n  }\n}\n\nfragment ConversationReviewOfferCTA_conversation on Conversation {\n  internalID\n  activeCollectorOrders: collectorOrdersConnection(first: 10, buyerState: [SUBMITTED, OFFER_RECEIVED, COUNTEROFFER_SENT, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, REFUNDED]) {\n    edges {\n      node {\n        internalID\n        buyerAction\n        buyerStateExpiresAt\n        lastSubmittedOffer {\n          createdAt\n          id\n        }\n        submittedOffers {\n          internalID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationReviewOfferCTA_Test_Query {\n  conversation(id: \"123\") {\n    ...ConversationReviewOfferCTA_conversation\n    id\n  }\n}\n\nfragment ConversationReviewOfferCTA_conversation on Conversation {\n  internalID\n  activeCollectorOrders: collectorOrdersConnection(first: 10, buyerState: [SUBMITTED, OFFER_RECEIVED, COUNTEROFFER_SENT, PAYMENT_FAILED, PROCESSING_PAYMENT, PROCESSING_OFFLINE_PAYMENT, APPROVED, SHIPPED, COMPLETED, REFUNDED]) {\n    edges {\n      node {\n        internalID\n        impulseConversationId\n        buyerAction\n        buyerStateExpiresAt\n        lastSubmittedOffer {\n          createdAt\n          id\n        }\n        submittedOffers {\n          internalID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

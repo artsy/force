@@ -167,7 +167,14 @@ describe("ConversationPartnerOfferCTA", () => {
         {},
         {
           activeCollectorOrders: {
-            edges: [{ node: { internalID: "order-id" } }],
+            edges: [
+              {
+                node: {
+                  impulseConversationId: "conversation-id",
+                  internalID: "order-id",
+                },
+              },
+            ],
           },
         },
       ),
@@ -176,6 +183,28 @@ describe("ConversationPartnerOfferCTA", () => {
     expect(
       screen.queryByTestId("partnerOfferActionLink"),
     ).not.toBeInTheDocument()
+  })
+
+  it("ignores orders from other conversations when checking for an active order", () => {
+    renderWithRelay({
+      Conversation: conversationWithOffer(
+        {},
+        {
+          activeCollectorOrders: {
+            edges: [
+              {
+                node: {
+                  impulseConversationId: "other-conversation-id",
+                  internalID: "order-id",
+                },
+              },
+            ],
+          },
+        },
+      ),
+    })
+
+    expect(screen.getByTestId("partnerOfferActionLink")).toBeInTheDocument()
   })
 
   it("ignores null order nodes when checking for an active order", () => {
@@ -195,7 +224,15 @@ describe("ConversationPartnerOfferCTA", () => {
         {},
         {
           activeCollectorOrders: {
-            edges: [{ node: null }, { node: { internalID: "order-id" } }],
+            edges: [
+              { node: null },
+              {
+                node: {
+                  impulseConversationId: "conversation-id",
+                  internalID: "order-id",
+                },
+              },
+            ],
           },
         },
       ),

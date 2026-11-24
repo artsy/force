@@ -2,6 +2,7 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationsTracking } from "Apps/Conversations/hooks/useConversationsTracking"
+import { findActiveConversationOrder } from "Apps/Conversations/utils/findActiveConversationOrder"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { RouterLink } from "System/Components/RouterLink"
@@ -22,11 +23,10 @@ export const ConversationPartnerOfferCTA: FC<
 
   const { findPartnerOffer } = useConversationsContext()
 
-  // The native orders connection can return null nodes (e.g. an order whose
-  // artwork no longer exists), so drop them before checking for an order.
-  const activeOrder = extractNodes(data.activeCollectorOrders).filter(
-    Boolean,
-  )[0]
+  const activeOrder = findActiveConversationOrder(
+    extractNodes(data.activeCollectorOrders),
+    data.internalID,
+  )
   const item = data.items?.[0]?.item
   const artwork = item?.__typename === "Artwork" ? item : null
   const partnerOffer = artwork?.internalID
@@ -104,11 +104,7 @@ const CONVERSATION_FRAGMENT = graphql`
         }
       }
     }
-    # Buyer states equivalent to the legacy Exchange order states
-    # [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
-    # (IN_REVIEW orders are also included, shown to the buyer as submitted).
-    # Keep alias and arguments identical across the inbox CTA fragments so the
-    # selections merge into a single Exchange request.
+    # Keep in sync with ConversationCTA so the selections merge into one request
     activeCollectorOrders: collectorOrdersConnection(
       first: 10
       buyerState: [
@@ -127,6 +123,8 @@ const CONVERSATION_FRAGMENT = graphql`
       edges {
         node {
           internalID
+          buyerAction
+          impulseConversationId
         }
       }
     }

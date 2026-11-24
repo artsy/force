@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b59d0639eccef078e2d4bb49e4a121e>>
+ * @generated SignedSource<<bcfe2c0d596e47660ec5047df9f0ca18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type ConversationCTA_conversation$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly buyerAction: OrderBuyerActionEnum | null | undefined;
+        readonly impulseConversationId: string | null | undefined;
         readonly internalID: string;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -219,6 +220,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "impulseConversationId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "buyerAction",
                   "storageKey": null
                 }
@@ -237,6 +245,6 @@ return {
 };
 })();
 
-(node as any).hash = "e7eba53ad27523c54eee0f2eabd443b5";
+(node as any).hash = "0837835a0f35b2a3f0beb0b64413ab68";
 
 export default node;
