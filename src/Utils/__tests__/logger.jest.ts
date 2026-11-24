@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { sendErrorToService } from "Utils/errors"
 import createLogger from "Utils/logger"
+import { HttpError } from "found"
 
 jest.mock("Utils/errors")
 jest.unmock("Utils/logger")
@@ -67,6 +68,12 @@ describe("logger", () => {
 
           logger.error(extendedErr)
           expect(sendErrorToService).toHaveBeenCalledWith(extendedErr)
+        })
+
+        it("sends found HttpErrors to service", () => {
+          const err = new HttpError(500)
+          logger.error(err)
+          expect(sendErrorToService).toHaveBeenCalledWith(err)
         })
       })
 
