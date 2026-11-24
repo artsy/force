@@ -258,7 +258,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: force-web-spotty
-  minReplicas: 16
+  minReplicas: 12
   maxReplicas: 28
   behavior:
     scaleDown:
