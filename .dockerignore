@@ -1,37 +1,8 @@
-# Prefer excluding all assets by default. It prevents large artifacts from
-
-# accidentally becomming part of the Docker context.
-
-\*
-
-# CI
-
-!scripts/
-
-# Source
-
-!data/
-!patches/
-!src/
-!webpack/
-
-# Testing
-
-!**mocks**/
-!cypress/
+# Keep local credentials and host dependencies out of the build context.
+.env
+.env.*
+!.env.development
+!.env.example
 !.env.oss
 !.env.test
-!cypress.config.ts
-!jest.config.js
-
-# Build Configuration
-
-!.eslintrc.js
-!.nvmrc
-!.prettierignore
-!apollo.config.js
-!dangerfile.ts
-!package.json
-!relay.config.js
-!tsconfig.json
-!yarn.lock
+node_modules

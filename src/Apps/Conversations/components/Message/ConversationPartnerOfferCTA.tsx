@@ -2,6 +2,7 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
 import { useConversationsContext } from "Apps/Conversations/ConversationsContext"
 import { useConversationsTracking } from "Apps/Conversations/hooks/useConversationsTracking"
+import { findActiveConversationOrder } from "Apps/Conversations/utils/findActiveConversationOrder"
 import { isPartnerOfferActive } from "Apps/Conversations/utils/isPartnerOfferActive"
 import { ExpiresInTimer } from "Components/Notifications/ExpiresInTimer"
 import { RouterLink } from "System/Components/RouterLink"
@@ -22,7 +23,10 @@ export const ConversationPartnerOfferCTA: FC<
 
   const { findPartnerOffer } = useConversationsContext()
 
-  const activeOrder = extractNodes(data.activeOrders)[0]
+  const activeOrder = findActiveConversationOrder(
+    extractNodes(data.activeCollectorOrders),
+    data.internalID,
+  )
   const item = data.items?.[0]?.item
   const artwork = item?.__typename === "Artwork" ? item : null
   const partnerOffer = artwork?.internalID
@@ -100,13 +104,27 @@ const CONVERSATION_FRAGMENT = graphql`
         }
       }
     }
-    activeOrders: orderConnection(
-      first: 1
-      states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
+    # Keep in sync with ConversationCTA so the selections merge into one request
+    activeCollectorOrders: collectorOrdersConnection(
+      first: 10
+      buyerState: [
+        SUBMITTED
+        OFFER_RECEIVED
+        COUNTEROFFER_SENT
+        PAYMENT_FAILED
+        PROCESSING_PAYMENT
+        PROCESSING_OFFLINE_PAYMENT
+        APPROVED
+        SHIPPED
+        COMPLETED
+        REFUNDED
+      ]
     ) {
       edges {
         node {
           internalID
+          buyerAction
+          impulseConversationId
         }
       }
     }

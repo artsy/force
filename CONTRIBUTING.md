@@ -67,6 +67,19 @@ Your browser has probably cached a redirect to `https://...`. Clear your browser
 - You may now browse successfully to the page
 </details>
 
+### Uploading Sentry source maps from a local Docker build
+
+Local builds don't need a Sentry token. Use a current Docker release with Dockerfile frontend 1.10 or later. To upload source maps, export both `SENTRY_AUTH_TOKEN` and `SENTRY_RELEASE` for the intended release, then run this from the repo root:
+
+```sh
+docker build --no-cache \
+  --secret id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
+  --build-arg SENTRY_RELEASE \
+  -t force:local .
+```
+
+BuildKit doesn't use the token to decide whether to reuse a cached step. Without `--no-cache`, a build at the same release can reuse a previous build that skipped the upload.
+
 ## Creating a Review App
 
 ```sh
