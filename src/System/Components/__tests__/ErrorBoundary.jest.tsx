@@ -1,5 +1,6 @@
 import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { render } from "@testing-library/react"
+import { HttpError } from "found"
 import { act } from "react"
 
 jest.unmock("Utils/logger")
@@ -177,42 +178,52 @@ describe("ErrorBoundary", () => {
     expect(state.message).toContain("Loading chunk c3495.js failed")
   })
 
-  it("reports to Sentry with tags, fingerprint, and exception", () => {
-    const ErrorComponent = () => {
-      throw new Error("sentry test error")
-    }
-
-    render(
-      <ErrorBoundary>
-        <ErrorComponent />
-      </ErrorBoundary>,
-    )
-
-    expect(mockSetTag).toHaveBeenCalledWith("errorBoundary", "outer")
-    expect(mockSetFingerprint).toHaveBeenCalledWith([
-      "ErrorBoundary",
-      "sentry test error",
-    ])
-    expect(mockCaptureException).toHaveBeenCalled()
-  })
-  it("reports each error to Sentry once in production", () => {
+  describe("Sentry reporting", () => {
     const originalNodeEnv = process.env.NODE_ENV
-    process.env.NODE_ENV = "production"
 
-    const ErrorComponent = () => {
-      throw new Error("sentry test error")
-    }
+    beforeEach(() => {
+      process.env.NODE_ENV = "production"
+    })
 
-    try {
+    afterEach(() => {
+      process.env.NODE_ENV = originalNodeEnv
+    })
+
+    it("reports the original error once with tags and fingerprint", () => {
+      const error = new Error("sentry test error")
+      const ErrorComponent = () => {
+        throw error
+      }
+
       render(
         <ErrorBoundary>
           <ErrorComponent />
         </ErrorBoundary>,
       )
-    } finally {
-      process.env.NODE_ENV = originalNodeEnv
-    }
 
-    expect(mockCaptureException).toHaveBeenCalledTimes(1)
+      expect(mockSetTag).toHaveBeenCalledWith("errorBoundary", "outer")
+      expect(mockSetFingerprint).toHaveBeenCalledWith([
+        "ErrorBoundary",
+        "sentry test error",
+      ])
+      expect(mockCaptureException).toHaveBeenCalledTimes(1)
+      expect(mockCaptureException).toHaveBeenCalledWith(error)
+    })
+
+    it("reports an HttpError once, unchanged", () => {
+      const error = new HttpError(500)
+      const ErrorComponent = () => {
+        throw error
+      }
+
+      render(
+        <ErrorBoundary>
+          <ErrorComponent />
+        </ErrorBoundary>,
+      )
+
+      expect(mockCaptureException).toHaveBeenCalledTimes(1)
+      expect(mockCaptureException).toHaveBeenCalledWith(error)
+    })
   })
 })

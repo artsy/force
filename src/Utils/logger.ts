@@ -15,8 +15,12 @@ export default function createLogger(namespace = "") {
       console.warn(formattedNamespace, ...warnings, "\n")
     },
     error: (...errors) => {
+      // found's HttpError doesn't extend Error, but boundaries still report it.
       const error = errors.find(
-        e => e instanceof Error || e?.shouldLogErrorToSentry,
+        e =>
+          e instanceof Error ||
+          e?.shouldLogErrorToSentry ||
+          e?.isFoundHttpError,
       )
 
       if (error && shouldCaptureError(process.env.NODE_ENV)) {

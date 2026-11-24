@@ -1,10 +1,13 @@
 import { Button, Spacer } from "@artsy/palette"
 import { ErrorPage } from "Components/ErrorPage"
 import { getENV } from "Utils/getENV"
-import { captureException, withScope } from "@sentry/browser"
+import createLogger from "Utils/logger"
+import { withScope } from "@sentry/browser"
 import { HttpError } from "found"
 import * as React from "react"
 import type { ErrorInfo } from "react"
+
+const logger = createLogger()
 
 interface ContentErrorBoundaryProps {
   children?: React.ReactNode
@@ -49,15 +52,13 @@ export class ContentErrorBoundary extends React.Component<
     }
 
     const message = error instanceof HttpError ? error.status : error.message
-    console.error(error, errorInfo.componentStack)
-
     withScope(scope => {
       scope.setContext("errorInfo", {
         componentStack: errorInfo.componentStack,
       })
       scope.setTag("errorBoundary", "content")
       scope.setFingerprint(["ContentErrorBoundary", String(message)])
-      captureException(error)
+      logger.error(error, errorInfo.componentStack)
     })
   }
 
