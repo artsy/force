@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react"
 import { HttpError } from "found"
 import { act } from "react"
 
+jest.unmock("Utils/logger")
+
 jest.mock("Utils/getENV", () => ({
   getENV: () => "development",
 }))
@@ -212,5 +214,25 @@ describe("ContentErrorBoundary", () => {
     }).toThrow()
 
     expect(mockCaptureException).not.toHaveBeenCalled()
+  })
+  it("reports each error to Sentry once in production", () => {
+    const originalNodeEnv = process.env.NODE_ENV
+    process.env.NODE_ENV = "production"
+
+    const ErrorComponent = () => {
+      throw new Error("sentry test error")
+    }
+
+    try {
+      render(
+        <ContentErrorBoundary pathname="/test">
+          <ErrorComponent />
+        </ContentErrorBoundary>,
+      )
+    } finally {
+      process.env.NODE_ENV = originalNodeEnv
+    }
+
+    expect(mockCaptureException).toHaveBeenCalledTimes(1)
   })
 })

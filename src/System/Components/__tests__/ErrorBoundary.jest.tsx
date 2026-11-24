@@ -2,6 +2,8 @@ import { ErrorBoundary } from "System/Components/ErrorBoundary"
 import { render } from "@testing-library/react"
 import { act } from "react"
 
+jest.unmock("Utils/logger")
+
 jest.mock("Utils/getENV", () => ({
   getENV: () => "development",
 }))
@@ -192,5 +194,25 @@ describe("ErrorBoundary", () => {
       "sentry test error",
     ])
     expect(mockCaptureException).toHaveBeenCalled()
+  })
+  it("reports each error to Sentry once in production", () => {
+    const originalNodeEnv = process.env.NODE_ENV
+    process.env.NODE_ENV = "production"
+
+    const ErrorComponent = () => {
+      throw new Error("sentry test error")
+    }
+
+    try {
+      render(
+        <ErrorBoundary>
+          <ErrorComponent />
+        </ErrorBoundary>,
+      )
+    } finally {
+      process.env.NODE_ENV = originalNodeEnv
+    }
+
+    expect(mockCaptureException).toHaveBeenCalledTimes(1)
   })
 })
