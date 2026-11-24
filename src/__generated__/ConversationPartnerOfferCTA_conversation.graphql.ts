@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f7a135715fbbbc6c9bade2f939d0695>>
+ * @generated SignedSource<<3349e93195c0a4555a438768fb5e8565>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,14 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type OrderBuyerActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPartnerOfferCTA_conversation$data = {
-  readonly activeOrders: {
+  readonly activeCollectorOrders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly buyerAction: OrderBuyerActionEnum | null | undefined;
+        readonly impulseConversationId: string | null | undefined;
         readonly internalID: string;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -97,34 +100,39 @@ return {
       "storageKey": null
     },
     {
-      "alias": "activeOrders",
+      "alias": "activeCollectorOrders",
       "args": [
         {
           "kind": "Literal",
-          "name": "first",
-          "value": 1
+          "name": "buyerState",
+          "value": [
+            "SUBMITTED",
+            "OFFER_RECEIVED",
+            "COUNTEROFFER_SENT",
+            "PAYMENT_FAILED",
+            "PROCESSING_PAYMENT",
+            "PROCESSING_OFFLINE_PAYMENT",
+            "APPROVED",
+            "SHIPPED",
+            "COMPLETED",
+            "REFUNDED"
+          ]
         },
         {
           "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "PROCESSING_APPROVAL",
-            "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED"
-          ]
+          "name": "first",
+          "value": 10
         }
       ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "concreteType": "MeOrdersConnection",
       "kind": "LinkedField",
-      "name": "orderConnection",
+      "name": "collectorOrdersConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "CommerceOrderEdge",
+          "concreteType": "MeOrdersEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -132,12 +140,26 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": null,
+              "concreteType": "Order",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/)
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "buyerAction",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "impulseConversationId",
+                  "storageKey": null
+                }
               ],
               "storageKey": null
             }
@@ -145,7 +167,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "collectorOrdersConnection(buyerState:[\"SUBMITTED\",\"OFFER_RECEIVED\",\"COUNTEROFFER_SENT\",\"PAYMENT_FAILED\",\"PROCESSING_PAYMENT\",\"PROCESSING_OFFLINE_PAYMENT\",\"APPROVED\",\"SHIPPED\",\"COMPLETED\",\"REFUNDED\"],first:10)"
     }
   ],
   "type": "Conversation",
@@ -153,6 +175,6 @@ return {
 };
 })();
 
-(node as any).hash = "32d91448f5f02eaa40e418844bc0fb65";
+(node as any).hash = "02e7fd4e16b31ad79c71e5d6f65f19b8";
 
 export default node;
