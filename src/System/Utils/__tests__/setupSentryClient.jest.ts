@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/browser"
-import { tagPageTranslated, traceFetch } from "System/Utils/setupSentryClient"
+import { traceFetch } from "System/Utils/setupSentryClient"
 
 jest.mock("@sentry/browser", () => ({
   startSpan: jest.fn((_options, callback) => callback()),
@@ -69,25 +69,5 @@ describe("traceFetch", () => {
         throw new Error("boom")
       }),
     ).rejects.toThrow("boom")
-  })
-})
-
-describe("tagPageTranslated", () => {
-  afterEach(() => {
-    document.documentElement.className = ""
-  })
-
-  it("tags events from an untranslated page", () => {
-    const event = tagPageTranslated({ type: undefined, tags: { foo: "bar" } })
-
-    expect(event.tags).toEqual({ foo: "bar", pageTranslated: false })
-  })
-
-  it("tags events from a translated page", () => {
-    document.documentElement.classList.add("translated-ltr")
-
-    const event = tagPageTranslated({ type: undefined })
-
-    expect(event.tags).toEqual({ pageTranslated: true })
   })
 })
