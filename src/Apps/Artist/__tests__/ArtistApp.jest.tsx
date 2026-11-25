@@ -19,7 +19,6 @@ jest.mock("../Components/ArtistHeader/ArtistHeader", () => ({
 }))
 
 jest.mock("../Components/ArtistStoryHeader/ArtistStoryHeader", () => ({
-  ...jest.requireActual("../Components/ArtistStoryHeader/ArtistStoryHeader"),
   ArtistStoryHeader: () => <div data-testid="artist-story-header" />,
 }))
 
@@ -100,9 +99,20 @@ describe("ArtistApp", () => {
       mockUseFlag.mockReturnValue(false)
     })
 
-    const renderWithStory = (featuredStory: unknown) => {
+    const COVER_ARTWORK = {
+      imageTitle: "Cover artwork",
+      image: { src: "https://example.com/cover.jpg", width: 800, height: 1000 },
+    }
+
+    const renderWithArtist = (artist: Record<string, unknown>) => {
       return renderWithRelay(
-        { Artist: () => ({ featuredStory }) },
+        {
+          Artist: () => ({
+            featuredStory: null,
+            coverArtwork: null,
+            ...artist,
+          }),
+        },
         { match: { params: { artworkId: undefined } } },
       )
     }
@@ -114,34 +124,15 @@ describe("ArtistApp", () => {
         )
       })
 
-      it("shows today's header without a Story", () => {
-        renderWithStory(null)
-
-        expect(screen.getByTestId("artist-header")).toBeInTheDocument()
-        expect(
-          screen.queryByTestId("artist-story-header"),
-        ).not.toBeInTheDocument()
-      })
-
-      it("shows the Story header with a Header Video", () => {
-        renderWithStory({
-          headerVideo: { internalID: "video" },
-          headerImage: null,
-        })
+      it("shows the Story header for an artist with an image, even without a Story", () => {
+        renderWithArtist({ coverArtwork: COVER_ARTWORK })
 
         expect(screen.getByTestId("artist-story-header")).toBeInTheDocument()
         expect(screen.queryByTestId("artist-header")).not.toBeInTheDocument()
       })
 
-      it("shows the Story header with only a Header Image", () => {
-        renderWithStory({ headerVideo: null, headerImage: { altText: "Alt" } })
-
-        expect(screen.getByTestId("artist-story-header")).toBeInTheDocument()
-        expect(screen.queryByTestId("artist-header")).not.toBeInTheDocument()
-      })
-
-      it("shows today's header when the Story has neither", () => {
-        renderWithStory({ headerVideo: null, headerImage: null })
+      it("keeps today's header for an artist with no image", () => {
+        renderWithArtist({})
 
         expect(screen.getByTestId("artist-header")).toBeInTheDocument()
         expect(
@@ -151,20 +142,8 @@ describe("ArtistApp", () => {
     })
 
     describe("with the flag off", () => {
-      it("shows today's header even with a Header Video", () => {
-        renderWithStory({
-          headerVideo: { internalID: "video" },
-          headerImage: null,
-        })
-
-        expect(screen.getByTestId("artist-header")).toBeInTheDocument()
-        expect(
-          screen.queryByTestId("artist-story-header"),
-        ).not.toBeInTheDocument()
-      })
-
-      it("shows today's header even with only a Header Image", () => {
-        renderWithStory({ headerVideo: null, headerImage: { altText: "Alt" } })
+      it("shows today's header even with an image", () => {
+        renderWithArtist({ coverArtwork: COVER_ARTWORK })
 
         expect(screen.getByTestId("artist-header")).toBeInTheDocument()
         expect(
