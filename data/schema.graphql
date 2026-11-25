@@ -28285,7 +28285,7 @@ type Mutation {
   updateQuiz(input: updateQuizMutationInput!): updateQuizMutationPayload
 
   """
-  Update the asking price, shipping preferences and condition photos of a resale submission. Omitted or null fields are left unchanged.
+  Update the condition, asking price, shipping preferences, condition photos and notes of a resale submission. Omitted or null fields are left unchanged.
   """
   updateResaleSubmission(
     input: UpdateResaleSubmissionInput!
@@ -36943,6 +36943,11 @@ type ResaleSubmission {
   channel: ResaleSubmissionChannel
 
   """
+  The seller’s answer to the work’s condition, in the same shape as Artwork.condition. Null until answered.
+  """
+  condition: ArtworkCondition
+
+  """
   Photos the seller added to show the work’s condition, oldest first.
   """
   conditionPhotos: [Image!]!
@@ -36974,6 +36979,11 @@ type ResaleSubmission {
   Answers still needed before the submission can be listed.
   """
   missingRequirements: [String!]!
+
+  """
+  The seller’s free-text notes about the work: condition, history, provenance or anything else. Null until given.
+  """
+  notes: String
 
   """
   The seller’s answer to how the work will be packed.
@@ -43294,6 +43304,11 @@ input UpdateResaleSubmissionInput {
   clientMutationId: String
 
   """
+  The work’s condition.
+  """
+  condition: ArtworkConditionEnumType
+
+  """
   How the work will get to its buyer.
   """
   courierHandoff: ResaleSubmissionCourierHandoff
@@ -43307,6 +43322,11 @@ input UpdateResaleSubmissionInput {
   The internal ID of the resale submission to update.
   """
   id: String!
+
+  """
+  Free-text notes about the work. Send an empty string to clear them.
+  """
+  notes: String
 
   """
   How the work will be packed.

@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react"
 import { HttpError } from "found"
 import { act } from "react"
 
+jest.unmock("Utils/logger")
+
 jest.mock("Utils/getENV", () => ({
   getENV: () => "development",
 }))
@@ -179,38 +181,68 @@ describe("ContentErrorBoundary", () => {
     expect(screen.getByText("Something Went Wrong")).toBeInTheDocument()
   })
 
-  it("reports to Sentry with tags, fingerprint, and exception", () => {
-    const ErrorComponent = () => {
-      throw new Error("sentry test error")
-    }
+  describe("Sentry reporting", () => {
+    const originalNodeEnv = process.env.NODE_ENV
 
-    render(
-      <ContentErrorBoundary pathname="/test">
-        <ErrorComponent />
-      </ContentErrorBoundary>,
-    )
+    beforeEach(() => {
+      process.env.NODE_ENV = "production"
+    })
 
-    expect(mockSetTag).toHaveBeenCalledWith("errorBoundary", "content")
-    expect(mockSetFingerprint).toHaveBeenCalledWith([
-      "ContentErrorBoundary",
-      "sentry test error",
-    ])
-    expect(mockCaptureException).toHaveBeenCalled()
-  })
+    afterEach(() => {
+      process.env.NODE_ENV = originalNodeEnv
+    })
 
-  it("skips Sentry reporting for AsyncChunkLoadError", () => {
-    const ErrorComponent = () => {
-      throw new Error("Loading chunk xyz.js failed")
-    }
+    it("reports the original error once with tags and fingerprint", () => {
+      const error = new Error("sentry test error")
+      const ErrorComponent = () => {
+        throw error
+      }
 
-    expect(() => {
       render(
         <ContentErrorBoundary pathname="/test">
           <ErrorComponent />
         </ContentErrorBoundary>,
       )
-    }).toThrow()
 
-    expect(mockCaptureException).not.toHaveBeenCalled()
+      expect(mockSetTag).toHaveBeenCalledWith("errorBoundary", "content")
+      expect(mockSetFingerprint).toHaveBeenCalledWith([
+        "ContentErrorBoundary",
+        "sentry test error",
+      ])
+      expect(mockCaptureException).toHaveBeenCalledTimes(1)
+      expect(mockCaptureException).toHaveBeenCalledWith(error)
+    })
+
+    it("reports an HttpError once, unchanged", () => {
+      const error = new HttpError(500)
+      const ErrorComponent = () => {
+        throw error
+      }
+
+      render(
+        <ContentErrorBoundary pathname="/test">
+          <ErrorComponent />
+        </ContentErrorBoundary>,
+      )
+
+      expect(mockCaptureException).toHaveBeenCalledTimes(1)
+      expect(mockCaptureException).toHaveBeenCalledWith(error)
+    })
+
+    it("skips Sentry reporting for AsyncChunkLoadError", () => {
+      const ErrorComponent = () => {
+        throw new Error("Loading chunk xyz.js failed")
+      }
+
+      expect(() => {
+        render(
+          <ContentErrorBoundary pathname="/test">
+            <ErrorComponent />
+          </ContentErrorBoundary>,
+        )
+      }).toThrow()
+
+      expect(mockCaptureException).not.toHaveBeenCalled()
+    })
   })
 })
