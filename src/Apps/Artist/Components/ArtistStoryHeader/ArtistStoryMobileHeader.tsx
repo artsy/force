@@ -25,7 +25,7 @@ export const ArtistStoryMobileHeader: React.FC<
         <Box
           as="header"
           position="relative"
-          height={`calc(100vh - ${navBarHeight}px)`}
+          height={`calc(100svh - ${navBarHeight}px)`}
           bg="mono100"
           color="mono0"
           overflow="hidden"
