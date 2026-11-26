@@ -5,14 +5,14 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Box, type BoxProps, Text } from "@artsy/palette"
-import { getVanguardArticleSlug } from "Apps/Artist/Utils/getVanguardArticleSlug"
 import { RouterLink } from "System/Components/RouterLink"
 import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
+import type { ArtistStoryVanguardBadge_artist$key } from "__generated__/ArtistStoryVanguardBadge_artist.graphql"
+import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 
 interface ArtistStoryVanguardBadgeProps {
-  artistSlug: string
-  year: string
+  artist: ArtistStoryVanguardBadge_artist$key
 }
 
 const BADGE_PROPS: BoxProps = {
@@ -27,19 +27,26 @@ const BADGE_PROPS: BoxProps = {
 
 export const ArtistStoryVanguardBadge: React.FC<
   ArtistStoryVanguardBadgeProps
-> = ({ artistSlug, year }) => {
+> = ({ artist: artistRef }) => {
+  const artist = useFragment(FRAGMENT, artistRef)
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
-  const articleSlug = getVanguardArticleSlug(artistSlug)
+
+  if (!artist.vanguardYear) {
+    return null
+  }
 
   const label = (
     <Text variant="xs" color="mono0">
-      {year} Vanguard Artist
+      {artist.vanguardYear} Vanguard Artist
     </Text>
   )
 
-  if (!articleSlug) {
+  const articleSlug = artist.vanguardArticle?.slug
+  const articleHref = artist.vanguardArticle?.href
+
+  if (!articleSlug || !articleHref) {
     return <Box {...BADGE_PROPS}>{label}</Box>
   }
 
@@ -61,7 +68,7 @@ export const ArtistStoryVanguardBadge: React.FC<
   return (
     <Box
       as={RouterLink}
-      to={`/article/${articleSlug}`}
+      to={articleHref}
       textDecoration="none"
       onClick={handleClick}
       {...BADGE_PROPS}
@@ -70,3 +77,13 @@ export const ArtistStoryVanguardBadge: React.FC<
     </Box>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment ArtistStoryVanguardBadge_artist on Artist {
+    vanguardYear
+    vanguardArticle {
+      slug
+      href
+    }
+  }
+`

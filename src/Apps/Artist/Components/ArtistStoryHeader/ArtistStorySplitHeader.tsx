@@ -72,10 +72,7 @@ export const ArtistStorySplitHeader: React.FC<ArtistStorySplitHeaderProps> = ({
 
               {artist.vanguardYear && (
                 <Box position="absolute" bottom={0} left={0} p={2}>
-                  <ArtistStoryVanguardBadge
-                    artistSlug={artist.slug}
-                    year={artist.vanguardYear}
-                  />
+                  <ArtistStoryVanguardBadge artist={artist} />
                 </Box>
               )}
             </Box>
@@ -149,6 +146,7 @@ const FRAGMENT = graphql`
       follows
     }
     ...ArtistStoryHeaderImage_artist
+    ...ArtistStoryVanguardBadge_artist
     ...ArtistStoryPullQuote_artist
     ...ArtistStoryBiography_artist
     ...ArtistStylesAndTechniques_artist

@@ -87,10 +87,7 @@ export const ArtistStoryVideoHeader: React.FC<ArtistStoryVideoHeaderProps> = ({
               >
                 <Stack gap={1} alignItems="flex-start">
                   {artist.vanguardYear && (
-                    <ArtistStoryVanguardBadge
-                      artistSlug={artist.slug}
-                      year={artist.vanguardYear}
-                    />
+                    <ArtistStoryVanguardBadge artist={artist} />
                   )}
 
                   <Text as="h1" variant={["xl", "xxl"]} color="mono0">
@@ -141,7 +138,6 @@ export const ArtistStoryVideoHeader: React.FC<ArtistStoryVideoHeaderProps> = ({
 const FRAGMENT = graphql`
   fragment ArtistStoryVideoHeader_artist on Artist {
     internalID
-    slug
     name
     formattedNationalityAndBirthday
     vanguardYear
@@ -150,5 +146,6 @@ const FRAGMENT = graphql`
       follows
     }
     ...ArtistStoryHeaderMedia_artist
+    ...ArtistStoryVanguardBadge_artist
   }
 `

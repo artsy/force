@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f0b504feec3ecafa928377cec1c2739>>
+ * @generated SignedSource<<42dcdb7904451679be860b2edfba8ac0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type ArtistStorySplitHeader_artist$data = {
   readonly name: string | null | undefined;
   readonly slug: string;
   readonly vanguardYear: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryBiography_artist" | "ArtistStoryHeaderImage_artist" | "ArtistStoryPullQuote_artist" | "ArtistStoryRepresentation_artist" | "ArtistStylesAndTechniques_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryBiography_artist" | "ArtistStoryHeaderImage_artist" | "ArtistStoryPullQuote_artist" | "ArtistStoryRepresentation_artist" | "ArtistStoryVanguardBadge_artist" | "ArtistStylesAndTechniques_artist">;
   readonly " $fragmentType": "ArtistStorySplitHeader_artist";
 };
 export type ArtistStorySplitHeader_artist$key = {
@@ -102,6 +102,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "ArtistStoryVanguardBadge_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtistStoryPullQuote_artist"
     },
     {
@@ -124,6 +129,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bc3e1517662b02e9d0b82f2528da9998";
+(node as any).hash = "cf2902f0c7589fb45de9c91431d1ebf9";
 
 export default node;

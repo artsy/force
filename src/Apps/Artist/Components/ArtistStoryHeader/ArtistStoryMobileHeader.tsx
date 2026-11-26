@@ -48,10 +48,7 @@ export const ArtistStoryMobileHeader: React.FC<
               <Stack gap={2}>
                 <Stack gap={1} alignItems="flex-start">
                   {artist.vanguardYear && (
-                    <ArtistStoryVanguardBadge
-                      artistSlug={artist.slug}
-                      year={artist.vanguardYear}
-                    />
+                    <ArtistStoryVanguardBadge artist={artist} />
                   )}
 
                   <Text as="h1" variant="xl" color="mono0">
@@ -90,7 +87,6 @@ export const ArtistStoryMobileHeader: React.FC<
 const FRAGMENT = graphql`
   fragment ArtistStoryMobileHeader_artist on Artist {
     internalID
-    slug
     name
     formattedNationalityAndBirthday
     vanguardYear
@@ -99,5 +95,6 @@ const FRAGMENT = graphql`
       follows
     }
     ...ArtistStoryHeaderImage_artist
+    ...ArtistStoryVanguardBadge_artist
   }
 `

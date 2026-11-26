@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<725f3cd9a8423b172f9eb4ecb47e3293>>
+ * @generated SignedSource<<a5e2b55c525e3fd8d194287a275e3946>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,9 +18,8 @@ export type ArtistStoryVideoHeader_artist$data = {
   readonly instagramHandle: string | null | undefined;
   readonly internalID: string;
   readonly name: string | null | undefined;
-  readonly slug: string;
   readonly vanguardYear: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryHeaderMedia_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryHeaderMedia_artist" | "ArtistStoryVanguardBadge_artist">;
   readonly " $fragmentType": "ArtistStoryVideoHeader_artist";
 };
 export type ArtistStoryVideoHeader_artist$key = {
@@ -39,13 +38,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
       "storageKey": null
     },
     {
@@ -98,12 +90,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistStoryHeaderMedia_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistStoryVanguardBadge_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "e9c4b713e8d14f5630c66f76272ec844";
+(node as any).hash = "1cefeb17c9b34f6fb034f177851fd474";
 
 export default node;

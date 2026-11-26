@@ -18,9 +18,6 @@ jest.mock("System/Hooks/useAnalyticsContext", () => ({
     contextPageOwnerType: "artist",
   })),
 }))
-jest.mock("Apps/Artist/Utils/vanguardArticleSlugs", () => ({
-  vanguardArticleSlugs: { "mapped-artist": "vanguard-article-slug" },
-}))
 jest.mock("Components/FollowButton/FollowArtistButton", () => ({
   FollowArtistButtonQueryRenderer: () => <button type="button">Follow</button>,
 }))
@@ -89,6 +86,11 @@ const COVER_ARTWORK = {
   image: { src: "https://example.com/cover.jpg", width: 800, height: 1000 },
 }
 
+const VANGUARD_ARTICLE = {
+  slug: "vanguard-article-slug",
+  href: "/article/vanguard-article-slug",
+}
+
 const BIO = "<p>Opening paragraph.</p><p>Second paragraph.</p>"
 
 const render = ({
@@ -111,6 +113,7 @@ const render = ({
       name: "Jane Example",
       formattedNationalityAndBirthday: "American, b. 1990",
       vanguardYear: "2026",
+      vanguardArticle: null,
       instagramHandle: null,
       counts: { follows: 1200 },
       biographyBlurb: { text: BIO, credit: null },
@@ -307,7 +310,7 @@ describe("ArtistStoryHeader", () => {
     it("links to the Vanguard article when the artist has one", () => {
       render({
         story: { headerVideo: VIDEO },
-        artist: { slug: "mapped-artist" },
+        artist: { vanguardArticle: VANGUARD_ARTICLE },
       })
 
       expect(
@@ -318,7 +321,7 @@ describe("ArtistStoryHeader", () => {
     it("tracks a click on the badge with the article as destination", () => {
       render({
         story: { headerVideo: VIDEO },
-        artist: { slug: "mapped-artist" },
+        artist: { vanguardArticle: VANGUARD_ARTICLE },
       })
 
       fireEvent.click(
