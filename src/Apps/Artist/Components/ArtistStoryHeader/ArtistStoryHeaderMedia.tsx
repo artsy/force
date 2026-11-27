@@ -1,28 +1,30 @@
-import { Box, Image, THEME, Text } from "@artsy/palette"
-import { AppContainer } from "Apps/Components/AppContainer"
+import {
+  ArtistStoryHeaderImage,
+  useHasArtistStoryHeaderImage,
+} from "Apps/Artist/Components/ArtistStoryHeader/ArtistStoryHeaderImage"
 import { LoopingVimeoVideo } from "Components/LoopingVimeoVideo/LoopingVimeoVideo"
-import type { ArtistStoryHeaderMedia_story$key } from "__generated__/ArtistStoryHeaderMedia_story.graphql"
+import type { ArtistStoryHeaderMedia_artist$key } from "__generated__/ArtistStoryHeaderMedia_artist.graphql"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface ArtistStoryHeaderMediaProps {
-  story: ArtistStoryHeaderMedia_story$key
+  artist: ArtistStoryHeaderMedia_artist$key
   onPlayVideo?: () => void
   onPauseVideo?: () => void
 }
 
 export const ArtistStoryHeaderMedia: React.FC<ArtistStoryHeaderMediaProps> = ({
-  story: storyRef,
+  artist: artistRef,
   onPlayVideo,
   onPauseVideo,
 }) => {
-  const story = useFragment(FRAGMENT, storyRef)
+  const artist = useFragment(FRAGMENT, artistRef)
+  const hasImage = useHasArtistStoryHeaderImage(artist)
   const [hasVideoFailed, setHasVideoFailed] = useState(false)
-  const { headerVideo, headerImage } = story
-  const image = headerImage?.image?.resized
+  const headerVideo = artist.featuredStory?.headerVideo
 
-  // A broken video gives way to the Header Image when there is one.
-  if (headerVideo && !(hasVideoFailed && image)) {
+  // A broken video gives way to the image when there is one to show.
+  if (headerVideo && !(hasVideoFailed && hasImage)) {
     const { video } = headerVideo
 
     return (
@@ -30,7 +32,7 @@ export const ArtistStoryHeaderMedia: React.FC<ArtistStoryHeaderMediaProps> = ({
         playerUrl={video.playerUrl}
         aspectRatio={video.aspectRatio ?? 16 / 9}
         title={video.title}
-        posterUrl={image?.src}
+        posterUrl={artist.featuredStory?.headerImage?.image?.resized?.src}
         onPlay={onPlayVideo}
         onPause={onPauseVideo}
         onError={() => setHasVideoFailed(true)}
@@ -38,60 +40,30 @@ export const ArtistStoryHeaderMedia: React.FC<ArtistStoryHeaderMediaProps> = ({
     )
   }
 
-  if (!headerImage || !image) {
-    return null
-  }
-
-  return (
-    <>
-      <Image
-        src={image.src}
-        srcSet={image.srcSet}
-        alt={headerImage.altText}
-        width="100%"
-        height="100%"
-        fetchPriority="high"
-        style={{ objectFit: "cover" }}
-      />
-
-      {headerImage.credit && (
-        <Box position="absolute" top={0} left={0} pt={2}>
-          <AppContainer px={[2, 4]}>
-            <Text
-              variant="xs"
-              color="rgba(255, 255, 255, 0.7)"
-              style={{ textShadow: THEME.effects.textShadow }}
-            >
-              {headerImage.credit}
-            </Text>
-          </AppContainer>
-        </Box>
-      )}
-    </>
-  )
+  return <ArtistStoryHeaderImage artist={artist} />
 }
 
 const FRAGMENT = graphql`
-  fragment ArtistStoryHeaderMedia_story on ArtistStory {
-    headerVideo {
-      video {
-        playerUrl
-        aspectRatio
-        title
+  fragment ArtistStoryHeaderMedia_artist on Artist {
+    featuredStory {
+      headerVideo {
+        video {
+          playerUrl
+          aspectRatio
+          title
+        }
       }
-    }
-    headerImage {
-      altText
-      credit
-      image {
-        resized(
-          width: 1600
-          version: ["main", "normalized", "larger", "large"]
-        ) {
-          src
-          srcSet
+      headerImage {
+        image {
+          resized(
+            width: 1600
+            version: ["main", "normalized", "larger", "large"]
+          ) {
+            src
+          }
         }
       }
     }
+    ...ArtistStoryHeaderImage_artist
   }
 `

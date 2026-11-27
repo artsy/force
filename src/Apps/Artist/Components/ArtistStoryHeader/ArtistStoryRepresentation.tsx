@@ -13,6 +13,7 @@ import { useTracking } from "react-tracking"
 
 interface ArtistStoryRepresentationProps {
   artist: ArtistStoryRepresentation_artist$key
+  isInline?: boolean
 }
 
 export const useHasArtistStoryRepresentation = (
@@ -25,7 +26,7 @@ export const useHasArtistStoryRepresentation = (
 
 export const ArtistStoryRepresentation: React.FC<
   ArtistStoryRepresentationProps
-> = ({ artist: artistRef }) => {
+> = ({ artist: artistRef, isInline = false }) => {
   const artist = useFragment(FRAGMENT, artistRef)
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
@@ -37,11 +38,21 @@ export const ArtistStoryRepresentation: React.FC<
 
   return (
     <Box data-testid="artist-story-representation">
-      <Text variant={["xs", "sm"]} color="mono60" textAlign={["left", "right"]}>
+      <Text
+        variant={["xs", "sm"]}
+        color="mono60"
+        textAlign={isInline ? "left" : ["left", "right"]}
+      >
         Featured representation
       </Text>
 
-      <Stack gap={1} mt={1} alignItems={["flex-start", "flex-end"]}>
+      <Stack
+        gap={1}
+        mt={1}
+        flexDirection={isInline ? "row" : "column"}
+        flexWrap={isInline ? "wrap" : "nowrap"}
+        alignItems={isInline ? "flex-start" : ["flex-start", "flex-end"]}
+      >
         {verifiedRepresentatives.map(({ partner }) => {
           const icon = partner.profile?.icon
           const handleClick = () => {
@@ -65,7 +76,7 @@ export const ArtistStoryRepresentation: React.FC<
               {...(icon?.src1x?.src && icon.src2x?.src
                 ? { src: [icon.src1x.src, icon.src2x.src] }
                 : {})}
-              // @ts-ignore
+              // @ts-expect-error
               to={partner.href}
               onClick={handleClick}
             >

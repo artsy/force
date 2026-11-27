@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<341a7f991c119f0d1b7229181caa0b62>>
+ * @generated SignedSource<<7f271468a7824b5818ba6db560329056>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -843,13 +843,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "vanguardYear",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "ArtistStory",
             "kind": "LinkedField",
             "name": "featuredStory",
@@ -863,6 +856,8 @@ return {
                 "name": "headerVideo",
                 "plural": false,
                 "selections": [
+                  (v11/*: any*/),
+                  (v10/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -889,12 +884,11 @@ return {
                       (v10/*: any*/)
                     ],
                     "storageKey": null
-                  },
-                  (v10/*: any*/),
-                  (v11/*: any*/)
+                  }
                 ],
                 "storageKey": null
               },
+              (v10/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -951,7 +945,6 @@ return {
                 ],
                 "storageKey": null
               },
-              (v10/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -974,6 +967,27 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "vanguardYear",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Article",
+            "kind": "LinkedField",
+            "name": "vanguardArticle",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v4/*: any*/),
+              (v10/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v10/*: any*/)
         ],
         "storageKey": null
@@ -981,12 +995,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6fdc928cbaf14726c6a37ed35ebd3c23",
+    "cacheID": "56c7d500313f6558a1a10ea3eecf8cbf",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    slug\n    ...ArtistApp_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  ...ArtistStoryHeader_artist\n  featuredStory {\n    headerVideo {\n      internalID\n      id\n    }\n    headerImage {\n      altText\n    }\n    id\n  }\n  internalID\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n  instagramHandle\n}\n\nfragment ArtistGenesRow_genes on Gene {\n  internalID\n  name\n  slug\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  slug\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  internalID\n  slug\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeaderImage_artwork on Artwork {\n  imageTitle\n  image {\n    src: url(version: [\"larger\", \"larger\"])\n    width\n    height\n  }\n  fallbackArtist: artist {\n    name\n    id\n  }\n}\n\nfragment ArtistHeaderSeriesItem_artistSeries on ArtistSeries {\n  slug\n  title\n  forSaleArtworksCount\n  image {\n    cropped(width: 280, height: 210, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderSeries_artist on Artist {\n  name\n  href\n  artistSeriesConnection(first: 10) {\n    edges {\n      node {\n        ...ArtistHeaderSeriesItem_artistSeries\n        internalID\n        slug\n        featured\n        forSaleArtworksCount\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  instagramHandle\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights(excludeBlanks: true) {\n    kind\n    entities\n    description(format: HTML)\n    ...ArtistCareerHighlight_insight\n  }\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n  }\n  ...ArtistHeaderEditorial_artist\n  ...ArtistHeaderSeries_artist\n  ...ArtistStylesAndTechniques_artist\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    href\n    title\n    date\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    ...ArtistHeaderImage_artwork\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStoryHeaderMedia_story on ArtistStory {\n  headerVideo {\n    video {\n      playerUrl\n      aspectRatio\n      title\n      id\n    }\n    id\n  }\n  headerImage {\n    altText\n    credit\n    image {\n      resized(width: 1600, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n  }\n}\n\nfragment ArtistStoryHeader_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  vanguardYear\n  instagramHandle\n  counts {\n    follows\n  }\n  featuredStory {\n    ...ArtistStoryHeaderMedia_story\n    id\n  }\n  ...ArtistStoryIntro_artist\n  ...ArtistHeaderEditorial_artist\n}\n\nfragment ArtistStoryIntro_artist on Artist {\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  featuredStory {\n    pullQuote {\n      text\n      attribution\n    }\n    id\n  }\n  ...ArtistStylesAndTechniques_artist\n  ...ArtistStoryRepresentation_artist\n}\n\nfragment ArtistStoryRepresentation_artist on Artist {\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  instagramHandle\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  notableArtworks(size: 3) {\n    title\n    href\n    date\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n\nfragment ArtistStylesAndTechniques_artist on Artist {\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n}\n"
+    "text": "query artistRoutes_ArtistAppQuery(\n  $artistID: String!\n) @cacheable {\n  artist(id: $artistID) @principalField {\n    slug\n    ...ArtistApp_artist\n    ...ArtistCombinedRoute_artist\n    id\n  }\n}\n\nfragment ArtistApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistHeader_artist\n  ...ArtistStoryHeader_artist\n  ...ArtistStoryHeaderImage_artist\n  internalID\n  name\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  kind\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCombinedRoute_artist on Artist {\n  internalID\n  instagramHandle\n}\n\nfragment ArtistGenesRow_genes on Gene {\n  internalID\n  name\n  slug\n}\n\nfragment ArtistHeaderEditorialItem_article on Article {\n  internalID\n  slug\n  href\n  byline\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    small: cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderEditorial_artist on Artist {\n  internalID\n  slug\n  name\n  href\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...ArtistHeaderEditorialItem_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeaderImage_artwork on Artwork {\n  imageTitle\n  image {\n    src: url(version: [\"larger\", \"larger\"])\n    width\n    height\n  }\n  fallbackArtist: artist {\n    name\n    id\n  }\n}\n\nfragment ArtistHeaderSeriesItem_artistSeries on ArtistSeries {\n  slug\n  title\n  forSaleArtworksCount\n  image {\n    cropped(width: 280, height: 210, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistHeaderSeries_artist on Artist {\n  name\n  href\n  artistSeriesConnection(first: 10) {\n    edges {\n      node {\n        ...ArtistHeaderSeriesItem_artistSeries\n        internalID\n        slug\n        featured\n        forSaleArtworksCount\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  internalID\n  slug\n  name\n  instagramHandle\n  formattedNationalityAndBirthday\n  counts {\n    follows\n  }\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  insights(excludeBlanks: true) {\n    kind\n    entities\n    description(format: HTML)\n    ...ArtistCareerHighlight_insight\n  }\n  articlesConnection(first: 3, sort: PUBLISHED_AT_DESC) {\n    totalCount\n  }\n  ...ArtistHeaderEditorial_artist\n  ...ArtistHeaderSeries_artist\n  ...ArtistStylesAndTechniques_artist\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n  coverArtwork {\n    internalID\n    slug\n    href\n    title\n    date\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    ...ArtistHeaderImage_artwork\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  ...ArtistStructuredData_artist\n  name\n  nationality\n  birthday\n  deathday\n  alternateNames\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      large: url(version: \"large\")\n    }\n    id\n  }\n}\n\nfragment ArtistStoryBiography_artist on Artist {\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n}\n\nfragment ArtistStoryHeaderImage_artist on Artist {\n  name\n  featuredStory {\n    headerImage {\n      altText\n      credit\n      image {\n        resized(width: 1600, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n        }\n      }\n    }\n    id\n  }\n  coverArtwork {\n    imageTitle\n    image {\n      src: url(version: [\"larger\", \"larger\"])\n      width\n      height\n    }\n    id\n  }\n}\n\nfragment ArtistStoryHeaderMedia_artist on Artist {\n  featuredStory {\n    headerVideo {\n      video {\n        playerUrl\n        aspectRatio\n        title\n        id\n      }\n      id\n    }\n    headerImage {\n      image {\n        resized(width: 1600, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n          src\n        }\n      }\n    }\n    id\n  }\n  ...ArtistStoryHeaderImage_artist\n}\n\nfragment ArtistStoryHeader_artist on Artist {\n  featuredStory {\n    headerVideo {\n      internalID\n      id\n    }\n    id\n  }\n  ...ArtistStoryMobileHeader_artist\n  ...ArtistStorySplitHeader_artist\n  ...ArtistStoryVideoHeader_artist\n  ...ArtistStoryIntro_artist\n  ...ArtistHeaderEditorial_artist\n}\n\nfragment ArtistStoryIntro_artist on Artist {\n  slug\n  ...ArtistStoryPullQuote_artist\n  ...ArtistStoryBiography_artist\n  ...ArtistStylesAndTechniques_artist\n  ...ArtistStoryRepresentation_artist\n}\n\nfragment ArtistStoryMobileHeader_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  vanguardYear\n  instagramHandle\n  counts {\n    follows\n  }\n  ...ArtistStoryHeaderImage_artist\n  ...ArtistStoryVanguardBadge_artist\n}\n\nfragment ArtistStoryPullQuote_artist on Artist {\n  featuredStory {\n    pullQuote {\n      text\n      attribution\n    }\n    id\n  }\n}\n\nfragment ArtistStoryRepresentation_artist on Artist {\n  verifiedRepresentatives {\n    partner {\n      internalID\n      name\n      href\n      profile {\n        icon {\n          src1x: cropped(width: 30, height: 30) {\n            src\n          }\n          src2x: cropped(width: 60, height: 60) {\n            src\n          }\n        }\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ArtistStorySplitHeader_artist on Artist {\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  vanguardYear\n  instagramHandle\n  counts {\n    follows\n  }\n  ...ArtistStoryHeaderImage_artist\n  ...ArtistStoryVanguardBadge_artist\n  ...ArtistStoryPullQuote_artist\n  ...ArtistStoryBiography_artist\n  ...ArtistStylesAndTechniques_artist\n  ...ArtistStoryRepresentation_artist\n}\n\nfragment ArtistStoryVanguardBadge_artist on Artist {\n  vanguardYear\n  vanguardArticle {\n    slug\n    href\n    id\n  }\n}\n\nfragment ArtistStoryVideoHeader_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  vanguardYear\n  instagramHandle\n  counts {\n    follows\n  }\n  ...ArtistStoryHeaderMedia_artist\n  ...ArtistStoryVanguardBadge_artist\n}\n\nfragment ArtistStructuredData_artist on Artist {\n  slug\n  name\n  alternateNames\n  awards\n  birthday\n  deathday\n  gender\n  hometown\n  nationality\n  instagramHandle\n  href\n  biographyBlurbPlain: biographyBlurb(format: PLAIN) {\n    text\n  }\n  coverArtwork {\n    image {\n      cropped(width: 1200, height: 900, version: [\"larger\", \"large\"]) {\n        src\n        width\n        height\n      }\n    }\n    id\n  }\n  verifiedRepresentatives {\n    partner {\n      name\n      href\n      id\n    }\n    id\n  }\n  notableArtworks(size: 3) {\n    title\n    href\n    date\n    id\n  }\n  genes(size: 10) {\n    name\n    id\n  }\n}\n\nfragment ArtistStylesAndTechniques_artist on Artist {\n  movementGenes: genes(geneFamilyID: \"styles-and-movements\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n  mediumGenes: genes(geneFamilyID: \"medium-and-techniques\", minValue: 50, size: 3) {\n    ...ArtistGenesRow_genes\n    id\n  }\n}\n"
   }
 };
 })();

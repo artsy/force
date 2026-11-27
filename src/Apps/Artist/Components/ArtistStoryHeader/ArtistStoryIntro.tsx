@@ -1,28 +1,24 @@
-import {
-  ActionType,
-  ContextModule,
-  type ToggledArtistBio,
-} from "@artsy/cohesion"
-import {
-  Box,
-  Column,
-  GridColumns,
-  ReadMore,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { ContextModule } from "@artsy/cohesion"
+import { Box, Column, GridColumns, Spacer } from "@artsy/palette"
 import {
   ArtistStylesAndTechniques,
   useHasArtistStylesAndTechniques,
 } from "Apps/Artist/Components/ArtistHeader/ArtistStylesAndTechniques"
 import {
+  ArtistStoryBiography,
+  useHasArtistStoryBiography,
+} from "Apps/Artist/Components/ArtistStoryHeader/ArtistStoryBiography"
+import { ArtistStoryCVLink } from "Apps/Artist/Components/ArtistStoryHeader/ArtistStoryCVLink"
+import {
+  ArtistStoryPullQuote,
+  useHasArtistStoryPullQuote,
+} from "Apps/Artist/Components/ArtistStoryHeader/ArtistStoryPullQuote"
+import {
   ArtistStoryRepresentation,
   useHasArtistStoryRepresentation,
 } from "Apps/Artist/Components/ArtistStoryHeader/ArtistStoryRepresentation"
-import { useAnalyticsContext } from "System/Hooks/useAnalyticsContext"
 import type { ArtistStoryIntro_artist$key } from "__generated__/ArtistStoryIntro_artist.graphql"
 import { graphql, useFragment } from "react-relay"
-import { useTracking } from "react-tracking"
 
 interface ArtistStoryIntroProps {
   artist: ArtistStoryIntro_artist$key
@@ -32,74 +28,32 @@ export const ArtistStoryIntro: React.FC<ArtistStoryIntroProps> = ({
   artist: artistRef,
 }) => {
   const artist = useFragment(FRAGMENT, artistRef)
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
-    useAnalyticsContext()
+  const hasPullQuote = useHasArtistStoryPullQuote(artist)
+  const hasBiography = useHasArtistStoryBiography(artist)
   const hasStylesAndTechniques = useHasArtistStylesAndTechniques(artist)
   const hasRepresentation = useHasArtistStoryRepresentation(artist)
-
-  const pullQuoteText = artist.featuredStory?.pullQuote?.text.trim()
-  const pullQuoteAttribution =
-    artist.featuredStory?.pullQuote?.attribution?.trim()
-
-  const biographyText = artist.biographyBlurb?.text
-  const biographyCredit = artist.biographyBlurb?.credit
-  const biographyContent =
-    biographyText && biographyCredit
-      ? `${biographyText} ${biographyCredit}`
-      : biographyText
-
-  if (!pullQuoteText && !biographyContent && !hasRepresentation) {
-    return null
-  }
-
-  const handleToggle = (expand: boolean) => {
-    if (!contextPageOwnerId || !contextPageOwnerSlug) return
-
-    const payload: ToggledArtistBio = {
-      action: ActionType.toggledArtistBio,
-      context_module: ContextModule.artistHeader,
-      context_page_owner_type: contextPageOwnerType,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      expand,
-    }
-    trackEvent(payload)
-  }
+  const hasBiographyRow = hasBiography || hasRepresentation
+  const hasContentAboveCV =
+    hasPullQuote || hasBiographyRow || hasStylesAndTechniques
 
   return (
     <Box data-testid="artist-story-intro">
-      {pullQuoteText && (
+      {hasPullQuote && (
         <GridColumns>
           <Column span={[12, 10]}>
-            <Text as="blockquote" variant={["xl", "xxl"]} m={0}>
-              {`“${pullQuoteText}”`}
-            </Text>
-
-            {pullQuoteAttribution && (
-              <Text variant={["xs", "sm"]} color="mono60" mt={1}>
-                {pullQuoteAttribution}
-              </Text>
-            )}
+            <ArtistStoryPullQuote artist={artist} />
           </Column>
         </GridColumns>
       )}
 
-      {(biographyContent || hasRepresentation) && (
+      {hasBiographyRow && (
         <>
-          {pullQuoteText && <Spacer y={2} />}
+          {hasPullQuote && <Spacer y={2} />}
 
           <GridColumns gridRowGap={4}>
-            {biographyContent && (
+            {hasBiography && (
               <Column span={[12, 8]}>
-                <Text variant="sm">
-                  <ReadMore
-                    maxLines={4}
-                    content={biographyContent}
-                    onReadMoreClicked={() => handleToggle(true)}
-                    onReadLessClicked={() => handleToggle(false)}
-                  />
-                </Text>
+                <ArtistStoryBiography artist={artist} />
               </Column>
             )}
 
@@ -109,39 +63,36 @@ export const ArtistStoryIntro: React.FC<ArtistStoryIntroProps> = ({
               </Column>
             )}
           </GridColumns>
-
-          {hasStylesAndTechniques && (
-            <>
-              <Spacer y={4} />
-
-              <GridColumns>
-                <Column span={[12, 6]}>
-                  <ArtistStylesAndTechniques
-                    artist={artist}
-                    contextModule={ContextModule.artistHeader}
-                  />
-                </Column>
-              </GridColumns>
-            </>
-          )}
         </>
       )}
+
+      {hasStylesAndTechniques && (
+        <>
+          {(hasPullQuote || hasBiographyRow) && <Spacer y={4} />}
+
+          <GridColumns>
+            <Column span={[12, 6]}>
+              <ArtistStylesAndTechniques
+                artist={artist}
+                contextModule={ContextModule.artistHeader}
+              />
+            </Column>
+          </GridColumns>
+        </>
+      )}
+
+      {hasContentAboveCV && <Spacer y={hasStylesAndTechniques ? 2 : 4} />}
+
+      <ArtistStoryCVLink slug={artist.slug} />
     </Box>
   )
 }
 
 const FRAGMENT = graphql`
   fragment ArtistStoryIntro_artist on Artist {
-    biographyBlurb(format: HTML) {
-      text
-      credit
-    }
-    featuredStory {
-      pullQuote {
-        text
-        attribution
-      }
-    }
+    slug
+    ...ArtistStoryPullQuote_artist
+    ...ArtistStoryBiography_artist
     ...ArtistStylesAndTechniques_artist
     ...ArtistStoryRepresentation_artist
   }
