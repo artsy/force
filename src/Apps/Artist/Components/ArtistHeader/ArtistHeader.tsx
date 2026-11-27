@@ -428,7 +428,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   },
 )
 
-const Bio = styled(HTML)<HTMLProps>`
+export const Bio = styled(HTML)<HTMLProps>`
   text-align: left;
 
   a:hover {

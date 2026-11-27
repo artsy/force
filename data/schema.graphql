@@ -354,6 +354,41 @@ type AddArtworkToPartnerShowSuccess {
   show: Show
 }
 
+type AddCRMContactToListFailure {
+  mutationError: GravityMutationError
+}
+
+input AddCRMContactToListInput {
+  clientMutationId: String
+
+  """
+  CRM contact ID. Contacts of other partners are not found.
+  """
+  contactID: String!
+
+  """
+  The internal ID of the list
+  """
+  id: String!
+}
+
+type AddCRMContactToListPayload {
+  clientMutationId: String
+
+  """
+  On success: the updated list
+  """
+  crmContactListOrError: AddCRMContactToListResponseOrError
+}
+
+union AddCRMContactToListResponseOrError =
+  | AddCRMContactToListFailure
+  | AddCRMContactToListSuccess
+
+type AddCRMContactToListSuccess {
+  crmContactList: CRMContactList
+}
+
 type AddInstallShotToPartnerShowFailure {
   mutationError: GravityMutationError
 }
@@ -2865,6 +2900,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   sortableID: String
   statuses: ArtistStatuses
   targetSupply: ArtistTargetSupply!
+  vanguardArticle: Article
   vanguardYear: String
   verifiedRepresentatives: [VerifiedRepresentative!]!
   years: String
@@ -8542,6 +8578,11 @@ type CRMContact {
   """
   internalID: ID!
   lastName: String
+
+  """
+  Lists the contact is in. Only internalID and name are set.
+  """
+  lists: [CRMContactList!]
   locations: [CRMContactLocation!]
 
   """
@@ -8816,6 +8857,84 @@ input CRMContactEmailInput {
   At most one email may be primary
   """
   isPrimary: Boolean
+}
+
+type CRMContactList {
+  """
+  Number of active contacts in the list. Null on lists embedded in a contact.
+  """
+  contactsCount: Int
+  createdAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  createdByID: String
+  description: String
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+  name: String!
+  partnerID: String
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+}
+
+"""
+A connection to a list of items.
+"""
+type CRMContactListConnection {
+  """
+  A list of edges.
+  """
+  edges: [CRMContactListEdge]
+  pageCursors: PageCursors!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+"""
+An edge in a connection.
+"""
+type CRMContactListEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: CRMContactList
+}
+
+enum CRMContactListSort {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  NAME_ASC
+  NAME_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
 }
 
 type CRMContactLocation {
@@ -14273,6 +14392,34 @@ input CreateCRMContactInput {
   phone: String
 }
 
+type CreateCRMContactListFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateCRMContactListInput {
+  clientMutationId: String
+  description: String
+  name: String!
+  partnerID: String!
+}
+
+type CreateCRMContactListPayload {
+  clientMutationId: String
+
+  """
+  On success: the created list
+  """
+  crmContactListOrError: CreateCRMContactListResponseOrError
+}
+
+union CreateCRMContactListResponseOrError =
+  | CreateCRMContactListFailure
+  | CreateCRMContactListSuccess
+
+type CreateCRMContactListSuccess {
+  crmContactList: CRMContactList
+}
+
 type CreateCRMContactLocationFailure {
   mutationError: GravityMutationError
 }
@@ -16539,6 +16686,36 @@ type DeleteCRMContactEmailSuccess {
   crmContactEmail: CRMContactEmail
 }
 
+type DeleteCRMContactListFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteCRMContactListInput {
+  clientMutationId: String
+
+  """
+  The internal ID of the list
+  """
+  id: String!
+}
+
+type DeleteCRMContactListPayload {
+  clientMutationId: String
+
+  """
+  On success: the deleted list
+  """
+  crmContactListOrError: DeleteCRMContactListResponseOrError
+}
+
+union DeleteCRMContactListResponseOrError =
+  | DeleteCRMContactListFailure
+  | DeleteCRMContactListSuccess
+
+type DeleteCRMContactListSuccess {
+  crmContactList: CRMContactList
+}
+
 type DeleteCRMContactLocationFailure {
   mutationError: GravityMutationError
 }
@@ -18365,6 +18542,82 @@ enum EmailAccountStatus {
   DISCONNECTED
   ERROR
   EXPIRED
+}
+
+"""
+A backfill of an email account’s mail from a date chosen by the user
+"""
+type EmailBackfillRun {
+  backfillSince(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  backfillUntil(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+
+  """
+  Whether the run stopped at the message limit, leaving the oldest mail out
+  """
+  capped: Boolean
+  completedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  createdAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+  emailAccountId: String!
+
+  """
+  A globally unique ID.
+  """
+  id: ID!
+
+  """
+  A type-specific ID likely used as a database ID.
+  """
+  internalID: ID!
+  lastError: String
+
+  """
+  The number of messages queued for ingestion
+  """
+  queuedMessages: Int
+  requestedById: String
+  status: EmailBackfillRunStatus
+  updatedAt(
+    format: String
+
+    """
+    A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See http://www.iana.org/time-zones, https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    """
+    timezone: String
+  ): String
+}
+
+enum EmailBackfillRunStatus {
+  COMPLETED
+  FAILED
+  PROCESSING
 }
 
 type EmailMessage {
@@ -26307,6 +26560,13 @@ type Mutation {
   ): AddArtworkToPartnerShowMutationPayload
 
   """
+  Add a contact to a CRM contact list. Adding a contact already in it changes nothing.
+  """
+  addCRMContactToList(
+    input: AddCRMContactToListInput!
+  ): AddCRMContactToListPayload
+
+  """
   Adds an installation shot to a partner show.
   """
   addInstallShotToPartnerShow(
@@ -26862,6 +27122,13 @@ type Mutation {
   ): CreateCRMContactEmailPayload
 
   """
+  Create a CRM contact list. The name must be unique within the partner, ignoring case.
+  """
+  createCRMContactList(
+    input: CreateCRMContactListInput!
+  ): CreateCRMContactListPayload
+
+  """
   Add a location to a CRM contact
   """
   createCRMContactLocation(
@@ -27283,6 +27550,13 @@ type Mutation {
   deleteCRMContactEmail(
     input: DeleteCRMContactEmailInput!
   ): DeleteCRMContactEmailPayload
+
+  """
+  Delete a CRM contact list. Its contacts are not deleted.
+  """
+  deleteCRMContactList(
+    input: DeleteCRMContactListInput!
+  ): DeleteCRMContactListPayload
 
   """
   Remove a location. If it was the primary, the contact's oldest remaining location becomes primary.
@@ -27825,6 +28099,13 @@ type Mutation {
     )
 
   """
+  Remove a contact from a CRM contact list. The contact is not deleted.
+  """
+  removeCRMContactFromList(
+    input: RemoveCRMContactFromListInput!
+  ): RemoveCRMContactFromListPayload
+
+  """
   Removes an installation shot from a partner show.
   """
   removeInstallShotFromPartnerShow(
@@ -27910,6 +28191,13 @@ type Mutation {
   requestCredentialsForAssetUpload(
     input: RequestCredentialsForAssetUploadInput!
   ): RequestCredentialsForAssetUploadPayload
+
+  """
+  Queue a backfill of an email account’s mail from a date up to now. Returns the run, which can be polled with `emailBackfillRun`.
+  """
+  requestEmailBackfill(
+    input: RequestEmailBackfillInput!
+  ): RequestEmailBackfillPayload
 
   """
   Request price estimate of an artwork
@@ -28186,6 +28474,13 @@ type Mutation {
   updateCRMContactEmail(
     input: UpdateCRMContactEmailInput!
   ): UpdateCRMContactEmailPayload
+
+  """
+  Rename a CRM contact list or change its description
+  """
+  updateCRMContactList(
+    input: UpdateCRMContactListInput!
+  ): UpdateCRMContactListPayload
 
   """
   Change a location. The primary can't be unset: make another location primary instead.
@@ -34688,6 +34983,36 @@ type Query {
   ): CRMContactEmailConnection
 
   """
+  A CRM contact list of a partner. Null when it doesn’t exist.
+  """
+  crmContactList(
+    """
+    The internal ID of the list
+    """
+    id: String!
+  ): CRMContactList
+
+  """
+  A connection of CRM contact lists for a partner
+  """
+  crmContactListsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    The partner ID to list contact lists for
+    """
+    partnerID: String!
+
+    """
+    Defaults to UPDATED_AT_DESC
+    """
+    sort: CRMContactListSort
+  ): CRMContactListConnection
+
+  """
   A location of a CRM contact
   """
   crmContactLocation(
@@ -34733,6 +35058,11 @@ type Query {
     Only contacts with any of these categories. Case-insensitive.
     """
     categories: [String!]
+
+    """
+    Only contacts in none of these CRM contact lists
+    """
+    excludeListIDs: [String!]
     first: Int
 
     """
@@ -34740,6 +35070,16 @@ type Query {
     """
     isUnassigned: Boolean
     last: Int
+
+    """
+    Only contacts in this CRM contact list
+    """
+    listID: String
+
+    """
+    Only contacts in any of these CRM contact lists
+    """
+    listIDs: [String!]
 
     """
     The partner ID to list contacts for
@@ -35044,6 +35384,16 @@ type Query {
     last: Int
     size: Int = 12
   ): [MarketingCollection!]
+
+  """
+  The most recent backfill requested for an email account, or null if none was requested
+  """
+  emailBackfillRun(
+    """
+    The internal ID of the email account
+    """
+    emailAccountId: String!
+  ): EmailBackfillRun
 
   """
   A pending, approved or skipped email sender review
@@ -36231,6 +36581,16 @@ type Query {
     @deprecated(reason: "Consignment submissions are no longer supported.")
 
   """
+  The email accounts connected by a user, with limited fields. For Artsy staff with the artos_support role; each access is logged.
+  """
+  supportEmailAccounts(
+    """
+    The internal ID of the user who connected the accounts
+    """
+    userId: String!
+  ): [EmailAccount!]
+
+  """
   Fields related to internal systems.
   """
   system: System
@@ -36717,6 +37077,41 @@ type RemoveArtworkImportImageSuccess {
   success: Boolean!
 }
 
+type RemoveCRMContactFromListFailure {
+  mutationError: GravityMutationError
+}
+
+input RemoveCRMContactFromListInput {
+  clientMutationId: String
+
+  """
+  CRM contact ID. Contacts of other partners are not found.
+  """
+  contactID: String!
+
+  """
+  The internal ID of the list
+  """
+  id: String!
+}
+
+type RemoveCRMContactFromListPayload {
+  clientMutationId: String
+
+  """
+  On success: the updated list
+  """
+  crmContactListOrError: RemoveCRMContactFromListResponseOrError
+}
+
+union RemoveCRMContactFromListResponseOrError =
+  | RemoveCRMContactFromListFailure
+  | RemoveCRMContactFromListSuccess
+
+type RemoveCRMContactFromListSuccess {
+  crmContactList: CRMContactList
+}
+
 type RemoveInstallShotFromPartnerShowFailure {
   mutationError: GravityMutationError
 }
@@ -37130,6 +37525,40 @@ input RequestCredentialsForAssetUploadInput {
 type RequestCredentialsForAssetUploadPayload {
   asset: Credentials
   clientMutationId: String
+}
+
+type RequestEmailBackfillFailure {
+  mutationError: GravityMutationError
+}
+
+input RequestEmailBackfillInput {
+  """
+  ISO 8601 time to import mail from. Must be in the past and after April 2004.
+  """
+  backfillSince: String!
+  clientMutationId: String
+
+  """
+  The internal ID of the email account
+  """
+  id: String!
+}
+
+type RequestEmailBackfillPayload {
+  clientMutationId: String
+
+  """
+  On success: the queued backfill run
+  """
+  emailBackfillRunOrError: RequestEmailBackfillResponseOrError
+}
+
+union RequestEmailBackfillResponseOrError =
+  | RequestEmailBackfillFailure
+  | RequestEmailBackfillSuccess
+
+type RequestEmailBackfillSuccess {
+  emailBackfillRun: EmailBackfillRun
 }
 
 type RequestError {
@@ -41641,6 +42070,42 @@ input UpdateCRMContactInput {
   phone: String
 }
 
+type UpdateCRMContactListFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCRMContactListInput {
+  clientMutationId: String
+
+  """
+  An empty string clears the description
+  """
+  description: String
+
+  """
+  The internal ID of the list
+  """
+  id: String!
+  name: String
+}
+
+type UpdateCRMContactListPayload {
+  clientMutationId: String
+
+  """
+  On success: the updated list
+  """
+  crmContactListOrError: UpdateCRMContactListResponseOrError
+}
+
+union UpdateCRMContactListResponseOrError =
+  | UpdateCRMContactListFailure
+  | UpdateCRMContactListSuccess
+
+type UpdateCRMContactListSuccess {
+  crmContactList: CRMContactList
+}
+
 type UpdateCRMContactLocationFailure {
   mutationError: GravityMutationError
 }
@@ -45771,6 +46236,36 @@ type Viewer {
   ): CRMContactEmailConnection
 
   """
+  A CRM contact list of a partner. Null when it doesn’t exist.
+  """
+  crmContactList(
+    """
+    The internal ID of the list
+    """
+    id: String!
+  ): CRMContactList
+
+  """
+  A connection of CRM contact lists for a partner
+  """
+  crmContactListsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    """
+    The partner ID to list contact lists for
+    """
+    partnerID: String!
+
+    """
+    Defaults to UPDATED_AT_DESC
+    """
+    sort: CRMContactListSort
+  ): CRMContactListConnection
+
+  """
   A location of a CRM contact
   """
   crmContactLocation(
@@ -45816,6 +46311,11 @@ type Viewer {
     Only contacts with any of these categories. Case-insensitive.
     """
     categories: [String!]
+
+    """
+    Only contacts in none of these CRM contact lists
+    """
+    excludeListIDs: [String!]
     first: Int
 
     """
@@ -45823,6 +46323,16 @@ type Viewer {
     """
     isUnassigned: Boolean
     last: Int
+
+    """
+    Only contacts in this CRM contact list
+    """
+    listID: String
+
+    """
+    Only contacts in any of these CRM contact lists
+    """
+    listIDs: [String!]
 
     """
     The partner ID to list contacts for
@@ -46127,6 +46637,16 @@ type Viewer {
     last: Int
     size: Int = 12
   ): [MarketingCollection!]
+
+  """
+  The most recent backfill requested for an email account, or null if none was requested
+  """
+  emailBackfillRun(
+    """
+    The internal ID of the email account
+    """
+    emailAccountId: String!
+  ): EmailBackfillRun
 
   """
   A pending, approved or skipped email sender review
@@ -47276,6 +47796,16 @@ type Viewer {
   ): StaticContent
   submission(externalId: ID, id: ID, sessionID: String): ConsignmentSubmission
     @deprecated(reason: "Consignment submissions are no longer supported.")
+
+  """
+  The email accounts connected by a user, with limited fields. For Artsy staff with the artos_support role; each access is logged.
+  """
+  supportEmailAccounts(
+    """
+    The internal ID of the user who connected the accounts
+    """
+    userId: String!
+  ): [EmailAccount!]
 
   """
   Fields related to internal systems.

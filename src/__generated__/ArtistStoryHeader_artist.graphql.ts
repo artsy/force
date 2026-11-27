@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f191e0ddb99f8925323932cdf4a6708f>>
+ * @generated SignedSource<<4e806c9d294e2297823173be56a96d5d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,12 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistStoryHeader_artist$data = {
-  readonly counts: {
-    readonly follows: any | null | undefined;
-  } | null | undefined;
   readonly featuredStory: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryHeaderMedia_story">;
+    readonly headerVideo: {
+      readonly internalID: string;
+    } | null | undefined;
   } | null | undefined;
-  readonly formattedNationalityAndBirthday: string | null | undefined;
-  readonly instagramHandle: string | null | undefined;
-  readonly internalID: string;
-  readonly name: string | null | undefined;
-  readonly vanguardYear: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist" | "ArtistStoryIntro_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeaderEditorial_artist" | "ArtistStoryIntro_artist" | "ArtistStoryMobileHeader_artist" | "ArtistStorySplitHeader_artist" | "ArtistStoryVideoHeader_artist">;
   readonly " $fragmentType": "ArtistStoryHeader_artist";
 };
 export type ArtistStoryHeader_artist$key = {
@@ -39,71 +33,46 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "formattedNationalityAndBirthday",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "vanguardYear",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "instagramHandle",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistCounts",
-      "kind": "LinkedField",
-      "name": "counts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "follows",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "ArtistStory",
       "kind": "LinkedField",
       "name": "featuredStory",
       "plural": false,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtistStoryHeaderMedia_story"
+          "concreteType": "ArtistStoryVideo",
+          "kind": "LinkedField",
+          "name": "headerVideo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistStoryMobileHeader_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistStorySplitHeader_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistStoryVideoHeader_artist"
     },
     {
       "args": null,
@@ -120,6 +89,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5a9300ae4a08f372cabf01e628ac7709";
+(node as any).hash = "80ebab931782b9aade657ab3352f75ae";
 
 export default node;

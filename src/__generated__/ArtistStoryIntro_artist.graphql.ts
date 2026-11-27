@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f538b748bc9674a4afb11d4f4ba9cb03>>
+ * @generated SignedSource<<92f0728a297abb0666276ad95e4b47ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,8 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistStoryIntro_artist$data = {
-  readonly biographyBlurb: {
-    readonly credit: string | null | undefined;
-    readonly text: string | null | undefined;
-  } | null | undefined;
-  readonly featuredStory: {
-    readonly pullQuote: {
-      readonly attribution: string | null | undefined;
-      readonly text: string;
-    } | null | undefined;
-  } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryRepresentation_artist" | "ArtistStylesAndTechniques_artist">;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryBiography_artist" | "ArtistStoryPullQuote_artist" | "ArtistStoryRepresentation_artist" | "ArtistStylesAndTechniques_artist">;
   readonly " $fragmentType": "ArtistStoryIntro_artist";
 };
 export type ArtistStoryIntro_artist$key = {
@@ -29,15 +20,7 @@ export type ArtistStoryIntro_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistStoryIntro_artist">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "text",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -45,58 +28,20 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "HTML"
-        }
-      ],
-      "concreteType": "ArtistBlurb",
-      "kind": "LinkedField",
-      "name": "biographyBlurb",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "credit",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "biographyBlurb(format:\"HTML\")"
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "concreteType": "ArtistStory",
-      "kind": "LinkedField",
-      "name": "featuredStory",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtistStoryQuote",
-          "kind": "LinkedField",
-          "name": "pullQuote",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "attribution",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "ArtistStoryPullQuote_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistStoryBiography_artist"
     },
     {
       "args": null,
@@ -112,8 +57,7 @@ return {
   "type": "Artist",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "7696eb891e3e15063f21365ce1d49a54";
+(node as any).hash = "ad28653ed36d98b5edfbe62d15db89c6";
 
 export default node;
