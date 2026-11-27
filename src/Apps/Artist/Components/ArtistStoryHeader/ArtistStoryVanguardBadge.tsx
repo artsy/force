@@ -43,8 +43,7 @@ export const ArtistStoryVanguardBadge: React.FC<
     </Text>
   )
 
-  const articleSlug = artist.vanguardArticle?.slug
-  const articleHref = artist.vanguardArticle?.href
+  const { slug: articleSlug, href: articleHref } = artist.vanguardArticle ?? {}
 
   if (!articleSlug || !articleHref) {
     return <Box {...BADGE_PROPS}>{label}</Box>

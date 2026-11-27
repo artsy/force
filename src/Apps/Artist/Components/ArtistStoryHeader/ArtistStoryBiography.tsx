@@ -30,8 +30,7 @@ export const ArtistStoryBiography: React.FC<ArtistStoryBiographyProps> = ({
   const { contextPageOwnerType, contextPageOwnerId, contextPageOwnerSlug } =
     useAnalyticsContext()
 
-  const text = artist.biographyBlurb?.text
-  const credit = artist.biographyBlurb?.credit
+  const { text, credit } = artist.biographyBlurb ?? {}
 
   if (!text) {
     return null
