@@ -2,7 +2,7 @@
 
 Force is Artsy's public-facing web application.
 
-Our best practices are documented in detail in @docs/best_practices.md
+Shared Artsy frontend conventions are in [`.claude/rules/artsy-frontend-conventions.md`](.claude/rules/artsy-frontend-conventions.md), auto-synced from [artsy/claude-config](https://github.com/artsy/claude-config) — edit them there, not here. This file holds **Force-specific** guidance and takes precedence on any conflict. Fuller Force docs: @docs/best_practices.md
 
 Shared Artsy frontend conventions live in @.claude/rules/artsy-frontend-conventions.md (synced from [artsy/agent-tooling](https://github.com/artsy/agent-tooling)). This file wins where the two conflict.
 
@@ -30,11 +30,11 @@ Use the following commands to verify the quality of uncommitted code:
 
 ## Code Style
 
+> Shared style rules (explicit JSX returns, named exports, object params, no nested ternaries, naming, imports) come from the shared conventions. Force-specific additions:
+
 - Write tests for any new functionality; ensure tests pass
 - Write correctly typed code; avoid adding `@ts-expect-error`
-- Prefer named exports; avoid default exports
-- Prefer explicit returns; avoid implicit returns
-- Force follows conventional typographical style and prefers curly typographic single quotes(`‘` and `’`) and double quotes (`“` and `”`) in user-facing texts. Consider this when generating or updating code, including tests
+- Force follows conventional typographical style and prefers curly typographic single quotes (`‘` and `’`) and double quotes (`“` and `”`) in user-facing texts. Consider this when generating or updating code, including tests
 
 ## Commit Style
 
@@ -57,8 +57,7 @@ yarn lint $(git ls-files --modified --others --exclude-standard)
 
 ## Common Patterns
 
-- **UI**: Use Artsy's design system `@artsy/palette` for UI components
-- **Data**: Use Relay hooks for data fetching
+- **Data**: Use Relay hooks for data fetching against Metaphysics (see shared conventions for fragment/connection naming)
 - **Analytics**: Use react-tracking with Artsy's event schema `@artsy/cohesion`
 - **Tests**
   - Use Jest, but avoid snapshot tests
@@ -69,7 +68,6 @@ yarn lint $(git ls-files --modified --others --exclude-standard)
 
 - Apps go in `src/Apps/`
 - Shared components in top-level `/Components`
-- Avoid index files (breaks VSCode auto-import)
 - Routes mounted in [src/routes.tsx](src/routes.tsx)
 
 ```
