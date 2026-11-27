@@ -8,7 +8,7 @@ describe("afterUpdateRedirect", () => {
     delete window.location
   })
   afterEach(() => {
-    window.location = originalLocation
+    window.location = originalLocation as string & Location
   })
 
   it("returns host for trusted domain", () => {
