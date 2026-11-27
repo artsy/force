@@ -34,6 +34,20 @@ Use the following commands to verify the quality of uncommitted code:
 - Write correctly typed code; avoid adding `@ts-expect-error`
 - Prefer named exports; avoid default exports
 - Prefer explicit returns; avoid implicit returns
+- When you read two or more fields from the same object, destructure them in one line instead of writing one `const` per field. If the object can be null or undefined, add `?? {}`, and rename fields inside the pattern when needed:
+
+  ```tsx
+  // avoid
+  const name = artwork.partner?.name
+  const href = artwork.partner?.href
+  const saleName = artwork.sale?.name
+  const saleHref = artwork.sale?.href
+
+  // good
+  const { name, href } = artwork.partner ?? {}
+  const { name: saleName, href: saleHref } = artwork.sale ?? {}
+  ```
+
 - Force follows conventional typographical style and prefers curly typographic single quotes(`‘` and `’`) and double quotes (`“` and `”`) in user-facing texts. Consider this when generating or updating code, including tests
 
 ## Commit Style
