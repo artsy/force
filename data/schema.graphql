@@ -9032,6 +9032,8 @@ input CRMContactLocationInput {
 }
 
 enum CRMContactSort {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
   DISPLAY_NAME_ASC
   DISPLAY_NAME_DESC
 }
